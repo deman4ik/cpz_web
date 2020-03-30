@@ -1,8 +1,0 @@
-.template-container {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1400;
-  margin: 0 auto;
-}

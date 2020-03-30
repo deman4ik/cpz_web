@@ -1,0 +1,17 @@
+:root {
+  --darkBg: #1f233f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--darkBg);
+  overflow-y:scroll;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}

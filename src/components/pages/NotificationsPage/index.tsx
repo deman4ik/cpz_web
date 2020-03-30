@@ -1,11 +1,10 @@
 import React from 'react';
-import { PageHead } from '../../layout/PageHead';
+import { Template } from '../../layout/Template';
 
 export const NotificationsPage = () => (
-  <>
-    <PageHead />
-    <div className='landing'>
+  <Template>
+    <div>
       Notification page
     </div>
-  </>
+  </Template>
 );
