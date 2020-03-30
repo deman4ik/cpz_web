@@ -1,0 +1,59 @@
+.logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mainMenu {
+  z-index: 1;
+  position: fixed;
+  left: auto;
+  top: 0;
+  height: 100%;
+  background-color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.mainMenuItem {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.mainMenuItemText {
+  margin-left: 32px;
+  margin-right: 32px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.bigLogo {
+  width: 72px;
+  height: 71px;
+}
+
+.menuInactive {
+  color: var(--inactiveGray);
+}
+
+.menuActive {
+  color: #fff;
+}
+
+.menuItemActive {
+  background-color: var(--activeSelect);
+  border-radius: 2px;
+}

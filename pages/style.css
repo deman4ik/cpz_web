@@ -1,5 +1,8 @@
 :root {
   --darkBg: #1f233f;
+  --dark: #242B4A;
+  --inactiveGray: rgba(255, 255, 255, 0.68);
+  --activeSelect: rgba(105, 135, 185, 0.2);
 }
 
 * {
@@ -10,6 +13,7 @@ body {
   background-color: var(--darkBg);
   overflow-y:scroll;
   margin: 0;
+  font-family: Roboto, sans-serif;
 }
 
 a {
