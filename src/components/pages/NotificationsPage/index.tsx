@@ -6,9 +6,10 @@ import { PageType } from '../../../config/types';
 export const NotificationsPage = () => (
   <Template
     page={PageType.notifications}
+    title='Notifications'
   >
     <div>
-      Notification page
+      Notification page ssfsdfsdfdsffffffffffffffffffffff
     </div>
   </Template>
 );

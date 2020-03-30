@@ -5,15 +5,15 @@ export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
 export const MAINMENU_MIN_HEIGHT = 56;
 export const MAINMENU_ITEMS: MainMenuItemProps[] = [
-  { label: PageType.robots, icon: 'alarm_on', route: 'robots' },
-  { label: PageType.signals, icon: 'alarm_on', route: 'signals' },
-  { label: PageType.notifications, icon: 'alarm_on', route: 'notifications' },
-  { label: PageType.profile, icon: 'alarm_on', route: 'profile' }
+  { label: PageType.robots, icon: 'robot', route: 'robots' },
+  { label: PageType.signals, icon: 'signals', route: 'signals' },
+  { label: PageType.notifications, icon: 'notifications', route: 'notifications' },
+  { label: PageType.profile, icon: 'profile', route: 'profile' }
 ];
 export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
   {
     label: PageType.support,
-    icon: 'help-circle',
+    icon: 'help',
     href: 'https://support.cryptuoso.com'
   },
   {
