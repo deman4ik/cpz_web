@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { NotificationsPage } from '../../src/components/pages/NotificationsPage';
+import { SignalsPage } from '../../src/components/pages/SignalsPage';
 
 const Page = () => (
-  <NotificationsPage />
+  <SignalsPage />
 );
 
 export default Page;

@@ -27,9 +27,12 @@ const _MainMenuItem: React.FC<Props> = ({ item, active }) => {
     <div className={styles.mainMenuItemWrapper}>
       <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`}>
         <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} />
-        <Link href={item.route ? `/${item.route}` : item.href}>
-          <a className={styleText.join(' ')}>{item.label}</a>
-        </Link>
+        { item.route ? (
+          <Link href={`/${item.route}`} replace>
+            <a className={styleText.join(' ')}>{item.label}</a>
+          </Link>
+        ) :
+          <a href={item.href} className={styleText.join(' ')}>{item.label}</a> }
       </div>
     </div>
   );
