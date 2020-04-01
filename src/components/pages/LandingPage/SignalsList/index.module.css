@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.btn {
+  width: 270px;
+  height: 62px;
+}

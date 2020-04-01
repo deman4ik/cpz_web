@@ -85,36 +85,8 @@
 .headerBtn {
   width: 270px;
   height: 62px;
-  min-width: auto;
-  border-radius: 2px;
-  border: 1px solid rgba(0, 0, 0, 0);
   margin-bottom: 20px;
 }
-
-.btnLeft {
-  background-image: linear-gradient(rgb(91, 236, 174), rgb(29, 185, 175));
-}
-
-.btnRight {
-  background-image: linear-gradient(rgb(64, 221, 255), rgb(11, 152, 197));
-}
-
-/* .volumeBtn {
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-}
-
-.wrapBtn {
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-} */
 
 .bigLogo {
   width: 621px;

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import Particles from 'react-particles-js';
 
 import BigLogo from '../../../assets/img/big-logo.png';
+import { PrimaryButton } from '../../basic';
 import styles from './Header.module.css';
 
 interface Props {
@@ -46,8 +47,8 @@ export const _Header: React.FC<Props> = () => (
               {subTitle}
             </div>
             <div className={styles.headerGroupBtn}>
-              <button type='button' className={`${styles.headerBtn} ${styles.btnLeft}`}>TRY IT FREE</button>
-              <button type='button' className={`${styles.headerBtn} ${styles.btnRight}`}>DOCUMENTATION</button>
+              <PrimaryButton title='TRY IT FREE' type='secondary' style={styles.headerBtn} />
+              <PrimaryButton title='DOCUMENTATION' type='primary' style={styles.headerBtn} />
             </div>
           </div>
           <div className={styles.logoWrapper}>

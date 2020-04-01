@@ -5,6 +5,7 @@ import styles from './index.module.css';
 import common_styles from '../../../config/common.module.css';
 import { Header } from './Header';
 import { Description } from './Description';
+import { SignalsList } from './SignalsList';
 
 const _LandingPage = () => (
   <>
@@ -18,6 +19,7 @@ const _LandingPage = () => (
         <div className={styles.starsBackground} />
         <div className={common_styles.container}>
           <Description />
+          <SignalsList />
         </div>
       </div>
     </div>

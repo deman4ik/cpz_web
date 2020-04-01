@@ -1,0 +1,3 @@
+export const moneyFormat = (value: number, toFixed = 2): string => (
+  !value ? '0' : value.toFixed(toFixed).toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ','));

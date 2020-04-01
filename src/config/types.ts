@@ -7,3 +7,9 @@ export enum PageType {
   support = 'Support',
   community = 'Community'
 }
+
+export interface DeviceProps {
+  isMobile: boolean;
+  isIOS: boolean;
+  width: number;
+}

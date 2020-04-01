@@ -1,0 +1,14 @@
+.btn {
+  min-width: auto;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.secondary {
+  background-image: linear-gradient(rgb(91, 236, 174), rgb(29, 185, 175));
+}
+
+.primary {
+  background-image: linear-gradient(rgb(64, 221, 255), rgb(11, 152, 197));
+}
