@@ -29,7 +29,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-particles-js": "^2.7.1",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "victory": "^34.1.3"
   },
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",

@@ -19,6 +19,9 @@ const _LandingPage = () => (
         <div className={styles.starsBackground} />
         <div className={common_styles.container}>
           <Description />
+          <div className={styles.topRobotsTitle}>
+            Top Performance Robots
+          </div>
           <SignalsList />
         </div>
       </div>

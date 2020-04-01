@@ -16,6 +16,8 @@
   --activeSelect: rgba(105, 135, 185, 0.2);
   --whiteFaded: rgba(255, 255, 255, 0.7);
   --whiteLight: rgba(255, 255, 255, 0.15);
+  --rgbaDark: rgba(36, 43, 74, 0.7);
+  --rgbaPrimary: rgba(105, 135, 185, 0.2);
   --small3: 10px;
   --small2: 12px;
   --small1: 14px;
@@ -41,4 +43,10 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.VictoryContainer {
+  user-select: auto !important;
+  pointer-events: auto !important;
+  touch-action: auto !important;
 }
