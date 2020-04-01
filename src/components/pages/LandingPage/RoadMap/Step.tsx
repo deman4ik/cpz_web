@@ -12,7 +12,6 @@ interface Props {
   idx: number;
 }
 const active = 6;
-
 export const Step: React.FC<Props> = ({ step, idx }) => {
   const isActiveCheck = active === idx + 1;
   const isActiveLine = active >= idx + 1;
@@ -43,6 +42,35 @@ export const Step: React.FC<Props> = ({ step, idx }) => {
       ? '/img/roadmap-triangle-will-odd.png'
       : '/img/roadmap-triangle-will.png';
   }
+  const getCircleCloud = () => {
+    const circleCloud = [ styles.circleCloud ];
+    if (isOdd) {
+      circleCloud.push(styles.oddBottom);
+    } else {
+      circleCloud.push(styles.oddTop);
+    }
+    if (isFuture) circleCloud.push(styles.isFuture);
+    if (isActiveCheck) circleCloud.push(styles.activeCloud);
+    if (isActiveLine && !isActiveCheck) circleCloud.push(styles.isFinished);
+    return circleCloud;
+  };
+
+  const getTriangleStyle = () => {
+    const triangle = [ styles.triangle ];
+    if (!isOdd) {
+      triangle.push(styles.oddTriangleBottom);
+    } else {
+      triangle.push(styles.oddTriangleTop);
+    }
+    return triangle;
+  };
+
+  const getLineStyle = () => {
+    const line = [ styles.line ];
+    if (isActiveLine) line.push(styles.activeLine);
+    if (isActiveCheck && (idx === 5)) line.push(styles.endActiveLine);
+    return line;
+  };
 
   return (
     <>
@@ -56,35 +84,18 @@ export const Step: React.FC<Props> = ({ step, idx }) => {
             src='/img/roadmap-check.png'
             alt='' />
         )}
-        <div className={styles.circleCloud}>
-          {/* {isActiveCheck && (
-          <LinearGradient
-            className={styles.circleCloudGr}
-            colors={[ '#2e3248', '#1f233f' ]}
-              />
-          )} */}
+        <div className={getCircleCloud().join(' ')}>
           <img
-            className={styles.triangle}
+            className={getTriangleStyle().join(' ')}
             src={renderTriangle}
             alt='' />
           <div className={styles.circleBody}>
-            <div className={styles.circleTitle}>{step.date}</div>
-            <div className={styles.circleText}>{step.title}</div>
+            <div className={`${styles.circleTitle}${isFuture ? ` ${styles.isFutureText}` : ''}`}>{step.date}</div>
+            <div className={`${styles.circleText}${isFuture ? ` ${styles.isFutureText}` : ''}`}>{step.title}</div>
           </div>
         </div>
       </div>
-      {/* {isActiveCheck && steps[index + 1] ? (
-          <>
-            <LinearGradient
-              className={responsive.line(isVertical, isActiveLine)}
-              colors={[ vars.color.primary, '#727f9b' ]}
-              start={isVertical ? [ 1, 0 ] : [ 0, 1 ]}
-              end={isVertical ? [ 0, 1 ] : [ 1, 0 ]}
-            />
-          </>
-        ) : (
-          <div className={responsive.line(isVertical, isActiveLine)} />
-        )} */}
+      <div className={getLineStyle().join(' ')} />
     </>
   );
 };

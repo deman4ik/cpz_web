@@ -15,11 +15,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .circleFuture {
-  width: 16;
-  height: 16;
+  width: 16px;
+  height: 16px;
   margin: 10.5px 4px;
   border-radius: 16px;
   background-color: #727f9b;
@@ -43,6 +44,16 @@
   border-color: transparent;
   border-radius: 2px;
   background-color: #22446c;
+  left: 50%;
+  margin-left: -108.5px;
+}  
+
+.activeCloud {
+  background-image: linear-gradient(#2e3248, #1f233f);
+}
+
+.endActiveLine {
+  background-image: linear-gradient(var(--primary), #727f9b);
 }
 
 .triangle {
@@ -51,11 +62,6 @@
   width: 9px;
   height: 7px;
   margin-left: -3.5px;
-}
-
-.circleBody {
-  z-index: 1;
-  position: relative;
 }
 
 .circleTitle {
@@ -70,4 +76,32 @@
   text-align: center;
   font-size: var(--normal1);
   color: white;
+}
+
+.oddBottom {
+  bottom: -120px;
+}
+
+.oddTop {
+  top: -120px;
+}
+
+.oddTriangleBottom {
+  bottom: -7px;
+}
+
+.oddTriangleTop {
+  top: -7px;
+}
+
+.isFuture {
+  border-color: #627392;
+}
+
+.isFutureText {
+  color: #727f9b;
+}
+
+.isFinished {
+  border-color: var(--primary);
 }
