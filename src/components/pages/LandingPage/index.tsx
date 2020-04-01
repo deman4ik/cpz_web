@@ -2,7 +2,9 @@ import React from 'react';
 import { PageHead } from '../../layout/PageHead';
 
 import styles from './index.module.css';
+import common_styles from '../../../config/common.module.css';
 import { Header } from './Header';
+import { Description } from './Description';
 
 const _LandingPage = () => (
   <>
@@ -12,7 +14,12 @@ const _LandingPage = () => (
       keywords='cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken' />
     <div className={styles.landing}>
       <Header />
-      Landing page
+      <div className={styles.bodyLanding}>
+        <div className={styles.starsBackground} />
+        <div className={common_styles.container}>
+          <Description />
+        </div>
+      </div>
     </div>
   </>
 );
