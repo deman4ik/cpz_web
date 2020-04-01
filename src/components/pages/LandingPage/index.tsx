@@ -6,6 +6,9 @@ import common_styles from '../../../config/common.module.css';
 import { Header } from './Header';
 import { Description } from './Description';
 import { SignalsList } from './SignalsList';
+import { TradingApp } from './TradingApp';
+import { TelegramBot } from './TelegramBot';
+import { RoadMap } from './RoadMap';
 
 const _LandingPage = () => (
   <>
@@ -23,6 +26,12 @@ const _LandingPage = () => (
             Top Performance Robots
           </div>
           <SignalsList />
+          <TradingApp />
+          <TelegramBot />
+          <div className={styles.roadmapTitle}>
+            Cryptuoso roadmap
+          </div>
+          <RoadMap />
         </div>
       </div>
     </div>

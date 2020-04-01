@@ -1,0 +1,73 @@
+.line {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #727f9b;
+  height: 3px;
+}
+
+.activeLine {
+  background-color: var(--primary);
+}
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleFuture {
+  width: 16;
+  height: 16;
+  margin: 10.5px 4px;
+  border-radius: 16px;
+  background-color: #727f9b;
+}
+
+.circleCheck {
+  width: 29;
+  height: 29;
+}
+
+.circleCloud {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  width: 215px;
+  height: 110px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 2px;
+  background-color: #22446c;
+}
+
+.triangle {
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 7px;
+  margin-left: -3.5px;
+}
+
+.circleBody {
+  z-index: 1;
+  position: relative;
+}
+
+.circleTitle {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: var(--normal2);
+  font-weight: bold;
+  color: white;
+}
+
+.circleText {
+  text-align: center;
+  font-size: var(--normal1);
+  color: white;
+}
