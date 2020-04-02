@@ -26,9 +26,18 @@
   background-color: #727f9b;
 }
 
+.circleUnCheck {
+  width: 29px;
+  height: 29px;
+}
+
 .circleCheck {
-  width: 29;
-  height: 29;
+  width: 37px;
+  height: 37px;
+}
+
+.circleCheckActive {
+  margin: 4px 0px;
 }
 
 .circleCloud {
@@ -45,8 +54,13 @@
   border-radius: 2px;
   background-color: #22446c;
   left: 50%;
+  margin-top: 0;
   margin-left: -108.5px;
 }  
+
+.circleCloudCorrect {
+  margin-left: -109px;
+}
 
 .activeCloud {
   background-image: linear-gradient(#2e3248, #1f233f);
@@ -104,4 +118,33 @@
 
 .isFinished {
   border-color: var(--primary);
+}
+
+@media (max-width: 992px) {
+  .line {
+    width: 3px;
+    min-height: 50px;
+  }
+  .circleFuture {
+    margin: 4px 10px;
+  }
+  .circleCheckActive {
+    margin: 0 4px;
+  }
+  .circleCloud {
+    top: 50%;
+    left: 45px;
+    margin-top: -56px;
+    margin-left: 0;
+  }
+  .circleCloudCorrect {
+    margin-left: 4px;
+  }
+  .triangle {
+    top: 50%;
+    left: -5px;
+    width: 7px;
+    height: 9px;
+    margin-top: -4.5px;
+  }
 }

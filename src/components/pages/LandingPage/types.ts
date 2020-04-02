@@ -7,3 +7,8 @@ export type SupportItemType = {
   buttonType: string;
   href: string;
 };
+
+export interface StepProps {
+  date: string;
+  title: string;
+}

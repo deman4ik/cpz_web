@@ -1,23 +1,19 @@
 import React from 'react';
 
 import styles from './Step.module.css';
-
-interface StepProps {
-  date: string;
-  title: string;
-}
+import { StepProps } from '../types';
 
 interface Props {
   step: StepProps;
   idx: number;
+  isVertical: boolean;
 }
 const active = 6;
-export const Step: React.FC<Props> = ({ step, idx }) => {
+export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
   const isActiveCheck = active === idx + 1;
   const isActiveLine = active >= idx + 1;
   const isFuture = active < idx + 1;
   const isOdd = (idx + 1) % 2 !== 0;
-  const isVertical = false;
 
   let renderTriangle;
 
@@ -50,7 +46,10 @@ export const Step: React.FC<Props> = ({ step, idx }) => {
       circleCloud.push(styles.oddTop);
     }
     if (isFuture) circleCloud.push(styles.isFuture);
-    if (isActiveCheck) circleCloud.push(styles.activeCloud);
+    if (isActiveCheck) {
+      circleCloud.push(styles.activeCloud);
+      circleCloud.push(styles.circleCloudCorrect);
+    }
     if (isActiveLine && !isActiveCheck) circleCloud.push(styles.isFinished);
     return circleCloud;
   };
@@ -80,7 +79,7 @@ export const Step: React.FC<Props> = ({ step, idx }) => {
           <div className={styles.circleFuture} />
         ) : (
           <img
-            className={styles.circleCheck}
+            className={`${styles.circleCheckActive} ${isActiveCheck ? styles.circleCheck : styles.circleUnCheck}`}
             src='/img/roadmap-check.png'
             alt='' />
         )}

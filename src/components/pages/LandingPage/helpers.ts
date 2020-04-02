@@ -1,3 +1,5 @@
+import { StepProps } from './types';
+
 export const supportContent = () => (
   [
     {
@@ -29,3 +31,13 @@ export const supportContent = () => (
     }
   ]
 );
+
+export const steps: StepProps[] = [
+  { date: '2017', title: 'Public Trading\nSignals' },
+  { date: '2018', title: 'Cryptuoso\nTrading Engine' },
+  { date: 'Q2 2019', title: 'Cryptuoso\nLanding Page' },
+  { date: 'Q3 2019', title: 'Premium individual trading\nfor private investors' },
+  { date: 'Q4 2019', title: 'Cryptuoso Trading\nTelegram Bot (Beta)' },
+  { date: 'Q1 2020', title: 'Cryptuoso Trading\nWeb App (Beta)' },
+  { date: 'Q2 2020', title: 'Cryptuoso Trading\nMobile App (Beta)' },
+];
