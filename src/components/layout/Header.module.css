@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1448px;
+  padding: 10px 20px;
+}
+
+.leftContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btnTitle {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: var(--small1);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
+}
+
+.btnWrapper {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  margin-left: 12px;
+}

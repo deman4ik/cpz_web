@@ -3,7 +3,7 @@ import { PageHead } from '../../layout/PageHead';
 
 import styles from './index.module.css';
 import common_styles from '../../../config/common.module.css';
-import { Header } from './Header';
+import { Hat } from './Hat';
 import { Description } from './Description';
 import { SignalsList } from './SignalsList';
 import { TradingApp } from './TradingApp';
@@ -19,7 +19,7 @@ const _LandingPage = () => (
       description='Cryptuoso - Cryptocurrency Trading Platform for your successful investment'
       keywords='cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken' />
     <div className={styles.landing}>
-      <Header />
+      <Hat />
       <div className={styles.bodyLanding}>
         <div className={styles.starsBackground} />
         <div className={common_styles.container}>

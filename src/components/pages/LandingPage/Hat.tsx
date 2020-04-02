@@ -3,16 +3,13 @@ import Particles from 'react-particles-js';
 
 import BigLogo from '../../../assets/img/big-logo.png';
 import { PrimaryButton } from '../../basic';
-import styles from './Header.module.css';
-
-interface Props {
-
-}
+import styles from './Hat.module.css';
+import { Header } from '../../layout';
 
 const primary = '#0B98C5';
 const headerHeight = 1080;
 const subTitle = 'Just invest –\n robots make the rest';
-export const _Header: React.FC<Props> = () => (
+export const _Hat: React.FC = () => (
   <>
     <div className={styles.headerBgImg}>
       <Particles
@@ -32,6 +29,7 @@ export const _Header: React.FC<Props> = () => (
     </div>
     <div className={styles.header}>
       <div className={styles.container}>
+        <Header />
         <div className={styles.headerBody}>
           <div className={styles.groupBrand}>
             <div className={styles.brand}>
@@ -63,4 +61,4 @@ export const _Header: React.FC<Props> = () => (
   </>
 );
 
-export const Header = memo(_Header);
+export const Hat = memo(_Hat);

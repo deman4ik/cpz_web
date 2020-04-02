@@ -22,3 +22,33 @@ export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
     href: 'https://t.me/joinchat/ACVS-0zaWVBgAYm8gOKYHA'
   }
 ];
+
+export const linksHeader = [
+  {
+    title: 'Robots',
+    href: '/robots'
+  },
+  {
+    title: 'Signals',
+    href: '/signals'
+  },
+  {
+    title: 'Notifications',
+    href: '/notifications'
+  },
+  {
+    title: 'Profile',
+    href: '/profile'
+  },
+];
+
+export const authHeader = [
+  {
+    title: 'Log in',
+    href: '/auth/login'
+  },
+  {
+    title: 'Sign up',
+    href: '/auth/signup'
+  }
+];
