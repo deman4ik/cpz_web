@@ -65,6 +65,12 @@
   margin-top: 0;
 }
 
+.telegramBotImg {
+  width: 357px;
+  height: 658px;
+  margin: 0;
+}
+
 .tradingAppImg {
   width: 700px;
   height: 429px;
@@ -72,4 +78,31 @@
   object-fit: contain;
   border-bottom-width: 1px;
   border-color: var(--whiteLight);
+}
+
+@media (max-width: 1200px) {
+  .app {
+    align-items: center;
+    flex-direction: column;
+  }
+  .free {
+    align-items: center;
+    flex-direction: column;
+  }
+  .robotsStepText {
+    font-size: var(--normal3);
+    line-height: var(--big1);
+  }
+  .tradingAppImgContainer {
+    height: 197px;
+    margin-top: 45px;
+  }
+  .tradingAppImg {
+    width: 320px;
+    height: 196px;
+  }
+  .telegramBotImg {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 }
