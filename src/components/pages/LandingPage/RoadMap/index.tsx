@@ -20,8 +20,7 @@ const _RoadMap: React.FC = () => {
             {steps.map((step, idx) => <Step step={step} idx={idx} key={idx} isVertical={isVertical} />)}
           </div>
         </div>
-      )
-        : null }
+      ) : null }
     </>
   );
 };
