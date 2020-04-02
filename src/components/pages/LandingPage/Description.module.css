@@ -1,6 +1,4 @@
 .title {
-  display: flex;
-  flex-direction: column;
   max-width: 980px;
   margin-top: 0;
   margin-left: auto;
@@ -43,4 +41,19 @@
 
 .textAccent {
   color: var(--accent);
+}
+
+@media (max-width: 1200px) {
+  .title {
+    max-width: 450px;
+    margin-top: 40;
+    text-align: left;
+    font-size: var(--big1);
+    line-height: var(--big3);
+  }
+  .text {
+    max-width: 450px;
+    font-size: var(--normal3);
+    line-height: var(--big2);
+  }
 }

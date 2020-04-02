@@ -74,7 +74,7 @@
 }
 
 .label {
-  font-size: var(--small1);
+  font-size: var(--small2);
   color: var(--accent);
 }
 
@@ -119,4 +119,26 @@
 
 .positive {
   color: var(--secondary);
+}
+
+@media (max-width: 768px) {
+  .primaryText {
+    text-align: right;
+  }
+  .label {
+    font-size: var(--small1);
+  }
+  .chartStat {
+    flex-direction: column;
+  }
+  .statCol {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  .statRow {
+    align-items: center;
+  }
 }

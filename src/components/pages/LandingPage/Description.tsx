@@ -8,11 +8,9 @@ const _Description: React.FC = () => (
   <div className={common_styles.container}>
     <div className={styles.title}>
       Still trading manually and constantly watching news
-      <div style={{ flexDirection: 'row', display: 'flex' }}>
-        trying to catch the trend? Follow the courses&nbsp;
-        <span className={styles.textWhite}>&nbsp;day&nbsp;</span>and
-        <span className={styles.textAccent}>&nbsp;night</span>?
-      </div>
+      trying to catch the trend? Follow the courses
+      <span className={styles.textWhite}>&nbsp;day&nbsp;</span>and
+      <span className={styles.textAccent}>&nbsp;night</span>?
     </div>
     <div className={styles.line}>
       <div className={styles.text}>

@@ -73,3 +73,19 @@
   font-weight: bold;
   color: white;
 }
+
+@media (max-width: 1200px) {
+  .robotsCols {
+    max-width: 450px
+  }
+  .robotsRow {
+    flex-direction: column;
+  }
+  .robotsCol {
+    margin-bottom: 40px;
+  }
+  .robotsColText {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

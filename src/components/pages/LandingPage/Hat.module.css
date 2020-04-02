@@ -51,7 +51,7 @@
 }
 
 .brandRights {
-  font-size: 32px;
+  font-size: var(--big3);
   color: white;
   line-height: 16px;
 }
@@ -96,4 +96,41 @@
 .logoWrapper {
   display: flex;
   align-items: flex-end;
+}
+
+@media (max-width: 1200px) {
+  .headerBody {
+    flex-direction: column;
+  }
+  .brand {
+    justify-content: center;
+  }
+  .brandName {
+    font-size: 46px;
+  }
+  .brandRights {
+    font-size: var(--big2);
+  }
+  .title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: var(--big1);
+    line-height: var(--big3);
+  }
+  .subTitle {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: var(--big2);
+    line-height: var(--big3);
+  }
+  .headerGroupBtn {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: none;
+  }
+  .bigLogo {
+    width: 320px;
+    height: 305px;
+  }
 }
