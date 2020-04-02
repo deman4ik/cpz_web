@@ -12,3 +12,8 @@ export interface StepProps {
   date: string;
   title: string;
 }
+
+export type TradingStepType = {
+  accent: string;
+  text: string;
+};
