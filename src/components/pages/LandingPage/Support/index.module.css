@@ -1,0 +1,21 @@
+.title {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 38px;
+  line-height: 42px;
+  font-weight: bold;
+  color: white;
+}
+
+.support {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 80px;
+}
