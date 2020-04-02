@@ -24,6 +24,11 @@
   align-items: center;
 }
 
+.iconWrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .colTitle {
   min-height: 64px;
   margin-bottom: 20px;
