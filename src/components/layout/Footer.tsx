@@ -8,13 +8,13 @@ const _Footer: React.FC = () => (
     <div className={styles.row}>
       <div className={styles.colLinks}>
         <a href={process.env.TERMS_URL} className={styles.navItem}>
-          <div className={styles.footerNavItemLink}>Terms</div>
+          <span className={styles.navItemText}>Terms</span>
         </a>
         <a href={process.env.PRIVACY_URL} className={styles.navItem}>
-          <div className={styles.footerNavItemLink}>Privacy</div>
+          <span className={styles.navItemText}>Privacy</span>
         </a>
         <a href={process.env.SUPPORT_URL} className={styles.navItem}>
-          <div className={styles.footerNavItemLink}>Support</div>
+          <span className={styles.navItemText}>Support</span>
         </a>
       </div>
       <div className={styles.logoWrapper}>
@@ -25,13 +25,13 @@ const _Footer: React.FC = () => (
       </div>
       <div className={styles.rights}>
         <div className={styles.social}>
-          <a href='https://twitter.com/cryptuoso' target='_blank' rel='noopener noreferrer'>
+          <a href='https://twitter.com/cryptuoso' className={styles.linkWrapper} target='_blank' rel='noopener noreferrer'>
             <TwitterIcon color='white' />
           </a>
-          <a href='https://www.instagram.com/cryptuoso' target='_blank' rel='noopener noreferrer'>
+          <a href='https://www.instagram.com/cryptuoso' className={styles.linkWrapper} target='_blank' rel='noopener noreferrer'>
             <InstagramIcon color='white' />
           </a>
-          <a href='https://t.me/joinchat/ACVS-0zaWVBgAYm8gOKYHA' target='_blank' rel='noopener noreferrer'>
+          <a href='https://t.me/joinchat/ACVS-0zaWVBgAYm8gOKYHA' className={styles.linkWrapper} target='_blank' rel='noopener noreferrer'>
             <TelegramIcon color='white' />
           </a>
         </div>
