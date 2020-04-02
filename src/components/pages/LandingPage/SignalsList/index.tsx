@@ -23,8 +23,7 @@ const _SignalsList: React.FC = () => {
           <div className={styles.moreBtn}>
             <PrimaryButton
               title='More Robots'
-              type='primary'
-              style={styles.btn} />
+              type='primary' />
           </div>
         </div>
       )}

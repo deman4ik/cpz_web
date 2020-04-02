@@ -77,12 +77,14 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
           <PrimaryButton
             type='primary'
             title='Subscribe to Signals'
+            mini
           />
         )}
         {robot.trading && (
           <PrimaryButton
             type='secondary'
             title='Start Trading'
+            mini
           />
         )}
       </div>

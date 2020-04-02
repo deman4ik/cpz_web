@@ -6,15 +6,20 @@ interface Props {
   title: string;
   type: string;
   style?: string;
+  mini?: boolean;
 }
 
-export const PrimaryButton: React.FC<Props> = ({ title, type, style }) => {
-  const composeClass = [ styles.btn, styles[type] ];
-  if (style) {
-    composeClass.push(style);
-  }
+export const PrimaryButton: React.FC<Props> = ({ title, type, style, mini }) => {
+  const getClassName = () => {
+    const composeClass = [ styles.btn, (mini ? styles.miniBtn : styles.normalBtn), styles[type] ];
+    if (style) {
+      composeClass.push(style);
+    }
+    return composeClass;
+  };
+
   return (
-    <button className={composeClass.join(' ')} type='button'>
+    <button className={getClassName().join(' ')} type='button'>
       {title}
     </button>
   );
