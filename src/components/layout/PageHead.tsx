@@ -14,7 +14,7 @@ export const PageHead: React.FC<Props> = ({ title }) => (
   <Head>
     <title>CRYPTUOSO - {title}</title>
     <meta charSet='utf-8' />
-    <meta name='viewport" content="initial-scale=1.0, width=device-width' />
+    <meta name='viewport" content="initial-scale=1.0, width=device-width' key='viewport' />
     <meta name='description' content={description} />
     <meta name='keywords' content={keywords} />
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.png' />
