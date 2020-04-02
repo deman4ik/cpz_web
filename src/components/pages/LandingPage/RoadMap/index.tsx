@@ -1,13 +1,16 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { Step } from './Step';
-import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { steps } from '../helpers';
 import styles from './index.module.css';
 
 const _RoadMap: React.FC = () => {
-  const { width } = useWindowDimensions();
+  const [ width, setWidth ] = useState(0);
   const isVertical = width <= 992;
+
+  useEffect(() =>
+    setWidth(document.children[0].clientWidth),
+  []);
 
   return (
     <div className={styles.container}>

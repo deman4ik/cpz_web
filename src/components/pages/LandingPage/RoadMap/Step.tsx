@@ -15,29 +15,32 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
   const isFuture = active < idx + 1;
   const isOdd = (idx + 1) % 2 !== 0;
 
-  let renderTriangle;
-
-  if (isVertical) {
-    if (isActiveCheck) {
-      renderTriangle = '/img/roadmap-triangle-cur-mob.png';
+  const getTringleImg = () => {
+    let renderTriangle;
+    if (isVertical) {
+      if (isActiveCheck) {
+        renderTriangle = '/img/roadmap-triangle-cur-mob.png';
+      } else if (isActiveLine) {
+        renderTriangle = '/img/roadmap-triangle-fin-mob.png';
+      } else if (isFuture) {
+        renderTriangle = '/img/roadmap-triangle-will-mob.png';
+      }
+    } else if (isActiveCheck) {
+      renderTriangle = isOdd
+        ? '/img/roadmap-triangle-cur-odd.png'
+        : '/img/roadmap-triangle-cur.png';
     } else if (isActiveLine) {
-      renderTriangle = '/img/roadmap-triangle-fin-mob.png';
+      renderTriangle = isOdd
+        ? '/img/roadmap-triangle-fin-odd.png'
+        : '/img/roadmap-triangle-fin.png';
     } else if (isFuture) {
-      renderTriangle = '/img/roadmap-triangle-will-mob.png';
+      renderTriangle = isOdd
+        ? '/img/roadmap-triangle-will-odd.png'
+        : '/img/roadmap-triangle-will.png';
     }
-  } else if (isActiveCheck) {
-    renderTriangle = isOdd
-      ? '/img/roadmap-triangle-cur-odd.png'
-      : '/img/roadmap-triangle-cur.png';
-  } else if (isActiveLine) {
-    renderTriangle = isOdd
-      ? '/img/roadmap-triangle-fin-odd.png'
-      : '/img/roadmap-triangle-fin.png';
-  } else if (isFuture) {
-    renderTriangle = isOdd
-      ? '/img/roadmap-triangle-will-odd.png'
-      : '/img/roadmap-triangle-will.png';
-  }
+    return renderTriangle;
+  };
+
   const getCircleCloud = () => {
     const circleCloud = [ styles.circleCloud ];
     if (isOdd) {
@@ -86,7 +89,7 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
         <div className={getCircleCloud().join(' ')}>
           <img
             className={getTriangleStyle().join(' ')}
-            src={renderTriangle}
+            src={getTringleImg()}
             alt='' />
           <div className={styles.circleBody}>
             <div className={`${styles.circleTitle}${isFuture ? ` ${styles.isFutureText}` : ''}`}>{step.date}</div>
