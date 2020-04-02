@@ -1,0 +1,68 @@
+.logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mainMenu {
+  height: 100vh;
+  z-index: 1;
+  background-color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mainMenuItemWrapper {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  align-items: stretch;
+  width: 190px;
+}
+
+.mainMenuItem {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.mainMenuItemText {
+  margin-left: 32px;
+  margin-right: 32px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.bigLogo {
+  width: 72px;
+  height: 71px;
+}
+
+.menuInactive {
+  color: var(--inactiveGray);
+}
+
+.menuActive {
+  color: #fff;
+}
+
+.menuItemActive {
+  background-color: var(--activeSelect);
+  border-radius: 2px;
+}
+
+.menuGroupLine {
+  margin-top: 4px;
+  background-color: rgba(0, 0, 0, 0.12);
+  height: 1px;
+  width: 100%;
+}

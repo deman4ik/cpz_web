@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 285px;
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .stepsContainer {
+    flex-direction: column;
+    margin-left: -120px;
+  }
+}

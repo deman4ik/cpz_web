@@ -1,0 +1,50 @@
+.btn {
+  min-width: auto;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  cursor: pointer;
+  padding: 9px 14px;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: rgb(17, 133, 169) 0px 1px 1px;
+  letter-spacing: 1px;
+}
+
+.secondary {
+  background-image: linear-gradient(rgb(91, 236, 174), rgb(29, 185, 175));
+}
+
+.primary {
+  background-image: linear-gradient(rgb(64, 221, 255), rgb(11, 152, 197));
+}
+
+.outline-primary {
+  color: var(--primary);
+  background-color: transparent;
+  border: 1px solid var(--primary);
+}
+
+.outline-secondary {
+  color: var(--secondary);
+  background-color: transparent;
+  border: 1px solid var(--secondary);
+}
+
+.outline-warn {
+  color: var(--warn);
+  background-color: transparent;
+  border: 1px solid var(--secondary);
+}
+
+.normalBtn {
+  font-size: 18px;
+  height: 62px;
+  padding-left: 42px;
+  padding-right: 42px;
+  overflow: hidden;
+}
+
+.miniBtn {
+  font-size: 12px;
+  height: 34px;
+}

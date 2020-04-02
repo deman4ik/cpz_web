@@ -1,0 +1,52 @@
+:root {
+  --darkBg: #1f233f;
+  --dark: #242B4A;
+  --bg: #091943;
+  --lightBg: #2C3454;
+  --primary: #0B98C5;
+  --secondary: #5BECAE;
+  --accent: #6987B9;
+  --danger: #FF8B75;
+  --warn: #FFF2BC;
+  --positive: #1CA46B;
+  --negative: #CD3E60;
+  --lightRed: #CC6FA3;
+  --lightGreen: #70e2bc;
+  --inactiveGray: rgba(255, 255, 255, 0.68);
+  --activeSelect: rgba(105, 135, 185, 0.2);
+  --whiteFaded: rgba(255, 255, 255, 0.7);
+  --whiteLight: rgba(255, 255, 255, 0.15);
+  --rgbaDark: rgba(36, 43, 74, 0.7);
+  --rgbaPrimary: rgba(105, 135, 185, 0.2);
+  --small3: 10px;
+  --small2: 12px;
+  --small1: 14px;
+  --normal1: 16px;
+  --normal2: 18px;
+  --normal3: 20px;
+  --big1: 24px;
+  --big2: 28px;
+  --big3: 32px;
+}
+
+* {
+  box-sizing: border-box;
+  border: 0 solid black;
+}
+
+body {
+  background-color: var(--darkBg);
+  overflow-y:scroll;
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.VictoryContainer {
+  user-select: auto !important;
+  pointer-events: auto !important;
+  touch-action: auto !important;
+}

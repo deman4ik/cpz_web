@@ -1,0 +1,23 @@
+.navBar {
+  width: 100%;
+  background-color: var(--dark);
+  height: 56px;
+  box-shadow: 0px 3px 4px rgba(0,0,0,0.24);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.navBarTitleGroup {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.navBarTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  text-align: left;
+}

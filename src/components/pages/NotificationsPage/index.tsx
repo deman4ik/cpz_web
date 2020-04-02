@@ -1,11 +1,15 @@
 import React from 'react';
-import { PageHead } from '../../layout/PageHead';
+import { Template } from '../../layout/Template';
+
+import { PageType } from '../../../config/types';
 
 export const NotificationsPage = () => (
-  <>
-    <PageHead />
-    <div className='landing'>
-      Notification page
+  <Template
+    page={PageType.notifications}
+    title='Notifications'
+  >
+    <div>
+      Notification page ssfsdfsdfdsffffffffffffffffffffff
     </div>
-  </>
+  </Template>
 );

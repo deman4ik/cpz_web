@@ -1,0 +1,150 @@
+.line {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #727f9b;
+  height: 3px;
+}
+
+.activeLine {
+  background-color: var(--primary);
+}
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.circleFuture {
+  width: 16px;
+  height: 16px;
+  margin: 10.5px 4px;
+  border-radius: 16px;
+  background-color: #727f9b;
+}
+
+.circleUnCheck {
+  width: 29px;
+  height: 29px;
+}
+
+.circleCheck {
+  width: 37px;
+  height: 37px;
+}
+
+.circleCheckActive {
+  margin: 4px 0px;
+}
+
+.circleCloud {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  width: 215px;
+  height: 110px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 2px;
+  background-color: #22446c;
+  left: 50%;
+  margin-top: 0;
+  margin-left: -108.5px;
+}  
+
+.circleCloudCorrect {
+  margin-left: -109px;
+}
+
+.activeCloud {
+  background-image: linear-gradient(#2e3248, #1f233f);
+}
+
+.endActiveLine {
+  background-image: linear-gradient(var(--primary), #727f9b);
+}
+
+.triangle {
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 7px;
+  margin-left: -3.5px;
+}
+
+.circleTitle {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: var(--normal2);
+  font-weight: bold;
+  color: white;
+}
+
+.circleText {
+  text-align: center;
+  font-size: var(--normal1);
+  color: white;
+}
+
+.oddBottom {
+  bottom: -120px;
+}
+
+.oddTop {
+  top: -120px;
+}
+
+.oddTriangleBottom {
+  bottom: -7px;
+}
+
+.oddTriangleTop {
+  top: -7px;
+}
+
+.isFuture {
+  border-color: #627392;
+}
+
+.isFutureText {
+  color: #727f9b;
+}
+
+.isFinished {
+  border-color: var(--primary);
+}
+
+@media (max-width: 992px) {
+  .line {
+    width: 3px;
+    min-height: 50px;
+  }
+  .circleFuture {
+    margin: 4px 10px;
+  }
+  .circleCheckActive {
+    margin: 0 4px;
+  }
+  .circleCloud {
+    top: 50%;
+    left: 45px;
+    margin-top: -56px;
+    margin-left: 0;
+  }
+  .circleCloudCorrect {
+    margin-left: 4px;
+  }
+  .triangle {
+    top: 50%;
+    left: -5px;
+    width: 7px;
+    height: 9px;
+    margin-top: -4.5px;
+  }
+}

@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.mainContainer {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mainMenuContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.navBarContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}

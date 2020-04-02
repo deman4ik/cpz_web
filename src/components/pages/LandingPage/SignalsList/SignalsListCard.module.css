@@ -1,0 +1,144 @@
+.container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: var(--rgbaDark);
+  border-radius: 2px;
+}
+
+.primaryText {
+  font-weight: bold;
+  color: white;
+}
+
+.secondaryText {
+  text-align: right;
+  font-size: var(--small1);
+  color: white;
+}
+
+.header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--dark);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nameCol {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.profitCol {
+  align-items: flex-start;
+}
+
+.numberCol {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.statCol {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0;
+  margin-left: 10px;
+  width: auto;
+  margin-top: 10px;
+}
+
+.statRow {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+
+.label {
+  font-size: var(--small2);
+  color: var(--accent);
+}
+
+.statValue {
+  font-size: var(--small1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.lastProfit {
+  font-size: var(--small1);
+}
+
+.chartStat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chartCol {
+  flex-grow: 2;
+  max-width: 260px;
+}
+
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: auto;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.negative {
+  color: var(--danger);
+}
+
+.positive {
+  color: var(--secondary);
+}
+
+@media (max-width: 768px) {
+  .primaryText {
+    text-align: right;
+  }
+  .label {
+    font-size: var(--small1);
+  }
+  .chartStat {
+    flex-direction: column;
+  }
+  .statCol {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  .statRow {
+    align-items: center;
+  }
+}
