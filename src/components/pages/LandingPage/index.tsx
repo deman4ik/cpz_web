@@ -9,6 +9,8 @@ import { SignalsList } from './SignalsList';
 import { TradingApp } from './TradingApp';
 import { TelegramBot } from './TelegramBot';
 import { RoadMap } from './RoadMap';
+import { Support } from './Support';
+import { Footer } from '../../layout';
 
 const _LandingPage = () => (
   <>
@@ -32,6 +34,8 @@ const _LandingPage = () => (
             Cryptuoso roadmap
           </div>
           <RoadMap />
+          <Support />
+          <Footer />
         </div>
       </div>
     </div>

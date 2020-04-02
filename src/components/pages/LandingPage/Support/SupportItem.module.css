@@ -37,6 +37,7 @@
   font-size: var(--normal3);
   line-height: var(--big2);
   color: var(--whiteFaded);
+  white-space: pre-line;
 }
 
 .colFooter {
