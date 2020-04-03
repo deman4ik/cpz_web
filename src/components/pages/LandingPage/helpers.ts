@@ -1,4 +1,4 @@
-import { StepProps, TradingStepType } from './types';
+import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from './types';
 
 export const supportContent = () => (
   [
@@ -57,7 +57,7 @@ export const tradingSteps: TradingStepType[] = [
   }
 ];
 
-export const descriptionRobots = [
+export const descriptionRobots: DescriptionRobotsType[] = [
   {
     imgStyle: { width: 52, height: 52 },
     title: 'Automatic',
@@ -77,5 +77,20 @@ export const descriptionRobots = [
     imgStyle: { width: 49, height: 52 },
     title: 'Simple',
     text: 'Just add your exchange account and subscribe to robots for transactions. Complete a few steps and you&apos;re done.'
+  }
+];
+
+export const descriptionFirstLine: DescriptionFirstLineType[] = [
+  {
+    imgStyle: { width: 250, height: 120 },
+    imgSrc: 'signals',
+    title: 'Receive Signals',
+    text: 'Use robot signals as indicators in your trading and make your trades manually. You will be able to view the approximate statistics of your trade with signals in your account.'
+  },
+  {
+    imgStyle: { width: 250, height: 120 },
+    imgSrc: 'robots',
+    title: 'Automatic Trading',
+    text: 'Attach you cryptocurrency exchange account (Binance, Bitfinex, Kraken) to our robots for automatic trading. Robots automatically execute all deals for you, so you only need to keep track of the current positions and your trading performance.'
   }
 ];
