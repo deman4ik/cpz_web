@@ -42,3 +42,27 @@ export const LOCALHOST = 'localhost:3000';
 //export const LOCALHOST = '127.0.0.1:80';
 
 export const POLL_INTERVAL = +process.env.POLL_INTERVAL || 10000;
+
+export const color = {
+  white: '#FFFFFF',
+  black: '#000000',
+  dark: '#242B4A',
+  bg: '#091943',
+  darkBg: '#1f233f',
+  lightBg: '#2C3454',
+  primary: '#0B98C5',
+  secondary: '#5BECAE',
+  accent: '#6987B9',
+  danger: '#FF8B75',
+  warn: '#FFF2BC',
+  positive: '#1CA46B',
+  negative: '#CD3E60',
+  lightRed: '#CC6FA3',
+  lightGreen: '#70e2bc',
+  rgba: {
+    white: 'rgba(255, 255, 255, 0.7)',
+    whiteLight: 'rgba(255, 255, 255, 0.15)',
+    dark: 'rgba(36, 43, 74, 0.7)',
+    primary: 'rgba(105, 135, 185, 0.2)'
+  }
+};

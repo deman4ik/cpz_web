@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import dynamic from 'next/dynamic';
 
-//import { AreaChart } from '../../../charts/AreaChart';
 import { PrimaryButton } from '../../../basic';
 import { moneyFormat, valueWithSign } from '../../../../config/utils';
 import styles from './SignalsListCard.module.css';
