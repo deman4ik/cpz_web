@@ -1,5 +1,4 @@
 import React from 'react';
-//import { View } from 'react-native';
 import { VictoryArea, VictoryContainer } from 'victory';
 
 import styles from './index.module.css';
@@ -10,7 +9,7 @@ interface AreaChartProps {
   positive: boolean;
 }
 
-export const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
+const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
   const randomId = Math.random();
   const arrX = data.map(d => d.x);
   const arrY = data.map(d => d.y);
@@ -86,3 +85,5 @@ export const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) 
     </div>
   );
 };
+
+export default AreaChart;
