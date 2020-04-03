@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { memo } from 'react';
+import React from 'react';
 
-import { AlarmIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon, TelegramIcon } from '../../assets/icons/svg';
+import { AlarmIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from '../../assets/icons/svg';
 import styles from './MainMenu.module.css';
 
 interface Props {
@@ -16,30 +16,20 @@ const components = {
   signals: MultiLineChartIcon,
   notifications: NotificationsIcon,
   profile: AssignmentIcon,
-  help: HelpIcon,
-  telegram: TelegramIcon
 };
 
-const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
-  const styleText = [ styles.mainMenuItemText, active ? styles.menuActive : styles.menuInactive ];
+export const MainMenuItemMobile: React.FC<Props> = ({ item, active, handleOnClick }) => {
   const SpecificIcon = components[item.icon];
 
   const handleOnClickLink = () => {
-    handleOnClick(item.route ? item.route : item.href, !item.route);
+    handleOnClick(item.route, false);
   };
 
   return (
     <div className={styles.mainMenuItemWrapper}>
       <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`} onClick={handleOnClickLink}>
         <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} />
-        <div className={styles.itemLabel}>
-          <div className={styleText.join(' ')}>
-            {item.label}
-          </div>
-        </div>
       </div>
     </div>
   );
 };
-
-export const MainMenuItem = memo(_MainMenuItem);

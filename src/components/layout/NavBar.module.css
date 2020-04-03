@@ -27,3 +27,15 @@
   font-size: var(--small1);
   color: var(--accent);
 }
+
+@media (max-width: 1200px) {
+  .navBar {
+    margin-left: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navBar {
+    margin-left: 0;
+  }
+}

@@ -28,3 +28,12 @@
   z-index: 102;
   width: 100%;
 }
+
+@media (max-width: 1200px) {
+  .mainMenuContainer {
+    width: 56px;
+  }
+  .mainContainer {
+    margin-left: 56px;
+  }
+}
