@@ -17,7 +17,7 @@ export const styles = {
     backgroundColor: 'rgba(44, 52, 84, 0.6)',
     top: '12px',
     left: '12px',
-    zIndex: 1000
+    zIndex: 100
   } as CSSProperties,
   btn: {
     width: '27px',
@@ -29,7 +29,7 @@ export const styles = {
     fontSize: '10px',
     borderRadius: '50%',
     textAlign: 'center',
-    zIndex: 1000,
+    zIndex: 100,
     color: '#B2B5BE',
     cursor: 'pointer',
     background: 'rgba(250, 250, 250, 0.95)',

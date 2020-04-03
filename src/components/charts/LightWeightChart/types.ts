@@ -50,7 +50,7 @@ export interface PropsWrapChart {
   markers?: any[];
   lines?: any[];
   onFetchMore?: (offset: number) => void;
-  size: { height: number; screenWidth: number; isMobile: boolean };
+  height: number;
   type: ChartType;
   legend?: string;
 }

@@ -13,8 +13,6 @@ import { getLegend } from '../../../../config/utils';
 interface Props {
   robot: any;
   signals: any;
-  screenWidth: number;
-  isMobile: boolean;
 }
 const LIMIT = 120;
 const LightWeightChartWithNoSSR = dynamic(
@@ -23,7 +21,7 @@ const LightWeightChartWithNoSSR = dynamic(
     ssr: false }
 );
 
-const _CandleChart: React.FC<Props> = ({ robot, signals, screenWidth, isMobile }) => {
+const _CandleChart: React.FC<Props> = ({ robot, signals }) => {
   const candleName = `candles${robot.timeframe}`;
   const legend = getLegend(robot);
   const { asset } = robot;
@@ -93,7 +91,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, screenWidth, isMobile }
       onFetchMore={onFetchMore}
       markers={formatData.markers}
       lines={signals}
-      size={{ screenWidth, height: 400, isMobile }}
+      height={400}
       legend={legend}
       type={ChartType.candle} />
   );

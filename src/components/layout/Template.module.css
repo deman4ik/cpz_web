@@ -8,10 +8,11 @@
 .mainContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding-top: 56px;
   margin-left: 200px;
   max-width: 1200px;
+  position: relative;
+  z-index: -1;
 }
 
 .mainMenuContainer {
@@ -22,14 +23,8 @@
   width: 200px;
 }
 
-.navBarContainer {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  position: relative;
-}
-
 .wrapFixed {
   position: fixed;
+  z-index: 102;
   width: 100%;
 }

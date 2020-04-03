@@ -24,9 +24,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData }) => {
     <>
       <CandleChart
         robot={robot}
-        signals={formatSignals}
-        isMobile={false}
-        screenWidth={1920} />
+        signals={formatSignals} />
       { loading ? <LoadingIndicator /> : (
         <>
           {/* <div className={styles.container}>
