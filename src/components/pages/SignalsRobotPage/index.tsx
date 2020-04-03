@@ -8,6 +8,8 @@ import { GET_ROBOT_INFO } from '../../../graphql/robots/queries';
 import { SET_ROBOT_DATA } from '../../../graphql/local/mutations';
 import { POLL_INTERVAL } from '../../../config/constants';
 import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
+import { TabsHeaderRobotPage } from './TabsHeaderRobotPage';
+import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { NoRecentData, LoadingIndicator } from '../../common';
 import { formatRobotData } from './helpers';
 
@@ -54,6 +56,13 @@ export const SignalsRobotPage = () => {
             <HeaderRobotsRobotPage
               robotSubscribe={robotSubscribe}
               robotData={robotData} />
+            <TabsHeaderRobotPage
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              isUserSignals={robotData.robot.isUserSignals} />
+            <TabsPagesRobotPage
+              robotData={robotData}
+              activeTab={activeTab} />
           </>
         )
       )}
