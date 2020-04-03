@@ -1,0 +1,15 @@
+.tableHeader {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.tableHeaderText {
+  color: var(--accent);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: var(--small1);
+}

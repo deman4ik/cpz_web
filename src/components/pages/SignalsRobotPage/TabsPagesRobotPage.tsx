@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import { TradingTabRobotPage } from './TradingTabRobotPage';
+import { TradingTabRobotPage } from './TradingTabRobotPage';
 // import { PerformanceTabRobotPage } from '../../ui/PerformanceTab';
 import { TabType } from '../../../config/types';
 
@@ -12,10 +12,8 @@ interface Props {
 export const TabsPagesRobotPage: React.FC<Props> = ({ robotData, activeTab }) => (
   <>
     {activeTab === TabType.trading && (
-      <div />
-      // <TradingTabRobotPage
-      //   dimension={dimension}
-      //   robotData={robotData} />
+      <TradingTabRobotPage
+        robotData={robotData} />
     )}
     {/* {activeTab === TabType.publicStatistic && (
       <PerformanceTabRobotPage
