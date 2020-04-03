@@ -21,8 +21,7 @@ const DinamicImage: React.FC = () => {
             color: { value: primary },
             line_linked: { color: primary }
           }
-        }}
-        />
+        }} />
     </div>
   );
 };
