@@ -10,8 +10,9 @@ interface Props {
 const _NavBar: React.FC<Props> = ({ title, subTitle }) => {
   return (
     <div className={styles.navBar}>
-      <div className={styles.navBarTitleGroup}>
-        <div className={styles.navBarTitle}>{title}</div>
+      <div className={styles.titleGroup}>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.subTitle}>{subTitle}</div>
       </div>
     </div>
   );

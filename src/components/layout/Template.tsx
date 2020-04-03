@@ -16,14 +16,15 @@ export const Template: React.FC<Props> = ({ title, subTitle, children, page }) =
       title={`${title}${subTitle ? `: ${subTitle}` : ''}`} />
     <div className={styles.mainMenuContainer}>
       <MainMenu activeTab={page} />
-      <div className={styles.navBarContainer}>
+      <div className={styles.navBarContainer} />
+      <div className={styles.wrapFixed}>
         <NavBar
           title={title}
           subTitle={subTitle} />
-        <div className={styles.mainContainer}>
-          {children}
-        </div>
       </div>
+    </div>
+    <div className={styles.mainContainer}>
+      {children}
     </div>
   </div>
 );

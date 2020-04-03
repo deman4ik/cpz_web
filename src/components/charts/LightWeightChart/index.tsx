@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react';
-//import { View } from 'react-native';
 
 import { _LightWeightChart } from './LightWeightChart';
 import styles from './index.module.css';

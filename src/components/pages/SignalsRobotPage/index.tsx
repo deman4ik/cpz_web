@@ -49,6 +49,7 @@ export const SignalsRobotPage = () => {
     <Template
       page={PageType.signals}
       title='Signals'
+      subTitle={robotData ? robotData.robot.name : ''}
     >
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
