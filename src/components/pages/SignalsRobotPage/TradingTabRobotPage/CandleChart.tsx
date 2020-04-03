@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, memo } from 'react';
 import { useQuery, useMutation, useSubscription } from '@apollo/react-hooks';
+import dynamic from 'next/dynamic';
 
-import { LightWeightChart } from '../../../charts/LightWeightChart';
 import { ChartType } from '../../../charts/LightWeightChart/types';
 import { ROBOT_POSITION_WITH_CANDLE } from '../../../../graphql/robots/queries';
 import { ROBOT_POSITION_WITH_CANDLE_SUB } from '../../../../graphql/robots/subscribtions';
 import { SET_CHART_DATA } from '../../../../graphql/local/mutations';
 import { getFormatData, getFormatUpdateData } from '../helpers';
-import { getLegend } from '../../../../services/Utils';
+import { getLegend } from '../../../../config/utils';
 
 interface Props {
   robot: any;
@@ -16,6 +17,12 @@ interface Props {
   isMobile: boolean;
 }
 const LIMIT = 120;
+const LightWeightChartWithNoSSR = dynamic(
+  () => import('../../../charts/LightWeightChart'),
+  { loading: () => <div />,
+    ssr: false }
+);
+
 const _CandleChart: React.FC<Props> = ({ robot, signals, screenWidth, isMobile }) => {
   const candleName = `candles${robot.timeframe}`;
   const legend = getLegend(robot);
@@ -61,7 +68,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, screenWidth, isMobile }
     if (!loading && data) {
       setFormatData(getFormatData(data, asset));
     }
-  }, [ loading, data ]);
+  }, [ loading, data, asset ]);
 
   useEffect(() => {
     if (data && dataUpdate && dataUpdate.candles.length) {
@@ -73,14 +80,14 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, screenWidth, isMobile }
         setLimit(limit + 1);
       }
     }
-  }, [ dataUpdate ]);
+  }, [ dataUpdate, asset ]);
 
   useEffect(() => {
     setChartData({ variables: { limit, robotId: robot.id, timeframe: robot.timeframe } });
   }, [ limit ]);
 
   return (
-    <LightWeightChart
+    <LightWeightChartWithNoSSR
       loading={loading}
       data={formatData.candles}
       onFetchMore={onFetchMore}

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-//import { CandleChart } from './CandleChart';
+import { CandleChart } from './CandleChart';
 import { LoadingIndicator } from '../../../common';
 import { floatPositions } from '../helpers';
 import { useFecthPositionData } from './useFetchPositionData';
@@ -22,11 +22,11 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData }) => {
 
   return (
     <>
-      {/* <CandleChart
+      <CandleChart
         robot={robot}
         signals={formatSignals}
-        isMobile={isMobile}
-        screenWidth={screenWidth} /> */}
+        isMobile={false}
+        screenWidth={1920} />
       { loading ? <LoadingIndicator /> : (
         <>
           {/* <div className={styles.container}>

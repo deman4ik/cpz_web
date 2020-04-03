@@ -1,4 +1,5 @@
 import dayjs from '../libs/dayjs';
+import { timeFrameFormat } from './constants';
 
 export const moneyFormat = (value: number, toFixed = 2): string => (
   !value ? '0' : value.toFixed(toFixed).toString()
@@ -17,3 +18,12 @@ export const formatDate = (date: string, addUTC = true): string => {
   if (res === 'Invalid date') return '';
   return addUTC ? `${res} UTC` : res;
 };
+
+export const exchangeName = (code: string) => (
+  code ? code.split('_').map(word => capitalize(word)).join(' ') : code
+);
+
+export const getLegend = (robot) =>
+  `${exchangeName(robot.exchange)} ${robot.asset}/${robot.currency} ${timeFrameFormat[robot.timeframe].abbr}`;
+
+export const roundFormat = (value: number): number => Math.round(value * 100) / 100;
