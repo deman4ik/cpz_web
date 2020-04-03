@@ -52,9 +52,9 @@ a {
 }
 
 .negative {
-  color: var(--danger);
+  color: var(--negative);
 }
 
 .positive {
-  color: var(--secondary);
+  color: var(--positive);
 }

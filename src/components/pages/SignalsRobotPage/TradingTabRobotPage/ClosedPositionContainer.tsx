@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import { HeaderTradingTabRobotPage } from './HeaderTradingTabRobotPage';
-// import { ClosedPositionsRobotPageItem } from './ClosedPositionsRobotPageItem';
+import { ClosedPositionsRobotPageItem } from './ClosedPositionsRobotPageItem';
 // import { ClosedPositionsRobotPageItemCard } from './ClosedPositionsRobotPageItemCard';
 import { SectionType } from '../types';
 // import { common } from '../../../../styles';
@@ -39,9 +39,9 @@ const _ClosedPositionContainer: React.FC<Props> =
           ) : ( */}
             <>
               <HeaderTradingTabRobotPage />
-              {/* { data.map(item => (
+              { data.map(item => (
                 <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
-              )) } */}
+              )) }
             </>
           {/* )} */}
           { (data.length < quantyRecords) && (

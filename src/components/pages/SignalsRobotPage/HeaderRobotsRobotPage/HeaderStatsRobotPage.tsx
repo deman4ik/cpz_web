@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import { moneyFormat } from '../../../../config/utils';
 import { subscribeAt, activeDays, getProfit, getVolume } from '../helpers';
+import { color } from '../../../../config/constants';
 import styles from './HeaderStatsRobotPage.module.css';
 
 interface Props {
@@ -17,10 +18,10 @@ const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
           <div className={styles.robotStatsLabel}>
             Profit&nbsp;
           </div>
-          <div className={[
-            styles.robotStatsValue,
-            getProfit(robotData, isUserSignals) > 0 ? 'positive' : 'negative'
-          ].join(' ')}>
+          <div
+            className={styles.robotStatsValue}
+            style={{ color: getProfit(robotData, isUserSignals) > 0 ? color.positive : color.negative }}
+          >
             {`${moneyFormat(getProfit(robotData, isUserSignals))} $`}
           </div>
         </div>
