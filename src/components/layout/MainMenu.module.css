@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
 }
 
 .menuContainer {
@@ -82,6 +83,9 @@
   .bigLogo {
     width: 30px;
     height: 29px;
+  }
+  .mainMenu {
+    width: 56px;
   }
 }
 
