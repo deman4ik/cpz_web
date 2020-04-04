@@ -1,7 +1,7 @@
 import React from 'react';
 import Particles from 'react-particles-js';
 
-import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../../../hooks/useWindowDimensions';
 import styles from './index.module.css';
 
 const primary = '#0B98C5';

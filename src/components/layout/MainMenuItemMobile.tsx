@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
-import { AlarmIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from '../../assets/icons/svg';
+import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from '../../assets/icons/svg';
 import styles from './MainMenu.module.css';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const components = {
-  robot: AlarmIcon,
+  robot: RobotIcon,
   signals: MultiLineChartIcon,
   notifications: NotificationsIcon,
   profile: AssignmentIcon,

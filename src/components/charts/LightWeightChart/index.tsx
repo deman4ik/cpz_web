@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 
-import useWindowDimensions from '../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { _LightWeightChart } from './LightWeightChart';
 import styles from './index.module.css';
 import { PropsWrapChart } from './types';

@@ -1,0 +1,56 @@
+.itemContainer {
+  display: flex;
+  background-color: var(--dark);
+  margin-bottom: 2px;
+  padding: 10px 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cellName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 0.55
+}
+
+.cellPerformance {
+  display: flex;
+  flex-direction: column;
+  flex: 0.6;
+  padding-left: 40px;
+  padding-right: 30px;
+}
+.cellStatistics {
+  display: flex;
+  flex-direction: column;
+  flex: 0.47;
+}
+.cellStatus {
+  display: flex;
+  flex-direction: column;
+  flex: 0.45;
+  align-items: flex-start;
+}
+.cellAction {
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+}
+.primaryText {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 16px
+}
+.secondaryText {
+  display: flex;
+  flex-direction: column;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.profitText {
+  font-size: 16px;
+}
