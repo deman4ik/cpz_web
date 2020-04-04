@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ButtonType } from './types';
-import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon } from '../../../assets/icons/svg';
+import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ArrowDownIcon } from '../../../assets/icons/svg';
 
 export interface HoverChangesProps {
   type?: ButtonType;
@@ -15,6 +15,7 @@ interface Props {
   type?: string;
   style?: object;
   isUppercase?: boolean;
+  isLoading?: boolean;
   size?: string;
   width?: number;
   disabled?: boolean;
@@ -26,10 +27,11 @@ const components = {
   check: CheckIcon,
   plus: PlusIcon,
   settings: SettingsIcon,
-  chevronright: ChevronRightIcon
+  chevronright: ChevronRightIcon,
+  arrowdown: ArrowDownIcon
 };
 
-export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, onClick, width }) => {
+export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, isLoading, onClick, width }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];

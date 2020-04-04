@@ -1,0 +1,12 @@
+.btnPosition {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+
+@media (max-width: 1200px) {
+  .btnPosition {
+    margin-top: 10px;
+  }
+}

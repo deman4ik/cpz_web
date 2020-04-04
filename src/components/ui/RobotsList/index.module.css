@@ -5,6 +5,7 @@
   border-radius: 4px;
   min-height: 300px;
   padding-top: 10px;
+  align-items: center;
 }
 
 .containerCart {

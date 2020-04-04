@@ -1,33 +1,29 @@
-import React, { PropsWithChildren } from 'react';
-import { View } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
 import { Button } from '../../basic/Button';
-import { responsive } from './RobotsListLoadMore.style';
+import styles from './RobotsListLoadMore.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   onFetchMore: () => void;
   isLoadingMore: boolean;
   renderLoadMoreButton: boolean;
-  isDesktopView: boolean;
 }
 
-export const _RobotsListLoadMore: React.FC<Props> = ({ t, renderLoadMoreButton, isLoadingMore, isDesktopView, onFetchMore }) => (
+export const _RobotsListLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
   <>
     {renderLoadMoreButton && (
-      <View style={responsive.btnPosition(isDesktopView)}>
+      <div className={styles.btnPosition}>
         <Button
           width={146}
-          title={t('loadMore')}
+          title='loadMore'
           type='dimmed'
-          icon='arrow-down'
+          icon='arrowdown'
           isUppercase
           isLoading={isLoadingMore}
-          onPress={onFetchMore}
-        />
-      </View>
+          onClick={onFetchMore} />
+      </div>
     )}
   </>
 );
 
-export const RobotsListLoadMore = withTranslation()(_RobotsListLoadMore);
+export const RobotsListLoadMore = memo(_RobotsListLoadMore);

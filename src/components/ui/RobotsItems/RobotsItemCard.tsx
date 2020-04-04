@@ -5,8 +5,7 @@ import dynamic from 'next/dynamic';
 
 import { moneyFormat, colorAction } from '../../../config/utils';
 import { SignalItem } from '../RobotsList/types';
-import { RobotsButtonItemCard } from './RobotsButtonItemCard';
-import { RobotItemStatusBlock } from './RobotItemStatusBlock';
+import { RobotsButtonItemCard, RobotItemStatusBlock } from '.';
 import { formatVariables } from './helpers';
 import { Button } from '../../basic';
 import styles from './RobotsItemCard.module.css';

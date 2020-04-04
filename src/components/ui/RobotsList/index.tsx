@@ -7,9 +7,9 @@ import { MODAL_VISIBLE } from '../../../graphql/local/queries';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { useShowDimension } from '../../../hooks/useShowDimension';
 import { RobotsHeader, RobotsItem, RobotsItemCard } from '../RobotsItems';
-// import { useDummyCarts } from '../../../hooks/useDummyCarts';
-// import { DummyCards } from '../Common/DummyCards';
-//import { RobotsListLoadMore } from './RobotsListLoadMore';
+import { useDummyCarts } from '../../../hooks/useDummyCarts';
+import { DummyCards } from '../../common/DummyCards';
+import { RobotsListLoadMore } from './RobotsListLoadMore';
 import styles from './index.module.css';
 //import { Dimension } from '../../../config/types';
 
@@ -25,11 +25,9 @@ interface Props {
 const cartWidth = 408;
 const SHOW_LIMIT = 12;
 export const RobotsList: React.FC<Props> = props => {
-  //const { screenType, screenWidth } = props.dimension;
-  //const { dummyCards } = useDummyCarts(screenWidth, cartWidth, props.data.length);
+  const { dummyCards } = useDummyCarts(props.width, cartWidth, props.data.length);
   const renderLoadMoreButton = (props.data.length >= SHOW_LIMIT) && props.data.length < props.counts;
   const { showDimension: isDesktopView } = useShowDimension(props.width, SCREEN_TYPE.WIDE);
-  //const isDesktopView = screenWidth > 1280;
   const handleRedirectToDetailView = (code: string) => {
     Router.push(`/${props.displayType}/robot/${code}`);
   };
@@ -44,15 +42,6 @@ export const RobotsList: React.FC<Props> = props => {
 
   return (
     <div className={styles.container}>
-      {/* <RobotsHeader />
-      { props.data.map((item) => (
-        <RobotsItem
-          key={item.id}
-          item={item}
-          robotSubscribe={robotSubscribe}
-          displayType={props.displayType}
-          onRedirectToDetailView={handleRedirectToDetailView} />
-      ))} */}
       {isDesktopView ? (
         <>
           <RobotsHeader />
@@ -75,19 +64,13 @@ export const RobotsList: React.FC<Props> = props => {
               displayType={props.displayType}
               onRedirectToDetailView={handleRedirectToDetailView} />
           ))}
-          {/* {DummyCards(dummyCards, cartWidth)} */}
+          {DummyCards(dummyCards, cartWidth)}
         </div>
       )}
-      {/*
       <RobotsListLoadMore
         renderLoadMoreButton={renderLoadMoreButton}
         isLoadingMore={props.isLoadingMore}
-        isDesktopView={isDesktopView}
-        onFetchMore={props.onFetchMore} /> */}
+        onFetchMore={props.onFetchMore} />
     </div>
   );
 };
-
-// RobotsList.defaultProps = {
-//   data: [],
-// } as Partial<Props>;
