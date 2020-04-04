@@ -7,8 +7,9 @@ import { moneyFormat, colorAction } from '../../../config/utils';
 import { SignalItem } from '../RobotsList/types';
 //import { vars } from '../../../styles';
 import { formatVariables } from './helpers';
+import { ChevronRightIcon } from '../../../assets/icons/svg';
 // import { RobotsButtonItem } from './RobotsButtonItem';
-// import { RobotItemStatusBlock } from './RobotItemStatusBlock';
+import { RobotItemStatusBlock } from './RobotItemStatusBlock';
 import styles from './RobotsItem.module.css';
 
 interface Props {
@@ -54,7 +55,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
             </div>
           </div>
         </div>
-        {/* <IconButton icon='chevron-right' color={vars.color.white} className={{ width: 15, height: 15 }} size={26} /> */}
+        <ChevronRightIcon color='white' size={26} />
       </div>
       <div className={styles.cellPerformance}>
         { (item.performance && item.performance.length) ? (
@@ -95,9 +96,9 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
           </>
         ) : null }
       </div>
-      {/* <div className={styles.cellStatus}>
+      <div className={styles.cellStatus}>
         <RobotItemStatusBlock item={item} displayType={displayType} />
-      </div> */}
+      </div>
       {/* <RobotsButtonItem
         isSubscribed={item.isSubscribed}
         robotStatus={item.user_robots.status}
