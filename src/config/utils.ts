@@ -1,5 +1,5 @@
 import dayjs from '../libs/dayjs';
-import { timeFrameFormat } from './constants';
+import { timeFrameFormat, color } from './constants';
 
 export const moneyFormat = (value: number, toFixed = 2): string => (
   !value ? '0' : value.toFixed(toFixed).toString()
@@ -27,3 +27,5 @@ export const getLegend = (robot) =>
   `${exchangeName(robot.exchange)} ${robot.asset}/${robot.currency} ${timeFrameFormat[robot.timeframe].abbr}`;
 
 export const roundFormat = (value: number): number => Math.round(value * 100) / 100;
+
+export const colorAction = (check: boolean): object => ({ color: check ? color.positive : color.negative });

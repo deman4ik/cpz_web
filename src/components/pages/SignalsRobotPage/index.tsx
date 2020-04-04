@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 //localhost:3000/signals/robot/CHAN_1_Kraken_BTC_USD_5m
 import { Template } from '../../layout/Template';
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { PageType, TabType } from '../../../config/types';
 import { GET_ROBOT_INFO } from '../../../graphql/robots/queries';
 import { SET_ROBOT_DATA } from '../../../graphql/local/mutations';
@@ -14,6 +15,7 @@ import { NoRecentData, LoadingIndicator } from '../../common';
 import { formatRobotData } from './helpers';
 
 export const SignalsRobotPage = () => {
+  const { width } = useWindowDimensions();
   const [ activeTab, setActiveTab ] = useState<TabType>(TabType.trading);
   const [ visibleModal, setVisibleModal ] = useState({ isVisible: false, type: '' });
   //const { dimension } = useDimensionWidth();
@@ -50,6 +52,7 @@ export const SignalsRobotPage = () => {
       page={PageType.signals}
       title='Signals'
       subTitle={robotData ? robotData.robot.name : ''}
+      width={width}
     >
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
