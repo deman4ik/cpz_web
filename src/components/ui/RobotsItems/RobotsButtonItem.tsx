@@ -39,7 +39,7 @@ export const RobotsButtonItem: React.FC<Props> =
           title: hoverTitle(robotStatus),
           icon: hoverIcon(robotStatus)
         } : null}
-        onPress={subscribeToggle}
+        onClick={subscribeToggle}
       />
       { canDisplayEdit() && (
       <Button
@@ -50,7 +50,7 @@ export const RobotsButtonItem: React.FC<Props> =
         isUppercase
         width={120}
         style={{ marginTop: 6 }}
-        onPress={handleOnPressChangeVolume} />
+        onClick={handleOnPressChangeVolume} />
       )}
       { canDisplayDelete() && (
       <Button
@@ -61,7 +61,7 @@ export const RobotsButtonItem: React.FC<Props> =
         isUppercase
         width={120}
         style={{ marginTop: 6 }}
-        onPress={handleOnPressDelete} />
+        onClick={handleOnPressDelete} />
       )}
     </div>
   );

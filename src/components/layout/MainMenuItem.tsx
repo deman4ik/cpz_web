@@ -31,7 +31,7 @@ const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
   return (
     <div className={styles.mainMenuItemWrapper}>
       <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`} onClick={handleOnClickLink}>
-        <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} />
+        <SpecificIcon color={active ? 'white' : 'rgba(255, 255, 255, 0.68)'} />
         <div className={styles.itemLabel}>
           <div className={styleText.join(' ')}>
             {item.label}

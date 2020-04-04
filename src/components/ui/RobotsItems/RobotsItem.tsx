@@ -5,11 +5,9 @@ import dynamic from 'next/dynamic';
 
 import { moneyFormat, colorAction } from '../../../config/utils';
 import { SignalItem } from '../RobotsList/types';
-//import { vars } from '../../../styles';
 import { formatVariables } from './helpers';
 import { ChevronRightIcon } from '../../../assets/icons/svg';
-// import { RobotsButtonItem } from './RobotsButtonItem';
-import { RobotItemStatusBlock } from './RobotItemStatusBlock';
+import { RobotItemStatusBlock, RobotsButtonItem } from '.';
 import styles from './RobotsItem.module.css';
 
 interface Props {
@@ -76,7 +74,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
                 {`${item.winRate} %`}
               </div>
             </div>
-            <div className={styles.statisticsElement} style={{ marginTop: 6, flexWrap: 'wrap' }}>
+            <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
               <div
                 className={styles.secondaryText}>
                 Max Drawdown&nbsp;
@@ -85,7 +83,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
                 {`${moneyFormat(item.maxDrawdown)} $`}
               </div>
             </div>
-            <div className={styles.statisticsElement} style={{ flexDirection: 'row', marginTop: 6 }}>
+            <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
               <div className={styles.secondaryText}>
                 Trades Count&nbsp;
               </div>
@@ -99,13 +97,13 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
       <div className={styles.cellStatus}>
         <RobotItemStatusBlock item={item} displayType={displayType} />
       </div>
-      {/* <RobotsButtonItem
+      <RobotsButtonItem
         isSubscribed={item.isSubscribed}
         robotStatus={item.user_robots.status}
         displayType={displayType}
         subscribeToggle={subscribeToggle}
         handleOnPressDelete={handleOnPressDelete}
-        handleOnPressChangeVolume={handleOnPressChangeVolume} /> */}
+        handleOnPressChangeVolume={handleOnPressChangeVolume} />
     </div>
   );
 };
