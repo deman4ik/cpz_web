@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ButtonType } from './types';
-import { CheckIcon, PlusIcon, SettingsIcon } from '../../../assets/icons/svg';
+import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon } from '../../../assets/icons/svg';
 
 export interface HoverChangesProps {
   type?: ButtonType;
@@ -10,29 +10,31 @@ export interface HoverChangesProps {
 }
 
 interface Props {
-  title: string;
+  title?: string;
   icon?: string;
-  type: string;
+  type?: string;
   style?: object;
   isUppercase?: boolean;
   size?: string;
-  width: number;
+  width?: number;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   hoverChanges?: HoverChangesProps;
 }
 
 const components = {
   check: CheckIcon,
   plus: PlusIcon,
-  settings: SettingsIcon
+  settings: SettingsIcon,
+  chevronright: ChevronRightIcon
 };
 
 export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, onClick, width }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
-    const composeClass = [ 'btn', type ];
+    const composeClass = [ 'btn' ];
     if (isUppercase) composeClass.push('uppercase');
+    if (type) composeClass.push(type);
     return composeClass;
   };
 
@@ -67,7 +69,7 @@ export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase,
         .btn {
           display: flex;
           cursor: pointer;
-          width: ${width}px;
+          width: ${width ? `${width}px` : 'min-content'};
           height: 26px;
           padding-left: 10px;
           padding-right: 10px;
@@ -76,6 +78,10 @@ export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase,
           overflow: hidden;
           border-radius: 4px;
           position: relative;
+          opacity: 1;
+        }
+        .btn:active {
+          opacity: 0.2;
         }
         .btn.uppercase {
           text-transform: uppercase;

@@ -6,3 +6,10 @@
   min-height: 300px;
   padding-top: 10px;
 }
+
+.containerCart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}

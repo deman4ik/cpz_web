@@ -17,7 +17,6 @@ export const SignalsSearchPage: React.FC = () => {
   const handlePressBack = () => {
     Router.back();
   };
-
   return (
     <Template
       page={PageType.signals}

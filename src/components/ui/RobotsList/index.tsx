@@ -6,9 +6,7 @@ import { SET_MODAL_STATE } from '../../../graphql/local/mutations';
 import { MODAL_VISIBLE } from '../../../graphql/local/queries';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { useShowDimension } from '../../../hooks/useShowDimension';
-import { RobotsItem } from '../RobotsItems/RobotsItem';
-// import { RobotsItemCard } from '../RobotsItems/RobotsItemCard';
-import { RobotsHeader } from '../RobotsItems/RobotsHeader';
+import { RobotsHeader, RobotsItem, RobotsItemCard } from '../RobotsItems';
 // import { useDummyCarts } from '../../../hooks/useDummyCarts';
 // import { DummyCards } from '../Common/DummyCards';
 //import { RobotsListLoadMore } from './RobotsListLoadMore';
@@ -46,7 +44,7 @@ export const RobotsList: React.FC<Props> = props => {
 
   return (
     <div className={styles.container}>
-      <RobotsHeader />
+      {/* <RobotsHeader />
       { props.data.map((item) => (
         <RobotsItem
           key={item.id}
@@ -54,8 +52,8 @@ export const RobotsList: React.FC<Props> = props => {
           robotSubscribe={robotSubscribe}
           displayType={props.displayType}
           onRedirectToDetailView={handleRedirectToDetailView} />
-      ))}
-      {/* {isDesktopView ? (
+      ))} */}
+      {isDesktopView ? (
         <>
           <RobotsHeader />
           { props.data.map((item) => (
@@ -68,20 +66,19 @@ export const RobotsList: React.FC<Props> = props => {
           ))}
         </>
       ) : (
-        <View style={styles.containerCart}>
+        <div className={styles.containerCart}>
           { props.data.map((item) => (
             <RobotsItemCard
               key={item.id}
               item={item}
-              screenType={screenType}
-              screenWidth={screenWidth}
               robotSubscribe={robotSubscribe}
               displayType={props.displayType}
               onRedirectToDetailView={handleRedirectToDetailView} />
           ))}
-          {DummyCards(dummyCards, cartWidth)}
-        </View>
+          {/* {DummyCards(dummyCards, cartWidth)} */}
+        </div>
       )}
+      {/*
       <RobotsListLoadMore
         renderLoadMoreButton={renderLoadMoreButton}
         isLoadingMore={props.isLoadingMore}

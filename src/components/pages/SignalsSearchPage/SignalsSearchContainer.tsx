@@ -21,7 +21,6 @@ export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width
   //const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
   const { robotsData, counts, loading, loading_aggregate, isLoadingMore, onFetchMore } =
     useFetchRobots(displayType, searchText, formatRobotsData);
-
   return (
     <>
       { loading || loading_aggregate ? <LoadingIndicator />

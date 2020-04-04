@@ -63,7 +63,7 @@ export const RobotIcon: React.FC<Props> = ({ color, size = 24 }) => (
   </svg>
 );
 
-export const ChevronRightIcon: React.FC<Props> = ({ color, size = 24 }) => (
+export const ChevronRightIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
   <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
     <path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' />
   </svg>
