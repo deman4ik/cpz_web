@@ -7,21 +7,21 @@ interface Props {
   title: string;
   isActive: boolean;
   handleOnClick: () => void;
-  textStyle?: string;
-  objectStyle? : string;
+  textClassName?: string;
+  objectClassName? : string;
 }
 
-export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, textStyle, objectStyle }) => {
+export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, textClassName, objectClassName }) => {
   const getBtnStyle = () => {
     const btn = [ styles.btn ];
     if (isActive) btn.push(styles.isActive);
-    if (objectStyle) btn.push(objectStyle);
+    if (objectClassName) btn.push(objectClassName);
     return btn;
   };
 
   const getBtnTextStyle = () => {
     const btnText = [ styles.btnText, isActive ? styles.isActive : styles.btnTextColor ];
-    if (objectStyle) btnText.push(textStyle);
+    if (textClassName) btnText.push(textClassName);
     return btnText;
   };
 

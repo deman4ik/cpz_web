@@ -20,6 +20,7 @@ interface Props {
   width?: number;
   disabled?: boolean;
   onClick?: () => void;
+  className?: string;
   hoverChanges?: HoverChangesProps;
 }
 
@@ -31,10 +32,11 @@ const components = {
   arrowdown: ArrowDownIcon
 };
 
-export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, isLoading, onClick, width }) => {
+export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, isLoading, onClick, width, className }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
+    if (className) composeClass.push(className);
     if (isUppercase) composeClass.push('uppercase');
     if (type) composeClass.push(type);
     return composeClass;

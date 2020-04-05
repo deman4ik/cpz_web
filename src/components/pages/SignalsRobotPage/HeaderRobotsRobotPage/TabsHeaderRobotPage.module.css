@@ -9,6 +9,9 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transform: translateZ(0px);
 }
 
 .objectStyle {
@@ -16,8 +19,15 @@
   margin-right: 5px;
 }
 
+.textClassName {
+  font-size: var(--normal3);
+}
+
 @media (max-width: 480px) {
-  .tabsBtns {
-    justify-content: flex-start;
+  .objectStyle {
+    margin-bottom: 5px;
+  }
+  .textClassName {
+    font-size: var(--normal1);
   }
 }

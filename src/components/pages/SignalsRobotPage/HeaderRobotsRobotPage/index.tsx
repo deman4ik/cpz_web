@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 
 //import { ScreenTypeProps } from '../../../services/Screen';
-// import { HeaderButtonRobotPage } from './HeaderButtonRobotPage';
+import { HeaderButtonRobotPage } from './HeaderButtonRobotPage';
 import { HeaderStatsRobotPage } from './HeaderStatsRobotPage';
 // import { TooltipButton } from '../../ui/Tooltip/TooltipButton';
 // import { TooltipText } from '../../ui/Tooltip/TooltipText';
@@ -41,10 +41,9 @@ const _HeaderRobotsRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) 
                   isDescriptionExpanded={isDescriptionExpanded} />
               </div> */}
             </div>
-            {/* <HeaderButtonRobotPage
+            <HeaderButtonRobotPage
               robotSubscribe={robotSubscribe}
-              screenType={screenType}
-              robotData={robotData} /> */}
+              robotData={robotData} />
           </div>
         </div>
         <HeaderStatsRobotPage robotData={robotData} />

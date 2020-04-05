@@ -205,3 +205,9 @@ export const createVariable = (robotData, type) => {
     }
   });
 };
+
+export const tabNames = {
+  trading: 'Trading',
+  myStatistic: 'My Performance',
+  publicStatistic: 'Public Performance'
+};

@@ -34,7 +34,7 @@
 }
 
 @media (max-width: 768px) {
-  .container {
+  .header {
     flex-direction: column;
     min-height: 40px;
     margin-top: 20px;
