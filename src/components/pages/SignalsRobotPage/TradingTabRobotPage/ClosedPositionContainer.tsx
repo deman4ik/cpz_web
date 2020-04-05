@@ -6,7 +6,6 @@ import { useShowDimension } from '../../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../../config/constants';
 import { ClosedPositionsRobotPageItemCard } from './ClosedPositionsRobotPageItemCard';
 import { SectionType } from '../types';
-// import { common } from '../../../../styles';
 import styles from './ClosedPositionContainer.module.css';
 // import { Button } from '../../../basic';
 import { NoRecentData } from '../../../common';
