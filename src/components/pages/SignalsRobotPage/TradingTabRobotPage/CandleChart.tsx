@@ -4,6 +4,7 @@ import { useQuery, useMutation, useSubscription } from '@apollo/react-hooks';
 import dynamic from 'next/dynamic';
 
 import { ChartType } from '../../../charts/LightWeightChart/types';
+import { LoadingIndicator } from '../../../common';
 import { ROBOT_POSITION_WITH_CANDLE } from '../../../../graphql/robots/queries';
 import { ROBOT_POSITION_WITH_CANDLE_SUB } from '../../../../graphql/robots/subscribtions';
 import { SET_CHART_DATA } from '../../../../graphql/local/mutations';
@@ -18,7 +19,7 @@ interface Props {
 const LIMIT = 120;
 const LightWeightChartWithNoSSR = dynamic(
   () => import('../../../charts/LightWeightChart'),
-  { loading: () => <div />,
+  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
     ssr: false }
 );
 
