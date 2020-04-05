@@ -37,7 +37,7 @@ export const renderAction = action => {
         { actionUp ? 'BUY' : 'SELL'}
       </div>
       <div style={{ marginLeft: 0, marginTop: 1 }}>
-        <SpecificIcon color={getColor(actionUp)} size={16} />
+        <SpecificIcon color={getColor(!actionUp)} size={16} />
       </div>
     </div>
   );

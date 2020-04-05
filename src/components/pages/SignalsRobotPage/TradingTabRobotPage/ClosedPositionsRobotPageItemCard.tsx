@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SectionType } from '../types';
-import { formatDate, valueWithSign, colorAction, capitalize, moneyFormat } from '../../../../config/utils';
+import { formatDate, valueWithSign, colorAction, capitalize, moneyFormat, splitCapitaize } from '../../../../config/utils';
 import { renderAction, renderVolume } from './ComposedItems';
 import styles from './ClosedPositionsRobotPageItemCard.module.css';
 
@@ -23,7 +23,7 @@ export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot,
           </div>
           <div className={styles.mobileCardTextValue}>
             <div style={colorAction([ 'long', 'closeShort' ].includes(item.direction || item.action))}>
-              {item.direction || item.action}
+              {splitCapitaize(item.direction || item.action)}
             </div>
             {'\n'}
             <div className={styles.mobileCardTextKey}>

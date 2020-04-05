@@ -9,7 +9,7 @@ import { useShowDimension } from '../../../hooks/useShowDimension';
 import { RobotsHeader, RobotsItem, RobotsItemCard } from '../RobotsItems';
 import { useDummyCarts } from '../../../hooks/useDummyCarts';
 import { DummyCards } from '../../common/DummyCards';
-import { RobotsListLoadMore } from './RobotsListLoadMore';
+import { RobotsLoadMore } from '../RobotsLoadMore';
 import styles from './index.module.css';
 //import { Dimension } from '../../../config/types';
 
@@ -41,36 +41,39 @@ export const RobotsList: React.FC<Props> = props => {
   };
 
   return (
-    <div className={styles.container}>
-      {isDesktopView ? (
-        <>
-          <RobotsHeader />
-          { props.data.map((item) => (
-            <RobotsItem
-              key={item.id}
-              item={item}
-              robotSubscribe={robotSubscribe}
-              displayType={props.displayType}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          ))}
-        </>
-      ) : (
-        <div className={styles.containerCart}>
-          { props.data.map((item) => (
-            <RobotsItemCard
-              key={item.id}
-              item={item}
-              robotSubscribe={robotSubscribe}
-              displayType={props.displayType}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          ))}
-          {DummyCards(dummyCards, cartWidth)}
-        </div>
-      )}
-      <RobotsListLoadMore
+    <>
+      <div className={styles.container}>
+        {isDesktopView ? (
+          <div className={styles.box}>
+            <RobotsHeader />
+            { props.data.map((item, idx) => (
+              <RobotsItem
+                key={item.id}
+                item={item}
+                robotSubscribe={robotSubscribe}
+                displayType={props.displayType}
+                lastItem={idx === (props.data.length - 1)}
+                onRedirectToDetailView={handleRedirectToDetailView} />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.containerCart}>
+            { props.data.map((item) => (
+              <RobotsItemCard
+                key={item.id}
+                item={item}
+                robotSubscribe={robotSubscribe}
+                displayType={props.displayType}
+                onRedirectToDetailView={handleRedirectToDetailView} />
+            ))}
+            {DummyCards(dummyCards, cartWidth)}
+          </div>
+        )}
+      </div>
+      <RobotsLoadMore
         renderLoadMoreButton={renderLoadMoreButton}
         isLoadingMore={props.isLoadingMore}
         onFetchMore={props.onFetchMore} />
-    </div>
+    </>
   );
 };

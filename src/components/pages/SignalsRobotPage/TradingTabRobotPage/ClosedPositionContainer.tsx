@@ -7,7 +7,7 @@ import { SCREEN_TYPE } from '../../../../config/constants';
 import { ClosedPositionsRobotPageItemCard } from './ClosedPositionsRobotPageItemCard';
 import { SectionType } from '../types';
 import styles from './ClosedPositionContainer.module.css';
-// import { Button } from '../../../basic';
+import { RobotsLoadMore } from '../../../ui/RobotsLoadMore';
 import { NoRecentData } from '../../../common';
 
 interface Props {
@@ -48,24 +48,15 @@ const _ClosedPositionContainer: React.FC<Props> =
                 ))}
               </div>
             )}
-            { (data.length < quantyRecords) && (
-            <div />
-            // <View style={styles.loadMore}>
-            //   <Button
-            //     width={146}
-            //     title={t('Load More')}
-            //     type='dimmed'
-            //     icon='arrow-down'
-            //     isUppercase
-            //     isLoading={isLoadingMore}
-            //     onPress={handleLoadMore} />
-            // </View>
-            )}
           </>
         ) : (
           <NoRecentData message='No Closed Positions' />
         )}
       </div>
+      <RobotsLoadMore
+        renderLoadMoreButton={data.length < quantyRecords}
+        isLoadingMore={isLoadingMore}
+        onFetchMore={handleLoadMore} />
     </>
   );
 };

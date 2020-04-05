@@ -13,6 +13,7 @@
   flex-direction: column;
   flex: 1;
   min-width: 290px;
+  margin-left: 10px;
 }
 
 .topCardsContainer {
@@ -32,4 +33,10 @@
   padding-bottom: 20px;
   font-size: var(--normal1);
   color: white;
+}
+
+@media (max-width: 768px) {
+  .topCards {
+    margin-left: 0;
+  }
 }

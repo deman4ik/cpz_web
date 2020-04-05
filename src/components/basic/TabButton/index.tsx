@@ -20,8 +20,7 @@ export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, tex
   };
 
   const getBtnTextStyle = () => {
-    const btnText = [ styles.btnText ];
-    if (isActive) btnText.push(styles.isActive);
+    const btnText = [ styles.btnText, isActive ? styles.isActive : styles.btnTextColor ];
     if (objectStyle) btnText.push(textStyle);
     return btnText;
   };

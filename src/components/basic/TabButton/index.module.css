@@ -8,6 +8,7 @@
 
 .isActive {
   border-color: var(--primary);
+  color: var(--primary);
 }
 
 .btnText {
@@ -15,5 +16,8 @@
   padding-right: 5px;
   padding-bottom: 20px;
   font-size: var(--normal3);
+}
+
+.btnTextColor {
   color: var(--accent);
 }

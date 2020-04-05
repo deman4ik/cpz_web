@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import { Button } from '../../basic/Button';
-import styles from './RobotsListLoadMore.module.css';
+import styles from './index.module.css';
 
 interface Props {
   onFetchMore: () => void;
@@ -9,7 +9,7 @@ interface Props {
   renderLoadMoreButton: boolean;
 }
 
-export const _RobotsListLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
+export const _RobotsLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
   <>
     {renderLoadMoreButton && (
       <div className={styles.btnPosition}>
@@ -26,4 +26,4 @@ export const _RobotsListLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isL
   </>
 );
 
-export const RobotsListLoadMore = memo(_RobotsListLoadMore);
+export const RobotsLoadMore = memo(_RobotsLoadMore);

@@ -15,13 +15,14 @@ interface Props {
   onRedirectToDetailView: (code: string) => void;
   robotSubscribe: (variables: any) => void;
   displayType: string;
+  lastItem: boolean;
 }
 
 const DinamicAreaChart = dynamic(
   () => import('../../charts/AreaChart')
 );
 
-export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType, onRedirectToDetailView }) => {
+export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType, onRedirectToDetailView, lastItem }) => {
   const subscribeToggle = () => {
     robotSubscribe(formatVariables(item, '', displayType));
   };
@@ -39,7 +40,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
   };
 
   return (
-    <div className={styles.itemContainer}>
+    <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ''}`}>
       <div className={styles.cellName} onClick={handleOnPressDetails}>
         <div className={styles.cellNameWrap}>
           <div className={styles.primaryText}>{item.name}</div>

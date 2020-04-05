@@ -13,6 +13,8 @@ export const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
+export const splitCapitaize = (s: string): string => capitalize(s).split(/(?=[A-Z])/).join(' ');
+
 export const formatDate = (date: string, addUTC = true): string => {
   const res = dayjs.utc(date).format('DD MMM YY HH:mm');
   if (res === 'Invalid date') return '';
