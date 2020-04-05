@@ -5,7 +5,7 @@ import { LoadingIndicator } from '../../../common';
 import { floatPositions } from '../helpers';
 import { useFecthPositionData } from './useFetchPositionData';
 import { ClosedPositionContainer } from './ClosedPositionContainer';
-// import { OpenPositionContainer } from './OpenPositionContainer';
+import { OpenPositionContainer } from './OpenPositionContainer';
 import styles from './index.module.css';
 
 interface Props {
@@ -20,7 +20,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
     loading, handleLoadMore, isLoadingMore, dataOpenPositions,
     formatDataClosedPositions, formatSignals, quantyRecords
   } = useFecthPositionData(isUserSignals, userSignals, robot);
-
+  if (width === 0) return null;
   return (
     <>
       <CandleChart
@@ -29,7 +29,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
         width={width} />
       { loading ? <LoadingIndicator /> : (
         <>
-          {/* <div className={styles.container}>
+          <div className={styles.container}>
             { Object.keys(floatPositions).map(key => (
               <OpenPositionContainer
                 key={key}
@@ -39,7 +39,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                   : (dataOpenPositions && dataOpenPositions.robot_positions.length) ? dataOpenPositions.robot_positions : []}
                 positionInfo={floatPositions[key]} />
             )) }
-          </div> */}
+          </div>
           <ClosedPositionContainer
             robot={robot}
             handleLoadMore={handleLoadMore}

@@ -29,3 +29,6 @@ export const getLegend = (robot) =>
 export const roundFormat = (value: number): number => Math.round(value * 100) / 100;
 
 export const colorAction = (check: boolean): object => ({ color: check ? color.positive : color.negative });
+export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
+export const getIconName = (direction: string) => (direction === 'short' ? 'arrowdown' : 'arrowup');
+export const getIconNameAction = (check: boolean) => (!check ? 'arrowdown' : 'arrowup');

@@ -11,7 +11,7 @@
 .accordionSurface {
   padding-top: 0;
   padding-bottom: 0;
-  margin: 5px 10px;
+  margin: 0 10px 5px;
   background-color: var(--dark);
 }
 
@@ -20,4 +20,10 @@
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .accordionSurface {
+    background-color: transparent;
+  }
 }

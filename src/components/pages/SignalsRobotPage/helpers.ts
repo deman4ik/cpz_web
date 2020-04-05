@@ -65,7 +65,7 @@ export const floatPositions = {
     activeTab: SectionType.signals
   },
   open: {
-    title: 'openPositions',
+    title: 'Open positions',
     empty: 'No Open Positions',
     activeTab: SectionType.openPositions
   },
