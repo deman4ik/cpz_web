@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-// import { SearchInput } from '../SearchInput';
-// import { ScreenTypeProps } from '../../../services/Screen';
-// import { responsive } from '../../pages/SignalsSearchPage/index.style';
+import { SearchInput } from '../../basic';
+import styles from './SearchToolbar.module.css';
 
 interface Props {
   setSignalsSearchValue: (text: string) => void;
@@ -17,19 +16,12 @@ export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayT
     setValue(text);
   };
 
-  //(56 - 333 - 16): 56 - menu, 333 - input, 16 - left paddig
-  //next 16 - right padding
-  //const searchWidth = screenWidth < 530 ? screenWidth < 405 ? 173 : 233 : 333;
-  //const searchWidth = screenWidth < 530 ? 233 : 333;
-  //const searchWidth = screenWidth < 520 ? 0 : 333;
-  return (null
-    // <div style={responsive.rowContainer(screenWidth)}>
-    //   <SearchInput
-    //     value={value}
-    //     onChange={onSignalsSearch}
-    //     screenWidth={screenWidth}
-    //     placeholder={`Search ${displayType}...`} />
-    //   { maxTablet && <div style={{ width: (screenWidth - 56 - searchWidth - 16) / 2 - 16 }} /> }
-    // </div>
+  return (
+    <div className={styles.container}>
+      <SearchInput
+        value={value}
+        onChange={onSignalsSearch}
+        placeholder={`Search ${displayType}...`} />
+    </div>
   );
 };

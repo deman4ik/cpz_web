@@ -13,17 +13,17 @@
   background-color: #1F233F;
   color: #6987B9;
   border-radius: 2px;
-  padding: 10;
+  padding: 10px;
   padding-right: 35px;
-  margin-left: 200px;
 }
 
 .icon {
   position: absolute;
-  right: 0;
-  top: 2;
+  right: 8px;
+  top: 11px;
 }
 
-::placeholder {
+.searchInput::-webkit-input-placeholder,
+.searchInput::placeholder {
   color: var(--accent);
 }

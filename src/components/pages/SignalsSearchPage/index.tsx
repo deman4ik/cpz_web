@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 
-//import { useDimensionWidth } from '../../../hooks/useDimensions';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { Template } from '../../layout';
 import { SignalsSearchContainer } from './SignalsSearchContainer';
-//import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
+import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
 import { PageType } from '../../../config/types';
 import styles from './index.module.css';
 
@@ -22,13 +21,11 @@ export const SignalsSearchPage: React.FC = () => {
       page={PageType.signals}
       title='Signals Search'
       width={width}
-      // toolbar={(
-      //   <SearchToolbar
-      //     setSignalsSearchValue={setSignalsSearchValue}
-      //     screenType={dimension.screenType}
-      //     displayType='signals'
-      //     screenWidth={dimension.screenWidth} />
-      // )}
+      toolbar={(
+        <SearchToolbar
+          setSignalsSearchValue={setSignalsSearchValue}
+          displayType='signals' />
+      )}
       handlePressBack={handlePressBack}>
       <div className={styles.container}>
         <SignalsSearchContainer

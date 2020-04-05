@@ -11,10 +11,9 @@ interface Props {
   value: string;
   onChange: (str: string) => void;
   placeholder: string;
-  width: number;
 }
 
-export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder, width }) => {
+export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) => {
   useEffect(() => () => { onChange(''); }, []);
 
   const handleOnChange = (e) => {
