@@ -10,8 +10,8 @@
 }
 
 .searchInput {
-  background-color: #1F233F;
-  color: #6987B9;
+  background-color: var(--darkBg);
+  color: var(--accent);
   border-radius: 2px;
   padding: 10px;
   padding-right: 35px;

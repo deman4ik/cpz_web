@@ -66,7 +66,8 @@ export const SignalsRobotPage = () => {
               isUserSignals={robotData.robot.isUserSignals} />
             <TabsPagesRobotPage
               robotData={robotData}
-              activeTab={activeTab} />
+              activeTab={activeTab}
+              width={width} />
           </>
         )
       )}

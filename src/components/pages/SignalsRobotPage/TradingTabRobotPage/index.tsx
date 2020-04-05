@@ -10,9 +10,10 @@ import styles from './index.module.css';
 
 interface Props {
   robotData: any;
+  width: number;
 }
 
-const _TradingTabRobotPage: React.FC<Props> = ({ robotData }) => {
+const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
   const { user_signals: userSignals, robot } = robotData;
   const { isUserSignals } = robot;
   const {
@@ -24,7 +25,8 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData }) => {
     <>
       <CandleChart
         robot={robot}
-        signals={formatSignals} />
+        signals={formatSignals}
+        width={width} />
       { loading ? <LoadingIndicator /> : (
         <>
           {/* <div className={styles.container}>
@@ -43,7 +45,8 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData }) => {
             handleLoadMore={handleLoadMore}
             data={formatDataClosedPositions}
             quantyRecords={quantyRecords}
-            isLoadingMore={isLoadingMore} />
+            isLoadingMore={isLoadingMore}
+            width={width} />
         </>
       )}
     </>

@@ -7,13 +7,15 @@ import { TabType } from '../../../config/types';
 interface Props {
   robotData: any;
   activeTab: TabType;
+  width: number;
 }
 
-export const TabsPagesRobotPage: React.FC<Props> = ({ robotData, activeTab }) => (
+export const TabsPagesRobotPage: React.FC<Props> = ({ robotData, activeTab, width }) => (
   <>
     {activeTab === TabType.trading && (
       <TradingTabRobotPage
-        robotData={robotData} />
+        robotData={robotData}
+        width={width} />
     )}
     {/* {activeTab === TabType.publicStatistic && (
       <PerformanceTabRobotPage
