@@ -16,15 +16,13 @@ const _OpenPositionContainer: React.FC<Props> = ({ data, robot, positionInfo }) 
       {positionInfo.title}
     </div>
     <div className={styles.topCardsContainer}>
-      { data.length ? data.map((item, idx) => {
-        console.log(item);
-        return (
+      { data.length ? data.map((item, idx) => (
         <ClosedPositionsRobotPageItemCard
           key={idx}
           item={item}
           robot={robot}
-          activeTab={positionInfo.activeTab} />)
-      }) : (
+          activeTab={positionInfo.activeTab} />
+      )) : (
         <div className={styles.tableCellEmpty}>
           {positionInfo.empty}
         </div>

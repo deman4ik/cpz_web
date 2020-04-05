@@ -95,7 +95,7 @@ export const ArrowDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) =
 
 export const ArrowUpIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
   <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
-    <path fill='#6F6F6F' ng-attr-d='{{icon.data}}' d='M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z' />
+    <path d='M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z' />
   </svg>
 );
 

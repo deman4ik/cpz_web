@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { SectionType } from '../types';
 import { formatDate, valueWithSign, colorAction, capitalize, moneyFormat } from '../../../../config/utils';
@@ -11,7 +11,7 @@ interface Props {
   activeTab: SectionType;
 }
 
-export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot, activeTab }) => {
+const _ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot, activeTab }) => {
   const { asset } = robot;
 
   return (
@@ -108,3 +108,5 @@ export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot,
     </div>
   );
 };
+
+export const ClosedPositionsRobotPageItemCard = memo(_ClosedPositionsRobotPageItemCard);
