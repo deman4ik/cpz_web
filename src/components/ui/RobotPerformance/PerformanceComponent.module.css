@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  padding-top: 0;
+  padding-left: 0;
+  margin: 15px 10px 5px;
+  background-color: var(--dark);
+  flex-direction: column;
+}
+
+.cardItemsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background-color: var(--darkBg);
+  padding-top: 10px;
+  padding-left: 0;
+}

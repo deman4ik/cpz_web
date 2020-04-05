@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -6,17 +7,16 @@ import { POLL_INTERVAL } from '../../../config/constants';
 import { PerformanceEmpty } from './PerformanceEmpty';
 import { PerformanceComponent } from './PerformanceComponent';
 import { getFormatData, queryParam } from './helpers';
-import { styles } from './index.style';
+import styles from './index.module.css';
 import { displayType } from './types';
 
 interface Props {
-  screenWidth: number;
   width: number;
   title: string;
   type: displayType;
 }
 
-const _RobotPerformance: React.FC<Props> = ({ title, screenWidth, width, type }) => {
+const _RobotPerformance: React.FC<Props> = ({ title, width, type }) => {
   const [ formatData, setFormatData ] = useState([]);
   const { data, loading } = useQuery(GET_USER_AGGR_STATS_ALL, {
     variables: { type: { _eq: queryParam[type] } },
@@ -30,10 +30,10 @@ const _RobotPerformance: React.FC<Props> = ({ title, screenWidth, width, type })
   }, [ loading, data ]);
 
   return (
-    <div style={{ marginTop: 20 }}>
-      <div style={styles.regionTitle}>{title}</div>
-      { !formatData.length ? <PerformanceEmpty screenWidth={screenWidth} width={width} displayType={type} /> :
-      <PerformanceComponent screenWidth={screenWidth} width={width} formatData={formatData} displayType={type} /> }
+    <div className={styles.container}>
+      <div className={styles.regionTitle}>{title}</div>
+      { !formatData.length ? <PerformanceEmpty width={width} displayType={type} /> :
+      <PerformanceComponent width={width} formatData={formatData} displayType={type} /> }
     </div>
   );
 };

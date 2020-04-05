@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TradingTabRobotPage } from './TradingTabRobotPage';
-// import { PerformanceTabRobotPage } from '../../ui/PerformanceTab';
+import { PerformanceTabRobotPage } from '../../ui/PerformanceTab';
 import { TabType } from '../../../config/types';
 
 interface Props {
@@ -17,19 +17,17 @@ export const TabsPagesRobotPage: React.FC<Props> = ({ robotData, activeTab, widt
         robotData={robotData}
         width={width} />
     )}
-    {/* {activeTab === TabType.publicStatistic && (
+    {activeTab === TabType.publicStatistic && (
       <PerformanceTabRobotPage
-        currency={robotData.robot.currency}
         stat={robotData ? robotData.robot : null}
         activeTab={activeTab}
-        dimension={dimension} />
+        width={width} />
     )}
     {activeTab === TabType.myStatistic && (
       <PerformanceTabRobotPage
-        currency={robotData.robot.currency}
         stat={robotData.robot.isUserSignals ? robotData.user_signals : null}
         activeTab={activeTab}
-        dimension={dimension} />
-    )} */}
+        width={width} />
+    )}
   </>
 );

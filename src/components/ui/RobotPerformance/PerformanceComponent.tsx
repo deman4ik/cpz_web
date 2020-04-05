@@ -1,27 +1,25 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
-import { Surface } from 'react-native-paper';
 import Router from 'next/router';
 
-import { styles } from './index.style';
+import { useShowDimension } from '../../../hooks/useShowDimension';
+import { SCREEN_TYPE } from '../../../config/constants';
 import { PerformanceItem } from './PerformanceItem';
 import { PerformanceItemCard } from './PerformanceItemCard';
 import { PerformanceHeader } from './PerformanceHeader';
 import { useDummyCarts } from '../../../hooks/useDummyCarts';
-import { DummyCards } from '../Common/DummyCards';
-import { ScreenTypeProps } from '../../../services/Screen';
+import { DummyCards } from '../../common';
+import styles from './PerformanceComponent.module.css';
 
 interface Props {
   formatData: any;
-  screenWidth: number;
-  screenType: ScreenTypeProps;
+  width: number;
   displayType: string;
 }
 
 const cardWidth = 410;
-const _PerformanceComponent: React.FC<Props> = ({ screenWidth, screenType, formatData, displayType }) => {
-  const maxDesktop = screenType.maxDesktop();
-  const { dummyCards } = useDummyCarts(screenWidth, cardWidth, formatData.length);
+const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType }) => {
+  const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
+  const { dummyCards } = useDummyCarts(width, cardWidth, formatData.length);
 
   const handleRedirectToDetailView = (path: string) => {
     Router.push(`/${displayType}/stats?${path}`);
@@ -29,8 +27,8 @@ const _PerformanceComponent: React.FC<Props> = ({ screenWidth, screenType, forma
 
   return (
     <>
-      { !maxDesktop ? (
-        <Surface style={styles.container}>
+      { isDesktopView ? (
+        <div className={styles.container}>
           <PerformanceHeader />
           { formatData.map(item => (
             <PerformanceItem
@@ -38,19 +36,17 @@ const _PerformanceComponent: React.FC<Props> = ({ screenWidth, screenType, forma
               item={item}
               onRedirectToDetailView={handleRedirectToDetailView} />
           )) }
-        </Surface>
+        </div>
       ) : (
-        <View style={styles.cardItemsContainer}>
+        <div className={styles.cardItemsContainer}>
           { formatData.map(item => (
             <PerformanceItemCard
               key={item.id}
               item={item}
-              screenType={screenType}
-              screenWidth={screenWidth}
               onRedirectToDetailView={handleRedirectToDetailView} />
           )) }
           {DummyCards(dummyCards, cardWidth)}
-        </View>
+        </div>
       )}
     </>
   );

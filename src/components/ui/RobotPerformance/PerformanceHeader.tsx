@@ -1,15 +1,13 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, Text } from 'react-native';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
-import { styles } from './PerformanceHeader.style';
+import styles from './PerformanceHeader.module.css';
 
-const _PerformanceHeader: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => (
-  <View style={styles.headerContainer}>
-    <Text style={[ styles.titleName, styles.titleFont ]}>{t('Name')}</Text>
-    <Text style={[ styles.titlePerformance, styles.titleFont ]}>{t('Performance')}</Text>
-    <Text style={[ styles.titleStatistics, styles.titleFont ]}>{t('Statistics')}</Text>
-  </View>
+const _PerformanceHeader: React.FC = () => (
+  <div className={styles.headerContainer}>
+    <div className={[ styles.titleName, styles.titleFont ].join(' ')}>Name</div>
+    <div className={[ styles.titlePerformance, styles.titleFont ].join(' ')}>Performance</div>
+    <div className={[ styles.titleStatistics, styles.titleFont ].join(' ')}>Statistics</div>
+  </div>
 );
 
-export const PerformanceHeader = memo(withTranslation()(_PerformanceHeader));
+export const PerformanceHeader = memo(_PerformanceHeader);
