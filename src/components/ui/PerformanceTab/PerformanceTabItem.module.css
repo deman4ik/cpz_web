@@ -1,0 +1,23 @@
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 0.25;
+}
+
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding: 15px 20px;
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+}
+
+.mobileCardTextKey {
+  font-size: var(--small1);
+  color: var(--accent);
+}

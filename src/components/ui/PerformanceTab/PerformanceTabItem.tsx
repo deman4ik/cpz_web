@@ -1,36 +1,31 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
-import { View, Text } from 'react-native';
+import React from 'react';
+import styles from './PerformanceTabItem.module.css';
 
-import { common } from '../../../styles';
-
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   item: any;
 }
 
-const _PerformanceTabItem: React.FC<Props> = ({ t, item }) => (
-  <View style={common.tableRow}>
-    <View style={{ flex: 0.25 }}>
-      <Text style={common.mobileCardTextKey}>
-        {t(item.title)}
-      </Text>
-    </View>
-    <View style={{ flex: 0.25 }}>
-      <Text style={common.tableCellText}>
+export const PerformanceTabItem: React.FC<Props> = ({ item }) => (
+  <div className={styles.tableRow}>
+    <div className={styles.col}>
+      <div className={styles.mobileCardTextKey}>
+        {item.title}
+      </div>
+    </div>
+    <div className={styles.col}>
+      <div className={styles.tableCellText}>
         {item.all}
-      </Text>
-    </View>
-    <View style={{ flex: 0.25 }}>
-      <Text style={common.tableCellText}>
+      </div>
+    </div>
+    <div className={styles.col}>
+      <div className={styles.tableCellText}>
         {item.long}
-      </Text>
-    </View>
-    <View style={{ flex: 0.25 }}>
-      <Text style={common.tableCellText}>
+      </div>
+    </div>
+    <div className={styles.col}>
+      <div className={styles.tableCellText}>
         {item.short}
-      </Text>
-    </View>
-  </View>
+      </div>
+    </div>
+  </div>
 );
-
-export const PerformanceTabItem = memo(withTranslation()(_PerformanceTabItem));

@@ -5,10 +5,9 @@ import dynamic from 'next/dynamic';
 import dayjs from '../../../libs/dayjs';
 import { NoRecentData, LoadingIndicator } from '../../common';
 import { TabType } from '../../../config/types';
-//import { Signals } from '../../../services';
 import { ChartType } from '../../charts/LightWeightChart/types';
-//import { PerformanceTabComponent } from './PerformanceTabComponent';
-import { tabName } from './helpers';
+import { PerformanceTabComponent } from './PerformanceTabComponent';
+import { tabName, getRobotStatistic } from './helpers';
 import styles from './index.module.css';
 
 interface Props {
@@ -31,10 +30,10 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
       }))
   ), [ stat ]);
 
-  // const robotStatistic = useMemo(() => (
-  //   (!stat.statistics || !stat.statistics.performance) ? null :
-  //     Signals.getRobotStatistic(stat.statistics)
-  // ), [ stat, currency ]);
+  const robotStatistic = useMemo(() => (
+    (!stat.statistics || !stat.statistics.performance) ? null :
+      getRobotStatistic(stat.statistics)
+  ), [ stat ]);
 
   return (
     <>
@@ -46,7 +45,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
           <div className={styles.performanceTitle}>
             {tabName[TabType[activeTab]]}
           </div>
-          {/* <PerformanceTabComponent width={width} robotStatistic={robotStatistic} /> */}
+          <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
         </>
       )}
     </>

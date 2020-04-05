@@ -1,54 +1,53 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, Text } from 'react-native';
-import { Surface } from 'react-native-paper';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
-import { NoRecentData } from '../Common/NoRecentData';
+import { useShowDimension } from '../../../hooks/useShowDimension';
+import { SCREEN_TYPE } from '../../../config/constants';
+import { NoRecentData } from '../../common';
 import { PerformanceTabItem } from './PerformanceTabItem';
-import { PerformanceTabItemCard } from './PerformanceTabItemCard';
-import { Signals } from '../../../services';
-import { common } from '../../../styles';
+//import { PerformanceTabItemCard } from './PerformanceTabItemCard';
+import { PerformanceTabStatisticts } from './PerformanceTabStatisticts';
+import styles from './PerformanceTabComponent.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   robotStatistic: any;
-  maxTablet: boolean;
+  width: number;
 }
 
-const _PerformanceTabComponent: React.FC<Props> = ({ t, robotStatistic, maxTablet }) => (
-  <Surface
-    style={common.accordionSurface}
-    theme={{ roundness: 0 }}
-          >
-    {!maxTablet && Signals.renderTableHeaders()}
-    {!robotStatistic ? (
-      <NoRecentData message='No recent data available' />
-    ) : (
-      <>
-        {Object.keys(robotStatistic).map(subtitle => (
-          <View key={subtitle}>
-            {!maxTablet ? (
-              <>
-                <View style={common.tableTitle}>
-                  <Text style={common.tableTitleText}>
-                    {t(subtitle)}
-                  </Text>
-                </View>
-                { robotStatistic[subtitle].map((item, idx) => (
-                  <PerformanceTabItem key={idx} item={item} />
-                )) }
-              </>
-            ) : (
-              <>
-                { robotStatistic[subtitle].map((item, idx) => (
+const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) => {
+  const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
+  return (
+    <div className={styles.accordionSurface}>
+      {isDesktopView && <PerformanceTabStatisticts />}
+      {!robotStatistic ? (
+        <NoRecentData message='No recent data available' />
+      ) : (
+        <>
+          {Object.keys(robotStatistic).map(subtitle => (
+            <div key={subtitle}>
+              {isDesktopView ? (
+                <>
+                  <div className={styles.tableTitle}>
+                    <div className={styles.tableTitleText}>
+                      {subtitle}
+                    </div>
+                  </div>
+                  { robotStatistic[subtitle].map((item, idx) => (
+                    <PerformanceTabItem key={idx} item={item} />
+                  )) }
+                </>
+              ) : (
+                <>
+                  {/* { robotStatistic[subtitle].map((item, idx) => (
                   <PerformanceTabItemCard key={idx} item={item} />
-                )) }
-              </>
-            )}
-          </View>
-        ))}
-      </>
-    )}
-  </Surface>
-);
+                )) } */}
+                </>
+              )}
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+};
 
-export const PerformanceTabComponent = memo(withTranslation()(_PerformanceTabComponent));
+export const PerformanceTabComponent = memo(_PerformanceTabComponent);
