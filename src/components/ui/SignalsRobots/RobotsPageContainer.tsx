@@ -2,10 +2,11 @@ import React from 'react';
 import Router from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
 
+import { useShowDimension } from '../../../hooks/useShowDimension';
+import { SCREEN_TYPE } from '../../../config/constants';
 import { SET_MODAL_STATE } from '../../../graphql/local/mutations';
 import { MODAL_VISIBLE } from '../../../graphql/local/queries';
-import { RobotsItem } from '../RobotsItems/RobotsItem';
-import { RobotsItemCard } from '../RobotsItems/RobotsItemCard';
+import { RobotsItem, RobotsItemCard } from '../RobotsItems';
 import { SignalRobotsAddSignals } from './SignalRobotsAddSignals';
 import { SignalRobotsAddSignalsCard } from './SignalRobotsAddSignalsCard';
 import { RobotsHeader } from '../RobotsItems/RobotsHeader';
@@ -21,6 +22,7 @@ interface Props {
 
 const cartWidth = 408;
 export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType }) => {
+  const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
   const { dummyCards } = useDummyCarts(width, cartWidth, data.length + 1);
   const handleRedirectToDetailView = (code: string) => {
     Router.push(`/${displayType}/robot/${code}`);
@@ -36,7 +38,7 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
 
   return (
     <>
-      { screenWidth > 1280 ? (
+      { isDesktopView ? (
         <div className={styles.container}>
           <RobotsHeader />
           { data.map((item) => (
@@ -45,11 +47,12 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
               item={item}
               robotSubscribe={robotSubscribe}
               displayType={displayType}
+              lastItem={false}
               onRedirectToDetailView={handleRedirectToDetailView} />
           ))}
           <SignalRobotsAddSignals displayType={displayType} />
         </div>
-      ) : (
+      ) : (<div />
         // <div className={styles.containerCard}>
         //   { data.map((item) => (
         //     <RobotsItemCard

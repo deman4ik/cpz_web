@@ -1,34 +1,31 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react';
 import Router from 'next/router';
-import { withTranslation, WithTranslation } from 'react-i18next';
 
-import { Button } from '../../basic';
-import { styles } from './SignalRobotsAddSignals.style';
+import { CaptionButton } from '../../basic';
+import styles from './SignalRobotsAddSignals.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   displayType: string;
 }
 
-const _SignalRobotsAddSignals: React.FC<Props> = ({ t, displayType }) => {
-  const handleOnPress = () => {
+export const SignalRobotsAddSignals: React.FC<Props> = ({ displayType }) => {
+  const handleOnClick = () => {
     Router.push(`/${displayType}/search`);
   };
 
   return (
-    <View style={styles.itemContainer}>
-      <TouchableOpacity
-        style={[ styles.border, { minHeight: 68 } ]}
-        onPress={handleOnPress}
+    <div className={styles.itemContainer}>
+      <div
+        className={styles.border}
+        onClick={handleOnClick}
       >
-        <Button
-          title={t(`Add ${displayType}`)}
+        <CaptionButton
+          title={`Add ${displayType}`}
           icon='plus'
-          isUppercase
         />
-      </TouchableOpacity>
-    </View>
+      </div>
+    </div>
   );
 };
-
-export const SignalRobotsAddSignals = memo(withTranslation()(_SignalRobotsAddSignals));

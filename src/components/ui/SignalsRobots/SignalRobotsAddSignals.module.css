@@ -1,0 +1,21 @@
+.itemContainer {
+  display: flex;
+  background-color: var(--dark);
+  border-color: var(--darkBg);
+  padding: 12px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: var(--accent);
+  align-items: center;
+  justify-content: center;
+  min-height: 68px;
+}
