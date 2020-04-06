@@ -76,8 +76,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
               </div>
             </div>
             <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
-              <div
-                className={styles.secondaryText}>
+              <div className={styles.secondaryText}>
                 Max Drawdown&nbsp;
               </div>
               <div className={styles.statisticsText} style={colorAction(item.maxDrawdown > 0)}>

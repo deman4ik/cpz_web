@@ -1,69 +1,73 @@
-import React, { memo } from 'react';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-// import { AreaChart } from '../../charts/AreaChart';
-
-import { moneyFormat } from '../../../config/utils';
+import { ChevronRightIcon } from '../../../assets/icons/svg';
+import { moneyFormat, colorAction } from '../../../config/utils';
 //import { PropsPerformanceItem } from './types';
+import styles from './PerformanceItem.module.css';
 
 interface Props {
   item: any;
-  onRedirectToDetaildiv: (path: string) => void;
+  onRedirectToDetailView: (path: string) => void;
 }
 
-const _PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetaildiv }) => {
-  const handleOnPress = () => {
-    onRedirectToDetaildiv(item.path);
+const DinamicAreaChart = dynamic(
+  () => import('../../charts/AreaChart')
+);
+
+export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
+  const handleOnClick = () => {
+    onRedirectToDetailView(item.path);
   };
 
   return (
     <div className={styles.tableRow}>
-      <div className={{ flex: 0.8 }}>
-        <TouchableOpacity className={{ flexDirection: 'row', alignItems: 'center' }} onPress={handleOnPress}>
-          <div>
-            <div className={[ styles.tableCellText, { minWidth: 90 } ]}>{item.name}</div>
-            <div className={[ styles.cellProfit, responsive.profitText(item.profit) ]}>
+      <div className={styles.col} style={{ flex: 0.8 }}>
+        <div className={styles.wraperBlock} onClick={handleOnClick}>
+          <div className={styles.wraperName}>
+            <div className={[ styles.tableCellText, styles.cellWidth ].join(' ')}>{item.name}</div>
+            <div className={styles.cellProfit} style={colorAction(item.profit > 0)}>
               {item.profit ? `${item.profit > 0 ? '+' : ''}${moneyFormat(item.profit)} $` : null}
             </div>
           </div>
-          <IconButton icon='chevron-right' color={vars.color.white} className={{ width: 15, height: 15 }} size={26} />
-        </TouchableOpacity>
+          <ChevronRightIcon color='white' size={26} />
+        </div>
       </div>
-      <div className={{ flex: 0.85 }}>
+      <div className={styles.col} style={{ flex: 0.85 }}>
         { (item.changes && item.changes.length) ? (
-          <AreaChart
+          <DinamicAreaChart
             height={120}
             positive={item.profit > 0}
             data={item.changes} />
         ) : null }
       </div>
-      <div className={{ flex: 0.05 }} />
-      <div className={{ flex: 0.9 }}>
+      <div className={styles.col} style={{ flex: 0.05 }} />
+      <div className={styles.col} style={{ flex: 0.9 }}>
         { (item.winRate || item.winRate === 0) ? (
           <>
-            <div className={{ flexDirection: 'row' }}>
+            <div className={styles.statisticsElement}>
               <div className={styles.secondaryText}>
-                {`${t('winrateZero')}  `}
+                Win Rate&nbsp;
               </div>
-              <div className={[ styles.secondaryText, { color: '#fff' } ]}>
+              <div className={styles.statisticsText}>
                 {`${item.winRate} %`}
               </div>
             </div>
-            <div className={{ flexDirection: 'row', marginTop: 6, flexWrap: 'wrap' }}>
-              <div
-                className={styles.secondaryText}>
-                {`${t('maxdrawdownZero')}  `}
+            <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
+              <div className={styles.secondaryText}>
+                Max Drawdown&nbsp;
               </div>
-              <div
-                className={[ styles.secondaryText, responsive.profitText(item.maxDrawdown), { fontSize: 14 } ]}>
+              <div className={styles.statisticsText} style={colorAction(item.maxDrawdown > 0)}>
                 {`${moneyFormat(item.maxDrawdown)} $`}
               </div>
             </div>
-            <div className={{ flexDirection: 'row', marginTop: 6 }}>
-              <div
-                className={styles.secondaryText}>
-                {`${t('tradescountZero')}  `}
+            <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
+              <div className={styles.secondaryText}>
+                Trades Count&nbsp;
               </div>
-              <div className={[ styles.secondaryText, { color: '#fff' } ]}>
+              <div className={styles.statisticsText}>
                 {item.tradesCount}
               </div>
             </div>
@@ -73,5 +77,3 @@ const _PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetaildiv }) => {
     </div>
   );
 };
-
-export const PerformanceItem = memo(_PerformanceItem);

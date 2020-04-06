@@ -6,17 +6,16 @@ import { GET_USER_AGGR_STATS_ALL } from '../../../graphql/signals/queries';
 import { POLL_INTERVAL } from '../../../config/constants';
 import { PerformanceEmpty } from './PerformanceEmpty';
 import { PerformanceComponent } from './PerformanceComponent';
-import { getFormatData, queryParam } from './helpers';
+import { getFormatData, queryParam, title } from './helpers';
 import styles from './index.module.css';
 import { displayType } from './types';
 
 interface Props {
   width: number;
-  title: string;
   type: displayType;
 }
 
-const _RobotPerformance: React.FC<Props> = ({ title, width, type }) => {
+const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
   const [ formatData, setFormatData ] = useState([]);
   const { data, loading } = useQuery(GET_USER_AGGR_STATS_ALL, {
     variables: { type: { _eq: queryParam[type] } },
@@ -31,7 +30,7 @@ const _RobotPerformance: React.FC<Props> = ({ title, width, type }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.regionTitle}>{title}</div>
+      <div className={styles.regionTitle}>{title[type]}</div>
       { !formatData.length ? <PerformanceEmpty width={width} displayType={type} /> :
       <PerformanceComponent width={width} formatData={formatData} displayType={type} /> }
     </div>

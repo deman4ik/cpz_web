@@ -1,4 +1,4 @@
-import { capitalize, exchangeName } from '../../../services/Utils';
+import { capitalize, exchangeName } from '../../../config/utils';
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) => (
   (!exchange && !asset) ? `Total ${type}` :
@@ -38,4 +38,9 @@ export const getItem = (displayType: string) => ({
 export const queryParam = {
   signals: 'signal',
   robots: 'userRobot'
+};
+
+export const title = {
+  signals: 'My Signals Total Performance',
+  robots: 'My Robots Total Performance'
 };

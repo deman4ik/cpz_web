@@ -1,83 +1,87 @@
-import React, { memo } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Surface } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-import { AreaChart } from '../../charts/AreaChart';
 import { Button } from '../../basic';
-import { styles, responsive } from './PerformanceItemCard.style';
-import { moneyFormat } from '../../../services/Utils';
-import { PropsPerformanceItem } from './types';
+import { moneyFormat, colorAction } from '../../../config/utils';
+import styles from './PerformanceItemCard.module.css';
 
-const _PerformanceItemCard: React.FC<PropsPerformanceItem> =
-({ t, item, screenType, onRedirectToDetailView }) => {
+interface Props {
+  item: any;
+  onRedirectToDetailView: (path: string) => void;
+}
+
+const DinamicAreaChart = dynamic(
+  () => import('../../charts/AreaChart')
+);
+
+export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
   const handleOnPress = () => {
     onRedirectToDetailView(item.path);
   };
 
   return (
-    <Surface style={styles.container}>
-      <View style={styles.headerCard}>
-        <TouchableOpacity style={styles.row} onPress={handleOnPress}>
-          <View style={styles.col}>
-            <Text style={[ styles.statValue, { marginBottom: 5 } ]}>{item.name}</Text>
+    <div className={styles.container}>
+      <div className={styles.headerCard}>
+        <div className={styles.row} onClick={handleOnPress}>
+          <div className={styles.col}>
+            <div className={styles.statValue} style={{ marginBottom: 5 }}>{item.name}</div>
             { item.profit ? (
-              <Text style={responsive.profitText(item.profit)}>
+              <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
                 {`${item.profit > 0 ? '+' : ''}${moneyFormat(item.profit)} $`}
-              </Text>
+              </div>
             ) : null}
-          </View>
-          <View style={styles.col}>
+          </div>
+          <div className={styles.col}>
             <Button
-              title={t('details')}
+              title='details'
               isUppercase
               size='small'
-              icon='chevron-right' />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={responsive.chartStat(screenType)}>
-        <View style={styles.chartCol}>
+              icon='chevronright' />
+          </div>
+        </div>
+      </div>
+      <div className={styles.chartStat}>
+        <div className={styles.chartCol}>
           { (item.changes && item.changes.length) ? (
-            <AreaChart
+            <DinamicAreaChart
               height={120}
               positive={item.profit > 0}
               data={item.changes} />
-          ) : <View style={styles.emptyChart} /> }
-        </View>
-        <View style={responsive.statCol(screenType)}>
+          ) : <div className={styles.emptyChart} /> }
+        </div>
+        <div className={styles.statCol}>
           { (item.winRate || item.winRate === 0) ? (
             <>
-              <View style={responsive.statRow(screenType)}>
-                <Text style={responsive.label(screenType)}>
-                  {t('winrateZero')}
-                </Text>
-                <Text style={styles.statValue}>
+              <div className={styles.statRow}>
+                <div className={styles.label}>
+                  Win Rate
+                </div>
+                <div className={styles.statValue}>
                   {item.winRate} %
-                </Text>
-              </View>
-              <View style={responsive.statRow(screenType)}>
-                <Text style={responsive.label(screenType)}>
-                  {t('maxdrawdownZero')}
-                </Text>
-                <Text style={responsive.profitText(item.maxDrawdown)}>
+                </div>
+              </div>
+              <div className={styles.statRow}>
+                <div className={styles.label}>
+                  Max Drawdown
+                </div>
+                <div className={styles.primaryText} style={colorAction(item.maxDrawdown > 0)}>
                   {`${moneyFormat(item.maxDrawdown)} $`}
-                </Text>
-              </View>
-              <View style={responsive.statRow(screenType)}>
-                <Text style={responsive.label(screenType)}>
-                  {t('tradescountZero')}
-                </Text>
-                <Text style={styles.statValue}>
+                </div>
+              </div>
+              <div className={styles.statRow}>
+                <div className={styles.label}>
+                  Trades Count
+                </div>
+                <div className={styles.statValue}>
                   {item.tradesCount}
-                </Text>
-              </View>
+                </div>
+              </div>
             </>
           ) : null }
-        </View>
-      </View>
-    </Surface>
+        </div>
+      </div>
+    </div>
   );
 };
-
-export const PerformanceItemCard = memo(withTranslation()(_PerformanceItemCard));

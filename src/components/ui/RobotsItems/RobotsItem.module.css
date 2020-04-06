@@ -43,28 +43,33 @@
   padding-left: 40px;
   padding-right: 30px;
 }
+
 .cellStatistics {
   display: flex;
   flex-direction: column;
   flex: 0.47;
 }
+
 .cellStatus {
   display: flex;
   flex-direction: column;
   flex: 0.45;
   align-items: flex-start;
 }
+
 .cellAction {
   display: flex;
   flex-direction: column;
   flex: 0.3;
 }
+
 .primaryText {
   display: flex;
   flex-direction: column;
   color: white;
   font-size: 16px
 }
+
 .secondaryText {
   display: flex;
   flex-direction: column;

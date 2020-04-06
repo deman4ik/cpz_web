@@ -4,6 +4,12 @@
   margin-bottom: 20px;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 @media (max-width: 1200px) {
   .container {
     flex-direction: column;

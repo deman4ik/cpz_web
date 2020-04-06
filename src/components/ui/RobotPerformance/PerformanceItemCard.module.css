@@ -1,0 +1,47 @@
+.statValue {
+  font-size: var(--small1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.statCol {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  flex-direction: column;
+  width: auto;
+  margin-top: 0;
+  margin-left: 10px;  
+}
+
+.statRow {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.primaryText {
+  font-size: var(--normal1);
+}
+
+.chartStat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chartCol {
+  display: flex;
+  flex-grow: 2;
+  max-width: 260px;
+}
