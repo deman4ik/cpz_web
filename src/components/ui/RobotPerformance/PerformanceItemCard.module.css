@@ -1,3 +1,11 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
 .statValue {
   font-size: var(--small1);
   line-height: var(--normal2);
@@ -44,4 +52,20 @@
   display: flex;
   flex-grow: 2;
   max-width: 260px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 5px 10px;
+  background-color: var(--rgbaDark);
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.headerCard {
+  padding: 10px 12px 10px 15px;
+  background-color: var(--dark);
 }

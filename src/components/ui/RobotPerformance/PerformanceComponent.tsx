@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { useShowDimension } from '../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { PerformanceItem } from './PerformanceItem';
-//import { PerformanceItemCard } from './PerformanceItemCard';
+import { PerformanceItemCard } from './PerformanceItemCard';
 import { PerformanceHeader } from './PerformanceHeader';
 import { useDummyCarts } from '../../../hooks/useDummyCarts';
 import { DummyCards } from '../../common';
@@ -38,16 +38,15 @@ const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType
           )) }
         </div>
       ) : (
-        <div />
-        // <div className={styles.cardItemsContainer}>
-        //   { formatData.map(item => (
-        //     <PerformanceItemCard
-        //       key={item.id}
-        //       item={item}
-        //       onRedirectToDetailView={handleRedirectToDetailView} />
-        //   )) }
-        //   {DummyCards(dummyCards, cardWidth)}
-        // </div>
+        <div className={styles.cardItemsContainer}>
+          { formatData.map(item => (
+            <PerformanceItemCard
+              key={item.id}
+              item={item}
+              onRedirectToDetailView={handleRedirectToDetailView} />
+          )) }
+          {DummyCards(dummyCards, cardWidth)}
+        </div>
       )}
     </>
   );

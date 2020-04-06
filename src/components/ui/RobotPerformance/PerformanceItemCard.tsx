@@ -38,6 +38,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
               title='details'
               isUppercase
               size='small'
+              style={{ paddingLeft: 0, paddingRight: 0 }}
               icon='chevronright' />
           </div>
         </div>
