@@ -25,29 +25,29 @@ export const propsToNull = obj => Object.keys(obj).reduce((acc, k) => ({ ...acc,
 export const getRobotStatistic = (robotStatistic) => (
   !robotStatistic ? null : ({
     profit: [
-      { title: 'netProfit', ...propsToMoneyFormat(robotStatistic.netProfit) },
-      { title: 'tradesCount', ...robotStatistic.tradesCount },
-      { title: 'avgProfit', ...propsToMoneyFormat(robotStatistic.avgProfit) },
-      { title: 'avgBarsHeld', ...propsToNull(robotStatistic.avgBarsHeld) },
-      { title: 'profitFactor', ...propsSimple(robotStatistic.profitFactor) },
-      { title: 'recoveryFactor', ...propsSimple(robotStatistic.recoveryFactor) },
-      { title: 'payoffRatio', ...propsSimple(robotStatistic.payoffRatio) },
-      { title: 'maximumDrawDawn', ...propsToMoneyFormat(robotStatistic.maxDrawdown) },
-      { title: 'maximumDrawDawnDate', ...formatAsDates(robotStatistic.maxDrawdownDate) }
+      { title: 'Net Profit', ...propsToMoneyFormat(robotStatistic.netProfit) },
+      { title: 'Number of Trades', ...robotStatistic.tradesCount },
+      { title: 'Average Profit', ...propsToMoneyFormat(robotStatistic.avgProfit) },
+      { title: 'Average Bars Held', ...propsToNull(robotStatistic.avgBarsHeld) },
+      { title: 'Profit Factor', ...propsSimple(robotStatistic.profitFactor) },
+      { title: 'Recovery Factor', ...propsSimple(robotStatistic.recoveryFactor) },
+      { title: 'Payoff Ratio', ...propsSimple(robotStatistic.payoffRatio) },
+      { title: 'Maximum Drawdawn', ...propsToMoneyFormat(robotStatistic.maxDrawdown) },
+      { title: 'Maximum Drawdawn Date', ...formatAsDates(robotStatistic.maxDrawdownDate) }
     ],
     winners: [
-      { title: 'winRate', ...propsToPercent(robotStatistic.winRate) },
-      { title: 'grossProfit', ...propsToMoneyFormat(robotStatistic.grossProfit) },
-      { title: 'avgProfit', ...propsToMoneyFormat(robotStatistic.avgProfit) },
-      { title: 'avgBarsHeld', ...propsToNull(robotStatistic.avgBarsHeld) },
-      { title: 'maxConnsecWins', ...robotStatistic.maxConnsecWins }
+      { title: 'Win Rate', ...propsToPercent(robotStatistic.winRate) },
+      { title: 'Gross Profit', ...propsToMoneyFormat(robotStatistic.grossProfit) },
+      { title: 'Average Profit', ...propsToMoneyFormat(robotStatistic.avgProfit) },
+      { title: 'Average Bars Held', ...propsToNull(robotStatistic.avgBarsHeld) },
+      { title: 'Max. Consecutive Winners', ...robotStatistic.maxConnsecWins }
     ],
     losses: [
-      { title: 'lossRate', ...propsToPercent(robotStatistic.lossRate) },
-      { title: 'grossLoss', ...propsToMoneyFormat(robotStatistic.grossLoss) },
-      { title: 'avgLoss', ...propsToMoneyFormat(robotStatistic.avgLoss) },
-      { title: 'avgBarsHeld', ...propsToNull(robotStatistic.avgBarsHeld) },
-      { title: 'maxConsecLosses', ...robotStatistic.maxConsecLosses }
+      { title: 'Loss Rate', ...propsToPercent(robotStatistic.lossRate) },
+      { title: 'Gross Loss', ...propsToMoneyFormat(robotStatistic.grossLoss) },
+      { title: 'Average Loss', ...propsToMoneyFormat(robotStatistic.avgLoss) },
+      { title: 'Average Bars Held', ...propsToNull(robotStatistic.avgBarsHeld) },
+      { title: 'Max. Consecutive Losses', ...robotStatistic.maxConsecLosses }
     ]
   })
 );

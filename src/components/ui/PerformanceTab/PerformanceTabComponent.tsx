@@ -6,6 +6,7 @@ import { NoRecentData } from '../../common';
 import { PerformanceTabItem } from './PerformanceTabItem';
 //import { PerformanceTabItemCard } from './PerformanceTabItemCard';
 import { PerformanceTabStatisticts } from './PerformanceTabStatisticts';
+import { capitalize } from '../../../config/utils';
 import styles from './PerformanceTabComponent.module.css';
 
 interface Props {
@@ -28,7 +29,7 @@ const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) =>
                 <>
                   <div className={styles.tableTitle}>
                     <div className={styles.tableTitleText}>
-                      {subtitle}
+                      {capitalize(subtitle)}
                     </div>
                   </div>
                   { robotStatistic[subtitle].map((item, idx) => (

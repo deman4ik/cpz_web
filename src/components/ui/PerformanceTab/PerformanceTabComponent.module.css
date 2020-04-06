@@ -1,3 +1,11 @@
+.accordionSurface {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 5px 10px;
+  background-color: var(--dark);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
 .tableTitle {
   display: flex;
   flex-direction: column;
@@ -5,7 +13,7 @@
   border-top-width: 2px;
   border-color: var(--darkBg);
   padding: 24px 20px 12px;
-};
+}
 
 .tableTitleText {
   display: flex;
