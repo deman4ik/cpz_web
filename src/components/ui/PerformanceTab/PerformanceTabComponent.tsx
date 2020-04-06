@@ -4,7 +4,7 @@ import { useShowDimension } from '../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { NoRecentData } from '../../common';
 import { PerformanceTabItem } from './PerformanceTabItem';
-//import { PerformanceTabItemCard } from './PerformanceTabItemCard';
+import { PerformanceTabItemCard } from './PerformanceTabItemCard';
 import { PerformanceTabStatisticts } from './PerformanceTabStatisticts';
 import { capitalize } from '../../../config/utils';
 import styles from './PerformanceTabComponent.module.css';
@@ -16,6 +16,7 @@ interface Props {
 
 const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) => {
   const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
+
   return (
     <div className={styles.accordionSurface}>
       {isDesktopView && <PerformanceTabStatisticts />}
@@ -38,9 +39,9 @@ const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) =>
                 </>
               ) : (
                 <>
-                  {/* { robotStatistic[subtitle].map((item, idx) => (
-                  <PerformanceTabItemCard key={idx} item={item} />
-                )) } */}
+                  { robotStatistic[subtitle].map((item, idx) => (
+                    <PerformanceTabItemCard key={idx} item={item} />
+                  )) }
                 </>
               )}
             </div>
