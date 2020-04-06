@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
 import { PlusIcon, CheckIcon } from '../../../assets/icons/svg';
@@ -8,14 +10,15 @@ interface Props {
   style?: object;
   icon?: string;
   width?: number;
+  onClick?: () => void;
 }
 
 const components = {
   check: CheckIcon,
-  plus: PlusIcon,
+  plus: PlusIcon
 };
 
-export const CaptionButton: React.FC<Props> = ({ title, style, icon, width }) => {
+export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
@@ -23,7 +26,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width }) =>
   };
 
   return (
-    <div className={getClassName().join(' ')} style={style}>
+    <div className={getClassName().join(' ')} style={style} onClick={onClick}>
       <div className='btn-text'>
         {title}
       </div>
@@ -66,6 +69,11 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width }) =>
           opacity: 1;
           background-color: transparent;
           text-transform: uppercase;
+        }
+        @media (max-width: 768px) {
+          .btn-text {
+            display: none;
+          }
         }`}
       </style>
     </div>

@@ -6,6 +6,7 @@ import { PageType } from '../../../config/types';
 import { RobotPerformance } from '../../ui/RobotPerformance';
 import { RobotOpenPositions } from '../../ui/RobotOpenPositions';
 import { SignalRobots } from '../../ui/SignalsRobots';
+import { PageToolbar } from '../../common/PageToolbar';
 import styles from './index.module.css';
 
 export const SignalsPage = () => {
@@ -15,6 +16,7 @@ export const SignalsPage = () => {
       page={PageType.signals}
       title='Signals'
       subTitle='Manual Trading'
+      toolbar={<PageToolbar displayType='signals' />}
       width={width}
     >
       <div className={styles.container}>
