@@ -1,36 +1,33 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Surface } from 'react-native-paper';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { memo } from 'react';
 import Router from 'next/router';
-import { withTranslation, WithTranslation } from 'react-i18next';
 
-import { Button } from '../../basic';
-import { responsive, styles } from './SignalRobotsAddSignals.style';
+import { CaptionButton } from '../../basic';
+import styles from './SignalRobotsAddSignals.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
-  screenWidth?: number;
+interface Props {
   displayType: string;
 }
 
-const _SignalRobotsAddSignalsCard: React.FC<Props> = ({ t, screenWidth, displayType }) => {
+const _SignalRobotsAddSignalsCard: React.FC<Props> = ({ displayType }) => {
   const handleOnPress = () => {
     Router.push(`/${displayType}/search`);
   };
 
   return (
-    <Surface style={responsive.itemContainerCard(screenWidth)}>
-      <TouchableOpacity
-        style={styles.border}
-        onPress={handleOnPress}
+    <div className={styles.itemContainerCard}>
+      <div
+        className={styles.border}
+        onClick={handleOnPress}
       >
-        <Button
-          title={t(`Add ${displayType}`)}
+        <CaptionButton
+          title={`Add ${displayType}`}
           icon='plus'
-          isUppercase
         />
-      </TouchableOpacity>
-    </Surface>
+      </div>
+    </div>
   );
 };
 
-export const SignalRobotsAddSignalsCard = memo(withTranslation()(_SignalRobotsAddSignalsCard));
+export const SignalRobotsAddSignalsCard = memo(_SignalRobotsAddSignalsCard);

@@ -1,7 +1,4 @@
-import { PropsWithChildren } from 'react';
-import { WithTranslation } from 'react-i18next';
-
-export interface PropsOpenPositionsItem extends PropsWithChildren<WithTranslation> {
+export interface PropsOpenPositionsItem {
   item: {
     id: string;
     code: string;
