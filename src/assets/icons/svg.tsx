@@ -69,6 +69,18 @@ export const ChevronRightIcon: React.FC<Props> = ({ color = 'white', size = 24 }
   </svg>
 );
 
+export const ChevronDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+  </svg>
+);
+
+export const ChevronUpIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z' />
+  </svg>
+);
+
 export const CheckIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
   <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
     <path d='M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z' />
