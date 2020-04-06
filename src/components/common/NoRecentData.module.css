@@ -1,8 +1,10 @@
-.indicator {
+.container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: auto;
   vertical-align: middle;
+  color: white;
   height: 100%;
 }

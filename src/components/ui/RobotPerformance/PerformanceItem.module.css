@@ -4,7 +4,7 @@
   border-top-width: 2px;
   border-color: var(--darkBg);
   background-color: var(--dark);
-  padding: 10px 20x;
+  padding: 10px 20px;
   align-items: center;
 }
 
@@ -45,6 +45,8 @@
 }
 
 .tableCellText {
+  word-wrap: break-word;
+  white-space: nowrap;
   font-size: var(--normal1);
   color: white;
 };

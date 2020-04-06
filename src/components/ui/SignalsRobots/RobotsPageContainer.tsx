@@ -52,19 +52,19 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
           ))}
           <SignalRobotsAddSignals displayType={displayType} />
         </div>
-      ) : (<div />
-        // <div className={styles.containerCard}>
-        //   { data.map((item) => (
-        //     <RobotsItemCard
-        //       key={item.id}
-        //       item={item}
-        //       robotSubscribe={robotSubscribe}
-        //       displayType={displayType}
-        //       onRedirectToDetailView={handleRedirectToDetailView} />
-        //   ))}
-        //   <SignalRobotsAddSignalsCard displayType={displayType} />
-        //   {DummyCards(dummyCards, cartWidth)}
-        // </div>
+      ) : (
+        <div className={styles.containerCard}>
+          { data.map((item) => (
+            <RobotsItemCard
+              key={item.id}
+              item={item}
+              robotSubscribe={robotSubscribe}
+              displayType={displayType}
+              onRedirectToDetailView={handleRedirectToDetailView} />
+          ))}
+          <SignalRobotsAddSignalsCard displayType={displayType} />
+          {DummyCards(dummyCards, cartWidth)}
+        </div>
       )}
     </>
   );

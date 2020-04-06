@@ -19,3 +19,26 @@
   justify-content: center;
   min-height: 68px;
 }
+
+.itemContainerCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark);
+  width: 100%;
+  max-width: 420px;
+  padding: 15px;
+  height: 246px;
+  margin: 0 5px 10px;
+}
+
+@media (max-width: 768px) {
+  .itemContainerCard {
+    height: 233px;
+  }
+}
+
+@media (max-width: 405px) {
+  .itemContainerCard {
+    height: 275px;
+  }
+}
