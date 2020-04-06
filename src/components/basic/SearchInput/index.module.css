@@ -1,0 +1,29 @@
+.wrapper {
+  width: 350px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1; 
+}
+
+.searchInput {
+  background-color: var(--darkBg);
+  color: var(--accent);
+  border-radius: 2px;
+  padding: 10px;
+  padding-right: 35px;
+}
+
+.icon {
+  position: absolute;
+  right: 8px;
+  top: 11px;
+}
+
+.searchInput::-webkit-input-placeholder,
+.searchInput::placeholder {
+  color: var(--accent);
+}

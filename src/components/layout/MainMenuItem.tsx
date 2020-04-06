@@ -1,18 +1,18 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { memo } from 'react';
-import Link from 'next/link';
 
-import { AlarmIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon, TelegramIcon } from '../../assets/icons/svg';
+import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon, TelegramIcon } from '../../assets/icons/svg';
 import styles from './MainMenu.module.css';
 
 interface Props {
   item: any;
   active: boolean;
+  handleOnClick: (path: string, external: boolean) => void;
 }
 
 const components = {
-  robot: AlarmIcon,
+  robot: RobotIcon,
   signals: MultiLineChartIcon,
   notifications: NotificationsIcon,
   profile: AssignmentIcon,
@@ -20,19 +20,23 @@ const components = {
   telegram: TelegramIcon
 };
 
-const _MainMenuItem: React.FC<Props> = ({ item, active }) => {
+const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
   const styleText = [ styles.mainMenuItemText, active ? styles.menuActive : styles.menuInactive ];
   const SpecificIcon = components[item.icon];
+
+  const handleOnClickLink = () => {
+    handleOnClick(item.route ? item.route : item.href, !item.route);
+  };
+
   return (
     <div className={styles.mainMenuItemWrapper}>
-      <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`}>
-        <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} />
-        { item.route ? (
-          <Link href={`/${item.route}`} replace>
-            <a className={styleText.join(' ')}>{item.label}</a>
-          </Link>
-        ) :
-          <a href={item.href} className={styleText.join(' ')}>{item.label}</a> }
+      <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`} onClick={handleOnClickLink}>
+        <SpecificIcon color={active ? 'white' : 'rgba(255, 255, 255, 0.68)'} />
+        <div className={styles.itemLabel}>
+          <div className={styleText.join(' ')}>
+            {item.label}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AlarmIcon, LiveHelpIcon, TelegramIcon } from '../../../../assets/icons/svg';
+import { RobotIcon, LiveHelpIcon, TelegramIcon } from '../../../../assets/icons/svg';
 import { PrimaryButton } from '../../../basic';
 import { SupportItemType } from '../types';
 import styles from './SupportItem.module.css';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const components = {
-  robot: AlarmIcon,
+  robot: RobotIcon,
   help: LiveHelpIcon,
   telegram: TelegramIcon
 };

@@ -1,0 +1,32 @@
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: var(--dark);
+}
+
+.titleFont {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.titleName {
+  display: flex;
+  flex-direction: column;
+  flex: 0.8;
+}
+
+.titlePerformance {
+  display: flex;
+  flex-direction: column;
+  flex: 0.9;
+}
+
+.titleStatistics {
+  display: flex;
+  flex-direction: column;
+  flex: 0.9
+}

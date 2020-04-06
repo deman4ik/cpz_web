@@ -1,0 +1,27 @@
+.btn {
+  border-bottom-width: 3px;
+  border-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 20px;
+}
+
+.isActive {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btnText {
+  font-size: var(--normal3);
+  white-space: nowrap;
+  word-wrap: break-word;
+  display: inline;
+}
+
+.btnTextColor {
+  color: var(--accent);
+}

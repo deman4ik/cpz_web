@@ -8,8 +8,14 @@ export enum PageType {
   community = 'Community'
 }
 
-export interface DeviceProps {
-  isMobile: boolean;
-  isIOS: boolean;
-  width: number;
+export enum TabType {
+  trading,
+  myStatistic,
+  publicStatistic
 }
+
+// export interface DeviceProps {
+//   isMobile: boolean;
+//   isIOS: boolean;
+//   width: number;
+// }

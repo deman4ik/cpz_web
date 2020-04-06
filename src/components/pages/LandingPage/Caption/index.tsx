@@ -1,32 +1,21 @@
 import React, { memo } from 'react';
-import Particles from 'react-particles-js';
+import dynamic from 'next/dynamic';
 
-import BigLogo from '../../../assets/img/big-logo.png';
-import { PrimaryButton } from '../../basic';
-import styles from './Hat.module.css';
-import { Header } from '../../layout';
+import BigLogo from '../../../../assets/img/big-logo.png';
+import { PrimaryButton } from '../../../basic';
+import { Header } from '../../../layout';
+import styles from './index.module.css';
 
-const primary = '#0B98C5';
-const headerHeight = 1080;
+const DinamicImageWithNoSSR = dynamic(
+  () => import('./DinamicImage'),
+  { loading: () => <div className={styles.loading} />,
+    ssr: false }
+);
+
 const subTitle = 'Just invest –\n robots make the rest';
-export const _Hat: React.FC = () => (
+export const _Caption: React.FC = () => (
   <>
-    <div className={styles.headerBgImg}>
-      <Particles
-        height={`${headerHeight}`}
-        params={{
-          particles: {
-            number: {
-              value: false ? 25
-                : false ? 50 : 100
-            },
-            size: { value: 3 },
-            color: { value: primary },
-            line_linked: { color: primary }
-          }
-        }}
-        />
-    </div>
+    <DinamicImageWithNoSSR />
     <div className={styles.header}>
       <div className={styles.container}>
         <Header />
@@ -61,4 +50,4 @@ export const _Hat: React.FC = () => (
   </>
 );
 
-export const Hat = memo(_Hat);
+export const Caption = memo(_Caption);

@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 
 import { Step } from './Step';
-import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../../../hooks/useWindowDimensions';
 import { steps } from '../helpers';
 import styles from './index.module.css';
 

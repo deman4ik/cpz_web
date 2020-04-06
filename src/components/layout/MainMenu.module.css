@@ -5,11 +5,12 @@
 
 .mainMenu {
   height: 100vh;
-  z-index: 1;
+  z-index: 103;
   background-color: var(--dark);
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
 }
 
 .menuContainer {
@@ -65,4 +66,41 @@
   background-color: rgba(0, 0, 0, 0.12);
   height: 1px;
   width: 100%;
+}
+
+.mainMenuMobile {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .mainMenuItemWrapper {
+    width: 40px;
+    margin-left: 5px;
+  }
+  .itemLabel {
+    display: none;
+  }
+  .bigLogo {
+    width: 30px;
+    height: 29px;
+  }
+  .mainMenu {
+    width: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainMenu {
+    display: none;
+  }
+  .mainMenuMobile {
+    display: flex;
+    position: fixed;
+    z-index: 103;
+    bottom: 0;
+    width: 100%;
+    top: auto;
+    justify-content: space-around;
+    background-color: var(--dark);
+  }
 }

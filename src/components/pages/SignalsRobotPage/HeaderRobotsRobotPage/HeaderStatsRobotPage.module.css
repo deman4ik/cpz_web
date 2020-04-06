@@ -1,0 +1,36 @@
+.robotStats {
+  display: flex;
+  flex-direction: row;
+}
+
+.robotStatsCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.robotStatsRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.robotStatsLabel {
+  margin-left: 20px;
+  font-size: var(--small1);
+  color: var(--accent);
+}
+
+.robotStatsValue {
+  margin-left: 20px;
+  font-size: var(--small1);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .robotStats {
+    flex-direction: column;
+    margin: 0 auto;
+    padding-right: 20px;
+  }
+}

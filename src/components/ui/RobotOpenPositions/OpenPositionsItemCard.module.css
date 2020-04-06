@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  height: 100%;
+  margin: 8px 5px 0;
+  background-color: var(--dark);
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.rowCaption {
+  background-color: var(--dark);
+  padding: 10px 5px 10px 10px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.rowBody {
+  margin-top: 15px;
+  padding: 0 10px 10px;
+  align-items: flex-start;
+}
+
+.cellText {
+  font-size: var(--normal1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.headerText {
+  color: var(--accent);
+  font-size: var(--small2);
+}
+
+.secondaryText {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white
+}
+
+.sectionGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.actionGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.iconGroup {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+}

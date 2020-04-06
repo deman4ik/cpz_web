@@ -1,0 +1,33 @@
+.container {
+  margin-top: 10px;
+  margin-bottom: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  flex-direction: row;
+  cursor: pointer;
+  background-color: var(--dark);
+  position: relative;
+  height: 58px;
+  user-select: none;
+}
+
+.icon {
+  margin: 5px;
+  position: absolute;
+  right: 10px;
+  padding-bottom: 5px;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    box-shadow: none;
+  }
+  .title {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+  }
+}

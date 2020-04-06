@@ -1,0 +1,29 @@
+.regionTitle {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+.container {
+  display: flex;
+  padding-top: 0;
+  padding-left: 0;
+  margin: 15px 10px 5px;
+  background-color: var(--darkBg);
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.containerCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background-color: var(--darkBg);
+  padding-top: 10px;
+  padding-left: 0;
+}

@@ -1,0 +1,16 @@
+.btnPosition {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 6px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .btnPosition {
+    margin-top: 10px;
+  }
+}

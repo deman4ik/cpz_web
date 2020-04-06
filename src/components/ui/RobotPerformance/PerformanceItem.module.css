@@ -1,0 +1,64 @@
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  background-color: var(--dark);
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.wraperBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.wraperName {
+  display: flex;
+  flex-direction: column;
+}
+
+.secondaryText {
+  display: flex;
+  flex-direction: column;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.statisticsElement {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.statisticsText {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 14px
+}
+
+.tableCellText {
+  word-wrap: break-word;
+  white-space: nowrap;
+  font-size: var(--normal1);
+  color: white;
+};
+
+.cellWidth {
+  min-width: 90px;
+}
+
+.cellProfit {
+  display: flex;
+  flex-direction: column;
+  flex: 0.13;
+  align-items: flex-start;
+  margin-top: 5px;
+}

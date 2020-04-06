@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding: 24px 20px 12px;
+}
+
+.tableTitleText {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 5px;
+  background-color: var(--dark);
+}
+
+.mobileCardText {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-top-width: 1px;
+  border-color: var(--darkBg);
+}
+
+.mobileCardTextKey {
+  font-size: var(--small1);
+  color: var(--accent);
+}
+
+.mobileCardTextValue {
+  font-size: var(--normal1);
+  line-height: var(--normal3);
+  color: white;
+}

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-radius: 4px;
+  min-height: 300px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+}
+
+.box {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.containerCart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    margin-bottom: 0;
+  }
+  .box {
+    box-shadow: none;
+  }
+}

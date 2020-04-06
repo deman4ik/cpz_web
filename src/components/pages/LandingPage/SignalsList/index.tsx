@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_LANDING_ROBOTS } from '../../../../graphql/robots/queries';
 import { PrimaryButton } from '../../../basic';
 import { SignalsListCard } from './SignalsListCard';
+import { LoadingDummy } from './LoadingDummy';
 import styles from './index.module.css';
 
 const _SignalsList: React.FC = () => {
@@ -13,7 +14,7 @@ const _SignalsList: React.FC = () => {
 
   return (
     <>
-      { loading || !data ? null : (
+      { loading || !data ? <LoadingDummy /> : (
         <div className={styles.container}>
           {data.v_robots_stats.map(item => (
             <SignalsListCard

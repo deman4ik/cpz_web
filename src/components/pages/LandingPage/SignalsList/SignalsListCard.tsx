@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
+import dynamic from 'next/dynamic';
 
-import { AreaChart } from '../../../charts/AreaChart';
 import { PrimaryButton } from '../../../basic';
 import { moneyFormat, valueWithSign } from '../../../../config/utils';
 import styles from './SignalsListCard.module.css';
@@ -8,6 +8,10 @@ import styles from './SignalsListCard.module.css';
 interface Props {
   robot: any;
 }
+
+const DinamicAreaChart = dynamic(
+  () => import('../../../charts/AreaChart')
+);
 
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
   const money = (
@@ -39,7 +43,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
       <div className={styles.chartStat}>
         <div className={styles.chartCol}>
           {robot.equity.changes && (
-            <AreaChart
+            <DinamicAreaChart
               height={120}
               positive={robot.equity.profit > 0}
               data={robot.equity.changes} />

@@ -1,16 +1,9 @@
 import React from 'react';
 
 interface Props {
-  color: string;
+  color?: string;
   size?: number;
 }
-
-export const AlarmIcon: React.FC<Props> = ({ color, size = 24 }) => (
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill={color} width={`${size}px`} height={`${size}px`}>
-    <path d='M0 0h24v24H0z' fill='none' />
-    <path d='M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-1.46-5.47L8.41 12.4l-1.06 1.06 3.18 3.18 6-6-1.06-1.06-4.93 4.95z' />
-  </svg>
-);
 
 export const AssignmentIcon: React.FC<Props> = ({ color }) => (
   <svg fill={color} width='24px' height='24px' focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
@@ -61,5 +54,71 @@ export const TwitterIcon: React.FC<Props> = ({ color }) => (
 export const LiveHelpIcon: React.FC<Props> = ({ color, size = 24 }) => (
   <svg width={`${size}px`} height={`${size}px`} focusable='false' viewBox='0 0 24 24' aria-hidden='true' fill={color}>
     <path d='M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-6 16h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 11.9 13 12.5 13 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z' />
+  </svg>
+);
+
+export const RobotIcon: React.FC<Props> = ({ color, size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox='0 0 24 24'>
+    <path d='M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z' />
+  </svg>
+);
+
+export const ChevronRightIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' />
+  </svg>
+);
+
+export const ChevronDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
+  </svg>
+);
+
+export const ChevronUpIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z' />
+  </svg>
+);
+
+export const CheckIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z' />
+  </svg>
+);
+
+export const PlusIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z' />
+  </svg>
+);
+
+export const SettingsIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M10,22C9.75,22 9.54,21.82 9.5,21.58L9.13,18.93C8.5,18.68 7.96,18.34 7.44,17.94L4.95,18.95C4.73,19.03 4.46,18.95 4.34,18.73L2.34,15.27C2.21,15.05 2.27,14.78 2.46,14.63L4.57,12.97L4.5,12L4.57,11L2.46,9.37C2.27,9.22 2.21,8.95 2.34,8.73L4.34,5.27C4.46,5.05 4.73,4.96 4.95,5.05L7.44,6.05C7.96,5.66 8.5,5.32 9.13,5.07L9.5,2.42C9.54,2.18 9.75,2 10,2H14C14.25,2 14.46,2.18 14.5,2.42L14.87,5.07C15.5,5.32 16.04,5.66 16.56,6.05L19.05,5.05C19.27,4.96 19.54,5.05 19.66,5.27L21.66,8.73C21.79,8.95 21.73,9.22 21.54,9.37L19.43,11L19.5,12L19.43,13L21.54,14.63C21.73,14.78 21.79,15.05 21.66,15.27L19.66,18.73C19.54,18.95 19.27,19.04 19.05,18.95L16.56,17.95C16.04,18.34 15.5,18.68 14.87,18.93L14.5,21.58C14.46,21.82 14.25,22 14,22H10M11.25,4L10.88,6.61C9.68,6.86 8.62,7.5 7.85,8.39L5.44,7.35L4.69,8.65L6.8,10.2C6.4,11.37 6.4,12.64 6.8,13.8L4.68,15.36L5.43,16.66L7.86,15.62C8.63,16.5 9.68,17.14 10.87,17.38L11.24,20H12.76L13.13,17.39C14.32,17.14 15.37,16.5 16.14,15.62L18.57,16.66L19.32,15.36L17.2,13.81C17.6,12.64 17.6,11.37 17.2,10.2L19.31,8.65L18.56,7.35L16.15,8.39C15.38,7.5 14.32,6.86 13.12,6.62L12.75,4H11.25Z' />
+  </svg>
+);
+
+export const ArrowDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z' />
+  </svg>
+);
+
+export const ArrowUpIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z' />
+  </svg>
+);
+
+export const CloseIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' />
+  </svg>
+);
+
+export const MagnifyIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z' />
   </svg>
 );

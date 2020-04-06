@@ -1,0 +1,49 @@
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding: 15px 20px;
+  align-items: center;
+  background-color: var(--dark);
+}
+
+.positionGroup {
+  display: flex;
+  flex-direction: row;
+  flex: 0.8;
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+}
+
+.secondaryText {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.volumeGroup {
+  display: flex;
+  flex-direction: row;
+  flex: 0.44;
+  align-items: center;
+}
+
+.limitWrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+}
+
+.codeGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
