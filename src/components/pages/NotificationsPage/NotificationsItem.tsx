@@ -15,8 +15,8 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
   };
 
   return (
-    <div className={styles.tableRow}>
-      <div className={styles.lineGroup} onClick={handleOnPressNotification}>
+    <div className={styles.tableRow} onClick={handleOnPressNotification}>
+      <div className={styles.lineGroup}>
         <div className={styles.dateGroup}>
           <div className={styles.dateText}>
             {formatDate(item.timestamp)}

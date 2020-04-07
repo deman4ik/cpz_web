@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { useShowDimension } from '../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { NotificationsItem } from './NotificationsItem';
-// import { NotificationsItemCard } from './NotificationsItemCard';
+import { NotificationsItemCard } from './NotificationsItemCard';
 //import { Button } from '../../basic';
 import styles from './NotificationsContainer.module.css';
 
@@ -31,15 +31,15 @@ export const NotificationsContainer: React.FC<Props> =
   return (
     <div className={styles.container}>
       <div className={styles.topCards}>
-        {!isDesktopView ? (<div />
-          // <div className={styles.topCardsContainer}>
-          //   {formatData.map((item, idx) => (
-          //     <NotificationsItemCard
-          //       key={`${item.id}_${idx}`}
-          //       item={item}
-          //       routeNotification={routeNotification} />
-          //   ))}
-          // </div>
+        {!isDesktopView ? (
+          <div className={styles.topCardsContainer}>
+            {formatData.map((item, idx) => (
+              <NotificationsItemCard
+                key={`${item.id}_${idx}`}
+                item={item}
+                routeNotification={routeNotification} />
+            ))}
+          </div>
         ) : (
           <div className={styles.accordionSurface}>
             {formatData.map((item, idx) => (

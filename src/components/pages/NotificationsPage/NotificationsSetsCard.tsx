@@ -1,261 +1,265 @@
-// import React from 'react';
-// import { Text, View } from 'react-native';
-// import { IconButton } from 'react-native-paper';
+import React from 'react';
 
-// import { styles } from './index.style';
-// import { color } from '../../../styles/vars';
-// import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorValue } from '../../../services/Utils';
-// import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
+import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
+import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from '../../../config/utils';
+import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
+import styles from './NotificationsSets.module.css';
 
-// export const failedSet = (item) => (
-//   <View style={{ flex: 1 }}>
-//     <Text style={styles.textMessageCard}>{`${item.data.error} Robot `}</Text>
-//     <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name}</Text>
-//     <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.data.userRobotId}</Text>
-//     <Text style={styles.textMessageCard}>{`Error occurred while processing robot job ${item.data.jobType}.`}</Text>
-//     <Text style={styles.textMessageCard}>Please contact support.</Text>
-//   </View>
-// );
+export const failedSet = (item) => (
+  <div className={styles.rowCard} style={{ flex: 1 }}>
+    <div className={styles.textMessageCard}>{`${item.data.error} Robot `}</div>
+    <div className={styles.textAccentCard}>{item.robot.name}</div>
+    <div className={styles.textAccentCard}>{item.data.userRobotId}</div>
+    <div className={styles.textMessageCard}>{`Error occurred while processing robot job ${item.data.jobType}.`}</div>
+    <div className={styles.textMessageCard}>Please contact support.</div>
+  </div>
+);
 
-// export const messageSet = (item) => (
-//   <Text style={[ styles.textMessageCard, { flexShrink: 1 } ]}>
-//     {`${item.type === 'message.support-reply' ? 'Support Team' : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
-//   </Text>
-// );
+export const messageSet = (item) => (
+  <div className={[ styles.messageRow, styles.textMessageCard ].join(' ')}>
+    {`${item.type === 'message.support-reply' ? 'Support Team' : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
+  </div>
+);
 
-// export const robotTradeSet = (item) => (
-//   <View style={{ flex: 1 }}>
-//     {item.data.status === 'open' ? (
-//       <>
-//         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-//           <Text style={styles.textMessageCard}>Trade </Text>
-//           <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageCard}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', flex: 1 }}>
-//           <View style={{ flex: 1, justifyContent: 'space-around', marginTop: 5 }}>
-//             <View style={{ alignItems: 'flex-start' }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Entry</Text>
-//               <Text style={[ styles.textMessageCard, colorAction(item.data.entryAction) ]}>
-//                 {capitalize(item.data.entryAction)}
-//               </Text>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Price</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {`${item.data.entryPrice} $`}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flex: 1, justifyContent: 'space-around', marginTop: 5 }}>
-//             <View style={{ alignItems: 'flex-start' }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Volume</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {`${item.data.entryExecuted} ${item.robot.asset}`}
-//               </Text>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Date</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {formatDate(item.data.entryDate)}
-//               </Text>
-//             </View>
-//           </View>
-//         </View>
-//       </>
-//     ) : (
-//       <>
-//         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-//           <Text style={styles.textMessageCard}>Trade </Text>
-//           <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageCard}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', flex: 1 }}>
-//           <View style={{ flex: 1, justifyContent: 'space-around', marginTop: 5 }}>
-//             <View style={{ alignItems: 'flex-start' }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Exit</Text>
-//               <Text style={[ styles.textMessageCard, colorAction(item.data.exitAction) ]}>
-//                 {capitalize(item.data.exitAction).split(/(?=[A-Z])/).join(' ')}
-//               </Text>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Price</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {`${item.data.exitPrice} $`}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flex: 1, marginTop: 5, justifyContent: 'space-around' }}>
-//             <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
-//               <View style={{ alignItems: 'flex-start' }}>
-//                 <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Volume</Text>
-//                 <Text style={styles.textMessageCard}>
-//                   {`${item.data.exitExecuted} ${item.robot.asset}`}
-//                 </Text>
-//               </View>
-//               <View style={{ alignItems: 'flex-start' }}>
-//                 <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Profit</Text>
-//                 <Text style={[ styles.textMessageCard, colorValue(item.data.profit) ]}>
-//                   {`${valueWithSign(moneyFormat(item.data.profit))} $`}
-//                 </Text>
-//               </View>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Date</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {formatDate(item.data.exit_date)}
-//               </Text>
-//             </View>
-//           </View>
-//         </View>
-//       </>
-//     )}
-//   </View>
-// );
+export const robotTradeSet = (item) => (
+  <div className={styles.rowCard}>
+    {item.data.status === 'open' ? (
+      <>
+        <div className={styles.row} style={{ justifyContent: 'flex-start' }}>
+          <div className={styles.textMessageCard}>Trade&nbsp;</div>
+          <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageCard}>{item.data.code}</div>
+        </div>
+        <div className={styles.row} style={{ flex: 1 }}>
+          <div className={styles.rowRobot}>
+            <div className={styles.colRobot}>
+              <div className={styles.textAccentCard}>Entry</div>
+              <div className={styles.textMessageCard} style={colorDirection(item.data.entryAction)}>
+                {capitalize(item.data.entryAction)}
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Price</div>
+              <div className={styles.textMessageCard}>
+                {`${item.data.entryPrice} $`}
+              </div>
+            </div>
+          </div>
+          <div className={styles.rowRobot}>
+            <div className={styles.colRobot}>
+              <div className={styles.textAccentCard}>Volume</div>
+              <div className={styles.textMessageCard}>
+                {`${item.data.entryExecuted} ${item.robot.asset}`}
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Date</div>
+              <div className={styles.textMessageCard}>
+                {formatDate(item.data.entryDate)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div className={styles.row} style={{ justifyContent: 'flex-start' }}>
+          <div className={styles.textMessageCard}>Trade&nbsp;</div>
+          <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageCard}>{item.data.code}</div>
+        </div>
+        <div className={styles.row} style={{ flex: 1 }}>
+          <div className={styles.rowRobot}>
+            <div className={styles.colRobot}>
+              <div className={styles.textAccentCard}>Exit</div>
+              <div className={styles.textMessageCard} style={colorDirection(item.data.exitAction)}>
+                {capitalize(item.data.exitAction).split(/(?=[A-Z])/).join(' ')}
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Price</div>
+              <div className={styles.textMessageCard}>
+                {`${item.data.exitPrice} $`}
+              </div>
+            </div>
+          </div>
+          <div className={styles.rowRobot}>
+            <div className={styles.rowRobotProfit}>
+              <div className={styles.colRobot}>
+                <div className={styles.textAccentCard}>Volume</div>
+                <div className={styles.textMessageCard}>
+                  {`${item.data.exitExecuted} ${item.robot.asset}`}
+                </div>
+              </div>
+              <div className={styles.colRobot}>
+                <div className={styles.textAccentCard}>Profit</div>
+                <div className={styles.textMessageCard} style={colorAction(item.data.profit > 0)}>
+                  {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+                </div>
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Date</div>
+              <div className={styles.textMessageCard}>
+                {formatDate(item.data.exit_date)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+);
 
-// export const errorSet = (item) => (
-//   <View style={{ flex: 1 }}>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageCard}>Robot </Text>
-//       <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name}</Text>
-//     </View>
-//     <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.data.userRobotId}</Text>
-//     <Text style={styles.textMessageCard}>Error occurred while processing order</Text>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.data.exId}</Text>
-//       <Text style={styles.textMessageCard}>{` ${item.data.error}.`}</Text>
-//     </View>
-//     <Text style={styles.textMessageCard}>Please check your API Keys and Robot settings or contact support.</Text>
-//   </View>
-// );
+export const errorSet = (item) => (
+  <div className={styles.rowCard} style={{ flex: 1 }}>
+    <div className={styles.row}>
+      <div className={styles.textMessageCard}>Robot&nbsp;</div>
+      <div className={styles.textAccentCard}>{item.robot.name}</div>
+    </div>
+    <div className={styles.textAccentCard}>{item.data.userRobotId}</div>
+    <div className={styles.textMessageCard}>Error occurred while processing order</div>
+    <div className={styles.row}>
+      <div className={styles.textAccentCard}>{item.data.exId}</div>
+      <div className={styles.textMessageCard}>{` ${item.data.error}.`}</div>
+    </div>
+    <div className={styles.textMessageCard}>Please check your API Keys and Robot settings or contact support.</div>
+  </div>
+);
 
-// export const signalAlertSet = (item) => (
-//   <View style={{ flex: 1 }}>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageCard}>Signal </Text>
-//       <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name} </Text>
-//       <Text style={styles.textMessageCard}>{item.robot_position.code}</Text>
-//     </View>
-//     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', marginTop: 5, flexWrap: 'wrap' }}>
-//       <View style={{ alignItems: 'flex-start' }}>
-//         <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Price</Text>
-//         <Text style={styles.textMessageCard}>{`${item.data.price} $`}</Text>
-//       </View>
-//       <View style={{ alignItems: 'flex-start' }}>
-//         <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Action</Text>
-//         <View style={{ flexDirection: 'row' }}>
-//           <Text style={styles.textMessageCard}>{actionName(item.data.action)}</Text>
-//           <IconButton
-//             style={{ height: 10, width: 10, marginTop: 4 }}
-//             icon={actionIcon(item.data.action)}
-//             size={16}
-//             color={actionColor(item.data.action)} />
-//           <Text style={styles.textMessageCard}>{capitalize(item.data.orderType)} </Text>
-//         </View>
-//       </View>
-//       <View style={{ alignItems: 'flex-start' }}>
-//         <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Date</Text>
-//         <Text style={styles.textMessageCard}>{formatDate(item.data.timestamp)}</Text>
-//       </View>
-//     </View>
-//   </View>
-// );
+const components = {
+  arrowdown: ArrowDownIcon,
+  arrowup: ArrowUpIcon,
+};
 
-// export const robotSet = (item) => (
-//   <View style={{ flex: 1 }}>
-//     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-//       <Text style={styles.textMessageCard}>Robot </Text>
-//       <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name}</Text>
-//       <Text style={styles.textMessageCard}>{`is ${item.type.split('.')[1]}`}</Text>
-//     </View>
-//     {item.data.message ? (
-//       <Text style={[ styles.textMessageCard, { flexShrink: 1 } ]}>
-//         {item.data.message}
-//       </Text>
-//     ) : null}
-//   </View>
-// );
+export const signalAlertSet = (item) => {
+  const SpecificIcon = components[actionIcon(item.data.action)];
+  return (
+    <div className={styles.rowCard} style={{ flex: 1 }}>
+      <div className={styles.row} style={{ flexWrap: 'wrap' }}>
+        <div className={styles.textMessageCard}>Signal&nbsp;</div>
+        <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
+        <div className={styles.textMessageCard}>{item.robot_position.code}</div>
+      </div>
+      <div className={styles.alertRow}>
+        <div className={styles.colRobot}>
+          <div className={styles.textAccentCard}>Price</div>
+          <div className={styles.textMessageCard}>{`${item.data.price} $`}</div>
+        </div>
+        <div className={styles.colRobot}>
+          <div className={styles.textAccentCard}>Action</div>
+          <div className={styles.row}>
+            <div className={styles.textMessageCard}>{actionName(item.data.action)}</div>
+            <div style={{ marginTop: -1 }}>
+              <SpecificIcon color={actionColor(item.data.action)} size={16} />
+            </div>
+            <div className={styles.textMessageCard}>{capitalize(item.data.orderType)}&nbsp;</div>
+          </div>
+        </div>
+        <div className={styles.colRobot}>
+          <div className={styles.textAccentCard}>Date</div>
+          <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-// export const signalTradeSet = (item) => (
-//   <View>
-//     {actionOpen(item.data.action) ? (
-//       <>
-//         <Text style={styles.textMessageCard}>Signal Trade </Text>
-//         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-//           <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageCard}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', marginTop: 5, flexWrap: 'wrap' }}>
-//           <View style={{ alignItems: 'flex-start' }}>
-//             <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Entry</Text>
-//             <Text style={[ styles.textMessageCard, colorAction(item.data.action) ]}>
-//               {capitalize(item.data.action)}
-//             </Text>
-//           </View>
-//           <View style={{ alignItems: 'flex-start' }}>
-//             <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Price</Text>
-//             <Text style={styles.textMessageCard}>
-//               {`${item.data.price} $`}
-//             </Text>
-//           </View>
-//           <View style={{ alignItems: 'flex-start' }}>
-//             <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Date</Text>
-//             <Text style={styles.textMessageCard}>
-//               {formatDate(item.data.timestamp)}
-//             </Text>
-//           </View>
-//         </View>
-//       </>
-//     ) : (
-//       <>
-//         <Text style={styles.textMessageCard}>Signal Trade </Text>
-//         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-//           <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageCard}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', flex: 1 }}>
-//           <View style={{ flex: 1, justifyContent: 'space-around', marginTop: 5 }}>
-//             <View style={{ alignItems: 'flex-start' }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Exit</Text>
-//               <Text style={[ styles.textMessageCard, colorAction(item.data.action) ]}>
-//                 {capitalize(item.data.action).split(/(?=[A-Z])/).join(' ')}
-//               </Text>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Price</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {`${item.data.price} $`}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={{ flex: 1, marginTop: 5, justifyContent: 'space-around' }}>
-//             <View style={{ alignItems: 'flex-start' }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Profit</Text>
-//               <Text style={[ styles.textMessageCard, colorValue(item.data.profit) ]}>
-//                 {`${valueWithSign(moneyFormat(item.data.profit))} $`}
-//               </Text>
-//             </View>
-//             <View style={{ alignItems: 'flex-start', marginTop: 5 }}>
-//               <Text style={[ styles.textMessageCard, { color: color.accent } ]}>Date</Text>
-//               <Text style={styles.textMessageCard}>
-//                 {formatDate(item.data.timestamp)}
-//               </Text>
-//             </View>
-//           </View>
-//         </View>
-//       </>
-//     )}
-//   </View>
-// );
+export const robotSet = (item) => (
+  <div className={styles.rowCard} style={{ flex: 1 }}>
+    <div className={styles.row} style={{ flexWrap: 'wrap' }}>
+      <div className={styles.textMessageCard}>Robot </div>
+      <div className={styles.textAccentCard}>{item.robot.name}</div>
+      <div className={styles.textMessageCard}>{`is ${item.type.split('.')[1]}`}</div>
+    </div>
+    {item.data.message ? (
+      <div className={[ styles.messageRow, styles.textMessageCard ].join(' ')}>
+        {item.data.message}
+      </div>
+    ) : null}
+  </div>
+);
 
-// export const userSet = (item) => (
-//   <View>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageCard}>Your API Key </Text>
-//       <Text style={[ styles.textMessageCard, { color: color.accent } ]}>{item.data.name}</Text>
-//       <Text style={styles.textMessageCard}> is invalid!</Text>
-//     </View>
-//     <Text style={styles.textMessageCard}>{item.data.error}</Text>
-//     <Text style={styles.textMessageCard}>Please update your API Key information in your Profile.</Text>
-//   </View>
-// );
+export const signalTradeSet = (item) => (
+  <div className={styles.rowCard}>
+    {actionOpen(item.data.action) ? (
+      <>
+        <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
+        <div className={styles.row} style={{ justifyContent: 'flex-start' }}>
+          <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageCard}>{item.data.code}</div>
+        </div>
+        <div className={styles.alertRow}>
+          <div className={styles.colRobot}>
+            <div className={styles.textAccentCard}>Entry</div>
+            <div className={styles.textMessageCard} style={colorDirection(item.data.action)}>
+              {capitalize(item.data.action)}
+            </div>
+          </div>
+          <div className={styles.colRobot}>
+            <div className={styles.textAccentCard}>Price</div>
+            <div className={styles.textMessageCard}>
+              {`${item.data.price} $`}
+            </div>
+          </div>
+          <div className={styles.colRobot}>
+            <div className={styles.textAccentCard}>Date</div>
+            <div className={styles.textMessageCard}>
+              {formatDate(item.data.timestamp)}
+            </div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
+        <div className={styles.row} style={{ justifyContent: 'flex-start' }}>
+          <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageCard}>{item.data.code}</div>
+        </div>
+        <div className={styles.row} style={{ flex: 1 }}>
+          <div className={styles.rowRobot}>
+            <div className={styles.colRobot}>
+              <div className={styles.textAccentCard}>Exit</div>
+              <div className={styles.textMessageCard} style={colorDirection(item.data.action)}>
+                {capitalize(item.data.action).split(/(?=[A-Z])/).join(' ')}
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Price</div>
+              <div className={styles.textMessageCard}>
+                {`${item.data.price} $`}
+              </div>
+            </div>
+          </div>
+          <div className={styles.rowRobot}>
+            <div className={styles.colRobot}>
+              <div className={styles.textAccentCard}>Profit</div>
+              <div className={styles.textMessageCard} style={colorAction(item.data.profit > 0)}>
+                {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+              </div>
+            </div>
+            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+              <div className={styles.textAccentCard}>Date</div>
+              <div className={styles.textMessageCard}>
+                {formatDate(item.data.timestamp)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+);
+
+export const userSet = (item) => (
+  <div>
+    <div className={styles.row}>
+      <div className={styles.textMessageCard}>Your API Key&nbsp;</div>
+      <div className={styles.textAccentCard}>{item.data.name}&nbsp;</div>
+      <div className={styles.textMessageCard}>is invalid!</div>
+    </div>
+    <div className={styles.textMessageCard}>{item.data.error}</div>
+    <div className={styles.textMessageCard}>Please update your API Key information in your Profile.</div>
+  </div>
+);

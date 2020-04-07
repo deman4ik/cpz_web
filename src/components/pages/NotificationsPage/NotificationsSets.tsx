@@ -22,7 +22,7 @@ export const failedSet = (item) => (
 );
 
 export const messageSet = (item) => (
-  <div className={styles.textMessageDesktop} style={{ flexShrink: 1 }}>
+  <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}>
     {`${item.type === 'message.support-reply'
       ? 'Support Team'
       : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
@@ -147,7 +147,7 @@ export const robotSet = (item) => (
       <div className={styles.textMessageDesktop}>{` is ${item.type.split('.')[1]}`}</div>
     </div>
     {item.data.message ? (
-      <div className={styles.textMessageDesktop} style={{ flexShrink: 1, marginTop: 3 }}>
+      <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')} style={{ marginTop: 3 }}>
         {item.data.message}
       </div>
     ) : null}

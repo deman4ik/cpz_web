@@ -1,5 +1,5 @@
 import * as Sets from './NotificationsSets';
-//import * as SetsCard from './NotificationsSetsCard';
+import * as SetsCard from './NotificationsSetsCard';
 import { color } from '../../../config/constants';
 
 const actionTypes = [ 'long', 'closeShort' ];
@@ -49,8 +49,7 @@ const messageMap = {
 };
 
 export const showMessage = (item, card = false) => {
-  //const setFunc = card ? SetsCard : Sets;
-  const setFunc = Sets;
+  const setFunc = card ? SetsCard : Sets;
   const messages = {
     failed: () => setFunc.failedSet(item),
     message: () => setFunc.messageSet(item),
