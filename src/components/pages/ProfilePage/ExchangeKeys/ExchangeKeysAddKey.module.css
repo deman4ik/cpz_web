@@ -1,0 +1,28 @@
+.itemContainerCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark);
+  width: 100%;
+  max-width: 220px;
+  height: 220px;
+  padding: 15px;
+  margin: 8px 5px 10px;
+}
+
+.border {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: var(--accent);
+  align-items: center;
+  justify-content: center; 
+}
+
+@media (max-width: 480px) {
+  .itemContainerCard {
+    max-width: 30px;
+  }
+}

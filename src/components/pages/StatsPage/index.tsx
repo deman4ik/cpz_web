@@ -1,31 +1,27 @@
-import React, { PropsWithChildren, memo, useMemo, useState, useEffect } from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import { View } from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/react-hooks';
 
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from '../../../graphql/signals/queries';
-import { useDimensionWidth } from '../../../hooks/useDimensions';
 import { POLL_INTERVAL } from '../../../config/constants';
-import { NoRecentData } from '../../ui/Common/NoRecentData';
+import { NoRecentData } from '../../common';
 import { useFilters } from '../../../hooks/useFilters';
 import { Template } from '../../layout';
-import { capitalize } from '../../../services/Utils';
+import { capitalize } from '../../../config/utils';
 import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from './helpers';
 import { PageType } from '../../../config/types';
 import { StatsPageButtonToolbar } from './StatsPageButtonToolbar';
 import { StatsPageComponent } from './StatsPageComponent';
 import { StatsPageFilters } from './StatsPageFilters';
-import { Modal, Button } from '../../basic';
+import { Button } from '../../basic';
 import { CheckedFilters, LabelCombinations } from './types';
-import { common } from '../../../styles';
-import { styles } from './index.style';
 
-const _StatsPage: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
+export const StatsPage: React.FC = () => {
+  const { width } = useWindowDimensions();
   const router = useRouter();
   const displayType = router.route.split('/')[1];
-  const { dimension } = useDimensionWidth();
-  const { screenType, setDimension, screenWidth, isMobile } = dimension;
   const [ isVisibleFilters, setIsVisibleFilters ] = useState(false);
   const [ filtersCombinations, setFiltersCombinations ] = useState<CheckedFilters[]>([]);
   const [ labelCombinations, setLabelCombinations ] = useState<LabelCombinations>({ exchange: [], asset: [] });
@@ -106,21 +102,18 @@ const _StatsPage: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
     setIsVisibleFilters(false);
     confirmSelectedFilters();
   };
-  console.log('formatData', formatData);
-  console.log('data', data);
+
   return (
     <Template
       page={PageType[displayType]}
-      title={t(`My ${capitalize(displayType)} Total Performance`)}
+      title={`My ${capitalize(displayType)} Total Performance`}
       subTitle={getSubTitle(selectedFilter)}
-      toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} screenType={screenType} />}
-      screenType={screenType}
-      screenWidth={screenWidth}
-      isMobile={isMobile}
-      onLayout={setDimension}
+      // toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} screenType={screenType} />}
+      width={width}
       handlePressBack={handlePressBack}
     >
-      <Modal
+      <div />
+      {/* <Modal
         title={t(`Filter My Total ${capitalize(displayType)} Performance`)}
         visible={isVisibleFilters}
         screenType={screenType}
@@ -168,9 +161,7 @@ const _StatsPage: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
             dimension={dimension}
             displayType={displayType} />
         ) }
-      </>
+      </> */}
     </Template>
   );
 };
-
-export const StatsPage = memo(withTranslation()(_StatsPage));

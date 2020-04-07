@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.regionTitle {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .regionTitle {
+    font-size: var(--normal1);
+  }
+}
+
+@media (max-width: 480px) {
+  .regionTitle {
+    font-size: var(--small1);
+  }
+}
