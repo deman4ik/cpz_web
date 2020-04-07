@@ -128,3 +128,9 @@ export const BorderColorIcon: React.FC<Props> = ({ color = 'white', size = 24 })
     <path d='M20.71,4.04C21.1,3.65 21.1,3 20.71,2.63L18.37,0.29C18,-0.1 17.35,-0.1 16.96,0.29L15,2.25L18.75,6M17.75,7L14,3.25L4,13.25V17H7.75L17.75,7Z' />
   </svg>
 );
+
+export const ChartLineIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19H22V21H2V3H4V17.54L9.5,8L16,11.78Z' />
+  </svg>
+);

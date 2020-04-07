@@ -1,7 +1,7 @@
 export const extraSettings = {
   signals: {
     title: 'Signals',
-    icon: 'chart-line',
+    icon: 'chartline',
   },
   trading: {
     title: 'Robots',

@@ -30,7 +30,7 @@
     "react": "16.13.1",
     "react-activity": "^1.2.2",
     "react-dom": "16.13.1",
-    "react-particles-js": "^3.0.2",
+    "react-particles-js": "^3.0.3",
     "subscriptions-transport-ws": "^0.9.16",
     "victory": "^34.1.3"
   },

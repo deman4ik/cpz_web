@@ -1,8 +1,9 @@
-import React, { memo, useState, Fragment } from 'react';
+import React, { memo, useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { SET_NOTIFICATION_SETTINGS } from '../../../../graphql/user/mutations';
+import { LoadingIndicator } from '../../../common';
 //import { useTooltip } from '../../../../hooks/useTooltip';
 import { capitalize } from '../../../../config/utils';
 //import { Checkbox } from '../../../basic/Checkbox';
@@ -11,8 +12,12 @@ import { capitalize } from '../../../../config/utils';
 import { extraSettings, serviceName } from './helpers';
 //import { styles as _styles, responsive as _responsive } from './index.style';
 import { NotificationProps } from './types';
+import { Notify } from './Notify';
+import styles from './index.module.css';
 
 const _NotifySettings: React.FC = () => {
+  // const indicatorRef = useRef(null);
+  // const [elheight, setElHeight] = useState(0);
   //const { tooltipText: signalsHelpText, tooltipButton: signalsHelpButton } = useTooltip('If you turn signals notifications OFF you will not receive any messages about signals from ALL SIGNALS ROBOTS', 400);
   //const { tooltipText: robotsHelpText, tooltipButton: robotsHelpButton } = useTooltip('If you turn robots notifications OFF you will not receive any messages about trades from ALL ROBOTS', 400);
 
@@ -77,54 +82,30 @@ const _NotifySettings: React.FC = () => {
       }
     });
   };
-
+  // useEffect(
+  //   () => {
+  //     console.log(indicatorRef);
+  //     console.log(indicatorRef.current.offsetHeight);
+  //     setElHeight(indicatorRef.current.offsetHeight);
+  //   },
+  //   [ indicatorRef ]
+  // );
+  //console.log(indicatorRef.current);
   return (
     <>
       {/* {signalsHelpText}
       {robotsHelpText} */}
-      <div className={_styles.container}>
-        <div className={responsive.regionTitle(screenType)}>
+      <div className={styles.container}>
+        <div className={styles.regionTitle}>
           Notification Settings
         </div>
-        <div className={_styles.surface}>
+        <div className={styles.surface}>
           {loading ? (
-            <div className={_styles.loadingContainer}>
-              <ActivityIndicator size='large' color={vars.color.accent} />
-            </div>
+            <LoadingIndicator />
           ) : (
-            <div className={_styles.columns}>
-              {notifications.map((notification, index) => (
-                <Fragment key={notification.key}>
-                  <div className={_styles.column}>
-                    <div className={_styles.titleRow}>
-                      <IconButton
-                        icon={notification.icon}
-                        size={24}
-                        color={vars.color.accent}
-                      />
-                      <div className={_styles.titleText}>
-                        {t(notification.title)}
-                      </div>
-                      {/* {renderHelpButton(notification.key)} */}
-                    </div>
-                    {notification.checkboxes.map(checkbox => (
-                      // <Checkbox
-                      //   key={`${notification.key}.${checkbox.name}`}
-                      //   color={vars.color.primary}
-                      //   uncheckedColor={vars.color.white}
-                      //   label={t(capitalize(checkbox.name))}
-                      //   labelStyle={_styles.label}
-                      //   isActive={checkbox.isActive}
-                      //   disabled={checkbox.disabled}
-                      //   isLoading={checkbox.isLoading}
-                      //   onPress={() => toggleNotification(notification.key, checkbox.name)}
-                      // />
-                    ))}
-                  </div>
-                  {index < notifications.length - 1 && (
-                    <div className={_responsive.separator(screenType)} />
-                  )}
-                </Fragment>
+            <div className={styles.columns}>
+              {notifications.map((item, idx) => (
+                <Notify item={item} idx={idx} key={item.key} />
               ))}
             </div>
           )}
