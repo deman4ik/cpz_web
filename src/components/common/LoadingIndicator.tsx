@@ -4,11 +4,12 @@ import Spinner from 'react-activity/lib/Spinner';
 interface Props {
   style?: object;
   height?: number;
+  size?: number;
 }
 
-export const LoadingIndicator: React.FC<Props> = ({ style, height }) => (
+export const LoadingIndicator: React.FC<Props> = ({ style, height, size }) => (
   <div className='indicator' style={style}>
-    <Spinner />
+    <Spinner size={size} />
     <style jsx>{`
       .indicator {
         display: flex;

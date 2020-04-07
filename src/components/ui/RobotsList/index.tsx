@@ -11,7 +11,6 @@ import { useDummyCarts } from '../../../hooks/useDummyCarts';
 import { DummyCards } from '../../common/DummyCards';
 import { RobotsLoadMore } from '../RobotsLoadMore';
 import styles from './index.module.css';
-//import { Dimension } from '../../../config/types';
 
 interface Props {
   data: any;

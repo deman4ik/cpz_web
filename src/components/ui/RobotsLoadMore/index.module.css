@@ -1,10 +1,7 @@
 .btnPosition {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  margin-top: 6px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 6px auto;
   flex-direction: row;
   justify-content: center;
 }

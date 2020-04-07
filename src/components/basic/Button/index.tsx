@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ButtonType } from './types';
 import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ArrowDownIcon } from '../../../assets/icons/svg';
+import { LoadingIndicator } from '../../common';
 
 export interface HoverChangesProps {
   type?: ButtonType;
@@ -32,7 +33,8 @@ const components = {
   arrowdown: ArrowDownIcon
 };
 
-export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase, isLoading, onClick, width, className }) => {
+export const Button: React.FC<Props> =
+({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
@@ -42,15 +44,25 @@ export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase,
     return composeClass;
   };
 
+  const handleOnClick = () => {
+    if (!isLoading && !disabled) {
+      onClick();
+    }
+  };
+
   return (
-    <div className={getClassName().join(' ')} style={style}>
-      <div className='btn-text'>
-        {title}
-      </div>
-      <div className='icon'>
-        <SpecificIcon size={15} />
-      </div>
-      <div className='aligner' />
+    <div className={getClassName().join(' ')} style={style} onClick={handleOnClick}>
+      {isLoading ? <LoadingIndicator height={26} size={10} /> : (
+        <>
+          <div className='btn-text'>
+            {title}
+          </div>
+          <div className='icon'>
+            <SpecificIcon size={15} />
+          </div>
+          <div className='aligner' />
+        </>
+      )}
       <style jsx>{`
         .btn-text {
           width: 100%;
@@ -98,8 +110,7 @@ export const Button: React.FC<Props> = ({ title, type, style, icon, isUppercase,
         }
         .btn.dimmed {
           background-color: rgb(44, 52, 84);
-        }
-      `}
+        }`}
       </style>
     </div>
   );

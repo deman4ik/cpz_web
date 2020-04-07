@@ -5,7 +5,8 @@ import { useShowDimension } from '../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../config/constants';
 import { NotificationsItem } from './NotificationsItem';
 import { NotificationsItemCard } from './NotificationsItemCard';
-//import { Button } from '../../basic';
+import { RobotsLoadMore } from '../../ui/RobotsLoadMore';
+
 import styles from './NotificationsContainer.module.css';
 
 interface Props {
@@ -19,7 +20,6 @@ interface Props {
 export const NotificationsContainer: React.FC<Props> =
 ({ formatData, handleLoadMore, isLoadingMore, recordsCount, width }) => {
   const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
-  //const maxTablet = screenWidth < 760;
   const routeNotification = (action: { link: string; redirect: boolean }) => {
     if (action.redirect) {
       window.location.assign(action.link);
@@ -50,18 +50,10 @@ export const NotificationsContainer: React.FC<Props> =
             ))}
           </div>
         )}
-        {/* { recordsCount > formatData.length ? (
-          <div className={styles.loadMore}>
-            <Button
-              width={146}
-              title='Load More'
-              type='dimmed'
-              icon='arrow-down'
-              isUppercase
-              isLoading={isLoadingMore}
-              onPress={handleLoadMore} />
-          </div>
-        ) : null} */}
+        <RobotsLoadMore
+          renderLoadMoreButton={recordsCount > formatData.length}
+          isLoadingMore={isLoadingMore}
+          onFetchMore={handleLoadMore} />
       </div>
     </div>
   );

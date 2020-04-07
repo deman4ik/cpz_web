@@ -13,9 +13,11 @@ export const SignalsSearchPage: React.FC = () => {
   const [ signalsSearchValue, setSignalsSearchValue ] = useState('');
   const debouncedSearchTerm = useDebounce(signalsSearchValue, 500);
   const { width } = useWindowDimensions();
+
   const handlePressBack = () => {
     Router.back();
   };
+
   return (
     <Template
       page={PageType.signals}
@@ -26,7 +28,8 @@ export const SignalsSearchPage: React.FC = () => {
           setSignalsSearchValue={setSignalsSearchValue}
           displayType='signals' />
       )}
-      handlePressBack={handlePressBack}>
+      handlePressBack={handlePressBack}
+    >
       <div className={styles.container}>
         <SignalsSearchContainer
           searchText={debouncedSearchTerm}
