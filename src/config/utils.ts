@@ -37,3 +37,12 @@ export const colorDirection = (direction: string): object =>
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) => (direction === 'short' ? 'arrowdown' : 'arrowup');
 export const getIconNameAction = (check: boolean) => (!check ? 'arrowdown' : 'arrowup');
+
+export const truncate = (str: string, maxLength: number) => {
+  if (str.length <= maxLength) return str;
+
+  let subString = str.substr(0, maxLength - 1);
+  subString = subString.substr(0, subString.lastIndexOf(' '));
+
+  return `${subString}...`;
+};

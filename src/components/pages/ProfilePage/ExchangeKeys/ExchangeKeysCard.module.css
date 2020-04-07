@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 220px;
+  height: 220px;
+  margin: 8px 5px 0;
+  background-color: var(--dark);
+  border-radius: 2px;
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+}
+
+.secondaryText {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rowError {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+
+.topPart {
+  background-color: var(--dark);
+  padding: 10px 5px 10px 15px;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  flex: 0.8;
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  flex: 0.5;
+  align-items: flex-end;
+}
+
+.exchangeGroup {
+  flex: 1;
+  align-items: flex-start;
+  margin-top: 15px;
+  padding: 0 15px 10px;
+}
+
+.exchangeRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.btnGroup {
+  margin-top: 15px;
+  padding: 0 15px 10px;
+  justify-content: space-around;
+}
+
+.errorGroup {
+  margin-top: 10px;
+  padding: 0 15px 10px;
+  height: 40px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    max-width: unset;
+  }
+}

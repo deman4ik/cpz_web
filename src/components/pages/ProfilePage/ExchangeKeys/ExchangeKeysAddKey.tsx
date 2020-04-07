@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { Button } from '../../../basic';
+import { CaptionButton } from '../../../basic';
 import { ModalKey } from './types';
 import styles from './ExchangeKeysAddKey.module.css';
 
@@ -19,11 +19,9 @@ const _ExchangeKeysAddKey: React.FC<Props> = ({ handleSetVisibleModal }) => {
         className={styles.border}
         onClick={handleOnPress}
       >
-        <Button
+        <CaptionButton
           title='Add New Key'
-          icon='plus'
-          isUppercase
-        />
+          icon='plus' />
       </div>
     </div>
   );

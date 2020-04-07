@@ -4,7 +4,7 @@ import { ExchangeKeysAddKey } from './ExchangeKeysAddKey';
 // import { ExchangeKeysAddKeyModal } from './ExchangeKeysAddKeyModal';
 // import { ExchangeKeysEditNameModal } from './ExchangeKeysEditNameModal';
 // import { ExchangeKeysDeleteKeyModal } from './ExchangeKeysDeleteKeyModal';
-// import { ExchangeKeysCard } from './ExchangeKeysCard';
+import { ExchangeKeysCard } from './ExchangeKeysCard';
 import { ModalKey } from './types';
 import styles from './ExchangeKeysContainer.module.css';
 //import { Modal } from '../../../basic';
@@ -61,13 +61,12 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
     <>
       <div className={styles.wrapper}>
         <div className={styles.containerCard}>
-          {/* { formatData.map((item) => (
+          { formatData.map((item) => (
             <ExchangeKeysCard
               key={item.id}
               item={item}
-              screenType={dimension.screenType}
               handleSetVisibleModal={handleSetVisibleModal} />
-          )) } */}
+          )) }
           <ExchangeKeysAddKey handleSetVisibleModal={handleSetVisibleModal} />
         </div>
       </div>

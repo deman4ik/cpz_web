@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ButtonType } from './types';
-import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ArrowDownIcon } from '../../../assets/icons/svg';
+import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ArrowDownIcon, BorderColorIcon, CloseIcon } from '../../../assets/icons/svg';
 import { LoadingIndicator } from '../../common';
 
 export interface HoverChangesProps {
@@ -30,7 +30,9 @@ const components = {
   plus: PlusIcon,
   settings: SettingsIcon,
   chevronright: ChevronRightIcon,
-  arrowdown: ArrowDownIcon
+  arrowdown: ArrowDownIcon,
+  bordercolor: BorderColorIcon,
+  close: CloseIcon
 };
 
 export const Button: React.FC<Props> =
