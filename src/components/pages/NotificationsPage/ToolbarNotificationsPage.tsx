@@ -1,25 +1,20 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
 import { useClearNotifications } from '../../../hooks/useClearNotifications';
-import { ScreenTypeProps } from '../../../services/Screen';
-import { Button } from '../../basic';
+import { CaptionButton } from '../../basic';
+import styles from '../../../config/common.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
-  screenType: ScreenTypeProps;
-}
-
-const _ToolbarNotificationsPage: React.FC<Props> = ({ t, screenType }) => {
-  const maxTablet = screenType.maxTablet();
+const _ToolbarNotificationsPage: React.FC = () => {
   const { updateNotifications } = useClearNotifications();
 
   return (
-    <Button
-      title={maxTablet ? null : t('Mark All as Readed')}
-      icon='check'
-      isUppercase
-      onPress={updateNotifications} />
+    <div className={styles.toolbar}>
+      <CaptionButton
+        title='Mark All as Readed'
+        icon='check'
+        onClick={updateNotifications} />
+    </div>
   );
 };
 
-export const ToolbarNotificationsPage = memo(withTranslation()(_ToolbarNotificationsPage));
+export const ToolbarNotificationsPage = memo(_ToolbarNotificationsPage);
