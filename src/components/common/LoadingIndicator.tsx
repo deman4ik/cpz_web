@@ -1,14 +1,22 @@
 import React from 'react';
 import Spinner from 'react-activity/lib/Spinner';
 
-import styles from './LoadingIndicator.module.css';
-
 interface Props {
   style?: object;
+  height?: number;
 }
 
-export const LoadingIndicator: React.FC<Props> = ({ style }) => (
-  <div className={styles.indicator} style={style}>
+export const LoadingIndicator: React.FC<Props> = ({ style, height }) => (
+  <div className='indicator' style={style}>
     <Spinner />
+    <style jsx>{`
+      .indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: ${height ? `${height}px` : '100vh'};
+      }`}
+    </style>
   </div>
 );
