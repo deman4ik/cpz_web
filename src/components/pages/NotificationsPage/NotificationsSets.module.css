@@ -1,0 +1,14 @@
+.textMessageDesktop {
+  color: white;
+  font-size: var(--normal1);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.textAccent {
+  color: var(--accent);
+  font-size: var(--normal1);
+}

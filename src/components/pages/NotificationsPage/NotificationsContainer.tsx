@@ -1,9 +1,12 @@
 import React from 'react';
 import Router from 'next/router';
 
-// import { NotificationsItem } from './NotificationsItem';
+import { useShowDimension } from '../../../hooks/useShowDimension';
+import { SCREEN_TYPE } from '../../../config/constants';
+import { NotificationsItem } from './NotificationsItem';
 // import { NotificationsItemCard } from './NotificationsItemCard';
-import { Button } from '../../basic';
+//import { Button } from '../../basic';
+import styles from './NotificationsContainer.module.css';
 
 interface Props {
   formatData: any;
@@ -15,6 +18,7 @@ interface Props {
 
 export const NotificationsContainer: React.FC<Props> =
 ({ formatData, handleLoadMore, isLoadingMore, recordsCount, width }) => {
+  const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
   //const maxTablet = screenWidth < 760;
   const routeNotification = (action: { link: string; redirect: boolean }) => {
     if (action.redirect) {
@@ -24,42 +28,41 @@ export const NotificationsContainer: React.FC<Props> =
     }
   };
 
-  return (<div />
-    // <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20 }}>
-    //   <View style={styles.topCards}>
-    //     {maxTablet ? (
-    //       <View style={styles.topCardsContainer}>
-    //         {formatData.map((item, idx) => (
-    //           <NotificationsItemCard
-    //             key={`${item.id}_${idx}`}
-    //             item={item}
-    //             screenWidth={screenWidth}
-    //             routeNotification={routeNotification} />
-    //         ))}
-    //       </View>
-    //     ) : (
-    //       <Surface style={common.accordionSurface} theme={{ roundness: 0 }}>
-    //         {formatData.map((item, idx) => (
-    //           <NotificationsItem
-    //             key={`${item.id}_${idx}`}
-    //             item={item}
-    //             routeNotification={routeNotification} />
-    //         ))}
-    //       </Surface>
-    //     )}
-    //     { recordsCount > formatData.length ? (
-    //       <View style={styles.loadMore}>
-    //         <Button
-    //           width={146}
-    //           title={t('Load More')}
-    //           type='dimmed'
-    //           icon='arrow-down'
-    //           isUppercase
-    //           isLoading={isLoadingMore}
-    //           onPress={handleLoadMore} />
-    //       </View>
-    //     ) : null}
-    //   </View>
-    // </View>
+  return (
+    <div className={styles.container}>
+      <div className={styles.topCards}>
+        {!isDesktopView ? (<div />
+          // <div className={styles.topCardsContainer}>
+          //   {formatData.map((item, idx) => (
+          //     <NotificationsItemCard
+          //       key={`${item.id}_${idx}`}
+          //       item={item}
+          //       routeNotification={routeNotification} />
+          //   ))}
+          // </div>
+        ) : (
+          <div className={styles.accordionSurface}>
+            {formatData.map((item, idx) => (
+              <NotificationsItem
+                key={`${item.id}_${idx}`}
+                item={item}
+                routeNotification={routeNotification} />
+            ))}
+          </div>
+        )}
+        {/* { recordsCount > formatData.length ? (
+          <div className={styles.loadMore}>
+            <Button
+              width={146}
+              title='Load More'
+              type='dimmed'
+              icon='arrow-down'
+              isUppercase
+              isLoading={isLoadingMore}
+              onPress={handleLoadMore} />
+          </div>
+        ) : null} */}
+      </div>
+    </div>
   );
 };

@@ -1,219 +1,223 @@
-// import React from 'react';
-// import { Text, View } from 'react-native';
-// import { IconButton } from 'react-native-paper';
+import React from 'react';
 
-// import { styles } from './index.style';
-// import { color } from '../../../styles/vars';
-// import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorValue } from '../../../config/utils';
-// import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
+import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
+import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from '../../../config/utils';
+import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
+import styles from './NotificationsSets.module.css';
 
-// export const failedSet = (item) => (
-//   <View>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageDesktop}>{`${item.data.error} Robot `}</Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name}</Text>
-//       <Text style={styles.textMessageDesktop}> (</Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.data.userRobotId}</Text>
-//       <Text style={styles.textMessageDesktop}>)</Text>
-//     </View>
-//     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 3 }}>
-//       <Text style={styles.textMessageDesktop}>{`Error occurred while processing robot job ${item.data.jobType}. `}</Text>
-//       <Text style={styles.textMessageDesktop}>Please contact support.</Text>
-//     </View>
-//   </View>
-// );
+export const failedSet = (item) => (
+  <div>
+    <div className={styles.row}>
+      <div className={styles.textMessageDesktop}>{`${item.data.error} Robot `}</div>
+      <div className={styles.textAccent}>{item.robot.name}</div>
+      <div className={styles.textMessageDesktop}>&nbsp;(</div>
+      <div className={styles.textAccent}>{item.data.userRobotId}</div>
+      <div className={styles.textMessageDesktop}>)</div>
+    </div>
+    <div className={styles.row} style={{ flexWrap: 'wrap', marginTop: 3 }}>
+      <div className={styles.textMessageDesktop}>{`Error occurred while processing robot job ${item.data.jobType}. `}</div>
+      <div className={styles.textMessageDesktop}>Please contact support.</div>
+    </div>
+  </div>
+);
 
-// export const messageSet = (item) => (
-//   <Text style={[ styles.textMessageDesktop, { flexShrink: 1 } ]}>
-//     {`${item.type === 'message.support-reply'
-//       ? 'Support Team'
-//       : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
-//   </Text>
-// );
+export const messageSet = (item) => (
+  <div className={styles.textMessageDesktop} style={{ flexShrink: 1 }}>
+    {`${item.type === 'message.support-reply'
+      ? 'Support Team'
+      : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
+  </div>
+);
 
-// export const robotTradeSet = (item) => (
-//   <View>
-//     {item.data.status === 'open' ? (
-//       <>
-//         <View style={{ flexDirection: 'row' }}>
-//           <Text style={styles.textMessageDesktop}>Trade </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageDesktop}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>Entry </Text>
-//           <Text style={[ styles.textMessageDesktop, colorAction(item.data.entryAction) ]}>
-//             {capitalize(item.data.entryAction)}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Volume </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.entryExecuted} ${item.robot.asset}`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Price </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.entryPrice} $`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Date </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {formatDate(item.data.entryDate)}
-//           </Text>
-//         </View>
-//       </>
-//     ) : (
-//       <>
-//         <View style={{ flexDirection: 'row' }}>
-//           <Text style={styles.textMessageDesktop}>Trade </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageDesktop}>{item.data.code}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>Exit </Text>
-//           <Text style={[ styles.textMessageDesktop, colorAction(item.data.exitAction) ]}>
-//             {capitalize(item.data.exitAction).split(/(?=[A-Z])/).join(' ')}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Volume </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.exitExecuted} ${item.robot.asset}`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Price </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.exitPrice} $`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Date </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {formatDate(item.data.exitDate)}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Profit </Text>
-//           <Text style={[ styles.textMessageDesktop, colorValue(item.data.profit) ]}>
-//             {`${valueWithSign(moneyFormat(item.data.profit))} $`}
-//           </Text>
-//         </View>
-//       </>
-//     )}
-//   </View>
-// );
+export const robotTradeSet = (item) => (
+  <div>
+    {item.data.status === 'open' ? (
+      <>
+        <div className={styles.row}>
+          <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
+          <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageDesktop}>{item.data.code}</div>
+        </div>
+        <div className={styles.row} style={{ marginTop: 3 }}>
+          <div className={styles.textAccent}>Entry&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorDirection(item.data.entryAction)}>
+            {capitalize(item.data.entryAction)}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Volume&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.entryExecuted} ${item.robot.asset}`}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.entryPrice} $`}
+          </div>
+          <div className={styles.textAccent}>  Date </div>
+          <div className={styles.textMessageDesktop}>
+            {formatDate(item.data.entryDate)}
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div className={styles.row}>
+          <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
+          <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageDesktop}>{item.data.code}</div>
+        </div>
+        <div className={styles.row} style={{ marginTop: 3 }}>
+          <div className={styles.textAccent}>Exit&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorDirection(item.data.exitAction)}>
+            {capitalize(item.data.exitAction).split(/(?=[A-Z])/).join(' ')}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Volume&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.exitExecuted} ${item.robot.asset}`}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.exitPrice} $`}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {formatDate(item.data.exitDate)}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
+            {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+);
 
-// export const errorSet = (item) => (
-//   <View>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageDesktop}>Robot </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name}</Text>
-//       <Text style={styles.textMessageDesktop}> (</Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.data.userRobotId}</Text>
-//       <Text style={styles.textMessageDesktop}>)</Text>
-//     </View>
-//     <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap', marginTop: 3 }}>
-//       <Text style={styles.textMessageDesktop}>Error occurred while processing order </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.data.exId}</Text>
-//       <Text style={styles.textMessageDesktop}>{` ${item.data.error}. `}</Text>
-//       <Text style={styles.textMessageDesktop}>Please check your API Keys and Robot settings or contact support.</Text>
-//     </View>
-//   </View>
-// );
+export const errorSet = (item) => (
+  <div>
+    <div className={styles.row}>
+      <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
+      <div className={styles.textAccent}>{item.robot.name}</div>
+      <div className={styles.textMessageDesktop}>&nbsp;(</div>
+      <div className={styles.textAccent}>{item.data.userRobotId}</div>
+      <div className={styles.textMessageDesktop}>)</div>
+    </div>
+    <div className={styles.row} style={{ flex: 1, flexWrap: 'wrap', marginTop: 3 }}>
+      <div className={styles.textMessageDesktop}>Error occurred while processing order&nbsp;</div>
+      <div className={styles.textAccent}>{item.data.exId}</div>
+      <div className={styles.textMessageDesktop}>{` ${item.data.error}. `}</div>
+      <div className={styles.textMessageDesktop}>Please check your API Keys and Robot settings or contact support.</div>
+    </div>
+  </div>
+);
 
-// export const signalAlertSet = (item) => (
-//   <>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageDesktop}>Signal </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name} </Text>
-//       <Text style={styles.textMessageDesktop}>{item.robot_position.code}</Text>
-//     </View>
-//     <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>Action </Text>
-//       <Text style={styles.textMessageDesktop}>{actionName(item.data.action)}</Text>
-//       <IconButton
-//         style={{ height: 10, width: 10, marginTop: 4 }}
-//         icon={actionIcon(item.data.action)}
-//         size={16}
-//         color={actionColor(item.data.action)} />
-//       <Text style={styles.textMessageDesktop}>{capitalize(item.data.orderType)} </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}> Price </Text>
-//       <Text style={styles.textMessageDesktop}>{`${moneyFormat(item.data.price)} $`}</Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Date </Text>
-//       <Text style={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</Text>
-//     </View>
-//   </>
-// );
+const components = {
+  arrowdown: ArrowDownIcon,
+  arrowup: ArrowUpIcon,
+};
 
-// export const robotSet = (item) => (
-//   <View>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageDesktop}>Robot </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name}</Text>
-//       <Text style={styles.textMessageDesktop}>{` is ${item.type.split('.')[1]}`}</Text>
-//     </View>
-//     {item.data.message ? (
-//       <Text style={[ styles.textMessageDesktop, { flexShrink: 1, marginTop: 3 } ]}>
-//         {item.data.message}
-//       </Text>
-//     ) : null}
-//   </View>
-// );
+export const signalAlertSet = (item) => {
+  const SpecificIcon = components[actionIcon(item.data.action)];
+  return (
+    <>
+      <div className={styles.row}>
+        <div className={styles.textMessageDesktop}>Signal&nbsp;</div>
+        <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+        <div className={styles.textMessageDesktop}>{item.robot_position.code}</div>
+      </div>
+      <div className={styles.row} style={{ marginTop: 3 }}>
+        <div className={styles.textAccent}>Action&nbsp;</div>
+        <div className={styles.textMessageDesktop}>{actionName(item.data.action)}</div>
+        <div style={{ marginTop: 1 }}>
+          <SpecificIcon color={actionColor(item.data.action)} size={16} />
+        </div>
+        <div className={styles.textMessageDesktop}>{capitalize(item.data.orderType)} </div>
+        <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+        <div className={styles.textMessageDesktop}>{`${moneyFormat(item.data.price)} $`}</div>
+        <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+        <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+      </div>
+    </>
+  );
+};
 
-// export const signalTradeSet = (item) => (
-//   <View>
-//     {actionOpen(item.data.action) ? (
-//       <>
-//         <View style={{ flexDirection: 'row' }}>
-//           <Text style={styles.textMessageDesktop}>Signal Trade </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageDesktop}>{item.data.positionCode}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>Entry </Text>
-//           <Text style={[ styles.textMessageDesktop, colorAction(item.data.action) ]}>
-//             {capitalize(item.data.action)}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Price </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.price} $`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Date </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {formatDate(item.data.timestamp)}
-//           </Text>
-//         </View>
-//       </>
-//     ) : (
-//       <>
-//         <View style={{ flexDirection: 'row' }}>
-//           <Text style={styles.textMessageDesktop}>Signal Trade </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.robot.name} </Text>
-//           <Text style={styles.textMessageDesktop}>{item.data.positionCode}</Text>
-//         </View>
-//         <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>Exit </Text>
-//           <Text style={[ styles.textMessageDesktop, colorAction(item.data.action) ]}>
-//             {capitalize(item.data.action).split(/(?=[A-Z])/).join(' ')}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Price </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {`${item.data.price} $`}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Date </Text>
-//           <Text style={styles.textMessageDesktop}>
-//             {formatDate(item.data.timestamp)}
-//           </Text>
-//           <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>  Profit </Text>
-//           <Text style={[ styles.textMessageDesktop, colorValue(item.data.profit) ]}>
-//             {`${valueWithSign(moneyFormat(item.data.profit))} $`}
-//           </Text>
-//         </View>
-//       </>
-//     )}
-//   </View>
-// );
+export const robotSet = (item) => (
+  <div>
+    <div className={styles.row}>
+      <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
+      <div className={styles.textAccent}>{item.robot.name}</div>
+      <div className={styles.textMessageDesktop}>{` is ${item.type.split('.')[1]}`}</div>
+    </div>
+    {item.data.message ? (
+      <div className={styles.textMessageDesktop} style={{ flexShrink: 1, marginTop: 3 }}>
+        {item.data.message}
+      </div>
+    ) : null}
+  </div>
+);
 
-// export const userSet = (item) => (
-//   <View>
-//     <View style={{ flexDirection: 'row' }}>
-//       <Text style={styles.textMessageDesktop}>Your API Key </Text>
-//       <Text style={[ styles.textMessageDesktop, { color: color.accent } ]}>{item.data.name}</Text>
-//       <Text style={styles.textMessageDesktop}> is invalid!</Text>
-//     </View>
-//     <View style={{ flexDirection: 'row', marginTop: 3 }}>
-//       <Text style={styles.textMessageDesktop}>{item.data.error}</Text>
-//       <Text style={styles.textMessageDesktop}> Please update your API Key information in your Profile.</Text>
-//     </View>
-//   </View>
-// );
+export const signalTradeSet = (item) => (
+  <div>
+    {actionOpen(item.data.action) ? (
+      <>
+        <div className={styles.row}>
+          <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
+          <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
+        </div>
+        <div className={styles.row} style={{ marginTop: 3 }}>
+          <div className={styles.textAccent}>Entry&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
+            {capitalize(item.data.action)}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.price} $`}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {formatDate(item.data.timestamp)}
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div className={styles.row}>
+          <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
+          <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+          <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
+        </div>
+        <div className={styles.row} style={{ marginTop: 3 }}>
+          <div className={styles.textAccent}>Exit&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
+            {capitalize(item.data.action).split(/(?=[A-Z])/).join(' ')}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {`${item.data.price} $`}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+          <div className={styles.textMessageDesktop}>
+            {formatDate(item.data.timestamp)}
+          </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
+          <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
+            {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+);
+
+export const userSet = (item) => (
+  <div>
+    <div className={styles.row}>
+      <div className={styles.textMessageDesktop}>Your API Key&nbsp;</div>
+      <div className={styles.textAccent}>{item.data.name}</div>
+      <div className={styles.textMessageDesktop}>&nbsp;is invalid!</div>
+    </div>
+    <div className={styles.row} style={{ marginTop: 3 }}>
+      <div className={styles.textMessageDesktop}>{item.data.error}&nbsp;</div>
+      <div className={styles.textMessageDesktop}>Please update your API Key information in your Profile.</div>
+    </div>
+  </div>
+);

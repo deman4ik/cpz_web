@@ -1,11 +1,11 @@
-// import * as Sets from './NotificationsSets';
-// import * as SetsCard from './NotificationsSetsCard';
+import * as Sets from './NotificationsSets';
+//import * as SetsCard from './NotificationsSetsCard';
 import { color } from '../../../config/constants';
 
 const actionTypes = [ 'long', 'closeShort' ];
 const actionSignals = [ 'long', 'short' ];
 export const actionName = (action) => (actionTypes.includes(action) ? 'BUY' : 'SELL');
-export const actionIcon = (action) => (actionTypes.includes(action) ? 'arrow-up' : 'arrow-down');
+export const actionIcon = (action) => (actionTypes.includes(action) ? 'arrowup' : 'arrowdown');
 export const actionColor = (action) => (actionTypes.includes(action) ? color.positive : color.negative);
 export const actionOpen = (action) => (actionSignals.includes(action));
 
@@ -48,21 +48,22 @@ const messageMap = {
   'user_ex_acc.error': 'user'
 };
 
-// export const showMessage = (item, card = false) => {
-//   const setFunc = card ? SetsCard : Sets;
-//   const messages = {
-//     failed: () => setFunc.failedSet(item),
-//     message: () => setFunc.messageSet(item),
-//     robotTrade: () => setFunc.robotTradeSet(item),
-//     error: () => setFunc.errorSet(item),
-//     signalAlert: () => setFunc.signalAlertSet(item),
-//     robot: () => setFunc.robotSet(item),
-//     signalTrade: () => setFunc.signalTradeSet(item),
-//     user: () => setFunc.userSet(item)
-//   };
+export const showMessage = (item, card = false) => {
+  //const setFunc = card ? SetsCard : Sets;
+  const setFunc = Sets;
+  const messages = {
+    failed: () => setFunc.failedSet(item),
+    message: () => setFunc.messageSet(item),
+    robotTrade: () => setFunc.robotTradeSet(item),
+    error: () => setFunc.errorSet(item),
+    signalAlert: () => setFunc.signalAlertSet(item),
+    robot: () => setFunc.robotSet(item),
+    signalTrade: () => setFunc.signalTradeSet(item),
+    user: () => setFunc.userSet(item)
+  };
 
-//   return messages[messageMap[item.type]]();
-// };
+  return messages[messageMap[item.type]]();
+};
 
 export const getRedirectionLink = (item) => {
   const links = {

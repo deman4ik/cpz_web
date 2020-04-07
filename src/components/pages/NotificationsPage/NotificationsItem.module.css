@@ -1,0 +1,29 @@
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding: 15px 20px;
+}
+
+.dateText {
+  color: var(--accent);
+  font-size: var(--small2);
+  margin-bottom: 3px
+}
+
+.mark {
+  color: var(--negative);
+  margin-top: -4px
+}
+
+.lineGroup {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: row;
+}

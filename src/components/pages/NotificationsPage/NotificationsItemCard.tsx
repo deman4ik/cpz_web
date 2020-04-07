@@ -28,7 +28,7 @@ export const _NotificationsItemCard: React.FC<Props> = ({ item, routeNotificatio
           <Text style={{ color: vars.color.accent, fontSize: vars.font.size.small2 }}>
             {formatDate(item.timestamp)}
           </Text>
-          { !item.readed ? <Text style={{ color: vars.color.negative, marginTop: -4 }}> *</Text> : null }
+          { !item.readed ? <Text style={{ color: vars.color.negative, marginTop: -4 }}>&nbsp;*</Text> : null }
         </View>
         { showMessage(item, true) }
       </TouchableOpacity>

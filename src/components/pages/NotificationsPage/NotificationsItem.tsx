@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 
-import { formatDate } from '../../../services/Utils';
-import { common, vars } from '../../../styles';
+import { formatDate } from '../../../config/utils';
 import { showMessage, getRedirectionLink } from './helpers';
+import styles from './NotificationsItem.module.css';
 
 interface Props {
   item: any;
@@ -16,17 +15,17 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
   };
 
   return (
-    <View style={common.tableRow}>
-      <TouchableOpacity style={{ flex: 1 }} onPress={handleOnPressNotification}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ color: vars.color.accent, fontSize: vars.font.size.small2, marginBottom: 3 }}>
+    <div className={styles.tableRow}>
+      <div className={styles.lineGroup} onClick={handleOnPressNotification}>
+        <div className={styles.dateGroup}>
+          <div className={styles.dateText}>
             {formatDate(item.timestamp)}
-          </Text>
-          { !item.readed ? <Text style={{ color: vars.color.negative, marginTop: -4 }}> *</Text> : null }
-        </View>
+          </div>
+          { !item.readed ? <div className={styles.mark}>&nbsp;*</div> : null }
+        </div>
         { showMessage(item) }
-      </TouchableOpacity>
-    </View>
+      </div>
+    </div>
   );
 };
 
