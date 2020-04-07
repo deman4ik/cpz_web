@@ -51,6 +51,8 @@ module.exports = {
       "@typescript-eslint/no-throw-literal": 0,
       "@typescript-eslint/no-explicit-any": 0,
       "@typescript-eslint/explicit-function-return-type": 0,
+      "jsx-a11y/no-static-element-interactions": 0,
+      "jsx-a11y/click-events-have-key-events": 0,
       "max-len": 0,
       "camelcase": "off",
       "@typescript-eslint/camelcase": 0,
