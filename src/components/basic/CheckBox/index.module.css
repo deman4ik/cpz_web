@@ -1,0 +1,29 @@
+.checkBoxWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+}
+
+.checkbox {
+  height: 16px;
+  width: 16px;
+  border: 2px solid;
+  border-radius: 2px;
+  margin-right: 10px;
+  position: relative;
+}
+
+.unchecked {
+  border-color: rgba(0, 0, 0, 0.26);
+}
+
+.checked {
+  border-color: var(--primary);
+}
+
+.checkedIcon {
+  position: absolute;
+  top: -2px;
+  left: -1px;
+}

@@ -5,14 +5,21 @@
   min-width: 200px;
   padding-left: 40px;
   padding-right: 40px;
+  align-items: center;
 }
 
 .titleRow {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: -6px;
-  margin-bottom: 5px;
+  justify-content: space-around;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: flex-start;
 }
 
 .titleText {

@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { RobotIcon, ChartLineIcon } from '../../../../assets/icons/svg';
+import { RobotIcon, ChartLineIcon, HelpIcon } from '../../../../assets/icons/svg';
+import { CheckBox } from '../../../basic';
 import { color } from '../../../../config/constants';
+import { capitalize } from '../../../../config/utils';
 import styles from './Notify.module.css';
 
 interface Props {
@@ -23,9 +25,17 @@ export const Notify: React.FC<Props> = ({ item, idx }) => {
           <div className={styles.titleText}>
             {item.title}
           </div>
+          <HelpIcon color={color.accent} size={24} />
           {/* {renderHelpButton(notification.key)} */}
         </div>
-        {item.checkboxes.map(checkbox => (null
+        <div className={styles.checkboxGroup}>
+          {item.checkboxes.map(checkbox => (
+            <CheckBox
+              key={`${item.key}.${checkbox.name}`}
+              checked={checkbox.isActive}
+              label={capitalize(checkbox.name)}
+              />
+
           // <Checkbox
           //   key={`${notification.key}.${checkbox.name}`}
           //   color={vars.color.primary}
@@ -37,7 +47,8 @@ export const Notify: React.FC<Props> = ({ item, idx }) => {
           //   isLoading={checkbox.isLoading}
           //   onPress={() => toggleNotification(notification.key, checkbox.name)}
           // />
-        ))}
+          ))}
+        </div>
       </div>
       <div className={styles.separator} />
     </>
