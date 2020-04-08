@@ -1,0 +1,17 @@
+.blocksContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .blocksContainer {
+    flex-direction: column;
+  }
+}

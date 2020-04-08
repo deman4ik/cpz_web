@@ -8,6 +8,7 @@ import { LoadingIndicator } from '../../../common';
 // import { EmailModal } from './EmailModal';
 // import { PasswordModal } from './PasswordModal';
 import styles from './index.module.css';
+import styles_ext from '../AccountBalance.module.css';
 
 const _UserInfo: React.FC = () => {
   const { data, loading } = useQuery(GET_USER_INFO);
@@ -18,10 +19,10 @@ const _UserInfo: React.FC = () => {
 
   return (
     <>
-      <div className={styles.regionTitle}>
+      <div className={styles_ext.regionTitle}>
         User Info
       </div>
-      <div className={styles.surface}>
+      <div className={styles_ext.surface}>
         {loading ? (
           <LoadingIndicator />
           // <div className={{ paddingVertical: 105 }}>
@@ -83,8 +84,7 @@ const _UserInfo: React.FC = () => {
                   <Button
                     title='Change'
                     type='dimmed'
-                    icon='lock-open'
-                  />
+                    icon='lockopen' />
                 </div>
               </div>
             )}

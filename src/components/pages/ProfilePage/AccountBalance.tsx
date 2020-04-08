@@ -16,7 +16,9 @@ const _AccountBalance: React.FC = () => (
           Beta Trial
         </div>
       </div>
-      <BetaIcon color={color.lightBg} size={156} />
+      <div className={styles.icon}>
+        <BetaIcon color={color.lightBg} size={156} />
+      </div>
       <div className={styles.comment}>
         All Cryptuoso Platform’s features are free for a limited time
       </div>
