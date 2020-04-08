@@ -3,6 +3,7 @@ import { Template } from '../../layout/Template';
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { ExchangeKeys } from './ExchangeKeys';
+import { UserContainer } from './UserContainer';
 import { NotifySettings } from './NotifySettings';
 import { PageType } from '../../../config/types';
 
@@ -15,6 +16,7 @@ export const ProfilePage = () => {
       subTitle='Settings'
       width={width}
     >
+      <UserContainer />
       <ExchangeKeys
         title='My Exchange API Keys' />
       <NotifySettings />
