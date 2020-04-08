@@ -11,21 +11,36 @@ interface Props {
   buttonTitle?: string;
   type?: string;
   onChangeText: (value) => void;
+  width?: number;
+  responsible?: boolean;
+  error?: boolean;
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText }) => {
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, width = 350, error }) => {
   //const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
     onChangeText(e.target.value);
     //setInputValue(e.target.value);
   };
 
+  const handleOnInput = (e) => {
+    if (type === 'number') {
+      e.target.value = Math.max(0, Number(e.target.value)).toString().slice(0, 8);
+    }
+  };
+
+  const getInputClass = () => {
+    const style = [ 'searchInput' ];
+    if (error) style.push('error');
+    return style;
+  };
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
+    <div className='wrapper'>
+      <div className='container'>
         { icon ? (
-          <div className={styles.icon}>
+          <div className='icon'>
             <Button
               title={buttonTitle || 'Change'}
               type='dimmed'
@@ -35,13 +50,60 @@ export const Input: React.FC<Props> =
         ) : null}
         <input
           type={type}
-          className={styles.searchInput}
+          className={getInputClass().join(' ')}
           placeholder={placeholder}
           maxLength={30}
           autoFocus
+          onInput={handleOnInput}
           onChange={handleOnChange}
           value={value} />
       </div>
+      <style jsx>{`
+        .wrapper {
+          width: ${width}px;
+        }
+        
+        .container {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          flex: 1; 
+        }
+        
+        .searchInput {
+          background-color: var(--darkBg);
+          color: var(--accent);
+          border-radius: 2px;
+          padding: 11px;
+          padding-right: ${icon ? '35px' : '11px'};
+        }
+        
+        .searchInput.error {
+          box-shadow: 0px 0px 0px 2px var(--negative);
+        }
+
+        .icon {
+          position: absolute;
+          right: 5px;
+          top: 6px;
+        }
+        
+        .searchInput::-webkit-input-placeholder,
+        .searchInput::placeholder {
+          color: var(--accent);
+        }
+        
+        .searchInput::-webkit-inner-spin-button {
+          display: none;
+        }
+        
+        @media (max-width: 480px) {
+          .wrapper {
+            width: 300px;
+          }
+        }
+      `}
+      </style>
     </div>
   );
 };

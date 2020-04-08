@@ -7,7 +7,9 @@
 }
 
 .bodyText {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   font-size: var(--normal1);
   line-height: var(--normal2);
   color: white;

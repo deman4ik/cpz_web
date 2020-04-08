@@ -95,29 +95,23 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose, searchName 
           <div className={styles_subs.container}>
             <div className={styles.bodyTitle}>
               Please enter desired trading volume in&nbsp;
-              <div style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</div>
+              <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
             </div>
             <div className={styles_subs.form}>
               <div className={[ styles.bodyText, styles_subs.formComment ].join(' ')}>
                 <div className={styles_subs.label}>
-                  Minimum value is
+                  Minimum value is &nbsp;
                 </div>
-                &nbsp;{moneyFormat(min, 3)}
+                <span>{moneyFormat(min, 3)}</span>
               </div>
               <div className={styles_subs.fieldset}>
                 <Input
                   type='number'
                   value={`${inputVolume}`}
+                  width={150}
+                  error={!isValid()}
                   onChangeText={value => handleOnChange(value)}
                 />
-                {/* <Input
-                  className={responsive.input(!isValid())}
-                  keyboardType='numeric'
-                  value={`${inputVolume}`}
-                  selectTextOnFocus
-                  onChangeText={value => handleOnChange(value)}
-                  onKeyPress={handleOnKeyPress}
-                /> */}
                 <div className={styles_subs.btns}>
                   <Button
                     className={styles.btn}

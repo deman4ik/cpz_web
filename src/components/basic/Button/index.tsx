@@ -42,7 +42,7 @@ const components = {
 };
 
 export const Button: React.FC<Props> =
-({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive }) => {
+({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
@@ -75,7 +75,7 @@ export const Button: React.FC<Props> =
         .btn-text {
           width: 100%;
           color: white;
-          font-size: 12px;
+          font-size: ${size === 'small' ? 12 : 14}px;
           text-align: center;
           padding-left: 4px;
           padding-right: 4px;
@@ -94,7 +94,7 @@ export const Button: React.FC<Props> =
           display: flex;
           cursor: ${disabled ? 'auto' : 'pointer'};
           width: ${width ? `${width}px` : 'min-content'};
-          height: 26px;
+          height: ${size === 'small' ? '26' : '34'}px;
           padding-left: 10px;
           padding-right: 10px;
           user-select: none;
