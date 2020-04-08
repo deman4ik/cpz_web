@@ -164,3 +164,9 @@ export const LogoutIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
     <path d='M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z' />
   </svg>
 );
+
+export const WindowCloseIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z' />
+  </svg>
+);
