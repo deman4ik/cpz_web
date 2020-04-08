@@ -5,3 +5,4 @@ export * from './CaptionButton';
 export * from './SearchInput';
 export * from './Accordion';
 export * from './CheckBox';
+export * from './Input';

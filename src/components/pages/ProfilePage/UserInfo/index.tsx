@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
-import { Button } from '../../../basic';
+import { Button, Input } from '../../../basic';
 import { LoadingIndicator } from '../../../common';
 // import { NameModal } from './NameModal';
 // import { EmailModal } from './EmailModal';
@@ -38,17 +38,11 @@ const _UserInfo: React.FC = () => {
                 className={styles.inputContainer}
                 onClick={() => setNameModalVisible(true)}
               >
-                {/* <divInput
-                  className={styles.input}
+                <Input
                   value={data.users[0].name || ''}
-                  editable={false}
-                />
-                <Button
-                  className={styles.absolutePosBtn}
-                  title='Change'
-                  type='dimmed'
+                  placeholder=''
                   icon='account'
-                /> */}
+                />
               </div>
             </div>
             <div className={styles.formRow}>
@@ -59,17 +53,11 @@ const _UserInfo: React.FC = () => {
                 className={styles.inputContainer}
                 onClick={() => setEmailModalVisible(true)}
               >
-                {/* <divInput
-                  className={styles.input}
+                <Input
                   value={data.users[0].email || ''}
-                  editable={false}
-                />
-                <Button
-                  className={styles.absolutePosBtn}
-                  title='Change'
-                  type='dimmed'
+                  placeholder=''
                   icon='email'
-                /> */}
+                />
               </div>
             </div>
             {data.users[0].email && (
