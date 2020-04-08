@@ -8,12 +8,16 @@ interface Props {
   icon?: string;
   placeholder?: string;
   buttonTitle?: string;
+  type?: string;
+  onChangeText: (value) => void;
 }
 
-export const Input: React.FC<Props> = ({ value, icon, placeholder, buttonTitle }) => {
-  const [ inputValue, setInputValue ] = useState(value);
+export const Input: React.FC<Props> =
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText }) => {
+  //const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
-    setInputValue(e.target.value);
+    onChangeText(e.target.value);
+    //setInputValue(e.target.value);
   };
 
   return (
@@ -29,12 +33,12 @@ export const Input: React.FC<Props> = ({ value, icon, placeholder, buttonTitle }
           </div>
         ) : null}
         <input
-          type='text'
+          type={type}
           className={styles.searchInput}
           placeholder={placeholder}
           maxLength={30}
           onChange={handleOnChange}
-          value={inputValue} />
+          value={value} />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useFetchRobots } from '../../../hooks/useFetchRobots';
 import { useVisibleModal } from '../../../hooks/useVisibleModal';
 import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
-import { UnsubscribeModal } from '../../ui/Modals';
+import { SubscribeModal, UnsubscribeModal } from '../../ui/Modals';
 import { Modal } from '../../basic';
 import { formatRobotsData } from './helpers';
 import { getIsVisibleStatus } from '../helpers';
@@ -37,33 +37,23 @@ export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width
       <Modal
         title={titleModal}
         isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
-        onClose={handleSetVisible}>
+        onClose={handleSetVisible}
+      >
         <UnsubscribeModal
           setTitle={setTitleModal}
           onClose={handleSetVisible} />
       </Modal>
-      {/* <Modal
-        screenType={dimension.screenType}
-        visible={getIsVisibleStatus(modalType.subscribe, dataModal)}
-        onDismiss={handleSetVisible}
+      <Modal
+        isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
+        onClose={handleSetVisible}
         title={titleModal}
       >
         <SubscribeModal
-          onDismiss={handleSetVisible}
+          onClose={handleSetVisible}
           type={dataModal.ModalVisible.type}
           searchName={searchText}
           setTitle={setTitleModal} />
       </Modal>
-      <Modal
-        screenType={dimension.screenType}
-        visible={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
-        onDismiss={handleSetVisible}
-        title={titleModal}
-      >
-        <UnsubscribeModal
-          setTitle={setTitleModal}
-          onDismiss={handleSetVisible} />
-      </Modal> */}
     </>
   );
 };

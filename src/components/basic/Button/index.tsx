@@ -92,7 +92,7 @@ export const Button: React.FC<Props> =
         }
         .btn {
           display: flex;
-          cursor: pointer;
+          cursor: ${disabled ? 'auto' : 'pointer'};
           width: ${width ? `${width}px` : 'min-content'};
           height: 26px;
           padding-left: 10px;
@@ -102,7 +102,7 @@ export const Button: React.FC<Props> =
           overflow: hidden;
           border-radius: 4px;
           position: relative;
-          opacity: 1;
+          opacity: ${disabled ? 0.2 : 1};
         }
         .btn:active {
           opacity: 0.2;
