@@ -24,6 +24,7 @@ export const Template: React.FC<Props> = ({ title, subTitle, children, page, wid
         title={`${title}${subTitle ? `: ${subTitle}` : ''}`}
         description='Cryptuoso - Cryptocurrency Trading Robots for your successful investment'
         keywords='cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken, binance' />
+      <div id='modal' />
       <div className={styles.mainMenuContainer}>
         <MainMenu activeTab={page} showDesktop={showDimension} />
         <div className={styles.wrapFixed}>

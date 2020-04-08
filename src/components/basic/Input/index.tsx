@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 
 import { Button } from '../Button';
@@ -37,6 +38,7 @@ export const Input: React.FC<Props> =
           className={styles.searchInput}
           placeholder={placeholder}
           maxLength={30}
+          autoFocus
           onChange={handleOnChange}
           value={value} />
       </div>
