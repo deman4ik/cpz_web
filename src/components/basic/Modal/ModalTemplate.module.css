@@ -20,7 +20,7 @@
 
 .header {
   padding: 20px 60px;
-  border-top-width: 1px;
+  border-bottom-width: 1px;
   border-color: var(--lightBg);
 }
 
