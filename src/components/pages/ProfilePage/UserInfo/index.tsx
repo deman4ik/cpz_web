@@ -25,9 +25,6 @@ const _UserInfo: React.FC = () => {
       <div className={styles_ext.surface}>
         {loading ? (
           <LoadingIndicator />
-          // <div className={{ paddingVertical: 105 }}>
-          //   <ActivityIndicator size='large' color={vars.color.accent} />
-          // </div>
         ) : (
           <>
             <div className={styles.formRow}>

@@ -6,6 +6,7 @@ import { ExchangeKeys } from './ExchangeKeys';
 import { UserContainer } from './UserContainer';
 import { NotifySettings } from './NotifySettings';
 import { PageType } from '../../../config/types';
+import { ToolbarProfilePage } from './ToolbarProfilePage';
 
 export const ProfilePage = () => {
   const { width } = useWindowDimensions();
@@ -14,6 +15,7 @@ export const ProfilePage = () => {
       page={PageType.profile}
       title='Profile'
       subTitle='Settings'
+      toolbar={<ToolbarProfilePage />}
       width={width}
     >
       <UserContainer />

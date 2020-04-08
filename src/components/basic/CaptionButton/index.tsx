@@ -1,8 +1,6 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
-import { PlusIcon, CheckIcon } from '../../../assets/icons/svg';
+import { PlusIcon, CheckIcon, LogoutIcon } from '../../../assets/icons/svg';
 
 
 interface Props {
@@ -15,7 +13,8 @@ interface Props {
 
 const components = {
   check: CheckIcon,
-  plus: PlusIcon
+  plus: PlusIcon,
+  logout: LogoutIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick }) => {
@@ -52,7 +51,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           right: 0;
         }
         .aligner {
-          width: 20px;
+          width: 12px;
         }
         .btn {
           display: flex;

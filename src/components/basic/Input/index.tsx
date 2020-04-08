@@ -24,6 +24,7 @@ export const Input: React.FC<Props> = ({ value, icon, placeholder, buttonTitle }
             <Button
               title={buttonTitle || 'Change'}
               type='dimmed'
+              responsive
               icon={icon} />
           </div>
         ) : null}

@@ -25,6 +25,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   hoverChanges?: HoverChangesProps;
+  responsive?: boolean;
 }
 
 const components = {
@@ -41,7 +42,7 @@ const components = {
 };
 
 export const Button: React.FC<Props> =
-({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled }) => {
+({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
@@ -117,6 +118,14 @@ export const Button: React.FC<Props> =
         }
         .btn.dimmed {
           background-color: rgb(44, 52, 84);
+        }
+        @media (max-width: 768px) {
+          .btn-text {
+            display: ${responsive ? 'none' : 'block'};
+          }
+          .aligner {
+            width: ${responsive ? '12px' : '20px'};
+          }
         }`}
       </style>
     </div>
