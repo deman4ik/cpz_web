@@ -1,0 +1,11 @@
+.errorContainer {
+  width: calc(100% + 80px);
+  margin: -30px -40px 20px;
+  padding: 10px 20px;
+  background-color: var(--negative);
+};
+
+.errorText {
+  text-align: center;
+  color: white
+};

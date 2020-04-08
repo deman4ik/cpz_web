@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 
 import { useFetchRobots } from '../../../hooks/useFetchRobots';
-//import { useVisibleModal } from '../../../hooks/useVisibleModal';
+import { useVisibleModal } from '../../../hooks/useVisibleModal';
 import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
-//import { Dimension } from '../../../config/types';
-//import { SubscribeModal, UnsubscribeModal } from '../../ui/Modals';
+import { UnsubscribeModal } from '../../ui/Modals';
 import { Modal } from '../../basic';
 import { formatRobotsData } from './helpers';
-//import { getIsVisibleStatus } from '../helpers';
-//import { modalType } from '../types';
+import { getIsVisibleStatus } from '../helpers';
+import { modalType } from '../types';
 
 interface Props {
   searchText?: string;
@@ -18,14 +17,9 @@ interface Props {
 }
 
 export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width, displayType }) => {
-  //const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
-  const [ isOpen, setIsOpen ] = useState(true);
+  const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
   const { robotsData, counts, loading, loading_aggregate, isLoadingMore, onFetchMore } =
     useFetchRobots(displayType, searchText, formatRobotsData);
-  const handleCloseModal = () => {
-    console.log('close');
-    setIsOpen(false);
-  };
 
   return (
     <>
@@ -40,8 +34,13 @@ export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width
             displayType={displayType}
         />
         )}
-      <Modal isOpen={isOpen} onClose={handleCloseModal}>
-        <div>Modal</div>
+      <Modal
+        title={titleModal}
+        isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
+        onClose={handleSetVisible}>
+        <UnsubscribeModal
+          setTitle={setTitleModal}
+          onClose={handleSetVisible} />
       </Modal>
       {/* <Modal
         screenType={dimension.screenType}

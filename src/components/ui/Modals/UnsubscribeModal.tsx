@@ -5,24 +5,22 @@ import { ROBOT } from '../../../graphql/local/queries';
 import { UNSUBSCRIBE_FROM_SIGNALS } from '../../../graphql/signals/mutations';
 import { UNSUBSCRIBE } from '../../../graphql/local/mutations';
 import { Button } from '../../basic';
-import { LoadingIndicator } from '../../common';
-import { color } from '../../../styles/vars';
-import { ErrorLine } from '../Common/ErrorLine';
+import { LoadingIndicator, ErrorLine } from '../../common';
 import styles from './index.module.css';
 
 interface Props {
-  onDismiss: () => void;
+  onClose: () => void;
   setTitle: (title: string) => void;
 }
 
-const _UnsubscribeModal: React.FC<Props> = ({ onDismiss, setTitle }) => {
+const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
   const [ formError, setFormError ] = useState('');
   const { data } = useQuery(ROBOT);
   const [ unsubscribeSend, { loading } ] = useMutation(UNSUBSCRIBE_FROM_SIGNALS);
   const [ unsubscribe ] = useMutation(UNSUBSCRIBE);
 
   useEffect(() => {
-    setTitle(`$Unfollowing ${data.robot.name}`);
+    setTitle(`Unfollowing ${data.robot.name}`);
   });
 
   const handleOnSubmit = () => {
@@ -35,7 +33,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onDismiss, setTitle }) => {
         } else {
           setFormError(response.data.userSignalSusbcribe.error);
         }
-        onDismiss();
+        onClose();
       });
   };
 
@@ -64,7 +62,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onDismiss, setTitle }) => {
               title='No'
               icon='close'
               type='primary'
-              onClick={onDismiss} />
+              onClick={onClose} />
           </div>
         </>
       )}

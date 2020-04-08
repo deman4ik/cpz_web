@@ -5,7 +5,7 @@ import { color } from '../../../config/constants';
 import styles from './ModalTemplate.module.css';
 
 interface Props {
-  title?: string;
+  title: string;
   footer?: JSX.Element;
   children?: React.ReactNode;
   onClose: (e: React.MouseEvent<HTMLDivElement>) => void;

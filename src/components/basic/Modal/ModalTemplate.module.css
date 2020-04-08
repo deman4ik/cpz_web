@@ -35,6 +35,11 @@
   cursor: pointer;
   top: 5px;
   right: 5px;
+  opacity: 1;
+}
+
+.icon:active {
+  opacity: 0.2;
 }
 
 @media (max-width: 768px) {

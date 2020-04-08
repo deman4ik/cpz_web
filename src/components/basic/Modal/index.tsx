@@ -15,14 +15,17 @@ interface Props {
   className?: string;
   noBackdrop?: boolean;
   onClose: React.MouseEventHandler;
+  title?: string;
 }
 
 const backdropStyle: any = {
-  position: 'absolute',
+  position: 'fixed',
   width: '100%',
   height: '100%',
-  top: '0px',
-  left: '0px',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
   zIndex: '9998',
   background: 'rgba(0, 0, 0, 0.3)'
 };
@@ -70,7 +73,7 @@ export const Modal: React.FC<Props> = props => {
   return (
     <div className={props.containerClassName}>
       <div className={props.className} style={modalStyle}>
-        <ModalTemplate onClose={handleOnClickClose}>
+        <ModalTemplate title={props.title} onClose={handleOnClickClose}>
           {props.children}
         </ModalTemplate>
       </div>

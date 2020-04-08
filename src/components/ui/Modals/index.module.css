@@ -1,0 +1,26 @@
+.bodyTitle {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: var(--normal2);
+  line-height: var(--big1);
+  color: var(--accent);
+}
+
+.bodyText {
+  text-align: center;
+  font-size: var(--normal1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.btnsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px auto 0;
+}
+
+.btn {
+  margin: 10px;
+}
