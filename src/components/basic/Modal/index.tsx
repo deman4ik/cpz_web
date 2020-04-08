@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 import React from 'react';
+import { ModalTemplate } from './ModalTemplate';
 
 interface Props {
   isOpen: boolean;
@@ -28,7 +29,7 @@ const backdropStyle: any = {
 
 const modalStyle: any = {
   position: 'absolute',
-  top: '50%',
+  top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   zIndex: '9999',
@@ -69,7 +70,9 @@ export const Modal: React.FC<Props> = props => {
   return (
     <div className={props.containerClassName}>
       <div className={props.className} style={modalStyle}>
-        {props.children}
+        <ModalTemplate onClose={handleOnClickClose}>
+          {props.children}
+        </ModalTemplate>
       </div>
       {!props.noBackdrop && (
         <div

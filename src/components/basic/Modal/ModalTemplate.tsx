@@ -7,29 +7,29 @@ import styles from './ModalTemplate.module.css';
 interface Props {
   title?: string;
   footer?: JSX.Element;
+  children?: React.ReactNode;
+  onClose: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export const ModalTemplate: React.FC<Props> = ({ children, title, footer }) => (
-  <div className={styles.container}>
-    <div className={styles.content}>
-      <div style={{ height: '100%' }}>
-        {title && (
-          <div className={styles.header}>
-            <div className={styles.title}>{title}</div>
-          </div>
-        )}
-        <div className={styles.body}>
-          {children}
+export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose }) => (
+  <div className={styles.content}>
+    <div style={{ height: '100%' }}>
+      {title && (
+        <div className={styles.header}>
+          <div className={styles.title}>{title}</div>
         </div>
-        {footer && (
-          <div className={styles.footer}>
-            {footer}
-          </div>
-        )}
+      )}
+      <div className={styles.body}>
+        {children}
       </div>
-      <div>
-        <WindowCloseIcon color={color.accent} size={26} />
-      </div>
+      {footer && (
+        <div className={styles.footer}>
+          {footer}
+        </div>
+      )}
+    </div>
+    <div className={styles.icon} onClick={onClose}>
+      <WindowCloseIcon color={color.accent} size={26} />
     </div>
   </div>
 );
