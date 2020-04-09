@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ExchangeKeysAddKey } from './ExchangeKeysAddKey';
-// import { ExchangeKeysAddKeyModal } from './ExchangeKeysAddKeyModal';
+import { ExchangeKeysAddKeyModal } from './ExchangeKeysAddKeyModal';
 import { ExchangeKeysEditNameModal } from './ExchangeKeysEditNameModal';
 import { ExchangeKeysDeleteKeyModal } from './ExchangeKeysDeleteKeyModal';
 import { ExchangeKeysCard } from './ExchangeKeysCard';
@@ -70,19 +70,17 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
           <ExchangeKeysAddKey handleSetVisibleModal={handleSetVisibleModal} />
         </div>
       </div>
-      {/* <Modal
-        screenType={dimension.screenType}
+      <Modal
         title={getTitle(ModalKey.addKey)}
-        visible={isVisibleModal.addKey.isVisible}
-        onDismiss={handleSetVisibleModalAddKey}
+        isOpen={isVisibleModal.addKey.isVisible}
+        onClose={handleSetVisibleModalAddKey}
       >
         <ExchangeKeysAddKeyModal
-          dimension={dimension}
           options={isVisibleModal.addKey.options}
           isExchangeDisabled={!!isVisibleModal.addKey.options}
-          onDismiss={handleSetVisibleModalAddKey}
+          onClose={handleSetVisibleModalAddKey}
         />
-      </Modal>*/}
+      </Modal>
       <Modal
         title={getTitle(ModalKey.editName)}
         isOpen={isVisibleModal.editName.isVisible}

@@ -15,11 +15,12 @@ interface Props {
   responsive?: boolean;
   error?: boolean;
   selectTextOnFocus?: boolean;
+  readonly?: boolean;
 }
 
 export const Input: React.FC<Props> =
 ({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText,
-  onKeyPress, width = 350, error, selectTextOnFocus, responsive }) => {
+  onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
     if (onChangeText) {
@@ -59,6 +60,7 @@ export const Input: React.FC<Props> =
           placeholder={placeholder}
           maxLength={30}
           autoFocus
+          readOnly={readonly}
           onInput={handleOnInput}
           onChange={handleOnChange}
           onKeyDown={onKeyPress}

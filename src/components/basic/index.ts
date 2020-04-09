@@ -7,3 +7,5 @@ export * from './Accordion';
 export * from './CheckBox';
 export * from './Input';
 export * from './Modal';
+export * from './Select';
+export * from './Textarea';

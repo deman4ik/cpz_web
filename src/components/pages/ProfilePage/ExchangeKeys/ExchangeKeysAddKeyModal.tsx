@@ -5,16 +5,17 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from '../../../../graphql/profile/queries';
 import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from '../../../../graphql/robots/queries';
 import { UPDATE_EXCHANGE_KEY } from '../../../../graphql/profile/mutations';
-import { Button, Select } from '../../../basic';
+import { Button, Select, Input, Textarea } from '../../../basic';
+import { color } from '../../../../config/constants';
+import styles from './ExchangeKeysAddKeyModal.module.css';
 import { AddKey } from './types';
-import { color } from '../../../../styles/vars';
 
 interface Props {
   options?: AddKey;
   exchange?: string;
   refetchQueries?: any; // Todo any
   isExchangeDisabled?: boolean;
-  onDismiss?: () => void;
+  onClose?: () => void;
   handleOnSubmit?: (key: string) => void;
 }
 
@@ -23,7 +24,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
   exchange,
   refetchQueries,
   isExchangeDisabled,
-  onDismiss,
+  onClose,
   handleOnSubmit
 }) => {
   const [ inputName, setInputName ] = useState(options ? options.name : '');
@@ -87,7 +88,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
         if (handleOnSubmit) {
           handleOnSubmit(response.data.userExchangeAccUpsert.result);
         } else {
-          onDismiss();
+          onClose();
         }
       } else {
         setResponseError({
@@ -119,88 +120,63 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
   return (
     <>
       {responseError.error && (
-        <View
-          style={[
-            common.errorContainer,
-            !!handleOnSubmit && { marginTop: 0 }
-          ]}>
-          <Text style={common.errorText}>{responseError.msg}</Text>
-        </View>
+        <div className={styles.errorContainer} style={!!handleOnSubmit && { marginTop: 0 }}>
+          <div className={styles.errorText}>{responseError.msg}</div>
+        </div>
       )}
-      <View style={styles.container}>
-        <View>
-          <Text style={common.tableCellText}>My Exchange API Key Name</Text>
-          <TextInput
-            value={inputName}
-            style={[ styles.inputName, { marginTop: 6 } ]}
-            selectTextOnFocus
-            editable={!options}
-            onChangeText={value => handleOnChangeName(value)}
-          />
-        </View>
-        <View>
-          <Text style={common.tableCellText}>Exchange</Text>
-          <Select
-            enabled={!isExchangeDisabled}
-            selectedValue={inputExchange}
-            data={dataPicker}
-            style={{ marginTop: 6 }}
-            dimension={dimension}
-            onValueChange={itemValue => handleOnChangeExchange(itemValue)}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            flexWrap: 'wrap'
-          }}>
-          <View style={{ marginHorizontal: 5 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={common.tableCellText}>
+      <div className={styles.container}>
+        <div style={{ marginBottom: 20 }}>
+          <div className={styles.tableCellText}>My Exchange API Key Name</div>
+          <div style={{ marginTop: 6 }}>
+            <Input
+              value={inputName}
+              selectTextOnFocus
+              width={260}
+              readonly={!!options}
+              onChangeText={value => handleOnChangeName(value)} />
+          </div>
+        </div>
+        <div style={{ marginBottom: 20 }}>
+          <div className={styles.tableCellText}>Exchange</div>
+          <div style={{ marginTop: 6 }}>
+            <Select
+              value={inputExchange}
+              data={dataPicker}
+              enabled={!isExchangeDisabled}
+              onValueChange={itemValue => handleOnChangeExchange(itemValue)} />
+          </div>
+        </div>
+        <div className={styles.areaGroup}>
+          <div className={styles.row}>
+            <div className={styles.apikeyGroup}>
+              <div className={styles.tableCellText}>
                 API Key (Public Key)&nbsp;
-              </Text>
-              <Text style={[ common.tableCellText, { color: color.negative } ]}>
-                *
-              </Text>
-            </View>
-            <TextInput
-              value={inputKeys.public}
-              style={[
-                responsive.inputKey(responseError.error),
-                { marginTop: 6 }
-              ]}
-              selectTextOnFocus
-              multiline
-              numberOfLines={4}
-              scrollEnabled={false}
-              onChangeText={text => handleOnChangeKeys(text, 'public')}
-            />
-          </View>
-          <View style={{ marginHorizontal: 5 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={common.tableCellText}>
+              </div>
+              <div className={styles.tableCellText} style={{ color: color.negative }}>*</div>
+            </div>
+            <div style={{ marginTop: 6 }}>
+              <Textarea
+                value={inputKeys.public}
+                rows={4}
+                onChangeText={text => handleOnChangeKeys(text, 'public')} />
+            </div>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.apikeyGroup}>
+              <div className={styles.tableCellText}>
                 API Secret (Private Key)&nbsp;
-              </Text>
-              <Text style={[ common.tableCellText, { color: color.negative } ]}>
-                *
-              </Text>
-            </View>
-            <TextInput
-              value={inputKeys.secret}
-              style={[
-                responsive.inputKey(responseError.error),
-                { marginTop: 6 }
-              ]}
-              selectTextOnFocus
-              multiline
-              numberOfLines={4}
-              scrollEnabled={false}
-              onChangeText={text => handleOnChangeKeys(text, 'secret')}
-            />
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
+              </div>
+              <div className={styles.tableCellText} style={{ color: color.negative }}>*</div>
+            </div>
+            <div style={{ marginTop: 6 }}>
+              <Textarea
+                value={inputKeys.secret}
+                rows={4}
+                onChangeText={text => handleOnChangeKeys(text, 'secret')} />
+            </div>
+          </div>
+        </div>
+        <div className={styles.apikeyGroup}>
           <Button
             type='success'
             width={125}
@@ -209,19 +185,17 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
             isLoading={isFetchResponse}
             disabled={disabledEdit}
             icon='check'
-            isUppercase
-          />
+            isUppercase />
           <Button
             type='dimmed'
             width={125}
             title='cancel'
             style={{ marginLeft: 15 }}
-            onClick={onDismiss}
+            onClick={onClose}
             icon='close'
-            isUppercase
-          />
-        </View>
-      </View>
+            isUppercase />
+        </div>
+      </div>
     </>
   );
 };
