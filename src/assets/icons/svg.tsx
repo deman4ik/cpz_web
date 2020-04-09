@@ -182,3 +182,9 @@ export const AlertIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
     <path d='M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z' />
   </svg>
 );
+
+export const MenuDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M7,10L12,15L17,10H7Z' />
+  </svg>
+);

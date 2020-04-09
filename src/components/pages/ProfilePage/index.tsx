@@ -18,7 +18,7 @@ export const ProfilePage = () => {
       toolbar={<ToolbarProfilePage />}
       width={width}
     >
-      <UserContainer />
+      <UserContainer width={width} />
       <ExchangeKeys
         title='My Exchange API Keys' />
       <NotifySettings />

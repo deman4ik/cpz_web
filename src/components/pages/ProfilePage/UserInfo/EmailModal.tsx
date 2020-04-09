@@ -6,17 +6,20 @@ import { SECRET_CODE_LENGTH } from '../../../../config/constants';
 import { CHANGE_USER_EMAIL, CONFIRM_USER_EMAIL } from '../../../../graphql/user/mutations';
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { validateEmail } from '../../../../config/validation';
-import { Input, Button } from '../../../basic';
+import { StepWizard } from '../../../basic';
+import { EmailStep1 } from './EmailStep1';
+import { EmailStep2 } from './EmailStep2';
 import styles from './EmailModal.module.css';
 
 interface Props {
   email: string;
   setTitle: (title: string) => void;
   onClose: () => void;
+  width: number;
 }
 
 const steps = [ 'Enter new Email', 'Confirm Email change' ];
-const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle }) => {
+const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   const [ formError, setFormError ] = useState('');
   const [ secretCode, setSecretCode ] = useState('');
   const [ step, setStep ] = useState(1);
@@ -36,7 +39,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle }) => {
   }
 
   useEffect(() => {
-    setTitle('1');
+    setTitle(steps[0]);
   }, []);
 
   const onAcceptEmail = () => {
@@ -86,86 +89,36 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle }) => {
   return (
     <>
       <div className={styles.wizardContainer}>
-        {/* <StepWizard
-            steps={steps}
-            active={step}
-            height={90}
-            titleWidth={160}
-            screenType={screenType}
-          /> */}
+        <StepWizard
+          steps={steps}
+          activeStep={step}
+          height={90}
+          titleWidth={160}
+          width={width} />
       </div>
       <div className={styles.form}>
         <div className={styles.fieldset}>
-          {step === 1 ? (
-            <Input
-              placeholder='Email'
-              width={260}
-              error={!isValidEmail()}
-              value={`${newEmail}`}
-              onChangeText={value => setNewEmail(value)}
-              onKeyPress={onKeyPressChange} />
-          ) : (
-            <>
-              <div className={styles.description}>
-                A letter with a confirmation code was sent to your new Email address, please enter the code from the letter in the field below
-              </div>
-              <Input
+          { step === 1
+            ? (
+              <EmailStep1
+                error={!isValidEmail()}
+                setNewEmail={setNewEmail}
+                onKeyPressChange={onKeyPressChange}
+                changeLoading={changeLoading}
+                onAcceptEmail={onAcceptEmail}
+                onClose={onClose}
+                newEmail={newEmail} />
+            )
+            : (
+              <EmailStep2
                 error={!isValidSecretCode()}
-                width={260}
-                placeholder='Confirmation code'
-                value={`${secretCode}`}
-                maxLength={SECRET_CODE_LENGTH}
-                onChangeText={value => setSecretCode(value)}
-                onKeyPress={onKeyPressConfirm} />
-            </>
-          )}
-          {step === 1 ? (
-            <div className={styles.btns}>
-              <Button
-                className={styles.btn}
-                width={130}
-                title='Accept'
-                icon='check'
-                type='success'
-                disabled={!isValidEmail()}
-                isUppercase
-                isLoading={changeLoading}
-                onClick={onAcceptEmail}
-                />
-              <Button
-                className={styles.btn}
-                width={120}
-                title='Cancel'
-                icon='close'
-                type='dimmed'
-                isUppercase
-                onClick={onClose}
-                />
-            </div>
-          ) : (
-            <div className={styles.btns}>
-              <Button
-                className={styles.btn}
-                width={120}
-                title='Back'
-                icon='chevronleft'
-                type='dimmed'
-                isUppercase
-                onClick={() => setStep(1)}
-                />
-              <Button
-                className={styles.btn}
-                width={130}
-                title='Confirm'
-                icon='check'
-                type='success'
-                disabled={!isValidSecretCode()}
-                isUppercase
-                isLoading={confirmLoading}
-                onClick={onConfirmEmail}
-                />
-            </div>
-          )}
+                setSecretCode={setSecretCode}
+                onKeyPressConfirm={onKeyPressConfirm}
+                confirmLoading={confirmLoading}
+                setStep={setStep}
+                onConfirmEmail={onConfirmEmail}
+                secretCode={secretCode} />
+            )}
         </div>
       </div>
     </>

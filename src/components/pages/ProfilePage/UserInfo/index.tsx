@@ -10,7 +10,11 @@ import { PasswordModal } from './PasswordModal';
 import styles from './index.module.css';
 import styles_ext from '../AccountBalance.module.css';
 
-const _UserInfo: React.FC = () => {
+interface Props {
+  width: number;
+}
+
+const _UserInfo: React.FC<Props> = ({ width }) => {
   const { data, loading } = useQuery(GET_USER_INFO);
   const [ title, setTitle ] = useState('');
   const [ isNameModalVisible, setNameModalVisible ] = useState(false);
@@ -108,6 +112,7 @@ const _UserInfo: React.FC = () => {
                 onClose={handleOnCloseEmailModal}
               >
                 <EmailModal
+                  width={width}
                   email={data.users[0].email || ''}
                   onClose={handleOnCloseEmailModal}
                   setTitle={setTitle} />

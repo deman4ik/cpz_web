@@ -4,10 +4,14 @@ import { UserInfo } from './UserInfo';
 import { AccountBalance } from './AccountBalance';
 import styles from './UserContainer.module.css';
 
-export const UserContainer: React.FC = () => (
+interface Props {
+  width: number;
+}
+
+export const UserContainer: React.FC<Props> = ({ width }) => (
   <div className={styles.blocksContainer}>
     <div className={styles.block}>
-      <UserInfo />
+      <UserInfo width={width} />
     </div>
     <div className={styles.block}>
       <AccountBalance />
