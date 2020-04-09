@@ -5,14 +5,14 @@ import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { Button, Input, Modal } from '../../../basic';
 import { LoadingIndicator } from '../../../common';
 import { NameModal } from './NameModal';
-// import { EmailModal } from './EmailModal';
+import { EmailModal } from './EmailModal';
 import { PasswordModal } from './PasswordModal';
 import styles from './index.module.css';
 import styles_ext from '../AccountBalance.module.css';
 
 const _UserInfo: React.FC = () => {
   const { data, loading } = useQuery(GET_USER_INFO);
-
+  const [ title, setTitle ] = useState('');
   const [ isNameModalVisible, setNameModalVisible ] = useState(false);
   const [ isEmailModalVisible, setEmailModalVisible ] = useState(false);
   const [ isPasswordModalVisible, setPasswordModalVisible ] = useState(false);
@@ -23,6 +23,10 @@ const _UserInfo: React.FC = () => {
 
   const handleOnCloseNameModal = () => {
     setNameModalVisible(!isNameModalVisible);
+  };
+
+  const handleOnCloseEmailModal = () => {
+    setEmailModalVisible(!isEmailModalVisible);
   };
 
   return (
@@ -53,13 +57,11 @@ const _UserInfo: React.FC = () => {
                 <div className={styles.label}>
                   Email
                 </div>
-                <div
-                  className={styles.inputContainer}
-                  onClick={() => setEmailModalVisible(true)}
-              >
+                <div className={styles.inputContainer}>
                   <Input
                     value={data.users[0].email || ''}
                     placeholder=''
+                    onClickButton={handleOnCloseEmailModal}
                     responsive
                     icon='email' />
                 </div>
@@ -100,13 +102,16 @@ const _UserInfo: React.FC = () => {
                   name={data.users[0].name || ''}
                   onClose={handleOnCloseNameModal} />
               </Modal>
-              {/*
-            <EmailModal
-              email={data.users[0].email || ''}
-              screenType={screenType}
-              onDismiss={() => setEmailModalVisible(false)}
-              visible={isEmailModalVisible}
-            /> */}
+              <Modal
+                isOpen={isEmailModalVisible}
+                title={title}
+                onClose={handleOnCloseEmailModal}
+              >
+                <EmailModal
+                  email={data.users[0].email || ''}
+                  onClose={handleOnCloseEmailModal}
+                  setTitle={setTitle} />
+              </Modal>
               <Modal
                 isOpen={isPasswordModalVisible}
                 title='Change Password'

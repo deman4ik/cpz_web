@@ -8,6 +8,7 @@ interface Props {
   icon?: string;
   placeholder?: string;
   buttonTitle?: string;
+  maxLength?: number;
   type?: string;
   onChangeText?: (value) => void;
   onKeyPress?: (e: any) => void;
@@ -21,7 +22,7 @@ interface Props {
 
 export const Input: React.FC<Props> =
 ({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton,
-  onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly }) => {
+  onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
     if (onChangeText) {
@@ -60,7 +61,7 @@ export const Input: React.FC<Props> =
           type={type}
           className={getInputClass().join(' ')}
           placeholder={placeholder}
-          maxLength={30}
+          maxLength={maxLength}
           autoFocus
           readOnly={readonly}
           onInput={handleOnInput}

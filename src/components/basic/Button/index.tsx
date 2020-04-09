@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ButtonType } from './types';
-import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon,
+import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ChevronLeftIcon,
   ArrowDownIcon, BorderColorIcon, CloseIcon, LockOpenIcon,
   EmailIcon, AccountIcon } from '../../../assets/icons/svg';
 import { LoadingIndicator } from '../../common';
@@ -33,6 +33,7 @@ const components = {
   plus: PlusIcon,
   settings: SettingsIcon,
   chevronright: ChevronRightIcon,
+  chevronleft: ChevronLeftIcon,
   arrowdown: ArrowDownIcon,
   bordercolor: BorderColorIcon,
   close: CloseIcon,
