@@ -45,6 +45,7 @@ const components = {
 export const Button: React.FC<Props> =
 ({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size }) => {
   const SpecificIcon = components[icon];
+  const rounded = type.indexOf('rounded') === 0;
   const getClassName = () => {
     const composeClass = [ 'btn' ];
     if (className) composeClass.push(className);
@@ -66,18 +67,21 @@ export const Button: React.FC<Props> =
           <div className='btn-text'>
             {title}
           </div>
-          <div className='icon'>
-            <SpecificIcon size={15} />
-          </div>
+          {icon ? (
+            <div className='icon'>
+              <SpecificIcon size={15} />
+            </div>
+          ) : null}
           <div className='aligner' />
         </>
       )}
       <style jsx>{`
         .btn-text {
           width: 100%;
-          color: white;
+          color: ${type === 'rounded-negative' ? 'var(--negative)' : 'white'};
           font-size: ${size === 'small' ? 12 : 14}px;
           text-align: center;
+          white-space: nowrap;
           padding-left: 4px;
           padding-right: 4px;
         }
@@ -89,7 +93,7 @@ export const Button: React.FC<Props> =
           right: 0;
         }
         .aligner {
-          width: 20px;
+          width: ${icon ? 20 : 0}px;
         }
         .btn {
           display: flex;
@@ -101,7 +105,7 @@ export const Button: React.FC<Props> =
           user-select: none;
           align-items: center;
           overflow: hidden;
-          border-radius: 4px;
+          border-radius: ${rounded ? 15 : 4}px;
           position: relative;
           opacity: ${disabled ? 0.2 : 1};
         }
@@ -117,6 +121,13 @@ export const Button: React.FC<Props> =
         .btn.primary {
           background-image: linear-gradient(rgb(11, 152, 197), rgb(4, 97, 128));
         }
+        .btn.rounded-primary {
+          background-color: rgb(4, 97, 128);
+        }
+        .btn.rounded,
+        .btn.rounded-negative {
+          background-color: rgba(0, 0, 0, 0.00);
+        }
         .btn.dimmed {
           background-color: rgb(44, 52, 84);
         }
@@ -125,7 +136,7 @@ export const Button: React.FC<Props> =
             display: ${responsive ? 'none' : 'block'};
           }
           .aligner {
-            width: ${responsive ? '12px' : '20px'};
+            width: ${icon ? responsive ? '12px' : '20px' : 0};
           }
         }`}
       </style>
