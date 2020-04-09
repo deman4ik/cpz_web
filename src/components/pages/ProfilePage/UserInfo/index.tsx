@@ -2,11 +2,11 @@ import React, { memo, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
-import { Button, Input } from '../../../basic';
+import { Button, Input, Modal } from '../../../basic';
 import { LoadingIndicator } from '../../../common';
 // import { NameModal } from './NameModal';
 // import { EmailModal } from './EmailModal';
-// import { PasswordModal } from './PasswordModal';
+import { PasswordModal } from './PasswordModal';
 import styles from './index.module.css';
 import styles_ext from '../AccountBalance.module.css';
 
@@ -17,6 +17,10 @@ const _UserInfo: React.FC = () => {
   const [ isEmailModalVisible, setEmailModalVisible ] = useState(false);
   const [ isPasswordModalVisible, setPasswordModalVisible ] = useState(false);
 
+  const handleOnCloseModal = () => {
+    setPasswordModalVisible(!isPasswordModalVisible);
+  };
+
   return (
     <>
       <div className={styles_ext.regionTitle}>
@@ -26,56 +30,53 @@ const _UserInfo: React.FC = () => {
         {loading ? (
           <LoadingIndicator />
         ) : (
-          <>
-            <div className={styles.formRow}>
-              <div className={styles.label}>
-                Username
-              </div>
-              <div
-                className={styles.inputContainer}
-                onClick={() => setNameModalVisible(true)}
+          <div className={styles.wrapper}>
+            <div className={styles.container}>
+              <div className={styles.formRow}>
+                <div className={styles.label}>
+                  Username
+                </div>
+                <div
+                  className={styles.inputContainer}
+                  onClick={() => setNameModalVisible(true)}
               >
-                <Input
-                  value={data.users[0].name || ''}
-                  placeholder=''
-                  responsive
-                  icon='account'
-                />
+                  <Input
+                    value={data.users[0].name || ''}
+                    placeholder=''
+                    responsive
+                    icon='account' />
+                </div>
               </div>
-            </div>
-            <div className={styles.formRow}>
-              <div className={styles.label}>
-                Email
-              </div>
-              <div
-                className={styles.inputContainer}
-                onClick={() => setEmailModalVisible(true)}
+              <div className={styles.formRow}>
+                <div className={styles.label}>
+                  Email
+                </div>
+                <div
+                  className={styles.inputContainer}
+                  onClick={() => setEmailModalVisible(true)}
               >
-                <Input
-                  value={data.users[0].email || ''}
-                  placeholder=''
-                  responsive
-                  icon='email'
-                />
+                  <Input
+                    value={data.users[0].email || ''}
+                    placeholder=''
+                    responsive
+                    icon='email' />
+                </div>
               </div>
-            </div>
-            {data.users[0].email && (
+              {data.users[0].email && (
               <div className={styles.formRow}>
                 <div className={styles.label}>
                   Password
                 </div>
-                <div
-                  className={styles.inputContainer}
-                  onClick={() => setPasswordModalVisible(true)}
-                >
+                <div className={styles.inputContainer}>
                   <Button
                     title='Change'
                     type='dimmed'
+                    onClick={handleOnCloseModal}
                     icon='lockopen' />
                 </div>
               </div>
-            )}
-            {data.users[0].telegram_id && (
+              )}
+              {data.users[0].telegram_id && (
               <div className={[ styles.formRow, styles.lastFormRow ].join(' ')}>
                 <div className={styles.label}>
                   Telegram
@@ -87,8 +88,8 @@ const _UserInfo: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
-            {/* <NameModal
+              )}
+              {/* <NameModal
               name={data.users[0].name || ''}
               screenType={screenType}
               onDismiss={() => setNameModalVisible(false)}
@@ -99,13 +100,16 @@ const _UserInfo: React.FC = () => {
               screenType={screenType}
               onDismiss={() => setEmailModalVisible(false)}
               visible={isEmailModalVisible}
-            />
-            <PasswordModal
-              screenType={screenType}
-              onDismiss={() => setPasswordModalVisible(false)}
-              visible={isPasswordModalVisible}
             /> */}
-          </>
+              <Modal
+                isOpen={isPasswordModalVisible}
+                title='Change Password'
+                onClose={handleOnCloseModal}
+              >
+                <PasswordModal onClose={handleOnCloseModal} />
+              </Modal>
+            </div>
+          </div>
         )}
       </div>
     </>
