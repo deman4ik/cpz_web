@@ -27,9 +27,7 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
 
   return (
     <div className={styles.container}>
-      <div
-        className={[ styles.row, styles.topPart ].join(' ')}
-        onClick={handleOnPressEditName}>
+      <div className={[ styles.row, styles.topPart ].join(' ')}>
         <div className={styles.name}>
           <div className={styles.tableCellText}>
             {truncate(item.name, 30)}

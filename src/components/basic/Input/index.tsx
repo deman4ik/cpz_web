@@ -12,12 +12,13 @@ interface Props {
   onChangeText?: (value) => void;
   onKeyPress?: (e: any) => void;
   width?: number;
-  responsible?: boolean;
+  responsive?: boolean;
   error?: boolean;
+  selectTextOnFocus?: boolean;
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onKeyPress, width = 350, error }) => {
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onKeyPress, width = 350, error, selectTextOnFocus, responsive }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
     if (onChangeText) {
@@ -103,7 +104,7 @@ export const Input: React.FC<Props> =
         
         @media (max-width: 480px) {
           .wrapper {
-            width: 300px;
+            width: ${responsive ? (width / 100) * 14 : width}px;
           }
         }
       `}

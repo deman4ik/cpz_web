@@ -38,6 +38,7 @@ const _UserInfo: React.FC = () => {
                 <Input
                   value={data.users[0].name || ''}
                   placeholder=''
+                  responsive
                   icon='account'
                 />
               </div>
@@ -53,6 +54,7 @@ const _UserInfo: React.FC = () => {
                 <Input
                   value={data.users[0].email || ''}
                   placeholder=''
+                  responsive
                   icon='email'
                 />
               </div>

@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  background-color: var(--rgbaDark);
+  border-radius: 2px;
+  align-items: center;
+}
+
+.groupBtn {
+  display: flex;
+  flex-direction: row;
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+}
+
+.inputWrapper {
+  margin-bottom: 20px;
+}

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { ExchangeKeysAddKey } from './ExchangeKeysAddKey';
 // import { ExchangeKeysAddKeyModal } from './ExchangeKeysAddKeyModal';
-// import { ExchangeKeysEditNameModal } from './ExchangeKeysEditNameModal';
-// import { ExchangeKeysDeleteKeyModal } from './ExchangeKeysDeleteKeyModal';
+import { ExchangeKeysEditNameModal } from './ExchangeKeysEditNameModal';
+import { ExchangeKeysDeleteKeyModal } from './ExchangeKeysDeleteKeyModal';
 import { ExchangeKeysCard } from './ExchangeKeysCard';
 import { ModalKey } from './types';
 import styles from './ExchangeKeysContainer.module.css';
-//import { Modal } from '../../../basic';
+import { Modal } from '../../../basic';
 
 interface Props {
   formatData: any;
@@ -82,27 +82,25 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
           isExchangeDisabled={!!isVisibleModal.addKey.options}
           onDismiss={handleSetVisibleModalAddKey}
         />
-      </Modal>
+      </Modal>*/}
       <Modal
-        screenType={dimension.screenType}
         title={getTitle(ModalKey.editName)}
-        visible={isVisibleModal.editName.isVisible}
-        onDismiss={handleSetVisibleModalEditName}
+        isOpen={isVisibleModal.editName.isVisible}
+        onClose={handleSetVisibleModalEditName}
       >
         <ExchangeKeysEditNameModal
-          onDismiss={handleSetVisibleModalEditName}
+          onClose={handleSetVisibleModalEditName}
           options={isVisibleModal.editName.options} />
       </Modal>
       <Modal
-        screenType={dimension.screenType}
         title={getTitle(ModalKey.deleteKey)}
-        visible={isVisibleModal.deleteKey.isVisible}
-        onDismiss={handleSetVisibleModalDeleteKey}
+        isOpen={isVisibleModal.deleteKey.isVisible}
+        onClose={handleSetVisibleModalDeleteKey}
       >
         <ExchangeKeysDeleteKeyModal
           options={isVisibleModal.deleteKey.options}
-          onDismiss={handleSetVisibleModalDeleteKey} />
-      </Modal> */}
+          onClose={handleSetVisibleModalDeleteKey} />
+      </Modal>
     </>
   );
 };
