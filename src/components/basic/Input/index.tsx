@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 import { Button } from '../Button';
-import styles from './index.module.css';
 
 interface Props {
   value: string;
@@ -10,18 +9,21 @@ interface Props {
   placeholder?: string;
   buttonTitle?: string;
   type?: string;
-  onChangeText: (value) => void;
+  onChangeText?: (value) => void;
+  onKeyPress?: (e: any) => void;
   width?: number;
   responsible?: boolean;
   error?: boolean;
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, width = 350, error }) => {
-  //const [ inputValue, setInputValue ] = useState(value);
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onKeyPress, width = 350, error }) => {
+  const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
-    onChangeText(e.target.value);
-    //setInputValue(e.target.value);
+    if (onChangeText) {
+      onChangeText(e.target.value);
+    }
+    setInputValue(e.target.value);
   };
 
   const handleOnInput = (e) => {
@@ -44,6 +46,7 @@ export const Input: React.FC<Props> =
             <Button
               title={buttonTitle || 'Change'}
               type='dimmed'
+              size='small'
               responsive
               icon={icon} />
           </div>
@@ -56,7 +59,8 @@ export const Input: React.FC<Props> =
           autoFocus
           onInput={handleOnInput}
           onChange={handleOnChange}
-          value={value} />
+          onKeyDown={onKeyPress}
+          value={inputValue} />
       </div>
       <style jsx>{`
         .wrapper {

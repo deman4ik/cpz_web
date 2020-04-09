@@ -80,7 +80,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose, searchName 
   const isValid = () => (Number(inputVolume) >= min && Number(inputVolume) <= max);
 
   const handleOnKeyPress = (e) => {
-    if (e.nativeEvent.key === 'Enter' && isValid) {
+    if (e.key === 'Enter' && isValid) {
       handleOnSubmit();
     }
   };
@@ -110,6 +110,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose, searchName 
                   value={`${inputVolume}`}
                   width={150}
                   error={!isValid()}
+                  onKeyPress={handleOnKeyPress}
                   onChangeText={value => handleOnChange(value)}
                 />
                 <div className={styles_subs.btns}>
