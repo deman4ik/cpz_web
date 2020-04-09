@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { Button, Input, Modal } from '../../../basic';
 import { LoadingIndicator } from '../../../common';
-// import { NameModal } from './NameModal';
+import { NameModal } from './NameModal';
 // import { EmailModal } from './EmailModal';
 import { PasswordModal } from './PasswordModal';
 import styles from './index.module.css';
@@ -17,8 +17,12 @@ const _UserInfo: React.FC = () => {
   const [ isEmailModalVisible, setEmailModalVisible ] = useState(false);
   const [ isPasswordModalVisible, setPasswordModalVisible ] = useState(false);
 
-  const handleOnCloseModal = () => {
+  const handleOnClosePasswordModal = () => {
     setPasswordModalVisible(!isPasswordModalVisible);
+  };
+
+  const handleOnCloseNameModal = () => {
+    setNameModalVisible(!isNameModalVisible);
   };
 
   return (
@@ -36,13 +40,11 @@ const _UserInfo: React.FC = () => {
                 <div className={styles.label}>
                   Username
                 </div>
-                <div
-                  className={styles.inputContainer}
-                  onClick={() => setNameModalVisible(true)}
-              >
+                <div className={styles.inputContainer}>
                   <Input
                     value={data.users[0].name || ''}
                     placeholder=''
+                    onClickButton={handleOnCloseNameModal}
                     responsive
                     icon='account' />
                 </div>
@@ -71,7 +73,7 @@ const _UserInfo: React.FC = () => {
                   <Button
                     title='Change'
                     type='dimmed'
-                    onClick={handleOnCloseModal}
+                    onClick={handleOnClosePasswordModal}
                     icon='lockopen' />
                 </div>
               </div>
@@ -89,12 +91,16 @@ const _UserInfo: React.FC = () => {
                 </div>
               </div>
               )}
-              {/* <NameModal
-              name={data.users[0].name || ''}
-              screenType={screenType}
-              onDismiss={() => setNameModalVisible(false)}
-              visible={isNameModalVisible}
-            />
+              <Modal
+                isOpen={isNameModalVisible}
+                title='Change Name'
+                onClose={handleOnCloseNameModal}
+              >
+                <NameModal
+                  name={data.users[0].name || ''}
+                  onClose={handleOnCloseNameModal} />
+              </Modal>
+              {/*
             <EmailModal
               email={data.users[0].email || ''}
               screenType={screenType}
@@ -104,9 +110,9 @@ const _UserInfo: React.FC = () => {
               <Modal
                 isOpen={isPasswordModalVisible}
                 title='Change Password'
-                onClose={handleOnCloseModal}
+                onClose={handleOnClosePasswordModal}
               >
-                <PasswordModal onClose={handleOnCloseModal} />
+                <PasswordModal onClose={handleOnClosePasswordModal} />
               </Modal>
             </div>
           </div>

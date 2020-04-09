@@ -11,6 +11,7 @@ interface Props {
   type?: string;
   onChangeText?: (value) => void;
   onKeyPress?: (e: any) => void;
+  onClickButton?: () => void;
   width?: number;
   responsive?: boolean;
   error?: boolean;
@@ -19,7 +20,7 @@ interface Props {
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText,
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton,
   onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
@@ -50,6 +51,7 @@ export const Input: React.FC<Props> =
               title={buttonTitle || 'Change'}
               type='dimmed'
               size='small'
+              onClick={onClickButton}
               responsive
               icon={icon} />
           </div>
