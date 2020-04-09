@@ -1,0 +1,41 @@
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  background-color: var(--rgbaDark);
+  border-radius: 2px;
+  align-items: center;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 450px;
+};
+
+.btnsGroup {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.performanceTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 16px;
+}

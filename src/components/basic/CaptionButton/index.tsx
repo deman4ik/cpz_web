@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PlusIcon, CheckIcon, LogoutIcon } from '../../../assets/icons/svg';
+import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon } from '../../../assets/icons/svg';
 
 
 interface Props {
@@ -9,15 +9,17 @@ interface Props {
   icon?: string;
   width?: number;
   onClick?: () => void;
+  responsive?: boolean;
 }
 
 const components = {
   check: CheckIcon,
   plus: PlusIcon,
-  logout: LogoutIcon
+  logout: LogoutIcon,
+  filtervariant: FilterVariantIcon
 };
 
-export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick }) => {
+export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn', 'ripple' ];
@@ -71,7 +73,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
         }
         @media (max-width: 768px) {
           .btn-text {
-            display: none;
+            display: ${responsive ? 'none' : 'block'};
           }
         }`}
       </style>

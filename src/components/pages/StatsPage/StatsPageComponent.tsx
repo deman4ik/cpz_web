@@ -1,38 +1,37 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { Text } from 'react-native';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React, { memo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { ChartType } from '../../charts/LightWeightChart/types';
-import { LightWeightChart } from '../../charts/LightWeightChart';
-import { capitalize } from '../../../services/Utils';
+import { capitalize } from '../../../config/utils';
 import { PerformanceTabComponent } from '../../ui/PerformanceTab/PerformanceTabComponent';
-import { styles } from '../../ui/PerformanceTab/index.style';
-import { LoadingIndicator } from '../../ui/Common/LoadingIndicator';
-import { Dimension } from '../../../config/types';
+import { LoadingIndicator } from '../../common';
+import styles from './index.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   formatData: any;
-  dimension: Dimension;
+  width: number;
   displayType: string;
 }
-const _StatsPageComponent: React.FC<Props> = ({ t, formatData, dimension, displayType }) => {
-  const { screenType, screenWidth, isMobile } = dimension;
-  const maxTablet = screenType.maxTablet();
 
-  return (
-    <>
-      {!formatData.chartData || !formatData.chartData.length ? <LoadingIndicator /> : (
-        <LightWeightChart
-          data={formatData.chartData}
-          type={ChartType.area}
-          size={{ height: 470, screenWidth, isMobile }} />
-      )}
-      <Text style={styles.performanceTitle}>
-        {t(`My ${capitalize(displayType)} Total Statistics`)}
-      </Text>
-      <PerformanceTabComponent maxTablet={maxTablet} robotStatistic={formatData.robotStatistic} />
-    </>
-  );
-};
+const LightWeightChartWithNoSSR = dynamic(
+  () => import('../../charts/LightWeightChart'),
+  { loading: () => <LoadingIndicator />,
+    ssr: false }
+);
 
-export const StatsPageComponent = memo(withTranslation()(_StatsPageComponent));
+const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width }) => (
+  <>
+    {!formatData.chartData || !formatData.chartData.length ? <LoadingIndicator /> : (
+      <LightWeightChartWithNoSSR
+        data={formatData.chartData}
+        type={ChartType.area}
+        size={{ height: 470, width }} />
+    )}
+    <div className={styles.performanceTitle}>
+      {`My ${capitalize(displayType)} Total Statistics`}
+    </div>
+    <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
+  </>
+);
+
+export const StatsPageComponent = memo(_StatsPageComponent);

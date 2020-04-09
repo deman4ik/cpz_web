@@ -1,29 +1,24 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
 
-import { ScreenTypeProps } from '../../../services/Screen';
-import { Button } from '../../basic';
-import { styles } from './index.style';
+import { CaptionButton } from '../../basic';
+import styles from './index.module.css';
 
 interface Props {
   setVisibleToolbarFilters: () => void;
-  screenType: ScreenTypeProps;
 }
 
-const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters, screenType }) => {
-  const isTabletSize = screenType.maxTablet();
+const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) => {
   const handleOnPress = () => {
     setVisibleToolbarFilters();
   };
 
   return (
-    <View style={styles.rowContainer}>
-      <Button
-        title={!isTabletSize ? 'filter' : undefined}
-        icon='filter-variant'
-        isUppercase
-        onPress={handleOnPress} />
-    </View>
+    <div className={styles.rowContainer}>
+      <CaptionButton
+        title='filter'
+        icon='filtervariant'
+        onClick={handleOnPress} />
+    </div>
   );
 };
 

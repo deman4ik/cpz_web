@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
-import { View, Text } from 'react-native';
 
 import { Button } from '../../basic';
-import { styles } from './StatsPageFilters.style';
-import { exchangeName, capitalize } from '../../../services/Utils';
+import { exchangeName, capitalize } from '../../../config/utils';
+import styles from './StatsPageFilters.module.css';
 
 interface Props {
   filterItem: {
@@ -24,11 +23,11 @@ const _StatsPageFilters: React.FC<Props> =
     };
 
     return (
-      <View style={styles.container}>
-        <View style={{ flexDirection: 'row', width: 72 }}>
-          <Text style={styles.labelText}>{`${capitalize(label)}:`}</Text>
-        </View>
-        <View style={styles.btnContainer}>
+      <div className={styles.container}>
+        <div className={styles.label}>
+          <div className={styles.labelText}>{`${capitalize(label)}:`}</div>
+        </div>
+        <div className={styles.btnContainer}>
           { labelsCombination.map((item: string) => {
             const availableButton = availableFilters.includes(item);
             return (
@@ -37,11 +36,11 @@ const _StatsPageFilters: React.FC<Props> =
                 disabled={!availableButton}
                 type={checkedItem === item ? 'rounded-primary' : !availableButton ? 'rounded-negative' : 'rounded'}
                 title={exchangeName(item)}
-                onPress={() => handleOnPressItem(item)} />
+                onClick={() => handleOnPressItem(item)} />
             );
           })}
-        </View>
-      </View>
+        </div>
+      </div>
     );
   };
 

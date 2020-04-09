@@ -18,7 +18,7 @@ interface Props {
 
 const LightWeightChartWithNoSSR = dynamic(
   () => import('../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
+  { loading: () => <LoadingIndicator />,
     ssr: false }
 );
 

@@ -15,8 +15,9 @@ import { PageType } from '../../../config/types';
 import { StatsPageButtonToolbar } from './StatsPageButtonToolbar';
 import { StatsPageComponent } from './StatsPageComponent';
 import { StatsPageFilters } from './StatsPageFilters';
-import { Button } from '../../basic';
+import { Button, Modal } from '../../basic';
 import { CheckedFilters, LabelCombinations } from './types';
+import styles from './index.module.css';
 
 export const StatsPage: React.FC = () => {
   const { width } = useWindowDimensions();
@@ -108,19 +109,17 @@ export const StatsPage: React.FC = () => {
       page={PageType[displayType]}
       title={`My ${capitalize(displayType)} Total Performance`}
       subTitle={getSubTitle(selectedFilter)}
-      // toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} screenType={screenType} />}
+      toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
       width={width}
       handlePressBack={handlePressBack}
     >
-      <div />
-      {/* <Modal
-        title={t(`Filter My Total ${capitalize(displayType)} Performance`)}
-        visible={isVisibleFilters}
-        screenType={screenType}
-        onDismiss={setVisibleToolbarFilters}
-        >
-        <View style={styles.filtersContainer}>
-          <View style={{ marginTop: 5 }}>
+      <Modal
+        isOpen={isVisibleFilters}
+        title={`Filter My Total ${capitalize(displayType)} Performance`}
+        onClose={setVisibleToolbarFilters}
+      >
+        <div className={styles.filtersContainer}>
+          <div style={{ marginTop: 5 }}>
             { Object.keys(labelCombinations).map((el: string) => (
               <StatsPageFilters
                 key={el}
@@ -131,37 +130,37 @@ export const StatsPage: React.FC = () => {
                 availableFilters={availableFilters[el]}
                 checkFilterButton={checkFilterButton} />
             ))}
-          </View>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+          </div>
+          <div className={styles.btnsGroup}>
             <Button
               title='OK'
               icon='check'
               type='success'
-              onPress={confirmSelectedFilter}
+              onClick={confirmSelectedFilter}
               isUppercase />
             <Button
               type='dimmed'
               width={160}
               title='clear filter'
               style={{ marginLeft: 15 }}
-              onPress={clearFilters}
+              onClick={clearFilters}
               icon='close'
               isUppercase />
-          </View>
-        </View>
+          </div>
+        </div>
       </Modal>
       <>
         {!formatData.chartData || !formatData.robotStatistic ? (
-          <View style={common.loadingContainer}>
-            <NoRecentData message={t('No recent data available')} />
-          </View>
+          <div className={styles.loadingContainer}>
+            <NoRecentData message='No recent data available' />
+          </div>
         ) : (
           <StatsPageComponent
             formatData={formatData}
-            dimension={dimension}
+            width={width}
             displayType={displayType} />
         ) }
-      </> */}
+      </>
     </Template>
   );
 };

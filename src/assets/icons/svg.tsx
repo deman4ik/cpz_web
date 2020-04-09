@@ -188,3 +188,9 @@ export const MenuDownIcon: React.FC<Props> = ({ color = 'white', size = 24 }) =>
     <path d='M7,10L12,15L17,10H7Z' />
   </svg>
 );
+
+export const FilterVariantIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
+  <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24' fill={color}>
+    <path d='M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z' />
+  </svg>
+);
