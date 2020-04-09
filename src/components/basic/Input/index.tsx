@@ -18,7 +18,8 @@ interface Props {
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onKeyPress, width = 350, error, selectTextOnFocus, responsive }) => {
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText,
+  onKeyPress, width = 350, error, selectTextOnFocus, responsive }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnChange = (e) => {
     if (onChangeText) {
