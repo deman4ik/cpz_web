@@ -8,9 +8,10 @@ import { PropsWrapChart } from './types';
 const LightWeightChart: React.FC<PropsWrapChart> =
 ({ data, size, type, loading = false, markers, lines, onFetchMore, legend }) => {
   const isMobile = size.width <= 480;
-  const leftToolBar = size.width >= 1200 ? 200 : 56;
+  const leftToolBar = size.width >= 1200 ? 200 : 46;
   const widthWithToolBar = 1214 + leftToolBar;
   const widthSubtractor = size.width >= widthWithToolBar ? 0 : widthWithToolBar - size.width;
+
   return (
     <div className={styles.container}>
       <_LightWeightChart

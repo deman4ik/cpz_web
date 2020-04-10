@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 
 import { HeaderTradingTabRobotPage } from './HeaderTradingTabRobotPage';
 import { ClosedPositionsRobotPageItem } from './ClosedPositionsRobotPageItem';
-// import { ClosedPositionsRobotPageItemCard } from './ClosedPositionsRobotPageItemCard';
+import { ClosedPositionsRobotPageItemCard } from './ClosedPositionsRobotPageItemCard';
 import { useShowDimension } from '../../../../hooks/useShowDimension';
 import { SCREEN_TYPE } from '../../../../config/constants';
-import { Robot } from '../types';
+import { Robot, SectionType } from '../types';
 import styles from './ClosedPositionContainer.module.css';
 import { RobotsLoadMore } from '../../../ui/RobotsLoadMore';
 import { NoRecentData } from '../../../common';
@@ -39,12 +39,12 @@ const _ClosedPositionContainer: React.FC<Props> =
             </>
           ) : (
             <div className={styles.mobileCardContainer}>
-              { data[tableName].map(item => (<div key={item.id} />
-                // <ClosedPositionsRobotPageItemCard
-                //   key={item.id}
-                //   item={item}
-                //   robot={robot}
-                //   activeTab={SectionType.closedPositions} />
+              { data[tableName].map(item => (
+                <ClosedPositionsRobotPageItemCard
+                  key={item.id}
+                  item={item}
+                  robot={robot}
+                  activeTab={SectionType.closedPositions} />
               ))}
             </div>
           )}
