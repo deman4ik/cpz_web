@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 
-//import { ScreenTypeProps } from '../../../services/Screen';
 import { HeaderButtonRobotPage } from './HeaderButtonRobotPage';
 import { HeaderStatsRobotPage } from './HeaderStatsRobotPage';
 // import { TooltipButton } from '../../ui/Tooltip/TooltipButton';
