@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { formatDate, capitalize, valueWithSign, moneyFormat, colorDirection } from '../../../../config/utils';
-import styles from './ClosedPositionsRobotPageItem.module.css';
+import { formatDate, capitalize, valueWithSign, colorDirection, moneyFormat } from '../../../../config/utils';
 import { color } from '../../../../config/constants';
+import { Robot } from '../types';
+import styles from './ClosedPositionsRobotPageItem.module.css';
 
 interface Props {
   item: any;
-  robot: any;
+  robot: Robot;
 }
 
 export const ClosedPositionsRobotPageItem: React.FC<Props> = ({ item, robot }) => {

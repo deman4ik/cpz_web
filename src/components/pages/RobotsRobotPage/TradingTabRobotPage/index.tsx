@@ -6,7 +6,7 @@ import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from '../../../../config/cons
 import { GET_ROBOT_POSITIONS_ROBOT, GET_ROBOT_POSITIONS_USER,
   ROBOT_POSITIONS_COUNT_USER } from '../../../../graphql/robots/queries';
 import { ROBOT_POSITIONS_COUNT } from '../../../../graphql/signals/queries';
-// import { ClosedPositionContainer } from './ClosedPositionContainer';
+import { ClosedPositionContainer } from './ClosedPositionContainer';
 // import { OpenPositionContainer } from './OpenPositionContainer';
 import { LoadingIndicator } from '../../../common';
 
@@ -85,15 +85,15 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
           {/* <OpenPositionContainer
             robot={robot}
             data={dataOpenPos}
-            tableName={tableName} />
+            tableName={tableName} /> */}
           <ClosedPositionContainer
             robot={robot}
             handleLoadMore={handleLoadMore}
             data={data}
             quantyRecords={quantyRecords}
-            maxTablet={maxTablet}
+            width={width}
             tableName={tableName}
-            isLoadingMore={isLoadingMore} /> */}
+            isLoadingMore={isLoadingMore} />
         </>
       )}
     </>

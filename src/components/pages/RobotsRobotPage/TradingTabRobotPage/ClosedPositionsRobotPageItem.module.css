@@ -1,0 +1,22 @@
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  border-top-width: 2px;
+  border-color: var(--darkBg);
+  padding: 15px 20px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+}
+
+.title {
+  font-size: var(--small1);
+  color: var(--accent);
+}
