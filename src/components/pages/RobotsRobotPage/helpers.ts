@@ -125,3 +125,9 @@ export const getProfit = (robotData: any, isUserRobots: boolean) => (
       ? robotData.user_robots.equity.profit
       : 0
     : robotData.robot.equity.profit);
+
+export const tabNames = {
+  trading: 'Trading',
+  myStatistic: 'My Performance',
+  publicStatistic: 'Public Performance'
+};
