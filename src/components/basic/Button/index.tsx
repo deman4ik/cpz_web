@@ -121,6 +121,9 @@ export const Button: React.FC<Props> =
         .btn.primary {
           background-image: linear-gradient(rgb(11, 152, 197), rgb(4, 97, 128));
         }
+        .btn.negative {
+          background-image: linear-gradient(rgb(205, 62, 96), rgb(133, 20, 47));
+        }
         .btn.rounded-primary {
           background-color: rgb(4, 97, 128);
         }

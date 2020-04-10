@@ -9,7 +9,7 @@ import { PageType, TabType } from '../../../config/types';
 import { GET_ROBOT_INFO_USER_ROBOTS } from '../../../graphql/robots/queries';
 import { SET_ROBOT_DATA } from '../../../graphql/local/mutations';
 import { POLL_INTERVAL } from '../../../config/constants';
-// import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
+import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 // import { TabsHeaderRobotPage } from './TabsHeaderRobotPage';
 // import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 // import { ToolbarRobotPage } from './ToolbarRobotPage';
@@ -58,11 +58,10 @@ export const RobotsRobotPage: React.FC = () => {
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
           <>
-            {/* <HeaderRobotsRobotPage
+            <HeaderRobotsRobotPage
               robotSubscribe={robotSubscribe}
-              robotData={robotData}
-              screenType={screenType} />
-            <TabsHeaderRobotPage
+              robotData={robotData} />
+            {/*<TabsHeaderRobotPage
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               screenType={screenType}

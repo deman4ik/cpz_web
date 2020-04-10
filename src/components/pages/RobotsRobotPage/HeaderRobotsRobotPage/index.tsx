@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
-// import { HeaderButtonRobotPage } from './HeaderButtonRobotPage';
-// import { HeaderStatsRobotPage } from './HeaderStatsRobotPage';
+import { HeaderButtonRobotPage } from './HeaderButtonRobotPage';
+import { HeaderStatsRobotPage } from './HeaderStatsRobotPage';
 import { capitalize } from '../../../../config/utils';
 import styles from './index.module.css';
 
@@ -19,16 +19,15 @@ const _HeaderRobotsRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) 
             {robotData.robot.name}
           </div>
         </div>
-        {/* <HeaderButtonRobotPage
-            robotSubscribe={robotSubscribe}
-            screenType={screenType}
-            robotData={robotData} /> */}
+        <HeaderButtonRobotPage
+          robotSubscribe={robotSubscribe}
+          robotData={robotData} />
       </div>
       <div className={styles.headerMessage}>
         {capitalize(robotData.user_robots ? robotData.user_robots.message : null)}
       </div>
     </div>
-    {/* <HeaderStatsRobotPage robotData={robotData} screenType={screenType} /> */}
+    <HeaderStatsRobotPage robotData={robotData} />
   </div>
 );
 

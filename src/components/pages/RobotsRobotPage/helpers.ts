@@ -119,7 +119,7 @@ export const startedAt = (robotData: any) => (
     ? robotData.user_robots.started_at ? dayjs.utc(robotData.user_robots.started_at).fromNow(true) : 0
     : null);
 
-export const profit = (robotData: any, isUserRobots: boolean) => (
+export const getProfit = (robotData: any, isUserRobots: boolean) => (
   isUserRobots
     ? (robotData.user_robots.equity && robotData.user_robots.equity.profit)
       ? robotData.user_robots.equity.profit
