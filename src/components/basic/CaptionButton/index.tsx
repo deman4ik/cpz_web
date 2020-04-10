@@ -28,11 +28,13 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
 
   return (
     <div className={getClassName().join(' ')} style={style} onClick={onClick}>
-      <div className='btn-text'>
-        {title}
-      </div>
-      <div className='icon'>
-        <SpecificIcon size={15} />
+      <div className='wrapper'>
+        <div className='btn-text'>
+          {title}
+        </div>
+        <div className='icon'>
+          <SpecificIcon size={15} />
+        </div>
       </div>
       <div className='aligner' />
       <style jsx>{`
@@ -44,13 +46,16 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           padding-left: 10px;
           padding-right: 10px;
           white-space: nowrap;
+          opacity: 1;
+          user-select: none;
         }
         .icon {
           padding-right: 8px;
           padding-left: 8px;
           padding-top: 3px;
           position: absolute;
-          right: 0;
+          top: -3px;
+          right: -18px;
         }
         .aligner {
           width: 12px;
@@ -70,6 +75,14 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           opacity: 1;
           background-color: transparent;
           text-transform: uppercase;
+        }
+        .wrapper {
+          position: relative;
+          width: 100%;
+          opacity: 1;
+        }
+        .wrapper:active {
+          opacity: 0.2;
         }
         @media (max-width: 768px) {
           .btn-text {

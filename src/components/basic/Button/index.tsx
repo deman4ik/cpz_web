@@ -45,7 +45,7 @@ const components = {
 export const Button: React.FC<Props> =
 ({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size }) => {
   const SpecificIcon = components[icon];
-  const rounded = type.indexOf('rounded') === 0;
+  const rounded = type && type.indexOf('rounded') === 0;
   const getClassName = () => {
     const composeClass = [ 'btn' ];
     if (className) composeClass.push(className);

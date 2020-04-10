@@ -5,7 +5,6 @@ import { Template } from '../../layout';
 import { PageType } from '../../../config/types';
 import { PageToolbar } from '../../common';
 import { RobotPerformance } from '../../ui/RobotPerformance';
-//import { ActionRobotModal, EditRobotModal } from '../../ui/Modals';
 import { RobotOpenPositions } from '../../ui/RobotOpenPositions';
 import { SignalRobots } from '../../ui/SignalsRobots';
 import { Modals } from './Modals';
@@ -36,27 +35,6 @@ export const RobotsPage: React.FC = () => {
       </div>
       <SignalRobots width={width} displayType='robots' />
       <Modals />
-      {/* <Modal
-        screenType={screenType}
-        onDismiss={handleSetVisible}
-        title={titleModal}
-        visible={getIsVisibleStatus(modalType.action, dataModal)}
-      >
-        <ActionRobotModal
-          onDismiss={handleSetVisible}
-          setTitle={setTitleModal}
-          type={dataModal.ModalVisible.type} />
-      </Modal>
-      <Modal
-        screenType={screenType}
-        visible={getIsVisibleStatus(modalType.edit, dataModal)}
-        title={titleModal}
-        onDismiss={handleSetVisible}
-      >
-        <EditRobotModal
-          setTitle={setTitleModal}
-          onDismiss={handleSetVisible} />
-      </Modal> */}
     </Template>
   );
 };
