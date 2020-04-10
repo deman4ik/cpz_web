@@ -1,9 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .bodyTitle {
   margin-bottom: 20px;
   text-align: center;
   font-size: var(--normal2);
   line-height: var(--big1);
   color: var(--accent);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.formComment {
+  margin-bottom: 25px;
 }
 
 .bodyText {
@@ -15,14 +31,32 @@
   color: white;
 }
 
-.btnsContainer {
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 380px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btns {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px auto 0;
 }
 
 .btn {
   margin: 10px;
+}
+
+.label {
+  color: var(--accent);
 }

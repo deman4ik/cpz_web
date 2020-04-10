@@ -10,7 +10,7 @@ import { ErrorLine, LoadingIndicator } from '../../common';
 import { Button, Input } from '../../basic';
 import { moneyFormat } from '../../../config/utils';
 import { color } from '../../../config/constants';
-import styles from './EditRobotModal.module.css';
+import styles from './index.module.css';
 
 interface Props {
   onClose: () => void;

@@ -50,7 +50,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
           <div className={styles.bodyText}>
             You will lost all your signals statistics for this robot!
           </div>
-          <div className={styles.btnsContainer}>
+          <div className={styles.btns}>
             <Button
               className={styles.btn}
               title='Yes'

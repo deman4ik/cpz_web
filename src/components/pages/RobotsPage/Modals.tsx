@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useVisibleModal } from '../../../hooks/useVisibleModal';
-import { EditRobotModal } from '../../ui/Modals';
+import { ActionRobotModal, EditRobotModal } from '../../ui/Modals';
 import { Modal } from '../../basic';
 import { getIsVisibleStatus } from '../helpers';
 import { modalType } from '../types';
@@ -11,16 +11,16 @@ export const Modals: React.FC = () => {
 
   return (
     <>
-      {/* <Modal
+      <Modal
         onClose={handleSetVisible}
-        isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
+        isOpen={getIsVisibleStatus(modalType.action, dataModal)}
         title={titleModal}
       >
-        <SubscribeModal
+        <ActionRobotModal
           onClose={handleSetVisible}
           setTitle={setTitleModal}
           type={dataModal.ModalVisible.type} />
-      </Modal> */}
+      </Modal>
       <Modal
         isOpen={getIsVisibleStatus(modalType.edit, dataModal)}
         onClose={handleSetVisible}
