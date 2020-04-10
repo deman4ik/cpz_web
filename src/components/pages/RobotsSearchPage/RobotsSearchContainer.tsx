@@ -4,8 +4,8 @@ import { useFetchRobots } from '../../../hooks/useFetchRobots';
 import { useVisibleModal } from '../../../hooks/useVisibleModal';
 import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
-import { SubscribeModal, UnsubscribeModal } from '../../ui/Modals';
 import { Modal } from '../../basic';
+//import { ActionRobotModal, EditRobotModal, CreateRobotModal } from '../../ui/Modals';
 import { formatRobotsData } from './helpers';
 import { getIsVisibleStatus } from '../helpers';
 import { modalType } from '../types';
@@ -16,7 +16,7 @@ interface Props {
   width: number;
 }
 
-export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width, displayType }) => {
+export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText = '', width }) => {
   const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
   const { robotsData, counts, loading, loading_aggregate, isLoadingMore, onFetchMore } =
     useFetchRobots(displayType, searchText, formatRobotsData);
@@ -32,26 +32,41 @@ export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width
           width={width}
           displayType={displayType} />
       )}
-      <Modal
-        title={titleModal}
-        isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
-        onClose={handleSetVisible}
+      {/* <Modal
+        screenType={screenType}
+        visible={getIsVisibleStatus(modalType.create, dataModal)}
+        onDismiss={handleSetVisible}
+        title='Add Trading Robot'
       >
-        <UnsubscribeModal
-          setTitle={setTitleModal}
-          onClose={handleSetVisible} />
+        <CreateRobotModal
+          onDismiss={handleSetVisible}
+          searchName={searchText}
+          dimension={dimension}
+        />
       </Modal>
       <Modal
-        isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
-        onClose={handleSetVisible}
+        screenType={screenType}
+        visible={getIsVisibleStatus(modalType.action, dataModal)}
+        onDismiss={handleSetVisible}
         title={titleModal}
       >
-        <SubscribeModal
-          onClose={handleSetVisible}
+        <ActionRobotModal
+          setTitle={setTitleModal}
+          onDismiss={handleSetVisible}
           type={dataModal.ModalVisible.type}
+        />
+      </Modal>
+      <Modal
+        screenType={screenType}
+        visible={getIsVisibleStatus(modalType.edit, dataModal)}
+        onDismiss={handleSetVisible}
+        title={titleModal}
+      >
+        <EditRobotModal
+          onDismiss={handleSetVisible}
           searchName={searchText}
           setTitle={setTitleModal} />
-      </Modal>
+      </Modal> */}
     </>
   );
 };
