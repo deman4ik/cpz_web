@@ -7,10 +7,12 @@ import { RobotPerformance } from '../../ui/RobotPerformance';
 import { RobotOpenPositions } from '../../ui/RobotOpenPositions';
 import { SignalRobots } from '../../ui/SignalsRobots';
 import { PageToolbar } from '../../common/PageToolbar';
+import { Modals } from './Modals';
 import styles from './index.module.css';
 
 export const SignalsPage = () => {
   const { width } = useWindowDimensions();
+
   return (
     <Template
       page={PageType.signals}
@@ -32,6 +34,7 @@ export const SignalsPage = () => {
         </div>
       </div>
       <SignalRobots width={width} displayType='signals' />
+      <Modals />
     </Template>
   );
 };
