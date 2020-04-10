@@ -1,0 +1,32 @@
+.accordionTitle {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 10px 20px;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+.topCards {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 290px;
+  margin-left: 10px;
+}
+
+.topCardsContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .topCards {
+    margin-left: 0;
+  }
+}
