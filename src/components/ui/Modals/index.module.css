@@ -63,12 +63,13 @@
 
 .wizardContainer {
   min-width: 550px;
-  margin: 0 40px;
+  margin: 0 40px 20px;
 }
 
 .selectGroup {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .btnSelectGroup {
@@ -81,6 +82,14 @@
   justify-content: center;
   font-size: var(--normal2);
   color: var(--accent);
+}
+
+.step3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: -30px auto 30px;
 }
 
 @media (max-width: 768px) {

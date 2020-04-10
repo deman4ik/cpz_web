@@ -1,14 +1,11 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
-import { Button } from '../../basic';
-import { styles as _styles, responsive } from './index.style';
-import { styles } from '../../basic/Modal/index.style';
-import { color } from '../../../styles/vars';
-import { moneyFormat } from '../../../services/Utils';
+import { Button, Input } from '../../../basic';
+import styles from '../index.module.css';
+import { color } from '../../../../config/constants';
+import { moneyFormat } from '../../../../config/utils';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   asset: string;
   min: number;
   max: number;
@@ -19,7 +16,6 @@ interface Props extends PropsWithChildren<WithTranslation> {
 }
 
 const _CreateRobotStep2: React.FC<Props> = ({
-  t,
   asset,
   min,
   max,
@@ -28,63 +24,60 @@ const _CreateRobotStep2: React.FC<Props> = ({
   handleOnBack,
   setVolume
 }) => {
-  const isValidNumber = Number(volume) >= min && Number(volume) <= max;
+  const isValidNumber = () => (Number(volume) >= min && Number(volume) <= max);
 
   const handleOnChange = (value: string) => {
     setVolume(value);
   };
 
   const handleOnKeyPress = (e) => {
-    if (e.nativeEvent.key === 'Enter' && isValidNumber) {
+    if (e.nativeEvent.key === 'Enter' && isValidNumber()) {
       handleOnCreate();
     }
   };
 
   return (
     <>
-      <Text style={styles.bodyTitle}>
-        {t('Please enter desired trading volume in')}&nbsp;
-        <Text style={{ color: color.white }}>{asset || ''}</Text>
-      </Text>
-      <View style={_styles.form}>
-        <Text style={[ styles.bodyText, _styles.formComment ]}>
-          <Text style={_styles.label}>
-            {t('Minimum value is')}
-          </Text>
-          &nbsp;{moneyFormat(min, 3)}
-        </Text>
-        <View style={_styles.fieldset}>
-          <TextInput
-            style={responsive.input(!isValidNumber)}
-            keyboardType='numeric'
-            value={`${volume}`}
+      <div className={styles.bodyTitle}>
+        Please enter desired trading volume in&nbsp;
+        <span style={{ color: color.white }}>{asset || ''}</span>
+      </div>
+      <div className={styles.form}>
+        <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
+          <div className={styles.label}>
+            Minimum value is&nbsp;
+          </div>
+          {moneyFormat(min, 3)}
+        </div>
+        <div className={styles.fieldset}>
+          <Input
+            error={!isValidNumber()}
+            type='number'
+            value={volume}
             selectTextOnFocus
             onChangeText={value => handleOnChange(value)}
-            onKeyPress={handleOnKeyPress}
-          />
-        </View>
-      </View>
-      <View style={_styles.btns}>
+            onKeyPress={handleOnKeyPress} />
+        </div>
+      </div>
+      <div className={styles.btns}>
         <Button
-          style={styles.btn}
-          title={t('Back')}
-          icon='chevron-left'
+          className={styles.btn}
+          title='Back'
+          icon='chevronleft'
           type='dimmed'
           isUppercase
-          onPress={handleOnBack}
-        />
+          onClick={handleOnBack} />
         <Button
-          style={styles.btn}
-          title={t('Next')}
-          icon='chevron-right'
+          className={styles.btn}
+          title='Next'
+          icon='chevronright'
           type='success'
-          disabled={!isValidNumber}
+          disabled={!isValidNumber()}
           isUppercase
-          onPress={handleOnCreate}
-        />
-      </View>
+          onClick={handleOnCreate} />
+      </div>
     </>
   );
 };
 
-export const CreateRobotStep2 = memo(withTranslation()(_CreateRobotStep2));
+export const CreateRobotStep2 = memo(_CreateRobotStep2);

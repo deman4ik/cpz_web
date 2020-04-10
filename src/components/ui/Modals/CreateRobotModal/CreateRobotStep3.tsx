@@ -1,62 +1,44 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, Text } from 'react-native';
-import { IconButton } from 'react-native-paper';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
-import { Button } from '../../basic';
-import { vars } from '../../../styles';
-import { styles as _styles } from './index.style';
-import { styles } from '../../basic/Modal/index.style';
+import { Button } from '../../../basic';
+import { AlertIcon } from '../../../../assets/icons/svg';
+import { color } from '../../../../config/constants';
+import styles from '../index.module.css';
 
-interface Props extends PropsWithChildren<WithTranslation> {
+interface Props {
   robotName: string;
   handleOnStart?: () => void;
-  onDismiss?: () => void;
+  onClose?: () => void;
 }
 
-const _CreateRobotStep3: React.FC<Props> = ({
-  t,
-  robotName,
-  handleOnStart,
-  onDismiss
-}) => (
+const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose }) => (
   <>
-    <Text style={{
-      maxWidth: 400,
-      marginHorizontal: 'auto',
-      marginTop: -30,
-      marginBottom: 30,
-      textAlign: 'center'
-    }}>
-      <IconButton icon='alert' size={48} color={vars.color.white} />
-      {'\n'}
-      <Text style={styles.bodyTitle}>
+    <div className={styles.step3}>
+      <AlertIcon size={48} color={color.white} />
+      <div className={styles.bodyTitle}>
         Are you sure you want to start {robotName} robot now?
-      </Text>
-      {'\n'}{'\n'}
-      <Text style={styles.bodyText}>
+      </div>
+      <div className={styles.bodyText}>
         It is a realtime automated trading mode using your exchange account and you use it at your own risk!
-      </Text>
-    </Text>
-    <View style={_styles.btns}>
+      </div>
+    </div>
+    <div className={styles.btns}>
       <Button
-        style={styles.btn}
-        title={t('Yes')}
+        className={styles.btn}
+        title='Yes'
         icon='check'
         type='success'
         isUppercase
-        onPress={handleOnStart}
-      />
+        onClick={handleOnStart} />
       <Button
-        style={styles.btn}
-        title={t('No')}
+        className={styles.btn}
+        title='No'
         icon='close'
         type='primary'
         isUppercase
-        onPress={onDismiss}
-      />
-    </View>
+        onClick={onClose} />
+    </div>
   </>
 );
 
-export const CreateRobotStep3 = memo(withTranslation()(_CreateRobotStep3));
+export const CreateRobotStep3 = memo(_CreateRobotStep3);

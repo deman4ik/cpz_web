@@ -8,11 +8,10 @@ import { USER_ROBOT_CREATE, USER_ROBOT_START } from '../../../../graphql/robots/
 import { CREATE_ROBOT, ACTION_ROBOT } from '../../../../graphql/local/mutations';
 import { exchangeName } from '../../../../config/utils';
 import { StepWizard } from '../../../basic';
-// import { CreateRobotStep1 } from './CreateRobotStep1';
-// import { CreateRobotStep2 } from './CreateRobotStep2';
-// import { CreateRobotStep3 } from './CreateRobotStep3';
+import { CreateRobotStep1 } from './CreateRobotStep1';
+import { CreateRobotStep2 } from './CreateRobotStep2';
+import { CreateRobotStep3 } from './CreateRobotStep3';
 import { ErrorLine, LoadingIndicator } from '../../../common';
-import { color } from '../../../../config/constants';
 import styles from '../index.module.css';
 
 interface Props {
@@ -151,19 +150,17 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, searchName, code, width }
               width={width} />
           </div>
           <ErrorLine formError={formError} />
-          {/* {step === 1 && dataPicker && (
-            <CreateRobotStep1
-              dataPicker={dataPicker}
-              exchange={variables.exchange}
-              selectedKey={inputKey}
-              refetchQueries={_refetchQueries}
-              dimension={dimension}
-              hasError={!!formError}
-              onDismiss={onDismiss}
-              setFormError={setFormError}
-              handleOnNext={handleOnNext}
-              handleOnChangeExchange={handleOnChangeExchange}
-            />
+          {step === 1 && dataPicker && (
+          <CreateRobotStep1
+            dataPicker={dataPicker}
+            exchange={variables.exchange}
+            selectedKey={inputKey}
+            refetchQueries={_refetchQueries}
+            hasError={!!formError}
+            onClose={onClose}
+            setFormError={setFormError}
+            handleOnNext={handleOnNext}
+            handleOnChangeExchange={handleOnChangeExchange} />
           )}
           {step === 2 && (
             <CreateRobotStep2
@@ -180,9 +177,9 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, searchName, code, width }
             <CreateRobotStep3
               robotName={dataRobot ? dataRobot.robot.name : null}
               handleOnStart={handleOnStart}
-              onDismiss={onDismiss}
+              onClose={onClose}
             />
-          )} */}
+          )}
         </>
       )}
     </>
