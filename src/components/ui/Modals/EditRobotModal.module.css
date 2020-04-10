@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bodyTitle {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: var(--normal2);
+  line-height: var(--big1);
+  color: var(--accent);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.formComment {
+  margin-bottom: 25px;
+}
+
+.bodyText {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: var(--normal1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btns {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.label {
+  color: var(--accent);
+}

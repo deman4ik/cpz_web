@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Button } from '../Button';
 
@@ -42,6 +42,10 @@ export const Input: React.FC<Props> =
     if (error) style.push('error');
     return style;
   };
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [ value ]);
 
   return (
     <div className='wrapper'>

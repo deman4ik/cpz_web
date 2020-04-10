@@ -1,22 +1,18 @@
 import React from 'react';
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
-import { useVisibleModal } from '../../../hooks/useVisibleModal';
 import { Template } from '../../layout';
 import { PageType } from '../../../config/types';
 import { PageToolbar } from '../../common';
 import { RobotPerformance } from '../../ui/RobotPerformance';
 //import { ActionRobotModal, EditRobotModal } from '../../ui/Modals';
-import { Modal } from '../../basic';
 import { RobotOpenPositions } from '../../ui/RobotOpenPositions';
 import { SignalRobots } from '../../ui/SignalsRobots';
-import { modalType } from '../types';
-import { getIsVisibleStatus } from '../helpers';
+import { Modals } from './Modals';
 import styles from './index.module.css';
 
 export const RobotsPage: React.FC = () => {
   const { width } = useWindowDimensions();
-  const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
   return (
     <Template
@@ -39,6 +35,7 @@ export const RobotsPage: React.FC = () => {
         </div>
       </div>
       <SignalRobots width={width} displayType='robots' />
+      <Modals />
       {/* <Modal
         screenType={screenType}
         onDismiss={handleSetVisible}
