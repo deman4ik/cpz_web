@@ -26,7 +26,6 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, searchName, code, setTitle 
 
   useEffect(() => {
     if (dataRobot) {
-      console.log(dataRobot.robot.subs.volume);
       setInputVolume(dataRobot.robot.subs.volume);
       setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ''}`);
     }

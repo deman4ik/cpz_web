@@ -31,6 +31,7 @@ export const Template: React.FC<Props> = ({ title, subTitle, children, page, wid
           <NavBar
             title={title}
             subTitle={subTitle}
+            handlePressBack={handlePressBack}
             toolbar={toolbar} />
         </div>
       </div>

@@ -52,8 +52,9 @@ const _CreateRobotStep2: React.FC<Props> = ({
         <div className={styles.fieldset}>
           <Input
             error={!isValidNumber()}
+            width={160}
             type='number'
-            value={volume}
+            value={`${volume}`}
             selectTextOnFocus
             onChangeText={value => handleOnChange(value)}
             onKeyPress={handleOnKeyPress} />

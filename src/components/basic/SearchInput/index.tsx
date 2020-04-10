@@ -24,7 +24,7 @@ export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) =
     <div className={styles.wrapper}>
       <div className={styles.container}>
         { value.length ? (
-          <div className={styles.icon} onClick={() => onChange('')}>
+          <div className={[ styles.icon, styles.pointer ].join(' ')} onClick={() => onChange('')}>
             <CloseIcon color={color.accent} size={16} />
           </div>
         ) : (

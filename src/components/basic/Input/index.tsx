@@ -24,16 +24,27 @@ export const Input: React.FC<Props> =
 ({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton,
   onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
   const [ inputValue, setInputValue ] = useState(value);
-  const handleOnChange = (e) => {
+  const handleOnInput = (e) => {
+    if (type === 'number') {
+      e.target.value = e.target.value.toString().slice(0, 8);
+    }
     if (onChangeText) {
       onChangeText(e.target.value);
     }
     setInputValue(e.target.value);
   };
 
-  const handleOnInput = (e) => {
+  const formatInput = (e) => {
     if (type === 'number') {
-      e.target.value = Math.max(0, Number(e.target.value)).toString().slice(0, 8);
+      if (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 190 || e.keyCode === 13) {
+        if (e.keyCode === 13) {
+          onKeyPress(e);
+        }
+      } else if (e.keyCode < 48 || e.keyCode > 57) {
+        e.preventDefault();
+      }
+    } else {
+      onKeyPress(e);
     }
   };
 
@@ -62,15 +73,14 @@ export const Input: React.FC<Props> =
           </div>
         ) : null}
         <input
-          type={type}
           className={getInputClass().join(' ')}
           placeholder={placeholder}
           maxLength={maxLength}
           autoFocus
+          type='text'
           readOnly={readonly}
           onInput={handleOnInput}
-          onChange={handleOnChange}
-          onKeyDown={onKeyPress}
+          onKeyDown={formatInput}
           value={inputValue} />
       </div>
       <style jsx>{`
