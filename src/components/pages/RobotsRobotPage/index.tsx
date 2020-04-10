@@ -11,7 +11,7 @@ import { SET_ROBOT_DATA } from '../../../graphql/local/mutations';
 import { POLL_INTERVAL } from '../../../config/constants';
 import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 import { TabsHeaderRobotPage } from './HeaderRobotsRobotPage/TabsHeaderRobotPage';
-// import { TabsPagesRobotPage } from './TabsPagesRobotPage';
+import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 // import { ToolbarRobotPage } from './ToolbarRobotPage';
 // import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
@@ -65,11 +65,11 @@ export const RobotsRobotPage: React.FC = () => {
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               isUserRobots={robotData.robot.isUserRobot} />
-            {/*<TabsPagesRobotPage
+            <TabsPagesRobotPage
               robotData={robotData}
               activeTab={activeTab}
-              dimension={dimension} />
-            <ModalsRobotPage
+              width={width} />
+            {/*<ModalsRobotPage
               visibleModal={visibleModal}
               setVisibleModal={setVisibleModal}
               code={router.query.code as string}
