@@ -60,3 +60,38 @@
 .label {
   color: var(--accent);
 }
+
+.wizardContainer {
+  min-width: 550px;
+  margin: 0 40px;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.btnSelectGroup {
+  margin-left: 10px;
+}
+
+.noKeysText {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: center;
+  font-size: var(--normal2);
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .wizardContainer {
+    margin-left: -140px;
+    margin-right: -140px;
+  }
+  .selectGroup {
+    flex-direction: column;
+  }
+  .btnSelectGroup {
+    margin-left: 0;
+  }
+}
