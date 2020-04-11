@@ -74,7 +74,7 @@ export const Login: React.FC = () => {
       <div className={styles.header}>
         <Header hasHomeButton />
       </div>
-      <div className={styles.plate}>
+      <div className={[ styles.plate, styles.plateLogin ].join(' ')}>
         <div className={styles.cardWrapper}>
           <div className={styles.content}>
             <div className={styles.card}>
@@ -100,6 +100,7 @@ export const Login: React.FC = () => {
                 type='success'
                 size='big'
                 title='log in'
+                width={260}
                 isUppercase
                 isLoading={isFetching}
                 onClick={handleLogin} />
@@ -113,6 +114,7 @@ export const Login: React.FC = () => {
                 type='primary'
                 size='big'
                 title='Create account'
+                width={260}
                 isUppercase
                 onClick={() => handleSwitchToStep('signUp')} />
               <div className={styles.telegramGroup}>

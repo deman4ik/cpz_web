@@ -78,7 +78,7 @@ export const Input: React.FC<Props> =
           autoFocus
           type={type === 'number' ? 'text' : type}
           readOnly={readonly}
-          onInput={handleOnInput}
+          onChange={handleOnInput}
           onKeyDown={formatInput}
           value={inputValue} />
       </div>
