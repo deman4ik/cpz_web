@@ -1,30 +1,26 @@
-import React, { PropsWithChildren, memo } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import React, { memo } from 'react';
 import Router from 'next/router';
-import { WithTranslation, withTranslation } from 'react-i18next';
-import { styles } from './CartFooter.style';
 
-const _CartFooter: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
+import { ChevronLeftIcon } from '../../../../assets/icons/svg';
+import styles from './CartFooter.module.css';
+
+const _CartFooter: React.FC = () => {
   const handleSwitchBackToLogin = () => {
     Router.push('/auth/login');
   };
 
   return (
-    <View style={[ styles.footer ]}>
-      <TouchableOpacity style={{ justifyContent: 'center', flexDirection: 'row' }} onPress={handleSwitchBackToLogin}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <IconButton
-            size={20}
-            color='white'
-            icon='chevron-left' />
-          <Text style={{ color: 'white' }}>
-            {t('auth.buttons.backToLogin')}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <div className={styles.footer}>
+      <div className={styles.wrapper}>
+        <div className={styles.iconGroup} onClick={handleSwitchBackToLogin}>
+          <ChevronLeftIcon size={20} />
+          <div className={styles.text}>
+            Back to login
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export const CartFooter = memo(withTranslation()(_CartFooter));
+export const CartFooter = memo(_CartFooter);
