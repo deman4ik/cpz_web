@@ -69,12 +69,14 @@ export const Verification: React.FC = () => {
               error={!!errors.verificationCode}
               placeholder='Verification code'
               maxLength={6}
+              width={260}
               onChangeText={(text: string) => handleChange('verificationCode', text)} />
             <Button
               size='big'
               style={{ marginTop: 30 }}
               title='Verify my email address'
               type='success'
+              width={260}
               onClick={handleOnPress}
               isUppercase />
           </div>

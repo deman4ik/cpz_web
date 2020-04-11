@@ -72,10 +72,11 @@ export const ForgotPassword: React.FC = () => {
               onChangeText={(text: string) => handleChange('email', text)}
             />
             <Button
-              style={{ marginTop: 30 }}
+              style={{ marginTop: 25 }}
               title='Request password reset'
               type='success'
               size='big'
+              width={260}
               isUppercase
               isLoading={isFetching}
               onClick={handleOnPress} />

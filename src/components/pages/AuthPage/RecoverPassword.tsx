@@ -90,8 +90,9 @@ export const RecoverPassword: React.FC = () => {
             <Button
               type='success'
               size='big'
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 10 }}
               title='Reset'
+              width={260}
               isUppercase
               isLoading={isFetching}
               onClick={handleOnPress} />

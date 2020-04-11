@@ -1,9 +1,9 @@
 import React from 'react';
-import { Login } from '../../src/components/pages/AuthPage/Login';
+import { ForgotPassword } from '../../src/components/pages/AuthPage/ForgotPassword';
 import { withAuth, withApollo } from '../../src/libs/hoc';
 
 const Page = () => (
-  <Login />
+  <ForgotPassword />
 );
 
 export default withApollo(withAuth(Page));

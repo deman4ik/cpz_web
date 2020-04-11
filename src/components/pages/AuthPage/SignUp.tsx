@@ -1,18 +1,15 @@
-import React, { PropsWithChildren, useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
 
-import { useDimensionWidth } from '../../../hooks/useDimensions';
-import { CartFooter } from './common';
+import { CartFooter } from './common/CartFooter';
 import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../services/Utils';
+import { validateAuth } from '../../../config/validation';
 import { register } from '../../../libs/auth';
-import { Button, TextInput, Checkbox } from '../../basic';
-import { PageHead, Footer } from '../../layout';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import { styles, responsive } from './SignUp.style';
+import { Button, Input } from '../../basic';
+import { PageHead, Footer, Header } from '../../layout';
+import styles from './index.module.css';
 
 const INITIAL_STATE = {
   email: '',
@@ -20,8 +17,7 @@ const INITIAL_STATE = {
   passwordRepeat: ''
 };
 
-const _SignUp: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
-  const { screenType, setDimension } = useDimensionWidth();
+export const SignUp: React.FC = () => {
   const client = useApolloClient();
   const {
     handleSubmit,
@@ -31,12 +27,12 @@ const _SignUp: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
     isValid,
     setValid
   } = useFormValidation(INITIAL_STATE, validateAuth);
-  const [ keepSignedIn, setKeepSignedIn ] = useState(true);
+  //const [ keepSignedIn, setKeepSignedIn ] = useState(true);
   const [ isFetching, setIsFetching ] = useState(false);
 
-  const toggleCheckBox = () => {
-    setKeepSignedIn(!keepSignedIn);
-  };
+  // const toggleCheckBox = () => {
+  //   setKeepSignedIn(!keepSignedIn);
+  // };
 
   const handleOnPress = () => {
     handleSubmit();
@@ -61,71 +57,64 @@ const _SignUp: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
     }
   }, [ isValid ]);
 
-  const handleOnLayout = () => {
-    setDimension();
-  };
-
   return (
-    <View
-      style={styles.container}
-      onLayout={handleOnLayout}
-    >
-      <PageHead title={t('auth.titles.signUp')} />
-      <View style={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu screenType={screenType} hasHomeButton />
-      </View>
-      <View style={responsive.plate(screenType)}>
-        <View style={{ backgroundColor: '#242B4A' }}>
-          <View style={responsive.card(screenType)}>
-            <Text style={styles.title}>{t('auth.titles.signUp')}</Text>
-            <TextInput
+    <div className={styles.container}>
+      <PageHead title='Create account' />
+      <div className={styles.header}>
+        <Header hasHomeButton />
+      </div>
+      <div className={styles.plate}>
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.title}>Create account</div>
+            <Input
               value={values.email}
-              error={errors.email}
+              error={!!errors.email}
               maxLength={255}
-              placeholder={t('auth.form.placeholders.email')}
-              onChangeText={(text: string) => handleChange('email', text)}
-            />
-            <TextInput
+              placeholder='Email'
+              width={260}
+              onChangeText={(text: string) => handleChange('email', text)} />
+            <Input
               value={values.password}
               style={{ marginTop: 8 }}
-              error={errors.password}
+              error={!!errors.password}
               maxLength={100}
-              placeholder={t('auth.form.placeholders.password')}
-              onChangeText={(text: string) => handleChange('password', text)}
-              secureTextEntry
-            />
-            <TextInput
+              placeholder='Password'
+              type='password'
+              width={260}
+              onChangeText={(text: string) => handleChange('password', text)} />
+            <Input
               value={values.passwordRepeat}
               style={{ marginTop: 8 }}
-              error={errors.passwordRepeat}
+              error={!!errors.passwordRepeat}
               maxLength={100}
-              placeholder={t('auth.form.placeholders.passwordRepeat')}
-              onChangeText={(text: string) => handleChange('passwordRepeat', text)}
-              secureTextEntry
-            />
-            <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 12, marginLeft: -8 }}>
+              placeholder='Repeat password'
+              type='password'
+              width={260}
+              onChangeText={(text: string) => handleChange('passwordRepeat', text)} />
+            {/* <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 12, marginLeft: -8 }}>
               <Checkbox
                 label={t('auth.form.keepSignedIn')}
                 labelStyle={styles.checkboxLabel}
                 isActive={keepSignedIn}
                 onPress={toggleCheckBox}
               />
-            </View>
+            </View> */}
             <Button
               type='success'
+              style={{ marginTop: 10 }}
               size='big'
-              title={t('auth.buttons.signUp')}
+              width={260}
+              title='Sign Up'
               isUppercase
               isLoading={isFetching}
-              onPress={handleOnPress}
+              onClick={handleOnPress}
             />
-          </View>
+          </div>
           <CartFooter />
-        </View>
-      </View>
-      <Footer screenType={screenType} />
-    </View>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
-
-export const SignUp = withTranslation()(_SignUp);
