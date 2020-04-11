@@ -3,6 +3,8 @@
 import React, { memo } from 'react';
 
 import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon, TelegramIcon } from '../../assets/icons/svg';
+import { NotificationCounter } from '../ui/NotificationCounter';
+import { PageType } from '../../config/types';
 import styles from './MainMenu.module.css';
 
 interface Props {
@@ -32,6 +34,7 @@ const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
     <div className={styles.mainMenuItemWrapper}>
       <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`} onClick={handleOnClickLink}>
         <SpecificIcon color={active ? 'white' : 'rgba(255, 255, 255, 0.68)'} />
+        {item.label === PageType.notifications && <NotificationCounter /> }
         <div className={styles.itemLabel}>
           <div className={styleText.join(' ')}>
             {item.label}
