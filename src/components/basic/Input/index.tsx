@@ -38,14 +38,12 @@ export const Input: React.FC<Props> =
     if (type === 'number') {
       if (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 190 || e.keyCode === 13) {
         if (e.keyCode === 13) {
-          onKeyPress(e);
+          if (onKeyPress) onKeyPress(e);
         }
       } else if (e.keyCode < 48 || e.keyCode > 57) {
         e.preventDefault();
       }
-    } else {
-      onKeyPress(e);
-    }
+    } else if (onKeyPress) onKeyPress(e);
   };
 
   const getInputClass = () => {

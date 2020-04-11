@@ -3,12 +3,11 @@ import React, { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import { useQuery } from '@apollo/react-hooks';
 
-import { CartFooter } from './common';
+import { CartFooter } from './common/CartFooter';
 import { USER } from '../../../graphql/local/queries';
 import { activate } from '../../../libs/auth';
-import { Footer, PageHead } from '../../layout';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import styles from './Done.module.css';
+import { Footer, PageHead, Header } from '../../layout';
+import styles from './index.module.css';
 
 export const Activate: React.FC = () => {
   const { data, loading } = useQuery(USER);
@@ -36,18 +35,18 @@ export const Activate: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       Router.push('/robots');
-    }, 2000 * 60);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className={styles.container}>
       <PageHead title='Done!' />
-      <div className={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu hasHomeButton />
+      <div className={styles.header}>
+        <Header hasHomeButton />
       </div>
       <div className={styles.plate}>
-        <div className={{ backgroundColor: '#242B4A' }}>
+        <div className={styles.cardWrapper}>
           <div className={styles.card}>
             <div className={styles.title}>Done!</div>
             <div className={styles.titleDescription}>You have successfully Activate your account</div>

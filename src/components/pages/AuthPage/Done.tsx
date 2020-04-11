@@ -3,14 +3,14 @@ import Router from 'next/router';
 
 import { CartFooter } from './common/CartFooter';
 import { Footer, PageHead, Header } from '../../layout';
-import styles from './Done.module.css';
+import styles from './index.module.css';
 
 export const Done: React.FC = () => {
   useEffect(() => {
-    // const timer = setTimeout(() => {
-    //   Router.push('/robots');
-    // }, 2000);
-    // return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      Router.push('/robots');
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (

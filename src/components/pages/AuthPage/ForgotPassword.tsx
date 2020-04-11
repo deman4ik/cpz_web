@@ -1,25 +1,21 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { useApolloClient } from '@apollo/react-hooks';
 
-import { useDimensionWidth } from '../../../hooks/useDimensions';
 import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../services/Utils';
-import { CartFooter } from './common';
-import { TextInput, Button } from '../../basic';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import { PageHead, Footer } from '../../layout';
+import { validateAuth } from '../../../config/validation';
+import { CartFooter } from './common/CartFooter';
+import { Input, Button } from '../../basic';
+import { PageHead, Footer, Header } from '../../layout';
 import { reset } from '../../../libs/auth';
-import { styles, responsive } from './ForgotPassword.style';
+import styles from './index.module.css';
 
 const INITIAL_STATE = {
   email: ''
 };
 
-const _ForgotPassword: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
-  const { screenType, setDimension } = useDimensionWidth();
+export const ForgotPassword: React.FC = () => {
   const [ isFetching, setIsFetching ] = useState(false);
   const client = useApolloClient();
   const {
@@ -54,49 +50,40 @@ const _ForgotPassword: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) =>
     }
   }, [ isValid ]);
 
-  const handleOnLayout = () => {
-    setDimension();
-  };
-
   return (
-    <View
-      style={styles.container}
-      onLayout={handleOnLayout}
-    >
-      <PageHead title={t('auth.forgotPasswordDescription')} />
-      <View style={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu screenType={screenType} hasHomeButton />
-      </View>
-      <View style={responsive.plate(screenType)}>
-        <View style={{ backgroundColor: '#242B4A' }}>
-          <View style={responsive.card(screenType)}>
-            <Text style={styles.title}>Forgot password?</Text>
-            <Text style={styles.titleDescription}>
-              {t('auth.forgotPasswordDescription')}
-            </Text>
-            <TextInput
+    <div className={styles.container}>
+      <PageHead title='Enter the Email you have registered with. We will send you the instructions there.' />
+      <div className={styles.header}>
+        <Header hasHomeButton />
+      </div>
+      <div className={styles.plate}>
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.title}>Forgot password?</div>
+            <div className={styles.titleDescription}>
+              Enter the Email you have registered with. We will send you the instructions there.
+            </div>
+            <Input
               value={values.email}
-              error={errors.email}
+              error={!!errors.email}
               maxLength={255}
-              placeholder={t('auth.form.placeholders.email')}
+              width={260}
+              placeholder='Email'
               onChangeText={(text: string) => handleChange('email', text)}
             />
             <Button
               style={{ marginTop: 30 }}
-              title={t('auth.buttons.passwordReset')}
+              title='Request password reset'
               type='success'
               size='big'
               isUppercase
               isLoading={isFetching}
-              onPress={handleOnPress}
-            />
-          </View>
+              onClick={handleOnPress} />
+          </div>
           <CartFooter />
-        </View>
-      </View>
-      <Footer screenType={screenType} />
-    </View>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
-
-export const ForgotPassword = withTranslation()(_ForgotPassword);
