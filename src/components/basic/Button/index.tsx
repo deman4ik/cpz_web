@@ -42,8 +42,14 @@ const components = {
   account: AccountIcon
 };
 
+const height = {
+  small: 26,
+  normal: 34,
+  big: 50
+};
+
 export const Button: React.FC<Props> =
-({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size }) => {
+({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size = 'normal' }) => {
   const SpecificIcon = components[icon];
   const rounded = type && type.indexOf('rounded') === 0;
   const getClassName = () => {
@@ -99,7 +105,7 @@ export const Button: React.FC<Props> =
           display: flex;
           cursor: ${disabled ? 'auto' : 'pointer'};
           width: ${width ? `${width}px` : 'min-content'};
-          height: ${size === 'small' ? '26' : '34'}px;
+          height: ${height[size]}px;
           padding-left: 10px;
           padding-right: 10px;
           user-select: none;

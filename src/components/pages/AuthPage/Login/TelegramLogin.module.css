@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-Direction: row;
+  align-items: center;
+}
+
+.errorText {
+  text-align: center;
+  font-size: var(--normal1);
+  color: white;
+}
+
+.telegramPlaceholder {
+  margin-top: 10px;
+  font-size: var(--small2);
+  color: var(--accent);
+  max-width: 260px;
+}

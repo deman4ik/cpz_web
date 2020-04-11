@@ -1,17 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
 
-import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../config/validation';
-import { login } from '../../../libs/auth';
-import { Input, Button } from '../../basic';
-import { PageHead, Header, Footer } from '../../layout';
-import styles from './index.module.css';
+import { useFormValidation } from '../../../../hooks/useFormValidation';
+import { validateAuth } from '../../../../config/validation';
+import { login } from '../../../../libs/auth';
+import { Input, Button } from '../../../basic';
+import { PageHead, Header, Footer } from '../../../layout';
+//import { TelegramLogin } from './TelegramLogin';
+import styles from '../index.module.css';
 
 const INITIAL_STATE = {
   email: ''
 };
+
+const TelegramLoginWithNoSSR = dynamic(
+  () => import('./TelegramLogin'),
+  { ssr: false }
+);
 
 export const Login: React.FC = () => {
   const {
@@ -23,16 +30,16 @@ export const Login: React.FC = () => {
     setValid
   } = useFormValidation(INITIAL_STATE, validateAuth);
   const [ password, setPassword ] = useState('');
-  const [ keepSignedIn, setKeepSignedIn ] = useState(true);
+  //const [ keepSignedIn, setKeepSignedIn ] = useState(true);
   const [ isFetching, setIsFetching ] = useState(false);
 
   const onChangePassword = (value: string) => {
     setPassword(value);
   };
 
-  const toggleCheckBox = () => {
-    setKeepSignedIn(!keepSignedIn);
-  };
+  // const toggleCheckBox = () => {
+  //   setKeepSignedIn(!keepSignedIn);
+  // };
 
   const handleLogin = () => {
     handleSubmit();
@@ -121,10 +128,7 @@ export const Login: React.FC = () => {
                 <div className={styles.telegramDesription}>
                   OR SIGN UP USING TELEGRAM
                 </div>
-                {/* <TelegramLoginButton
-                  screenType={screenType}
-                  buttonSize='large'
-                  borderRadius={vars.borderRadius.normal} /> */}
+                <TelegramLoginWithNoSSR />
               </div>
             </div>
           </div>
@@ -146,6 +150,7 @@ export const Login: React.FC = () => {
         </div>
       </div>
       <Footer />
+      <div id='modal' />
     </div>
   );
 };
