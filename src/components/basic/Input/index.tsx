@@ -18,10 +18,11 @@ interface Props {
   error?: boolean;
   selectTextOnFocus?: boolean;
   readonly?: boolean;
+  style?: object;
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton,
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton, style,
   onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const handleOnInput = (e) => {
@@ -47,9 +48,9 @@ export const Input: React.FC<Props> =
   };
 
   const getInputClass = () => {
-    const style = [ 'searchInput' ];
-    if (error) style.push('error');
-    return style;
+    const styleInput = [ 'searchInput' ];
+    if (error) styleInput.push('error');
+    return styleInput;
   };
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export const Input: React.FC<Props> =
   }, [ value ]);
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper' style={style}>
       <div className='container'>
         { icon ? (
           <div className='icon'>
@@ -75,7 +76,7 @@ export const Input: React.FC<Props> =
           placeholder={placeholder}
           maxLength={maxLength}
           autoFocus
-          type='text'
+          type={type === 'number' ? 'text' : type}
           readOnly={readonly}
           onInput={handleOnInput}
           onKeyDown={formatInput}
