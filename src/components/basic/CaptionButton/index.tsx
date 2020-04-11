@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon } from '../../../assets/icons/svg';
+import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon, SettingsIcon, CloseIcon } from '../../../assets/icons/svg';
 
 
 interface Props {
@@ -16,7 +16,9 @@ const components = {
   check: CheckIcon,
   plus: PlusIcon,
   logout: LogoutIcon,
-  filtervariant: FilterVariantIcon
+  filtervariant: FilterVariantIcon,
+  settings: SettingsIcon,
+  close: CloseIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {

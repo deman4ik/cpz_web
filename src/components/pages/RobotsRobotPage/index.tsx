@@ -12,8 +12,8 @@ import { POLL_INTERVAL } from '../../../config/constants';
 import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 import { TabsHeaderRobotPage } from './HeaderRobotsRobotPage/TabsHeaderRobotPage';
 import { TabsPagesRobotPage } from './TabsPagesRobotPage';
-// import { ToolbarRobotPage } from './ToolbarRobotPage';
-// import { ModalsRobotPage } from './ModalsRobotPage';
+import { ToolbarRobotPage } from './ToolbarRobotPage';
+import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
 
 export const RobotsRobotPage: React.FC = () => {
@@ -48,12 +48,11 @@ export const RobotsRobotPage: React.FC = () => {
       title='Trading Robot'
       subTitle={robotData ? robotData.robot.name : ''}
       width={width}
-      // toolbar={robotData ? (
-      //   <ToolbarRobotPage
-      //     screenType={screenType}
-      //     robotSubscribe={robotSubscribe}
-      //     robotData={robotData} />
-      // ) : null}
+      toolbar={robotData ? (
+        <ToolbarRobotPage
+          robotSubscribe={robotSubscribe}
+          robotData={robotData} />
+      ) : null}
       handlePressBack={handlePressBack}>
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
@@ -69,11 +68,11 @@ export const RobotsRobotPage: React.FC = () => {
               robotData={robotData}
               activeTab={activeTab}
               width={width} />
-            {/*<ModalsRobotPage
+            <ModalsRobotPage
               visibleModal={visibleModal}
               setVisibleModal={setVisibleModal}
               code={router.query.code as string}
-              dimension={dimension} /> */}
+              width={width} />
           </>
         )
       )}

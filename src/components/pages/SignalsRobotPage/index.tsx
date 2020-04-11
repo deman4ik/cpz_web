@@ -12,6 +12,7 @@ import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 import { TabsHeaderRobotPage } from './HeaderRobotsRobotPage/TabsHeaderRobotPage';
 import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { NoRecentData, LoadingIndicator } from '../../common';
+import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
 
@@ -52,6 +53,11 @@ export const SignalsRobotPage = () => {
       title='Signals'
       subTitle={robotData ? robotData.robot.name : ''}
       width={width}
+      toolbar={robotData ? (
+        <ToolbarRobotPage
+          robotSubscribe={robotSubscribe}
+          robotData={robotData} />
+      ) : null}
       handlePressBack={handlePressBack}
     >
       {loading ? <LoadingIndicator /> : (
