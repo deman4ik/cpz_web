@@ -3,3 +3,8 @@ export enum SectionType {
   openPositions,
   closedPositions
 }
+
+export type VisibleModal = {
+  isVisible: boolean;
+  type: string;
+};

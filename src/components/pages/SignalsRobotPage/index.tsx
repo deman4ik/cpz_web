@@ -12,6 +12,7 @@ import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 import { TabsHeaderRobotPage } from './HeaderRobotsRobotPage/TabsHeaderRobotPage';
 import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { NoRecentData, LoadingIndicator } from '../../common';
+import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
 
 export const SignalsRobotPage = () => {
@@ -51,6 +52,7 @@ export const SignalsRobotPage = () => {
       title='Signals'
       subTitle={robotData ? robotData.robot.name : ''}
       width={width}
+      handlePressBack={handlePressBack}
     >
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
@@ -66,6 +68,9 @@ export const SignalsRobotPage = () => {
               robotData={robotData}
               activeTab={activeTab}
               width={width} />
+            <ModalsRobotPage
+              visibleModal={visibleModal}
+              setVisibleModal={setVisibleModal} />
           </>
         )
       )}
