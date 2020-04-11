@@ -1,26 +1,22 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';
 
-import { useDimensionWidth } from '../../../hooks/useDimensions';
-import { Footer, PageHead } from '../../layout';
-import { CartFooter } from './common';
-import { Button, TextInput } from '../../basic';
+import { Footer, PageHead, Header } from '../../layout';
+import { CartFooter } from './common/CartFooter';
+import { Button, Input } from '../../basic';
 import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../services/Utils';
+import { validateAuth } from '../../../config/validation';
 import { recoverEncoded } from '../../../libs/auth';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import { styles, responsive } from './RecoverPassword.style';
+import styles from './index.module.css';
 
 const INITIAL_STATE = {
   password: '',
   passwordRepeat: ''
 };
 
-const _RecoverPasswordWeb: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
+export const RecoverPasswordWeb: React.FC = () => {
   const [ isFetching, setIsFetching ] = useState(false);
-  const { screenType, setDimension } = useDimensionWidth();
   const {
     handleSubmit,
     handleChange,
@@ -53,56 +49,47 @@ const _RecoverPasswordWeb: React.FC<PropsWithChildren<WithTranslation>> = ({ t }
     }
   }, [ isValid ]);
 
-  const handleOnLayout = () => {
-    setDimension();
-  };
-
   return (
-    <View
-      style={styles.container}
-      onLayout={handleOnLayout}
-    >
-      <PageHead title={t('auth.titles.resetPassword')} />
-      <View style={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu screenType={screenType} hasHomeButton />
-      </View>
-      <View style={responsive.plate(screenType)}>
-        <View style={{ backgroundColor: '#242B4A' }}>
-          <View style={responsive.card(screenType)}>
-            <Text style={styles.title}>{t('auth.titles.resetPassword')}</Text>
-            <TextInput
+    <div className={styles.container}>
+      <PageHead title='Reset password' />
+      <div className={styles.header}>
+        <Header hasHomeButton />
+      </div>
+      <div className={styles.plate}>
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.title}>Reset password</div>
+            <Input
               value={values.password}
               style={{ marginTop: 8 }}
-              error={errors.password}
+              error={!!errors.password}
               maxLength={100}
-              placeholder={t('auth.form.placeholders.password')}
-              onChangeText={(text: string) => handleChange('password', text)}
-              secureTextEntry
-            />
-            <TextInput
+              placeholder='Password'
+              width={260}
+              type='password'
+              onChangeText={(text: string) => handleChange('password', text)} />
+            <Input
               value={values.passwordRepeat}
               style={{ marginTop: 8 }}
-              error={errors.passwordRepeat}
+              error={!!errors.passwordRepeat}
               maxLength={100}
-              placeholder={t('auth.form.placeholders.passwordRepeat')}
-              onChangeText={(text: string) => handleChange('passwordRepeat', text)}
-              secureTextEntry
-            />
+              width={260}
+              type='password'
+              placeholder='Repeat password'
+              onChangeText={(text: string) => handleChange('passwordRepeat', text)} />
             <Button
               type='success'
               size='big'
               style={{ marginTop: 16 }}
-              title={t('auth.buttons.reset')}
+              title='Reset'
               isLoading={isFetching}
-              onPress={handleOnPress}
+              onClick={handleOnPress}
             />
-          </View>
+          </div>
           <CartFooter />
-        </View>
-      </View>
-      <Footer screenType={screenType} />
-    </View>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
-
-export const RecoverPasswordWeb = withTranslation()(_RecoverPasswordWeb);
