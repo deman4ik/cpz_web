@@ -4,22 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_NOTIFICATIONS_AGGREGATE } from '../../../graphql/user/queries';
 import { useClearNotifications } from '../../../hooks/useClearNotifications';
 import { POLL_INTERVAL } from '../../../config/constants';
+import { getIndentLength, indent } from './helpers';
 
-interface Props {
-  isPhone?: boolean;
-}
-
-const getIndentLength = (count: number) => (
-  count.toString().length >= 2 && count > 10 ? 3 : count.toString().length
-);
-
-const indent = {
-  1: 25,
-  2: 27,
-  3: 20,
-};
-
-export const NotificationCounter: React.FC<Props> = ({ isPhone }) => {
+export const NotificationCounter: React.FC = () => {
   const { updateNotifications } = useClearNotifications();
   const { data } = useQuery(GET_NOTIFICATIONS_AGGREGATE, {
     variables: {
@@ -55,8 +42,7 @@ export const NotificationCounter: React.FC<Props> = ({ isPhone }) => {
               padding: 2px ${count === 1 ? 7 : 4}px;
               color: white;
               font-size: 10px;
-            }
-          `}
+            }`}
           </style>
         </div>
       ) : null}
