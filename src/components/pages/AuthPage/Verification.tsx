@@ -1,27 +1,23 @@
-import React, { PropsWithChildren, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Router from 'next/router';
 
-import { useDimensionWidth } from '../../../hooks/useDimensions';
 import { confirm } from '../../../libs/auth';
 import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../services/Utils';
+import { validateAuth } from '../../../config/validation';
 import { USER } from '../../../graphql/local/queries';
-import { CartFooter } from './common';
-import { Button, TextInput } from '../../basic';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import { Footer, PageHead } from '../../layout';
-import { styles, responsive } from './Verification.style';
+import { CartFooter } from './common/CartFooter';
+import { Button, Input } from '../../basic';
+import { Footer, PageHead, Header } from '../../layout';
+import styles from './index.module.css';
 
 const INITIAL_STATE = {
   verificationCode: '',
 };
 
-const _Verification: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
+export const Verification: React.FC = () => {
   const { data, loading } = useQuery(USER);
-  const { screenType, setDimension } = useDimensionWidth();
   const {
     handleSubmit,
     handleChange,
@@ -45,10 +41,6 @@ const _Verification: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
     handleSubmit();
   };
 
-  const handleOnLayout = () => {
-    setDimension();
-  };
-
   useEffect(() => {
     if (!loading && data && !data.userId) {
       Router.push('/auth/signup');
@@ -62,41 +54,34 @@ const _Verification: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
   }, [ isValid ]);
 
   return (
-    <View
-      style={styles.container}
-      onLayout={handleOnLayout}
-    >
-      <PageHead title={t('auth.titles.verification')} />
-      <View style={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu screenType={screenType} hasHomeButton />
-      </View>
-      <View style={responsive.plate(screenType)}>
-        <View style={{ backgroundColor: '#242B4A' }}>
-          <View style={responsive.card(screenType)}>
-            <Text style={styles.title}>{t('auth.titles.verification')}</Text>
-            <Text style={styles.titleDescription}>{t('auth.verificationDescription')}</Text>
-            <TextInput
+    <div className={styles.container}>
+      <PageHead title='Verification' />
+      <div className={styles.header}>
+        <Header hasHomeButton />
+      </div>
+      <div className={styles.plate}>
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.title}>Verification</div>
+            <div className={styles.titleDescription}>Enter the verification code you recieved via Email below.</div>
+            <Input
               value={values.verificationCode}
-              error={errors.verificationCode}
-              placeholder={t('auth.form.placeholders.verification')}
+              error={!!errors.verificationCode}
+              placeholder='Verification code'
               maxLength={6}
-              onChangeText={(text: string) => handleChange('verificationCode', text)}
-            />
+              onChangeText={(text: string) => handleChange('verificationCode', text)} />
             <Button
               size='big'
               style={{ marginTop: 30 }}
-              title={t('auth.buttons.verifyEmail')}
+              title='Verify my email address'
               type='success'
-              onPress={handleOnPress}
-              isUppercase
-            />
-          </View>
+              onClick={handleOnPress}
+              isUppercase />
+          </div>
           <CartFooter />
-        </View>
-      </View>
-      <Footer screenType={screenType} />
-    </View>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
-
-export const Verification = withTranslation()(_Verification);
