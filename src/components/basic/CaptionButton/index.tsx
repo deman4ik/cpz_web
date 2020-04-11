@@ -24,7 +24,7 @@ const components = {
 export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
-    const composeClass = [ 'btn', 'ripple' ];
+    const composeClass = [ 'btn' ];
     return composeClass;
   };
 
