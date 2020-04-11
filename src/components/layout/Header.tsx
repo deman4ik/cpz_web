@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import Link from 'next/link';
 
 import { getAccessToken } from '../../libs/accessToken';
-//import { useLogoutProcess } from '../../hooks/useLogoutProcess';
+import { useLogoutProcess } from '../../hooks/useLogoutProcess';
 import { linksHeader, authHeader } from './helpers';
 import styles from './Header.module.css';
 
@@ -15,10 +15,8 @@ interface Props {
 
 const _Header: React.FC<Props> = ({ hasHomeButton }) => {
   const { token } = getAccessToken();
-  const handleOnClick = () => {
-    console.log('click');
-  };
-  //const { logoutProcess } = useLogoutProcess();
+  const { logoutProcess } = useLogoutProcess();
+
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
@@ -42,7 +40,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
       <div className={styles.rightContainer}>
         {token ? (
           <div className={styles.btnWrapper}>
-            <div className={styles.btnTitle} onClick={handleOnClick}>Log out</div>
+            <div className={styles.btnTitle} onClick={logoutProcess}>Log out</div>
           </div>
         ) : (
           <>
