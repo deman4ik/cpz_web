@@ -29,6 +29,20 @@
   width: 290px;
 }
 
+.loginDescription {
+  font-size: var(--small1);
+  color: white;
+  padding-top: 22px;
+  padding-bottom: 20px;
+}
+
+.telegramDesription {
+  font-size: var(--small2);
+  color: white;
+  padding-top: 50pxpx;
+  padding-bottom: 20px;
+}
+
 .plate {
   display: flex;
   flex-direction: row;
@@ -53,8 +67,50 @@
   height: fit-content;
 }
 
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.divider {
+  min-width: 1px;
+  min-height: 1px;
+  background-color: var(--lightBg);
+}
+
+.telegramGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footerLogin {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: var(--lightBg);
+  padding: 20px;
+  flex-shrink: 1;
+  color: white;
+  width: 100%;
+}
+
+.decoration {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: white;
+}
+
+.forgotLine {
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .plate {
+    flex-direction: column;
+  }
+  .content {
     flex-direction: column;
   }
 }

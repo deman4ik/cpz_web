@@ -1,25 +1,19 @@
-import React, { PropsWithChildren, useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { WithTranslation, withTranslation } from 'react-i18next';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 
-import { useDimensionWidth } from '../../../hooks/useDimensions';
 import { useFormValidation } from '../../../hooks/useFormValidation';
-import { validateAuth } from '../../../services/Utils';
+import { validateAuth } from '../../../config/validation';
 import { login } from '../../../libs/auth';
-import { TextInput, Button, Checkbox, TelegramLoginButton } from '../../basic';
-import { PageHead } from '../../layout';
-import { HeaderMenu } from '../../layout/HeaderMenu';
-import { Footer } from '../../layout';
-import { styles, responsive } from './Login.style';
-import { vars } from '../../../styles';
+import { Input, Button } from '../../basic';
+import { PageHead, Header, Footer } from '../../layout';
+import styles from './index.module.css';
 
 const INITIAL_STATE = {
   email: ''
 };
 
-const _Login: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
-  const { screenType, setDimension } = useDimensionWidth();
+export const Login: React.FC = () => {
   const {
     handleSubmit,
     handleChange,
@@ -38,10 +32,6 @@ const _Login: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
 
   const toggleCheckBox = () => {
     setKeepSignedIn(!keepSignedIn);
-  };
-
-  const handleOnLayout = () => {
-    setDimension();
   };
 
   const handleLogin = () => {
@@ -79,119 +69,81 @@ const _Login: React.FC<PropsWithChildren<WithTranslation>> = ({ t }) => {
   }, [ isValid ]);
 
   return (
-    <View
-      style={[ styles.container, { alignContent: 'space-between', alignItems: 'center' } ]}
-      onLayout={handleOnLayout}
-    >
-      <PageHead title={t('auth.titles.login')} />
-      <View style={{ width: '100%', maxWidth: 1280 }}>
-        <HeaderMenu screenType={screenType} hasHomeButton />
-      </View>
-      <View style={responsive.plate(screenType)}>
-        <View style={{ backgroundColor: '#242B4A' }}>
-          <View style={responsive.content(screenType)}>
-            <View style={responsive.card(screenType)}>
-              <Text style={styles.title}>{t('auth.titles.login')}</Text>
-              <TextInput
-                error={errors.email}
+    <div className={styles.container} style={{ alignContent: 'space-between' }}>
+      <PageHead title='Login' />
+      <div className={styles.header}>
+        <Header hasHomeButton />
+      </div>
+      <div className={styles.plate}>
+        <div className={styles.cardWrapper}>
+          <div className={styles.content}>
+            <div className={styles.card}>
+              <div className={styles.title}>Login</div>
+              <Input
+                error={!!errors.email}
                 value={values.email}
                 maxLength={255}
-                placeholder={t('auth.form.placeholders.email')}
-                onChangeText={(text: string) => handleChange('email', text)}
-              />
-              <TextInput
+                width={260}
+                placeholder='Email'
+                onChangeText={(text: string) => handleChange('email', text)} />
+              <Input
                 style={{ marginTop: 8 }}
                 value={password}
                 maxLength={100}
-                error={errors.password}
-                placeholder={t('auth.form.placeholders.password')}
+                width={260}
+                error={!!errors.password}
+                placeholder='Password'
                 onChangeText={text => onChangePassword(text)}
-                secureTextEntry
-              />
-              <View style={{ flexDirection: 'row', marginTop: 4, marginBottom: 12, marginLeft: -8 }}>
-                <Checkbox
-                  label={t('auth.form.keepSignedIn')}
-                  labelStyle={styles.checkboxLabel}
-                  isActive={keepSignedIn}
-                  onPress={toggleCheckBox}
-                />
-              </View>
+                type='password' />
               <Button
+                style={{ marginTop: 10 }}
                 type='success'
                 size='big'
-                title={t('log in')}
+                title='log in'
                 isUppercase
                 isLoading={isFetching}
-                onPress={handleLogin}
-              />
-            </View>
-            <View style={styles.divider} />
-            <View style={responsive.card(screenType)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'white',
-                  paddingTop: 22,
-                  paddingBottom: 20
-                }}>
-                {t('auth.createAccountDescription')}
-              </Text>
+                onClick={handleLogin} />
+            </div>
+            <div className={styles.divider} />
+            <div className={styles.card}>
+              <div className={styles.loginDescription}>
+                If you don’t already have an account click the button below to create your account.
+              </div>
               <Button
                 type='primary'
                 size='big'
-                title={t('auth.buttons.createAccount')}
+                title='Create account'
                 isUppercase
-                onPress={() => {
-                  handleSwitchToStep('signUp');
-                }}
-              />
-              <View style={{ alignItems: 'center' }}>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: 'white',
-                    paddingTop: 50,
-                    paddingBottom: 20
-                  }}>
-                  {t('auth.orSignUpUsing')}
-                </Text>
-                <TelegramLoginButton
+                onClick={() => handleSwitchToStep('signUp')} />
+              <div className={styles.telegramGroup}>
+                <div className={styles.telegramDesription}>
+                  OR SIGN UP USING TELEGRAM
+                </div>
+                {/* <TelegramLoginButton
                   screenType={screenType}
                   buttonSize='large'
-                  borderRadius={vars.borderRadius.normal}
-                />
-              </View>
-            </View>
-          </View>
-          <View
-            style={[
-              styles.footer,
-              { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }
-            ]}>
-            <Text style={{ color: 'white' }}>{t('auth.cantLogin')}&nbsp;</Text>
-            <Text style={{ color: 'white' }}>
-              {t('auth.didYou')}
-              <TouchableOpacity
-                onPress={() => {
-                  handleSwitchToStep('forgotPassword');
-                }}>
-                <Text
-                  style={{
-                    textDecorationLine: 'underline',
-                    textDecorationStyle: 'solid',
-                    textDecorationColor: 'white'
-                  }}>
-                  {t('auth.forgotPassword')}
-                </Text>
-              </TouchableOpacity>
-              {t('auth.questionMark')}
-            </Text>
-          </View>
-        </View>
-      </View>
-      <Footer screenType={screenType} />
-    </View>
+                  borderRadius={vars.borderRadius.normal} /> */}
+              </div>
+            </div>
+          </div>
+          <div className={styles.footerLogin}>
+            <span>So you can&apos;t get into your account?&nbsp;</span>
+            <span>
+              Did you&nbsp;
+              <span
+                className={styles.forgotLine}
+                onClick={() => handleSwitchToStep('forgotPassword')}>
+                <span
+                  className={styles.decoration}>
+                  forgot your password
+                </span>
+              </span>
+              ?
+            </span>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
-
-export const Login = withTranslation()(_Login);
