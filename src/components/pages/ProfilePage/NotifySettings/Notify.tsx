@@ -18,6 +18,7 @@ const components = {
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
   const SpecificIcon = components[item.icon];
+  console.log(item);
   return (
     <>
       <div className={styles.column}>
@@ -36,6 +37,7 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
                 checked={checkbox.isActive}
                 onClick={() => toggleNotification(item.key, checkbox.name)}
                 label={capitalize(checkbox.name)}
+                isLoading={checkbox.isLoading}
                 disabled={checkbox.disabled} />
             </div>
           ))}

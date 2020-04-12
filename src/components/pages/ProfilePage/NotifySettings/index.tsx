@@ -39,7 +39,8 @@ const _NotifySettings: React.FC = () => {
         checkboxes: Object.keys(_notifications[key]).map(name => ({
           name,
           isActive: _notifications[key][name],
-          disabled: !data.users[0][serviceName[name]]
+          disabled: !data.users[0][serviceName[name]],
+          isLoading: false
         })),
         ...extraSettings[key]
       })));
