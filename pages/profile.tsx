@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { ProfilePage } from '../src/components/pages/ProfilePage';
-import { withApollo, withAuth } from '../src/libs/hoc';
+import { withApollo, withAuth, withDevice } from '../src/libs/hoc';
 
 
 const Page = () => (
   <ProfilePage />
 );
 
-export default withApollo(withAuth(Page));
+export default withApollo(withAuth(withDevice(Page)));

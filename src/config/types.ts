@@ -14,8 +14,6 @@ export enum TabType {
   publicStatistic
 }
 
-// export interface DeviceProps {
-//   isMobile: boolean;
-//   isIOS: boolean;
-//   width: number;
-// }
+export interface DeviceProps {
+  isMobile: boolean;
+}

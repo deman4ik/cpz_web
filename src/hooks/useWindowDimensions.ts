@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState, useContext } from 'react';
+import { DeviceContext } from '../libs/deviceContext';
 
-function getWindowDimensions() {
+function getWindowDimensions(isMobile: boolean) {
   if (process.browser) {
     const { innerWidth: width, innerWidth: height } = window;
     return {
@@ -8,15 +10,16 @@ function getWindowDimensions() {
       height
     };
   }
-  return { width: 0, height: 0 };
+  return { width: !isMobile ? 1200 : 0, height: !isMobile ? 800 : 0 };
 }
 
 export default function useWindowDimensions() {
-  const [ windowDimensions, setWindowDimensions ] = useState(getWindowDimensions());
+  const { isMobile } = useContext(DeviceContext);
+  const [ windowDimensions, setWindowDimensions ] = useState(getWindowDimensions(isMobile));
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowDimensions());
+      setWindowDimensions(getWindowDimensions(isMobile));
     }
 
     window.addEventListener('resize', handleResize);
