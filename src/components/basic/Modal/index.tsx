@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useRef } from 'react';
 
 import { ModalTemplate } from './ModalTemplate';
 import ClientOnlyPortal from '../../../libs/ClientOnlyPortal';
@@ -13,6 +15,19 @@ interface Props {
 
 export const Modal: React.FC<Props> = props => {
   if (!props.isOpen) return null;
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        props.onClose(event);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ modalRef ]);
 
   const handleOnClickClose = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -25,7 +40,7 @@ export const Modal: React.FC<Props> = props => {
   return (
     <ClientOnlyPortal selector='#modal'>
       <div className={styles.backdrop}>
-        <div className={styles.modal}>
+        <div ref={modalRef} className={styles.modal}>
           <ModalTemplate title={props.title} onClose={handleOnClickClose}>
             {props.children}
           </ModalTemplate>
