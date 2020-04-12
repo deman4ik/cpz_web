@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import Router from 'next/router';
 
 import { CaptionButton } from '../basic';
-import styles from './PageToolbar.module.css';
+import styles from '../../config/common.module.css';
 
 interface Props {
   displayType: string;
@@ -14,7 +14,7 @@ const _PageToolbar: React.FC<Props> = ({ displayType }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.toolbar}>
       <CaptionButton
         title={`Add ${displayType}`}
         icon='plus'

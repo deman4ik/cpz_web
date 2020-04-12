@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatDate, capitalize, valueWithSign, moneyFormat } from '../../../../config/utils';
+import { formatDate, capitalize, valueWithSign, moneyFormat, colorDirection } from '../../../../config/utils';
 import styles from './ClosedPositionsRobotPageItem.module.css';
 import { color } from '../../../../config/constants';
 
@@ -9,15 +9,13 @@ interface Props {
   robot: any;
 }
 
-export const colorAction = (action: boolean) => (action ? 'positive' : 'negative');
-
 export const ClosedPositionsRobotPageItem: React.FC<Props> = ({ item, robot }) => {
   const { asset } = robot;
   return (
     <div className={styles.tableRow}>
       <div className={styles.col} style={{ flex: 0.5 }}>
         <div className={styles.tableCellText}>
-          <div className={colorAction([ 'long', 'closeShort' ].includes(item.direction))}>
+          <div style={colorDirection(item.direction)}>
             {capitalize(item.direction)}
           </div>
           {'\n'}

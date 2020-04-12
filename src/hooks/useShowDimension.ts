@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { DeviceContext } from '../libs/deviceContext';
 
 export const useShowDimension = (width: number, dimension: number) => {
-  const [ showDimension, setShowDimension ] = useState(true);
+  const { isMobile } = useContext(DeviceContext);
+  const [ showDimension, setShowDimension ] = useState(!isMobile);
+
   useEffect(() => {
     setShowDimension(width > dimension);
   }, [ width, dimension ]);

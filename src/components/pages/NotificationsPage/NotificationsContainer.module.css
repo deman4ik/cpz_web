@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.topCards {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.topCardsContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.accordionSurface {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 5px 10px;
+  background-color: var(--dark);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+};

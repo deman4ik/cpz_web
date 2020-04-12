@@ -1,0 +1,31 @@
+.accordionTitle {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 10px 20px;
+  font-size: var(--normal3);
+  color: var(--accent);
+}
+
+.accordionSurface {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0 10px 5px;
+  background-color: var(--dark);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.mobileCardContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .accordionSurface {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}

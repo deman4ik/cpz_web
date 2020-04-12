@@ -7,3 +7,17 @@
   padding-left: 16px;
   padding-right: 16px;
 }
+
+@media (max-width: 640px) {
+  .container {
+    justify-content: center;
+    padding-right: 46px;
+  }
+}
+
+@media (max-width: 410px) {
+  .container {
+    justify-content: center;
+    padding-right: 36px;
+  }
+}

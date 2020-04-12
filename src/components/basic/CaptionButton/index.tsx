@@ -1,8 +1,6 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
-import { PlusIcon, CheckIcon } from '../../../assets/icons/svg';
+import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon, SettingsIcon, CloseIcon } from '../../../assets/icons/svg';
 
 
 interface Props {
@@ -11,14 +9,19 @@ interface Props {
   icon?: string;
   width?: number;
   onClick?: () => void;
+  responsive?: boolean;
 }
 
 const components = {
   check: CheckIcon,
-  plus: PlusIcon
+  plus: PlusIcon,
+  logout: LogoutIcon,
+  filtervariant: FilterVariantIcon,
+  settings: SettingsIcon,
+  close: CloseIcon
 };
 
-export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick }) => {
+export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {
   const SpecificIcon = components[icon];
   const getClassName = () => {
     const composeClass = [ 'btn' ];
@@ -27,11 +30,13 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
 
   return (
     <div className={getClassName().join(' ')} style={style} onClick={onClick}>
-      <div className='btn-text'>
-        {title}
-      </div>
-      <div className='icon'>
-        <SpecificIcon size={15} />
+      <div className='wrapper'>
+        <div className='btn-text'>
+          {title}
+        </div>
+        <div className='icon'>
+          <SpecificIcon size={15} />
+        </div>
       </div>
       <div className='aligner' />
       <style jsx>{`
@@ -43,16 +48,19 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           padding-left: 10px;
           padding-right: 10px;
           white-space: nowrap;
+          opacity: 1;
+          user-select: none;
         }
         .icon {
           padding-right: 8px;
           padding-left: 8px;
           padding-top: 3px;
           position: absolute;
-          right: 0;
+          top: -3px;
+          right: -18px;
         }
         .aligner {
-          width: 20px;
+          width: 12px;
         }
         .btn {
           display: flex;
@@ -70,9 +78,20 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           background-color: transparent;
           text-transform: uppercase;
         }
+        .wrapper {
+          position: relative;
+          width: 100%;
+          opacity: 1;
+        }
+        .wrapper:active {
+          opacity: 0.2;
+        }
         @media (max-width: 768px) {
           .btn-text {
-            display: none;
+            display: ${responsive ? 'none' : 'block'};
+          }
+          .icon {
+            top: ${responsive ? -10 : -3}px;
           }
         }`}
       </style>

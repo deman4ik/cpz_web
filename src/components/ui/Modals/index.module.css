@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bodyTitle {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: var(--normal2);
+  line-height: var(--big1);
+  color: var(--accent);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.formComment {
+  margin-bottom: 25px;
+}
+
+.bodyText {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: var(--normal1);
+  line-height: var(--normal2);
+  color: white;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 380px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btns {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.label {
+  color: var(--accent);
+}
+
+.wizardContainer {
+  min-width: 550px;
+  margin: 0 40px 20px;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btnSelectGroup {
+  margin-left: 10px;
+}
+
+.noKeysText {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: center;
+  font-size: var(--normal2);
+  color: var(--accent);
+}
+
+.step3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: -30px auto 30px;
+}
+
+@media (max-width: 768px) {
+  .wizardContainer {
+    margin-left: -140px;
+    margin-right: -140px;
+  }
+  .selectGroup {
+    flex-direction: column;
+  }
+  .btnSelectGroup {
+    margin-left: 0;
+  }
+}

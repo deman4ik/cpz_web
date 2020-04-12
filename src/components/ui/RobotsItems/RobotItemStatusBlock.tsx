@@ -22,7 +22,7 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
     { (displayType === 'robots' && ((item.active && !item.user_robots.status) || item.user_robots.status === 'started')) ? (
       <div className={styles.statisticsElement}>
         <div className={styles.secondaryText}>
-          {`${item.user_robots.status === 'started' ? 'Started' : 'Active'}  `}
+          {`${item.user_robots.status === 'started' ? 'Started' : 'Active'}`}&nbsp;
         </div>
         <div className={styles.statisticsText}>
           {item.user_robots.status === 'started' ? item.started_at : item.active}

@@ -27,6 +27,7 @@
   --big1: 24px;
   --big2: 28px;
   --big3: 32px;
+  --shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
 }
 
 * {
@@ -38,7 +39,9 @@ body {
   background-color: var(--darkBg);
   overflow-y:scroll;
   margin: 0;
-  font-family: Roboto, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -57,4 +60,35 @@ a {
 
 .positive {
   color: var(--positive);
+}
+
+::-webkit-scrollbar-button {
+  background-repeat:no-repeat;
+  width:5px;
+  height:0px
+}
+  
+::-webkit-scrollbar-track {
+  background-color:#696969
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background-color: var(--primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent);
+}
+
+::-webkit-resizer {
+  background-repeat:no-repeat;
+  width:4px;
+  height:0px
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }

@@ -1,0 +1,45 @@
+.line {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 6px;
+  background-color: var(--lightBg);
+}
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: var(--lightBg);
+  font-size: var(--small1);
+  position: relative;
+}
+
+.circleNumber {
+  text-align: center;
+  color: white;
+}
+
+.circleText {
+  text-align: center;
+  color: white;
+}
+
+.circleTitle {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.arrow {
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+  margin-left: -20px;
+}

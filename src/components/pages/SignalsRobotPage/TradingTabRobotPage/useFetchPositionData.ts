@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -6,7 +7,7 @@ import { ROBOT_POSITIONS_COUNT } from '../../../../graphql/signals/queries';
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from '../../../../config/constants';
 import { getFormatDataClosedPositions, getAlerts } from '../helpers';
 
-export const useFecthPositionData = (isUserSignals, userSignals, robot) => {
+export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
   const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 
@@ -101,7 +102,9 @@ export const useFecthPositionData = (isUserSignals, userSignals, robot) => {
   ), [ loadingOpenSignals, dataSignals ]);
 
   const quantyRecords = useMemo(() =>
-    (!loadingAggregate ? dataCount.robot_positions_aggregate.aggregate.count : 0), [ dataCount, loadingAggregate ]);
+    ((!loadingAggregate && dataCount)
+      ? dataCount.robot_positions_aggregate.aggregate.count
+      : 0), [ dataCount, loadingAggregate ]);
 
   return {
     loading: loadingOpenSignals || loadingOpenPositions || loadingClosedPositions || loadingAggregate,

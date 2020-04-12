@@ -3,6 +3,8 @@
 import React from 'react';
 
 import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from '../../assets/icons/svg';
+import { NotificationCounter } from '../ui/NotificationCounter';
+import { PageType } from '../../config/types';
 import styles from './MainMenu.module.css';
 
 interface Props {
@@ -29,6 +31,7 @@ export const MainMenuItemMobile: React.FC<Props> = ({ item, active, handleOnClic
     <div className={styles.mainMenuItemWrapper}>
       <div className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ''}`} onClick={handleOnClickLink}>
         <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} />
+        {item.label === PageType.notifications && <NotificationCounter /> }
       </div>
     </div>
   );

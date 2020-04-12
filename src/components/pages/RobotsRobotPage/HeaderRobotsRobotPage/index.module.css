@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 70px;
+}
+
+.headerName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.robotName {
+  font-size: var(--normal3);
+  color: white;
+}
+
+.robotNameWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerMessage {
+  font-size: var(--small1);
+  color: (--accent);
+  margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    min-height: 40px;
+    margin-top: 20px;
+  }
+  .headerName {
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+}

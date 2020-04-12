@@ -1,20 +1,36 @@
 import React from 'react';
-import { Template } from '../../layout/Template';
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import { useFetchData } from './useFetchData';
+import { NoRecentData, LoadingIndicator } from '../../common';
+import { ToolbarNotificationsPage } from './ToolbarNotificationsPage';
+import { Template } from '../../layout';
 import { PageType } from '../../../config/types';
+import { NotificationsContainer } from './NotificationsContainer';
 
-export const NotificationsPage = () => {
+export const NotificationsPage: React.FC = () => {
   const { width } = useWindowDimensions();
+  const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading } = useFetchData();
+
   return (
     <Template
       page={PageType.notifications}
       title='Notifications'
       width={width}
+      toolbar={<ToolbarNotificationsPage />}
     >
-      <div>
-        Notification page ssfsdfsdfdsffffffffffffffffffffff
-      </div>
+      { loading ? <LoadingIndicator /> : (
+        !formatData.length ? (
+          <NoRecentData message='You have no notifications yet' />
+        ) : (
+          <NotificationsContainer
+            handleLoadMore={handleLoadMore}
+            isLoadingMore={isLoadingMore}
+            recordsCount={recordsCount}
+            formatData={formatData}
+            width={width} />
+        )
+      )}
     </Template>
   );
 };

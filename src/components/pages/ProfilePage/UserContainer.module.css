@@ -1,0 +1,19 @@
+.blocksContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+@media (max-width: 970px) {
+  .blocksContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}

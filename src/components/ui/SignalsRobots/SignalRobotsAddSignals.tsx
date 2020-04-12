@@ -23,8 +23,7 @@ export const SignalRobotsAddSignals: React.FC<Props> = ({ displayType }) => {
       >
         <CaptionButton
           title={`Add ${displayType}`}
-          icon='plus'
-        />
+          icon='plus' />
       </div>
     </div>
   );

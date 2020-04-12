@@ -12,10 +12,12 @@ import { HeaderRobotsRobotPage } from './HeaderRobotsRobotPage';
 import { TabsHeaderRobotPage } from './HeaderRobotsRobotPage/TabsHeaderRobotPage';
 import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { NoRecentData, LoadingIndicator } from '../../common';
+import { ToolbarRobotPage } from './ToolbarRobotPage';
+import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
 
 export const SignalsRobotPage = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const [ activeTab, setActiveTab ] = useState<TabType>(TabType.trading);
   const [ visibleModal, setVisibleModal ] = useState({ isVisible: false, type: '' });
 
@@ -51,6 +53,12 @@ export const SignalsRobotPage = () => {
       title='Signals'
       subTitle={robotData ? robotData.robot.name : ''}
       width={width}
+      toolbar={robotData ? (
+        <ToolbarRobotPage
+          robotSubscribe={robotSubscribe}
+          robotData={robotData} />
+      ) : null}
+      handlePressBack={handlePressBack}
     >
       {loading ? <LoadingIndicator /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
@@ -66,6 +74,9 @@ export const SignalsRobotPage = () => {
               robotData={robotData}
               activeTab={activeTab}
               width={width} />
+            <ModalsRobotPage
+              visibleModal={visibleModal}
+              setVisibleModal={setVisibleModal} />
           </>
         )
       )}

@@ -1,0 +1,65 @@
+.textMessageDesktop {
+  color: white;
+  font-size: var(--normal1);
+}
+
+.textMessageCard {
+  color: white;
+  font-size: var(--small1);
+}
+
+.messageRow {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.rowCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowRobot {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+
+.rowRobotProfit {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.colRobot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.textAccent {
+  color: var(--accent);
+  font-size: var(--normal1);
+}
+
+.textAccentCard {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.alertRow {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}

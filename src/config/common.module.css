@@ -8,3 +8,13 @@
   padding-right: 15px;
   overflow: hidden;
 }
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+}

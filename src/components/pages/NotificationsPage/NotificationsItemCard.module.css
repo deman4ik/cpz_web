@@ -1,0 +1,32 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 5px;
+  padding: 10px;
+  background-color: var(--dark);
+  max-width: 300px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3px;
+}
+
+.dateText {
+  color: var(--accent);
+  font-size: var(--small2);
+}
+
+.mark {
+  color: var(--negative);
+  margin-top: -4px
+}
+
+@media (max-width: 320px) {
+  .card {
+    max-width: unset;
+  }
+}

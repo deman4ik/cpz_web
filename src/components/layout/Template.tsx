@@ -12,10 +12,11 @@ interface Props {
   page?: PageType;
   width: number;
   toolbar?: any;
+  hideToolbar?: boolean;
   handlePressBack?: () => void;
 }
 
-export const Template: React.FC<Props> = ({ title, subTitle, children, page, width, handlePressBack, toolbar }) => {
+export const Template: React.FC<Props> = ({ title, subTitle, children, page, width, handlePressBack, toolbar, hideToolbar }) => {
   const { showDimension } = useShowDimension(width, SCREEN_TYPE.PHONE);
 
   return (
@@ -24,12 +25,15 @@ export const Template: React.FC<Props> = ({ title, subTitle, children, page, wid
         title={`${title}${subTitle ? `: ${subTitle}` : ''}`}
         description='Cryptuoso - Cryptocurrency Trading Robots for your successful investment'
         keywords='cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken, binance' />
+      <div id='modal' />
       <div className={styles.mainMenuContainer}>
         <MainMenu activeTab={page} showDesktop={showDimension} />
         <div className={styles.wrapFixed}>
           <NavBar
             title={title}
             subTitle={subTitle}
+            handlePressBack={handlePressBack}
+            hideToolbar={hideToolbar}
             toolbar={toolbar} />
         </div>
       </div>

@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  opacity: 1;
 }
 
 .statValue {
@@ -68,4 +69,8 @@
 .headerCard {
   padding: 10px 12px 10px 15px;
   background-color: var(--dark);
+}
+
+.row:active {
+  opacity: 0.2;
 }

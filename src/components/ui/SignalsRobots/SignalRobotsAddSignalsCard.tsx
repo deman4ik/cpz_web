@@ -24,7 +24,7 @@ const _SignalRobotsAddSignalsCard: React.FC<Props> = ({ displayType }) => {
         <CaptionButton
           title={`Add ${displayType}`}
           icon='plus'
-        />
+          responsive={false} />
       </div>
     </div>
   );

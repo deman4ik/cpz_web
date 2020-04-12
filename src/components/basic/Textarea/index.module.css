@@ -1,0 +1,8 @@
+.textarea {
+  background-color: var(--darkBg);
+  color: var(--accent);
+  border-radius: 2px;
+  padding: 11px;
+  overflow: hidden;
+  resize: none;
+}
