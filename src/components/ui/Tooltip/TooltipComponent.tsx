@@ -31,6 +31,17 @@ export const TooltipComponent: React.FC<Props> = ({ show, message, direction }) 
         font-size: var(--normal1);
         color: white;
       }
+      @media (max-width: 768px) {
+        .tooltip {
+          right: -70px;
+        }
+      }
+      @media (max-width: 480px) {
+        .tooltip {
+          width: 300px;
+          right: -20px;
+        }
+      }
     `}
     </style>
   </div>
