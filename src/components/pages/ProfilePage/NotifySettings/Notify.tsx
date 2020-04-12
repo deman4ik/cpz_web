@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { RobotIcon, ChartLineIcon, HelpIcon } from '../../../../assets/icons/svg';
+import { Tooltip } from '../../../ui/Tooltip';
 import { CheckBox } from '../../../basic';
 import { color } from '../../../../config/constants';
 import { capitalize } from '../../../../config/utils';
@@ -18,7 +19,7 @@ const components = {
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
   const SpecificIcon = components[item.icon];
-  console.log(item);
+
   return (
     <>
       <div className={styles.column}>
@@ -27,8 +28,7 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
           <div className={styles.titleText}>
             {item.title}
           </div>
-          <HelpIcon color={color.accent} size={24} />
-          {/* {renderHelpButton(notification.key)} */}
+          <Tooltip message={item.message} />
         </div>
         <div className={styles.checkboxGroup}>
           {item.checkboxes.map(checkbox => (

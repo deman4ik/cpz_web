@@ -1,34 +1,16 @@
-import React, { memo, useState, useRef, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { SET_NOTIFICATION_SETTINGS } from '../../../../graphql/user/mutations';
 import { LoadingIndicator } from '../../../common';
-//import { useTooltip } from '../../../../hooks/useTooltip';
 import { capitalize } from '../../../../config/utils';
-//import { Checkbox } from '../../../basic/Checkbox';
-//import { vars } from '../../../../styles';
-//import { responsive } from '../UseContainer.style';
 import { extraSettings, serviceName } from './helpers';
-//import { styles as _styles, responsive as _responsive } from './index.style';
 import { NotificationProps } from './types';
 import { Notify } from './Notify';
 import styles from './index.module.css';
 
 const _NotifySettings: React.FC = () => {
-  // const indicatorRef = useRef(null);
-  // const [elheight, setElHeight] = useState(0);
-  //const { tooltipText: signalsHelpText, tooltipButton: signalsHelpButton } = useTooltip('If you turn signals notifications OFF you will not receive any messages about signals from ALL SIGNALS ROBOTS', 400);
-  //const { tooltipText: robotsHelpText, tooltipButton: robotsHelpButton } = useTooltip('If you turn robots notifications OFF you will not receive any messages about trades from ALL ROBOTS', 400);
-
-  // const renderHelpButton = (key: string) => {
-  //   const helpButton = {
-  //     signals: () => signalsHelpButton,
-  //     trading: () => robotsHelpButton
-  //   };
-  //   return helpButton[key]();
-  // };
-
   const [ notifications, setNotifications ] = useState<NotificationProps[]>([]);
 
   const { loading } = useQuery(GET_USER_INFO, {
@@ -36,7 +18,7 @@ const _NotifySettings: React.FC = () => {
       const { notifications: _notifications } = data.users[0].settings;
       setNotifications(Object.keys(_notifications).map(key => ({
         key,
-        checkboxes: Object.keys(_notifications[key]).map(name => ({
+        checkboxes: Object.keys(_notifications[key]).filter(name => name !== 'email').map(name => ({
           name,
           isActive: _notifications[key][name],
           disabled: !data.users[0][serviceName[name]],
@@ -83,19 +65,9 @@ const _NotifySettings: React.FC = () => {
       }
     });
   };
-  // useEffect(
-  //   () => {
-  //     console.log(indicatorRef);
-  //     console.log(indicatorRef.current.offsetHeight);
-  //     setElHeight(indicatorRef.current.offsetHeight);
-  //   },
-  //   [ indicatorRef ]
-  // );
-  //console.log(indicatorRef.current);
+
   return (
     <>
-      {/* {signalsHelpText}
-      {robotsHelpText} */}
       <div className={styles.container}>
         <div className={styles.regionTitle}>
           Notification Settings

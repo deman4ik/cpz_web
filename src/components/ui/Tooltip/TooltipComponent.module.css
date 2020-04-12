@@ -1,0 +1,21 @@
+.tooltip {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: var(--lightBg);
+  padding: 15px 20px;
+  box-shadow: var(--shadow);
+  bottom: 30px;
+  right: -200px;
+  width: 400px;
+  height: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.text {
+  font-size: var(--normal1);
+  color: white;
+}
