@@ -13,6 +13,7 @@ interface Props {
 
 const _TabsHeaderRobotPage: React.FC<Props> = ({ activeTab, setActiveTab, isUserSignals }) => (
   <div className={styles.tabsHeader}>
+    <div className={styles.dummy} />
     <div className={styles.tabsBtns}>
       { Object.keys(tabNames).map(key => (
         ((isUserSignals && key === 'myStatistic') || (key !== 'myStatistic')) ? (
@@ -26,6 +27,7 @@ const _TabsHeaderRobotPage: React.FC<Props> = ({ activeTab, setActiveTab, isUser
         ) : null
       )) }
     </div>
+    <div className={styles.dummy} />
   </div>
 );
 

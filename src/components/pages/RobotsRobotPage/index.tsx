@@ -17,7 +17,7 @@ import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
 
 export const RobotsRobotPage: React.FC = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const [ activeTab, setActiveTab ] = useState<TabType>(TabType.trading);
   const [ visibleModal, setVisibleModal ] = useState({ isVisible: false, type: '' });
   const router = useRouter();

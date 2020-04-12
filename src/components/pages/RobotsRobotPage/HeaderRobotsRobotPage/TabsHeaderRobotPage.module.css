@@ -2,6 +2,9 @@
   width: 100%;
   border-bottom-width: 1px;
   border-color: var(--lightBg);
+  flex-direction: row;
+  overflow-x: auto;
+  display: flex;
 }
 
 .tabsBtns {
@@ -9,8 +12,6 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
   transform: translateZ(0px);
 }
 
@@ -23,11 +24,22 @@
   font-size: var(--normal3);
 }
 
+.dummy {
+  display: none;
+}
+
 @media (max-width: 480px) {
   .objectStyle {
     margin-bottom: 5px;
   }
   .textClassName {
     font-size: var(--normal1);
+  }
+}
+
+@media (max-width: 370px) {
+  .dummy {
+    display: flex;
+    padding-right: 30px;
   }
 }

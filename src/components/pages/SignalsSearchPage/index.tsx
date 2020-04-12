@@ -28,6 +28,7 @@ export const SignalsSearchPage: React.FC = () => {
           setSignalsSearchValue={setSignalsSearchValue}
           displayType='signals' />
       )}
+      hideToolbar
       handlePressBack={handlePressBack}
     >
       <div className={styles.container}>

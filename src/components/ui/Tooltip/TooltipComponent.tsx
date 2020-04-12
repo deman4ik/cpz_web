@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './TooltipComponent.module.css';
 
 interface Props {
   show: boolean;

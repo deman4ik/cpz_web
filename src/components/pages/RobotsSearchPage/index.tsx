@@ -28,6 +28,7 @@ export const RobotsSearchPage: React.FC = () => {
           setSignalsSearchValue={setSignalsSearchValue}
           displayType='robots' />
       )}
+      hideToolbar
       handlePressBack={handlePressBack}
     >
       <div className={styles.container}>
