@@ -21,6 +21,7 @@ const _ExchangeKeysAddKey: React.FC<Props> = ({ handleSetVisibleModal }) => {
       >
         <CaptionButton
           title='Add New Key'
+          responsive={false}
           icon='plus' />
       </div>
     </div>

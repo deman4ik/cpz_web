@@ -8,6 +8,7 @@ import styles from './Notify.module.css';
 
 interface Props {
   item: any;
+  isLast: boolean;
   toggleNotification: (key: string, name: string) => void;
 }
 const components = {
@@ -15,7 +16,7 @@ const components = {
   chartline: ChartLineIcon
 };
 
-export const Notify: React.FC<Props> = ({ item, toggleNotification }) => {
+export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
   const SpecificIcon = components[item.icon];
   return (
     <>
@@ -40,7 +41,7 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification }) => {
           ))}
         </div>
       </div>
-      <div className={styles.separator} />
+      { !isLast ? <div className={styles.separator} /> : null }
     </>
   );
 };

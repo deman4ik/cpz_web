@@ -104,8 +104,12 @@ const _NotifySettings: React.FC = () => {
             <LoadingIndicator />
           ) : (
             <div className={styles.columns}>
-              {notifications.map((item) => (
-                <Notify item={item} toggleNotification={toggleNotification} key={item.key} />
+              {notifications.map((item, idx) => (
+                <Notify
+                  item={item}
+                  toggleNotification={toggleNotification}
+                  key={item.key}
+                  isLast={idx === notifications.length - 1} />
               ))}
             </div>
           )}

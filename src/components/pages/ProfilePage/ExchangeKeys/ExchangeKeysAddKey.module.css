@@ -8,6 +8,12 @@
   padding: 15px;
   margin: 8px 5px 10px;
   box-shadow: var(--shadow);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.itemContainerCard:active {
+  opacity: 0.2;
 }
 
 .border {
@@ -20,10 +26,4 @@
   border-color: var(--accent);
   align-items: center;
   justify-content: center; 
-}
-
-@media (max-width: 480px) {
-  .itemContainerCard {
-    max-width: 30px;
-  }
 }

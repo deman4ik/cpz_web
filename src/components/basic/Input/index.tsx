@@ -123,7 +123,7 @@ export const Input: React.FC<Props> =
         
         @media (max-width: 480px) {
           .wrapper {
-            width: ${responsive ? (width / 100) * 14 : width}px;
+            width: ${responsive ? width - (width / 100) * 14 : width}px;
           }
         }
       `}

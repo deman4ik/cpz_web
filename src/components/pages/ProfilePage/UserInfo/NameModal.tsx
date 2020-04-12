@@ -52,6 +52,7 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
               value={`${inputValue}`}
               error={!!formError}
               width={250}
+              responsive
               onChangeText={value => setInputValue(value)}
               onKeyPress={onKeyPress} />
           </div>
