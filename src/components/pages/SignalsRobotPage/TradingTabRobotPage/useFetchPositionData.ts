@@ -6,7 +6,7 @@ import { ROBOT_POSITIONS_COUNT } from '../../../../graphql/signals/queries';
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from '../../../../config/constants';
 import { getFormatDataClosedPositions, getAlerts } from '../helpers';
 
-export const useFecthPositionData = (isUserSignals, userSignals, robot) => {
+export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
   const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 

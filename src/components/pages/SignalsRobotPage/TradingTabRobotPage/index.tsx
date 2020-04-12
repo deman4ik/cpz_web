@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { CandleChart } from './CandleChart';
 import { LoadingIndicator } from '../../../common';
 import { floatPositions } from '../helpers';
-import { useFecthPositionData } from './useFetchPositionData';
+import { useFetchPositionData } from './useFetchPositionData';
 import { ClosedPositionContainer } from './ClosedPositionContainer';
 import { OpenPositionContainer } from './OpenPositionContainer';
 import styles from './index.module.css';
@@ -19,8 +19,8 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
   const {
     loading, handleLoadMore, isLoadingMore, dataOpenPositions,
     formatDataClosedPositions, formatSignals, quantyRecords
-  } = useFecthPositionData(isUserSignals, userSignals, robot);
-  if (width === 0) return null;
+  } = useFetchPositionData(isUserSignals, userSignals, robot);
+
   return (
     <>
       <CandleChart

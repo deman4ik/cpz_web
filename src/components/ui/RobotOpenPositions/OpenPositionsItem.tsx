@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
-import { capitalize, getColor, getIconName, colorAction } from '../../../config/utils';
+import { capitalize, getColor, getIconName, colorDirection } from '../../../config/utils';
 import { color } from '../../../config/constants';
 import { PropsOpenPositionsItem } from './types';
 import styles from './OpenPositionsItem.module.css';
@@ -24,7 +24,7 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
       <div className={styles.positionGroup} onClick={handleOnPress}>
         <div className={styles.limitWrapper}>
           <div className={styles.codeGroup}>
-            <div className={styles.tableCellText} style={colorAction([ 'long', 'closeShort' ].includes(item.direction))}>{capitalize(item.direction)}</div>
+            <div className={styles.tableCellText} style={colorDirection(item.direction)}>{capitalize(item.direction)}</div>
             <div className={styles.tableCellText} style={{ marginLeft: 4 }}>{item.code}</div>
           </div>
           <div className={styles.secondaryText} style={{ marginTop: 2 }}>{item.robot.name}</div>

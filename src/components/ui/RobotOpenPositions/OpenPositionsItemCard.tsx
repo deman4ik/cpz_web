@@ -4,7 +4,7 @@ import React from 'react';
 
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
 import { Button } from '../../basic';
-import { colorAction, capitalize, getIconName, getColor } from '../../../config/utils';
+import { colorDirection, capitalize, getIconName, getColor } from '../../../config/utils';
 import styles from './OpenPositionsItemCard.module.css';
 import { PropsOpenPositionsItem } from './types';
 
@@ -24,10 +24,10 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
       <div
         className={[ styles.row, styles.rowCaption ].join(' ')}
         onClick={handleOnPress}
-        >
+      >
         <div className={styles.sectionGroup} style={{ flex: 0.9 }}>
           <div className={styles.actionGroup}>
-            <div className={styles.tableCellText} style={colorAction([ 'long', 'closeShort' ].includes(item.direction))}>{capitalize(item.direction)}</div>
+            <div className={styles.tableCellText} style={colorDirection(item.direction)}>{capitalize(item.direction)}</div>
             <div className={styles.tableCellText} style={{ marginLeft: 4 }}>{item.code}</div>
           </div>
           <div className={styles.secondaryText} style={{ marginTop: 2 }}>{item.robot.name}</div>

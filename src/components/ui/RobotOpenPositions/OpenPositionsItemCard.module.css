@@ -21,6 +21,7 @@
   padding: 10px 5px 10px 10px;
   cursor: pointer;
   align-items: center;
+  opacity: 1;
 }
 
 .rowBody {
@@ -65,4 +66,8 @@
   flex-direction: row;
   flex: 1;
   align-items: center;
+}
+
+.rowCaption:active {
+  opacity: 0.2;
 }
