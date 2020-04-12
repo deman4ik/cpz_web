@@ -36,7 +36,7 @@ const _NotifySettings: React.FC = () => {
       const { notifications: _notifications } = data.users[0].settings;
       setNotifications(Object.keys(_notifications).map(key => ({
         key,
-        checkboxes: Object.keys(_notifications[key]).filter(name => name !== 'email').map(name => ({
+        checkboxes: Object.keys(_notifications[key]).map(name => ({
           name,
           isActive: _notifications[key][name],
           disabled: !data.users[0][serviceName[name]]
@@ -104,8 +104,8 @@ const _NotifySettings: React.FC = () => {
             <LoadingIndicator />
           ) : (
             <div className={styles.columns}>
-              {notifications.map((item, idx) => (
-                <Notify item={item} idx={idx} key={item.key} />
+              {notifications.map((item) => (
+                <Notify item={item} toggleNotification={toggleNotification} key={item.key} />
               ))}
             </div>
           )}

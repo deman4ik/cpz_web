@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { CheckIcon } from '../../../assets/icons/svg';
+import { color } from '../../../config/constants';
 import styles from './index.module.css';
 
 interface Props {
@@ -11,23 +12,27 @@ interface Props {
 }
 
 export const CheckBox: React.FC<Props> = ({ checked, label, disabled, onClick }) => {
+  const [ isChecked, setIsChecked ] = useState(checked);
   const getCheckboxStyle = () => {
-    const style = [ styles.checkbox, checked ? styles.checked : styles.unchecked ];
+    const style = [ styles.checkbox, disabled ? styles.disabled : isChecked ? styles.checked : styles.unchecked ];
     return style;
   };
 
   const handleOnClick = () => {
     if (!disabled) {
       onClick();
+      setIsChecked(!isChecked);
     }
   };
 
+  const getTextColor = () => [ styles.checkBoxWrapper, disabled ? styles.textColorDisabled : styles.textColor ];
+
   return (
-    <div className={styles.checkBoxWrapper}>
-      <div className={getCheckboxStyle().join(' ')} onClick={handleOnClick}>
-        { checked ? (
+    <div className={getTextColor().join(' ')} onClick={handleOnClick}>
+      <div className={getCheckboxStyle().join(' ')}>
+        { isChecked ? (
           <div className={styles.checkedIcon}>
-            <CheckIcon size={14} />
+            <CheckIcon size={18} color={color.primary} />
           </div>
         ) : null }
       </div>

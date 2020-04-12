@@ -8,14 +8,14 @@ import styles from './Notify.module.css';
 
 interface Props {
   item: any;
-  idx: number;
+  toggleNotification: (key: string, name: string) => void;
 }
 const components = {
   robot: RobotIcon,
   chartline: ChartLineIcon
 };
 
-export const Notify: React.FC<Props> = ({ item, idx }) => {
+export const Notify: React.FC<Props> = ({ item, toggleNotification }) => {
   const SpecificIcon = components[item.icon];
   return (
     <>
@@ -30,23 +30,13 @@ export const Notify: React.FC<Props> = ({ item, idx }) => {
         </div>
         <div className={styles.checkboxGroup}>
           {item.checkboxes.map(checkbox => (
-            <CheckBox
-              key={`${item.key}.${checkbox.name}`}
-              checked={checkbox.isActive}
-              label={capitalize(checkbox.name)}
-              />
-
-          // <Checkbox
-          //   key={`${notification.key}.${checkbox.name}`}
-          //   color={vars.color.primary}
-          //   uncheckedColor={vars.color.white}
-          //   label={t(capitalize(checkbox.name))}
-          //   labelStyle={_styles.label}
-          //   isActive={checkbox.isActive}
-          //   disabled={checkbox.disabled}
-          //   isLoading={checkbox.isLoading}
-          //   onPress={() => toggleNotification(notification.key, checkbox.name)}
-          // />
+            <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
+              <CheckBox
+                checked={checkbox.isActive}
+                onClick={() => toggleNotification(item.key, checkbox.name)}
+                label={capitalize(checkbox.name)}
+                disabled={checkbox.disabled} />
+            </div>
           ))}
         </div>
       </div>
