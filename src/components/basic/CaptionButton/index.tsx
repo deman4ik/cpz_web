@@ -90,6 +90,9 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           .btn-text {
             display: ${responsive ? 'none' : 'block'};
           }
+          .icon {
+            top: ${responsive ? -10 : -3}px;
+          }
         }`}
       </style>
     </div>
