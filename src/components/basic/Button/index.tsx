@@ -1,62 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { ButtonType } from './types';
-import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ChevronLeftIcon,
-  ArrowDownIcon, BorderColorIcon, CloseIcon, LockOpenIcon,
-  EmailIcon, AccountIcon } from '../../../assets/icons/svg';
+import { ButtonProps } from './types';
+import { components, height } from './helpers';
 import { LoadingIndicator } from '../../common';
 
-export interface HoverChangesProps {
-  type?: ButtonType;
-  title?: string;
-  icon?: string;
-}
-
-interface Props {
-  title?: string;
-  icon?: string;
-  type?: string;
-  style?: object;
-  isUppercase?: boolean;
-  isLoading?: boolean;
-  size?: string;
-  width?: number;
-  disabled?: boolean;
-  onClick?: () => void;
-  className?: string;
-  hoverChanges?: HoverChangesProps;
-  responsive?: boolean;
-}
-
-const components = {
-  check: CheckIcon,
-  plus: PlusIcon,
-  settings: SettingsIcon,
-  chevronright: ChevronRightIcon,
-  chevronleft: ChevronLeftIcon,
-  arrowdown: ArrowDownIcon,
-  bordercolor: BorderColorIcon,
-  close: CloseIcon,
-  lockopen: LockOpenIcon,
-  email: EmailIcon,
-  account: AccountIcon
-};
-
-const height = {
-  small: 26,
-  normal: 34,
-  big: 50
-};
-
-export const Button: React.FC<Props> =
-({ title, type, style, icon, isUppercase, isLoading, onClick, width, className, disabled, responsive, size = 'normal' }) => {
-  const SpecificIcon = components[icon];
+export const Button: React.FC<ButtonProps> =
+({ title, type, style, icon, isUppercase, isLoading, onClick, width,
+  className, disabled, responsive, size = 'normal', hoverChanges }) => {
+  const [ base, setBase ] = useState({ title, icon, type });
+  const SpecificIcon = components[base.icon];
   const rounded = type && type.indexOf('rounded') === 0;
+
   const getClassName = () => {
     const composeClass = [ 'btn' ];
     if (className) composeClass.push(className);
     if (isUppercase) composeClass.push('uppercase');
-    if (type) composeClass.push(type);
+    if (base.type) composeClass.push(base.type);
     return composeClass;
   };
 
@@ -66,14 +25,33 @@ export const Button: React.FC<Props> =
     }
   };
 
+  const handleMouseEnter = () => {
+    if (hoverChanges) {
+      setBase({
+        type: hoverChanges.type || type,
+        title: hoverChanges.title || title,
+        icon: hoverChanges.icon || icon
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setBase({ title, icon, type });
+  };
+
   return (
-    <div className={getClassName().join(' ')} style={style} onClick={handleOnClick}>
+    <div
+      className={getClassName().join(' ')}
+      style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleOnClick}>
       {isLoading ? <LoadingIndicator height={26} size={10} /> : (
         <>
           <div className='btn-text'>
-            {title}
+            {base.title}
           </div>
-          {icon ? (
+          {base.icon ? (
             <div className='icon'>
               <SpecificIcon size={15} />
             </div>
@@ -84,7 +62,7 @@ export const Button: React.FC<Props> =
       <style jsx>{`
         .btn-text {
           width: 100%;
-          color: ${type === 'rounded-negative' ? 'var(--negative)' : 'white'};
+          color: ${base.type === 'rounded-negative' ? 'var(--negative)' : 'white'};
           font-size: ${size === 'small' ? 12 : 14}px;
           text-align: center;
           white-space: nowrap;
@@ -99,7 +77,7 @@ export const Button: React.FC<Props> =
           right: 0;
         }
         .aligner {
-          width: ${icon ? 20 : 0}px;
+          width: ${base.icon ? 20 : 0}px;
         }
         .btn {
           display: flex;
@@ -145,7 +123,7 @@ export const Button: React.FC<Props> =
             display: ${responsive ? 'none' : 'block'};
           }
           .aligner {
-            width: ${icon ? responsive ? '12px' : '20px' : 0};
+            width: ${base.icon ? responsive ? '12px' : '20px' : 0};
           }
         }`}
       </style>
