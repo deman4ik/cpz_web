@@ -7,10 +7,12 @@
 }
 
 .surface {
+  max-width: 550px;
   min-height: 340px;
   margin-left: 10px;
   margin-right: 10px;
   padding: 40px 50px;
+  width: 100%;
   background-color: var(--dark);
   box-shadow: var(--shadow);
 }
