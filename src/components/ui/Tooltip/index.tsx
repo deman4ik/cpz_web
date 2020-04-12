@@ -7,9 +7,10 @@ import styles from './index.module.css';
 
 interface Props {
   message: string;
+  direction?: string;
 }
 
-export const Tooltip: React.FC<Props> = ({ message }) => {
+export const Tooltip: React.FC<Props> = ({ message, direction }) => {
   const [ hover, setHover ] = useState(false);
 
   const handleOnMouseEnter = () => {
@@ -27,7 +28,7 @@ export const Tooltip: React.FC<Props> = ({ message }) => {
       onMouseLeave={handleOnMouseLeave}
     >
       <HelpIcon color={color.accent} size={24} />
-      <TooltipComponent show={hover} message={message} />
+      <TooltipComponent show={hover} message={message} direction={direction}/>
     </div>
   );
 };

@@ -45,7 +45,9 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
   );
 
   const quantyRecords = useMemo(() =>
-    (!loadingAggregate ? dataCount[`${tableName}_aggregate`].aggregate.count : 0), [ dataCount, loadingAggregate ]);
+    ((!loadingAggregate && dataCount)
+      ? dataCount[`${tableName}_aggregate`].aggregate.count
+      : 0), [ dataCount, loadingAggregate ]);
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);

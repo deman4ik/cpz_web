@@ -27,7 +27,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
         robot={robot}
         signals={formatSignals}
         width={width} />
-      { loading ? <LoadingIndicator /> : (
+      { loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
         <>
           <div className={styles.container}>
             { Object.keys(floatPositions).map(key => (

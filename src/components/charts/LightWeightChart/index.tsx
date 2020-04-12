@@ -22,7 +22,7 @@ const LightWeightChart: React.FC<PropsWrapChart> =
         lines={lines}
         onFetchMore={onFetchMore}
         legend={legend}
-        size={{ width: isMobile ? size.width - 36 : 1180 - widthSubtractor, height: size.height }} />
+        size={{ width: isMobile ? size.width - 22 : 1180 - widthSubtractor, height: size.height }} />
     </div>
   );
 };
