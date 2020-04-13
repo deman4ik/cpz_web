@@ -22,7 +22,7 @@ const heightButton = 27;
 const baseButtonOffset = 60;
 
 export const _LightWeightChart: React.FC<PropsLighweightChart> =
-({ loading, data, markers, lines, onFetchMore, size, type, legend }) => {
+({ loading, data, markers, lines, onFetchMore, size, type, legend, setIsChartLoaded }) => {
   const chartRef = useRef(null);
   const toolTipRef = useRef(null);
   const buttonRef = useRef(null);
@@ -106,6 +106,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
     buttonRef.current.style.color = '#4c525e';
 
     setChart({ field: currentCart, series });
+    if (setIsChartLoaded) setIsChartLoaded(true);
   }, []);
 
   const setCurrentButtonLeft = (lastLine: any) => {

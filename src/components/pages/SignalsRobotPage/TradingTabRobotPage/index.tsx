@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import { CandleChart } from './CandleChart';
 import { LoadingIndicator } from '../../../common';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
+  const [ isChartLoaded, setIsChartLoaded ] = useState(false);
   const { user_signals: userSignals, robot } = robotData;
   const { isUserSignals } = robot;
   const {
@@ -26,28 +27,31 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
       <CandleChart
         robot={robot}
         signals={formatSignals}
-        width={width} />
+        width={width}
+        setIsChartLoaded={setIsChartLoaded} />
       { loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
-        <>
-          <div className={styles.container}>
-            { Object.keys(floatPositions).map(key => (
-              <OpenPositionContainer
-                key={key}
-                robot={robot}
-                data={key === 'signals'
-                  ? formatSignals
-                  : (dataOpenPositions && dataOpenPositions.robot_positions.length) ? dataOpenPositions.robot_positions : []}
-                positionInfo={floatPositions[key]} />
-            )) }
-          </div>
-          <ClosedPositionContainer
-            robot={robot}
-            handleLoadMore={handleLoadMore}
-            data={formatDataClosedPositions}
-            quantyRecords={quantyRecords}
-            isLoadingMore={isLoadingMore}
-            width={width} />
-        </>
+        !isChartLoaded ? <div className={styles.empty} /> : (
+          <>
+            <div className={styles.container}>
+              { Object.keys(floatPositions).map(key => (
+                <OpenPositionContainer
+                  key={key}
+                  robot={robot}
+                  data={key === 'signals'
+                    ? formatSignals
+                    : (dataOpenPositions && dataOpenPositions.robot_positions.length) ? dataOpenPositions.robot_positions : []}
+                  positionInfo={floatPositions[key]} />
+              )) }
+            </div>
+            <ClosedPositionContainer
+              robot={robot}
+              handleLoadMore={handleLoadMore}
+              data={formatDataClosedPositions}
+              quantyRecords={quantyRecords}
+              isLoadingMore={isLoadingMore}
+              width={width} />
+          </>
+        )
       )}
     </>
   );

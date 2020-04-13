@@ -9,3 +9,10 @@
 .loading {
   margin: 100px auto;
 }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  width: 100%;
+}
