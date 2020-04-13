@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import BigLogo from '../../../../assets/img/big-logo.png';
 import { PrimaryButton } from '../../../basic';
 import { Header } from '../../../layout';
+import { DOCS_URL } from '../../../../config/constants';
 import styles from './index.module.css';
 
 const DinamicImageWithNoSSR = dynamic(
@@ -46,7 +47,7 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
               <PrimaryButton
                 title='DOCUMENTATION'
                 type='primary'
-                onClick={() => handleOnClick(process.env.DOCS_URL, true)}
+                onClick={() => handleOnClick(DOCS_URL, true)}
                 style={styles.headerBtn} />
             </div>
           </div>

@@ -76,7 +76,7 @@ const _TelegramLogin: React.FC<Props> = ({ userId }) => {
 
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?7';
-    script.setAttribute('data-telegram-login', process.env.BOT_NAME);
+    script.setAttribute('data-telegram-login', process.env.TELEGRAM_BOT_NAME);
     script.setAttribute('data-size', buttonSize);
     script.setAttribute('data-radius', `${borderRadius}`);
     script.setAttribute('data-request-access', requestAccess);

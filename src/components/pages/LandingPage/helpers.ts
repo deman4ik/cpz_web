@@ -1,4 +1,5 @@
 import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from './types';
+import { DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../../config/constants';
 
 export const supportContent = () => (
   [
@@ -9,7 +10,7 @@ export const supportContent = () => (
       text: 'Learn all about Cryptuoso Platform.\n How to use and configure signals, robots and exchange accounts.',
       button: 'DOCUMENTATION',
       buttonType: 'outline-secondary',
-      href: process.env.DOCS_URL
+      href: DOCS_URL
     },
     {
       icon: 'telegram',
@@ -18,7 +19,7 @@ export const supportContent = () => (
       text: 'Having common questions with signals or robots? \n Ask your question in our Community Group and we will help you.',
       button: 'Telegram Community',
       buttonType: 'outline-primary',
-      href: process.env.TELEGRAM_COMMUNITY_URL
+      href: TELEGRAM_COMMUNITY_URL
     },
     {
       icon: 'robot',
@@ -27,7 +28,7 @@ export const supportContent = () => (
       text: 'Have a personal problem regarding connecting an exchange or billing? \n Use support section in our Telegram Bot.',
       button: 'TELEGRAM BOT',
       buttonType: 'outline-warn',
-      href: process.env.TELEGRAM_BOT_URL
+      href: `https://t.me/${process.env.TELEGRAM_BOT_NAME}`
     }
   ]
 );
