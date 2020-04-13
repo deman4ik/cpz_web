@@ -14,7 +14,9 @@ interface Props {
 const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose }) => (
   <>
     <div className={styles.step3}>
-      <AlertIcon size={48} color={color.white} />
+      <div className={styles.iconWrapper}>
+        <AlertIcon size={48} color={color.white} />
+      </div>
       <div className={styles.bodyTitle}>
         Are you sure you want to start {robotName} robot now?
       </div>

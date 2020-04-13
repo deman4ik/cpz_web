@@ -48,7 +48,7 @@ export const Input: React.FC<Props> =
   };
 
   const getInputClass = () => {
-    const styleInput = [ 'searchInput' ];
+    const styleInput = [ 'input' ];
     if (error) styleInput.push('error');
     return styleInput;
   };
@@ -94,10 +94,11 @@ export const Input: React.FC<Props> =
           flex: 1; 
         }
         
-        .searchInput {
+        .input {
           background-color: var(--darkBg);
           color: var(--accent);
           border-radius: 2px;
+          font-size: var(--normal1);
           padding: 11px;
           padding-right: ${icon ? '35px' : '11px'};
         }

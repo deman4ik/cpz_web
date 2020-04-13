@@ -3,6 +3,7 @@
   justify-content: space-around;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 1448px;
 }
 
 .moreBtn {

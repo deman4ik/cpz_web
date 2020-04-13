@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { Button, Input, Modal } from '../../../basic';
+import { InputLike } from '../../../ui/InputLike';
 import { LoadingIndicator } from '../../../common';
 import { NameModal } from './NameModal';
 import { EmailModal } from './EmailModal';
@@ -49,12 +50,17 @@ const _UserInfo: React.FC<Props> = ({ width }) => {
                   Username
                 </div>
                 <div className={styles.inputContainer}>
-                  <Input
+                  <InputLike
+                    value={data.users[0].name || ''}
+                    onClickButton={handleOnCloseNameModal}
+                    icon='account' />
+
+                  {/* <Input
                     value={data.users[0].name || ''}
                     placeholder=''
                     onClickButton={handleOnCloseNameModal}
                     responsive
-                    icon='account' />
+                    icon='account' /> */}
                 </div>
               </div>
               <div className={styles.formRow}>
@@ -62,12 +68,16 @@ const _UserInfo: React.FC<Props> = ({ width }) => {
                   Email
                 </div>
                 <div className={styles.inputContainer}>
-                  <Input
+                  <InputLike
+                    value={data.users[0].email || ''}
+                    onClickButton={handleOnCloseEmailModal}
+                    icon='email' />
+                  {/* <Input
                     value={data.users[0].email || ''}
                     placeholder=''
                     onClickButton={handleOnCloseEmailModal}
                     responsive
-                    icon='email' />
+                    icon='email' /> */}
                 </div>
               </div>
               {data.users[0].email && (

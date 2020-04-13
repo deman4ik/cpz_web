@@ -78,6 +78,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             className={styles.btn}
             title='Yes'
             icon='check'
+            width={70.61}
             type='success'
             isLoading={loading}
             onClick={handleOnPressSubmit}

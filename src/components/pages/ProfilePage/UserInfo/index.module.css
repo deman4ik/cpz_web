@@ -36,6 +36,11 @@
   width: 100%;
 }
 
+.telegramName {
+  font-size: var(--normal1);
+  color: white;
+}
+
 @media (max-width: 768px) {
   .formRow {
     flex-direction: column;

@@ -22,7 +22,9 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
       <div className={styles.leftContainer}>
         {hasHomeButton && (
           <div className={styles.btnWrapper}>
-            <div className={styles.btnTitle}>Cryptuoso</div>
+            <Link href='/' replace>
+              <a className={styles.btnTitle}>Cryptuoso</a>
+            </Link>
           </div>
         )}
         {!!token && (
