@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ButtonProps } from './types';
 import { components, height } from './helpers';
@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> =
   };
 
   const handleOnClick = () => {
-    if (!isLoading && !disabled) {
+    if (!isLoading && !disabled && onClick) {
       onClick();
     }
   };
@@ -39,6 +39,10 @@ export const Button: React.FC<ButtonProps> =
   const handleMouseLeave = () => {
     setBase({ title, icon, type });
   };
+
+  useEffect(() => {
+    setBase(prev => ({ ...prev, type }));
+  }, [ type ]);
 
   return (
     <div

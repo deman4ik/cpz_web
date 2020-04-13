@@ -5,14 +5,14 @@
   min-width: 200px;
   padding-left: 40px;
   padding-right: 40px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .titleRow {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 10px;
   width: 100%;
 }
@@ -25,6 +25,7 @@
 
 .checkBoxWrapper {
   margin-top: 5px;
+  margin-left: 2px;
 }
 
 .titleText {

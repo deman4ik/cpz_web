@@ -16,10 +16,10 @@ export const Accordion: React.FC<Props> = ({ title, children, left }) => {
 
   return (
     <div className={styles.container}>
-      <div className={[ styles.title, styles.ripple ].join(' ')}>
+      <div className={[ styles.title, styles.ripple ].join(' ')} onClick={handleOnClick}>
         {left}
         {title}
-        <div className={styles.icon} onClick={handleOnClick}>
+        <div className={styles.icon}>
           {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
         </div>
       </div>

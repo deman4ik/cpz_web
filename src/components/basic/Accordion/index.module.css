@@ -28,13 +28,6 @@
   transition: background 0.8s;
 }
 
-/* .ripple:hover {
-  background-color: var(--darkBg);
-  background-image: radial-gradient(circle, transparent 1%, var(--darkBg) 1%);
-  background-position: center;
-  background-size: 15000%;
-} */
-
 .ripple:active {
   background-color: var(--lightBg);
   background-size: 100%;
