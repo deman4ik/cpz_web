@@ -35,8 +35,14 @@
 
 .headerMessage {
   font-size: var(--small1);
-  color: (--accent);
+  color: var(--accent);
   margin-left: 5px;
+}
+
+@media (max-width: 825px) {
+  .header {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 768px) {
@@ -48,5 +54,9 @@
   .headerName {
     flex-direction: column;
     margin-bottom: 5px;
+  }
+  .headerMessage {
+    align-self: start;
+    margin-top: 10px;
   }
 }

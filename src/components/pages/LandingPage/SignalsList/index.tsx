@@ -7,7 +7,11 @@ import { SignalsListCard } from './SignalsListCard';
 import { LoadingDummy } from './LoadingDummy';
 import styles from './index.module.css';
 
-const _SignalsList: React.FC = () => {
+interface Props {
+  handleOnClick: (path: string, external: boolean) => void;
+}
+
+const _SignalsList: React.FC<Props> = ({ handleOnClick }) => {
   const { data, loading } = useQuery(GET_LANDING_ROBOTS, {
     variables: { limit: 5 }
   });
@@ -19,11 +23,13 @@ const _SignalsList: React.FC = () => {
           {data.v_robots_stats.map(item => (
             <SignalsListCard
               key={item.robots.id}
+              handleOnClick={handleOnClick}
               robot={item.robots} />
           ))}
           <div className={styles.moreBtn}>
             <PrimaryButton
               title='More Robots'
+              onClick={() => handleOnClick('/robots', false)}
               type='primary' />
           </div>
         </div>
