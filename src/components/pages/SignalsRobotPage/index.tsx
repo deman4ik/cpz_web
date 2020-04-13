@@ -60,7 +60,7 @@ export const SignalsRobotPage = () => {
       ) : null}
       handlePressBack={handlePressBack}
     >
-      {loading ? <LoadingIndicator /> : (
+      {loading ? <LoadingIndicator style={{ height: 200 }} /> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
           <>
             <HeaderRobotsRobotPage

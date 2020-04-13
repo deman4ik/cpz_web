@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import dynamic from 'next/dynamic';
@@ -19,7 +20,7 @@ const LIMIT = 120;
 
 const LightWeightChartWithNoSSR = dynamic(
   () => import('../../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator />,
+  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
     ssr: false }
 );
 
