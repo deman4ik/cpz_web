@@ -14,10 +14,12 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, enabled = 
   };
 
   return (
-    <select value={value} onChange={onChange} className={styles.select} disabled={!enabled}>
-      { data.map(item => (
-        <option key={item.value} value={item.value}>{item.label}</option>
-      )) }
-    </select>
+    <div className={styles.container}>
+      <select value={value} onChange={onChange} className={styles.select} disabled={!enabled}>
+        { data.map(item => (
+          <option key={item.value} value={item.value}>{item.label}</option>
+        )) }
+      </select>
+    </div>
   );
 };

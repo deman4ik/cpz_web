@@ -4,6 +4,7 @@
   align-items: flex-end;
   margin-top: 60px;
   margin-bottom: 40px;
+  max-width: 1448px;
 }
 
 .free {
@@ -12,6 +13,7 @@
   align-items: center;
   margin-top: 20px;
   margin-bottom: 40px;
+  max-width: 1448px;
 }
 
 .row {
