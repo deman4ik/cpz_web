@@ -41,8 +41,8 @@ export const Button: React.FC<ButtonProps> =
   };
 
   useEffect(() => {
-    setBase(prev => ({ ...prev, type }));
-  }, [ type ]);
+    setBase(prev => ({ ...prev, type, title, icon }));
+  }, [ type, title, icon ]);
 
   return (
     <div

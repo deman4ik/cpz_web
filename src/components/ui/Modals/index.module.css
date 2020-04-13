@@ -92,6 +92,10 @@
   margin: -30px auto 30px;
 }
 
+.iconWrapper {
+  margin-top: 10px;
+}
+
 @media (max-width: 768px) {
   .wizardContainer {
     margin-left: -140px;

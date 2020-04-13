@@ -13,7 +13,7 @@ export const AssignmentIcon: React.FC<Props> = ({ color }) => (
 
 export const MultiLineChartIcon: React.FC<Props> = ({ color }) => (
   <svg fill={color} width='24px' height='24px' focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
-    <path d='M22 6.92l-1.41-1.41-2.85 3.21C15.68 6.4 12.83 5 9.61 5 6.72 5 4.07 6.16 2 8l1.42 1.42C5.12 7.93 7.27 7 9.61 7c2.74 0 5.09 1.26 6.77 3.24l-2.88 3.24-4-4L2 16.99l1.5 1.5 6-6.01 4 4 4.05-4.55c.75 1.35 1.25 2.9 1.44 4.55H21c-.22-2.3-.95-4.39-2.04-6.14L22 6.92z' />
+    <path d='M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56l6.49 3.74z' />
   </svg>
 );
 
