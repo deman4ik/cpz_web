@@ -15,9 +15,10 @@ import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
+import styles from './index.module.css';
 
 export const RobotsRobotPage: React.FC = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [ activeTab, setActiveTab ] = useState<TabType>(TabType.trading);
   const [ visibleModal, setVisibleModal ] = useState({ isVisible: false, type: '' });
   const router = useRouter();
@@ -54,7 +55,7 @@ export const RobotsRobotPage: React.FC = () => {
           robotData={robotData} />
       ) : null}
       handlePressBack={handlePressBack}>
-      {loading ? <LoadingIndicator /> : (
+      {loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
           <>
             <HeaderRobotsRobotPage

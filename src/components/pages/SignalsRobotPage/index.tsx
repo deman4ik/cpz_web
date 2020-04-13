@@ -15,9 +15,10 @@ import { NoRecentData, LoadingIndicator } from '../../common';
 import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
+import styles from './index.module.css';
 
 export const SignalsRobotPage = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [ activeTab, setActiveTab ] = useState<TabType>(TabType.trading);
   const [ visibleModal, setVisibleModal ] = useState({ isVisible: false, type: '' });
 
@@ -60,7 +61,7 @@ export const SignalsRobotPage = () => {
       ) : null}
       handlePressBack={handlePressBack}
     >
-      {loading ? <LoadingIndicator /> : (
+      {loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
           <>
             <HeaderRobotsRobotPage

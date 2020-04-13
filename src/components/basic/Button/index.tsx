@@ -15,6 +15,7 @@ export const Button: React.FC<ButtonProps> =
     const composeClass = [ 'btn' ];
     if (className) composeClass.push(className);
     if (isUppercase) composeClass.push('uppercase');
+    if (isLoading) composeClass.push('loading');
     if (base.type) composeClass.push(base.type);
     return composeClass;
   };
@@ -78,6 +79,9 @@ export const Button: React.FC<ButtonProps> =
         }
         .aligner {
           width: ${base.icon ? 20 : 0}px;
+        }
+        .loading {
+          justify-content: center;
         }
         .btn {
           display: flex;

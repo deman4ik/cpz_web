@@ -12,7 +12,7 @@ interface Props {
 }
 
 const _OpenPositionContainer: React.FC<Props> = ({ data, robot, tableName }) => (
-  <div className={styles.topCards}>
+  <div className={styles.container}>
     <div className={styles.topCards}>
       <div className={styles.accordionTitle}>
         Open Positions
