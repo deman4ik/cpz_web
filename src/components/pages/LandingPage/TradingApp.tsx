@@ -7,7 +7,11 @@ import { tradingSteps } from './helpers';
 import { TradingStepType } from './types';
 import styles from './TradingApp.module.css';
 
-const _TradingApp: React.FC = () => (
+interface Props {
+  handleOnClick: (path: string, external: boolean) => void;
+}
+
+const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
   <div className={styles.app}>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
@@ -27,6 +31,7 @@ const _TradingApp: React.FC = () => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Start now'
+            onClick={() => handleOnClick('/robots', false)}
             type='secondary' />
         </div>
       </div>

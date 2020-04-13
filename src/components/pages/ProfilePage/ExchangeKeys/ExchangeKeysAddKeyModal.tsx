@@ -157,7 +157,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
             <div style={{ marginTop: 6 }}>
               <Textarea
                 value={inputKeys.public}
-                rows={4}
+                rows={5}
                 onChangeText={text => handleOnChangeKeys(text, 'public')} />
             </div>
           </div>
@@ -171,7 +171,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
             <div style={{ marginTop: 6 }}>
               <Textarea
                 value={inputKeys.secret}
-                rows={4}
+                rows={5}
                 onChangeText={text => handleOnChangeKeys(text, 'secret')} />
             </div>
           </div>

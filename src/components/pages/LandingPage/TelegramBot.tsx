@@ -5,7 +5,11 @@ import phoneImg from '../../../assets/img/phone-img.png';
 import { CircleIcon } from '../../../assets/icons/svg';
 import styles from './TradingApp.module.css';
 
-const _TelegramBot: React.FC = () => (
+interface Props {
+  handleOnClick: (path: string, external: boolean) => void;
+}
+
+const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
   <div className={styles.free}>
     <div className={styles.row}>
       <img
@@ -39,6 +43,7 @@ const _TelegramBot: React.FC = () => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Try it now'
+            onClick={() => handleOnClick(process.env.TELEGRAM_BOT_URL, true)}
             type='primary' />
         </div>
       </div>

@@ -8,6 +8,11 @@
   text-transform: uppercase;
   text-shadow: rgb(17, 133, 169) 0px 1px 1px;
   letter-spacing: 1px;
+  opacity: 1;
+}
+
+.btn:active {
+  opacity: 0.2;
 }
 
 .secondary {
