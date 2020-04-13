@@ -40,7 +40,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
       {!stat ? <LoadingIndicator /> : (
         <>
           { !chartData
-            ? (<NoRecentData message='No recent data available' />)
+            ? (<NoRecentData message='No recent data available' style={{ marginTop: 20 }} />)
             : (<LightWeightChartWithNoSSR data={chartData} type={ChartType.area} size={{ height: 400, width }} />)}
           <div className={styles.performanceTitle}>
             {tabName[TabType[activeTab]]}

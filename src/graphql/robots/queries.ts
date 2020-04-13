@@ -4,7 +4,7 @@ export const GET_LANDING_ROBOTS = gql`
   query robots_by_stats($limit: Int) {
     v_robots_stats(
       limit: $limit
-      order_by: { recovery_factor: desc_nulls_last }
+      order_by: { recovery_factor: desc_nulls_last, id: asc }
     ) {
       robots {
         id
@@ -335,7 +335,8 @@ export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
 
 export const USER_ROBOTS = gql`
   query user_robots {
-    robots: user_robots @connection(key: "user_robots_robots") {
+    robots: user_robots(order_by: { started_at: asc })
+      @connection(key: "user_robots_robots") {
       id
       status
       settings
@@ -360,7 +361,7 @@ export const GET_ROBOTS_BY_STATS = gql`
       where: { robots: { name: { _ilike: $name }, trading: { _eq: true } } }
       limit: $limit
       offset: $offset
-      order_by: { recovery_factor: desc_nulls_last }
+      order_by: { recovery_factor: desc_nulls_last, id: asc }
     ) @connection(key: "v_robots_stats_robots", filter: ["name"]) {
       robots {
         id

@@ -34,7 +34,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
   const [ linkLines, setLinkLines ] = useState([]);
 
   useEffect(() => {
-    //const { createChart, CrosshairMode, LineStyle } = LightweightCharts;
     const currentCart = createChart(chartRef.current, {
       width: size.width,
       height: size.height,
@@ -93,8 +92,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
       series = currentCart.addAreaSeries({
         topColor: 'rgba(21, 146, 230, 0.4)',
         bottomColor: 'rgba(21, 146, 230, 0)',
-        // topColor: vars.color.positive,
-        // bottomColor: vars.color.negative,
         lineColor: 'rgba(21, 146, 230, 1)',
         lineStyle: 0,
         lineWidth: 2,
