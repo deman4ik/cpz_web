@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, memo } from 'react';
+import React, { useMemo, useState, memo } from 'react';
 import dynamic from 'next/dynamic';
 
 import dayjs from '../../../libs/dayjs';
@@ -23,6 +23,7 @@ const LightWeightChartWithNoSSR = dynamic(
 );
 
 const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) => {
+  const [ isChartLoaded, setIsChartLoaded ] = useState(false);
   const chartData = useMemo(() => (
     (!stat.statistics || !stat.statistics.performance) ? null :
       stat.statistics.performance.map(pos => ({
@@ -41,11 +42,15 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
         <>
           { !chartData
             ? (<NoRecentData message='No recent data available' style={{ marginTop: 20 }} />)
-            : (<LightWeightChartWithNoSSR data={chartData} type={ChartType.area} size={{ height: 400, width }} />)}
-          <div className={styles.performanceTitle}>
-            {tabName[TabType[activeTab]]}
-          </div>
-          <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
+            : (<LightWeightChartWithNoSSR data={chartData} type={ChartType.area} size={{ height: 400, width }} setIsChartLoaded={setIsChartLoaded} />)}
+          {isChartLoaded ? (
+            <>
+              <div className={styles.performanceTitle}>
+                {tabName[TabType[activeTab]]}
+              </div>
+              <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
+            </>
+          ) : null}
         </>
       )}
     </>

@@ -15,6 +15,7 @@ interface Props {
   robot: any;
   userRobots: any;
   width: number;
+  setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
 const LIMIT = 120;
 
@@ -24,7 +25,7 @@ const LightWeightChartWithNoSSR = dynamic(
     ssr: false }
 );
 
-export const CandleChart: React.FC<Props> = ({ robot, width, userRobots }) => {
+export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsChartLoaded }) => {
   const candleName = `candles${robot.timeframe}`;
   const legend = getLegend(robot);
   const { asset } = robot;
@@ -77,6 +78,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots }) => {
       onFetchMore={onFetchMore}
       markers={formatData.markers}
       legend={legend}
+      setIsChartLoaded={setIsChartLoaded}
       size={{ width, height: 400 }}
       type={ChartType.candle} />
   );

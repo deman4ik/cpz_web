@@ -6,7 +6,7 @@ import styles from './index.module.css';
 import { PropsWrapChart } from './types';
 
 const LightWeightChart: React.FC<PropsWrapChart> =
-({ data, size, type, loading = false, markers, lines, onFetchMore, legend }) => {
+({ data, size, type, loading = false, markers, lines, onFetchMore, legend, setIsChartLoaded }) => {
   const isMobile = size.width <= 480;
   const leftToolBar = size.width >= 1200 ? 190 : 46;
   const widthWithToolBar = 1214 + leftToolBar;
@@ -22,6 +22,7 @@ const LightWeightChart: React.FC<PropsWrapChart> =
         lines={lines}
         onFetchMore={onFetchMore}
         legend={legend}
+        setIsChartLoaded={setIsChartLoaded}
         size={{ width: isMobile ? size.width - 22 : 1180 - widthSubtractor, height: size.height }} />
     </div>
   );

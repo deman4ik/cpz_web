@@ -42,6 +42,7 @@ export interface PropsLighweightChart {
   };
   type: ChartType;
   legend?: string;
+  setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
 
 export interface PropsWrapChart {
@@ -56,4 +57,5 @@ export interface PropsWrapChart {
   };
   type: ChartType;
   legend?: string;
+  setIsChartLoaded?: (isChartLoaded: boolean) => void;
 }
