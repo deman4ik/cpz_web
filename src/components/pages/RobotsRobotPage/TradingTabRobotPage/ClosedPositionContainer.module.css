@@ -1,6 +1,6 @@
 .accordionTitle {
   display: flex;
-  text-align: center;
+  align-items: center;
   flex-direction: column;
   margin: 0;
   padding: 10px 20px;
