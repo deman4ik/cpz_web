@@ -103,7 +103,7 @@ export const Input: React.FC<Props> =
           padding-right: ${icon ? '35px' : '11px'};
         }
         
-        .searchInput.error {
+        .input.error {
           box-shadow: 0px 0px 0px 2px var(--negative);
         }
 
@@ -113,12 +113,12 @@ export const Input: React.FC<Props> =
           top: 6px;
         }
         
-        .searchInput::-webkit-input-placeholder,
-        .searchInput::placeholder {
+        .input::-webkit-input-placeholder,
+        .input::placeholder {
           color: var(--accent);
         }
         
-        .searchInput::-webkit-inner-spin-button {
+        .input::-webkit-inner-spin-button {
           display: none;
         }
         
