@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import dynamic from 'next/dynamic';
 
 import { GET_USER_INFO } from '../../../../graphql/user/queries';
 import { Button, Modal } from '../../../basic';
@@ -14,6 +15,11 @@ import styles_ext from '../AccountBalance.module.css';
 interface Props {
   width: number;
 }
+
+const TelegramLoginWithNoSSR = dynamic(
+  () => import('../../../ui/TelegramLogin'),
+  { ssr: false }
+);
 
 const _UserInfo: React.FC<Props> = ({ width }) => {
   const { data, loading } = useQuery(GET_USER_INFO);
@@ -81,19 +87,19 @@ const _UserInfo: React.FC<Props> = ({ width }) => {
                 </div>
               </div>
               )}
-              {data.users[0].telegram_id && (
-              <div className={[ styles.formRow, styles.lastFormRow ].join(' ')}>
+              <div className={styles.formRow} style={{ marginBottom: 0 }}>
                 <div className={styles.label}>
                   Telegram
                 </div>
-                <div className={styles.inputContainer}>
-                  <div className={styles.telegramName}>
-                    {data.users[0].telegram_username
+                {data.users[0].telegram_id ? (
+                  <div className={styles.inputContainer}>
+                    <div className={styles.telegramName}>
+                      {data.users[0].telegram_username
                     || data.users[0].telegram_id}
+                    </div>
                   </div>
-                </div>
+                ) : <TelegramLoginWithNoSSR userId={data.users[0].id} />}
               </div>
-              )}
               <Modal
                 isOpen={isNameModalVisible}
                 title='Change Name'
