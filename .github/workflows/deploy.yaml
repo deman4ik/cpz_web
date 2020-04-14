@@ -51,7 +51,7 @@ jobs:
 
       - name: Update deployment file ENV prod
         if: contains(github.ref, 'master')
-        run: sed -i 's|<APP>|prod|' $GITHUB_WORKSPACE/deployment.yaml
+        run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig show cpz > $GITHUB_WORKSPACE/.kubeconfig
