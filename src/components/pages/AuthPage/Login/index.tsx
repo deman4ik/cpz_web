@@ -8,7 +8,6 @@ import { validateAuth } from '../../../../config/validation';
 import { login } from '../../../../libs/auth';
 import { Input, Button } from '../../../basic';
 import { PageHead, Header, Footer } from '../../../layout';
-//import { TelegramLogin } from './TelegramLogin';
 import styles from '../index.module.css';
 
 const INITIAL_STATE = {
