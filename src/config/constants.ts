@@ -19,10 +19,6 @@ export const nearestTrades = [
   { y: 1455, type: 'short' }
 ];
 
-// export const IS_WEB = Platform.OS === 'web';
-// export const IS_ANDROID = Platform.OS === 'android';
-// export const IS_IOS = Platform.OS === 'ios';
-
 export const DISPLAY_CLOSED_POSITIONS = 50;
 
 export const SCREEN_TYPE = {
