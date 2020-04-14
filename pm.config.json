@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "cpz-web",
+      "script": "npm",
+      "args": "start"
+    }
+  ]
+}
