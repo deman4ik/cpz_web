@@ -3,10 +3,9 @@ import React, { memo } from 'react';
 import { descriptionRobots, descriptionFirstLine } from '../helpers';
 import styles from './DescriptionView.module.css';
 import landing_styles from '../index.module.css';
-import common_styles from '../../../../config/common.module.css';
 
 const _DescriptionView: React.FC = () => (
-  <div className={common_styles.container}>
+  <div className={styles.container}>
     <div className={landing_styles.robotsCols}>
       <div className={landing_styles.robotsRow}>
         {descriptionFirstLine.map((item, idx) => (

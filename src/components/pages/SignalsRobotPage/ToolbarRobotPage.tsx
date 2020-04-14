@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Button, CaptionButton } from '../../basic';
 import { createVariable } from './helpers';
-import styles from '../../../config/common.module.css';
+//import styles from '../../../config/common.module.css';
 
 interface Props {
   robotData: any;
@@ -16,7 +16,7 @@ const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
   };
 
   return (
-    <div className={styles.toolbar}>
+    <div className='toolbar'>
       {isUserSignals ? (
         <CaptionButton
           title='Edit'

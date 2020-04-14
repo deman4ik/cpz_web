@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { PageHead } from '../../layout/PageHead';
 
 import styles from './index.module.css';
-import common_styles from '../../../config/common.module.css';
 import { Caption } from './Caption';
 import { Description } from './Description';
 import { SignalsList } from './SignalsList';
@@ -33,7 +32,7 @@ const _LandingPage = () => {
         <Caption handleOnClick={handleOnClick} />
         <div className={styles.bodyLanding}>
           <div className={styles.starsBackground} />
-          <div className={common_styles.container}>
+          <div className={styles.container}>
             <Description />
             <div className={styles.topRobotsTitle}>
               Top Performance Robots

@@ -5,7 +5,7 @@ import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
 import { formatRobotsData } from './helpers';
 import { Modals } from './Modals';
-import styles from '../../../config/common.module.css';
+//import styles from '../../../config/common.module.css';
 
 interface Props {
   searchText?: string;
@@ -19,7 +19,7 @@ export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width
 
   return (
     <>
-      { loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
+      { loading ? <div className='loading'><LoadingIndicator /></div> : (
         <RobotsList
           data={robotsData}
           isLoadingMore={isLoadingMore}
