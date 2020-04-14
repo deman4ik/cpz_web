@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import { CaptionButton } from '../../basic';
-import styles from '../../../config/common.module.css';
+//import styles from '../../../config/common.module.css';
 
 interface Props {
   setVisibleToolbarFilters: () => void;
@@ -13,7 +13,7 @@ const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) 
   };
 
   return (
-    <div className={styles.toolbar}>
+    <div className='toolbar'>
       <CaptionButton
         title='filter'
         icon='filtervariant'
