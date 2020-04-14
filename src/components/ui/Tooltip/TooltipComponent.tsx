@@ -4,9 +4,10 @@ interface Props {
   show: boolean;
   message: string;
   direction: string;
+  location: string;
 }
 
-export const TooltipComponent: React.FC<Props> = ({ show, message, direction }) => (
+export const TooltipComponent: React.FC<Props> = ({ show, message, direction, location }) => (
   <div className='tooltip' style={{ visibility: show ? 'visible' : 'hidden' }}>
     <div className='text'>{message}</div>
     <style jsx>{`
@@ -32,13 +33,14 @@ export const TooltipComponent: React.FC<Props> = ({ show, message, direction }) 
       }
       @media (max-width: 768px) {
         .tooltip {
-          right: -70px;
+          right: ${direction === 'down' ? -70 : -55}px;
+          ${direction === 'up' && location === 'left' ? 'left: -140px;' : ''}
         }
       }
       @media (max-width: 480px) {
         .tooltip {
           width: 300px;
-          right: -20px;
+          ${direction === 'up' ? 'left: -193px;' : 'right: -20px;'}
         }
       }
     `}

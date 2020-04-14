@@ -30,7 +30,7 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
               {item.title}
             </div>
             <div className={styles.toolTip}>
-              <Tooltip message={item.message} />
+              <Tooltip message={item.message} location={isLast ? 'right' : 'left'} direction='up' />
             </div>
           </div>
           <div className={styles.checkboxGroup}>
