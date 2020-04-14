@@ -1,5 +1,6 @@
 import { MainMenuItemProps } from './types';
 import { PageType } from '../../config/types';
+import { DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../config/constants';
 
 export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
@@ -14,12 +15,12 @@ export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
   {
     label: PageType.support,
     icon: 'help',
-    href: 'https://support.cryptuoso.com'
+    href: DOCS_URL
   },
   {
     label: PageType.community,
     icon: 'telegram',
-    href: 'https://t.me/joinchat/ACVS-0zaWVBgAYm8gOKYHA'
+    href: TELEGRAM_COMMUNITY_URL
   }
 ];
 

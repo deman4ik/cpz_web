@@ -1,6 +1,6 @@
 import * as Sets from './NotificationsSets';
 import * as SetsCard from './NotificationsSetsCard';
-import { color } from '../../../config/constants';
+import { color, DOCS_URL, SUPPORT_URL } from '../../../config/constants';
 
 const actionTypes = [ 'long', 'closeShort' ];
 const actionSignals = [ 'long', 'short' ];
@@ -66,10 +66,10 @@ export const showMessage = (item, card = false) => {
 
 export const getRedirectionLink = (item) => {
   const links = {
-    failed: () => ({ link: process.env.SUPPORT_URL, redirect: true }),
-    message: () => ({ link: process.env.SUPPORT_URL, redirect: true }),
+    failed: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
+    message: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
     robotTrade: () => ({ link: `/robots/robot/${item.robot.code}`, redirect: false }),
-    error: () => ({ link: process.env.SUPPORT_URL, redirect: true }),
+    error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
     signalAlert: () => ({ link: `/signals/robot/${item.robot.code}`, redirect: false }),
     robot: () => ({ link: `/robots/robot/${item.robot.code}`, redirect: false }),
     signalTrade: () => ({ link: `/signals/robot/${item.robot.code}`, redirect: false }),

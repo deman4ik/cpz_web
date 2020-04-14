@@ -21,7 +21,7 @@ interface Definintion {
 }
 const ssrMode = !process.browser;
 const httpLink = createHttpLink({
-  uri: process.env.API_URL,
+  uri: `https://${process.env.HASURA_URL}`,
 });
 
 const connectionParams = async (ctx) => {
@@ -40,7 +40,7 @@ export default withApollo(
     let link = contextLink;
     if (!ssrMode) {
       const wsLink = new WebSocketLink({
-        uri: process.env.WS_URL,
+        uri: `wss://${process.env.HASURA_URL}`,
         options: {
           reconnect: true,
           timeout: 30000,

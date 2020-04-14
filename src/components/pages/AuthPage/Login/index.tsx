@@ -30,16 +30,11 @@ export const Login: React.FC = () => {
     setValid
   } = useFormValidation(INITIAL_STATE, validateAuth);
   const [ password, setPassword ] = useState('');
-  //const [ keepSignedIn, setKeepSignedIn ] = useState(true);
   const [ isFetching, setIsFetching ] = useState(false);
 
   const onChangePassword = (value: string) => {
     setPassword(value);
   };
-
-  // const toggleCheckBox = () => {
-  //   setKeepSignedIn(!keepSignedIn);
-  // };
 
   const handleLogin = () => {
     handleSubmit();
@@ -84,7 +79,7 @@ export const Login: React.FC = () => {
       <div className={[ styles.plate, styles.plateLogin ].join(' ')}>
         <div className={styles.cardWrapper}>
           <div className={styles.content}>
-            <div className={styles.card}>
+            <div className={styles.card} style={{ justifyContent: 'center' }}>
               <div className={styles.title}>Login</div>
               <Input
                 error={!!errors.email}
