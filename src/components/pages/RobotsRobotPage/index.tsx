@@ -15,7 +15,7 @@ import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
-import styles from './index.module.css';
+import styles from '../../../config/common.module.css';
 
 export const RobotsRobotPage: React.FC = () => {
   const { width } = useWindowDimensions();

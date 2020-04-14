@@ -5,6 +5,7 @@ import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
 import { Modals } from './Modals';
 import { formatRobotsData } from './helpers';
+import styles from '../../../config/common.module.css';
 
 interface Props {
   searchText?: string;
@@ -13,12 +14,12 @@ interface Props {
 }
 
 export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText = '', width }) => {
-  const { robotsData, counts, loading, loading_aggregate, isLoadingMore, onFetchMore } =
+  const { robotsData, counts, loading, isLoadingMore, onFetchMore } =
     useFetchRobots(displayType, searchText, formatRobotsData);
 
   return (
     <>
-      { loading || loading_aggregate ? <LoadingIndicator /> : (
+      { loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
         <RobotsList
           data={robotsData}
           isLoadingMore={isLoadingMore}
