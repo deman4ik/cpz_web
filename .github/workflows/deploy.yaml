@@ -16,7 +16,7 @@ jobs:
         run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/src/_meta
 
       - name: Build container image dev
-        if: contains(github.ref, 'k8s')
+        if: contains(github.ref, 'dev')
         run: docker build --build-arg HASURA_URL=${{ secrets.HASURA_URL_DEV }} --build-arg AUTH_API_URL=${{ secrets.AUTH_API_URL_DEV }} --build-arg TELEGRAM_BOT_NAME=${{ secrets.TELEGRAM_BOT_NAME_DEV }} -t registry.digitalocean.com/cpz/cpz-web:$(echo $GITHUB_SHA | head -c7) .
 
       - name: Build container image prod
@@ -38,7 +38,7 @@ jobs:
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/cpz/cpz-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Update deployment file APP dev
-        if: contains(github.ref, 'k8s')
+        if: contains(github.ref, 'dev')
         run: sed -i 's|<APP>|cpz-web-dev|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Update deployment file APP prod
@@ -46,7 +46,7 @@ jobs:
         run: sed -i 's|<APP>|cpz-web|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Update deployment file ENV dev
-        if: contains(github.ref, 'k8s')
+        if: contains(github.ref, 'dev')
         run: sed -i 's|<ENV>|dev|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Update deployment file ENV prod
@@ -60,7 +60,7 @@ jobs:
         run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Verify deployment dev
-        if: contains(github.ref, 'k8s')
+        if: contains(github.ref, 'dev')
         run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/cpz-web-dev
 
       - name: Verify deployment prod
