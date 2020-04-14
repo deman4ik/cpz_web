@@ -65,7 +65,7 @@ export const ForgotPassword: React.FC = () => {
             </div>
             <Input
               value={values.email}
-              error={!!errors.email}
+              error={errors.email}
               maxLength={255}
               width={260}
               placeholder='Email'

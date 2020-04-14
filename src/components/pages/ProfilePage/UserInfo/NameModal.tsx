@@ -50,7 +50,7 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
           <div className={styles.oneInputAlign}>
             <Input
               value={`${inputValue}`}
-              error={!!formError}
+              error={formError}
               width={250}
               responsive
               onChangeText={value => setInputValue(value)}
