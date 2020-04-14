@@ -14,6 +14,8 @@ const config = {
   }
 };
 
+const errorMessage = 'can\'t fulfill the request';
+
 function timeout(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -55,7 +57,7 @@ export const loginTelegram = async data => {
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -83,7 +85,7 @@ export const login = async (data: { email: string; password: string }) => {
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -103,7 +105,7 @@ export const logout = async () => {
       console.error(json.error);
     }
   } catch (err) {
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -133,7 +135,7 @@ export const register = async (data: { email: string; password: string }, client
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -161,7 +163,7 @@ export const confirm = async (data: { userId: string; secretCode: string }) => {
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -175,7 +177,7 @@ export const activate = async (encode: string) => {
       result = (await confirm(data)).success;
     }
   } catch (err) {
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -205,7 +207,7 @@ export const reset = async (email: string, client: any) => {
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -233,7 +235,7 @@ export const recover = async (data: { userId: string; secretCode: string; passwo
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -251,7 +253,7 @@ export const recoverEncoded = async (encode: string, password: string) => {
     }
   } catch (err) {
     result.error = 'system error';
-    console.error(err);
+    console.error(errorMessage);
   }
   return result;
 };
@@ -281,7 +283,7 @@ export const fetchAccessToken = async (refresh_token?: string, isLocalhost = fal
       accessToken = json.accessToken;
     }
   } catch (err) {
-    console.error(err);
+    console.error(errorMessage);
   }
   return accessToken;
 };
