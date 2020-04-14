@@ -1,0 +1,68 @@
+name: CD
+
+on:
+  push:
+    branches: [dev, master]
+
+jobs:
+  build:
+    name: Build, push, and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Update SHA
+        run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/src/_meta
+
+      - name: Build container image dev
+        if: contains(github.ref, 'k8s')
+        run: docker build --build-arg HASURA_URL=${{ secrets.HASURA_URL_DEV }} --build-arg AUTH_API_URL=${{ secrets.AUTH_API_URL_DEV }} --build-arg TELEGRAM_BOT_NAME=${{ secrets.TELEGRAM_BOT_NAME_DEV }} -t registry.digitalocean.com/cpz/cpz-web:$(echo $GITHUB_SHA | head -c7) .
+
+      - name: Build container image prod
+        if: contains(github.ref, 'master')
+        run: docker build --build-arg HASURA_URL=${{ secrets.HASURA_URL }} --build-arg AUTH_API_URL=${{ secrets.AUTH_API_URL }} --build-arg TELEGRAM_BOT_NAME=${{ secrets.TELEGRAM_BOT_NAME }}  -t registry.digitalocean.com/cpz/cpz-web:$(echo $GITHUB_SHA | head -c7) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2-experiment
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Login to Docker
+        run: doctl registry login
+
+      - name: Push image to Docker Hub
+        run: docker push registry.digitalocean.com/cpz/cpz-web
+
+      - name: Update deployment file TAG
+        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/cpz/cpz-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Update deployment file APP dev
+        if: contains(github.ref, 'k8s')
+        run: sed -i 's|<APP>|cpz-web-dev|' $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Update deployment file APP prod
+        if: contains(github.ref, 'master')
+        run: sed -i 's|<APP>|cpz-web|' $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Update deployment file ENV dev
+        if: contains(github.ref, 'k8s')
+        run: sed -i 's|<ENV>|dev|' $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Update deployment file ENV prod
+        if: contains(github.ref, 'master')
+        run: sed -i 's|<APP>|prod|' $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig show cpz > $GITHUB_WORKSPACE/.kubeconfig
+
+      - name: Deploy to DigitalOcean Kubernetes
+        run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
+
+      - name: Verify deployment dev
+        if: contains(github.ref, 'k8s')
+        run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/cpz-web-dev
+
+      - name: Verify deployment prod
+        if: contains(github.ref, 'master')
+        run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/cpz-web
