@@ -55,4 +55,4 @@ export const getRobotStatistic = (robotStatistic) => (
 export const tabName = {
   myStatistic: 'My Statistic',
   publicStatistic: 'Public Statistic'
-}
+};

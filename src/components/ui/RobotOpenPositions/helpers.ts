@@ -93,4 +93,4 @@ export const getFormatDataRobots = (positions: any) => positions.reduce((acc, po
 export const title = {
   signals: 'My Signals Open Positions',
   robots: 'My Robots Open Positions'
-}
+};
