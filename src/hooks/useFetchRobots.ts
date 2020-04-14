@@ -76,5 +76,5 @@ export const useFetchRobots = (
     });
   };
 
-  return { robotsData, error, counts, loading, loading_aggregate, isLoadingMore, onFetchMore };
+  return { robotsData, error, counts, loading: loading || loading_aggregate, isLoadingMore, onFetchMore };
 };

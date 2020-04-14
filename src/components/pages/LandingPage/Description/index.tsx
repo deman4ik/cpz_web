@@ -2,10 +2,9 @@ import React, { memo } from 'react';
 
 import { DescriptionView } from './DescriptionView';
 import styles from './index.module.css';
-import common_styles from '../../../../config/common.module.css';
 
 const _Description: React.FC = () => (
-  <div className={common_styles.container}>
+  <div className={styles.container}>
     <div className={styles.title}>
       Still trading manually and constantly watching news
       trying to catch the trend? Follow the courses

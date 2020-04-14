@@ -15,7 +15,7 @@ import { TabsPagesRobotPage } from './TabsPagesRobotPage';
 import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
-import styles from './index.module.css';
+//import styles from '../../../config/common.module.css';
 
 export const RobotsRobotPage: React.FC = () => {
   const { width } = useWindowDimensions();
@@ -55,7 +55,7 @@ export const RobotsRobotPage: React.FC = () => {
           robotData={robotData} />
       ) : null}
       handlePressBack={handlePressBack}>
-      {loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
+      {loading ? <div className='loading'><LoadingIndicator /></div> : (
         (!robotData) ? <NoRecentData message='No recent data available' /> : (
           <>
             <HeaderRobotsRobotPage

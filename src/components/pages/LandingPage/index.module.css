@@ -1,3 +1,14 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1448px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+}
+
 .landing {
   background-color: rgba(9,25,67,1.00);
   font-size: var(--normal1);
