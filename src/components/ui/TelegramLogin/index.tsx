@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import Router from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ADD_TELEGRAM_ACCOUNT, UPDATE_USER } from '../../../graphql/user/mutations';
+import { ADD_TELEGRAM_ACCOUNT } from '../../../graphql/user/mutations';
 import { GET_USER_INFO } from '../../../graphql/user/queries';
 import { loginTelegram } from '../../../libs/auth';
 import { Modal } from '../../basic';
@@ -13,13 +13,13 @@ import styles from './index.module.css';
 interface Props {
   userId?: number;
   message?: string;
+  buttonSize?: string;
 }
 
-const buttonSize = 'medium';
 const borderRadius = 2;
 const requestAccess = 'write';
 const userPic = true;
-const _TelegramLogin: React.FC<Props> = ({ userId, message }) => {
+const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = 'medium' }) => {
   let instance;
 
   const [ error, setError ] = useState('');
@@ -40,24 +40,6 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message }) => {
       setError(result.error);
     }
   };
-
-  // For test only
-  const [ logoutTelegram, { loading: logoutLoading } ] = useMutation(
-    UPDATE_USER,
-    {
-      variables: {
-        _set: {
-          telegram_id: null,
-          telegram_username: null
-        },
-        where: {
-          id: { _eq: userId }
-        }
-      },
-      refetchQueries: [ { query: GET_USER_INFO } ]
-    }
-  );
-
 
   useEffect(() => {
     (window as any).TelegramLoginWidget = userId
@@ -90,8 +72,7 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message }) => {
   return (
     <>
       <div className={styles.container}>
-        {/*<Button icon='close' onPress={logoutTelegram} />*/}
-        {(loginLoading || addLoading || logoutLoading) && (
+        {(loginLoading || addLoading) && (
           <LoadingIndicator />
         )}
         <div className={styles.widget} ref={ref => (instance = ref)} />

@@ -66,7 +66,7 @@ export const Verification: React.FC = () => {
             <div className={styles.titleDescription}>Enter the verification code you recieved via Email below.</div>
             <Input
               value={values.verificationCode}
-              error={!!errors.verificationCode}
+              error={errors.verificationCode}
               placeholder='Verification code'
               maxLength={6}
               width={260}

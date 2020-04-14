@@ -38,7 +38,7 @@
 .outline-warn {
   color: var(--warn);
   background-color: transparent;
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--warn);
 }
 
 .normalBtn {

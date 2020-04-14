@@ -64,7 +64,7 @@ export const RecoverPassword: React.FC = () => {
             <div className={styles.title}>Reset password</div>
             <Input
               value={values.verificationCode}
-              error={!!errors.verificationCode}
+              error={errors.verificationCode}
               placeholder='Verification code'
               maxLength={6}
               width={260}
@@ -73,7 +73,7 @@ export const RecoverPassword: React.FC = () => {
               value={values.password}
               style={{ marginTop: 8 }}
               maxLength={100}
-              error={!!errors.password}
+              error={errors.password}
               placeholder='Password'
               width={260}
               type='password'
@@ -83,7 +83,7 @@ export const RecoverPassword: React.FC = () => {
               style={{ marginTop: 8 }}
               maxLength={100}
               width={260}
-              error={!!errors.passwordRepeat}
+              error={errors.passwordRepeat}
               placeholder='Repeat password'
               type='password'
               onChangeText={(text: string) => handleChange('passwordRepeat', text)} />

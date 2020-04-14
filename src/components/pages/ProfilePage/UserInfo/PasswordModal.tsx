@@ -91,7 +91,7 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
             <div className={styles_main.inputContainer}>
               <Input
                 value={values.password}
-                error={!!errors.password}
+                error={errors.password}
                 width={210}
                 type='password'
                 onChangeText={(text: string) => handleChange('password', text)}
@@ -106,7 +106,7 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
             <div className={styles_main.inputContainer}>
               <Input
                 value={values.passwordRepeat}
-                error={!!errors.passwordRepeat}
+                error={errors.passwordRepeat}
                 width={210}
                 type='password'
                 onChangeText={(text: string) => handleChange('passwordRepeat', text)}

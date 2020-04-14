@@ -81,7 +81,7 @@ export const Login: React.FC = () => {
             <div className={styles.card} style={{ justifyContent: 'center' }}>
               <div className={styles.title}>Login</div>
               <Input
-                error={!!errors.email}
+                error={errors.email}
                 value={values.email}
                 maxLength={255}
                 width={260}
@@ -92,7 +92,7 @@ export const Login: React.FC = () => {
                 value={password}
                 maxLength={100}
                 width={260}
-                error={!!errors.password}
+                error={errors.password}
                 placeholder='Password'
                 onChangeText={text => onChangePassword(text)}
                 type='password' />
@@ -122,7 +122,7 @@ export const Login: React.FC = () => {
                 <div className={styles.telegramDesription}>
                   OR SIGN UP USING TELEGRAM
                 </div>
-                <TelegramLoginWithNoSSR message={message} />
+                <TelegramLoginWithNoSSR message={message} buttonSize='large' />
               </div>
             </div>
           </div>
