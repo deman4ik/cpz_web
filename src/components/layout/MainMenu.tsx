@@ -19,7 +19,7 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
     if (external) {
       window.location.assign(path);
     } else {
-      router.push(`/${path}`);
+      router.push(`/${path}`).then(() => window.scrollTo(0, 0));
     }
   };
 
