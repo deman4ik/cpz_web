@@ -168,8 +168,8 @@ export const signalAlertSet = (item) => {
 export const robotSet = (item) => (
   <div className={styles.rowCard} style={{ flex: 1 }}>
     <div className={styles.row} style={{ flexWrap: 'wrap' }}>
-      <div className={styles.textMessageCard}>Robot </div>
-      <div className={styles.textAccentCard}>{item.robot.name}</div>
+      <div className={styles.textMessageCard}>Robot&nbsp;</div>
+      <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
       <div className={styles.textMessageCard}>{`is ${item.type.split('.')[1]}`}</div>
     </div>
     {item.data.message ? (

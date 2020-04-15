@@ -30,11 +30,11 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .regionTitle {
     font-size: var(--normal1);
   }
-}
+} */
 
 @media (max-width: 480px) {
   .surface {

@@ -85,10 +85,10 @@ a {
 ::-webkit-resizer {
   background-repeat: no-repeat;
   width: 4px;
-  height: 0;
+  height: 6px;
 }
 
 ::-webkit-scrollbar {
   width: 4px;
-  height: 4px;
+  height: 6px;
 }

@@ -43,12 +43,12 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
                 title='TRY IT FREE'
                 type='secondary'
                 onClick={() => handleOnClick('/auth/login', false)}
-                style={styles.headerBtn} />
+                className={styles.headerBtn} />
               <PrimaryButton
                 title='DOCUMENTATION'
                 type='primary'
                 onClick={() => handleOnClick(DOCS_URL, true)}
-                style={styles.headerBtn} />
+                className={styles.headerBtn} />
             </div>
           </div>
           <div className={styles.logoWrapper}>

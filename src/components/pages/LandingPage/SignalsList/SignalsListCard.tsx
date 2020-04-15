@@ -27,7 +27,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
         <div className={styles.row}>
           <div className={styles.nameCol}>
             <div className={styles.primaryText}>{robot.name}</div>
-            {money}
+            <span className={styles.wide}>{money}</span>
           </div>
           <div className={`${styles.numberCol} ${styles.profitCol}`}>
             <div className={styles.secondaryText}>
@@ -35,6 +35,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
                 {robot.settings.volume} {robot.asset}
               </div>
             </div>
+            <span className={styles.mobile}>{money}</span>
             <div className={`${styles.lastProfit} ${robot.equity.lastProfit < 0 ? styles.negative : styles.positive}`}>
               {valueWithSign(moneyFormat(robot.equity.lastProfit))} $
             </div>
@@ -83,16 +84,15 @@ const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
             type='primary'
             title='Subscribe to Signals'
             onClick={() => handleOnClick(`/signals/robot/${robot.code}`, false)}
-            mini
-          />
+            mini />
         )}
         {robot.trading && (
           <PrimaryButton
             type='secondary'
             title='Start Trading'
+            className={styles.btn}
             onClick={() => handleOnClick(`/robots/robot/${robot.code}`, false)}
-            mini
-          />
+            mini />
         )}
       </div>
     </div>

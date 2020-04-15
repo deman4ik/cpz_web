@@ -4,7 +4,7 @@ import { DeviceContext } from '../libs/deviceContext';
 
 function getWindowDimensions(isMobile: boolean) {
   if (process.browser) {
-    const { innerWidth: width, innerWidth: height } = window;
+    const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
       height
