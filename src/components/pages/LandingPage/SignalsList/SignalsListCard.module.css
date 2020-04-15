@@ -152,6 +152,10 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .btns {
     flex-direction: column;
   }
@@ -166,5 +170,11 @@
   }
   .mobile {
     display: inline;
+  }
+  .primaryText {
+    text-align: left;
+  }
+  .label {
+    font-size: var(--small2);
   }
 }
