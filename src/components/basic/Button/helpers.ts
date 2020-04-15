@@ -17,8 +17,8 @@ export const components = {
   account: AccountIcon
 };
 
-export const height = {
-  small: 26,
-  normal: 34,
-  big: 50
+export const props = {
+  small: { height: 26, indicator: 10 },
+  normal: { height: 34, indicator: 12 },
+  big: { height: 50, indicator: 14 }
 };

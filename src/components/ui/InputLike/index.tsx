@@ -9,33 +9,37 @@ interface Props {
   width?: number;
 }
 
-export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width = 350, buttonTitle }) => (
-  <div className='wrapper' onClick={onClickButton}>
-    <div className='container'>
-      <div className='icon'>
-        <Button
-          title={buttonTitle || 'Change'}
-          type='dimmed'
-          size='small'
-          responsive
-          icon={icon} />
+export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width = 350, buttonTitle }) => {
+  const handleOnClick = (e) => {
+    e.stopPropagation();
+    onClickButton();
+  };
+
+  return (
+    <div className='wrapper' onClick={handleOnClick}>
+      <div className='container'>
+        <div className='icon'>
+          <Button
+            title={buttonTitle || 'Change'}
+            type='dimmed'
+            size='small'
+            responsive
+            icon={icon} />
+        </div>
+        <div className='input'>{value}</div>
       </div>
-      <div className='input'>{value}</div>
-    </div>
-    <style jsx>{`
+      <style jsx>{`
         .wrapper {
           width: ${width}px;
           cursor: pointer;
           opacity: 1;
         }
-        
         .container {
           display: flex;
           flex-direction: column;
           position: relative;
           flex: 1; 
         }
-        
         .input {
           background-color: var(--darkBg);
           color: var(--accent);
@@ -44,17 +48,14 @@ export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width =
           padding-right: ${icon ? '35px' : '11px'};
           height: 38px;
         }
-        
         .searchInput.error {
           box-shadow: 0px 0px 0px 2px var(--negative);
         }
-
         .icon {
           position: absolute;
           right: 5px;
           top: 6px;
         }
-        
         .wrapper:active {
           opacity: 0.2;
         }
@@ -65,6 +66,7 @@ export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width =
           }
         }
       `}
-    </style>
-  </div>
-);
+      </style>
+    </div>
+  );
+};

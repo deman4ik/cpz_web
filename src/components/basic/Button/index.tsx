@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { ButtonProps } from './types';
-import { components, height } from './helpers';
+import { components, props } from './helpers';
 import { LoadingIndicator } from '../../common';
 
 export const Button: React.FC<ButtonProps> =
@@ -51,7 +51,7 @@ export const Button: React.FC<ButtonProps> =
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleOnClick}>
-      {isLoading ? <LoadingIndicator height={26} size={10} /> : (
+      {isLoading ? <LoadingIndicator color='white' size={props[size].indicator} /> : (
         <>
           <div className='btn-text'>
             {base.title}
@@ -91,7 +91,7 @@ export const Button: React.FC<ButtonProps> =
           display: flex;
           cursor: ${disabled ? 'auto' : 'pointer'};
           width: ${width ? `${width}px` : 'min-content'};
-          height: ${height[size]}px;
+          height: ${props[size].height}px;
           padding-left: 10px;
           padding-right: 10px;
           user-select: none;
