@@ -40,7 +40,7 @@ export const RobotsList: React.FC<Props> = props => {
   };
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <div className={styles.container}>
         {isDesktopView ? (
           <div className={styles.box}>
@@ -73,6 +73,6 @@ export const RobotsList: React.FC<Props> = props => {
         renderLoadMoreButton={renderLoadMoreButton}
         isLoadingMore={props.isLoadingMore}
         onFetchMore={props.onFetchMore} />
-    </>
+    </div>
   );
 };
