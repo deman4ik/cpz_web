@@ -62,7 +62,7 @@ export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width =
 
         @media (max-width: 480px) {
           .wrapper {
-            width: ${width - (width / 100) * 14}px;
+            width: ${width - (width / 100) * 25}px;
           }
         }
       `}

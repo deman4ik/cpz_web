@@ -35,7 +35,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           {title}
         </div>
         <div className='icon'>
-          <SpecificIcon size={15} />
+          <SpecificIcon size={20} />
         </div>
       </div>
       <div className='aligner' />
@@ -52,11 +52,11 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           user-select: none;
         }
         .icon {
-          padding-right: 8px;
+          padding-right: 0px;
           padding-left: 8px;
           padding-top: 3px;
           position: absolute;
-          top: -3px;
+          top: -6px;
           right: -18px;
         }
         .aligner {
@@ -91,7 +91,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
             display: ${responsive ? 'none' : 'block'};
           }
           .icon {
-            top: ${responsive ? -10 : -3}px;
+            top: ${responsive ? -10 : -6}px;
           }
         }`}
       </style>

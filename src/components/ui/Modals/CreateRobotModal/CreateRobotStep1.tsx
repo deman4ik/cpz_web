@@ -61,12 +61,14 @@ const _CreateRobotStep1: React.FC<Props> = ({
       <div className={styles.container}>
         {dataPicker.length ? (
           <div className={styles.selectGroup}>
-            <Select
-              data={dataPicker}
-              value={selectedKey}
-              enabled={!isAddKeyVisible}
-              onValueChange={value => handleOnChangeExchange(value)}
-            />
+            <div>
+              <Select
+                data={dataPicker}
+                value={selectedKey}
+                enabled={!isAddKeyVisible}
+                onValueChange={value => handleOnChangeExchange(value)}
+              />
+            </div>
             <Button
               className={styles.btnSelectGroup}
               title='Add New API Key'

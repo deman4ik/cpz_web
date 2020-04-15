@@ -6,14 +6,13 @@
   font-size: var(--normal1);
   -moz-appearance: none;
 	-webkit-appearance: none;
-  appearance: none;
   width: 200px;
   cursor: pointer;
 }
 
-.container {position:relative; display: inline;}
-.container:after {content:""; width:0; height:0; position:absolute; pointer-events: none;}
-.container:after {
+.select_container {position:relative; display: inline;}
+.select_container:after {content:""; width:0; height:0; position:absolute; pointer-events: none;}
+.select_container:after {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     top: .4em;

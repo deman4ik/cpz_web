@@ -31,6 +31,7 @@
   height: 718px;
   width: 730px;
   position: absolute;
+  max-width: 100%;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -87,6 +88,9 @@
 }
 
 @media (max-width: 1200px) {
+  .container {
+    max-width: none;
+  }
   .robotsCols {
     max-width: 450px
   }

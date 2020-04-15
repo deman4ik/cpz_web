@@ -14,7 +14,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, enabled = 
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.select_container}>
       <select value={value} onChange={onChange} className={styles.select} disabled={!enabled}>
         { data.map(item => (
           <option key={item.value} value={item.value}>{item.label}</option>
