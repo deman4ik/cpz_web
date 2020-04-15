@@ -143,8 +143,8 @@ export const robotSet = (item) => (
   <div>
     <div className={styles.row}>
       <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
-      <div className={styles.textAccent}>{item.robot.name}</div>
-      <div className={styles.textMessageDesktop}>{` is ${item.type.split('.')[1]}`}</div>
+      <div className={styles.textAccent}>{item.robot.name}&nbsp;</div>
+      <div className={styles.textMessageDesktop}>{`is ${item.type.split('.')[1]}`}</div>
     </div>
     {item.data.message ? (
       <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')} style={{ marginTop: 3 }}>

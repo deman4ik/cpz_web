@@ -121,6 +121,14 @@
   color: var(--secondary);
 }
 
+.wide {
+  display: inline;
+}
+
+.mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .primaryText {
     text-align: right;
@@ -140,5 +148,23 @@
   }
   .statRow {
     align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .btns {
+    flex-direction: column;
+  }
+  .btn {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .wide {
+    display: none;
+  }
+  .mobile {
+    display: inline;
   }
 }

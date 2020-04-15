@@ -7,6 +7,7 @@
   font-size: var(--big3);
   line-height: 40px;
   color: var(--whiteFaded);
+  text-align: center;
 }
 
 .text {

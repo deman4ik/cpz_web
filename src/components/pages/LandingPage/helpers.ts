@@ -1,11 +1,11 @@
 import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from './types';
-import { DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../../config/constants';
+import { DOCS_URL, TELEGRAM_COMMUNITY_URL, color } from '../../../config/constants';
 
 export const supportContent = () => (
   [
     {
       icon: 'help',
-      iconColor: '#5BECAE', //secondary
+      iconColor: color.secondary, //secondary
       title: 'Documentation',
       text: 'Learn all about Cryptuoso Platform.\n How to use and configure signals, robots and exchange accounts.',
       button: 'DOCUMENTATION',
@@ -14,7 +14,7 @@ export const supportContent = () => (
     },
     {
       icon: 'telegram',
-      iconColor: '#0B98C5', //primary
+      iconColor: color.primary, //primary
       title: 'Telegram \n Community',
       text: 'Having common questions with signals or robots? \n Ask your question in our Community Group and we will help you.',
       button: 'Telegram Community',
@@ -23,7 +23,7 @@ export const supportContent = () => (
     },
     {
       icon: 'robot',
-      iconColor: '#FFF2BC', //warn
+      iconColor: color.warn, //warn
       title: 'Telegram Bot',
       text: 'Have a personal problem regarding connecting an exchange or billing? \n Use support section in our Telegram Bot.',
       button: 'TELEGRAM BOT',

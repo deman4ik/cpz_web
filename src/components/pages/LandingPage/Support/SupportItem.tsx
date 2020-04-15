@@ -34,7 +34,7 @@ export const SupportItem: React.FC<Props> = ({ item, handleOnClick }) => {
         </div>
         <div className={styles.colFooter}>
           <PrimaryButton
-            style={styles.headerBtn}
+            className={styles.headerBtn}
             title={item.button}
             type={item.buttonType}
             onClick={() => handleOnClick(item.href, true)} />
