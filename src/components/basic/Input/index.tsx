@@ -81,7 +81,7 @@ export const Input: React.FC<Props> =
           onChange={handleOnInput}
           onKeyDown={formatInput}
           value={inputValue} />
-        {error && (typeof error === 'string') && <div className='error'>{error}</div>}
+        {error && (typeof error === 'string') && <div className='error-line'>{error}</div>}
       </div>
       <style jsx>{`
         .wrapper {
@@ -93,7 +93,7 @@ export const Input: React.FC<Props> =
           position: relative;
           flex: 1; 
         }
-        .error {
+        .error-line {
           color: white;
           background-color: var(--negative);
           padding: 3px 10px 3px;
