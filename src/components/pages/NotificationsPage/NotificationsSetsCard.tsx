@@ -115,13 +115,13 @@ export const errorSet = (item) => (
   <div className={styles.rowCard} style={{ flex: 1 }}>
     <div className={styles.row}>
       <div className={styles.textMessageCard}>Robot&nbsp;</div>
-      <div className={styles.textAccentCard}>{item.robot.name}</div>
+      <div className={styles.textAccentCard}>{item.robot.name}&nbsp;</div>
     </div>
-    <div className={styles.textAccentCard}>{item.data.userRobotId}</div>
+    <div className={styles.textAccentCard}>{item.data.userRobotId}&nbsp;</div>
     <div className={styles.textMessageCard}>Error occurred while processing order</div>
     <div className={styles.row}>
-      <div className={styles.textAccentCard}>{item.data.exId}</div>
-      <div className={styles.textMessageCard}>{` ${item.data.error}.`}</div>
+      <div className={styles.textAccentCard}>{item.data.exId}&nbsp;</div>
+      <div className={styles.textMessageCard}>{item.data.error}.&nbsp;</div>
     </div>
     <div className={styles.textMessageCard}>Please check your API Keys and Robot settings or contact support.</div>
   </div>

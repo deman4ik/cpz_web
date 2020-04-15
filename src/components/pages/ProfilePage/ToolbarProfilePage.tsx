@@ -12,6 +12,7 @@ const _ToolbarProfilePage: React.FC = () => {
       <CaptionButton
         title='Log out'
         icon='logout'
+        responsive={false}
         onClick={logoutProcess} />
     </div>
   );

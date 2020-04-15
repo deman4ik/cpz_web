@@ -1,7 +1,7 @@
 .container {
   margin-top: 10px;
   margin-bottom: 0;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+  box-shadow: var(--shadow);
 }
 
 .title {
@@ -39,6 +39,6 @@
     box-shadow: none;
   }
   .title {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+    box-shadow: var(--shadow);
   }
 }

@@ -15,8 +15,8 @@
   color: var(--accent);
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .regionTitle {
     font-size: var(--normal1);
   }
-}
+} */

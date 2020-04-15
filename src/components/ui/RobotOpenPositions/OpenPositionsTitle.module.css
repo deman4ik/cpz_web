@@ -23,3 +23,9 @@
   color: white;
   padding-left: 12px;
 }
+
+@media (max-width: 415px) {
+  .leftText {
+    max-width: 100px;
+  }
+}

@@ -48,9 +48,9 @@
 }
 
 @media (max-width: 768px) {
-  .regionTitle {
+  /* .regionTitle {
     font-size: var(--normal1);
-  }
+  } */
   .surface {
     min-height: auto;
     padding: 20px 25px;
@@ -59,10 +59,11 @@
 }
 
 @media (max-width: 480px) {
-  .regionTitle {
+  /* .regionTitle {
     font-size: vars(--small1);
-  }
+  } */
   .surface {
-    max-width: 371px;
+    max-width: 312px;
+    padding: 20px 15px;
   }
 }
