@@ -6,7 +6,7 @@ import styles from './index.module.css';
 const _Description: React.FC = () => (
   <div className={styles.container}>
     <div className={styles.title}>
-      Still trading manually and constantly watching news
+      Still trading manually and constantly watching news<br />
       trying to catch the trend? Follow the courses
       <span className={styles.textWhite}>&nbsp;day&nbsp;</span>and
       <span className={styles.textAccent}>&nbsp;night</span>?
