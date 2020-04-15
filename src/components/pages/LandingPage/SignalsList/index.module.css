@@ -3,7 +3,6 @@
   justify-content: space-around;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 1448px;
   margin: 0 auto;
 }
 
@@ -21,4 +20,7 @@
 
 .loading {
   width: 100%;
+}
+
+@media (max-width: 480px) {
 }
