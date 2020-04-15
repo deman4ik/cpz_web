@@ -2,8 +2,8 @@ import React from 'react';
 import Particles from 'react-particles-js';
 
 import useWindowDimensions from '../../../../hooks/useWindowDimensions';
-import styles from './index.module.css';
 import { color } from '../../../../config/constants';
+import styles from './index.module.css';
 
 const DinamicImage: React.FC = () => {
   const { width, height } = useWindowDimensions();
