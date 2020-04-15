@@ -15,7 +15,7 @@ interface Props {
   onClickButton?: () => void;
   width?: number;
   responsive?: boolean;
-  error?: boolean;
+  error?: string | boolean;
   selectTextOnFocus?: boolean;
   readonly?: boolean;
   style?: object;
@@ -81,19 +81,26 @@ export const Input: React.FC<Props> =
           onChange={handleOnInput}
           onKeyDown={formatInput}
           value={inputValue} />
+        {error && (typeof error === 'string') && <div className='error_line'>{error}</div>}
       </div>
       <style jsx>{`
         .wrapper {
           width: ${width}px;
         }
-        
         .container {
           display: flex;
           flex-direction: column;
           position: relative;
           flex: 1; 
         }
-        
+        .error_line {
+          color: white;
+          background-color: var(--negative);
+          padding: 3px 10px 3px;
+          text-align: center;
+          font-size: var(--small2);
+          width: 100%; 
+        }
         .input {
           background-color: var(--darkBg);
           color: var(--accent);
@@ -102,22 +109,18 @@ export const Input: React.FC<Props> =
           padding: 11px;
           padding-right: ${icon ? '35px' : '11px'};
         }
-        
         .input.error {
-          box-shadow: 0px 0px 0px 2px var(--negative);
+          border: 2px solid var(--negative);
         }
-
         .icon {
           position: absolute;
           right: 5px;
           top: 6px;
         }
-        
         .input::-webkit-input-placeholder,
         .input::placeholder {
           color: var(--accent);
         }
-        
         .input::-webkit-inner-spin-button {
           display: none;
         }

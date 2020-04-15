@@ -59,6 +59,7 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
           </div>
         </div>
       </div>
+      <div className={styles.gradient} />
     </div>
   </>
 );

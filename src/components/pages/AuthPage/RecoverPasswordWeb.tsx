@@ -62,7 +62,7 @@ export const RecoverPasswordWeb: React.FC = () => {
             <Input
               value={values.password}
               style={{ marginTop: 8 }}
-              error={!!errors.password}
+              error={errors.password}
               maxLength={100}
               placeholder='Password'
               width={260}
@@ -71,7 +71,7 @@ export const RecoverPasswordWeb: React.FC = () => {
             <Input
               value={values.passwordRepeat}
               style={{ marginTop: 8 }}
-              error={!!errors.passwordRepeat}
+              error={errors.passwordRepeat}
               maxLength={100}
               width={260}
               type='password'

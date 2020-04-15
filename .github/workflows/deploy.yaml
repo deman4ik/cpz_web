@@ -34,7 +34,7 @@ jobs:
       - name: Push image to Docker Hub
         run: docker push registry.digitalocean.com/cpz/cpz-web
 
-      - name: Update deployment file TAG
+      - name: Update deployment file IMAGE and TAG
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/cpz/cpz-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Update deployment file APP dev
@@ -51,7 +51,7 @@ jobs:
 
       - name: Update deployment file ENV prod
         if: contains(github.ref, 'master')
-        run: sed -i 's|<APP>|prod|' $GITHUB_WORKSPACE/deployment.yaml
+        run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig show cpz > $GITHUB_WORKSPACE/.kubeconfig

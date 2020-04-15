@@ -27,12 +27,7 @@ export const SignUp: React.FC = () => {
     isValid,
     setValid
   } = useFormValidation(INITIAL_STATE, validateAuth);
-  //const [ keepSignedIn, setKeepSignedIn ] = useState(true);
   const [ isFetching, setIsFetching ] = useState(false);
-
-  // const toggleCheckBox = () => {
-  //   setKeepSignedIn(!keepSignedIn);
-  // };
 
   const handleOnPress = () => {
     handleSubmit();
@@ -69,7 +64,7 @@ export const SignUp: React.FC = () => {
             <div className={styles.title}>Create account</div>
             <Input
               value={values.email}
-              error={!!errors.email}
+              error={errors.email}
               maxLength={255}
               placeholder='Email'
               width={260}
@@ -77,7 +72,7 @@ export const SignUp: React.FC = () => {
             <Input
               value={values.password}
               style={{ marginTop: 8 }}
-              error={!!errors.password}
+              error={errors.password}
               maxLength={100}
               placeholder='Password'
               type='password'
@@ -86,20 +81,12 @@ export const SignUp: React.FC = () => {
             <Input
               value={values.passwordRepeat}
               style={{ marginTop: 8 }}
-              error={!!errors.passwordRepeat}
+              error={errors.passwordRepeat}
               maxLength={100}
               placeholder='Repeat password'
               type='password'
               width={260}
               onChangeText={(text: string) => handleChange('passwordRepeat', text)} />
-            {/* <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 12, marginLeft: -8 }}>
-              <Checkbox
-                label={t('auth.form.keepSignedIn')}
-                labelStyle={styles.checkboxLabel}
-                isActive={keepSignedIn}
-                onPress={toggleCheckBox}
-              />
-            </View> */}
             <Button
               type='success'
               style={{ marginTop: 10 }}
@@ -108,8 +95,7 @@ export const SignUp: React.FC = () => {
               title='Sign Up'
               isUppercase
               isLoading={isFetching}
-              onClick={handleOnPress}
-            />
+              onClick={handleOnPress} />
           </div>
           <CartFooter />
         </div>
