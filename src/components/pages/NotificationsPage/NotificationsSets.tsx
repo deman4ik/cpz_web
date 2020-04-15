@@ -25,7 +25,7 @@ export const messageSet = (item) => (
   <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}>
     {`${item.type === 'message.support-reply'
       ? 'Support Team'
-      : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
+      : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '').replace(/\\n/g, '<br />')}`}
   </div>
 );
 
