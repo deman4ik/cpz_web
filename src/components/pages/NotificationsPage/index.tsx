@@ -19,9 +19,9 @@ export const NotificationsPage: React.FC = () => {
       width={width}
       toolbar={<ToolbarNotificationsPage />}
     >
-      { loading ? <LoadingIndicator style={{ height: 200 }} /> : (
+      { loading ? <div className='loading'><LoadingIndicator /></div> : (
         !formatData.length ? (
-          <NoRecentData message='You have no notifications yet' />
+          <NoRecentData message='You have no notifications yet' style={{ marginTop: 20 }} />
         ) : (
           <NotificationsContainer
             handleLoadMore={handleLoadMore}
