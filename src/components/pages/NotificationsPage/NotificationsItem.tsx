@@ -15,7 +15,7 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
   };
 
   return (
-    <div className={styles.tableRow} onClick={handleOnPressNotification}>
+    <div className={styles.tableRow}>
       <div className={styles.lineGroup}>
         <div className={styles.dateGroup}>
           <div className={styles.dateText}>
@@ -23,7 +23,7 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
           </div>
           { !item.readed ? <div className={styles.mark}>&nbsp;*</div> : null }
         </div>
-        { showMessage(item) }
+        { showMessage(item, handleOnPressNotification) }
       </div>
     </div>
   );
