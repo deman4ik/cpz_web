@@ -52,7 +52,7 @@ export const showMessage = (item, onClick, card = false) => {
   const setFunc = card ? SetsCard : Sets;
   const messages = {
     failed: () => setFunc.failedSet(item, onClick),
-    message: () => setFunc.messageSet(item, onClick),
+    message: () => setFunc.messageSet(item),
     robotTrade: () => setFunc.robotTradeSet(item, onClick),
     error: () => setFunc.errorSet(item, onClick),
     signalAlert: () => setFunc.signalAlertSet(item, onClick),
