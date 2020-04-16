@@ -7,7 +7,7 @@ import { UPDATE_NOTIFICATIONS } from '../../../graphql/user/mutations';
 import { POLL_INTERVAL } from '../../../config/constants';
 import { getFormatData } from './helpers';
 
-const RECORDS_LIMIT = 400;
+const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
   const [ limit, setLimit ] = useState(RECORDS_LIMIT);
@@ -52,7 +52,7 @@ export const useFetchData = () => {
   ), [ data, loading ]);
 
   const recordsCount = useMemo(() => (
-    !loadingCount ? dataCount.notifications_aggregate.aggregate.count : 0
+    (!loadingCount && dataCount) ? dataCount.notifications_aggregate.aggregate.count : 0
   ), [ loadingCount, dataCount ]);
 
   useEffect(() => {
