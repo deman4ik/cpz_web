@@ -5,20 +5,20 @@ interface Props {
   size?: number;
 }
 
-export const AssignmentIcon: React.FC<Props> = ({ color }) => (
-  <svg fill={color} width='24px' height='24px' focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
+export const AssignmentIcon: React.FC<Props> = ({ color, size = 24 }) => (
+  <svg style={{ width: size, height: size }} fill={color} viewBox='0 0 24 24'>
     <path d='M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z' />
   </svg>
 );
 
-export const MultiLineChartIcon: React.FC<Props> = ({ color }) => (
-  <svg fill={color} width='24px' height='24px' focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
+export const MultiLineChartIcon: React.FC<Props> = ({ color, size = 24 }) => (
+  <svg style={{ width: size, height: size }} fill={color} viewBox='0 0 24 24'>
     <path d='M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56l6.49 3.74z' />
   </svg>
 );
 
-export const NotificationsIcon: React.FC<Props> = ({ color }) => (
-  <svg fill={color} width='24px' height='24px' focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
+export const NotificationsIcon: React.FC<Props> = ({ color, size = 24 }) => (
+  <svg style={{ width: size, height: size }} fill={color} viewBox='0 0 24 24'>
     <path d='M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21M19.75,3.19L18.33,4.61C20.04,6.3 21,8.6 21,11H23C23,8.07 21.84,5.25 19.75,3.19M1,11H3C3,8.6 3.96,6.3 5.67,4.61L4.25,3.19C2.16,5.25 1,8.07 1,11Z' />
   </svg>
 );
@@ -58,7 +58,7 @@ export const LiveHelpIcon: React.FC<Props> = ({ color, size = 24 }) => (
 );
 
 export const RobotIcon: React.FC<Props> = ({ color, size = 24 }) => (
-  <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox='0 0 24 24'>
+  <svg style={{ width: size, height: size }} fill={color} viewBox='0 0 24 24'>
     <path d='M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z' />
   </svg>
 );

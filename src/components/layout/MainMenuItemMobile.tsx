@@ -30,7 +30,9 @@ export const MainMenuItemMobile: React.FC<Props> = ({ item, active, handleOnClic
   return (
     <div className={styles.mainMenuItemWrapper}>
       <div className={styles.mainMenuItem} onClick={handleOnClickLink}>
-        <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} size={28} />
+        <i style={{ backgroundSize: 28 }}>
+          <SpecificIcon color={active ? '#fff' : 'rgba(255, 255, 255, 0.68)'} size={28} />
+        </i>
         {item.label === PageType.notifications && <NotificationCounter /> }
       </div>
     </div>
