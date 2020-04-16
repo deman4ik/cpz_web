@@ -19,7 +19,9 @@ export const failedSet = (item, onClick) => (
 
 export const messageSet = (item) => (
   <div className={[ styles.messageRow, styles.textMessageCard ].join(' ')}>
-    <NotificationNode message={item.data.message} />
+    <NotificationNode message={`${item.type === 'message.support-reply'
+      ? 'Support Team'
+      : 'Announcement'} - ${item.data.message}`} />
   </div>
 );
 

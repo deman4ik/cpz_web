@@ -52,7 +52,7 @@ export const useFetchData = () => {
   ), [ data, loading ]);
 
   const recordsCount = useMemo(() => (
-    !loadingCount ? dataCount.notifications_aggregate.aggregate.count : 0
+    (!loadingCount && dataCount) ? dataCount.notifications_aggregate.aggregate.count : 0
   ), [ loadingCount, dataCount ]);
 
   useEffect(() => {
