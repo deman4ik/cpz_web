@@ -34,6 +34,10 @@
   cursor: pointer;
 }
 
+.btnTitle:visited {
+  color: white;
+}
+
 .btnWrapper {
   height: 34px;
   display: flex;

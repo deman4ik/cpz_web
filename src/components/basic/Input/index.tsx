@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Button } from '../Button';
 
@@ -25,6 +25,7 @@ export const Input: React.FC<Props> =
 ({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton, style,
   onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
   const [ inputValue, setInputValue ] = useState(value);
+  const inputRef = useRef(null);
   const handleOnInput = (e) => {
     if (type === 'number') {
       e.target.value = e.target.value.toString().slice(0, 8);
@@ -53,6 +54,12 @@ export const Input: React.FC<Props> =
     return styleInput;
   };
 
+  const handleOnFocus = () => {
+    if (selectTextOnFocus) {
+      inputRef.current?.setSelectionRange(0, inputValue.length);
+    }
+  };
+
   useEffect(() => {
     setInputValue(value);
   }, [ value ]);
@@ -75,11 +82,12 @@ export const Input: React.FC<Props> =
           className={getInputClass().join(' ')}
           placeholder={placeholder}
           maxLength={maxLength}
-          autoFocus
+          ref={inputRef}
           type={type === 'number' ? 'text' : type}
           readOnly={readonly}
           onChange={handleOnInput}
           onKeyDown={formatInput}
+          onFocus={handleOnFocus}
           value={inputValue} />
         {error && (typeof error === 'string') && <div className='error_line'>{error}</div>}
       </div>

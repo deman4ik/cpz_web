@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
@@ -22,11 +23,11 @@ export const failedSet = (item) => (
 );
 
 export const messageSet = (item) => (
-  <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}>
-    {`${item.type === 'message.support-reply'
+  <div
+    className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}
+    dangerouslySetInnerHTML={{ __html: `${item.type === 'message.support-reply'
       ? 'Support Team'
-      : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '').replace(/\\n/g, '<br />')}`}
-  </div>
+      : 'Announcement'} - ${item.data.message}` }} />
 );
 
 export const robotTradeSet = (item) => (
@@ -51,7 +52,7 @@ export const robotTradeSet = (item) => (
           <div className={styles.textMessageDesktop}>
             {`${item.data.entryPrice} $`}
           </div>
-          <div className={styles.textAccent}>  Date </div>
+          <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
           <div className={styles.textMessageDesktop}>
             {formatDate(item.data.entryDate)}
           </div>
@@ -125,11 +126,11 @@ export const signalAlertSet = (item) => {
       </div>
       <div className={styles.row} style={{ marginTop: 3 }}>
         <div className={styles.textAccent}>Action&nbsp;</div>
-        <div className={styles.textMessageDesktop}>{actionName(item.data.action)}</div>
+        <div className={styles.textMessageDesktop}>{actionName(item.data.action)}&nbsp;</div>
         <div style={{ marginTop: 1 }}>
           <SpecificIcon color={actionColor(item.data.action)} size={16} />
         </div>
-        <div className={styles.textMessageDesktop}>{capitalize(item.data.orderType)} </div>
+        <div className={styles.textMessageDesktop}>{capitalize(item.data.orderType)}&nbsp;</div>
         <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
         <div className={styles.textMessageDesktop}>{`${moneyFormat(item.data.price)} $`}</div>
         <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
