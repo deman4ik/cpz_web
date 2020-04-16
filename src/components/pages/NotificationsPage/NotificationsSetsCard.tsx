@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
@@ -16,9 +17,11 @@ export const failedSet = (item) => (
 );
 
 export const messageSet = (item) => (
-  <div className={[ styles.messageRow, styles.textMessageCard ].join(' ')}>
-    {`${item.type === 'message.support-reply' ? 'Support Team' : 'Announcement'} - ${item.data.message.replace(/<[^>]*>/g, '')}`}
-  </div>
+  <div
+    className={[ styles.messageRow, styles.textMessageCard ].join(' ')}
+    dangerouslySetInnerHTML={{ __html: `${item.type === 'message.support-reply'
+      ? 'Support Team'
+      : 'Announcement'} - ${item.data.message}` }} />
 );
 
 export const robotTradeSet = (item) => (
