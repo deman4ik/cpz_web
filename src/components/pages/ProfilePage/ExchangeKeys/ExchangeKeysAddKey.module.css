@@ -27,3 +27,9 @@
   align-items: center;
   justify-content: center; 
 }
+
+@media (max-width: 480px) {
+  .itemContainerCard {
+    max-width: unset;
+  }
+}
