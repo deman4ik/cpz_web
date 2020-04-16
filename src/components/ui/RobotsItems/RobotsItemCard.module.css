@@ -123,6 +123,10 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .chartStat {
     flex-direction: column;
     margin-top: 6px;
