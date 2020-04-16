@@ -30,21 +30,12 @@
   flex-wrap: wrap;
 }
 
-/* @media (max-width: 768px) {
-  .regionTitle {
-    font-size: var(--normal1);
-  }
-} */
-
 @media (max-width: 480px) {
   .surface {
     padding-top: 0;
     padding-bottom: 0;
   }
-}
-
-/* @media (max-width: 480px) {
-  .regionTitle {
-    font-size: var(--small1);
+  .container {
+    margin-bottom: 60px;
   }
-} */
+}

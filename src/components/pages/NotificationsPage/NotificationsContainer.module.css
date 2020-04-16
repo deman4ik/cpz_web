@@ -25,4 +25,10 @@
   margin: 5px 10px;
   background-color: var(--dark);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
-};
+}
+
+@media (max-width: 480px) {
+  .topCards {
+    margin-bottom: 55px;
+  }
+}
