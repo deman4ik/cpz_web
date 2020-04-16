@@ -135,4 +135,13 @@
     padding-left: 25px;
     padding-right: 25px;
   }
+  .container {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) and (min-height: 800px) {
+  .container {
+    height: 100vh;
+  }
 }
