@@ -46,6 +46,11 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--accent);
+}
+
+a:visited {
+  color: var(--accent);
 }
 
 .VictoryContainer {

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
+import { NotificationNode } from './NotificationNode';
 
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
 import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from '../../../config/utils';
@@ -22,18 +23,11 @@ export const failedSet = (item, onClick) => (
   </div>
 );
 
-export const messageSet = (item, onClick) => {
-  const res = (`${item.type === 'message.support-reply'
-    ? 'Support Team'
-    : 'Announcement'} - ${item.data.message}`).replace(/<[^>]*>/g, '').replace(/(\r\n|\n|\r)/gm, '<br />');
-
-  return (
-    <div
-      className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}
-      dangerouslySetInnerHTML={{ __html: res }}
-      onClick={onClick} />
-  );
-};
+export const messageSet = (item) => (
+  <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}>
+    <NotificationNode message={item.data.message} />
+  </div>
+);
 
 export const robotTradeSet = (item, onClick) => (
   <div>
