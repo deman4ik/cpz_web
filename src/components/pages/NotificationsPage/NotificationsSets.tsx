@@ -22,13 +22,17 @@ export const failedSet = (item) => (
   </div>
 );
 
-export const messageSet = (item) => (
-  <div
-    className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}
-    dangerouslySetInnerHTML={{ __html: `${item.type === 'message.support-reply'
-      ? 'Support Team'
-      : 'Announcement'} - ${item.data.message}` }} />
-);
+export const messageSet = (item) => {
+  const res = (`${item.type === 'message.support-reply'
+    ? 'Support Team'
+    : 'Announcement'} - ${item.data.message}`).replace(/<[^>]*>/g, '').replace(/(\r\n|\n|\r)/gm, '<br />');
+
+  return (
+    <div
+      className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}
+      dangerouslySetInnerHTML={{ __html: res }} />
+  );
+};
 
 export const robotTradeSet = (item) => (
   <div>
