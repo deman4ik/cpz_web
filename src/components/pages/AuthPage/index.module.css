@@ -122,6 +122,9 @@
   .content {
     flex-direction: column;
   }
+  .container {
+    height: unset;
+  }
 }
 
 @media (max-width: 510px) {
