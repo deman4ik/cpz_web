@@ -22,3 +22,9 @@
   font-size: var(--normal3);
   color: var(--accent);
 }
+
+@media (max-width: 480px) {
+  .accordionSurface {
+    margin-bottom: 60px;
+  }
+}

@@ -24,7 +24,7 @@ const _ClosedPositionContainer: React.FC<Props> =
 ({ robot, handleLoadMore, isLoadingMore, quantyRecords, width, data, tableName }) => {
   const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
   return (
-    <>
+    <div className={styles.wrapper}>
       <div className={styles.accordionTitle}>
         Closed Positions
       </div>
@@ -58,7 +58,7 @@ const _ClosedPositionContainer: React.FC<Props> =
         renderLoadMoreButton={data.length < quantyRecords}
         isLoadingMore={isLoadingMore}
         onFetchMore={handleLoadMore} />
-    </>
+    </div>
   );
 };
 
