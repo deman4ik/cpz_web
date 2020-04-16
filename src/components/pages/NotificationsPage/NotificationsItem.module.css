@@ -4,13 +4,7 @@
   border-top-width: 2px;
   border-color: var(--darkBg);
   padding: 15px 20px;
-  cursor: pointer;
-  opacity: 1;
 }
-
-.tableRow:active {
-  opacity: 0.2;
-} 
 
 .dateText {
   color: var(--accent);

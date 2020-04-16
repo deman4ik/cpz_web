@@ -48,17 +48,17 @@ const messageMap = {
   'user_ex_acc.error': 'user'
 };
 
-export const showMessage = (item, card = false) => {
+export const showMessage = (item, onClick, card = false) => {
   const setFunc = card ? SetsCard : Sets;
   const messages = {
-    failed: () => setFunc.failedSet(item),
-    message: () => setFunc.messageSet(item),
-    robotTrade: () => setFunc.robotTradeSet(item),
-    error: () => setFunc.errorSet(item),
-    signalAlert: () => setFunc.signalAlertSet(item),
-    robot: () => setFunc.robotSet(item),
-    signalTrade: () => setFunc.signalTradeSet(item),
-    user: () => setFunc.userSet(item)
+    failed: () => setFunc.failedSet(item, onClick),
+    message: () => setFunc.messageSet(item, onClick),
+    robotTrade: () => setFunc.robotTradeSet(item, onClick),
+    error: () => setFunc.errorSet(item, onClick),
+    signalAlert: () => setFunc.signalAlertSet(item, onClick),
+    robot: () => setFunc.robotSet(item, onClick),
+    signalTrade: () => setFunc.signalTradeSet(item, onClick),
+    user: () => setFunc.userSet(item, onClick)
   };
 
   return messages[messageMap[item.type]]();
