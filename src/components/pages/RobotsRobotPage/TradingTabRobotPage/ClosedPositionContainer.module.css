@@ -29,3 +29,9 @@
     box-shadow: none;
   }
 }
+
+@media (max-width: 480px) {
+  .wrapper {
+    margin-bottom: 60px;
+  }
+}

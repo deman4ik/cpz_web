@@ -48,7 +48,6 @@ const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) =>
               </div>
             ))}
           </>
-
         </div>
       )}
     </>
