@@ -55,4 +55,4 @@ export const tabName = {
 };
 
 export const getCardTitle = (item, subtitle) =>
-  `${item.title}${item.key === 'avgBarsHeld' && subtitle !== 'profit' ? ` (${capitalize(subtitle)})` : ''}`;
+  `${item.title}${item.key === 'avgBarsHeld' && subtitle !== 'profit' ? ` ${capitalize(subtitle)}` : ''}`;
