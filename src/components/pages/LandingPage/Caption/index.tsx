@@ -13,12 +13,8 @@ const DinamicImageWithNoSSR = dynamic(
     ssr: false }
 );
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
 const subTitle = 'Just invest –\n robots make the rest';
-export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
+export const _Caption: React.FC = () => (
   <>
     <DinamicImageWithNoSSR />
     <div className={styles.header}>
@@ -32,9 +28,9 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
               </div>
               <div className={styles.brandRights}>®</div>
             </div>
-            <div className={styles.title}>
+            <h1 className={styles.title}>
               Cryptocurrency trading robots for&nbsp;your&nbsp;successful investment
-            </div>
+            </h1>
             <div className={styles.subTitle}>
               {subTitle}
             </div>
@@ -42,12 +38,12 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
               <PrimaryButton
                 title='TRY IT FREE'
                 type='secondary'
-                onClick={() => handleOnClick('/auth/login', false)}
+                href='/auth/login'
                 className={styles.headerBtn} />
               <PrimaryButton
                 title='DOCUMENTATION'
                 type='primary'
-                onClick={() => handleOnClick(DOCS_URL, true)}
+                href={DOCS_URL}
                 className={styles.headerBtn} />
             </div>
           </div>

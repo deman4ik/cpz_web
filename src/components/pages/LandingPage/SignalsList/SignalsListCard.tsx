@@ -7,14 +7,13 @@ import styles from './SignalsListCard.module.css';
 
 interface Props {
   robot: any;
-  handleOnClick: (path: string, external: boolean) => void;
 }
 
 const DinamicAreaChart = dynamic(
   () => import('../../../charts/AreaChart')
 );
 
-const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
+const _SignalsListCard: React.FC<Props> = ({ robot }) => {
   const money = (
     <div className={styles.primaryText}>
       {moneyFormat(robot.equity.profit)} $
@@ -83,15 +82,15 @@ const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
           <PrimaryButton
             type='primary'
             title='Subscribe to Signals'
-            onClick={() => handleOnClick(`/signals/robot/${robot.code}`, false)}
+            href={`/signals/robot/${robot.code}`}
             mini />
         )}
         {robot.trading && (
           <PrimaryButton
             type='secondary'
             title='Start Trading'
+            href={`/robots/robot/${robot.code}`}
             className={styles.btn}
-            onClick={() => handleOnClick(`/robots/robot/${robot.code}`, false)}
             mini />
         )}
       </div>

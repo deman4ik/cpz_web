@@ -13,7 +13,7 @@ const _DescriptionView: React.FC = () => (
             <div className={`${styles.icon} ${styles.heightIcon}`}>
               <img style={item.imgStyle} src={`/img/${item.imgSrc}.png`} alt='' />
             </div>
-            <div className={styles.title}>{item.title}</div>
+            <h3 className={styles.title}>{item.title}</h3>
             <div className={landing_styles.robotsColText}>
               {item.text}
             </div>
@@ -26,7 +26,7 @@ const _DescriptionView: React.FC = () => (
             <div className={`${styles.icon} ${styles.heightMiniIcon}`}>
               <img style={item.imgStyle} src={`/img/robots-icon-${idx + 1}.png`} alt='' />
             </div>
-            <div className={styles.title}>{item.title}</div>
+            <h3 className={styles.title}>{item.title}</h3>
             <div className={landing_styles.robotsColText}>
               {item.text}
             </div>

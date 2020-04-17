@@ -15,7 +15,7 @@ export const _RobotsLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadi
       <div className={styles.btnPosition}>
         <Button
           width={146}
-          title='loadMore'
+          title='load more'
           type='dimmed'
           icon='arrowdown'
           isUppercase
