@@ -134,7 +134,7 @@ export const Button: React.FC<ButtonProps> =
             width: ${base.icon ? responsive ? '12px' : '20px' : 0};
           }
           .icon {
-            right: ${responsive ? 0 : '8px'};
+            right: ${(responsive && style) ? 0 : '8px'};
           }
         }`}
       </style>

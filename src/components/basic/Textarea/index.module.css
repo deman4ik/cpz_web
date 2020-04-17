@@ -6,4 +6,12 @@
   overflow: hidden;
   resize: none;
   font-size: var(--normal1);
+  width: 300px;
+}
+
+@media (max-width: 480px) {
+  .textarea {
+    width: 250px;
+    height: 90px;
+  }
 }

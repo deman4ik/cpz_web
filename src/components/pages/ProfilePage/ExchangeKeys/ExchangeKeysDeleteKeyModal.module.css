@@ -12,10 +12,20 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
   margin: 20px auto;
 }
 
 .btn {
   margin: 10px;
+}
+
+.bodyText {
+  margin-top: 5px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .btnsContainer {
+    margin: 0 auto;
+  }
 }
