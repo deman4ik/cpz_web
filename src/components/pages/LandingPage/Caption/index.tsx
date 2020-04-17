@@ -32,9 +32,9 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
               </div>
               <div className={styles.brandRights}>®</div>
             </div>
-            <div className={styles.title}>
+            <h1 className={styles.title}>
               Cryptocurrency trading robots for&nbsp;your&nbsp;successful investment
-            </div>
+            </h1>
             <div className={styles.subTitle}>
               {subTitle}
             </div>

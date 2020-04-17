@@ -15,9 +15,9 @@ const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
   <div className={styles.app}>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
-        <div className={styles.robotsStepsTitle}>
+        <h2 className={styles.robotsStepsTitle}>
           Cryptuoso Trading App
-        </div>
+        </h2>
         { tradingSteps.map((item: TradingStepType, idx: number) => (
           <div key={idx} className={styles.robotsStep}>
             <div className={styles.robotsStepCircle}>

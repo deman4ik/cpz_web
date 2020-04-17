@@ -20,10 +20,10 @@ const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
     </div>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
-        <div className={styles.robotsStepsTitle}>
+        <h2 className={styles.robotsStepsTitle}>
           Cryptuoso Trading{'\n'}
           Telegram Bot
-        </div>
+        </h2>
         <div className={styles.robotsStep}>
           <div className={styles.robotsStepCircle}>
             <CircleIcon color='white' />

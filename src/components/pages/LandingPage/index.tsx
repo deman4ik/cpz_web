@@ -34,15 +34,15 @@ const _LandingPage = () => {
           <div className={styles.starsBackground} />
           <div className={styles.container}>
             <Description />
-            <div className={styles.topRobotsTitle}>
+            <h2 className={styles.topRobotsTitle}>
               Top Performance Robots
-            </div>
+            </h2>
             <SignalsList handleOnClick={handleOnClick} />
             <TradingApp handleOnClick={handleOnClick} />
             <TelegramBot handleOnClick={handleOnClick} />
-            <div className={styles.roadmapTitle}>
+            <h2 className={styles.roadmapTitle}>
               Cryptuoso roadmap
-            </div>
+            </h2>
             <RoadMap />
             <Support handleOnClick={handleOnClick} />
             <Footer />
