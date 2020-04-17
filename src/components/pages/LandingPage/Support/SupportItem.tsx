@@ -7,7 +7,6 @@ import styles from './SupportItem.module.css';
 
 interface Props {
   item: SupportItemType;
-  handleOnClick: (path: string, external: boolean) => void;
 }
 
 const components = {
@@ -16,7 +15,7 @@ const components = {
   telegram: TelegramIcon
 };
 
-export const SupportItem: React.FC<Props> = ({ item, handleOnClick }) => {
+export const SupportItem: React.FC<Props> = ({ item }) => {
   const SpecificIcon = components[item.icon];
   return (
     <div className={styles.row}>

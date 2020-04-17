@@ -13,12 +13,8 @@ const DinamicImageWithNoSSR = dynamic(
     ssr: false }
 );
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
 const subTitle = 'Just invest –\n robots make the rest';
-export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
+export const _Caption: React.FC = () => (
   <>
     <DinamicImageWithNoSSR />
     <div className={styles.header}>

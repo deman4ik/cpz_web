@@ -5,11 +5,7 @@ import phoneImg from '../../../assets/img/phone-img.png';
 import { CircleIcon } from '../../../assets/icons/svg';
 import styles from './TradingApp.module.css';
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
-const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
+const _TelegramBot: React.FC = () => (
   <div className={styles.free}>
     <div className={styles.row}>
       <img

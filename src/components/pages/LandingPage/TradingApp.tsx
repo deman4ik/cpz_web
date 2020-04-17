@@ -7,11 +7,7 @@ import { tradingSteps } from './helpers';
 import { TradingStepType } from './types';
 import styles from './TradingApp.module.css';
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
-const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
+const _TradingApp: React.FC = () => (
   <div className={styles.app}>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
