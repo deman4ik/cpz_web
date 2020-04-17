@@ -1,7 +1,6 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
-import { NotificationNode } from './NotificationNode';
 
+import { NotificationsNode } from './NotificationsNode';
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
 import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from '../../../config/utils';
 import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
@@ -25,7 +24,7 @@ export const failedSet = (item, onClick) => (
 
 export const messageSet = (item) => (
   <div className={[ styles.messageRow, styles.textMessageDesktop ].join(' ')}>
-    <NotificationNode message={`${item.type === 'message.support-reply'
+    <NotificationsNode message={`${item.type === 'message.support-reply'
       ? 'Support Team'
       : 'Announcement'} - ${item.data.message}`} />
   </div>
