@@ -1,7 +1,6 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
-import { NotificationNode } from './NotificationNode';
 
+import { NotificationsNode } from './NotificationsNode';
 import { ArrowDownIcon, ArrowUpIcon } from '../../../assets/icons/svg';
 import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from '../../../config/utils';
 import { actionName, actionIcon, actionColor, actionOpen } from './helpers';
@@ -19,7 +18,7 @@ export const failedSet = (item, onClick) => (
 
 export const messageSet = (item) => (
   <div className={[ styles.messageRow, styles.textMessageCard ].join(' ')}>
-    <NotificationNode message={`${item.type === 'message.support-reply'
+    <NotificationsNode message={`${item.type === 'message.support-reply'
       ? 'Support Team'
       : 'Announcement'} - ${item.data.message}`} />
   </div>
@@ -105,7 +104,7 @@ export const robotTradeSet = (item, onClick) => (
             <div className={styles.colRobot} style={{ marginTop: 5 }}>
               <div className={styles.textAccentCard}>Date</div>
               <div className={styles.textMessageCard}>
-                {formatDate(item.data.exit_date)}
+                {formatDate(item.data.exitDate)}
               </div>
             </div>
           </div>

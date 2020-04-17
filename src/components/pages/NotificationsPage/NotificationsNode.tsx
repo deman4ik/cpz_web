@@ -4,7 +4,7 @@ interface Props {
   message: string;
 }
 
-export const NotificationNode: React.FC<Props> = ({ message }) => {
+export const NotificationsNode: React.FC<Props> = ({ message }) => {
   const refDiv = useRef(null);
   useEffect(() => {
     refDiv.current.innerHTML = message.replace(/(\r\n|\n|\r)/gm, '<br />');

@@ -1,15 +1,18 @@
 import React from 'react';
+
+import { getCardTitle } from './helpers';
 import styles from './PerformanceTabItemCard.module.css';
 
 interface Props {
   item: any;
+  subtitle: string;
 }
 
-export const PerformanceTabItemCard: React.FC<Props> = ({ item }) => (
+export const PerformanceTabItemCard: React.FC<Props> = ({ item, subtitle }) => (
   <div className={styles.container}>
     <div className={styles.tableTitle}>
       <div className={styles.tableTitleText}>
-        {item.title}
+        {getCardTitle(item, subtitle)}
       </div>
     </div>
     <div className={styles.mobileCard}>
