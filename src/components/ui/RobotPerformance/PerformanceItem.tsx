@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 
 import { ChevronRightIcon } from '../../../assets/icons/svg';
 import { moneyFormat, colorAction } from '../../../config/utils';
-//import { PropsPerformanceItem } from './types';
 import styles from './PerformanceItem.module.css';
 
 interface Props {

@@ -142,6 +142,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
             <Select
               value={inputExchange}
               data={dataPicker}
+              width={260}
               enabled={!isExchangeDisabled}
               onValueChange={itemValue => handleOnChangeExchange(itemValue)} />
           </div>

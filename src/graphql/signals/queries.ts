@@ -106,26 +106,6 @@ export const GET_AGGR_STATISTICS = gql`
   }
 `;
 
-// export const GET_USER_AGGR_STATS_FILTERED = gql`
-//   query user_aggr_stats(
-//     $asset: String_comparison_exp,
-//     $exchange: String_comparison_exp
-//   ){
-//     stats: user_aggr_stats(
-//       where: {
-//         type: {  _eq: "signal" }
-//         asset: $asset
-//         exchange: $exchange
-//       }
-//     ) {
-//       id
-//       asset
-//       exchange
-//       equity
-//     }
-//   }
-// `;
-
 export const GET_USER_AGGR_STATS_ALL = gql`
   query user_aggr_stats_filters(
     $type: String_comparison_exp
@@ -164,7 +144,7 @@ export const GET_USER_AGGR_STATS_FILTERS = gql`
 export const USER_SIGNALS = gql`
   query user_signals {
     signals: user_signals(
-      order_by: { subscribed_at: asc }
+      order_by: { subscribed_at: asc, id: asc }
     ) @connection(key: "user_signals_robots") {
       robot {
         id

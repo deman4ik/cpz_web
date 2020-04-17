@@ -14,8 +14,8 @@
   display: flex;
   flex-direction: column;
   padding-top: 15px;
-  padding-bottom: 5px;
-  background-color: (--rgbaDark);
+  padding-bottom: 15px;
+  background-color: var(--rgbaDark);
   border-radius: 2px;
   align-items: center;
 }
@@ -41,4 +41,13 @@
 .row {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0;
+  }
+  .areaGroup {
+    margin-bottom: 10px;
+  }
 }
