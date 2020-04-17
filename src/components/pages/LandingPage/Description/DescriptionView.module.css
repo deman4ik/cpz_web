@@ -1,11 +1,10 @@
 .title {
-  margin-bottom: 12px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 0 30px 12px;
   text-align: center;
   font-size: var(--big3);
   line-height: 36px;
   color: white;
+  font-weight: normal;
 }
 
 .icon {

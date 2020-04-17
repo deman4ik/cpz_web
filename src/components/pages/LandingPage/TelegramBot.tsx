@@ -5,11 +5,7 @@ import phoneImg from '../../../assets/img/phone-img.png';
 import { CircleIcon } from '../../../assets/icons/svg';
 import styles from './TradingApp.module.css';
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
-const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
+const _TelegramBot: React.FC = () => (
   <div className={styles.free}>
     <div className={styles.row}>
       <img
@@ -20,10 +16,10 @@ const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
     </div>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
-        <div className={styles.robotsStepsTitle}>
+        <h2 className={styles.robotsStepsTitle}>
           Cryptuoso Trading{'\n'}
           Telegram Bot
-        </div>
+        </h2>
         <div className={styles.robotsStep}>
           <div className={styles.robotsStepCircle}>
             <CircleIcon color='white' />
@@ -43,7 +39,7 @@ const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Try it now'
-            onClick={() => handleOnClick(process.env.TELEGRAM_BOT_URL, true)}
+            href={`https://t.me/${process.env.TELEGRAM_BOT_NAME}`}
             type='primary' />
         </div>
       </div>

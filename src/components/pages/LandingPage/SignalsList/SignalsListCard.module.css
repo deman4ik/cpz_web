@@ -11,6 +11,7 @@
   margin-right: 20px;
   background-color: var(--rgbaDark);
   border-radius: 2px;
+  box-shadow: rgba(11, 152, 197, 0.2) 0px 0px 20px;
 }
 
 .primaryText {

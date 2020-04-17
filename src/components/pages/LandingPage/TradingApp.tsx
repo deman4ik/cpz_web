@@ -7,17 +7,13 @@ import { tradingSteps } from './helpers';
 import { TradingStepType } from './types';
 import styles from './TradingApp.module.css';
 
-interface Props {
-  handleOnClick: (path: string, external: boolean) => void;
-}
-
-const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
+const _TradingApp: React.FC = () => (
   <div className={styles.app}>
     <div className={styles.row}>
       <div className={styles.robotsSteps}>
-        <div className={styles.robotsStepsTitle}>
+        <h2 className={styles.robotsStepsTitle}>
           Cryptuoso Trading App
-        </div>
+        </h2>
         { tradingSteps.map((item: TradingStepType, idx: number) => (
           <div key={idx} className={styles.robotsStep}>
             <div className={styles.robotsStepCircle}>
@@ -31,7 +27,7 @@ const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Start now'
-            onClick={() => handleOnClick('/robots', false)}
+            href='/robots'
             type='secondary' />
         </div>
       </div>

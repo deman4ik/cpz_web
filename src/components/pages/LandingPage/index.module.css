@@ -71,6 +71,7 @@
 }
 
 .topRobotsTitle {
+  margin-top: 0;
   margin-bottom: 40px;
   text-align: center;
   font-size: 38px;
@@ -79,6 +80,7 @@
   color: white;
 }
 .roadmapTitle {
+  margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
   font-size: 38px;
