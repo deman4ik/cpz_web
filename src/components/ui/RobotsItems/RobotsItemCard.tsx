@@ -58,6 +58,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             <Button
               title='details'
               isUppercase
+              responsive
               size='small'
               style={{ paddingLeft: 0, paddingRight: 0 }}
               icon='chevronright' />

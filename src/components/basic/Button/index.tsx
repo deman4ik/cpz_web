@@ -10,7 +10,7 @@ export const Button: React.FC<ButtonProps> =
   const [ base, setBase ] = useState({ title, icon, type });
   const SpecificIcon = components[base.icon];
   const rounded = type && type.indexOf('rounded') === 0;
-
+  const iconSize = 15;
   const getClassName = () => {
     const composeClass = [ 'btn' ];
     if (className) composeClass.push(className);
@@ -57,9 +57,9 @@ export const Button: React.FC<ButtonProps> =
             {base.title}
           </div>
           {base.icon ? (
-            <div className='icon'>
-              <SpecificIcon size={15} />
-            </div>
+            <i className='icon'>
+              <SpecificIcon size={iconSize} />
+            </i>
           ) : null}
           <div className='aligner' />
         </>
@@ -76,10 +76,10 @@ export const Button: React.FC<ButtonProps> =
         }
         .icon {
           padding-right: 8px;
-          padding-left: 8px;
-          padding-top: 3px;
           position: absolute;
-          right: 0;
+          width: ${iconSize}px;
+          height: ${iconSize}px;
+          right: 8px;
         }
         .aligner {
           width: ${base.icon ? 20 : 0}px;
@@ -132,6 +132,9 @@ export const Button: React.FC<ButtonProps> =
           }
           .aligner {
             width: ${base.icon ? responsive ? '12px' : '20px' : 0};
+          }
+          .icon {
+            right: ${responsive ? 0 : '8px'};
           }
         }`}
       </style>
