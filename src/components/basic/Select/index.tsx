@@ -3,11 +3,12 @@ import React from 'react';
 interface Props {
   data: any;
   value: string;
+  width?: number;
   enabled?: boolean;
   onValueChange: (itemValue: string) => void;
 }
 
-export const Select: React.FC<Props> = ({ data, value, onValueChange, enabled = true }) => {
+export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 200, enabled = true }) => {
   const onChange = (e) => {
     onValueChange(e.target.value);
   };
@@ -28,7 +29,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, enabled = 
           font-size: var(--normal1);
           -moz-appearance: none;
           -webkit-appearance: none;
-          width: 200px;
+          width: ${width}px;
           cursor: pointer;
           opacity: ${enabled ? 1 : 0.5};
         }
