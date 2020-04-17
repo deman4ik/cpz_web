@@ -128,64 +128,6 @@ export const GET_ROBOT_POSITIONS = (key: string) => gql`
   }
 `;
 
-// export const GET_ROBOT_POSITIONS1 = gql`
-//   query robotPositions(
-//     $robotId: uuid!
-//     $status: String_comparison_exp
-//     $dateFrom: timestamp
-//     $dateTo: timestamp
-//     $limit: Int
-//     $offset: Int
-//     $orderBy: [robot_positions_order_by!]
-//   ) {
-//     robot_positions(
-//       where: {
-//         robot_id: { _eq: $robotId }
-//         status: $status
-//         _or: [
-//           {
-//             _and: [
-//               { entry_candle_timestamp: { _gte: $dateFrom } }
-//               { entry_candle_timestamp: { _lte: $dateTo } }
-//             ]
-//           }
-//           {
-//             _and: [
-//               { exit_candle_timestamp: { _gte: $dateFrom } }
-//               { exit_candle_timestamp: { _lte: $dateTo } }
-//             ]
-//           }
-//         ]
-//       }
-//       limit: $limit
-//       offset: $offset
-//       order_by: $orderBy
-//     ) @connection(key: "robot_positions_open_signals") {
-//       id
-//       code
-//       direction
-//       status
-//       entry_date
-//       entry_candle_timestamp
-//       entry_price
-//       entry_action
-//       exit_date
-//       exit_candle_timestamp
-//       exit_price
-//       exit_action
-//       bars_held
-//       profit
-//       alerts
-//       volume
-//       robot {
-//         user_signals {
-//           volume
-//         }
-//       }
-//     }
-//   }
-// `;
-
 export const GET_ROBOT_POSITIONS_ROBOT = (key: string) => gql`
   query robotPositions(
     $robotId: uuid!
@@ -335,7 +277,7 @@ export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
 
 export const USER_ROBOTS = gql`
   query user_robots {
-    robots: user_robots(order_by: { started_at: asc })
+    robots: user_robots(order_by: { started_at: asc, id: asc })
       @connection(key: "user_robots_robots") {
       id
       status

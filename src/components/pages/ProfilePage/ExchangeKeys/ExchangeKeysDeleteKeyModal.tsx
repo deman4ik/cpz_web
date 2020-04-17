@@ -57,7 +57,7 @@ const _ExchangeKeysDeleteKeyModal: React.FC<Props> = ({ options, onClose }) => {
         <div className={styles.bodyTitle}>
           <AlertIcon size={48} />
           {'\n'}
-          You can&apos;t delete API Keys with added Robots
+          <span className={styles.bodyText}>You can&apos;t delete API Keys with added Robots</span>
         </div>
       )}
       <div className={styles.btnsContainer}>
