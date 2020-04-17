@@ -49,7 +49,7 @@
 .tableCellText {
   word-wrap: break-word;
   white-space: nowrap;
-  font-size: var(--small1);
+  font-size: var(--normal0);
   color: white;
 };
 
@@ -63,7 +63,7 @@
   flex: 0.13;
   align-items: flex-start;
   margin-top: 5px;
-  font-size: var(--small1);
+  font-size: var(--normal0);
 }
 
 .wraperBlock:active {
