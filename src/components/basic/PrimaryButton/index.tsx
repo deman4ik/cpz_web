@@ -8,10 +8,10 @@ interface Props {
   style?: object;
   className?: string;
   mini?: boolean;
-  onClick?: () => void;
+  href: string;
 }
 
-export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, mini, onClick }) => {
+export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, mini, href }) => {
   const getClassName = () => {
     const composeClass = [ styles.btn, (mini ? styles.miniBtn : styles.normalBtn), styles[type] ];
     if (className) composeClass.push(className);
@@ -19,8 +19,8 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
   };
 
   return (
-    <button className={getClassName().join(' ')} type='button' onClick={onClick} style={style}>
+    <a className={getClassName().join(' ')} style={style} href={href}>
       {title}
-    </button>
+    </a>
   );
 };

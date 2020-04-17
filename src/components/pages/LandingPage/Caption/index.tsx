@@ -42,12 +42,12 @@ export const _Caption: React.FC<Props> = ({ handleOnClick }) => (
               <PrimaryButton
                 title='TRY IT FREE'
                 type='secondary'
-                onClick={() => handleOnClick('/auth/login', false)}
+                href='/auth/login'
                 className={styles.headerBtn} />
               <PrimaryButton
                 title='DOCUMENTATION'
                 type='primary'
-                onClick={() => handleOnClick(DOCS_URL, true)}
+                href={DOCS_URL}
                 className={styles.headerBtn} />
             </div>
           </div>

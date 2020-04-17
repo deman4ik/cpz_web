@@ -83,15 +83,15 @@ const _SignalsListCard: React.FC<Props> = ({ robot, handleOnClick }) => {
           <PrimaryButton
             type='primary'
             title='Subscribe to Signals'
-            onClick={() => handleOnClick(`/signals/robot/${robot.code}`, false)}
+            href={`/signals/robot/${robot.code}`}
             mini />
         )}
         {robot.trading && (
           <PrimaryButton
             type='secondary'
             title='Start Trading'
+            href={`/robots/robot/${robot.code}`}
             className={styles.btn}
-            onClick={() => handleOnClick(`/robots/robot/${robot.code}`, false)}
             mini />
         )}
       </div>

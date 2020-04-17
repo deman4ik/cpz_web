@@ -37,7 +37,7 @@ export const SupportItem: React.FC<Props> = ({ item, handleOnClick }) => {
             className={styles.headerBtn}
             title={item.button}
             type={item.buttonType}
-            onClick={() => handleOnClick(item.href, true)} />
+            href={item.href} />
         </div>
       </div>
     </div>

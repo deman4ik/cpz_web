@@ -43,7 +43,7 @@ const _TelegramBot: React.FC<Props> = ({ handleOnClick }) => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Try it now'
-            onClick={() => handleOnClick(process.env.TELEGRAM_BOT_URL, true)}
+            href={`https://t.me/${process.env.TELEGRAM_BOT_NAME}`}
             type='primary' />
         </div>
       </div>

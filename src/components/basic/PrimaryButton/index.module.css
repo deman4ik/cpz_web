@@ -1,4 +1,7 @@
 .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: auto;
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0);
@@ -9,10 +12,16 @@
   text-shadow: rgb(17, 133, 169) 0px 1px 1px;
   letter-spacing: 1px;
   opacity: 1;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .btn:active {
   opacity: 0.2;
+}
+
+.btn:visited {
+  color: white;
 }
 
 .secondary {
@@ -23,19 +32,19 @@
   background-image: linear-gradient(rgb(64, 221, 255), rgb(11, 152, 197));
 }
 
-.outline-primary {
+.outline-primary, .outline-primary:visited {
   color: var(--primary);
   background-color: transparent;
   border: 1px solid var(--primary);
 }
 
-.outline-secondary {
+.outline-secondary, .outline-secondary:visited {
   color: var(--secondary);
   background-color: transparent;
   border: 1px solid var(--secondary);
 }
 
-.outline-warn {
+.outline-warn, .outline-warn:visited {
   color: var(--warn);
   background-color: transparent;
   border: 1px solid var(--warn);

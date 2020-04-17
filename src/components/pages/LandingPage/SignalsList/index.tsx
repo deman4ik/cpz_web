@@ -29,7 +29,7 @@ const _SignalsList: React.FC<Props> = ({ handleOnClick }) => {
           <div className={styles.moreBtn}>
             <PrimaryButton
               title='More Robots'
-              onClick={() => handleOnClick('/robots', false)}
+              href='/robots'
               type='primary' />
           </div>
         </div>

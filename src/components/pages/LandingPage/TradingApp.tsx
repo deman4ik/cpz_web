@@ -31,7 +31,7 @@ const _TradingApp: React.FC<Props> = ({ handleOnClick }) => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Start now'
-            onClick={() => handleOnClick('/robots', false)}
+            href='/robots'
             type='secondary' />
         </div>
       </div>
