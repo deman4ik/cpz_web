@@ -41,7 +41,7 @@ const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) =>
                 ) : (
                   <>
                     { robotStatistic[subtitle].map((item, idx) => (
-                      <PerformanceTabItemCard key={idx} item={item} />
+                      <PerformanceTabItemCard key={idx} item={item} subtitle={subtitle} />
                     )) }
                   </>
                 )}
