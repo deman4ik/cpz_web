@@ -5,7 +5,6 @@ import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
 import { formatRobotsData } from './helpers';
 import { Modals } from './Modals';
-//import styles from '../../../config/common.module.css';
 
 interface Props {
   searchText?: string;
