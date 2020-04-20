@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from 'react';
+import React, { useMemo, useState, memo } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
@@ -13,19 +13,21 @@ interface Props {
 }
 
 const _SearchFiltersModal: React.FC<Props> = () => {
+  const [ checkedButtons, setCheckedButtons ] = useState<string[]>([]);
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS);
 
   const filterData = useMemo(() => (
     (!loading && data) ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }
   ), [ data, loading ]);
   const handleOnPressItem = (item: string) => {
-    console.log(item);
+    setCheckedButtons(prev => (
+      prev.find(el => el === item) ? prev.filter(el => el !== item) : [ ...prev, item ]
+    ));
   };
 
-  console.log(filterData);
   return (
     loading ? <LoadingIndicator /> : (
-      <div>
+      <div className={styles.container}>
         {labels.map((label: string) => (
           <div key={label} className={styles.row}>
             <div className={styles.label}>
@@ -35,9 +37,10 @@ const _SearchFiltersModal: React.FC<Props> = () => {
               {filterData[label].map(item => (
                 <Button
                   key={item.key}
-                  type='rounded-primary'
+                  type={checkedButtons.includes(item.key) ? 'rounded' : 'rounded-primary'}
                   title={item.label}
                   style={{ marginLeft: 5, marginTop: 5 }}
+                  clickable={false}
                   onClick={() => handleOnPressItem(item.key)} />
               ))}
             </div>

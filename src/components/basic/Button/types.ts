@@ -21,4 +21,5 @@ export interface ButtonProps {
   className?: string;
   hoverChanges?: HoverChangesProps;
   responsive?: boolean;
+  clickable?: boolean;
 }

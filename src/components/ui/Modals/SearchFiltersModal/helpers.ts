@@ -7,7 +7,7 @@ export const labels = [ 'asset', 'exchange', 'timeframe' ];
 const formatData = {
   asset: key => key,
   exchange: key => exchangeName(key),
-  timeframe: key => timeFrameFormat[key].abbr
+  timeframe: key => (timeFrameFormat[key].abbr)
 };
 
 export const getFilterData = (filters) => {
