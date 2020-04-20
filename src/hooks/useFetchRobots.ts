@@ -6,6 +6,7 @@ import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COU
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
 import { SEARCH_FILTERS } from '../graphql/local/queries';
 import { POLL_INTERVAL } from '../config/constants';
+import { getHash } from '../config/utils';
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -15,7 +16,6 @@ const queryKey = {
 
 export const useFetchRobots = (
   dispayType: string,
-  searchText: string,
   formatRobotsData: (v_robots_stats: any) => {}
 ) => {
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
@@ -23,7 +23,6 @@ export const useFetchRobots = (
   const { data: filters } = useQuery(SEARCH_FILTERS);
   const defaultFiltersQuery = {
     robots: {
-      name: { _ilike: searchText ? `%${searchText}%` : null },
       signals: { _eq: true },
     }
   };
@@ -33,8 +32,8 @@ export const useFetchRobots = (
     ROBOT_AGGREGATE_COUNT, {
       variables: {
         where: {
-          name: { _ilike: searchText ? `%${searchText}%` : null },
-          [queryKey[dispayType]]: { _eq: true }
+          [queryKey[dispayType]]: { _eq: true },
+          ...filtersQuery.robots
         }
       },
       pollInterval: POLL_INTERVAL,
@@ -64,13 +63,15 @@ export const useFetchRobots = (
 
 
   useEffect(() => {
-    const addFields = () =>
-      (!filters.searchFilters
-        ? defaultFiltersQuery
-        : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) } });
+    const addFields = () => {
+      const hash = getHash(30);
+      return !filters.searchFilters
+        ? { ...defaultFiltersQuery, hash }
+        : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) }, hash };
+    };
 
     setFiltersQuery(addFields());
-  }, [ searchText, filters ]);
+  }, [ filters ]);
 
   useEffect(() => {
     refetchStats();

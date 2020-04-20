@@ -5,6 +5,7 @@ export const GET_ROBOTS_BY_STATS = gql`
     $limit: Int
     $offset: Int
     $where: v_robots_stats_bool_exp
+    $hash: String!
   ) {
     v_robots_stats(
       where: $where
@@ -13,7 +14,7 @@ export const GET_ROBOTS_BY_STATS = gql`
       order_by:{
         recovery_factor: desc_nulls_last
       }
-    ) @connection(key: "v_robots_stats_signals", filter: ["name"]) {
+    ) @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
       robots {
         id
         code

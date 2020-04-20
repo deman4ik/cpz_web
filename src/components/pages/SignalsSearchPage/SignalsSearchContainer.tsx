@@ -14,7 +14,7 @@ interface Props {
 
 export const SignalsSearchContainer: React.FC<Props> = ({ searchText = '', width, displayType }) => {
   const { robotsData, counts, loading, isLoadingMore, onFetchMore } =
-    useFetchRobots(displayType, searchText, formatRobotsData);
+    useFetchRobots(displayType, formatRobotsData);
 
   return (
     <>
