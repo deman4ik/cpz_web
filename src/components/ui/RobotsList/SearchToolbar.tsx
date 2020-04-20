@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 
-import { SearchInput } from '../../basic';
+import { SearchInput, CaptionButton } from '../../basic';
 import styles from './SearchToolbar.module.css';
 
 interface Props {
   setSignalsSearchValue: (text: string) => void;
+  setVisibleToolbarFilters?: () => void;
   displayType: string;
 }
 
-export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayType }) => {
+export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayType, setVisibleToolbarFilters }) => {
   const [ value, setValue ] = useState('');
 
   const onSignalsSearch = text => {
     setSignalsSearchValue(text);
     setValue(text);
+  };
+
+  const handleOnPress = () => {
+    setVisibleToolbarFilters();
   };
 
   return (
@@ -22,6 +27,11 @@ export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayT
         value={value}
         onChange={onSignalsSearch}
         placeholder={`Search ${displayType}...`} />
+      <CaptionButton
+        title='filter'
+        icon='filtervariant'
+        responsive
+        onClick={handleOnPress} />
     </div>
   );
 };

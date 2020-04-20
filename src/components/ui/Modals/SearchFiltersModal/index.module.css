@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  align-items: baseline;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  width: 72px;
+}
+
+.labelText {
+  font-family: var(--normal);
+  font-size: var(--small1);
+  line-height: var(--normal2);
+  color: var(--accent);
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 400px;
+  flex-wrap: wrap;
+}

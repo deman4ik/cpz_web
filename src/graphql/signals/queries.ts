@@ -43,6 +43,18 @@ export const GET_ROBOTS_BY_STATS = gql`
   }
 `;
 
+export const SEARCH_SIGNALS_FILTERS = gql`
+  query signals_filters {
+    filters: v_robots_stats {
+      robots {
+        exchange
+        asset
+        timeframe
+      }
+    }
+  }
+`;
+
 export const ROBOT_AGGREGATE_COUNT = gql`
   query aggregate(
       $where: robots_bool_exp

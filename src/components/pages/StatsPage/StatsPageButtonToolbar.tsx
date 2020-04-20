@@ -1,25 +1,17 @@
 import React, { memo } from 'react';
-
 import { CaptionButton } from '../../basic';
-//import styles from '../../../config/common.module.css';
 
 interface Props {
   setVisibleToolbarFilters: () => void;
 }
 
-const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) => {
-  const handleOnPress = () => {
-    setVisibleToolbarFilters();
-  };
-
-  return (
-    <div className='toolbar'>
-      <CaptionButton
-        title='filter'
-        icon='filtervariant'
-        onClick={handleOnPress} />
-    </div>
-  );
-};
+const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) => (
+  <div className='toolbar'>
+    <CaptionButton
+      title='filter'
+      icon='filtervariant'
+      onClick={setVisibleToolbarFilters} />
+  </div>
+);
 
 export const StatsPageButtonToolbar = memo(_StatsPageButtonToolbar);

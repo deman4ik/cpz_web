@@ -5,17 +5,24 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { Template } from '../../layout';
 import { SignalsSearchContainer } from './SignalsSearchContainer';
+import { Modal } from '../../basic';
 import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
 import { PageType } from '../../../config/types';
+import { SearchFiltersModal } from '../../ui/Modals/SearchFiltersModal';
 import styles from './index.module.css';
 
 export const SignalsSearchPage: React.FC = () => {
   const [ signalsSearchValue, setSignalsSearchValue ] = useState('');
   const debouncedSearchTerm = useDebounce(signalsSearchValue, 500);
+  const [ isVisibleFilters, setIsVisibleFilters ] = useState(false);
   const { width } = useWindowDimensions();
 
   const handlePressBack = () => {
     Router.back();
+  };
+
+  const setVisibleToolbarFilters = () => {
+    setIsVisibleFilters(prev => !prev);
   };
 
   return (
@@ -26,6 +33,7 @@ export const SignalsSearchPage: React.FC = () => {
       toolbar={(
         <SearchToolbar
           setSignalsSearchValue={setSignalsSearchValue}
+          setVisibleToolbarFilters={setVisibleToolbarFilters}
           displayType='signals' />
       )}
       hideToolbar
@@ -37,6 +45,13 @@ export const SignalsSearchPage: React.FC = () => {
           displayType='signals'
           width={width} />
       </div>
+      <Modal
+        isOpen={isVisibleFilters}
+        title='Filter Signals Search'
+        onClose={setVisibleToolbarFilters}
+      >
+        <SearchFiltersModal />
+      </Modal>
     </Template>
   );
 };
