@@ -22,7 +22,6 @@ export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayT
     setFilter({
       variables: { searchFilters: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }) }
     });
-    //setSignalsSearchValue(text);
     setValue(text);
   };
 
