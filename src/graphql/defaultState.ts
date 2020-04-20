@@ -1,6 +1,10 @@
 export const defaultState = {
   userId: '',
-  searchFilters: '',
+  Filters: {
+    signals: '',
+    robots: '',
+    __typename: 'Filters'
+  },
   ModalVisible: {
     isVisible: false,
     type: '',

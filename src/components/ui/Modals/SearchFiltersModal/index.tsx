@@ -15,9 +15,10 @@ import styles from './index.module.css';
 
 interface Props {
   onClose: () => void;
+  displayType: string;
 }
 
-const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
+const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS);
   const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
@@ -29,9 +30,9 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
   ), [ data, loading ]);
 
   useEffect(() => {
-    if (data && data.searchFilters) {
-      const filters = JSON.parse(data.searchFilters);
-      const obj = (Object.keys(filters).reduce((acc, item) => (
+    if (data && data.Filters[displayType]) {
+      const filters = JSON.parse(data.Filters[displayType]);
+      const obj = (Object.keys(filters).filter(el => el !== 'name').reduce((acc, item) => (
         { ...acc,
           [item]: filters[item]._in
             ? filterData[item].filter(el => !filters[item]._in.includes(el.key)).map(el => el.key)
@@ -50,12 +51,14 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
   };
 
   const confirmSelectedFilter = () => {
+    const filters = data.Filters[displayType] ? JSON.parse(data.Filters[displayType]) : {};
     const searchFilters = Object.keys(filterData).reduce((acc, item) => ({
       ...acc, [item]: { _in: getElements(filterData[item], checkedButtons[item]) }
     }), {});
 
     setFilters({ variables: {
-      searchFilters: JSON.stringify(searchFilters)
+      searchFilters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
+      type: displayType
     } }).then(_result => {
       onClose();
     });

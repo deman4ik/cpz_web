@@ -22,7 +22,8 @@ export const setChartData = (_root: any, variables: any, context: any) => {
 };
 
 export const setSearchFilters = (_root: any, variables: any, context: any) => {
+  const { searchFilters, type } = variables;
   context.client.writeData({
-    data: { searchFilters: variables.searchFilters }
+    data: { Filters: { [type]: searchFilters, __typename: 'Filters' } }
   });
 };

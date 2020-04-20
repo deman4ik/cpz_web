@@ -48,7 +48,10 @@ export const SEARCH_SIGNALS_FILTERS = gql`
         timeframe
       }
     }
-    searchFilters @client
+    Filters @client {
+      signals
+      robots
+    }
   }
 `;
 

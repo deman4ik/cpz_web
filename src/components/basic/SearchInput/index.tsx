@@ -17,7 +17,6 @@ export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) =
   // useEffect(() => () => { onChange(''); }, []);
 
   const handleOnChange = (e) => {
-    console.log(e.target);
     onChange(e.target.value);
   };
 

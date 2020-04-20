@@ -51,7 +51,10 @@ export const ROBOT = gql`
 `;
 
 export const SEARCH_FILTERS = gql`
-  query searchFilters {
-    searchFilters @client
+  query Filters {
+    Filters @client {
+      signals
+      robots
+    }
   }
 `;

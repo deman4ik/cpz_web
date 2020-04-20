@@ -14,6 +14,11 @@ const queryKey = {
   robots: 'trading'
 };
 
+const queryFilter = {
+  signals: () => ({ signals: { _eq: true } }),
+  robots: () => ({ trading: { eq: true } })
+};
+
 export const useFetchRobots = (
   dispayType: string,
   formatRobotsData: (v_robots_stats: any) => {}
@@ -44,7 +49,7 @@ export const useFetchRobots = (
         hash: filtersQuery.hash,
         where: {
           robots: {
-            signals: { _eq: true },
+            ...queryFilter[dispayType](),
             ...filtersQuery.robots
           }
         }
@@ -66,14 +71,13 @@ export const useFetchRobots = (
   useEffect(() => {
     const addFields = () => {
       const hash = getHash(30);
-
-      return !filters.searchFilters
+      return !filters.Filters[dispayType]
         ? { robots: {}, hash }
-        : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) }, hash };
+        : { robots: { ...JSON.parse(filters.Filters[dispayType]) }, hash };
     };
 
     setFiltersQuery(addFields());
-  }, [ filters ]);
+  }, [ filters.Filters[dispayType] ]);
 
   useEffect(() => {
     refetchStats();

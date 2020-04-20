@@ -38,9 +38,14 @@ export const typeDefs = gql`
     name: String
   }
 
+  extend type Filters {
+    signals: String
+    robots: String
+  }
+
   extend type Query {
     userId: String!
-    searchFilters: String!
+    Filters: Filters!
     ChartData: ChartData!
     ModalVisible: ModalVisible!
     Robot: Robot!

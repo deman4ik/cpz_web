@@ -62,7 +62,7 @@ export const CREATE_ROBOT = gql`
 `;
 
 export const SET_SEARCH_FILTERS = gql`
-  mutation setSearchFilters($searchFilters: String!) {
-    setSearchFilters(searchFilters: $searchFilters) @client
+  mutation setSearchFilters($searchFilters: String!, $type: String!) {
+    setSearchFilters(searchFilters: $searchFilters, type: $type) @client
   }
 `;
