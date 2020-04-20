@@ -54,11 +54,12 @@ export const SEARCH_SIGNALS_FILTERS = gql`
 
 export const ROBOT_AGGREGATE_COUNT = gql`
   query aggregate(
+      $hash: String!
       $where: robots_bool_exp
     ){
     robots_aggregate(
       where: $where
-    ) @connection(key: "robots_aggregate", filter: ["where"]) {
+    ) @connection(key: "robots_aggregate", filter: ["hash"]) {
       aggregate {
         count
       }

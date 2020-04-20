@@ -21,20 +21,16 @@ export const useFetchRobots = (
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
   const { data: filters } = useQuery(SEARCH_FILTERS);
-  const defaultFiltersQuery = {
-    robots: {
-      signals: { _eq: true },
-    }
-  };
-  const [ filtersQuery, setFiltersQuery ] = useState(defaultFiltersQuery);
+  const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '' });
 
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
       variables: {
         where: {
           [queryKey[dispayType]]: { _eq: true },
-          ...filtersQuery.robots
-        }
+          ...filtersQuery.robots,
+        },
+        hash: filtersQuery.hash
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -45,7 +41,13 @@ export const useFetchRobots = (
       variables: {
         offset: 0,
         limit,
-        where: filtersQuery
+        hash: filtersQuery.hash,
+        where: {
+          robots: {
+            signals: { _eq: true },
+            ...filtersQuery.robots
+          }
+        }
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -61,12 +63,12 @@ export const useFetchRobots = (
     }
   }, [ loading_aggregate, data_count ]);
 
-
   useEffect(() => {
     const addFields = () => {
       const hash = getHash(30);
+
       return !filters.searchFilters
-        ? { ...defaultFiltersQuery, hash }
+        ? { robots: {}, hash }
         : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) }, hash };
     };
 
