@@ -20,9 +20,18 @@ export const useFetchRobots = (
 ) => {
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
-
   const { data: filters } = useQuery(SEARCH_FILTERS);
-  console.log(filters);
+  const [ filtersQuery, setFiltersQuery ] = useState({
+    robots: {
+      name: { _ilike: searchText ? `%${searchText}%` : null },
+      signals: { _eq: true },
+    }
+  });
+  const addFields = () => {
+    //console.log(JSON.parse(filters.searchFilters));
+    return !filters.searchFilters ? filtersQuery : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) } };
+  };
+
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
       variables: {
@@ -34,14 +43,22 @@ export const useFetchRobots = (
       pollInterval: POLL_INTERVAL,
     }
   );
-
+  console.log('filtersQuery', filtersQuery);
   const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(
     dispayType === 'signals' ? GET_ROBOTS_BY_STATS_SIGNALS : GET_ROBOTS_BY_STATS_ROBOTS, {
       variables: {
         offset: 0,
         limit,
-        name: searchText ? `%${searchText}%` : null,
-        exchange: null
+        where: filtersQuery
+        // where: {
+        //   robots: {
+        //     name: { _ilike: searchText ? `%${searchText}%` : null },
+        //     signals: { _eq: true },
+        //     exchange: $exchange
+        //   }
+        // }
+        //name: searchText ? `%${searchText}%` : null,
+        // exchange: null
         //exchange: { _in: [ 'bitfinex' ] }
         //exchange: { _in: filters.searchFilters ? JSON.parse(filters.searchFilters) : null }
       },
@@ -61,9 +78,13 @@ export const useFetchRobots = (
 
 
   useEffect(() => {
+    setFiltersQuery(addFields());
+  }, [ searchText, filters ]);
+
+  useEffect(() => {
     refetchStats();
     refetchCounts();
-  }, [ searchText, filters.searchFilters ]);
+  }, [ filtersQuery ]);
 
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 

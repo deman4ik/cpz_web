@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useMemo, useState, memo } from 'react';
+import React, { useMemo, useState, memo, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
@@ -22,8 +23,23 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
   const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
 
   const filterData = useMemo(() => (
-    (!loading && data) ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }
+    (!loading && data)
+      ? getFilterData(data.filters)
+      : { asset: [], exchange: [], timeframe: [] }
   ), [ data, loading ]);
+
+  useEffect(() => {
+    if (data && data.searchFilters) {
+      const filters = JSON.parse(data.searchFilters);
+      const obj = (Object.keys(filters).reduce((acc, item) => (
+        { ...acc,
+          [item]: filters[item]._in
+            ? filterData[item].filter(el => !filters[item]._in.includes(el.key)).map(el => el.key)
+            : [] }
+      ), {}));
+      setCheckedButtons(prev => ({ ...prev, ...obj }));
+    }
+  }, [ filterData, data ]);
 
   const handleOnPressItem = (item: string, label: string) => {
     setCheckedButtons(prev => ({ ...prev,
@@ -34,9 +50,9 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
   };
 
   const confirmSelectedFilter = () => {
-    const searchFilters = Object.keys(filterData).map(el => ({
-      [el]: { _in: getElements(filterData[el], checkedButtons[el]) }
-    }));
+    const searchFilters = Object.keys(filterData).reduce((acc, item) => ({
+      ...acc, [item]: { _in: getElements(filterData[item], checkedButtons[item]) }
+    }), {});
 
     setFilters({ variables: {
       searchFilters: JSON.stringify(searchFilters)

@@ -4,17 +4,10 @@ export const GET_ROBOTS_BY_STATS = gql`
   query robots_by_stats(
     $limit: Int
     $offset: Int
-    $name: String
-    $exchange: String_comparison_exp
+    $where: v_robots_stats_bool_exp
   ) {
     v_robots_stats(
-      where: {
-        robots: {
-            name: { _ilike: $name },
-            signals: { _eq: true },
-            exchange: $exchange
-          }
-      }
+      where: $where
       limit: $limit
       offset: $offset
       order_by:{
@@ -54,6 +47,7 @@ export const SEARCH_SIGNALS_FILTERS = gql`
         timeframe
       }
     }
+    searchFilters @client
   }
 `;
 
