@@ -40,8 +40,8 @@ export const GET_ROBOTS_BY_STATS = gql`
 `;
 
 export const SEARCH_SIGNALS_FILTERS = gql`
-  query signals_filters {
-    filters: v_robots_stats {
+  query signals_filters($where: v_robots_stats_bool_exp) {
+    filters: v_robots_stats(where: $where) {
       robots {
         exchange
         asset

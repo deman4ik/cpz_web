@@ -16,7 +16,7 @@ const queryKey = {
 
 const queryFilter = {
   signals: () => ({ signals: { _eq: true } }),
-  robots: () => ({ trading: { eq: true } })
+  robots: () => ({ trading: { _eq: true } })
 };
 
 export const useFetchRobots = (

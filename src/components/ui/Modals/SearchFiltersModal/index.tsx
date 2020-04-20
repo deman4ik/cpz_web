@@ -18,9 +18,14 @@ interface Props {
   displayType: string;
 }
 
+const queryFilter = {
+  signals: () => ({ signals: { _eq: true } }),
+  robots: () => ({ trading: { _eq: true } })
+};
+
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
-  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS);
+  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS, { variables: { where: queryFilter[displayType]() } });
   const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
 
   const filterData = useMemo(() => (
