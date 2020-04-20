@@ -8,3 +8,9 @@ export type FilterData = {
   exchange: ButtonName[];
   timeframe: ButtonName[];
 };
+
+export type CheckedFilter = {
+  asset: string[];
+  exchange: string[];
+  timeframe: string[];
+};

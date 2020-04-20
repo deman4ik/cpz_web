@@ -1,5 +1,6 @@
 export const defaultState = {
   userId: '',
+  searchFilters: '',
   ModalVisible: {
     isVisible: false,
     type: '',

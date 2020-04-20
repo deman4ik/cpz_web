@@ -2,7 +2,7 @@ import { exchangeName } from '../../../../config/utils';
 import { timeFrameFormat } from '../../../../config/constants';
 import { FilterData } from './types';
 
-export const labels = [ 'asset', 'exchange', 'timeframe' ];
+export const labels = [ 'exchange', 'asset', 'timeframe' ];
 
 const formatData = {
   asset: key => key,
@@ -25,3 +25,7 @@ export const getFilterData = (filters) => {
 
   return result;
 };
+
+export const getElements = (target, filter) =>
+  (filter.length ? target.reduce((acc, item) =>
+    (filter.includes(item.key) ? acc : [ ...acc, item.key ]), []) : null);

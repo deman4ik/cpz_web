@@ -50,7 +50,7 @@ export const SignalsSearchPage: React.FC = () => {
         title='Filter Signals Search'
         onClose={setVisibleToolbarFilters}
       >
-        <SearchFiltersModal />
+        <SearchFiltersModal onClose={setVisibleToolbarFilters} />
       </Modal>
     </Template>
   );

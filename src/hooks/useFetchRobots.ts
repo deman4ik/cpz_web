@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from '../graphql/signals/queries';
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
+import { SEARCH_FILTERS } from '../graphql/local/queries';
 import { POLL_INTERVAL } from '../config/constants';
 
 const SHOW_LIMIT = 12;
@@ -19,6 +20,9 @@ export const useFetchRobots = (
 ) => {
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
+
+  const { data: filters } = useQuery(SEARCH_FILTERS);
+  console.log(filters);
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
       variables: {
@@ -36,7 +40,10 @@ export const useFetchRobots = (
       variables: {
         offset: 0,
         limit,
-        name: searchText ? `%${searchText}%` : null
+        name: searchText ? `%${searchText}%` : null,
+        exchange: null
+        //exchange: { _in: [ 'bitfinex' ] }
+        //exchange: { _in: filters.searchFilters ? JSON.parse(filters.searchFilters) : null }
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -56,7 +63,7 @@ export const useFetchRobots = (
   useEffect(() => {
     refetchStats();
     refetchCounts();
-  }, [ searchText ]);
+  }, [ searchText, filters.searchFilters ]);
 
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 

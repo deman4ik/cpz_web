@@ -49,3 +49,9 @@ export const ROBOT = gql`
     }
   }
 `;
+
+export const SEARCH_FILTERS = gql`
+  query searchFilters {
+    searchFilters @client
+  }
+`;

@@ -40,6 +40,7 @@ export const typeDefs = gql`
 
   extend type Query {
     userId: String!
+    searchFilters: String!
     ChartData: ChartData!
     ModalVisible: ModalVisible!
     Robot: Robot!

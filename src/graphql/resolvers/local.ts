@@ -20,3 +20,9 @@ export const setChartData = (_root: any, variables: any, context: any) => {
     data: { ChartData: { ...variables, __typename: 'ChartData' } }
   });
 };
+
+export const setSearchFilters = (_root: any, variables: any, context: any) => {
+  context.client.writeData({
+    data: { searchFilters: variables.searchFilters }
+  });
+};

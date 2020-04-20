@@ -5,12 +5,14 @@ export const GET_ROBOTS_BY_STATS = gql`
     $limit: Int
     $offset: Int
     $name: String
+    $exchange: String_comparison_exp
   ) {
     v_robots_stats(
       where: {
         robots: {
             name: { _ilike: $name },
-            signals: { _eq: true }
+            signals: { _eq: true },
+            exchange: $exchange
           }
       }
       limit: $limit

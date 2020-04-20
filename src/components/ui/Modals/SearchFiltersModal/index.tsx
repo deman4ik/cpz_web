@@ -1,28 +1,52 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useMemo, useState, memo } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
+import { SEARCH_FILTERS } from '../../../../graphql/local/queries';
+import { SET_SEARCH_FILTERS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button } from '../../../basic';
 import { capitalize } from '../../../../config/utils';
-import { labels, getFilterData } from './helpers';
+import { labels, getFilterData, getElements } from './helpers';
+import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
 interface Props {
-
+  onClose: () => void;
 }
 
-const _SearchFiltersModal: React.FC<Props> = () => {
-  const [ checkedButtons, setCheckedButtons ] = useState<string[]>([]);
+const _SearchFiltersModal: React.FC<Props> = ({ onClose }) => {
+  const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS);
+  const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
 
   const filterData = useMemo(() => (
     (!loading && data) ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }
   ), [ data, loading ]);
-  const handleOnPressItem = (item: string) => {
-    setCheckedButtons(prev => (
-      prev.find(el => el === item) ? prev.filter(el => el !== item) : [ ...prev, item ]
-    ));
+
+  const handleOnPressItem = (item: string, label: string) => {
+    setCheckedButtons(prev => ({ ...prev,
+      [label]: prev[label].find(el => el === item)
+        ? prev[label].filter(el => el !== item)
+        : [ ...prev[label], item ]
+    }));
+  };
+
+  const confirmSelectedFilter = () => {
+    const searchFilters = Object.keys(filterData).map(el => ({
+      [el]: { _in: getElements(filterData[el], checkedButtons[el]) }
+    }));
+
+    setFilters({ variables: {
+      searchFilters: JSON.stringify(searchFilters)
+    } }).then(_result => {
+      onClose();
+    });
+  };
+
+  const clearFilters = () => {
+    setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
   };
 
   return (
@@ -37,15 +61,31 @@ const _SearchFiltersModal: React.FC<Props> = () => {
               {filterData[label].map(item => (
                 <Button
                   key={item.key}
-                  type={checkedButtons.includes(item.key) ? 'rounded' : 'rounded-primary'}
+                  type={checkedButtons[label].includes(item.key) ? 'rounded' : 'rounded-primary'}
                   title={item.label}
                   style={{ marginLeft: 5, marginTop: 5 }}
                   clickable={false}
-                  onClick={() => handleOnPressItem(item.key)} />
+                  onClick={() => handleOnPressItem(item.key, label)} />
               ))}
             </div>
           </div>
         ))}
+        <div className={styles.btnsGroup}>
+          <Button
+            title='OK'
+            icon='check'
+            type='success'
+            onClick={confirmSelectedFilter}
+            isUppercase />
+          <Button
+            type='dimmed'
+            width={160}
+            title='clear filter'
+            style={{ marginLeft: 15 }}
+            onClick={clearFilters}
+            icon='close'
+            isUppercase />
+        </div>
       </div>
     )
   );

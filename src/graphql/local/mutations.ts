@@ -60,3 +60,9 @@ export const CREATE_ROBOT = gql`
     createRobot(robotInfo: $robotInfo, volume: $volume) @client
   }
 `;
+
+export const SET_SEARCH_FILTERS = gql`
+  mutation setSearchFilters($searchFilters: String!) {
+    setSearchFilters(searchFilters: $searchFilters) @client
+  }
+`;
