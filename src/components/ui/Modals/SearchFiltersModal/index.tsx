@@ -37,6 +37,7 @@ const _SearchFiltersModal: React.FC<Props> = () => {
                   key={item.key}
                   type='rounded-primary'
                   title={item.label}
+                  style={{ marginLeft: 5, marginTop: 5 }}
                   onClick={() => handleOnPressItem(item.key)} />
               ))}
             </div>

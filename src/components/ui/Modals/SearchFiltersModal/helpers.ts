@@ -11,7 +11,7 @@ const formatData = {
 };
 
 export const getFilterData = (filters) => {
-  return filters.reduce((acc: FilterData, item) => {
+  const result = filters.reduce((acc: FilterData, item) => {
     labels.forEach(key => {
       if (!acc[key].find(el => el.key === item.robots[key])) {
         acc[key].push({ key: item.robots[key], label: formatData[key](item.robots[key]) });
@@ -19,4 +19,9 @@ export const getFilterData = (filters) => {
     });
     return acc;
   }, { asset: [], exchange: [], timeframe: [] });
+  labels.forEach(key => {
+    result[key].sort((a, b) => a.key - b.key);
+  });
+
+  return result;
 };
