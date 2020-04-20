@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 
+import { SET_SEARCH_FILTERS } from '../../../graphql/local/mutations';
+import { SEARCH_FILTERS } from '../../../graphql/local/queries';
 import { SearchInput, CaptionButton } from '../../basic';
 import styles from './SearchToolbar.module.css';
 
@@ -11,14 +14,17 @@ interface Props {
 
 export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayType, setVisibleToolbarFilters }) => {
   const [ value, setValue ] = useState('');
+  const [ setFilterClear ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
 
   const onSignalsSearch = text => {
     setSignalsSearchValue(text);
     setValue(text);
   };
 
-  const handleOnPress = () => {
-    setVisibleToolbarFilters();
+  const handleOnPressClearFilter = () => {
+    setFilterClear({
+      variables: { searchFilters: '' }
+    });
   };
 
   return (
@@ -31,7 +37,12 @@ export const SearchToolbar: React.FC<Props> = ({ setSignalsSearchValue, displayT
         title='filter'
         icon='filtervariant'
         responsive
-        onClick={handleOnPress} />
+        onClick={setVisibleToolbarFilters} />
+      <CaptionButton
+        title='remove'
+        icon='filtervariantremove'
+        responsive
+        onClick={handleOnPressClearFilter} />
     </div>
   );
 };

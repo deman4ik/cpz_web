@@ -21,16 +21,13 @@ export const useFetchRobots = (
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
   const { data: filters } = useQuery(SEARCH_FILTERS);
-  const [ filtersQuery, setFiltersQuery ] = useState({
+  const defaultFiltersQuery = {
     robots: {
       name: { _ilike: searchText ? `%${searchText}%` : null },
       signals: { _eq: true },
     }
-  });
-  const addFields = () => {
-    //console.log(JSON.parse(filters.searchFilters));
-    return !filters.searchFilters ? filtersQuery : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) } };
   };
+  const [ filtersQuery, setFiltersQuery ] = useState(defaultFiltersQuery);
 
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
@@ -43,24 +40,13 @@ export const useFetchRobots = (
       pollInterval: POLL_INTERVAL,
     }
   );
-  console.log('filtersQuery', filtersQuery);
+
   const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(
     dispayType === 'signals' ? GET_ROBOTS_BY_STATS_SIGNALS : GET_ROBOTS_BY_STATS_ROBOTS, {
       variables: {
         offset: 0,
         limit,
         where: filtersQuery
-        // where: {
-        //   robots: {
-        //     name: { _ilike: searchText ? `%${searchText}%` : null },
-        //     signals: { _eq: true },
-        //     exchange: $exchange
-        //   }
-        // }
-        //name: searchText ? `%${searchText}%` : null,
-        // exchange: null
-        //exchange: { _in: [ 'bitfinex' ] }
-        //exchange: { _in: filters.searchFilters ? JSON.parse(filters.searchFilters) : null }
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -78,6 +64,11 @@ export const useFetchRobots = (
 
 
   useEffect(() => {
+    const addFields = () =>
+      (!filters.searchFilters
+        ? defaultFiltersQuery
+        : { robots: { ...filtersQuery.robots, ...JSON.parse(filters.searchFilters) } });
+
     setFiltersQuery(addFields());
   }, [ searchText, filters ]);
 
