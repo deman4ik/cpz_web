@@ -6,14 +6,13 @@ export const GET_ROBOTS_BY_STATS = gql`
     $offset: Int
     $where: v_robots_stats_bool_exp
     $hash: String!
+    $order_by: [v_robots_stats_order_by!]
   ) {
     v_robots_stats(
       where: $where
       limit: $limit
       offset: $offset
-      order_by:{
-        recovery_factor: desc_nulls_last
-      }
+      order_by: $order_by
     ) @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
       robots {
         id

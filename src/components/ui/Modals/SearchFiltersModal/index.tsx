@@ -9,7 +9,7 @@ import { SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button, Select } from '../../../basic';
 import { capitalize, getSearchProps } from '../../../../config/utils';
-import { labels, getFilterData, getElements, ordersSort } from './helpers';
+import { labels, getFilterData, getElements, ordersSortList, ordersSortMethod } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
@@ -25,7 +25,7 @@ const queryFilter = {
 
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
-  const [ inputKey, setInputKey ] = useState('');
+  const [ inputKey, setInputKey ] = useState('recovery_factor');
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS,
     { variables: { where: { robots: queryFilter[displayType]() } } });
   const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
@@ -47,6 +47,10 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
             : [] }
       ), {}));
       setCheckedButtons(prev => ({ ...prev, ...obj }));
+      if (filtersProps.orders) {
+        const orders = JSON.parse(filtersProps.orders);
+        setInputKey(Object.keys(orders).filter(el => el !== 'id')[0]);
+      }
     }
   }, [ filterData, data ]);
 
@@ -57,6 +61,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
         : [ ...prev[label], item ]
     }));
   };
+
   const confirmSelectedFilter = () => {
     const filtersProps = getSearchProps(data, displayType);
     const filters = filtersProps && filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
@@ -65,9 +70,9 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     }), {});
 
     setFilters({ variables: {
-      value: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
+      filters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
       type: displayType,
-      field: 'filters'
+      orders: JSON.stringify(ordersSortMethod[inputKey])
     } }).then(_result => {
       onClose();
     });
@@ -78,7 +83,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   };
 
   const handleOnChangeOrder = (value) => {
-    console.log(value);
+    setInputKey(value);
   };
 
   return (
@@ -89,7 +94,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
         </div>
         <div className={styles.orderby}>
           <Select
-            data={ordersSort}
+            data={ordersSortList}
             value={inputKey}
             onValueChange={value => handleOnChangeOrder(value)} />
         </div>

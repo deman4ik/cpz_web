@@ -35,9 +35,16 @@ export const tabNames = {
   orders: 'Sort by'
 };
 
-export const ordersSort = [
-  { value: 'profit', label: 'Profit' },
-  { value: 'winrate', label: 'Winrate' },
-  { value: 'recoveryfactor', label: 'Recovery factor' },
-  { value: 'tradescount', label: 'Trades count' }
+export const ordersSortList = [
+  { value: 'max_drawdown', label: 'Max drawdown' },
+  { value: 'recovery_factor', label: 'Recovery factor' },
+  { value: 'win_rate', label: 'Win rate' },
+  { value: 'trades_count', label: 'Trades count' }
 ];
+
+export const ordersSortMethod = {
+  max_drawdown: { max_drawdown: 'desc_nulls_last', id: 'asc' },
+  recovery_factor: { recovery_factor: 'asc_nulls_last', id: 'asc' },
+  win_rate: { win_rate: 'asc_nulls_last', id: 'asc' },
+  trades_count: { trades_count: 'asc_nulls_last', id: 'asc' }
+};
