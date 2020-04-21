@@ -27,14 +27,6 @@ export const PageHead: React.FC<Props> = ({ title }) => (
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
       rel="stylesheet"
     />
-    {/* Google Page Speed */}
-    <link
-      rel="preload"
-      href="/_next/static/chunks/fonts/MaterialCommunityIcons-5a293a273bee8d740a045d9922b9a9ae.ttf"
-      as="font"
-      type="font/ttf"
-      crossOrigin="anonymous"
-    />
     {/*  Global site tag (gtag.js) - Google Analytics */}
     <script
       async
