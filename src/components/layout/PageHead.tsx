@@ -38,7 +38,8 @@ export const PageHead: React.FC<Props> = ({ title }) => (
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-37BGBQ6GCK');`,
+        gtag('config', 'G-37BGBQ6GCK');
+        gtag('config', 'AW-971308941');`,
       }}
     />
   </Head>
