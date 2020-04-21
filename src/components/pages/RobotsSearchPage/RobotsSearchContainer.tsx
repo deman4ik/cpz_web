@@ -7,12 +7,12 @@ import { Modals } from './Modals';
 import { formatRobotsData } from './helpers';
 
 interface Props {
-  searchText?: string;
+  //searchText?: string;
   displayType: string;
   width: number;
 }
 
-export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText = '', width }) => {
+export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
   const { robotsData, counts, loading, isLoadingMore, onFetchMore } =
     useFetchRobots(displayType, formatRobotsData);
 
@@ -27,7 +27,7 @@ export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText
           width={width}
           displayType={displayType} />
       )}
-      <Modals searchText={searchText} width={width} />
+      <Modals width={width} />
     </>
   );
 };

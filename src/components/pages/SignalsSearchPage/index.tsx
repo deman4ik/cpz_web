@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
-import { useDebounce } from '../../../hooks/useDebounce';
+//import { useDebounce } from '../../../hooks/useDebounce';
 import { Template } from '../../layout';
 import { SignalsSearchContainer } from './SignalsSearchContainer';
 import { Modal } from '../../basic';
@@ -12,8 +12,8 @@ import { SearchFiltersModal } from '../../ui/Modals/SearchFiltersModal';
 import styles from './index.module.css';
 
 export const SignalsSearchPage: React.FC = () => {
-  const [ signalsSearchValue, setSignalsSearchValue ] = useState('');
-  const debouncedSearchTerm = useDebounce(signalsSearchValue, 500);
+  //const [ signalsSearchValue, setSignalsSearchValue ] = useState('');
+  //const debouncedSearchTerm = useDebounce(signalsSearchValue, 500);
   const [ isVisibleFilters, setIsVisibleFilters ] = useState(false);
   const { width } = useWindowDimensions();
 
@@ -32,7 +32,7 @@ export const SignalsSearchPage: React.FC = () => {
       width={width}
       toolbar={(
         <SearchToolbar
-          setSignalsSearchValue={setSignalsSearchValue}
+          //setSignalsSearchValue={setSignalsSearchValue}
           setVisibleToolbarFilters={setVisibleToolbarFilters}
           displayType='signals' />
       )}
@@ -41,7 +41,6 @@ export const SignalsSearchPage: React.FC = () => {
     >
       <div className={styles.container}>
         <SignalsSearchContainer
-          searchText={debouncedSearchTerm}
           displayType='signals'
           width={width} />
       </div>

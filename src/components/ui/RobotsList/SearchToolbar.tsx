@@ -9,7 +9,7 @@ import { getSearchProps } from '../../../config/utils';
 import styles from './SearchToolbar.module.css';
 
 interface Props {
-  setSignalsSearchValue: (text: string) => void;
+  //setSignalsSearchValue: (text: string) => void;
   setVisibleToolbarFilters?: () => void;
   displayType: string;
 }
@@ -36,8 +36,13 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
     const search = getSearchProps(data, displayType);
     const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
     const searchFilters = filters.name && filters.name._ilike ? JSON.stringify({ name: filters.name }) : '';
+
     setFilter({
-      variables: { searchFilters, type: displayType }
+      variables: {
+        value: searchFilters,
+        field: 'filters',
+        type: displayType
+      }
     });
   };
 
