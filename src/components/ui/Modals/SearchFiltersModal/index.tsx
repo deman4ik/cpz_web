@@ -78,8 +78,14 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     });
   };
 
-  const clearFilters = () => {
+  const resetFilters = () => {
     setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
+  };
+
+  const clearFilters = () => {
+    const fullFilter = Object.keys(filterData).reduce((acc, item) =>
+      ({ ...acc, [item]: [ ...filterData[item].map(el => el.key) ] }), {});
+    setCheckedButtons(prev => ({ ...prev, ...fullFilter }));
   };
 
   const handleOnChangeOrder = (value) => {
@@ -139,7 +145,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               width={160}
               title='reset filter'
               className={styles.btn}
-              onClick={clearFilters}
+              onClick={resetFilters}
               icon='filtervariantremove'
               isUppercase />
           </div>
