@@ -51,7 +51,7 @@ export const useFetchRobots = (
         offset: 0,
         limit,
         hash: filtersQuery.hash,
-        order_by: defaultOrderBy,
+        order_by: filtersQuery.order_by,
         where: {
           robots: {
             ...queryFilter[dispayType](),
@@ -82,7 +82,6 @@ export const useFetchRobots = (
         : { robots: { ...JSON.parse(search.filters) }, hash, order_by: defaultOrderBy };
 
       result.order_by = (search && search.orders) ? JSON.parse(search.orders) : defaultOrderBy;
-      console.log('result', result);
       return result;
     };
 
