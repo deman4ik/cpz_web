@@ -33,7 +33,7 @@
   color: var(--accent);
 }
 
-@media (max-width: 495px) {
+@media (max-width: 550px) {
   .wrapper {
     width: 300px;
   }
@@ -42,14 +42,20 @@
   }
 }
 
-@media (max-width: 410px) {
+@media (max-width: 490px) {
   .wrapper {
     width: 250px;
   }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 390px) {
   .wrapper {
     width: 230px;
+  }
+}
+
+@media (max-width: 355px) {
+  .wrapper {
+    width: 220px;
   }
 }

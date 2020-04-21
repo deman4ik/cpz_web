@@ -130,6 +130,9 @@ export const Button: React.FC<ButtonProps> =
           .btn-text {
             display: ${responsive ? 'none' : 'block'};
           }
+          .btn {
+            width: ${responsive ? 'min-content' : width ? `${width}px` : 'min-content'}
+          }
           .aligner {
             width: ${base.icon ? responsive ? '12px' : '20px' : 0};
           }

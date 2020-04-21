@@ -7,9 +7,9 @@ import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
 import { GET_SEARCH_PROPS } from '../../../../graphql/local/queries';
 import { SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
-import { Button } from '../../../basic';
+import { Button, Select } from '../../../basic';
 import { capitalize, getSearchProps } from '../../../../config/utils';
-import { labels, getFilterData, getElements } from './helpers';
+import { labels, getFilterData, getElements, ordersSortList, ordersSortMethod } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
@@ -25,9 +25,9 @@ const queryFilter = {
 
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
+  const [ inputKey, setInputKey ] = useState('recovery_factor');
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS,
     { variables: { where: { robots: queryFilter[displayType]() } } });
-  //const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
   const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
 
   const filterData = useMemo(() => (
@@ -47,6 +47,10 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
             : [] }
       ), {}));
       setCheckedButtons(prev => ({ ...prev, ...obj }));
+      if (filtersProps.orders) {
+        const orders = JSON.parse(filtersProps.orders);
+        setInputKey(Object.keys(orders).filter(el => el !== 'id')[0]);
+      }
     }
   }, [ filterData, data ]);
 
@@ -57,7 +61,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
         : [ ...prev[label], item ]
     }));
   };
-  //console.log(data);
+
   const confirmSelectedFilter = () => {
     const filtersProps = getSearchProps(data, displayType);
     const filters = filtersProps && filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
@@ -65,65 +69,91 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
       ...acc, [item]: { _in: getElements(filterData[item], checkedButtons[item]) }
     }), {});
 
-    // setFilters({ variables: {
-    //   searchFilters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
-    //   type: displayType
-    // } }).then(_result => {
-    //   //onClose();
-    // });
-
     setFilters({ variables: {
-      value: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
+      filters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
       type: displayType,
-      field: 'filters'
+      orders: JSON.stringify(ordersSortMethod[inputKey])
     } }).then(_result => {
       onClose();
     });
   };
 
-  const clearFilters = () => {
+  const resetFilters = () => {
     setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
   };
 
+  const clearFilters = () => {
+    const fullFilter = Object.keys(filterData).reduce((acc, item) =>
+      ({ ...acc, [item]: [ ...filterData[item].map(el => el.key) ] }), {});
+    setCheckedButtons(prev => ({ ...prev, ...fullFilter }));
+  };
+
+  const handleOnChangeOrder = (value) => {
+    setInputKey(value);
+  };
+
   return (
-    loading ? <LoadingIndicator /> : (
-      <div className={styles.container}>
-        {labels.map((label: string) => (
-          <div key={label} className={styles.row}>
-            <div className={styles.label}>
-              <div className={styles.labelText}>{`${capitalize(label)}:`}</div>
-            </div>
-            <div className={styles.btnContainer}>
-              {filterData[label].map(item => (
-                <Button
-                  key={item.key}
-                  type={checkedButtons[label].includes(item.key) ? 'rounded' : 'rounded-primary'}
-                  title={item.label}
-                  style={{ marginLeft: 5, marginTop: 5 }}
-                  clickable={false}
-                  onClick={() => handleOnPressItem(item.key, label)} />
-              ))}
-            </div>
-          </div>
-        ))}
-        <div className={styles.btnsGroup}>
-          <Button
-            title='OK'
-            icon='check'
-            type='success'
-            onClick={confirmSelectedFilter}
-            isUppercase />
-          <Button
-            type='dimmed'
-            width={160}
-            title='clear filter'
-            style={{ marginLeft: 15 }}
-            onClick={clearFilters}
-            icon='close'
-            isUppercase />
+    <>
+      <div className={styles.row}>
+        <div className={styles.label}>
+          <div className={styles.labelText}>Sort by:</div>
+        </div>
+        <div className={styles.orderby}>
+          <Select
+            data={ordersSortList}
+            value={inputKey}
+            onValueChange={value => handleOnChangeOrder(value)} />
         </div>
       </div>
-    )
+      {loading ? <LoadingIndicator /> : (
+        <div className={styles.container}>
+          {labels.map((label: string) => (
+            <div key={label} className={styles.row}>
+              <div className={styles.label}>
+                <div className={styles.labelText}>{`${capitalize(label)}:`}</div>
+              </div>
+              <div className={styles.btnContainer}>
+                {filterData[label].map(item => (
+                  <Button
+                    key={item.key}
+                    type={checkedButtons[label].includes(item.key) ? 'rounded' : 'rounded-primary'}
+                    title={item.label}
+                    style={{ marginLeft: 5, marginTop: 5 }}
+                    clickable={false}
+                    onClick={() => handleOnPressItem(item.key, label)} />
+                ))}
+              </div>
+            </div>
+          ))}
+          <div className={styles.btnsGroup}>
+            <Button
+              title='OK'
+              icon='check'
+              type='success'
+              onClick={confirmSelectedFilter}
+              isUppercase />
+            <Button
+              type='dimmed'
+              width={160}
+              title='clear filter'
+              className={styles.btn}
+              onClick={clearFilters}
+              responsive
+              icon='filtervariantminus'
+              isUppercase />
+            <Button
+              type='dimmed'
+              width={160}
+              title='reset filter'
+              className={styles.btn}
+              onClick={resetFilters}
+              responsive
+              icon='filtervariantremove'
+              isUppercase />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

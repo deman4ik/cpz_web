@@ -28,35 +28,37 @@ const _ClosedPositionContainer: React.FC<Props> =
         Closed Positions
       </div>
       {data.length ? (
-        <div className={styles.accordionSurface}>
-          {isDesktopView ? (
-            <>
-              <HeaderTradingTabRobotPage />
-              { data.map(item => (
-                <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
-              )) }
-            </>
-          ) : (
-            <div className={styles.mobileCardContainer}>
-              { data.map(item => (
-                <ClosedPositionsRobotPageItemCard
-                  key={item.id}
-                  item={item}
-                  robot={robot}
-                  activeTab={SectionType.closedPositions} />
-              ))}
-            </div>
-          )}
-        </div>
+        <>
+          <div className={styles.accordionSurface}>
+            {isDesktopView ? (
+              <>
+                <HeaderTradingTabRobotPage />
+                { data.map(item => (
+                  <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
+                )) }
+              </>
+            ) : (
+              <div className={styles.mobileCardContainer}>
+                { data.map(item => (
+                  <ClosedPositionsRobotPageItemCard
+                    key={item.id}
+                    item={item}
+                    robot={robot}
+                    activeTab={SectionType.closedPositions} />
+                ))}
+              </div>
+            )}
+          </div>
+          <RobotsLoadMore
+            renderLoadMoreButton={data.length < quantyRecords}
+            isLoadingMore={isLoadingMore}
+            onFetchMore={handleLoadMore} />
+        </>
       ) : (
         <div style={{ marginTop: 20 }}>
           <NoRecentData message='No Closed Positions' />
         </div>
       )}
-      <RobotsLoadMore
-        renderLoadMoreButton={data.length < quantyRecords}
-        isLoadingMore={isLoadingMore}
-        onFetchMore={handleLoadMore} />
     </div>
   );
 };

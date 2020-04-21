@@ -8,7 +8,7 @@ import { RobotsSearchContainer } from './RobotsSearchContainer';
 import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
 import { Modal } from '../../basic';
 import { PageType } from '../../../config/types';
-import { SearchFiltersModal } from '../../ui/Modals/SearchFiltersModal';
+import { SearchFiltersModal } from '../../ui/Modals';
 import styles from './index.module.css';
 
 export const RobotsSearchPage: React.FC = () => {
@@ -45,7 +45,7 @@ export const RobotsSearchPage: React.FC = () => {
       </div>
       <Modal
         isOpen={isVisibleFilters}
-        title='Filter Signals Search'
+        title='Filter Robots Search'
         onClose={setVisibleToolbarFilters}
       >
         <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='robots' />

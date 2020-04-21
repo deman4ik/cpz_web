@@ -34,9 +34,9 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
         <div className='btn-text'>
           {title}
         </div>
-        <div className='icon'>
+        <i className='icon'>
           <SpecificIcon size={20} />
-        </div>
+        </i>
       </div>
       <div className='aligner' />
       <style jsx>{`
@@ -67,8 +67,8 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
           cursor: pointer;
           width: ${width ? `${width}px` : 'min-content'};
           height: 34px;
-          padding-left: 12px;
-          padding-right: 12px;
+          padding-left: 5px;
+          padding-right: 5px;
           user-select: none;
           align-items: center;
           overflow: hidden;
@@ -91,7 +91,20 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
             display: ${responsive ? 'none' : 'block'};
           }
           .icon {
-            top: ${responsive ? -10 : -6}px;
+            top: ${responsive ? -12 : -6}px;
+          }
+          .aligner {
+            width: ${responsive ? 25 : 12}px;
+          }
+        }
+        @media (max-width: 365px) {
+          .icon {
+            padding-left: ${responsive ? 0 : 8}px;
+            right: ${responsive ? -12 : -18}px;
+          }
+          .btn {
+            padding-left: ${responsive ? 0 : 5}px;
+            padding-right: ${responsive ? 0 : 5}px;
           }
         }`}
       </style>

@@ -19,6 +19,10 @@ const queryFilter = {
   robots: () => ({ trading: { _eq: true } })
 };
 
+const defaultOrderBy = {
+  recovery_factor: 'desc_nulls_last', id: 'asc'
+};
+
 export const useFetchRobots = (
   dispayType: string,
   formatRobotsData: (v_robots_stats: any) => {}
@@ -26,7 +30,7 @@ export const useFetchRobots = (
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
   const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
-  const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '' });
+  const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '', order_by: {} });
 
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
@@ -47,6 +51,7 @@ export const useFetchRobots = (
         offset: 0,
         limit,
         hash: filtersQuery.hash,
+        order_by: filtersQuery.order_by,
         where: {
           robots: {
             ...queryFilter[dispayType](),
@@ -72,9 +77,12 @@ export const useFetchRobots = (
     const addFields = () => {
       const hash = getHash(30);
       const search = getSearchProps(searchProps, dispayType);
-      return (!search || !search.filters)
-        ? { robots: {}, hash }
-        : { robots: { ...JSON.parse(search.filters) }, hash };
+      const result: { robots: any; hash: string; order_by: any } = (!search || !search.filters)
+        ? { robots: {}, hash, order_by: defaultOrderBy }
+        : { robots: { ...JSON.parse(search.filters) }, hash, order_by: defaultOrderBy };
+
+      result.order_by = (search && search.orders) ? JSON.parse(search.orders) : defaultOrderBy;
+      return result;
     };
 
     setFiltersQuery(addFields());

@@ -1,10 +1,5 @@
 export const defaultState = {
   userId: '',
-  Filters: {
-    signals: '',
-    robots: '',
-    __typename: 'Filters'
-  },
   Limit: {
     signals: 12,
     robots: 12,

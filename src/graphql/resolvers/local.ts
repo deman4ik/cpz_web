@@ -31,19 +31,19 @@ export const setChartData = (_root: any, variables: any, context: any) => {
 // };
 
 export const setSearchProps = (_root: any, variables: any, context: any) => {
-  const { field, type, value } = variables;
+  const { filters, type, orders } = variables;
   const dataProps = context.cache.readQuery({ query: GET_SEARCH_PROPS });
   const itemProps = dataProps.SearchProps.props.find(el => el.type === type);
   let data;
   if (itemProps) {
     data = dataProps.SearchProps.props.map(el => {
       if (el.type === type) {
-        return { ...el, [field]: value };
+        return { ...el, filters, orders };
       }
       return el;
     });
   } else {
-    const item = { type, filters: '', orders: '', [field]: value, __typename: 'PropsType' };
+    const item = { type, filters, orders, __typename: 'PropsType' };
     data = [ ...dataProps.SearchProps.props, item ];
   }
   context.cache.writeQuery({

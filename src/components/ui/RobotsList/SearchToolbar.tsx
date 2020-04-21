@@ -9,10 +9,13 @@ import { getSearchProps } from '../../../config/utils';
 import styles from './SearchToolbar.module.css';
 
 interface Props {
-  //setSignalsSearchValue: (text: string) => void;
   setVisibleToolbarFilters?: () => void;
   displayType: string;
 }
+
+const defaultOrderBy = {
+  recovery_factor: 'desc_nulls_last', id: 'asc'
+};
 
 export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
   const [ value, setValue ] = useState('');
@@ -24,8 +27,8 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
     const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
     setFilter({
       variables: {
-        value: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }),
-        field: 'filters',
+        filters: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }),
+        orders: (search && search.orders) ? search.orders : '',
         type: displayType
       }
     });
@@ -39,8 +42,8 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
 
     setFilter({
       variables: {
-        value: searchFilters,
-        field: 'filters',
+        filters: searchFilters,
+        orders: JSON.stringify(defaultOrderBy),
         type: displayType
       }
     });

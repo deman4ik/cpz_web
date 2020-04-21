@@ -14,3 +14,8 @@ export type CheckedFilter = {
   exchange: string[];
   timeframe: string[];
 };
+
+export enum TabTypeFilters {
+  filters,
+  orders
+}

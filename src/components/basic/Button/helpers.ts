@@ -1,5 +1,5 @@
 import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ChevronLeftIcon,
-  ArrowDownIcon, BorderColorIcon, CloseIcon, LockOpenIcon, MinusIcon,
+  ArrowDownIcon, BorderColorIcon, CloseIcon, LockOpenIcon, MinusIcon, FilterVariantRemoveIcon, FilterVariantMinusIcon,
   EmailIcon, AccountIcon } from '../../../assets/icons/svg';
 
 export const components = {
@@ -11,6 +11,8 @@ export const components = {
   chevronleft: ChevronLeftIcon,
   arrowdown: ArrowDownIcon,
   bordercolor: BorderColorIcon,
+  filtervariantremove: FilterVariantRemoveIcon,
+  filtervariantminus: FilterVariantMinusIcon,
   close: CloseIcon,
   lockopen: LockOpenIcon,
   email: EmailIcon,
