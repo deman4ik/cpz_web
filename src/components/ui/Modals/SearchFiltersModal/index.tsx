@@ -138,6 +138,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               title='clear filter'
               className={styles.btn}
               onClick={clearFilters}
+              responsive
               icon='filtervariantminus'
               isUppercase />
             <Button
@@ -146,6 +147,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               title='reset filter'
               className={styles.btn}
               onClick={resetFilters}
+              responsive
               icon='filtervariantremove'
               isUppercase />
           </div>
