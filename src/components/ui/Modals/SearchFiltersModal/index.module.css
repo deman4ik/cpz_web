@@ -38,3 +38,13 @@
   justify-content: center;
   margin-top: 10px;
 }
+
+.orderby {
+  margin-left: 5px;
+}
+
+@media (max-width: 480px) {
+  .btnsGroup {
+    flex-direction: column;
+  }
+}

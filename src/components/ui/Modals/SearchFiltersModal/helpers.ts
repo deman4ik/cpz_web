@@ -35,9 +35,9 @@ export const tabNames = {
   orders: 'Sort by'
 };
 
-export const ordersSort = {
-  profit: 'Profit',
-  winrate: 'Winrate',
-  recoveryfactor: 'Recovery factor',
-  tradescount: 'Trades count'
-};
+export const ordersSort = [
+  { value: 'profit', label: 'Profit' },
+  { value: 'winrate', label: 'Winrate' },
+  { value: 'recoveryfactor', label: 'Recovery factor' },
+  { value: 'tradescount', label: 'Trades count' }
+];

@@ -32,7 +32,6 @@ export const SignalsSearchPage: React.FC = () => {
       width={width}
       toolbar={(
         <SearchToolbar
-          //setSignalsSearchValue={setSignalsSearchValue}
           setVisibleToolbarFilters={setVisibleToolbarFilters}
           displayType='signals' />
       )}
@@ -47,6 +46,7 @@ export const SignalsSearchPage: React.FC = () => {
       <Modal
         isOpen={isVisibleFilters}
         onClose={setVisibleToolbarFilters}
+        title='Filter Signals Search'
       >
         <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='signals' />
       </Modal>

@@ -8,16 +8,21 @@
   padding-right: 16px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 670px) {
   .container {
     justify-content: center;
     padding-right: 46px;
   }
 }
 
-@media (max-width: 410px) {
+@media (max-width: 580px) {
   .container {
-    justify-content: center;
     padding-right: 36px;
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    padding-right: 16px;
   }
 }

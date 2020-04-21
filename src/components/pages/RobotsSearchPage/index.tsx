@@ -45,7 +45,7 @@ export const RobotsSearchPage: React.FC = () => {
       </div>
       <Modal
         isOpen={isVisibleFilters}
-        title='Filter Signals Search'
+        title='Filter Robots Search'
         onClose={setVisibleToolbarFilters}
       >
         <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='robots' />
