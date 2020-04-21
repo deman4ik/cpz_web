@@ -5,6 +5,11 @@ export const defaultState = {
     robots: '',
     __typename: 'Filters'
   },
+  Limit: {
+    signals: 12,
+    robots: 12,
+    __typename: 'Limit'
+  },
   SearchProps: {
     props: [],
     __typename: 'SearchProps'

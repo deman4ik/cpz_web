@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import { SET_SEARCH_FILTERS } from '../../../graphql/local/mutations';
-import { SEARCH_FILTERS } from '../../../graphql/local/queries';
+import { SET_SEARCH_PROPS } from '../../../graphql/local/mutations';
+import { GET_SEARCH_PROPS } from '../../../graphql/local/queries';
 import { SearchInput, CaptionButton } from '../../basic';
+import { getSearchProps } from '../../../config/utils';
 import styles from './SearchToolbar.module.css';
 
 interface Props {
@@ -15,28 +16,34 @@ interface Props {
 
 export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
   const [ value, setValue ] = useState('');
-  const [ setFilter ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
-  const { data } = useQuery(SEARCH_FILTERS);
+  const [ setFilter ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
+  const { data } = useQuery(GET_SEARCH_PROPS);
 
   const onSignalsSearch = text => {
-    const filters = (data && data.Filters[displayType]) ? JSON.parse(data.Filters[displayType]) : {};
+    const search = getSearchProps(data, displayType);
+    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
     setFilter({
-      variables: { searchFilters: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }), type: displayType }
+      variables: {
+        value: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }),
+        field: 'filters',
+        type: displayType
+      }
     });
     setValue(text);
   };
 
   const handleOnPressClearFilter = () => {
-    const filters = (data && data.Filters[displayType]) ? JSON.parse(data.Filters[displayType]) : {};
+    const search = getSearchProps(data, displayType);
+    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
     const searchFilters = filters.name && filters.name._ilike ? JSON.stringify({ name: filters.name }) : '';
-    console.log(searchFilters);
     setFilter({
       variables: { searchFilters, type: displayType }
     });
   };
 
   useEffect(() => {
-    const filters = (data && data.Filters[displayType]) ? JSON.parse(data.Filters[displayType]) : {};
+    const search = getSearchProps(data, displayType);
+    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
     if (filters.name && filters.name._ilike) {
       setValue((filters.name._ilike).slice(1, -1));
     }

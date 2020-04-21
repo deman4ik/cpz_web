@@ -4,12 +4,12 @@ import React, { useMemo, useState, memo, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
-import { SEARCH_FILTERS } from '../../../../graphql/local/queries';
-import { SET_SEARCH_FILTERS, SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
+import { GET_SEARCH_PROPS } from '../../../../graphql/local/queries';
+import { SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button } from '../../../basic';
-import { capitalize } from '../../../../config/utils';
-import { labels, getFilterData, getElements, getSearchProps } from './helpers';
+import { capitalize, getSearchProps } from '../../../../config/utils';
+import { labels, getFilterData, getElements } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
@@ -28,7 +28,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS,
     { variables: { where: { robots: queryFilter[displayType]() } } });
   //const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
-  const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
+  const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
 
   const filterData = useMemo(() => (
     (!loading && data)
@@ -38,7 +38,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
 
   useEffect(() => {
     const filtersProps = getSearchProps(data, displayType);
-    console.log('filtersProps', filtersProps);
     if (filtersProps) {
       const filters = filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
       const obj = (Object.keys(filters).filter(el => el !== 'name').reduce((acc, item) => (
@@ -78,7 +77,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
       type: displayType,
       field: 'filters'
     } }).then(_result => {
-      console.log('_result', _result);
       onClose();
     });
   };

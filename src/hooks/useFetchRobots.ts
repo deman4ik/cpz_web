@@ -4,9 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from '../graphql/signals/queries';
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
-import { SEARCH_FILTERS } from '../graphql/local/queries';
+import { GET_SEARCH_PROPS } from '../graphql/local/queries';
 import { POLL_INTERVAL } from '../config/constants';
-import { getHash } from '../config/utils';
+import { getHash, getSearchProps } from '../config/utils';
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -25,7 +25,7 @@ export const useFetchRobots = (
 ) => {
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
-  const { data: filters } = useQuery(SEARCH_FILTERS);
+  const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
   const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '' });
 
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
@@ -71,13 +71,14 @@ export const useFetchRobots = (
   useEffect(() => {
     const addFields = () => {
       const hash = getHash(30);
-      return !filters.Filters[dispayType]
+      const search = getSearchProps(searchProps, dispayType);
+      return (!search || !search.filters)
         ? { robots: {}, hash }
-        : { robots: { ...JSON.parse(filters.Filters[dispayType]) }, hash };
+        : { robots: { ...JSON.parse(search.filters) }, hash };
     };
 
     setFiltersQuery(addFields());
-  }, [ filters.Filters[dispayType] ]);
+  }, [ searchProps ]);
 
   useEffect(() => {
     refetchStats();

@@ -29,11 +29,3 @@ export const getFilterData = (filters) => {
 export const getElements = (target, filter) =>
   (filter.length ? target.reduce((acc, item) =>
     (filter.includes(item.key) ? acc : [ ...acc, item.key ]), []) : null);
-
-export const getSearchProps = (data, displayType) => {
-  let result = null;
-  if (data && data.SearchProps.props) {
-    result = data.SearchProps.props.find(el => el.type === displayType);
-  }
-  return result;
-};

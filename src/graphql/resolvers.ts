@@ -1,4 +1,4 @@
-import { setModalState, setRobot, setChartData, setSearchFilters, setSearchProps } from './resolvers/local';
+import { setModalState, setRobot, setChartData, setSearchProps } from './resolvers/local';
 import { unsubscribe, subscribe } from './resolvers/signals';
 import { deleteRobot, actionRobot, createRobot, editRobot } from './resolvers/robots';
 
@@ -7,7 +7,6 @@ export const resolvers = {
     setModalState,
     setRobot,
     setChartData,
-    setSearchFilters,
     setSearchProps,
     unsubscribe,
     subscribe,

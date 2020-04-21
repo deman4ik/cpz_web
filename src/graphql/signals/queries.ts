@@ -53,7 +53,6 @@ export const SEARCH_SIGNALS_FILTERS = gql`
         type
         filters
         orders
-        limit
       }
     }
   }

@@ -66,7 +66,6 @@ export const GET_SEARCH_PROPS = gql`
         type
         filters
         orders
-        limit
       }
     }
   }

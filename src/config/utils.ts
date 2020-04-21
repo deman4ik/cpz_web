@@ -52,3 +52,11 @@ export const getHash = (length) => {
   const loops = Math.ceil(length / 13);
   return new Array(loops).fill(radom13chars).reduce((string, func) => string + func(), '').substring(0, length);
 };
+
+export const getSearchProps = (data, displayType) => {
+  let result = null;
+  if (data && data.SearchProps.props) {
+    result = data.SearchProps.props.find(el => el.type === displayType);
+  }
+  return result;
+};
