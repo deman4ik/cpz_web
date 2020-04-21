@@ -125,7 +125,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               type='dimmed'
               width={160}
               title='clear filter'
-              style={{ marginLeft: 15 }}
+              className={styles.btn}
               onClick={clearFilters}
               icon='filtervariantminus'
               isUppercase />
@@ -133,7 +133,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               type='dimmed'
               width={160}
               title='reset filter'
-              style={{ marginLeft: 15 }}
+              className={styles.btn}
               onClick={clearFilters}
               icon='filtervariantremove'
               isUppercase />
