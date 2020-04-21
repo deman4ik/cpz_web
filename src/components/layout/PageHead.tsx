@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import Head from 'next/head';
 
@@ -15,22 +16,22 @@ const keywords =
 export const PageHead: React.FC<Props> = ({ title }) => (
   <Head>
     <title>CRYPTUOSO - {title}</title>
-    <meta charSet="utf-8" />
+    <meta charSet='utf-8' />
     <meta
       name='viewport" content="initial-scale=1.0, width=device-width'
-      key="viewport"
+      key='viewport'
     />
-    <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+    <meta name='description' content={description} />
+    <meta name='keywords' content={keywords} />
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.png' />
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
-      rel="stylesheet"
+      href='https://fonts.googleapis.com/css?family=Roboto:400,700'
+      rel='stylesheet'
     />
     {/*  Global site tag (gtag.js) - Google Analytics */}
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-37BGBQ6GCK"
+      src='https://www.googletagmanager.com/gtag/js?id=G-37BGBQ6GCK'
     />
     <script
       dangerouslySetInnerHTML={{
