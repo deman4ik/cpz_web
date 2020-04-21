@@ -8,7 +8,7 @@ import { RobotsSearchContainer } from './RobotsSearchContainer';
 import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
 import { Modal } from '../../basic';
 import { PageType } from '../../../config/types';
-import { SearchFiltersModal } from '../../ui/Modals/SearchFiltersModal';
+import { SearchFiltersModal } from '../../ui/Modals';
 import styles from './index.module.css';
 
 export const RobotsSearchPage: React.FC = () => {
