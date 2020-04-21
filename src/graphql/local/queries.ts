@@ -58,3 +58,16 @@ export const SEARCH_FILTERS = gql`
     }
   }
 `;
+
+export const GET_SEARCH_PROPS = gql`
+  query SearchProps {
+    SearchProps @client {
+      props {
+        type
+        filters
+        orders
+        limit
+      }
+    }
+  }
+`;

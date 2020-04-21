@@ -5,11 +5,11 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { SEARCH_SIGNALS_FILTERS } from '../../../../graphql/signals/queries';
 import { SEARCH_FILTERS } from '../../../../graphql/local/queries';
-import { SET_SEARCH_FILTERS } from '../../../../graphql/local/mutations';
+import { SET_SEARCH_FILTERS, SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button } from '../../../basic';
 import { capitalize } from '../../../../config/utils';
-import { labels, getFilterData, getElements } from './helpers';
+import { labels, getFilterData, getElements, getSearchProps } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
@@ -25,8 +25,10 @@ const queryFilter = {
 
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
-  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS, { variables: { where: queryFilter[displayType]() } });
-  const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
+  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS,
+    { variables: { where: { robots: queryFilter[displayType]() } } });
+  //const [ setFilters ] = useMutation(SET_SEARCH_FILTERS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
+  const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: SEARCH_FILTERS } ] });
 
   const filterData = useMemo(() => (
     (!loading && data)
@@ -35,8 +37,10 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   ), [ data, loading ]);
 
   useEffect(() => {
-    if (data && data.Filters[displayType]) {
-      const filters = JSON.parse(data.Filters[displayType]);
+    const filtersProps = getSearchProps(data, displayType);
+    console.log('filtersProps', filtersProps);
+    if (filtersProps) {
+      const filters = filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
       const obj = (Object.keys(filters).filter(el => el !== 'name').reduce((acc, item) => (
         { ...acc,
           [item]: filters[item]._in
@@ -54,17 +58,27 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
         : [ ...prev[label], item ]
     }));
   };
-
+  //console.log(data);
   const confirmSelectedFilter = () => {
-    const filters = data.Filters[displayType] ? JSON.parse(data.Filters[displayType]) : {};
+    const filtersProps = getSearchProps(data, displayType);
+    const filters = filtersProps && filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
     const searchFilters = Object.keys(filterData).reduce((acc, item) => ({
       ...acc, [item]: { _in: getElements(filterData[item], checkedButtons[item]) }
     }), {});
 
+    // setFilters({ variables: {
+    //   searchFilters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
+    //   type: displayType
+    // } }).then(_result => {
+    //   //onClose();
+    // });
+
     setFilters({ variables: {
-      searchFilters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
-      type: displayType
+      value: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
+      type: displayType,
+      field: 'filters'
     } }).then(_result => {
+      console.log('_result', _result);
       onClose();
     });
   };

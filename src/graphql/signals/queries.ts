@@ -48,9 +48,13 @@ export const SEARCH_SIGNALS_FILTERS = gql`
         timeframe
       }
     }
-    Filters @client {
-      signals
-      robots
+    SearchProps @client {
+      props {
+        type
+        filters
+        orders
+        limit
+      }
     }
   }
 `;

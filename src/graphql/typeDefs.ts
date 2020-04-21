@@ -43,11 +43,23 @@ export const typeDefs = gql`
     robots: String
   }
 
+  extend type PropsType {
+    type: String
+    filters: String
+    orders: String
+    limit: Int
+  }
+
+  extend type SearchProps {
+    props: [PropsType]
+  }
+
   extend type Query {
     userId: String!
     Filters: Filters!
     ChartData: ChartData!
     ModalVisible: ModalVisible!
     Robot: Robot!
+    SearchProps: SearchProps!
   }
 `;

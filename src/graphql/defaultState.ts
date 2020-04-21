@@ -5,6 +5,10 @@ export const defaultState = {
     robots: '',
     __typename: 'Filters'
   },
+  SearchProps: {
+    props: [],
+    __typename: 'SearchProps'
+  },
   ModalVisible: {
     isVisible: false,
     type: '',
