@@ -43,10 +43,15 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: white;
+  opacity: 1;
 }
 
 .navItemText:visited {
   color: white;
+}
+
+.navItemText:active {
+  opacity: .2;
 }
 
 .logoImg {

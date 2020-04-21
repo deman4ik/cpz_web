@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon, SettingsIcon, CloseIcon } from '../../../assets/icons/svg';
-
+import { PlusIcon, CheckIcon, LogoutIcon, FilterVariantIcon, FilterVariantRemoveIcon, SettingsIcon, CloseIcon } from '../../../assets/icons/svg';
 
 interface Props {
   title: string;
@@ -17,6 +16,7 @@ const components = {
   plus: PlusIcon,
   logout: LogoutIcon,
   filtervariant: FilterVariantIcon,
+  filtervariantremove: FilterVariantRemoveIcon,
   settings: SettingsIcon,
   close: CloseIcon
 };

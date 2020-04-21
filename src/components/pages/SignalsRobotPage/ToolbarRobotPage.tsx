@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 import { Button, CaptionButton } from '../../basic';
 import { createVariable } from './helpers';
-//import styles from '../../../config/common.module.css';
 
 interface Props {
   robotData: any;

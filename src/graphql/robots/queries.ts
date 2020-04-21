@@ -298,13 +298,18 @@ export const USER_ROBOTS = gql`
 `;
 
 export const GET_ROBOTS_BY_STATS = gql`
-  query robots_by_stats($name: String, $limit: Int, $offset: Int) {
+  query robots_by_stats(
+    $where: v_robots_stats_bool_exp
+    $hash: String!
+    $limit: Int
+    $offset: Int
+  ) {
     v_robots_stats(
-      where: { robots: { name: { _ilike: $name }, trading: { _eq: true } } }
+      where: $where
       limit: $limit
       offset: $offset
       order_by: { recovery_factor: desc_nulls_last, id: asc }
-    ) @connection(key: "v_robots_stats_robots", filter: ["name"]) {
+    ) @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
       robots {
         id
         code

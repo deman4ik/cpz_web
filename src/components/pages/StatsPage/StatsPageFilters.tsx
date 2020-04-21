@@ -36,6 +36,7 @@ const _StatsPageFilters: React.FC<Props> =
                 disabled={!availableButton}
                 type={checkedItem === item ? 'rounded-primary' : !availableButton ? 'rounded-negative' : 'rounded'}
                 title={exchangeName(item)}
+                clickable={false}
                 onClick={() => handleOnPressItem(item)} />
             );
           })}

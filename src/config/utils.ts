@@ -46,3 +46,17 @@ export const truncate = (str: string, maxLength: number) => {
 
   return `${subString}...`;
 };
+
+export const getHash = (length) => {
+  const radom13chars = () => Math.random().toString(16).substring(2, 15);
+  const loops = Math.ceil(length / 13);
+  return new Array(loops).fill(radom13chars).reduce((string, func) => string + func(), '').substring(0, length);
+};
+
+export const getSearchProps = (data, displayType) => {
+  let result = null;
+  if (data && data.SearchProps.props) {
+    result = data.SearchProps.props.find(el => el.type === displayType);
+  }
+  return result;
+};

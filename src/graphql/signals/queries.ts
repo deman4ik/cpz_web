@@ -4,21 +4,17 @@ export const GET_ROBOTS_BY_STATS = gql`
   query robots_by_stats(
     $limit: Int
     $offset: Int
-    $name: String
+    $where: v_robots_stats_bool_exp
+    $hash: String!
   ) {
     v_robots_stats(
-      where: {
-        robots: {
-            name: { _ilike: $name },
-            signals: { _eq: true }
-          }
-      }
+      where: $where
       limit: $limit
       offset: $offset
       order_by:{
         recovery_factor: desc_nulls_last
       }
-    ) @connection(key: "v_robots_stats_signals", filter: ["name"]) {
+    ) @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
       robots {
         id
         code
@@ -43,13 +39,33 @@ export const GET_ROBOTS_BY_STATS = gql`
   }
 `;
 
+export const SEARCH_SIGNALS_FILTERS = gql`
+  query signals_filters($where: v_robots_stats_bool_exp) {
+    filters: v_robots_stats(where: $where) {
+      robots {
+        exchange
+        asset
+        timeframe
+      }
+    }
+    SearchProps @client {
+      props {
+        type
+        filters
+        orders
+      }
+    }
+  }
+`;
+
 export const ROBOT_AGGREGATE_COUNT = gql`
   query aggregate(
+      $hash: String!
       $where: robots_bool_exp
     ){
     robots_aggregate(
       where: $where
-    ) @connection(key: "robots_aggregate", filter: ["where"]) {
+    ) @connection(key: "robots_aggregate", filter: ["hash"]) {
       aggregate {
         count
       }

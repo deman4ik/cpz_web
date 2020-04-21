@@ -7,7 +7,7 @@ import { getIsVisibleStatus } from '../helpers';
 import { modalType } from '../types';
 
 interface Props {
-  searchText: string;
+  searchText?: string;
 }
 
 export const Modals: React.FC<Props> = ({ searchText }) => {

@@ -4,7 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from '../graphql/signals/queries';
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
+import { GET_SEARCH_PROPS } from '../graphql/local/queries';
 import { POLL_INTERVAL } from '../config/constants';
+import { getHash, getSearchProps } from '../config/utils';
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -12,20 +14,28 @@ const queryKey = {
   robots: 'trading'
 };
 
+const queryFilter = {
+  signals: () => ({ signals: { _eq: true } }),
+  robots: () => ({ trading: { _eq: true } })
+};
+
 export const useFetchRobots = (
   dispayType: string,
-  searchText: string,
   formatRobotsData: (v_robots_stats: any) => {}
 ) => {
   const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
+  const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
+  const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '' });
+
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
       variables: {
         where: {
-          name: { _ilike: searchText ? `%${searchText}%` : null },
-          [queryKey[dispayType]]: { _eq: true }
-        }
+          [queryKey[dispayType]]: { _eq: true },
+          ...filtersQuery.robots,
+        },
+        hash: filtersQuery.hash
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -36,7 +46,13 @@ export const useFetchRobots = (
       variables: {
         offset: 0,
         limit,
-        name: searchText ? `%${searchText}%` : null
+        hash: filtersQuery.hash,
+        where: {
+          robots: {
+            ...queryFilter[dispayType](),
+            ...filtersQuery.robots
+          }
+        }
       },
       pollInterval: POLL_INTERVAL,
     }
@@ -52,11 +68,22 @@ export const useFetchRobots = (
     }
   }, [ loading_aggregate, data_count ]);
 
+  useEffect(() => {
+    const addFields = () => {
+      const hash = getHash(30);
+      const search = getSearchProps(searchProps, dispayType);
+      return (!search || !search.filters)
+        ? { robots: {}, hash }
+        : { robots: { ...JSON.parse(search.filters) }, hash };
+    };
+
+    setFiltersQuery(addFields());
+  }, [ searchProps ]);
 
   useEffect(() => {
     refetchStats();
     refetchCounts();
-  }, [ searchText ]);
+  }, [ filtersQuery ]);
 
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) => {
-  useEffect(() => () => { onChange(''); }, []);
+  // useEffect(() => () => { onChange(''); }, []);
 
   const handleOnChange = (e) => {
     onChange(e.target.value);
