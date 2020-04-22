@@ -9,7 +9,7 @@ import { SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button, Select } from '../../../basic';
 import { capitalize, getSearchProps } from '../../../../config/utils';
-import { labels, getFilterData, getElements, ordersSortList, ordersSortMethod } from './helpers';
+import { labels, getFilterData, ordersSortList, ordersSortMethod } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 

@@ -32,10 +32,6 @@ export const getFilterData = (filters) => {
   return result;
 };
 
-export const getElements = (target, filter) =>
-  (filter.length ? target.reduce((acc, item) =>
-    (filter.includes(item.key) ? acc : [ ...acc, item.key ]), []) : null);
-
 export const tabNames = {
   filters: 'Filters',
   orders: 'Sort by'
