@@ -74,7 +74,7 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
         responsive
         onClick={setVisibleToolbarFilters} />
       <CaptionButton
-        title='remove'
+        title='clear'
         icon='filtervariantremove'
         responsive
         onClick={handleOnPressClearFilter} />
