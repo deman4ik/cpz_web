@@ -50,7 +50,7 @@ export const ordersSortList = [
 
 export const ordersSortMethod = {
   max_drawdown: { max_drawdown: 'desc_nulls_last', id: 'asc' },
-  recovery_factor: { recovery_factor: 'asc_nulls_last', id: 'asc' },
+  recovery_factor: { recovery_factor: 'desc_nulls_last', id: 'asc' },
   win_rate: { win_rate: 'asc_nulls_last', id: 'asc' },
   trades_count: { trades_count: 'asc_nulls_last', id: 'asc' }
 };
