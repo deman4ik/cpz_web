@@ -6,6 +6,7 @@ interface Props {
   title?: string;
   description?: string;
   keywords?: string;
+  gtag?: string;
 }
 
 const description =
@@ -13,7 +14,7 @@ const description =
 const keywords =
   'cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken';
 
-export const PageHead: React.FC<Props> = ({ title }) => (
+export const PageHead: React.FC<Props> = ({ title, gtag }) => (
   <Head>
     <title>CRYPTUOSO - {title}</title>
     <meta charSet='utf-8' />
@@ -40,7 +41,7 @@ export const PageHead: React.FC<Props> = ({ title }) => (
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-37BGBQ6GCK');
-        gtag('config', 'AW-971308941');`,
+        gtag('config', 'AW-971308941');${gtag || ''}`,
       }}
     />
   </Head>

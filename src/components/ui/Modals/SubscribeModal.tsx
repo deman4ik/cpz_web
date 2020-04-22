@@ -15,11 +15,10 @@ import styles_subs from './SubscribeModal.module.css';
 interface Props {
   type?: string;
   setTitle: (title: string) => void;
-  searchName?: string;
   onClose: () => void;
 }
 
-const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose, searchName }) => {
+const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
   const [ formError, setFormError ] = useState('');
   const { data: dataRobot } = useQuery(ROBOT);
   const [ inputVolume, setInputVolume ] = useState('0');
@@ -65,8 +64,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose, searchName 
               cache: dataRobot.robot.cache,
               volume: Number(inputVolume),
               type,
-              chartData: dataRobot.ChartData,
-              name: searchName
+              chartData: dataRobot.ChartData
             }
           });
         } else {

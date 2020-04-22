@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from '../graphql/signals/queries';
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
-import { GET_SEARCH_PROPS } from '../graphql/local/queries';
+import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from '../graphql/local/queries';
+import { SET_SEARCH_LIMIT } from '../graphql/local/mutations';
 import { POLL_INTERVAL } from '../config/constants';
 import { getHash, getSearchProps } from '../config/utils';
 
@@ -27,10 +28,12 @@ export const useFetchRobots = (
   dispayType: string,
   formatRobotsData: (v_robots_stats: any) => {}
 ) => {
-  const [ limit, setLimit ] = useState(SHOW_LIMIT);
   const [ counts, setCounts ] = useState(0);
   const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
+  const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
+  const [ limit, setLimit ] = useState(searchLimit.Limit[dispayType]);
   const [ filtersQuery, setFiltersQuery ] = useState({ robots: {}, hash: '', order_by: {} });
+  const [ setSearchLimit ] = useMutation(SET_SEARCH_LIMIT);
 
   const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(
     ROBOT_AGGREGATE_COUNT, {
@@ -106,6 +109,9 @@ export const useFetchRobots = (
         setIsLoadingMore(false);
         if (!fetchMoreResult) return prev;
         setLimit(data.v_robots_stats.length + SHOW_LIMIT);
+        setSearchLimit({
+          variables: { limit: data.v_robots_stats.length + SHOW_LIMIT, type: dispayType }
+        });
         return { v_robots_stats: [ ...prev.v_robots_stats, ...fetchMoreResult.v_robots_stats ] };
       }
     });

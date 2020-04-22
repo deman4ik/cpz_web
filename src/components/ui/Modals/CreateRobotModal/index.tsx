@@ -16,12 +16,11 @@ import styles from '../index.module.css';
 
 interface Props {
   onClose: () => void;
-  searchName?: string;
   code?: string;
   width: number;
 }
 const steps = [ 'Choose Exchange API Keys', 'Enter trading volume', 'Start Trading Robot' ];
-const _CreateRobotModal: React.FC<Props> = ({ onClose, searchName, code, width }) => {
+const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ inputKey, setInputKey ] = useState('');
   const [ inputVolume, setInputVolume ] = useState('0');
   const [ formError, setFormError ] = useState('');
@@ -88,7 +87,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, searchName, code, width }
             volume: Number(inputVolume),
             robotInfo: {
               robotId: dataRobot.robot.id,
-              name: searchName,
               userRobotId: response.data.userRobotCreate.result,
               code
             }

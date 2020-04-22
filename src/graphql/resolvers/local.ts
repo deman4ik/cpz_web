@@ -23,13 +23,6 @@ export const setChartData = (_root: any, variables: any, context: any) => {
   });
 };
 
-// export const setSearchFilters = (_root: any, variables: any, context: any) => {
-//   const { searchFilters, type } = variables;
-//   context.client.writeData({
-//     data: { Filters: { [type]: searchFilters, __typename: 'Filters' } }
-//   });
-// };
-
 export const setSearchProps = (_root: any, variables: any, context: any) => {
   const { filters, type, orders } = variables;
   const dataProps = context.cache.readQuery({ query: GET_SEARCH_PROPS });
@@ -49,5 +42,12 @@ export const setSearchProps = (_root: any, variables: any, context: any) => {
   context.cache.writeQuery({
     query: GET_SEARCH_PROPS,
     data: { SearchProps: { props: data, __typename: 'SearchProps' } }
+  });
+};
+
+export const setSearchLimit = (_root: any, variables: any, context: any) => {
+  const { limit, type } = variables;
+  context.client.writeData({
+    data: { Limit: { [type]: limit, __typename: 'Limit' } }
   });
 };

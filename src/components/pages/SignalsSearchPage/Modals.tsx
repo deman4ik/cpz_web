@@ -6,11 +6,7 @@ import { SubscribeModal, UnsubscribeModal } from '../../ui/Modals';
 import { getIsVisibleStatus } from '../helpers';
 import { modalType } from '../types';
 
-interface Props {
-  searchText?: string;
-}
-
-export const Modals: React.FC<Props> = ({ searchText }) => {
+export const Modals: React.FC = () => {
   const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
   return (
@@ -32,7 +28,6 @@ export const Modals: React.FC<Props> = ({ searchText }) => {
         <SubscribeModal
           onClose={handleSetVisible}
           type={dataModal.ModalVisible.type}
-          searchName={searchText}
           setTitle={setTitleModal} />
       </Modal>
     </>

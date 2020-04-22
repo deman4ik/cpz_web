@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
+import { useDebounce } from '../../../hooks/useDebounce';
 import { SET_SEARCH_PROPS } from '../../../graphql/local/mutations';
 import { GET_SEARCH_PROPS } from '../../../graphql/local/queries';
 import { SearchInput, CaptionButton } from '../../basic';
@@ -19,19 +20,11 @@ const defaultOrderBy = {
 
 export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
   const [ value, setValue ] = useState('');
+  const debounceValue = useDebounce(value, 500);
   const [ setFilter ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
   const { data } = useQuery(GET_SEARCH_PROPS);
 
   const onSignalsSearch = text => {
-    const search = getSearchProps(data, displayType);
-    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
-    setFilter({
-      variables: {
-        filters: JSON.stringify({ ...filters, name: { _ilike: text ? `%${text}%` : null } }),
-        orders: (search && search.orders) ? search.orders : '',
-        type: displayType
-      }
-    });
     setValue(text);
   };
 
@@ -56,6 +49,18 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
       setValue((filters.name._ilike).slice(1, -1));
     }
   }, []);
+
+  useEffect(() => {
+    const search = getSearchProps(data, displayType);
+    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
+    setFilter({
+      variables: {
+        filters: JSON.stringify({ ...filters, name: { _ilike: debounceValue ? `%${debounceValue}%` : null } }),
+        orders: (search && search.orders) ? search.orders : '',
+        type: displayType
+      }
+    });
+  }, [ debounceValue ]);
 
   return (
     <div className={styles.container}>
