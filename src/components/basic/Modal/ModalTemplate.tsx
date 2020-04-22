@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { WindowCloseIcon } from '../../../assets/icons/svg';
+//import { WindowCloseIcon } from '../../../assets/icons/svg';
+import { EffectButton } from '../.';
 import { color } from '../../../config/constants';
 import styles from './ModalTemplate.module.css';
 
@@ -28,8 +29,8 @@ export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClos
         </div>
       )}
     </div>
-    <div className={styles.icon} onClick={onClose}>
-      <WindowCloseIcon color={color.accent} size={26} />
+    <div className={styles.icon}>
+      <EffectButton icon='windowclose' color={color.accent} onClick={onClose} />
     </div>
   </div>
 );

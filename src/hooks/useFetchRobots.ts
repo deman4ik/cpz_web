@@ -21,7 +21,7 @@ const queryFilter = {
 };
 
 const defaultOrderBy = {
-  recovery_factor: 'desc_nulls_last', id: 'asc'
+  recovery_factor: 'desc_nulls_last'
 };
 
 export const useFetchRobots = (
@@ -54,7 +54,7 @@ export const useFetchRobots = (
         offset: 0,
         limit,
         hash: filtersQuery.hash,
-        order_by: filtersQuery.order_by,
+        order_by: [ filtersQuery.order_by, { id: 'asc' } ],
         where: {
           robots: {
             ...queryFilter[dispayType](),
@@ -83,7 +83,6 @@ export const useFetchRobots = (
       const result: { robots: any; hash: string; order_by: any } = (!search || !search.filters)
         ? { robots: {}, hash, order_by: defaultOrderBy }
         : { robots: { ...JSON.parse(search.filters) }, hash, order_by: defaultOrderBy };
-
       result.order_by = (search && search.orders) ? JSON.parse(search.orders) : defaultOrderBy;
       return result;
     };

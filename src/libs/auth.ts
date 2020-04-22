@@ -283,7 +283,7 @@ export const fetchAccessToken = async (refresh_token?: string, isLocalhost = fal
       accessToken = json.accessToken;
     }
   } catch (err) {
-    console.error(errorMessage);
+    console.error(err);
   }
   return accessToken;
 };

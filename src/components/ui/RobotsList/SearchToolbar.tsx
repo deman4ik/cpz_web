@@ -15,7 +15,7 @@ interface Props {
 }
 
 const defaultOrderBy = {
-  recovery_factor: 'desc_nulls_last', id: 'asc'
+  recovery_factor: 'desc_nulls_last'
 };
 
 export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
