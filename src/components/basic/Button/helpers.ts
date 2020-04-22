@@ -12,6 +12,7 @@ export const components = {
   arrowdown: ArrowDownIcon,
   bordercolor: BorderColorIcon,
   filtervariantremove: FilterVariantRemoveIcon,
+  filtervariantminus: FilterVariantMinusIcon,
   close: CloseIcon,
   lockopen: LockOpenIcon,
   email: EmailIcon,
