@@ -8,7 +8,7 @@
   padding-right: 16px;
 }
 
-@media (max-width: 670px) {
+@media (max-width: 770px) {
   .container {
     justify-content: center;
     padding-right: 46px;
