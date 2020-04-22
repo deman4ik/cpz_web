@@ -1,5 +1,14 @@
 export const defaultState = {
   userId: '',
+  Limit: {
+    signals: 12,
+    robots: 12,
+    __typename: 'Limit'
+  },
+  SearchProps: {
+    props: [],
+    __typename: 'SearchProps'
+  },
   ModalVisible: {
     isVisible: false,
     type: '',

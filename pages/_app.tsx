@@ -1,6 +1,5 @@
 import React from 'react';
 import './style.css';
-import 'react-activity/lib/Spinner/Spinner.css';
 import '../src/assets/static/common.css';
 
 // This default export is required in a new `pages/_app.js` file.

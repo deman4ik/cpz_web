@@ -7,11 +7,10 @@ import { getIsVisibleStatus } from '../helpers';
 import { modalType } from '../types';
 
 interface Props {
-  searchText: string;
   width: number;
 }
 
-export const Modals: React.FC<Props> = ({ searchText, width }) => {
+export const Modals: React.FC<Props> = ({ width }) => {
   const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
   return (
@@ -23,7 +22,6 @@ export const Modals: React.FC<Props> = ({ searchText, width }) => {
       >
         <CreateRobotModal
           onClose={handleSetVisible}
-          searchName={searchText}
           width={width} />
       </Modal>
       <Modal
@@ -43,7 +41,6 @@ export const Modals: React.FC<Props> = ({ searchText, width }) => {
       >
         <EditRobotModal
           onClose={handleSetVisible}
-          searchName={searchText}
           setTitle={setTitleModal} />
       </Modal>
     </>

@@ -57,7 +57,7 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
           margin-left: 56px;
         }
       }
-      @media (max-width: 640px) {
+      @media (max-width: 780px) {
         .titleGroup {
           display: ${hideToolbar ? 'none' : 'flex'};
         }

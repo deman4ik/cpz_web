@@ -49,3 +49,24 @@ export const ROBOT = gql`
     }
   }
 `;
+
+export const GET_SEARCH_PROPS = gql`
+  query SearchProps {
+    SearchProps @client {
+      props {
+        type
+        filters
+        orders
+      }
+    }
+  }
+`;
+
+export const GET_SEARCH_LIMIT = gql`
+  query Limit {
+    Limit @client {
+      signals
+      robots
+    }
+  }
+`;

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { color } from '../../../config/constants';
 import { CloseIcon, MagnifyIcon } from '../../../assets/icons/svg';
@@ -14,8 +14,6 @@ interface Props {
 }
 
 export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) => {
-  useEffect(() => () => { onChange(''); }, []);
-
   const handleOnChange = (e) => {
     onChange(e.target.value);
   };

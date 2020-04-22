@@ -64,7 +64,7 @@ export default withApollo(
       link,
       cache,
       resolvers,
-      connectToDevTools: !ssrMode,
+      connectToDevTools: (!ssrMode && process.env.NODE_ENV === 'development'),
       typeDefs,
       ssrMode
     });

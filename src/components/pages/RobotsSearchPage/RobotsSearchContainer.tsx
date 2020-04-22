@@ -5,17 +5,16 @@ import { RobotsList } from '../../ui/RobotsList';
 import { LoadingIndicator } from '../../common';
 import { Modals } from './Modals';
 import { formatRobotsData } from './helpers';
-//import styles from '../../../config/common.module.css';
 
 interface Props {
-  searchText?: string;
+  //searchText?: string;
   displayType: string;
   width: number;
 }
 
-export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText = '', width }) => {
+export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
   const { robotsData, counts, loading, isLoadingMore, onFetchMore } =
-    useFetchRobots(displayType, searchText, formatRobotsData);
+    useFetchRobots(displayType, formatRobotsData);
 
   return (
     <>
@@ -28,7 +27,7 @@ export const RobotsSearchContainer: React.FC<Props> = ({ displayType, searchText
           width={width}
           displayType={displayType} />
       )}
-      <Modals searchText={searchText} width={width} />
+      <Modals width={width} />
     </>
   );
 };

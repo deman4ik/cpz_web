@@ -6,7 +6,7 @@ import { LoadingIndicator } from '../../common';
 
 export const Button: React.FC<ButtonProps> =
 ({ title, type, style, icon, isUppercase, isLoading, onClick, width,
-  className, disabled, responsive, size = 'normal', hoverChanges }) => {
+  className, disabled, responsive, size = 'normal', hoverChanges, clickable = true }) => {
   const [ base, setBase ] = useState({ title, icon, type });
   const SpecificIcon = components[base.icon];
   const rounded = type && type.indexOf('rounded') === 0;
@@ -102,7 +102,7 @@ export const Button: React.FC<ButtonProps> =
           opacity: ${disabled ? 0.2 : 1};
         }
         .btn:active {
-          opacity: 0.2;
+          opacity: ${clickable ? 0.2 : 1};
         }
         .btn.uppercase {
           text-transform: uppercase;
@@ -129,6 +129,9 @@ export const Button: React.FC<ButtonProps> =
         @media (max-width: 768px) {
           .btn-text {
             display: ${responsive ? 'none' : 'block'};
+          }
+          .btn {
+            width: ${responsive ? 'min-content' : width ? `${width}px` : 'min-content'}
           }
           .aligner {
             width: ${base.icon ? responsive ? '12px' : '20px' : 0};

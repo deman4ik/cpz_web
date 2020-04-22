@@ -15,11 +15,10 @@ import styles from './index.module.css';
 interface Props {
   onClose: () => void;
   setTitle: (title: string) => void;
-  searchName?: string;
   code?: string;
 }
 
-const _EditRobotModal: React.FC<Props> = ({ onClose, searchName, code, setTitle }) => {
+const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
   const [ formError, setFormError ] = useState('');
   const { data: dataRobot } = useQuery(ROBOT);
   const [ inputVolume, setInputVolume ] = useState('0');
@@ -64,7 +63,6 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, searchName, code, setTitle 
           variables: {
             robot: dataRobot.robot,
             volume: Number(inputVolume),
-            name: searchName,
             code
           }
         });

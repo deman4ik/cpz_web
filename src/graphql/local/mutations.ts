@@ -26,8 +26,8 @@ export const UNSUBSCRIBE = gql`
 `;
 
 export const SUBSCRIBE = gql`
-  mutation subscribe($cache: CacheData!, $volume: Float!, $name: String, $type: String!, $chartData: ChartData) {
-    subscribe(cache: $cache, volume: $volume, name: $name, type: $type, chartData: $chartData) @client
+  mutation subscribe($cache: CacheData!, $volume: Float!, $type: String!, $chartData: ChartData) {
+    subscribe(cache: $cache, volume: $volume, type: $type, chartData: $chartData) @client
   }
 `;
 
@@ -50,13 +50,25 @@ export const ACTION_ROBOT = gql`
 `;
 
 export const EDIT_ROBOT = gql`
-  mutation editRobot($robot: Robot!, $volume: Float!, $name: String, $code: String) {
-    editRobot(robot: $robot, volume: $volume, name: $name, code: $code) @client
+  mutation editRobot($robot: Robot!, $volume: Float!, $code: String) {
+    editRobot(robot: $robot, volume: $volume, code: $code) @client
   }
 `;
 
 export const CREATE_ROBOT = gql`
   mutation createRobot($robotInfo: robotInfo!, $volume: Float!) {
     createRobot(robotInfo: $robotInfo, volume: $volume) @client
+  }
+`;
+
+export const SET_SEARCH_PROPS = gql`
+  mutation setSearchProps($filters: String!, $type: String!, $orders: String) {
+    setSearchProps(filters: $filters, type: $type, orders: $orders) @client
+  }
+`;
+
+export const SET_SEARCH_LIMIT = gql`
+  mutation setSearchLimit($limit: Int, $type: String!) {
+    setSearchLimit(limit: $limit, type: $type) @client
   }
 `;

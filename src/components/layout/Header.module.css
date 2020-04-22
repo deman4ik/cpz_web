@@ -32,10 +32,15 @@
   text-transform: uppercase;
   color: white;
   cursor: pointer;
+  opacity: 1;
 }
 
 .btnTitle:visited {
   color: white;
+}
+
+.btnTitle:active {
+  opacity: .2;
 }
 
 .btnWrapper {

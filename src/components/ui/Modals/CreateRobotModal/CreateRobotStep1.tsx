@@ -19,16 +19,8 @@ interface Props {
 }
 
 const _CreateRobotStep1: React.FC<Props> = ({
-  exchange,
-  selectedKey,
-  hasError,
-  dataPicker,
-  refetchQueries,
-  handleOnNext,
-  handleOnChangeExchange,
-  setFormError,
-  onClose
-}) => {
+  exchange, selectedKey, hasError, dataPicker, refetchQueries, handleOnNext,
+  handleOnChangeExchange, setFormError, onClose }) => {
   const [ newName, setNewName ] = useState('');
   const [ isAddKeyVisible, setIsAddKeyVisible ] = useState(!dataPicker.length);
 
