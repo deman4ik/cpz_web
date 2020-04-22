@@ -32,10 +32,6 @@ export const getFilterData = (filters) => {
   return result;
 };
 
-export const getElements = (target, filter) =>
-  (filter.length ? target.reduce((acc, item) =>
-    (filter.includes(item.key) ? acc : [ ...acc, item.key ]), []) : null);
-
 export const tabNames = {
   filters: 'Filters',
   orders: 'Sort by'
@@ -50,7 +46,7 @@ export const ordersSortList = [
 
 export const ordersSortMethod = {
   max_drawdown: { max_drawdown: 'desc_nulls_last', id: 'asc' },
-  recovery_factor: { recovery_factor: 'asc_nulls_last', id: 'asc' },
+  recovery_factor: { recovery_factor: 'desc_nulls_last', id: 'asc' },
   win_rate: { win_rate: 'asc_nulls_last', id: 'asc' },
   trades_count: { trades_count: 'asc_nulls_last', id: 'asc' }
 };

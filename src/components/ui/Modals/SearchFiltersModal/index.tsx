@@ -9,7 +9,7 @@ import { SET_SEARCH_PROPS } from '../../../../graphql/local/mutations';
 import { LoadingIndicator } from '../../../common';
 import { Button, Select } from '../../../basic';
 import { capitalize, getSearchProps } from '../../../../config/utils';
-import { labels, getFilterData, getElements, ordersSortList, ordersSortMethod } from './helpers';
+import { labels, getFilterData, ordersSortList, ordersSortMethod } from './helpers';
 import { CheckedFilter } from './types';
 import styles from './index.module.css';
 
@@ -43,7 +43,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
       const obj = (Object.keys(filters).filter(el => el !== 'name').reduce((acc, item) => (
         { ...acc,
           [item]: filters[item]._in
-            ? filterData[item].filter(el => !filters[item]._in.includes(el.key)).map(el => el.key)
+            ? [ ...filters[item]._in ]
             : [] }
       ), {}));
       setCheckedButtons(prev => ({ ...prev, ...obj }));
@@ -66,7 +66,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     const filtersProps = getSearchProps(data, displayType);
     const filters = filtersProps && filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
     const searchFilters = Object.keys(filterData).reduce((acc, item) => ({
-      ...acc, [item]: { _in: getElements(filterData[item], checkedButtons[item]) }
+      ...acc, [item]: { _in: checkedButtons[item].length ? [ ...checkedButtons[item] ] : null }
     }), {});
 
     setFilters({ variables: {
@@ -78,11 +78,11 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     });
   };
 
-  const resetFilters = () => {
+  const clearFilters = () => {
     setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
   };
 
-  const clearFilters = () => {
+  const resetFilters = () => {
     const fullFilter = Object.keys(filterData).reduce((acc, item) =>
       ({ ...acc, [item]: [ ...filterData[item].map(el => el.key) ] }), {});
     setCheckedButtons(prev => ({ ...prev, ...fullFilter }));
@@ -116,7 +116,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
                 {filterData[label].map(item => (
                   <Button
                     key={item.key}
-                    type={checkedButtons[label].includes(item.key) ? 'rounded' : 'rounded-primary'}
+                    type={checkedButtons[label].includes(item.key) ? 'rounded-primary' : 'rounded'}
                     title={item.label}
                     style={{ marginLeft: 5, marginTop: 5 }}
                     clickable={false}
