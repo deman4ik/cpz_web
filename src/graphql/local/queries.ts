@@ -61,3 +61,12 @@ export const GET_SEARCH_PROPS = gql`
     }
   }
 `;
+
+export const GET_SEARCH_LIMIT = gql`
+  query Limit {
+    Limit @client {
+      signals
+      robots
+    }
+  }
+`;

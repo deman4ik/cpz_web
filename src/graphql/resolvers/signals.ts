@@ -109,7 +109,6 @@ export const subscribe = (_root: any, variables: any, context: any) => {
         query: GET_ROBOTS_BY_STATS_SIGNALS,
         variables: {
           limit: 12,
-          name: variables.name ? `%${variables.name}%` : null
         }
       });
       const v_robots_stats = dataRobots.v_robots_stats.map(el => {
@@ -123,7 +122,6 @@ export const subscribe = (_root: any, variables: any, context: any) => {
         query: GET_ROBOTS_BY_STATS_SIGNALS,
         variables: {
           limit: 12,
-          name: variables.name ? `%${variables.name}%` : null
         },
         data: { v_robots_stats }
       });

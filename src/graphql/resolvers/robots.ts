@@ -145,7 +145,6 @@ export const editRobot = (_root: any, variables: any, context: any) => {
         order_by: {
           recovery_factor: 'desc_nulls_last'
         },
-        name: variables.name ? `%${variables.name}%` : null
       }
     });
     const v_robots_stats = dataRobots.v_robots_stats.map(el => {
@@ -163,7 +162,6 @@ export const editRobot = (_root: any, variables: any, context: any) => {
         order_by: {
           recovery_factor: 'desc_nulls_last'
         },
-        name: variables.name ? `%${variables.name}%` : null
       },
       data: { v_robots_stats }
     });
@@ -199,7 +197,6 @@ export const createRobot = (_root: any, variables: any, context: any) => {
         order_by: {
           recovery_factor: 'desc_nulls_last'
         },
-        name: variables.robotInfo.name ? `%${variables.robotInfo.name}%` : null
       }
     });
     const v_robots_stats = dataRobots.v_robots_stats.map(el => {
@@ -225,7 +222,6 @@ export const createRobot = (_root: any, variables: any, context: any) => {
         order_by: {
           recovery_factor: 'desc_nulls_last'
         },
-        name: variables.robotInfo.name ? `%${variables.robotInfo.name}%` : null
       },
       data: { v_robots_stats }
     });

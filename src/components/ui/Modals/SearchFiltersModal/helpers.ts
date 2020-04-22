@@ -10,6 +10,12 @@ const formatData = {
   timeframe: key => (timeFrameFormat[key].abbr)
 };
 
+const sortFunc = {
+  asset: (a, b) => (a.key).localeCompare(b.key),
+  exchange: (a, b) => (a.key).localeCompare(b.key),
+  timeframe: (a, b) => a.key - b.key
+};
+
 export const getFilterData = (filters) => {
   const result = filters.reduce((acc: FilterData, item) => {
     labels.forEach(key => {
@@ -20,7 +26,7 @@ export const getFilterData = (filters) => {
     return acc;
   }, { asset: [], exchange: [], timeframe: [] });
   labels.forEach(key => {
-    result[key].sort((a, b) => a.key - b.key);
+    result[key].sort(sortFunc[key]);
   });
 
   return result;
