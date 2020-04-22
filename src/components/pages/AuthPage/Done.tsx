@@ -15,7 +15,10 @@ export const Done: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <PageHead title='Done!' />
+      <PageHead
+        title='Done!'
+        gtag={`
+        gtag('event', 'conversion', {'send_to': 'AW-971308941/WX65CJXv5c0BEI3_k88D'});`} />
       <div className={styles.header}>
         <Header hasHomeButton />
       </div>
