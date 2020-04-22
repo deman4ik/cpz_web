@@ -82,12 +82,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
   };
 
-  const resetFilters = () => {
-    const fullFilter = Object.keys(filterData).reduce((acc, item) =>
-      ({ ...acc, [item]: [ ...filterData[item].map(el => el.key) ] }), {});
-    setCheckedButtons(prev => ({ ...prev, ...fullFilter }));
-  };
-
   const handleOnChangeOrder = (value) => {
     setInputKey(value);
   };
@@ -138,16 +132,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
               title='clear filter'
               className={styles.btn}
               onClick={clearFilters}
-              responsive
-              icon='filtervariantminus'
-              isUppercase />
-            <Button
-              type='dimmed'
-              width={160}
-              title='reset filter'
-              className={styles.btn}
-              onClick={resetFilters}
-              responsive
               icon='filtervariantremove'
               isUppercase />
           </div>
