@@ -1,7 +1,6 @@
 import React from 'react';
 
-//import { WindowCloseIcon } from '../../../assets/icons/svg';
-import { EffectButton } from '../.';
+import { EffectButton } from '..';
 import { color } from '../../../config/constants';
 import styles from './ModalTemplate.module.css';
 

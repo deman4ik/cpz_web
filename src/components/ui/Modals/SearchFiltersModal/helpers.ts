@@ -45,8 +45,8 @@ export const ordersSortList = [
 ];
 
 export const ordersSortMethod = {
-  max_drawdown: { max_drawdown: 'desc_nulls_last' },
+  max_drawdown: { max_drawdown: 'asc_nulls_last' },
   recovery_factor: { recovery_factor: 'desc_nulls_last' },
-  win_rate: { win_rate: 'asc_nulls_last' },
-  trades_count: { trades_count: 'asc_nulls_last' }
+  win_rate: { win_rate: 'desc_nulls_last' },
+  trades_count: { trades_count: 'desc_nulls_last' }
 };
