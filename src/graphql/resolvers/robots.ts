@@ -140,12 +140,6 @@ export const editRobot = (_root: any, variables: any, context: any) => {
   if (isExistRobotsStats) {
     const dataRobots = context.cache.readQuery({
       query: GET_ROBOTS_BY_STATS,
-      variables: {
-        limit: 12,
-        order_by: {
-          recovery_factor: 'desc_nulls_last'
-        },
-      }
     });
     const v_robots_stats = dataRobots.v_robots_stats.map(el => {
       if (el.robots.id === variables.robot.id) {
@@ -157,12 +151,6 @@ export const editRobot = (_root: any, variables: any, context: any) => {
     });
     context.cache.writeQuery({
       query: GET_ROBOTS_BY_STATS,
-      variables: {
-        limit: 12,
-        order_by: {
-          recovery_factor: 'desc_nulls_last'
-        },
-      },
       data: { v_robots_stats }
     });
   }
@@ -192,12 +180,6 @@ export const createRobot = (_root: any, variables: any, context: any) => {
   if (isExistRobotsStats) {
     const dataRobots = context.cache.readQuery({
       query: GET_ROBOTS_BY_STATS,
-      variables: {
-        limit: 12,
-        order_by: {
-          recovery_factor: 'desc_nulls_last'
-        },
-      }
     });
     const v_robots_stats = dataRobots.v_robots_stats.map(el => {
       if (el.robots.id === variables.robotInfo.robotId) {
@@ -217,12 +199,6 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     });
     context.cache.writeQuery({
       query: GET_ROBOTS_BY_STATS,
-      variables: {
-        limit: 12,
-        order_by: {
-          recovery_factor: 'desc_nulls_last'
-        },
-      },
       data: { v_robots_stats }
     });
   }

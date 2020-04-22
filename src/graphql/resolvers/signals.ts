@@ -107,9 +107,6 @@ export const subscribe = (_root: any, variables: any, context: any) => {
     if (isExistVRobotsStats) {
       const dataRobots = context.cache.readQuery({
         query: GET_ROBOTS_BY_STATS_SIGNALS,
-        variables: {
-          limit: 12,
-        }
       });
       const v_robots_stats = dataRobots.v_robots_stats.map(el => {
         if (el.robots.id === variables.cache.id) {
@@ -120,9 +117,6 @@ export const subscribe = (_root: any, variables: any, context: any) => {
       });
       context.cache.writeQuery({
         query: GET_ROBOTS_BY_STATS_SIGNALS,
-        variables: {
-          limit: 12,
-        },
         data: { v_robots_stats }
       });
     }

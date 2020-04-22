@@ -50,8 +50,8 @@ export const ACTION_ROBOT = gql`
 `;
 
 export const EDIT_ROBOT = gql`
-  mutation editRobot($robot: Robot!, $volume: Float!, $name: String, $code: String) {
-    editRobot(robot: $robot, volume: $volume, name: $name, code: $code) @client
+  mutation editRobot($robot: Robot!, $volume: Float!, $code: String) {
+    editRobot(robot: $robot, volume: $volume, code: $code) @client
   }
 `;
 
