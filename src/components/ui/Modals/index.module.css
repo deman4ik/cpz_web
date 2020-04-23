@@ -93,7 +93,7 @@
 }
 
 .iconWrapper {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .input_group {
@@ -134,13 +134,23 @@
 
 @media (max-width: 768px) {
   .wizardContainer {
-    margin-left: -140px;
-    margin-right: -140px;
+    min-width: unset;
+    margin-left: 15px;
+    margin-right: 15px;
   }
   .selectGroup {
     flex-direction: column;
   }
   .btnSelectGroup {
     margin-left: 0;
+  }
+  .select {
+    margin-bottom: 10px;
+  }
+  .container {
+    min-width: 250px;
+  }
+  .step3 {
+    min-width: 250px;
   }
 }

@@ -98,7 +98,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
       ) : (
         <>
           <ErrorLine formError={formError} />
-          <div className={styles_subs.container}>
+          <div className={styles.container}>
             <div className={styles.bodyTitle}>
               Please enter desired trading volume
             </div>

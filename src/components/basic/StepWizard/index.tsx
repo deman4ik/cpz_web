@@ -19,8 +19,24 @@ export const _StepWizard: React.FC<Props> = ({ steps, activeStep, height, width,
     <div className='container'>
       <div className='stepsContainer'>
         {showDimension
-          ? steps.map((step, idx) => (<Step key={idx} step={step} idx={idx} steps={steps} titleWidth={titleWidth} activeStep={activeStep} />))
-          : <Step step={steps[activeStep - 1]} steps={steps} titleWidth={titleWidth} activeStep={activeStep} />}
+          ? steps.map((step, idx) => (
+            <Step
+              key={idx}
+              step={step}
+              idx={idx}
+              steps={steps}
+              titleWidth={titleWidth}
+              activeStep={activeStep}
+              showDimension={showDimension} />
+          ))
+          : (
+            <Step
+              step={steps[activeStep - 1]}
+              steps={steps}
+              titleWidth={titleWidth}
+              activeStep={activeStep}
+              showDimension={showDimension} />
+          )}
       </div>
       <style jsx>{`
         .container {
@@ -37,6 +53,13 @@ export const _StepWizard: React.FC<Props> = ({ steps, activeStep, height, width,
           justify-content: space-between;
           align-items: center;
           width: 100%;
+        }
+
+        @media (max-width: 768px) {
+          .container {
+            margin-left: 0;
+            margin-right: 0;
+          }
         }
       `}
       </style>

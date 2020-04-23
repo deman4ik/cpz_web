@@ -38,7 +38,7 @@ const _CreateRobotStep2: React.FC<Props> =
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.bodyTitle}>
         Please enter desired trading volume
       </div>
@@ -100,7 +100,7 @@ const _CreateRobotStep2: React.FC<Props> =
           isUppercase
           onClick={handleOnCreate} />
       </div>
-    </>
+    </div>
   );
 };
 
