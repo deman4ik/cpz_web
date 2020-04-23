@@ -3,18 +3,23 @@ import { useMemo, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from '../../../graphql/user/queries';
+import { GET_NOTIFICATIONS_PROPS } from '../../../graphql/local/queries';
+import { SET_NOTIFICATIONS_PROPS } from '../../../graphql/local/mutations';
 import { UPDATE_NOTIFICATIONS } from '../../../graphql/user/mutations';
 import { POLL_INTERVAL } from '../../../config/constants';
-import { getFormatData } from './helpers';
+import { getFormatData, filters } from './helpers';
 
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
+  const { data: notificationsProps } = useQuery(GET_NOTIFICATIONS_PROPS);
+  const [ inputSelect, setInputSelect ] = useState(notificationsProps.NotificationsProps.filters);
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
   const [ limit, setLimit ] = useState(RECORDS_LIMIT);
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
     variables: {
       offset: 0,
-      limit
+      limit,
+      type: filters[inputSelect]
     },
     pollInterval: POLL_INTERVAL
   });
@@ -23,12 +28,18 @@ export const useFetchData = () => {
     refetchQueries: [ {
       query: GET_NOTIFICATIONS_AGGREGATE,
       variables: {
-        where: { readed: { _eq: false } }
+        where: { readed: { _eq: false }, type: { _in: filters[inputSelect] } }
       }
     } ]
   });
 
-  const { data: dataCount, loading: loadingCount } = useQuery(GET_NOTIFICATIONS_AGGREGATE);
+  const [ setNotificationsFilters ] = useMutation(SET_NOTIFICATIONS_PROPS);
+
+  const { data: dataCount, loading: loadingCount, refetch: refetch_aggregate } = useQuery(GET_NOTIFICATIONS_AGGREGATE, {
+    variables: {
+      where: { type: { _in: filters[inputSelect] } }
+    }
+  });
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);
@@ -69,7 +80,26 @@ export const useFetchData = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+    refetch_aggregate();
+  }, [ inputSelect ]);
 
-  return { isLoadingMore, recordsCount, formatData, handleLoadMore, loading: loading || loadingCount };
+  const setFilters = (value: string) => {
+    setNotificationsFilters({
+      variables: {
+        filters: value
+      }
+    }).then(result => {
+      setInputSelect(result.data.setNotificationsProps);
+    });
+  };
+
+  return {
+    isLoadingMore,
+    recordsCount,
+    formatData,
+    handleLoadMore,
+    loading: loading || loadingCount,
+    inputSelect,
+    setFilters
+  };
 };

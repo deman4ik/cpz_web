@@ -82,10 +82,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     setCheckedButtons({ asset: [], exchange: [], timeframe: [] });
   };
 
-  const handleOnChangeOrder = (value) => {
-    setInputKey(value);
-  };
-
   return (
     <>
       <div className={styles.row}>
@@ -96,7 +92,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
           <Select
             data={ordersSortList}
             value={inputKey}
-            onValueChange={value => handleOnChangeOrder(value)} />
+            onValueChange={value => setInputKey(value)} />
         </div>
       </div>
       {loading ? <LoadingIndicator /> : (

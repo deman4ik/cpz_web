@@ -1,11 +1,15 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 
 import { useClearNotifications } from '../../../hooks/useClearNotifications';
 import { CaptionButton, Select } from '../../basic';
 import { headerSelectData } from './helpers';
 
-const _ToolbarNotificationsPage: React.FC = () => {
-  const [ inputSelect, setInputSelect ] = useState('all');
+interface Props {
+  inputSelect: string;
+  setInputSelect: (inputSelect: string) => void;
+}
+
+const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelect }) => {
   const { updateNotifications } = useClearNotifications();
 
   return (
