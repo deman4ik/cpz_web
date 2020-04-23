@@ -22,7 +22,6 @@ interface Props {
 const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
   const [ formError, setFormError ] = useState('');
   const { data: dataRobot } = useQuery(ROBOT);
-  //const [ inputVolume, setInputVolume ] = useState('0');
   const [ inputVolumeAsset, setInputVolumeAsset ] = useState('0');
   const [ inputVolumeCurrency, setInputVolumeCurrency ] = useState('0');
 
@@ -57,18 +56,8 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
     setInputVolumeAsset(calculateAsset(value, limits.price));
   };
 
-  // const handleOnChange = (value: string) => {
-  //   setInputVolume(value);
-  // };
   const [ userRobotEdit, { loading: editRobotLoading } ] = useMutation(USER_ROBOT_EDIT);
   const [ editRobot ] = useMutation(EDIT_ROBOT);
-
-  // const exchange = useMemo(() => ((!loading && data && data.markets.length) ?
-  //   data.markets[0] : { limits: { amount: { min: 0, max: 0 } } }
-  // ), [ loading, data ]);
-
-  //const { min, max } = exchange.limits.amount;
-  //const isValid = () => (Number(inputVolume) >= min && Number(inputVolume) <= max);
 
   const handleOnSubmit = () => {
     userRobotEdit({
