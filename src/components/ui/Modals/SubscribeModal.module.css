@@ -31,3 +31,27 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.input_group {
+  display: flex;
+  flex-direction: column;
+}
+
+.volume {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.volume_text {
+  font-size: var(--normal2);
+  color: white;
+  margin-left: 5px;
+}
+
+.delimiter {
+  font-size: var(--normal2);
+  color: white;
+  text-align: center;
+  padding-right: 40px;
+}

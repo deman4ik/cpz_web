@@ -114,6 +114,7 @@ export const Input: React.FC<Props> =
           color: var(--accent);
           border-radius: 2px;
           font-size: var(--normal1);
+          text-align: right;
           padding: 11px;
           padding-right: ${icon ? '35px' : '11px'};
         }
