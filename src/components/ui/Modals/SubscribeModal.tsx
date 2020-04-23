@@ -104,12 +104,16 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             </div>
             <div className={styles_subs.form}>
               <div className={[ styles.bodyText, styles_subs.formComment ].join(' ')}>
-                <div className={styles_subs.label}>
-                  Minimum value is&nbsp;
+                <div className={styles_subs.value_group}>
+                  <div className={styles_subs.label}>
+                    Minimum value is&nbsp;
+                  </div>
+                  <div className={styles_subs.value_row}>
+                    <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                    <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
+                    &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
+                  </div>
                 </div>
-                <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
-                <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
-                &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
               </div>
               <div className={styles_subs.fieldset}>
                 <div className={styles_subs.input_group}>
@@ -119,6 +123,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                       value={`${inputVolumeAsset}`}
                       width={150}
                       error={!isValid()}
+                      right
                       onKeyPress={handleOnKeyPress}
                       onChangeText={value => handleOnChangeAsset(value)} />
                     <span className={styles_subs.volume_text}>BTC</span>
@@ -129,6 +134,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                       type='number'
                       value={`${inputVolumeCurrency}`}
                       width={150}
+                      right
                       onKeyPress={handleOnKeyPress}
                       onChangeText={value => handleOnChangeCurrency(value)} />
                     <span className={styles_subs.volume_text}>$</span>

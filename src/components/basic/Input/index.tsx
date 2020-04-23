@@ -19,10 +19,11 @@ interface Props {
   selectTextOnFocus?: boolean;
   readonly?: boolean;
   style?: object;
+  right?: boolean;
 }
 
 export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton, style,
+({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton, style, right,
   onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
   const [ inputValue, setInputValue ] = useState(value);
   const inputRef = useRef(null);
@@ -51,6 +52,7 @@ export const Input: React.FC<Props> =
   const getInputClass = () => {
     const styleInput = [ 'input' ];
     if (error) styleInput.push('error');
+    if (right) styleInput.push('right');
     return styleInput;
   };
 
@@ -114,9 +116,11 @@ export const Input: React.FC<Props> =
           color: var(--accent);
           border-radius: 2px;
           font-size: var(--normal1);
-          text-align: right;
           padding: 11px;
           padding-right: ${icon ? '35px' : '11px'};
+        }
+        .input.right {
+          text-align: right;
         }
         .input.error {
           border: 2px solid var(--negative);
