@@ -104,11 +104,11 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             </div>
             <div className={styles_subs.form}>
               <div className={[ styles.bodyText, styles_subs.formComment ].join(' ')}>
-                <div className={styles_subs.value_group}>
+                <div className={styles.value_group}>
                   <div className={styles_subs.label}>
                     Minimum value is&nbsp;
                   </div>
-                  <div className={styles_subs.value_row}>
+                  <div className={styles.value_row}>
                     <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
                     <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
                     &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
@@ -116,8 +116,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                 </div>
               </div>
               <div className={styles_subs.fieldset}>
-                <div className={styles_subs.input_group}>
-                  <div className={styles_subs.volume}>
+                <div className={styles.input_group}>
+                  <div className={styles.volume}>
                     <Input
                       type='number'
                       value={`${inputVolumeAsset}`}
@@ -126,10 +126,10 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                       right
                       onKeyPress={handleOnKeyPress}
                       onChangeText={value => handleOnChangeAsset(value)} />
-                    <span className={styles_subs.volume_text}>BTC</span>
+                    <span className={styles.volume_text}>BTC</span>
                   </div>
-                  <span className={styles_subs.delimiter} style={{ marginTop: 3 }}>≈</span>
-                  <div className={styles_subs.volume} style={{ marginTop: 3 }}>
+                  <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
+                  <div className={styles.volume} style={{ marginTop: 3 }}>
                     <Input
                       type='number'
                       value={`${inputVolumeCurrency}`}
@@ -137,7 +137,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                       right
                       onKeyPress={handleOnKeyPress}
                       onChangeText={value => handleOnChangeCurrency(value)} />
-                    <span className={styles_subs.volume_text}>$</span>
+                    <span className={styles.volume_text}>$</span>
                   </div>
                 </div>
                 <div className={styles_subs.btns}>
