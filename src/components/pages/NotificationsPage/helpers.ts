@@ -48,6 +48,14 @@ const messageMap = {
   'user_ex_acc.error': 'user'
 };
 
+export const headerSelectData = [
+  { value: 'all', label: 'All' },
+  { value: 'message', label: 'News' },
+  { value: 'status', label: 'Status' },
+  { value: 'signals', label: 'Signals' },
+  { value: 'trading', label: 'Trading' }
+];
+
 export const showMessage = (item, onClick, card = false) => {
   const setFunc = card ? SetsCard : Sets;
   const messages = {
