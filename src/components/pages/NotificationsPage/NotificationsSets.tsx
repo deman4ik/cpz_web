@@ -11,13 +11,13 @@ export const failedSet = (item, onClick) => (
     <div className={styles.row}>
       <div className={styles.textMessageDesktop}>{`${item.data.error} Robot`}&nbsp;</div>
       <div className={[ styles.textAccent, styles.cursor ].join(' ')} onClick={onClick}>{item.robot.name}</div>
-      <div className={styles.textMessageDesktop}>(</div>
+      <div className={styles.textMessageDesktop}>&nbsp;(</div>
       <div className={styles.textAccent}>{item.data.userRobotId}</div>
       <div className={styles.textMessageDesktop}>)</div>
     </div>
     <div className={styles.row} style={{ flexWrap: 'wrap', marginTop: 3 }}>
-      <div className={styles.textMessageDesktop}>{`Error occurred while processing robot job ${item.data.jobType}. `}</div>
-      <div className={styles.textMessageDesktop}>Please contact support.</div>
+      <div className={styles.textMessageDesktop}>{`Error occurred while processing robot job ${item.data.jobType}.`}</div>
+      <div className={styles.textMessageDesktop}>&nbsp;Please contact support.</div>
     </div>
   </div>
 );

@@ -10,14 +10,14 @@ import { NotificationsContainer } from './NotificationsContainer';
 
 export const NotificationsPage: React.FC = () => {
   const { width } = useWindowDimensions();
-  const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading } = useFetchData();
+  const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading, inputSelect, setFilters } = useFetchData();
 
   return (
     <Template
       page={PageType.notifications}
       title='Notifications'
       width={width}
-      toolbar={<ToolbarNotificationsPage />}
+      toolbar={<ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}
     >
       { loading ? <div className='loading'><LoadingIndicator /></div> : (
         !formatData.length ? (

@@ -51,3 +51,12 @@ export const setSearchLimit = (_root: any, variables: any, context: any) => {
     data: { Limit: { [type]: limit, __typename: 'Limit' } }
   });
 };
+
+export const setNotificationsProps = (_root: any, variables: any, context: any) => {
+  const { filters } = variables;
+  console.log('filters', filters);
+  context.client.writeData({
+    data: { NotificationsProps: { filters, __typename: 'NotificationsProps' } }
+  });
+  return filters;
+};

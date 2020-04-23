@@ -48,6 +48,24 @@ const messageMap = {
   'user_ex_acc.error': 'user'
 };
 
+export const headerSelectData = [
+  { value: 'all', label: 'All' },
+  { value: 'message', label: 'News' },
+  { value: 'status', label: 'Status' },
+  { value: 'signals', label: 'Signals' },
+  { value: 'trading', label: 'Trading' },
+  { value: 'error', label: 'Error' }
+];
+
+export const filters = {
+  all: null,
+  message: [ 'message.broadcast' ],
+  status: [ 'user-robot.failed', 'user-robot.started', 'user-robot.stopped', 'user-robot.paused', 'user-robot.resumed', 'message.support-reply' ],
+  signals: [ 'signal.trade', 'signal.alert' ],
+  trading: [ 'user-robot.trade' ],
+  error: [ 'order.error', 'user_ex_acc.error' ]
+};
+
 export const showMessage = (item, onClick, card = false) => {
   const setFunc = card ? SetsCard : Sets;
   const messages = {
