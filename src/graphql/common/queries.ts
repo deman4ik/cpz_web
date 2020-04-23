@@ -15,5 +15,13 @@ export const GET_MARKETS = gql`
       currency
       precision
     }
+    candles1440(
+      where: { exchange: { _eq: $exchange }, asset: { _eq: $asset } }
+      limit: 1
+      order_by: { time: desc }
+    ) {
+      high
+      low
+    }
   }
 `;

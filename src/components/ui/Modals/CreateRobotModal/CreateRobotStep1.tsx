@@ -53,13 +53,12 @@ const _CreateRobotStep1: React.FC<Props> = ({
       <div className={styles.container}>
         {dataPicker.length ? (
           <div className={styles.selectGroup}>
-            <div>
+            <div className={styles.select}>
               <Select
                 data={dataPicker}
                 value={selectedKey}
                 enabled={!isAddKeyVisible}
-                onValueChange={value => handleOnChangeExchange(value)}
-              />
+                onValueChange={value => handleOnChangeExchange(value)} />
             </div>
             <Button
               className={styles.btnSelectGroup}
