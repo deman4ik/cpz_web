@@ -29,19 +29,11 @@ export const Modal: React.FC<Props> = props => {
     };
   }, [ modalRef ]);
 
-  const handleOnClickClose = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-
-    if (props.onClose) {
-      props.onClose(e);
-    }
-  };
-
   return (
     <ClientOnlyPortal selector='#modal'>
       <div className={styles.backdrop}>
         <div ref={modalRef} className={styles.modal}>
-          <ModalTemplate title={props.title} onClose={handleOnClickClose}>
+          <ModalTemplate title={props.title} onClose={props.onClose}>
             {props.children}
           </ModalTemplate>
         </div>
