@@ -14,6 +14,7 @@ export const useFetchData = () => {
   const { data: notificationsProps } = useQuery(GET_NOTIFICATIONS_PROPS);
   const [ inputSelect, setInputSelect ] = useState(notificationsProps.NotificationsProps.filters);
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
+  const [ changeStatus, setChangeStatus ] = useState(false);
   const [ limit, setLimit ] = useState(RECORDS_LIMIT);
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
     variables: {
@@ -21,7 +22,8 @@ export const useFetchData = () => {
       limit,
       type: filters[inputSelect]
     },
-    pollInterval: POLL_INTERVAL
+    pollInterval: POLL_INTERVAL,
+    notifyOnNetworkStatusChange: changeStatus
   });
 
   const [ updateReaded ] = useMutation(UPDATE_NOTIFICATIONS, {
@@ -90,8 +92,15 @@ export const useFetchData = () => {
       }
     }).then(result => {
       setInputSelect(result.data.setNotificationsProps);
+      setChangeStatus(true);
     });
   };
+
+  useEffect(() => {
+    if (!loading) {
+      setChangeStatus(false);
+    }
+  }, [ loading ]);
 
   return {
     isLoadingMore,
