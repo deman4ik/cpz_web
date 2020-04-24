@@ -12,7 +12,7 @@ import { CreateRobotStep1 } from './CreateRobotStep1';
 import { CreateRobotStep2 } from './CreateRobotStep2';
 import { CreateRobotStep3 } from './CreateRobotStep3';
 import { ErrorLine, LoadingIndicator } from '../../../common';
-import { getLimits } from '../helpers';
+import { getLimits, calculateCurrency } from '../helpers';
 import { event } from '../../../../libs/gtag';
 import styles from '../index.module.css';
 
@@ -149,6 +149,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
       setInputKey(data.userExchange[0].id);
       setFormError('');
       handleOnChangeExchange(data.userExchange[0].id);
+      setInputVolumeAsset(dataRobot.robot.subs.volume);
+      setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
     }
   }, [ dataPicker ]);
 

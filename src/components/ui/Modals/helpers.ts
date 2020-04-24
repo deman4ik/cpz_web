@@ -8,7 +8,10 @@ export const actionText = {
 
 export const getLimits = data => {
   const result = { asset: { min: 0, max: 0 }, price: 0 };
-  if (data.markets.length) result.asset = data.markets[0].limits.amount;
+  if (data.markets.length) {
+    result.asset = data.markets[0].limits.amount;
+    result.asset.min = result.asset.min < 0.001 ? 0.001 : result.asset.min;
+  }
   if (data.candles1440.length) {
     const { high, low } = data.candles1440[0];
     result.price = (high + low) / 2;

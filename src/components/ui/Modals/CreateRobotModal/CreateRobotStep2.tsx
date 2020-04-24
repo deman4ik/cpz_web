@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 import { Button, Input } from '../../../basic';
 import styles from '../index.module.css';
-//import { color } from '../../../../config/constants';
 import { moneyFormat } from '../../../../config/utils';
 import { calculateCurrency, calculateAsset } from '../helpers';
 
