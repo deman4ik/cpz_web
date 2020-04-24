@@ -115,7 +115,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> =
     if (!loadingCheck && options) {
       const checkElements = [ 'stopped', 'paused' ];
       setDisabledEdit(
-        dataCheck.user_robots.some(el => checkElements.includes(el.status))
+        dataCheck.user_robots.some(el => checkElements.includes(el.status)) && options.status !== 'invalid'
       );
     }
   }, [ loadingCheck, dataCheck ]);
