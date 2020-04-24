@@ -71,7 +71,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
       setFormError('');
     }
 
-    if (e.nativeEvent.key === 'Enter' && isValidEmail) {
+    if (e.nativeEvent.key === 'Enter' && isValidEmail()) {
       onAcceptEmail();
     }
   };
@@ -81,7 +81,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
       setFormError('');
     }
 
-    if (e.nativeEvent.key === 'Enter' && isValidSecretCode) {
+    if (e.nativeEvent.key === 'Enter' && isValidSecretCode()) {
       onConfirmEmail();
     }
   };

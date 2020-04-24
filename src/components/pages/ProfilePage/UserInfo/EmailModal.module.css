@@ -8,7 +8,7 @@
   flex-direction: column;
   justify-content: center;
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   align-items: center;
 }
 
@@ -39,7 +39,13 @@
 
 @media (max-width: 768px) {
   .wizardContainer {
-    margin-left: -30px;
-    margin-right: -30px;
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wizardContainer {
+    min-width: 250px;
   }
 }

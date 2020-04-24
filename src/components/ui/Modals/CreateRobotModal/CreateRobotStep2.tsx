@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 import { Button, Input } from '../../../basic';
 import styles from '../index.module.css';
-//import { color } from '../../../../config/constants';
 import { moneyFormat } from '../../../../config/utils';
 import { calculateCurrency, calculateAsset } from '../helpers';
 
@@ -67,7 +66,7 @@ const _CreateRobotStep2: React.FC<Props> =
                 right
                 onChangeText={value => handleOnChangeAsset(value)}
                 onKeyPress={handleOnKeyPress} />
-              <span className={styles.volume_text}>BTC</span>
+              <span className={styles.volume_text}>{asset}</span>
             </div>
             <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
             <div className={styles.volume} style={{ marginTop: 3 }}>

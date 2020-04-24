@@ -44,7 +44,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
       setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
       setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ''}`);
     }
-  }, [ dataRobot ]);
+  }, [ dataRobot, limits ]);
 
   const handleOnChangeAsset = (value: string) => {
     setInputVolumeAsset(value);
@@ -124,7 +124,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
                       right
                       onChangeText={value => handleOnChangeAsset(value)}
                       onKeyPress={handleOnKeyPress} />
-                    <span className={styles.volume_text}>BTC</span>
+                    <span className={styles.volume_text}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
                   </div>
                   <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
                   <div className={styles.volume} style={{ marginTop: 3 }}>

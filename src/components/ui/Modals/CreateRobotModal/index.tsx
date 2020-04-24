@@ -12,7 +12,8 @@ import { CreateRobotStep1 } from './CreateRobotStep1';
 import { CreateRobotStep2 } from './CreateRobotStep2';
 import { CreateRobotStep3 } from './CreateRobotStep3';
 import { ErrorLine, LoadingIndicator } from '../../../common';
-import { getLimits } from '../helpers';
+import { getLimits, calculateCurrency } from '../helpers';
+import { event } from '../../../../libs/gtag';
 import styles from '../index.module.css';
 
 interface Props {
@@ -97,7 +98,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
               code
             }
           }
-        }).then(() => handleOnNext());
+        }).then(() => {
+          event({
+            action: 'create',
+            category: 'Robots',
+            label: 'create',
+            value: dataRobot.robot.id
+          });
+          handleOnNext();
+        });
       } else {
         setFormError(response.data.userRobotCreate.error);
       }
@@ -114,7 +123,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             robot: dataRobot.robot,
             message: 'started'
           }
-        }).then(() => onClose());
+        }).then(() => {
+          event({
+            action: 'start',
+            category: 'Robots',
+            label: 'start',
+            value: dataRobot.robot.id
+          });
+          onClose();
+        });
       } else {
         setFormError(response.data.userRobotStart.error);
       }
@@ -132,6 +149,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
       setInputKey(data.userExchange[0].id);
       setFormError('');
       handleOnChangeExchange(data.userExchange[0].id);
+      setInputVolumeAsset(dataRobot.robot.subs.volume);
+      setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
     }
   }, [ dataPicker ]);
 

@@ -8,8 +8,9 @@ import { DELETE_ROBOT, ACTION_ROBOT } from '../../../graphql/local/mutations';
 import { capitalize } from '../../../config/utils';
 import { ErrorLine } from '../../common';
 import { Button } from '../../basic';
-import styles from './index.module.css';
 import { actionText } from './helpers';
+import { event } from '../../../libs/gtag';
+import styles from './index.module.css';
 
 interface Props {
   setTitle: (title: string) => void;
@@ -54,6 +55,14 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
           variablesLocal.message = response.data[action[type]].status;
         }
         actionOnRobot({ variables: variablesLocal });
+        if (type === 'start') {
+          event({
+            action: 'start',
+            category: 'Robots',
+            label: 'start',
+            value: data.robot.userRobotId
+          });
+        }
         onClose();
       } else {
         setFormError(response.data[action[type]].error);
