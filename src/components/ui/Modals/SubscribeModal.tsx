@@ -60,7 +60,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
         `Following ${dataRobot.robot.name}` :
         `Subscribing to ${dataRobot.robot.name} signals`);
     }
-  }, [ dataRobot ]);
+  }, [ dataRobot, limits ]);
 
   const handleOnSubmit = () => {
     subscribeSend({ variables: {
@@ -135,7 +135,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                       right
                       onKeyPress={handleOnKeyPress}
                       onChangeText={value => handleOnChangeAsset(value)} />
-                    <span className={styles.volume_text}>BTC</span>
+                    <span className={styles.volume_text}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
                   </div>
                   <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
                   <div className={styles.volume} style={{ marginTop: 3 }}>
