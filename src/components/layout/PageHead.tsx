@@ -30,19 +30,23 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
       rel='stylesheet'
     />
     {/*  Global site tag (gtag.js) - Google Analytics */}
-    <script
-      async
-      src='https://www.googletagmanager.com/gtag/js?id=G-37BGBQ6GCK'
-    />
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
+    {process.env.NODE_ENV === 'development' ? null : (
+      <>
+        <script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-37BGBQ6GCK'
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-37BGBQ6GCK');
         gtag('config', 'AW-971308941');${gtag || ''}`,
-      }}
-    />
+          }}
+        />
+      </>
+    )}
   </Head>
 );
