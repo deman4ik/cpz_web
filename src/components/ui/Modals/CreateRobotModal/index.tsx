@@ -12,6 +12,8 @@ import { CreateRobotStep1 } from './CreateRobotStep1';
 import { CreateRobotStep2 } from './CreateRobotStep2';
 import { CreateRobotStep3 } from './CreateRobotStep3';
 import { ErrorLine, LoadingIndicator } from '../../../common';
+import { getLimits, calculateCurrency } from '../helpers';
+import { event } from '../../../../libs/gtag';
 import styles from '../index.module.css';
 
 interface Props {
@@ -22,7 +24,8 @@ interface Props {
 const steps = [ 'Choose Exchange API Keys', 'Enter trading volume', 'Start Trading Robot' ];
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ inputKey, setInputKey ] = useState('');
-  const [ inputVolume, setInputVolume ] = useState('0');
+  const [ inputVolumeAsset, setInputVolumeAsset ] = useState('0');
+  const [ inputVolumeCurrency, setInputVolumeCurrency ] = useState('0');
   const [ formError, setFormError ] = useState('');
   const [ newRobotId, setNewRobotId ] = useState('');
 
@@ -72,11 +75,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ actionOnRobot ] = useMutation(ACTION_ROBOT);
   const [ userRobotStart, { loading: startLoading } ] = useMutation(USER_ROBOT_START);
 
+  const limits = useMemo(() => ((!loading && data) ?
+    getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }
+  ), [ loading, data ]);
+
   const handleOnCreate = () => {
     userRobotCreate({
       variables: {
         robotId: dataRobot.robot.id,
-        volume: Number(inputVolume),
+        volume: Number(inputVolumeAsset),
         userExAccId: inputKey
       }
     }).then(response => {
@@ -84,14 +91,22 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         setNewRobotId(response.data.userRobotCreate.result);
         createRobot({
           variables: {
-            volume: Number(inputVolume),
+            volume: Number(inputVolumeAsset),
             robotInfo: {
               robotId: dataRobot.robot.id,
               userRobotId: response.data.userRobotCreate.result,
               code
             }
           }
-        }).then(() => handleOnNext());
+        }).then(() => {
+          event({
+            action: 'create',
+            category: 'Robots',
+            label: 'create',
+            value: dataRobot.robot.id
+          });
+          handleOnNext();
+        });
       } else {
         setFormError(response.data.userRobotCreate.error);
       }
@@ -108,7 +123,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             robot: dataRobot.robot,
             message: 'started'
           }
-        }).then(() => onClose());
+        }).then(() => {
+          event({
+            action: 'start',
+            category: 'Robots',
+            label: 'start',
+            value: dataRobot.robot.id
+          });
+          onClose();
+        });
       } else {
         setFormError(response.data.userRobotStart.error);
       }
@@ -126,14 +149,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
       setInputKey(data.userExchange[0].id);
       setFormError('');
       handleOnChangeExchange(data.userExchange[0].id);
+      setInputVolumeAsset(dataRobot.robot.subs.volume);
+      setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
     }
   }, [ dataPicker ]);
-
-  const exchange = useMemo(() => ((!loading && data && data.markets.length) ?
-    data.markets[0] : { limits: { amount: { min: 0, max: 0 } } }
-  ), [ loading, data ]);
-
-  const { min, max } = exchange.limits.amount;
 
   return (
     <>
@@ -164,12 +183,12 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             <CreateRobotStep2
               handleOnCreate={handleOnCreate}
               handleOnBack={handleOnBack}
-              asset={dataRobot ? dataRobot.robot.subs.asset : null}
-              min={min}
-              max={max}
-              volume={inputVolume}
-              setVolume={setInputVolume}
-            />
+              asset={dataRobot ? dataRobot.robot.subs.asset : ''}
+              limits={limits}
+              volumeAsset={inputVolumeAsset}
+              volumeCurrency={inputVolumeCurrency}
+              setInputVolumeAsset={setInputVolumeAsset}
+              setInputVolumeCurrency={setInputVolumeCurrency} />
           )}
           {step === 3 && (
             <CreateRobotStep3

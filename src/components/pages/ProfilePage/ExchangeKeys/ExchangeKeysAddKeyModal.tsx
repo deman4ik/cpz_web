@@ -7,8 +7,9 @@ import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from '../../../../graphql/robots/queri
 import { UPDATE_EXCHANGE_KEY } from '../../../../graphql/profile/mutations';
 import { Button, Select, Input, Textarea } from '../../../basic';
 import { color } from '../../../../config/constants';
-import styles from './ExchangeKeysAddKeyModal.module.css';
+import { event } from '../../../../libs/gtag';
 import { AddKey } from './types';
+import styles from './ExchangeKeysAddKeyModal.module.css';
 
 interface Props {
   options?: AddKey;
@@ -19,14 +20,8 @@ interface Props {
   handleOnSubmit?: (key: string) => void;
 }
 
-const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
-  options,
-  exchange,
-  refetchQueries,
-  isExchangeDisabled,
-  onClose,
-  handleOnSubmit
-}) => {
+const _ExchangeKeysAddKeyModal: React.FC<Props> =
+({ options, exchange, refetchQueries, isExchangeDisabled, onClose, handleOnSubmit }) => {
   const [ inputName, setInputName ] = useState(options ? options.name : '');
   const [ inputExchange, setInputExchange ] = useState(
     options ? options.exchange : exchange
@@ -85,6 +80,14 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
       setIsFetchResponse(false);
       if (response.data.userExchangeAccUpsert.success) {
         setResponseError({ error: false, msg: '' });
+        if (!options) {
+          event({
+            action: 'add_api_key',
+            category: 'Profile',
+            label: 'add_api_key',
+            value: 'add_api_key'
+          });
+        }
         if (handleOnSubmit) {
           handleOnSubmit(response.data.userExchangeAccUpsert.result);
         } else {
@@ -112,7 +115,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
     if (!loadingCheck && options) {
       const checkElements = [ 'stopped', 'paused' ];
       setDisabledEdit(
-        dataCheck.user_robots.some(el => checkElements.includes(el.status))
+        dataCheck.user_robots.some(el => checkElements.includes(el.status)) && options.status !== 'invalid'
       );
     }
   }, [ loadingCheck, dataCheck ]);

@@ -1,14 +1,26 @@
 import React, { memo } from 'react';
 
 import { useClearNotifications } from '../../../hooks/useClearNotifications';
-import { CaptionButton } from '../../basic';
-//import styles from '../../../config/common.module.css';
+import { CaptionButton, Select } from '../../basic';
+import { headerSelectData } from './helpers';
 
-const _ToolbarNotificationsPage: React.FC = () => {
+interface Props {
+  inputSelect: string;
+  setInputSelect: (inputSelect: string) => void;
+}
+
+const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelect }) => {
   const { updateNotifications } = useClearNotifications();
 
   return (
     <div className='toolbar'>
+      <div>
+        <Select
+          data={headerSelectData}
+          width={110}
+          onValueChange={value => setInputSelect(value)}
+          value={inputSelect} />
+      </div>
       <CaptionButton
         title='Mark All as Readed'
         icon='check'

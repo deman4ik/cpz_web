@@ -18,7 +18,7 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
   };
 
   const handlePressEdit = () => {
-    handleSetVisibleModal(ModalKey.addKey, { name: item.name, id: item.id, exchange: item.exchange });
+    handleSetVisibleModal(ModalKey.addKey, { name: item.name, id: item.id, exchange: item.exchange, status: item.status });
   };
 
   const handlePressDelete = () => {

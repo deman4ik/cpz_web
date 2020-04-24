@@ -53,6 +53,10 @@ export const typeDefs = gql`
     robots: Int
   }
 
+  extend type NotificationsProps {
+    filters: String
+  }
+
   extend type Query {
     userId: String!
     Limit: Limit!
@@ -60,5 +64,6 @@ export const typeDefs = gql`
     ModalVisible: ModalVisible!
     Robot: Robot!
     SearchProps: SearchProps!
+    NotificationsProps: NotificationsProps!
   }
 `;

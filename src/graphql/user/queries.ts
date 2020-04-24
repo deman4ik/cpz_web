@@ -17,10 +17,12 @@ export const GET_NOTIFICATIONS = gql`
   query notifications(
     $limit: Int!
     $offset: Int
+    $type: [String!]
   ){
     notifications(
       limit: $limit
       offset: $offset
+      where: { type: { _in: $type } }
       order_by: { timestamp: desc }
     ) @connection(key: "notifications") {
       type

@@ -10,9 +10,10 @@ interface Props {
   activeStep: number;
   steps: string[];
   titleWidth: number;
+  showDimension: boolean;
 }
 
-export const Step: React.FC<Props> = ({ step, idx = null, activeStep, steps, titleWidth }) => {
+export const Step: React.FC<Props> = ({ step, idx = null, activeStep, steps, titleWidth, showDimension }) => {
   const isActiveCheck = idx === null || activeStep - 1 >= idx;
   const isActiveTitle = idx === null || activeStep - 1 === idx;
   const isActivePrevLine = idx <= activeStep - 1;
@@ -25,7 +26,7 @@ export const Step: React.FC<Props> = ({ step, idx = null, activeStep, steps, tit
         <div className={styles.line} style={{ backgroundColor: isActivePrevLine && color.primary }} />
       )}
       <div className={styles.circle} style={{ backgroundColor: isActiveCheck && color.primary }}>
-        <div className={styles.circleNumber}>{idx + 1}</div>
+        <div className={styles.circleNumber}>{showDimension ? idx + 1 : activeStep}</div>
         <div
           className={styles.circleTitle}
           style={{ width: titleWidth, marginLeft: -(titleWidth / 2), backgroundColor: isActiveTitle && color.primary }}>

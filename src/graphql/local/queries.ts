@@ -70,3 +70,11 @@ export const GET_SEARCH_LIMIT = gql`
     }
   }
 `;
+
+export const GET_NOTIFICATIONS_PROPS = gql`
+  query NotificationsProps {
+    NotificationsProps @client {
+      filters
+    }
+  }
+`;

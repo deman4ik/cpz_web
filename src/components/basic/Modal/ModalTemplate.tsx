@@ -8,7 +8,7 @@ interface Props {
   title: string;
   footer?: JSX.Element;
   children?: React.ReactNode;
-  onClose: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClose: React.MouseEventHandler;
 }
 
 export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose }) => (

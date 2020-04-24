@@ -72,3 +72,9 @@ export const SET_SEARCH_LIMIT = gql`
     setSearchLimit(limit: $limit, type: $type) @client
   }
 `;
+
+export const SET_NOTIFICATIONS_PROPS = gql`
+  mutation setNotificationsProps($filters: String!) {
+    setNotificationsProps(filters: $filters) @client
+  }
+`;

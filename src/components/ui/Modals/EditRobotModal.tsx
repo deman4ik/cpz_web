@@ -9,6 +9,7 @@ import { USER_ROBOT_EDIT } from '../../../graphql/robots/mutations';
 import { ErrorLine, LoadingIndicator } from '../../common';
 import { Button, Input } from '../../basic';
 import { moneyFormat } from '../../../config/utils';
+import { getLimits, calculateCurrency, calculateAsset } from './helpers';
 import { color } from '../../../config/constants';
 import styles from './index.module.css';
 
@@ -21,14 +22,8 @@ interface Props {
 const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
   const [ formError, setFormError ] = useState('');
   const { data: dataRobot } = useQuery(ROBOT);
-  const [ inputVolume, setInputVolume ] = useState('0');
-
-  useEffect(() => {
-    if (dataRobot) {
-      setInputVolume(dataRobot.robot.subs.volume);
-      setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ''}`);
-    }
-  }, [ dataRobot ]);
+  const [ inputVolumeAsset, setInputVolumeAsset ] = useState('0');
+  const [ inputVolumeCurrency, setInputVolumeCurrency ] = useState('0');
 
   const { data, loading } = useQuery(GET_MARKETS, {
     variables: {
@@ -38,31 +33,44 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
     },
     skip: !dataRobot
   });
-  const handleOnChange = (value: string) => {
-    setInputVolume(value);
-  };
-  const [ userRobotEdit, { loading: editRobotLoading } ] = useMutation(USER_ROBOT_EDIT);
-  const [ editRobot ] = useMutation(EDIT_ROBOT);
 
-  const exchange = useMemo(() => ((!loading && data && data.markets.length) ?
-    data.markets[0] : { limits: { amount: { min: 0, max: 0 } } }
+  const limits = useMemo(() => ((!loading && data) ?
+    getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }
   ), [ loading, data ]);
 
-  const { min, max } = exchange.limits.amount;
-  const isValid = () => (Number(inputVolume) >= min && Number(inputVolume) <= max);
+  useEffect(() => {
+    if (dataRobot) {
+      setInputVolumeAsset(dataRobot.robot.subs.volume);
+      setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
+      setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ''}`);
+    }
+  }, [ dataRobot, limits ]);
+
+  const handleOnChangeAsset = (value: string) => {
+    setInputVolumeAsset(value);
+    setInputVolumeCurrency(calculateCurrency(value, limits.price));
+  };
+
+  const handleOnChangeCurrency = (value: string) => {
+    setInputVolumeCurrency(value);
+    setInputVolumeAsset(calculateAsset(value, limits.price));
+  };
+
+  const [ userRobotEdit, { loading: editRobotLoading } ] = useMutation(USER_ROBOT_EDIT);
+  const [ editRobot ] = useMutation(EDIT_ROBOT);
 
   const handleOnSubmit = () => {
     userRobotEdit({
       variables: {
         id: dataRobot.robot.userRobotId,
-        volume: Number(inputVolume),
+        volume: Number(inputVolumeAsset),
       }
     }).then(response => {
       if (response.data.userRobotEdit.success) {
         editRobot({
           variables: {
             robot: dataRobot.robot,
-            volume: Number(inputVolume),
+            volume: Number(inputVolumeAsset),
             code
           }
         });
@@ -72,7 +80,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
       onClose();
     });
   };
-
+  const isValid = () => (Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max);
   const handleOnKeyPress = (e) => {
     if (e.nativeEvent.key === 'Enter' && isValid()) {
       handleOnSubmit();
@@ -93,20 +101,43 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
             </div>
             <div className={styles.form}>
               <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
-                <div className={styles.label}>
-                  Minimum value is&nbsp;
+                <div className={styles.value_group}>
+                  <div className={styles.label}>
+                    Minimum value is&nbsp;
+                  </div>
+                  <div className={styles.value_row}>
+                    <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                    <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
+                    &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
+                  </div>
                 </div>
-                {moneyFormat(min, 3)}
               </div>
               <div className={styles.fieldset}>
-                <Input
-                  error={!isValid()}
-                  type='number'
-                  width={160}
-                  value={inputVolume}
-                  selectTextOnFocus
-                  onChangeText={value => handleOnChange(value)}
-                  onKeyPress={handleOnKeyPress} />
+                <div className={styles.input_group}>
+                  <div className={styles.volume}>
+                    <Input
+                      error={!isValid()}
+                      type='number'
+                      width={150}
+                      value={inputVolumeAsset}
+                      selectTextOnFocus
+                      right
+                      onChangeText={value => handleOnChangeAsset(value)}
+                      onKeyPress={handleOnKeyPress} />
+                    <span className={styles.volume_text}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
+                  </div>
+                  <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
+                  <div className={styles.volume} style={{ marginTop: 3 }}>
+                    <Input
+                      type='number'
+                      value={`${inputVolumeCurrency}`}
+                      width={150}
+                      right
+                      onKeyPress={handleOnKeyPress}
+                      onChangeText={value => handleOnChangeCurrency(value)} />
+                    <span className={styles.volume_text}>$</span>
+                  </div>
+                </div>
                 <div className={styles.btns}>
                   <Button
                     className={styles.btn}
