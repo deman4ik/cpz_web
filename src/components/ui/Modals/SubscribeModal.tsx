@@ -79,7 +79,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
           });
           if (type !== 'edit') {
             event({
-              action: 'signals_subscribe',
+              action: 'subscribe',
               category: 'Signals',
               label: 'subscribe',
               value: dataRobot.robot.id
