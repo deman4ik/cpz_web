@@ -2,6 +2,8 @@
 import React from 'react';
 import Head from 'next/head';
 
+import { GA_TRACKING_ID } from '../../libs/gtag';
+
 interface Props {
   title?: string;
   description?: string;
@@ -34,7 +36,7 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
       <>
         <script
           async
-          src='https://www.googletagmanager.com/gtag/js?id=G-37BGBQ6GCK'
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         />
         <script
           dangerouslySetInnerHTML={{
@@ -42,7 +44,9 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-37BGBQ6GCK');
+        gtag('config', '${GA_TRACKING_ID}', {
+          page_path: window.location.pathname,
+        });
         gtag('config', 'AW-971308941');${gtag || ''}`,
           }}
         />

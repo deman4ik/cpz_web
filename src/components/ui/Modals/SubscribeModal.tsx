@@ -10,6 +10,7 @@ import { Button, Input } from '../../basic';
 import { moneyFormat } from '../../../config/utils';
 import { ErrorLine, LoadingIndicator } from '../../common';
 import { getLimits, calculateCurrency, calculateAsset } from './helpers';
+import { event } from '../../../libs/gtag';
 import styles from './index.module.css';
 import styles_subs from './SubscribeModal.module.css';
 
@@ -76,6 +77,14 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
               chartData: dataRobot.ChartData
             }
           });
+          if (type !== 'edit') {
+            event({
+              action: 'signals_subscribe',
+              category: 'Signals',
+              label: 'subscribe',
+              value: dataRobot.robot.id
+            });
+          }
         } else {
           setFormError(response.data.userSignalSusbcribe.error);
         }
