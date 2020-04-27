@@ -5,7 +5,7 @@ import { SectionType } from './types';
 
 export const formatRobotData = (data) => {
   const { id, name, code, mod, exchange, asset, currency, strategyByStrategy,
-    timeframe, available, status, equity, statistics, settings, started_at, user_signals } = data.robot[0];
+    timeframe, available, status, equity, statistics, robot_settings, started_at, user_signals } = data.robot[0];
   return {
     robot: {
       id,
@@ -15,7 +15,7 @@ export const formatRobotData = (data) => {
       code,
       currency,
       timeframe,
-      settings,
+      volume: robot_settings.volume,
       statistics,
       equity,
       available,
@@ -43,7 +43,7 @@ export const activeDays = (robotData: any) => (
 );
 
 export const getVolume = (robotData: any) => (
-  robotData.robot.isUserSignals ? robotData.user_signals.volume : robotData.robot.settings.volume
+  robotData.robot.isUserSignals ? robotData.user_signals.volume : robotData.robot.volume
 );
 
 export const getFormatDataClosedPositions = (dataClosedPositions, isUserSignals, volume) => (

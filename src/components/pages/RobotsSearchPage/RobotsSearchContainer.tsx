@@ -7,7 +7,6 @@ import { Modals } from './Modals';
 import { formatRobotsData } from './helpers';
 
 interface Props {
-  //searchText?: string;
   displayType: string;
   width: number;
 }

@@ -31,7 +31,7 @@ const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
             Volume&nbsp;
           </div>
           <div className={styles.robotStatsValue}>
-            {isUserRobot ? robotData.user_robots.settings.volume : robotData.robot.settings.volume } {robotData.robot.asset}
+            {isUserRobot ? robotData.user_robots.settings.volume : robotData.robot.volume } {robotData.robot.asset}
           </div>
         </div>
       </div>

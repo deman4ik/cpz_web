@@ -24,7 +24,6 @@ export const GET_ROBOTS_BY_STATS = gql`
         status
         started_at
         equity
-        settings
         robot_settings {
           volume
         }

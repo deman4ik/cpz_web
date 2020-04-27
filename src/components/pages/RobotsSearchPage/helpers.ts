@@ -2,7 +2,7 @@ import dayjs from '../../../libs/dayjs';
 
 export const formatRobotsData = (v_robots_stats: any) => (v_robots_stats.map((el: any) => {
   const {
-    id, code, name, exchange, asset, currency, active, settings,
+    id, code, name, exchange, asset, currency, active, robot_settings,
     user_robots, equity } = el.robots;
 
   const res = {
@@ -21,7 +21,7 @@ export const formatRobotsData = (v_robots_stats: any) => (v_robots_stats.map((el
       id: null
     },
     started_at: null,
-    volume: settings.volume,
+    volume: robot_settings.volume,
     profit: (equity && equity.profit) ? equity.profit : 0,
     performance: (equity && equity.changes) ? equity.changes : [],
     active: active ? dayjs.utc(active).fromNow(true) : active,

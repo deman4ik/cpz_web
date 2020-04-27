@@ -4,7 +4,7 @@ import dayjs from '../../../libs/dayjs';
 
 export const formatRobotData = (data: any) => {
   const { id, exchange, asset, name, currency, timeframe,
-    user_robots, settings, statistics, equity, active } = data.robot[0];
+    user_robots, robot_settings, statistics, equity, active } = data.robot[0];
   return {
     robot: {
       id,
@@ -13,7 +13,7 @@ export const formatRobotData = (data: any) => {
       name,
       currency,
       timeframe,
-      settings,
+      volume: robot_settings.volume,
       statistics,
       equity,
       active,
@@ -40,7 +40,7 @@ export const createVariable = (robotData, type) => (
         tableName: 'user_robots'
       },
       robot: { id: robotData.robot.id, name: robotData.robot.name, userRobotId: null },
-      subs: { volume: robotData.robot.settings.volume, exchange: robotData.robot.exchange, asset: robotData.robot.asset, currency: robotData.robot.currency },
+      subs: { volume: robotData.robot.volume, exchange: robotData.robot.exchange, asset: robotData.robot.asset, currency: robotData.robot.currency },
       type
     } }
 );

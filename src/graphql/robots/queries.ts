@@ -15,7 +15,9 @@ export const GET_LANDING_ROBOTS = gql`
         signals
         trading
         equity
-        settings
+        robot_settings {
+          volume
+        }
         statistics
       }
     }
@@ -46,7 +48,9 @@ export const GET_ROBOT_INFO = gql`
       status
       equity
       statistics
-      settings
+      robot_settings {
+        volume
+      }
       started_at
       user_signals {
         subscribed_at
@@ -321,7 +325,9 @@ export const GET_ROBOTS_BY_STATS = gql`
         status
         active: started_at
         equity
-        settings
+        robot_settings {
+          volume
+        }
         user_robots {
           id
           status
@@ -362,7 +368,9 @@ export const GET_ROBOT_INFO_USER_ROBOTS = gql`
       timeframe
       equity
       statistics
-      settings
+      robot_settings {
+        volume
+      }
       active: started_at
       user_robots {
         id
