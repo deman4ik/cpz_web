@@ -3,6 +3,7 @@ import Router from 'next/router';
 
 import { CartFooter } from './common/CartFooter';
 import { Footer, PageHead, Header } from '../../layout';
+import { AW_CONVERSION_ID } from '../../../libs/gtag';
 import styles from './index.module.css';
 
 export const Done: React.FC = () => {
@@ -18,7 +19,7 @@ export const Done: React.FC = () => {
       <PageHead
         title='Done!'
         gtag={`
-        gtag('event', 'conversion', {'send_to': 'AW-971308941/WX65CJXv5c0BEI3_k88D'});`} />
+        gtag('event', 'conversion', {'send_to': ${AW_CONVERSION_ID}/WX65CJXv5c0BEI3_k88D'});`} />
       <div className={styles.header}>
         <Header hasHomeButton />
       </div>

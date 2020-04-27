@@ -39,6 +39,7 @@ const _TelegramBot: React.FC = () => (
         <div style={{ margin: '0 auto' }}>
           <PrimaryButton
             title='Try it now'
+            gtag_conversation
             href={`https://t.me/${process.env.TELEGRAM_BOT_NAME}`}
             type='primary' />
         </div>

@@ -1,6 +1,7 @@
 import { MainMenuItemProps } from './types';
 import { PageType } from '../../config/types';
-import { DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../config/constants';
+import { TERMS_URL, PRIVACY_URL, SUPPORT_URL, DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../config/constants';
+import { TelegramIcon, InstagramIcon, TwitterIcon } from '../../assets/icons/svg';
 
 export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
@@ -51,5 +52,41 @@ export const authHeader = [
   {
     title: 'Sign up',
     href: '/auth/signup'
+  }
+];
+
+export const footerIcons = [
+  {
+    href: 'https://twitter.com/cryptuoso',
+    icon: 'twitter'
+  },
+  {
+    href: 'https://www.instagram.com/cryptuoso',
+    icon: 'instagram'
+  },
+  {
+    href: TELEGRAM_COMMUNITY_URL,
+    icon: 'telegram'
+  }
+];
+
+export const specificIcon = {
+  telegram: TelegramIcon,
+  instagram: InstagramIcon,
+  twitter: TwitterIcon
+};
+
+export const footerLinks = [
+  {
+    href: `${DOCS_URL}${TERMS_URL}`,
+    name: 'Terms'
+  },
+  {
+    href: `${DOCS_URL}${PRIVACY_URL}`,
+    name: 'Privacy'
+  },
+  {
+    href: `${DOCS_URL}${SUPPORT_URL}`,
+    name: 'Support'
   }
 ];
