@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
-//import { useDebounce } from '../../../hooks/useDebounce';
 import { Template } from '../../layout';
 import { RobotsSearchContainer } from './RobotsSearchContainer';
 import { SearchToolbar } from '../../ui/RobotsList/SearchToolbar';
@@ -12,8 +11,6 @@ import { SearchFiltersModal } from '../../ui/Modals';
 import styles from './index.module.css';
 
 export const RobotsSearchPage: React.FC = () => {
-  //const [ signalsSearchValue, setSignalsSearchValue ] = useState('');
-  //const debouncedSearchTerm = useDebounce(signalsSearchValue, 500);
   const [ isVisibleFilters, setIsVisibleFilters ] = useState(false);
   const { width } = useWindowDimensions();
 

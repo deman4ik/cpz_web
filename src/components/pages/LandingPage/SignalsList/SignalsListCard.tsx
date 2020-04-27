@@ -31,7 +31,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
           <div className={`${styles.numberCol} ${styles.profitCol}`}>
             <div className={styles.secondaryText}>
               <div className={styles.label}>
-                {robot.settings.volume} {robot.asset}
+                {robot.robot_settings.volume} {robot.asset}
               </div>
             </div>
             <span className={styles.mobile}>{money}</span>

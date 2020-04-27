@@ -15,7 +15,6 @@ import { NoRecentData, LoadingIndicator } from '../../common';
 import { ToolbarRobotPage } from './ToolbarRobotPage';
 import { ModalsRobotPage } from './ModalsRobotPage';
 import { formatRobotData } from './helpers';
-//import styles from '../../../config/common.module.css';
 
 export const SignalsRobotPage = () => {
   const { width } = useWindowDimensions();
