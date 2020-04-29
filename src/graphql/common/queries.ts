@@ -8,7 +8,7 @@ export const GET_MARKETS = gql`
         exchange: { _eq: $exchange }
         currency: { _eq: $currency }
       }
-    ){
+    ) {
       exchange
       asset
       limits

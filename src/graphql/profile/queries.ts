@@ -6,7 +6,8 @@ export const GET_EXCHANGES = gql`
       code
       name
     }
-}`;
+  }
+`;
 
 export const GET_USER_EXCHANGES = gql`
   query user_exchange_accs {
@@ -22,13 +23,11 @@ export const GET_USER_EXCHANGES = gql`
 
 export const GET_USER_EXCHANGES_WITH_MARKETS = gql`
   query user_exchange_accs_markets(
-    $asset: String!, $exchange: String!, $currency: String!
+    $asset: String!
+    $exchange: String!
+    $currency: String!
   ) {
-    userExchange: user_exchange_accs(
-      where: {
-        exchange: { _eq: $exchange }
-      }
-    ){
+    userExchange: user_exchange_accs(where: { exchange: { _eq: $exchange } }) {
       created_at
       exchange
       id
@@ -42,7 +41,7 @@ export const GET_USER_EXCHANGES_WITH_MARKETS = gql`
         exchange: { _eq: $exchange }
         currency: { _eq: $currency }
       }
-    ){
+    ) {
       exchange
       asset
       limits

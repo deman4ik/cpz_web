@@ -1,6 +1,11 @@
-export const validateAuth = (values) => {
+export const validateAuth = values => {
   const errorFields: string[] = Object.keys(values);
-  const errors: { email?: string; password?: string; passwordRepeat?: string; verificationCode?: string } = {};
+  const errors: {
+    email?: string;
+    password?: string;
+    passwordRepeat?: string;
+    verificationCode?: string;
+  } = {};
 
   // Email Errors
   if (errorFields.includes('email')) {

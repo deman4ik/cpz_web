@@ -42,15 +42,15 @@ export const CONFIRM_USER_EMAIL = gql`
 
 export const SET_NOTIFICATION_SETTINGS = gql`
   mutation setNotificationSettings(
-    $signalsEmail: Boolean,
-    $signalsTelegram: Boolean,
-    $tradingEmail: Boolean,
+    $signalsEmail: Boolean
+    $signalsTelegram: Boolean
+    $tradingEmail: Boolean
     $tradingTelegram: Boolean
   ) {
     setNotificationSettings(
-      signalsEmail: $signalsEmail,
-      signalsTelegram: $signalsTelegram,
-      tradingEmail: $tradingEmail,
+      signalsEmail: $signalsEmail
+      signalsTelegram: $signalsTelegram
+      tradingEmail: $tradingEmail
       tradingTelegram: $tradingTelegram
     ) {
       success
@@ -80,7 +80,10 @@ export const UPDATE_USER = gql`
 `;
 
 export const UPDATE_NOTIFICATIONS = gql`
-  mutation update_notifications($_set: notifications_set_input, $where: notifications_bool_exp!) {
+  mutation update_notifications(
+    $_set: notifications_set_input
+    $where: notifications_bool_exp!
+  ) {
     update_notifications(_set: $_set, where: $where) {
       affected_rows
     }

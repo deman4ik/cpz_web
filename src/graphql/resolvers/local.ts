@@ -37,7 +37,7 @@ export const setSearchProps = (_root: any, variables: any, context: any) => {
     });
   } else {
     const item = { type, filters, orders, __typename: 'PropsType' };
-    data = [ ...dataProps.SearchProps.props, item ];
+    data = [...dataProps.SearchProps.props, item];
   }
   context.cache.writeQuery({
     query: GET_SEARCH_PROPS,
@@ -52,7 +52,11 @@ export const setSearchLimit = (_root: any, variables: any, context: any) => {
   });
 };
 
-export const setNotificationsProps = (_root: any, variables: any, context: any) => {
+export const setNotificationsProps = (
+  _root: any,
+  variables: any,
+  context: any
+) => {
   const { filters } = variables;
   console.log('filters', filters);
   context.client.writeData({

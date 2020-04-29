@@ -2,7 +2,10 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from '../../../graphql/user/queries';
+import {
+  GET_NOTIFICATIONS,
+  GET_NOTIFICATIONS_AGGREGATE
+} from '../../../graphql/user/queries';
 import { GET_NOTIFICATIONS_PROPS } from '../../../graphql/local/queries';
 import { SET_NOTIFICATIONS_PROPS } from '../../../graphql/local/mutations';
 import { UPDATE_NOTIFICATIONS } from '../../../graphql/user/mutations';
@@ -12,10 +15,12 @@ import { getFormatData, filters } from './helpers';
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
   const { data: notificationsProps } = useQuery(GET_NOTIFICATIONS_PROPS);
-  const [ inputSelect, setInputSelect ] = useState(notificationsProps.NotificationsProps.filters);
-  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
-  const [ changeStatus, setChangeStatus ] = useState(false);
-  const [ limit, setLimit ] = useState(RECORDS_LIMIT);
+  const [inputSelect, setInputSelect] = useState(
+    notificationsProps.NotificationsProps.filters
+  );
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [changeStatus, setChangeStatus] = useState(false);
+  const [limit, setLimit] = useState(RECORDS_LIMIT);
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
     variables: {
       offset: 0,
@@ -26,18 +31,24 @@ export const useFetchData = () => {
     notifyOnNetworkStatusChange: changeStatus
   });
 
-  const [ updateReaded ] = useMutation(UPDATE_NOTIFICATIONS, {
-    refetchQueries: [ {
-      query: GET_NOTIFICATIONS_AGGREGATE,
-      variables: {
-        where: { readed: { _eq: false }, type: { _in: filters[inputSelect] } }
+  const [updateReaded] = useMutation(UPDATE_NOTIFICATIONS, {
+    refetchQueries: [
+      {
+        query: GET_NOTIFICATIONS_AGGREGATE,
+        variables: {
+          where: { readed: { _eq: false }, type: { _in: filters[inputSelect] } }
+        }
       }
-    } ]
+    ]
   });
 
-  const [ setNotificationsFilters ] = useMutation(SET_NOTIFICATIONS_PROPS);
+  const [setNotificationsFilters] = useMutation(SET_NOTIFICATIONS_PROPS);
 
-  const { data: dataCount, loading: loadingCount, refetch: refetch_aggregate } = useQuery(GET_NOTIFICATIONS_AGGREGATE, {
+  const {
+    data: dataCount,
+    loading: loadingCount,
+    refetch: refetch_aggregate
+  } = useQuery(GET_NOTIFICATIONS_AGGREGATE, {
     variables: {
       where: { type: { _in: filters[inputSelect] } }
     }
@@ -55,18 +66,28 @@ export const useFetchData = () => {
         setIsLoadingMore(false);
         if (!fetchMoreResult) return prev;
         setLimit(data.notifications.length + RECORDS_LIMIT);
-        return { notifications: [ ...prev.notifications, ...fetchMoreResult.notifications ] };
+        return {
+          notifications: [
+            ...prev.notifications,
+            ...fetchMoreResult.notifications
+          ]
+        };
       }
     });
   };
 
-  const formatData = useMemo(() => (
-    (!loading && data) ? getFormatData(data.notifications) : []
-  ), [ data, loading ]);
+  const formatData = useMemo(
+    () => (!loading && data ? getFormatData(data.notifications) : []),
+    [data, loading]
+  );
 
-  const recordsCount = useMemo(() => (
-    (!loadingCount && dataCount) ? dataCount.notifications_aggregate.aggregate.count : 0
-  ), [ loadingCount, dataCount ]);
+  const recordsCount = useMemo(
+    () =>
+      !loadingCount && dataCount
+        ? dataCount.notifications_aggregate.aggregate.count
+        : 0,
+    [loadingCount, dataCount]
+  );
 
   useEffect(() => {
     const unreadData = formatData.filter(el => !el.readed).map(el => el.id);
@@ -78,12 +99,12 @@ export const useFetchData = () => {
         }
       });
     }
-  }, [ formatData ]);
+  }, [formatData]);
 
   useEffect(() => {
     refetch();
     refetch_aggregate();
-  }, [ inputSelect ]);
+  }, [inputSelect]);
 
   const setFilters = (value: string) => {
     setNotificationsFilters({
@@ -100,7 +121,7 @@ export const useFetchData = () => {
     if (!loading) {
       setChangeStatus(false);
     }
-  }, [ loading ]);
+  }, [loading]);
 
   return {
     isLoadingMore,

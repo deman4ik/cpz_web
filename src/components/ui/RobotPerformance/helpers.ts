@@ -1,14 +1,20 @@
 import { capitalize, exchangeName } from '../../../config/utils';
 
-const getLineName = (exchange: string | null, asset: string | null, type: string) => (
-  (!exchange && !asset) ? `Total ${type}` :
-    `${exchange ? exchangeName(exchange) : ''}${asset && exchange ? ' ' : ''}${asset ? capitalize(asset) : ''}`
-);
+const getLineName = (
+  exchange: string | null,
+  asset: string | null,
+  type: string
+) =>
+  !exchange && !asset
+    ? `Total ${type}`
+    : `${exchange ? exchangeName(exchange) : ''}${
+        asset && exchange ? ' ' : ''
+      }${asset ? capitalize(asset) : ''}`;
 
 const getAssetData = (stat, type) => {
   const { id, asset, exchange, equity } = stat;
   const { profit, changes, winRate, maxDrawdown, tradesCount } = equity;
-  return ({
+  return {
     id,
     name: getLineName(exchange, asset, type),
     profit,
@@ -17,12 +23,17 @@ const getAssetData = (stat, type) => {
     maxDrawdown,
     tradesCount,
     path: `exchange=${exchange}&asset=${asset}`
-  });
+  };
 };
 
-export const getFormatData = (stats, type) => stats.reduce((acc, stat) =>
-  ((!stat.asset && !stat.exchange) || (stat.asset && stat.exchange) ? [
-    ...acc, getAssetData(stat, type) ] : acc), []);
+export const getFormatData = (stats, type) =>
+  stats.reduce(
+    (acc, stat) =>
+      (!stat.asset && !stat.exchange) || (stat.asset && stat.exchange)
+        ? [...acc, getAssetData(stat, type)]
+        : acc,
+    []
+  );
 
 export const getItem = (displayType: string) => ({
   id: '',

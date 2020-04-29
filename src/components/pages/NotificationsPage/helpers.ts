@@ -2,16 +2,29 @@ import * as Sets from './NotificationsSets';
 import * as SetsCard from './NotificationsSetsCard';
 import { color, DOCS_URL, SUPPORT_URL } from '../../../config/constants';
 
-const actionTypes = [ 'long', 'closeShort' ];
-const actionSignals = [ 'long', 'short' ];
-export const actionName = (action) => (actionTypes.includes(action) ? 'BUY' : 'SELL');
-export const actionIcon = (action) => (actionTypes.includes(action) ? 'arrowup' : 'arrowdown');
-export const actionColor = (action) => (actionTypes.includes(action) ? color.positive : color.negative);
-export const actionOpen = (action) => (actionSignals.includes(action));
+const actionTypes = ['long', 'closeShort'];
+const actionSignals = ['long', 'short'];
+export const actionName = action =>
+  actionTypes.includes(action) ? 'BUY' : 'SELL';
+export const actionIcon = action =>
+  actionTypes.includes(action) ? 'arrowup' : 'arrowdown';
+export const actionColor = action =>
+  actionTypes.includes(action) ? color.positive : color.negative;
+export const actionOpen = action => actionSignals.includes(action);
 
-export const getFormatData = (notifications) => (
+export const getFormatData = notifications =>
   notifications.map(notification => {
-    const { type, data, user_robot, user_position, robot_position, robot, timestamp, readed, id } = notification;
+    const {
+      type,
+      data,
+      user_robot,
+      user_position,
+      robot_position,
+      robot,
+      timestamp,
+      readed,
+      id
+    } = notification;
     return {
       id,
       type,
@@ -20,18 +33,21 @@ export const getFormatData = (notifications) => (
       readed,
       user_position,
       robot_position,
-      robot: user_robot ? {
-        code: user_robot.robot.code,
-        name: user_robot.robot.name,
-        asset: user_robot.robot.asset,
-      } : robot ? {
-        code: robot.code,
-        name: robot.name,
-        asset: robot.asset,
-      } : null
+      robot: user_robot
+        ? {
+            code: user_robot.robot.code,
+            name: user_robot.robot.name,
+            asset: user_robot.robot.asset
+          }
+        : robot
+        ? {
+            code: robot.code,
+            name: robot.name,
+            asset: robot.asset
+          }
+        : null
     };
-  })
-);
+  });
 
 const messageMap = {
   'user-robot.failed': 'failed',
@@ -59,11 +75,18 @@ export const headerSelectData = [
 
 export const filters = {
   all: null,
-  message: [ 'message.broadcast' ],
-  status: [ 'user-robot.failed', 'user-robot.started', 'user-robot.stopped', 'user-robot.paused', 'user-robot.resumed', 'message.support-reply' ],
-  signals: [ 'signal.trade', 'signal.alert' ],
-  trading: [ 'user-robot.trade' ],
-  error: [ 'order.error', 'user_ex_acc.error' ]
+  message: ['message.broadcast'],
+  status: [
+    'user-robot.failed',
+    'user-robot.started',
+    'user-robot.stopped',
+    'user-robot.paused',
+    'user-robot.resumed',
+    'message.support-reply'
+  ],
+  signals: ['signal.trade', 'signal.alert'],
+  trading: ['user-robot.trade'],
+  error: ['order.error', 'user_ex_acc.error']
 };
 
 export const showMessage = (item, onClick, card = false) => {
@@ -82,15 +105,27 @@ export const showMessage = (item, onClick, card = false) => {
   return messages[messageMap[item.type]]();
 };
 
-export const getRedirectionLink = (item) => {
+export const getRedirectionLink = item => {
   const links = {
     failed: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
     message: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
-    robotTrade: () => ({ link: `/robots/robot/${item.robot.code}`, redirect: false }),
+    robotTrade: () => ({
+      link: `/robots/robot/${item.robot.code}`,
+      redirect: false
+    }),
     error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
-    signalAlert: () => ({ link: `/signals/robot/${item.robot.code}`, redirect: false }),
-    robot: () => ({ link: `/robots/robot/${item.robot.code}`, redirect: false }),
-    signalTrade: () => ({ link: `/signals/robot/${item.robot.code}`, redirect: false }),
+    signalAlert: () => ({
+      link: `/signals/robot/${item.robot.code}`,
+      redirect: false
+    }),
+    robot: () => ({
+      link: `/robots/robot/${item.robot.code}`,
+      redirect: false
+    }),
+    signalTrade: () => ({
+      link: `/signals/robot/${item.robot.code}`,
+      redirect: false
+    }),
     user: () => ({ link: '/profile', redirect: true })
   };
 

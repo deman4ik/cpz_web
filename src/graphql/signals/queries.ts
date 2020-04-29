@@ -24,7 +24,6 @@ export const GET_ROBOTS_BY_STATS = gql`
         status
         started_at
         equity
-        settings
         robot_settings {
           volume
         }
@@ -58,13 +57,9 @@ export const SEARCH_SIGNALS_FILTERS = gql`
 `;
 
 export const ROBOT_AGGREGATE_COUNT = gql`
-  query aggregate(
-      $hash: String!
-      $where: robots_bool_exp
-    ){
-    robots_aggregate(
-      where: $where
-    ) @connection(key: "robots_aggregate", filter: ["hash"]) {
+  query aggregate($hash: String!, $where: robots_bool_exp) {
+    robots_aggregate(where: $where)
+      @connection(key: "robots_aggregate", filter: ["hash"]) {
       aggregate {
         count
       }
@@ -77,22 +72,14 @@ export const ROBOT_POSITIONS_COUNT = gql`
     $robotId: uuid!
     $status: String_comparison_exp
     $dateFrom: timestamp
-  ){
+  ) {
     robot_positions_aggregate(
       where: {
         robot_id: { _eq: $robotId }
         status: $status
         _or: [
-          {
-            _and: [
-              { entry_candle_timestamp: { _gte: $dateFrom } }
-            ]
-          }
-          {
-            _and: [
-              { exit_candle_timestamp: { _gte: $dateFrom } }
-            ]
-          }
+          { _and: [{ entry_candle_timestamp: { _gte: $dateFrom } }] }
+          { _and: [{ exit_candle_timestamp: { _gte: $dateFrom } }] }
         ]
       }
     ) {
@@ -115,22 +102,18 @@ export const GET_AGGR_STATISTICS = gql`
         exchange: $exchange
         asset: $asset
         equity: { _has_key: "profit" }
-      }) {
-        statistics
       }
+    ) {
+      statistics
+    }
   }
 `;
 
 export const GET_USER_AGGR_STATS_ALL = gql`
-  query user_aggr_stats_filters(
-    $type: String_comparison_exp
-  ){
+  query user_aggr_stats_filters($type: String_comparison_exp) {
     stats: user_aggr_stats(
-      order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first } ]
-      where: {
-        type: $type
-        equity: { _has_key: "profit" }
-      }
+      order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
+      where: { type: $type, equity: { _has_key: "profit" } }
     ) {
       id
       asset
@@ -141,14 +124,9 @@ export const GET_USER_AGGR_STATS_ALL = gql`
 `;
 
 export const GET_USER_AGGR_STATS_FILTERS = gql`
-  query user_aggr_stats_filters(
-    $type: String_comparison_exp
-  ) {
+  query user_aggr_stats_filters($type: String_comparison_exp) {
     filters: user_aggr_stats(
-      where: {
-        type: $type
-        equity: { _has_key: "profit" }
-      }
+      where: { type: $type, equity: { _has_key: "profit" } }
     ) {
       asset
       exchange
@@ -158,9 +136,8 @@ export const GET_USER_AGGR_STATS_FILTERS = gql`
 
 export const USER_SIGNALS = gql`
   query user_signals {
-    signals: user_signals(
-      order_by: { subscribed_at: asc, id: asc }
-    ) @connection(key: "user_signals_robots") {
+    signals: user_signals(order_by: { subscribed_at: asc, id: asc })
+      @connection(key: "user_signals_robots") {
       robot {
         id
         name

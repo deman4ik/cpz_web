@@ -5,7 +5,7 @@ export const AW_CONVERSION_ID = 'AW-971308941';
 export const pageview = url => {
   if (process.env.NODE_ENV === 'development') return;
   (window as any).gtag('config', GA_TRACKING_ID, {
-    page_path: url,
+    page_path: url
   });
 };
 
@@ -15,14 +15,14 @@ export const event = ({ action, category, label, value }) => {
   (window as any).gtag('event', action, {
     event_category: category,
     event_label: label,
-    value,
+    value
   });
 };
 
 export const gtag_report_conversion = (url: string) => {
   if (process.env.NODE_ENV === 'development') return false;
   const callback = () => {
-    if (typeof (url) !== 'undefined') {
+    if (typeof url !== 'undefined') {
       (window as any).location = url;
     }
   };
