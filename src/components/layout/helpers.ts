@@ -1,7 +1,17 @@
 import { MainMenuItemProps } from './types';
 import { PageType } from '../../config/types';
-import { TERMS_URL, PRIVACY_URL, SUPPORT_URL, DOCS_URL, TELEGRAM_COMMUNITY_URL } from '../../config/constants';
-import { TelegramIcon, InstagramIcon, TwitterIcon } from '../../assets/icons/svg';
+import {
+  TERMS_URL,
+  PRIVACY_URL,
+  SUPPORT_URL,
+  DOCS_URL,
+  TELEGRAM_COMMUNITY_URL
+} from '../../config/constants';
+import {
+  TelegramIcon,
+  InstagramIcon,
+  TwitterIcon
+} from '../../assets/icons/svg';
 
 export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
@@ -9,7 +19,11 @@ export const MAINMENU_MIN_HEIGHT = 56;
 export const MAINMENU_ITEMS: MainMenuItemProps[] = [
   { label: PageType.robots, icon: 'robot', route: 'robots' },
   { label: PageType.signals, icon: 'signals', route: 'signals' },
-  { label: PageType.notifications, icon: 'notifications', route: 'notifications' },
+  {
+    label: PageType.notifications,
+    icon: 'notifications',
+    route: 'notifications'
+  },
   { label: PageType.profile, icon: 'profile', route: 'profile' }
 ];
 export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
@@ -41,7 +55,7 @@ export const linksHeader = [
   {
     title: 'Profile',
     href: '/profile'
-  },
+  }
 ];
 
 export const authHeader = [

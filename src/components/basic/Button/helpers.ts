@@ -1,6 +1,19 @@
-import { CheckIcon, PlusIcon, SettingsIcon, ChevronRightIcon, ChevronLeftIcon,
-  ArrowDownIcon, BorderColorIcon, CloseIcon, LockOpenIcon, MinusIcon, FilterVariantRemoveIcon, FilterVariantMinusIcon,
-  EmailIcon, AccountIcon } from '../../../assets/icons/svg';
+import {
+  CheckIcon,
+  PlusIcon,
+  SettingsIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ArrowDownIcon,
+  BorderColorIcon,
+  CloseIcon,
+  LockOpenIcon,
+  MinusIcon,
+  FilterVariantRemoveIcon,
+  FilterVariantMinusIcon,
+  EmailIcon,
+  AccountIcon
+} from '../../../assets/icons/svg';
 
 export const components = {
   check: CheckIcon,

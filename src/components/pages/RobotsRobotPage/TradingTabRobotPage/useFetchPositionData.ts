@@ -2,18 +2,32 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from '../../../../config/constants';
-import { GET_ROBOT_POSITIONS_ROBOT, GET_ROBOT_POSITIONS_USER,
-  ROBOT_POSITIONS_COUNT_USER } from '../../../../graphql/robots/queries';
+import {
+  DISPLAY_CLOSED_POSITIONS,
+  POLL_INTERVAL
+} from '../../../../config/constants';
+import {
+  GET_ROBOT_POSITIONS_ROBOT,
+  GET_ROBOT_POSITIONS_USER,
+  ROBOT_POSITIONS_COUNT_USER
+} from '../../../../graphql/robots/queries';
 import { ROBOT_POSITIONS_COUNT } from '../../../../graphql/signals/queries';
 
-export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) => {
-  const arrStatus = isUserRobot ? [ 'closed', 'closedAuto' ] : [ 'closed' ];
-  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
-  const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
+export const useFetchPositionData = (
+  isUserRobot,
+  userRobots,
+  robot,
+  tableName
+) => {
+  const arrStatus = isUserRobot ? ['closed', 'closedAuto'] : ['closed'];
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
 
   const { data, loading, fetchMore } = useQuery(
-    isUserRobot ? GET_ROBOT_POSITIONS_USER('user_positions') : GET_ROBOT_POSITIONS_ROBOT('robot_positions'), {
+    isUserRobot
+      ? GET_ROBOT_POSITIONS_USER('user_positions')
+      : GET_ROBOT_POSITIONS_ROBOT('robot_positions'),
+    {
       variables: {
         robotId: isUserRobot ? userRobots.id : robot.id,
         status: { _in: arrStatus },
@@ -25,7 +39,8 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
     }
   );
   const { data: dataCount, loading: loadingAggregate } = useQuery(
-    userRobots ? ROBOT_POSITIONS_COUNT_USER : ROBOT_POSITIONS_COUNT, {
+    userRobots ? ROBOT_POSITIONS_COUNT_USER : ROBOT_POSITIONS_COUNT,
+    {
       variables: {
         robotId: isUserRobot ? userRobots.id : robot.id,
         status: { _in: arrStatus }
@@ -34,7 +49,10 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
     }
   );
   const { data: dataOpenPos, loading: loadingOpenPos } = useQuery(
-    userRobots ? GET_ROBOT_POSITIONS_USER('user_positions_open') : GET_ROBOT_POSITIONS_ROBOT('robot_positions_open'), {
+    userRobots
+      ? GET_ROBOT_POSITIONS_USER('user_positions_open')
+      : GET_ROBOT_POSITIONS_ROBOT('robot_positions_open'),
+    {
       variables: {
         robotId: isUserRobot ? userRobots.id : robot.id,
         status: { _eq: 'open' },
@@ -44,10 +62,13 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
     }
   );
 
-  const quantyRecords = useMemo(() =>
-    ((!loadingAggregate && dataCount)
-      ? dataCount[`${tableName}_aggregate`].aggregate.count
-      : 0), [ dataCount, loadingAggregate ]);
+  const quantyRecords = useMemo(
+    () =>
+      !loadingAggregate && dataCount
+        ? dataCount[`${tableName}_aggregate`].aggregate.count
+        : 0,
+    [dataCount, loadingAggregate]
+  );
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);
@@ -61,10 +82,19 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         setIsLoadingMore(false);
         if (!fetchMoreResult) return prev;
         setLimit(data[tableName].length + DISPLAY_CLOSED_POSITIONS);
-        return { [tableName]: [ ...prev[tableName], ...fetchMoreResult[tableName] ] };
+        return {
+          [tableName]: [...prev[tableName], ...fetchMoreResult[tableName]]
+        };
       }
     });
   };
 
-  return { isLoadingMore, quantyRecords, dataOpenPos, handleLoadMore, data, loading: loading || loadingAggregate || loadingOpenPos };
+  return {
+    isLoadingMore,
+    quantyRecords,
+    dataOpenPos,
+    handleLoadMore,
+    data,
+    loading: loading || loadingAggregate || loadingOpenPos
+  };
 };

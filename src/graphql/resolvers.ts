@@ -1,6 +1,18 @@
-import { setModalState, setRobot, setChartData, setSearchProps, setSearchLimit, setNotificationsProps } from './resolvers/local';
+import {
+  setModalState,
+  setRobot,
+  setChartData,
+  setSearchProps,
+  setSearchLimit,
+  setNotificationsProps
+} from './resolvers/local';
 import { unsubscribe, subscribe } from './resolvers/signals';
-import { deleteRobot, actionRobot, createRobot, editRobot } from './resolvers/robots';
+import {
+  deleteRobot,
+  actionRobot,
+  createRobot,
+  editRobot
+} from './resolvers/robots';
 
 export const resolvers = {
   Mutation: {
@@ -15,6 +27,6 @@ export const resolvers = {
     deleteRobot,
     actionRobot,
     createRobot,
-    editRobot,
+    editRobot
   }
 };

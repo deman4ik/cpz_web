@@ -2,29 +2,35 @@ import { exchangeName } from '../../../../config/utils';
 import { timeFrameFormat } from '../../../../config/constants';
 import { FilterData } from './types';
 
-export const labels = [ 'exchange', 'asset', 'timeframe' ];
+export const labels = ['exchange', 'asset', 'timeframe'];
 
 const formatData = {
   asset: key => key,
   exchange: key => exchangeName(key),
-  timeframe: key => (timeFrameFormat[key].abbr)
+  timeframe: key => timeFrameFormat[key].abbr
 };
 
 const sortFunc = {
-  asset: (a, b) => (a.key).localeCompare(b.key),
-  exchange: (a, b) => (a.key).localeCompare(b.key),
+  asset: (a, b) => a.key.localeCompare(b.key),
+  exchange: (a, b) => a.key.localeCompare(b.key),
   timeframe: (a, b) => a.key - b.key
 };
 
-export const getFilterData = (filters) => {
-  const result = filters.reduce((acc: FilterData, item) => {
-    labels.forEach(key => {
-      if (!acc[key].find(el => el.key === item.robots[key])) {
-        acc[key].push({ key: item.robots[key], label: formatData[key](item.robots[key]) });
-      }
-    });
-    return acc;
-  }, { asset: [], exchange: [], timeframe: [] });
+export const getFilterData = filters => {
+  const result = filters.reduce(
+    (acc: FilterData, item) => {
+      labels.forEach(key => {
+        if (!acc[key].find(el => el.key === item.robots[key])) {
+          acc[key].push({
+            key: item.robots[key],
+            label: formatData[key](item.robots[key])
+          });
+        }
+      });
+      return acc;
+    },
+    { asset: [], exchange: [], timeframe: [] }
+  );
   labels.forEach(key => {
     result[key].sort(sortFunc[key]);
   });

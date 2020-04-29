@@ -41,5 +41,5 @@ export const defaultState = {
       __typename: 'SubsData'
     },
     __typename: 'Robot'
-  },
+  }
 };

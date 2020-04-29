@@ -1,8 +1,18 @@
 import gql from 'graphql-tag';
 
 export const UPDATE_EXCHANGE_KEY = gql`
-  mutation userExchangeAccUpsert($exchange: String!, $id: ID!, $name: String, $keys: ExchangeKeys!) {
-    userExchangeAccUpsert(exchange: $exchange, id: $id, name: $name, keys: $keys) {
+  mutation userExchangeAccUpsert(
+    $exchange: String!
+    $id: ID!
+    $name: String
+    $keys: ExchangeKeys!
+  ) {
+    userExchangeAccUpsert(
+      exchange: $exchange
+      id: $id
+      name: $name
+      keys: $keys
+    ) {
       error
       result
       success

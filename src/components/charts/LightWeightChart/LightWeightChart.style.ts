@@ -4,7 +4,7 @@ export const styles = {
   container: {
     position: 'relative',
     cursor: 'crosshair',
-    display: 'flex',
+    display: 'flex'
   } as CSSProperties,
   toolTip: {
     position: 'absolute',
@@ -45,5 +45,5 @@ export const styles = {
     fontFamily: '"Trebuchet MS", Roboto, Ubuntu, sans-serif',
     fontWeight: 500,
     color: '#ffffff'
-  } as CSSProperties,
+  } as CSSProperties
 };

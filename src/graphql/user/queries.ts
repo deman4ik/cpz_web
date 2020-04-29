@@ -14,11 +14,7 @@ export const GET_USER_INFO = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query notifications(
-    $limit: Int!
-    $offset: Int
-    $type: [String!]
-  ){
+  query notifications($limit: Int!, $offset: Int, $type: [String!]) {
     notifications(
       limit: $limit
       offset: $offset
@@ -48,7 +44,7 @@ export const GET_NOTIFICATIONS = gql`
         profit
         status
       }
-      user_position{
+      user_position {
         id
         code
         status
@@ -75,7 +71,7 @@ export const GET_NOTIFICATIONS = gql`
 
 export const GET_NOTIFICATIONS_AGGREGATE = gql`
   query notifications_aggregate($where: notifications_bool_exp) {
-    notifications_aggregate(where: $where){
+    notifications_aggregate(where: $where) {
       aggregate {
         count
       }
