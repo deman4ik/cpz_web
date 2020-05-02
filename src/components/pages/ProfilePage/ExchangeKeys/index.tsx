@@ -12,19 +12,18 @@ interface Props {
 
 export const _ExchangeKeys: React.FC<Props> = ({ title }) => {
   const { data, loading } = useQuery(GET_USER_EXCHANGES);
-  const formatData = useMemo(() => ((!loading && data) ? data.userExchange : []), [ loading, data ]);
+  const formatData = useMemo(
+    () => (!loading && data ? data.userExchange : []),
+    [loading, data]
+  );
 
   return (
     <div className={styles.container}>
-      <div className={styles.regionTitle}>
-        {title}
-      </div>
+      <div className={styles.regionTitle}>{title}</div>
       {loading ? (
         <LoadingIndicator />
       ) : (
-        !formatData.length ? <NoRecentData message='No data received' style={{ marginTop: 10 }} /> : (
-          <ExchangeKeysContainer formatData={formatData} />
-        )
+        <ExchangeKeysContainer formatData={formatData} />
       )}
     </div>
   );
