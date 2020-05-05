@@ -134,7 +134,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
       context.cache.writeFragment({
         fragment: fragmentRobots,
         id: idRobots,
-        data: { ...row, user_signals: [userItem] }
+        data: { ...row, user_signals: [ userItem ] }
       });
     }
     const isExistVRobotsStats = Object.keys(
@@ -152,7 +152,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
       });
       const v_robots_stats = dataRobots.v_robots_stats.map(el => {
         if (el.robots.id === variables.cache.id) {
-          const robots = { ...el.robots, user_signals: [userSignalsItem] };
+          const robots = { ...el.robots, user_signals: [ userSignalsItem ] };
           return { ...el, robots };
         }
         return el;
@@ -169,7 +169,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
         variables: { limit, robotId }
       });
       const dataChart = dataCandles.candles.map(item => {
-        const user_signals = [...item.robot.user_signals, userSignalsItem];
+        const user_signals = [ ...item.robot.user_signals, userSignalsItem ];
         return { ...item, robot: { ...item.robot, user_signals } };
       });
       context.cache.writeQuery({
@@ -217,7 +217,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
       context.cache.writeQuery({
         query: USER_SIGNALS,
         data: {
-          signals: [...dataSignals.signals, item]
+          signals: [ ...dataSignals.signals, item ]
         }
       });
     }

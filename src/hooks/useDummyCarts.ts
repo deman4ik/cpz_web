@@ -6,7 +6,7 @@ export const useDummyCarts = (
   cardWidth: number,
   dataLength: number
 ) => {
-  const [dummyCards, setDummyCards] = useState(0);
+  const [ dummyCards, setDummyCards ] = useState(0);
 
   useEffect(() => {
     if (width <= 1200) {
@@ -15,7 +15,7 @@ export const useDummyCarts = (
       const module = dataLength % cardsInARow;
       setDummyCards(module ? cardsInARow - module : 0);
     }
-  }, [width]);
+  }, [ width ]);
 
   return { dummyCards };
 };

@@ -37,7 +37,7 @@ export const setSearchProps = (_root: any, variables: any, context: any) => {
     });
   } else {
     const item = { type, filters, orders, __typename: 'PropsType' };
-    data = [...dataProps.SearchProps.props, item];
+    data = [ ...dataProps.SearchProps.props, item ];
   }
   context.cache.writeQuery({
     query: GET_SEARCH_PROPS,

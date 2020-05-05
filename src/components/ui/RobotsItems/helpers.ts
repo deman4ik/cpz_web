@@ -38,8 +38,8 @@ export const formatVariables = (
         ? 'unsubscribe'
         : 'subscribe'
       : !item.user_robots.status
-      ? 'create'
-      : statusTypes[item.user_robots.status]
+        ? 'create'
+        : statusTypes[item.user_robots.status]
     : buttonType;
   return {
     variables: {
@@ -69,9 +69,9 @@ export const displayData = {
   robots: {
     title: checker => (!checker ? 'Add' : buttonName[checker]),
     icon: checker =>
-      checker ? (checker === 'paused' ? 'close' : 'check') : 'plus',
+      (checker ? (checker === 'paused' ? 'close' : 'check') : 'plus'),
     type: checker =>
-      checker ? (checker === 'paused' ? 'negative' : 'success') : 'primary',
+      (checker ? (checker === 'paused' ? 'negative' : 'success') : 'primary'),
     hoverTitle: checker => hoverTitle[checker],
     hoverIcon: checker => hoverIcon[checker],
     hoverType: checker => hoverType[checker]

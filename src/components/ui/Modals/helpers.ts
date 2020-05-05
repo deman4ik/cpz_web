@@ -25,4 +25,4 @@ export const calculateCurrency = (asset: string, price: number) =>
   moneyFormat(Number(asset) * price);
 
 export const calculateAsset = (currency: string, price: number) =>
-  price === 0 ? '0' : moneyFormat(Number(currency) / price, 3);
+  (price === 0 ? '0' : moneyFormat(Number(currency) / price, 3));

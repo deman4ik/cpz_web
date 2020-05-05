@@ -15,7 +15,7 @@ function getWindowDimensions(isMobile: boolean) {
 
 export default function useWindowDimensions() {
   const { isMobile } = useContext(DeviceContext);
-  const [windowDimensions, setWindowDimensions] = useState(
+  const [ windowDimensions, setWindowDimensions ] = useState(
     getWindowDimensions(isMobile)
   );
 

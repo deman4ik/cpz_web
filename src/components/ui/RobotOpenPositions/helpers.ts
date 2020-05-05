@@ -2,9 +2,9 @@ import { color } from '../../../config/constants';
 import { formatDate, moneyFormat, round } from '../../../config/utils';
 
 export const getColor = (condition: boolean) =>
-  condition ? color.negative : color.positive;
+  (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) =>
-  direction === 'short' ? 'arrow-down' : 'arrow-up';
+  (direction === 'short' ? 'arrow-down' : 'arrow-up');
 
 const getRobotDataSignals = position => {
   const {
@@ -43,7 +43,7 @@ export const getFormatDataSignals = (positions: any) =>
       asset: position.robot.asset,
       volume:
         (position.direction === 'short' ? -1 : 1) * position.user_signal.volume,
-      robots: [robot]
+      robots: [ robot ]
     };
     if (item) {
       const findAsset = item.assets.find(
@@ -60,9 +60,9 @@ export const getFormatDataSignals = (positions: any) =>
         );
       }
     } else {
-      obj.assets = [asset];
+      obj.assets = [ asset ];
     }
-    return item ? acc : [...acc, obj];
+    return item ? acc : [ ...acc, obj ];
   }, []);
 
 const getRobotDataRobots = position => {
@@ -102,7 +102,7 @@ export const getFormatDataRobots = (positions: any) =>
     const asset = {
       asset: position.asset,
       volume: (position.direction === 'short' ? -1 : 1) * position.volume,
-      robots: [robot]
+      robots: [ robot ]
     };
     if (item) {
       const findAsset = item.assets.find(el => el.asset === position.asset);
@@ -117,9 +117,9 @@ export const getFormatDataRobots = (positions: any) =>
         );
       }
     } else {
-      obj.assets = [asset];
+      obj.assets = [ asset ];
     }
-    return item ? acc : [...acc, obj];
+    return item ? acc : [ ...acc, obj ];
   }, []);
 
 export const title = {

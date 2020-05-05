@@ -5,11 +5,11 @@ const getLineName = (
   asset: string | null,
   type: string
 ) =>
-  !exchange && !asset
+  (!exchange && !asset
     ? `Total ${type}`
     : `${exchange ? exchangeName(exchange) : ''}${
-        asset && exchange ? ' ' : ''
-      }${asset ? capitalize(asset) : ''}`;
+      asset && exchange ? ' ' : ''
+    }${asset ? capitalize(asset) : ''}`);
 
 const getAssetData = (stat, type) => {
   const { id, asset, exchange, equity } = stat;
@@ -29,9 +29,9 @@ const getAssetData = (stat, type) => {
 export const getFormatData = (stats, type) =>
   stats.reduce(
     (acc, stat) =>
-      (!stat.asset && !stat.exchange) || (stat.asset && stat.exchange)
-        ? [...acc, getAssetData(stat, type)]
-        : acc,
+      ((!stat.asset && !stat.exchange) || (stat.asset && stat.exchange)
+        ? [ ...acc, getAssetData(stat, type) ]
+        : acc),
     []
   );
 

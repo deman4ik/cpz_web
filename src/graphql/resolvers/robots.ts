@@ -230,7 +230,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             volume: variables.volume
           }
         };
-        const robots = { ...el.robots, user_robots: [item] };
+        const robots = { ...el.robots, user_robots: [ item ] };
         return { ...el, robots };
       }
       return el;
@@ -285,7 +285,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
           settings: { volume: variables.volume },
           __typename: 'user_robots'
         };
-        const robots = { ...el.robots, user_robots: [item] };
+        const robots = { ...el.robots, user_robots: [ item ] };
         robotInfo = { ...el.robots };
         return { ...el, robots };
       }
@@ -321,7 +321,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     };
     context.cache.writeQuery({
       query: USER_ROBOTS,
-      data: { robots: [...dataUserRobots.robots, item] }
+      data: { robots: [ ...dataUserRobots.robots, item ] }
     });
   }
   const isExistRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
@@ -344,7 +344,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     };
     const robot = dataRobots.robot.map(el => {
       if (el.id === variables.robotInfo.robotId) {
-        return { ...el, user_robots: [item] };
+        return { ...el, user_robots: [ item ] };
       }
       return el;
     });

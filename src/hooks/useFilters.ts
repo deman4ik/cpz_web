@@ -5,11 +5,11 @@ export const useFilters = (
   _exchange: string | string[] | undefined,
   _asset: string | string[] | undefined
 ) => {
-  const [checkedFilters, setCheckedFilters] = useState<CheckedFilters>({
+  const [ checkedFilters, setCheckedFilters ] = useState<CheckedFilters>({
     exchange: null,
     asset: null
   });
-  const [selectedFilter, setSelectedFilter] = useState<CheckedFilters>({
+  const [ selectedFilter, setSelectedFilter ] = useState<CheckedFilters>({
     exchange: null,
     asset: null
   });
@@ -31,7 +31,7 @@ export const useFilters = (
 
     setCheckedFilters(filters);
     setSelectedFilter(filters);
-  }, [_exchange, _asset]);
+  }, [ _exchange, _asset ]);
 
   const clearFilters = () => {
     setCheckedFilters({ exchange: null, asset: null });

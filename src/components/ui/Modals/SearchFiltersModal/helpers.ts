@@ -2,7 +2,7 @@ import { exchangeName } from '../../../../config/utils';
 import { timeFrameFormat } from '../../../../config/constants';
 import { FilterData } from './types';
 
-export const labels = ['exchange', 'asset', 'timeframe'];
+export const labels = [ 'exchange', 'asset', 'timeframe' ];
 
 const formatData = {
   asset: key => key,

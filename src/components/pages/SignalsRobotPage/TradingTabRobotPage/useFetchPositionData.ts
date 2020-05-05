@@ -11,8 +11,8 @@ import {
 import { getFormatDataClosedPositions, getAlerts } from '../helpers';
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
-  const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
+  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 
   const {
     data: dataSignals,
@@ -22,7 +22,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     variables: {
       robotId: robot.id,
       dateFrom: isUserSignals ? userSignals.subscribed_at : null,
-      status: { _in: ['new', 'open'] },
+      status: { _in: [ 'new', 'open' ] },
       orderBy: { entry_date: 'desc' }
     },
     pollInterval: POLL_INTERVAL
@@ -97,7 +97,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     refetch_open_signals();
     refetch_open();
     refetch_closed();
-  }, [isUserSignals]);
+  }, [ isUserSignals ]);
 
   const volume = useMemo(() => (isUserSignals ? userSignals.volume : 0), [
     userSignals
@@ -105,33 +105,33 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
 
   const formatDataClosedPositions = useMemo(
     () =>
-      !loadingClosedPositions && dataClosedPositions
+      (!loadingClosedPositions && dataClosedPositions
         ? getFormatDataClosedPositions(
-            dataClosedPositions,
-            isUserSignals,
-            volume
-          )
-        : [],
-    [dataClosedPositions, loadingClosedPositions, volume]
+          dataClosedPositions,
+          isUserSignals,
+          volume
+        )
+        : []),
+    [ dataClosedPositions, loadingClosedPositions, volume ]
   );
 
   const formatSignals = useMemo(
     () =>
-      !loadingOpenSignals &&
+      (!loadingOpenSignals &&
       dataSignals &&
       dataSignals.robot_positions.length &&
       Object.keys(dataSignals.robot_positions[0].alerts).length
         ? getAlerts(dataSignals.robot_positions[0])
-        : [],
-    [loadingOpenSignals, dataSignals]
+        : []),
+    [ loadingOpenSignals, dataSignals ]
   );
 
   const quantyRecords = useMemo(
     () =>
-      !loadingAggregate && dataCount
+      (!loadingAggregate && dataCount
         ? dataCount.robot_positions_aggregate.aggregate.count
-        : 0,
-    [dataCount, loadingAggregate]
+        : 0),
+    [ dataCount, loadingAggregate ]
   );
 
   return {

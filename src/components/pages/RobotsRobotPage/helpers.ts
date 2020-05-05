@@ -35,47 +35,47 @@ export const formatRobotData = (data: any) => {
 };
 
 export const createVariable = (robotData, type) =>
-  robotData.user_robots
+  (robotData.user_robots
     ? {
-        variables: {
-          cache: {
-            id: robotData.user_robots.id,
-            tableName: 'user_robots'
-          },
-          robot: {
-            id: robotData.robot.id,
-            name: robotData.robot.name,
-            userRobotId: robotData.user_robots.id
-          },
-          subs: {
-            volume: robotData.user_robots.settings.volume,
-            exchange: robotData.robot.exchange,
-            asset: robotData.robot.asset,
-            currency: robotData.robot.currency
-          },
-          type
-        }
+      variables: {
+        cache: {
+          id: robotData.user_robots.id,
+          tableName: 'user_robots'
+        },
+        robot: {
+          id: robotData.robot.id,
+          name: robotData.robot.name,
+          userRobotId: robotData.user_robots.id
+        },
+        subs: {
+          volume: robotData.user_robots.settings.volume,
+          exchange: robotData.robot.exchange,
+          asset: robotData.robot.asset,
+          currency: robotData.robot.currency
+        },
+        type
       }
+    }
     : {
-        variables: {
-          cache: {
-            id: robotData.robot.id,
-            tableName: 'user_robots'
-          },
-          robot: {
-            id: robotData.robot.id,
-            name: robotData.robot.name,
-            userRobotId: null
-          },
-          subs: {
-            volume: robotData.robot.volume,
-            exchange: robotData.robot.exchange,
-            asset: robotData.robot.asset,
-            currency: robotData.robot.currency
-          },
-          type
-        }
-      };
+      variables: {
+        cache: {
+          id: robotData.robot.id,
+          tableName: 'user_robots'
+        },
+        robot: {
+          id: robotData.robot.id,
+          name: robotData.robot.name,
+          userRobotId: null
+        },
+        subs: {
+          volume: robotData.robot.volume,
+          exchange: robotData.robot.exchange,
+          asset: robotData.robot.asset,
+          currency: robotData.robot.currency
+        },
+        type
+      }
+    });
 
 const getEntryMarker = (position_entry, candleRobot, asset, isUserRobots) => {
   const {
@@ -140,8 +140,7 @@ const getExitMarker = (position_exit, candleRobot, asset, isUserRobots) => {
 };
 
 export const getFormatData = (data, asset, isUserRobots) => {
-  if (!data || !data.candles.length)
-    return { candles: [], markers: [], overlay: [] };
+  if (!data || !data.candles.length) return { candles: [], markers: [], overlay: [] };
   return data.candles.reduceRight(
     (acc, item) => {
       const {
@@ -196,23 +195,23 @@ export const getFormatSignals = signals =>
   );
 
 export const activeDays = (robotData: any) =>
-  robotData.robot.active
+  (robotData.robot.active
     ? dayjs.utc(robotData.robot.active).fromNow(true)
-    : null;
+    : null);
 
 export const startedAt = (robotData: any) =>
-  robotData.user_robots
+  (robotData.user_robots
     ? robotData.user_robots.started_at
       ? dayjs.utc(robotData.user_robots.started_at).fromNow(true)
       : 0
-    : null;
+    : null);
 
 export const getProfit = (robotData: any, isUserRobots: boolean) =>
-  isUserRobots
+  (isUserRobots
     ? robotData.user_robots.equity && robotData.user_robots.equity.profit
       ? robotData.user_robots.equity.profit
       : 0
-    : robotData.robot.equity.profit;
+    : robotData.robot.equity.profit);
 
 export const tabNames = {
   trading: 'Trading',

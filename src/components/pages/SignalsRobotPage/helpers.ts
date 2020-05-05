@@ -56,14 +56,14 @@ export const subscribeAt = (robotData: any) =>
   dayjs.utc(robotData.user_signals.subscribed_at).fromNow(true);
 
 export const activeDays = (robotData: any) =>
-  robotData.robot.started_at
+  (robotData.robot.started_at
     ? dayjs.utc(robotData.robot.started_at).fromNow(true)
-    : 0;
+    : 0);
 
 export const getVolume = (robotData: any) =>
-  robotData.robot.isUserSignals
+  (robotData.robot.isUserSignals
     ? robotData.user_signals.volume
-    : robotData.robot.volume;
+    : robotData.robot.volume);
 
 export const getFormatDataClosedPositions = (
   dataClosedPositions,
@@ -281,24 +281,24 @@ export const getFormatUpdateData = (data, asset) => {
 };
 
 export const getAlerts = signals =>
-  Object.keys(signals.alerts).length
+  (Object.keys(signals.alerts).length
     ? Object.keys(signals.alerts).map(item => {
-        const colorItem =
+      const colorItem =
           signals.alerts[item].action === 'short' ||
           signals.alerts[item].action === 'closeLong'
             ? color.negative
             : color.positive;
-        const axisLabelVisible = true;
-        const alertItem = {
-          ...signals.alerts[item],
-          volume: signals.volume,
-          code: signals.code,
-          axisLabelVisible,
-          color: colorItem
-        };
-        return alertItem;
-      })
-    : [];
+      const axisLabelVisible = true;
+      const alertItem = {
+        ...signals.alerts[item],
+        volume: signals.volume,
+        code: signals.code,
+        axisLabelVisible,
+        color: colorItem
+      };
+      return alertItem;
+    })
+    : []);
 
 export const createVariable = (robotData, type) => {
   const { robot } = robotData;

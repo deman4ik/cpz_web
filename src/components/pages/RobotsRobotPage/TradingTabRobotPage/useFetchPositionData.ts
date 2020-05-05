@@ -19,9 +19,9 @@ export const useFetchPositionData = (
   robot,
   tableName
 ) => {
-  const arrStatus = isUserRobot ? ['closed', 'closedAuto'] : ['closed'];
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
+  const arrStatus = isUserRobot ? [ 'closed', 'closedAuto' ] : [ 'closed' ];
+  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
+  const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
 
   const { data, loading, fetchMore } = useQuery(
     isUserRobot
@@ -64,10 +64,10 @@ export const useFetchPositionData = (
 
   const quantyRecords = useMemo(
     () =>
-      !loadingAggregate && dataCount
+      (!loadingAggregate && dataCount
         ? dataCount[`${tableName}_aggregate`].aggregate.count
-        : 0,
-    [dataCount, loadingAggregate]
+        : 0),
+    [ dataCount, loadingAggregate ]
   );
 
   const handleLoadMore = () => {
@@ -83,7 +83,7 @@ export const useFetchPositionData = (
         if (!fetchMoreResult) return prev;
         setLimit(data[tableName].length + DISPLAY_CLOSED_POSITIONS);
         return {
-          [tableName]: [...prev[tableName], ...fetchMoreResult[tableName]]
+          [tableName]: [ ...prev[tableName], ...fetchMoreResult[tableName] ]
         };
       }
     });

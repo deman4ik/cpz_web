@@ -4,8 +4,7 @@ import { exchangeName } from '../../../config/utils';
 import { CheckedFilters } from './types';
 
 export const getFormatData = stats => {
-  if (!stats.length || !stats[0].statistics.performance)
-    return { chartData: null, robotStatistic: null };
+  if (!stats.length || !stats[0].statistics.performance) return { chartData: null, robotStatistic: null };
   return {
     chartData: stats[0].statistics.performance.map(pos => ({
       time: dayjs.utc(pos.x / 1000).valueOf(),

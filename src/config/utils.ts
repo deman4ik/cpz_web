@@ -2,18 +2,18 @@ import dayjs from '../libs/dayjs';
 import { timeFrameFormat, color } from './constants';
 
 export const moneyFormat = (value: number, toFixed = 2): string =>
-  !value
+  (!value
     ? '0'
     : value
-        .toFixed(toFixed)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      .toFixed(toFixed)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
 export const round = (n: number, decimals = 0): number =>
   +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
 export const valueWithSign = (value: number | string): string =>
-  Number(value) > 0 ? `+${value}` : `${value}`;
+  (Number(value) > 0 ? `+${value}` : `${value}`);
 
 export const capitalize = (s: string) => {
   if (typeof s !== 'string') return '';
@@ -32,12 +32,12 @@ export const formatDate = (date: string, addUTC = true): string => {
 };
 
 export const exchangeName = (code: string) =>
-  code
+  (code
     ? code
-        .split('_')
-        .map(word => capitalize(word))
-        .join(' ')
-    : code;
+      .split('_')
+      .map(word => capitalize(word))
+      .join(' ')
+    : code);
 
 export const getLegend = robot =>
   `${exchangeName(robot.exchange)} ${robot.asset}/${robot.currency} ${
@@ -51,17 +51,17 @@ export const colorAction = (check: boolean): object => ({
   color: check ? color.positive : color.negative
 });
 export const colorDirection = (direction: string): object => ({
-  color: ['long', 'closeShort'].includes(direction)
+  color: [ 'long', 'closeShort' ].includes(direction)
     ? color.positive
     : color.negative
 });
 
 export const getColor = (condition: boolean) =>
-  condition ? color.negative : color.positive;
+  (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) =>
-  direction === 'short' ? 'arrowdown' : 'arrowup';
+  (direction === 'short' ? 'arrowdown' : 'arrowup');
 export const getIconNameAction = (check: boolean) =>
-  !check ? 'arrowdown' : 'arrowup';
+  (!check ? 'arrowdown' : 'arrowup');
 
 export const truncate = (str: string, maxLength: number) => {
   if (str.length <= maxLength) return str;

@@ -15,12 +15,12 @@ import { getFormatData, filters } from './helpers';
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
   const { data: notificationsProps } = useQuery(GET_NOTIFICATIONS_PROPS);
-  const [inputSelect, setInputSelect] = useState(
+  const [ inputSelect, setInputSelect ] = useState(
     notificationsProps.NotificationsProps.filters
   );
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [changeStatus, setChangeStatus] = useState(false);
-  const [limit, setLimit] = useState(RECORDS_LIMIT);
+  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
+  const [ changeStatus, setChangeStatus ] = useState(false);
+  const [ limit, setLimit ] = useState(RECORDS_LIMIT);
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
     variables: {
       offset: 0,
@@ -31,7 +31,7 @@ export const useFetchData = () => {
     notifyOnNetworkStatusChange: changeStatus
   });
 
-  const [updateReaded] = useMutation(UPDATE_NOTIFICATIONS, {
+  const [ updateReaded ] = useMutation(UPDATE_NOTIFICATIONS, {
     refetchQueries: [
       {
         query: GET_NOTIFICATIONS_AGGREGATE,
@@ -42,7 +42,7 @@ export const useFetchData = () => {
     ]
   });
 
-  const [setNotificationsFilters] = useMutation(SET_NOTIFICATIONS_PROPS);
+  const [ setNotificationsFilters ] = useMutation(SET_NOTIFICATIONS_PROPS);
 
   const {
     data: dataCount,
@@ -78,15 +78,15 @@ export const useFetchData = () => {
 
   const formatData = useMemo(
     () => (!loading && data ? getFormatData(data.notifications) : []),
-    [data, loading]
+    [ data, loading ]
   );
 
   const recordsCount = useMemo(
     () =>
-      !loadingCount && dataCount
+      (!loadingCount && dataCount
         ? dataCount.notifications_aggregate.aggregate.count
-        : 0,
-    [loadingCount, dataCount]
+        : 0),
+    [ loadingCount, dataCount ]
   );
 
   useEffect(() => {
@@ -99,12 +99,12 @@ export const useFetchData = () => {
         }
       });
     }
-  }, [formatData]);
+  }, [ formatData ]);
 
   useEffect(() => {
     refetch();
     refetch_aggregate();
-  }, [inputSelect]);
+  }, [ inputSelect ]);
 
   const setFilters = (value: string) => {
     setNotificationsFilters({
@@ -121,7 +121,7 @@ export const useFetchData = () => {
     if (!loading) {
       setChangeStatus(false);
     }
-  }, [loading]);
+  }, [ loading ]);
 
   return {
     isLoadingMore,

@@ -1,6 +1,6 @@
 import { modalType } from './types';
 
-const actions = ['delete', 'start', 'stop'];
+const actions = [ 'delete', 'start', 'stop' ];
 
 export const getIsVisibleStatus = (
   modal: modalType,

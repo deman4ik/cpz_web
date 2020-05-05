@@ -2,14 +2,14 @@ import * as Sets from './NotificationsSets';
 import * as SetsCard from './NotificationsSetsCard';
 import { color, DOCS_URL, SUPPORT_URL } from '../../../config/constants';
 
-const actionTypes = ['long', 'closeShort'];
-const actionSignals = ['long', 'short'];
+const actionTypes = [ 'long', 'closeShort' ];
+const actionSignals = [ 'long', 'short' ];
 export const actionName = action =>
-  actionTypes.includes(action) ? 'BUY' : 'SELL';
+  (actionTypes.includes(action) ? 'BUY' : 'SELL');
 export const actionIcon = action =>
-  actionTypes.includes(action) ? 'arrowup' : 'arrowdown';
+  (actionTypes.includes(action) ? 'arrowup' : 'arrowdown');
 export const actionColor = action =>
-  actionTypes.includes(action) ? color.positive : color.negative;
+  (actionTypes.includes(action) ? color.positive : color.negative);
 export const actionOpen = action => actionSignals.includes(action);
 
 export const getFormatData = notifications =>
@@ -35,17 +35,17 @@ export const getFormatData = notifications =>
       robot_position,
       robot: user_robot
         ? {
-            code: user_robot.robot.code,
-            name: user_robot.robot.name,
-            asset: user_robot.robot.asset
-          }
+          code: user_robot.robot.code,
+          name: user_robot.robot.name,
+          asset: user_robot.robot.asset
+        }
         : robot
-        ? {
+          ? {
             code: robot.code,
             name: robot.name,
             asset: robot.asset
           }
-        : null
+          : null
     };
   });
 
@@ -75,7 +75,7 @@ export const headerSelectData = [
 
 export const filters = {
   all: null,
-  message: ['message.broadcast'],
+  message: [ 'message.broadcast' ],
   status: [
     'user-robot.failed',
     'user-robot.started',
@@ -84,9 +84,9 @@ export const filters = {
     'user-robot.resumed',
     'message.support-reply'
   ],
-  signals: ['signal.trade', 'signal.alert'],
-  trading: ['user-robot.trade'],
-  error: ['order.error', 'user_ex_acc.error']
+  signals: [ 'signal.trade', 'signal.alert' ],
+  trading: [ 'user-robot.trade' ],
+  error: [ 'order.error', 'user_ex_acc.error' ]
 };
 
 export const showMessage = (item, onClick, card = false) => {
