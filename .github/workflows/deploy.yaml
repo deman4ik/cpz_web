@@ -54,7 +54,7 @@ jobs:
         run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
 
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig show cpz > $GITHUB_WORKSPACE/.kubeconfig
+        run: doctl kubernetes cluster kubeconfig show cpz-cluster > $GITHUB_WORKSPACE/.kubeconfig
 
       - name: Deploy to DigitalOcean Kubernetes
         run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
