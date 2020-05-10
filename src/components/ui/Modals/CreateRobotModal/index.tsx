@@ -21,7 +21,7 @@ interface Props {
   code?: string;
   width: number;
 }
-const steps = [ 'Choose Exchange API Keys', 'Enter trading volume', 'Start Trading Robot' ];
+const steps = [ "Choose Exchange API Keys", 'Enter trading amount', 'Start Trading Robot'];
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ inputKey, setInputKey ] = useState('');
   const [ inputVolumeAsset, setInputVolumeAsset ] = useState('0');
@@ -46,10 +46,12 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     currency: !dataRobot ? null : dataRobot.robot.subs.currency
   };
 
-  const _refetchQueries = [ {
-    query: GET_USER_EXCHANGES_WITH_MARKETS,
-    variables
-  } ];
+  const _refetchQueries = [
+    {
+      query: GET_USER_EXCHANGES_WITH_MARKETS,
+      variables
+    }
+  ];
 
   const { data, loading } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
     variables,
@@ -57,9 +59,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   });
 
   const handleOnChangeExchange = (value?: string) => {
-    const key = value && data
-      ? data.userExchange.find(item => item.id === value)
-      : data ? data.userExchange[0] : null;
+    const key =
+            value && data ? data.userExchange.find((item) => item.id === value) : data ? data.userExchange[0] : null;
 
     if (key && key.status === 'invalid') {
       setFormError(`Your API Key ${key.name} is invalid! ${key.error || ''} Please update your API Key.`);
@@ -75,9 +76,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ actionOnRobot ] = useMutation(ACTION_ROBOT);
   const [ userRobotStart, { loading: startLoading } ] = useMutation(USER_ROBOT_START);
 
-  const limits = useMemo(() => ((!loading && data) ?
-    getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }
-  ), [ loading, data ]);
+  const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
+    loading,
+    data
+  ]);
 
   const handleOnCreate = () => {
     userRobotCreate({
@@ -86,7 +88,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         volume: Number(inputVolumeAsset),
         userExAccId: inputKey
       }
-    }).then(response => {
+    }).then((response) => {
       if (response.data.userRobotCreate.success) {
         setNewRobotId(response.data.userRobotCreate.result);
         createRobot({
@@ -116,7 +118,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const handleOnStart = () => {
     userRobotStart({
       variables: { id: newRobotId }
-    }).then(response => {
+    }).then((response) => {
       if (response.data.userRobotStart.success) {
         actionOnRobot({
           variables: {
@@ -138,11 +140,16 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     });
   };
 
-  const dataPicker = useMemo(() => (
-    !loading && data && data.userExchange ? data.userExchange.map(item => ({
-      label: exchangeName(item.name),
-      value: item.id
-    })) : []), [ loading, data ]);
+  const dataPicker = useMemo(
+    () =>
+      !loading && data && data.userExchange
+        ? data.userExchange.map((item) => ({
+          label: exchangeName(item.name),
+          value: item.id
+        }))
+        : [],
+    [ loading, data ]
+  );
 
   useEffect(() => {
     if (dataPicker.length) {
@@ -155,51 +162,50 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   }, [ dataPicker ]);
 
   return (
-    <>
-      {loading || createRobotLoading || startLoading ? <LoadingIndicator /> : (
+      <>
+      {loading || createRobotLoading || startLoading ? (
+              <LoadingIndicator />
+            ) : (
         <>
-          <div className={styles.wizardContainer}>
-            <StepWizard
-              steps={steps}
-              activeStep={step}
-              height={90}
-              titleWidth={200}
-              width={width} />
+                    <div className={styles.wizardContainer}>
+            <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
           </div>
-          <ErrorLine formError={formError} />
-          {step === 1 && dataPicker && (
-          <CreateRobotStep1
-            dataPicker={dataPicker}
-            exchange={variables.exchange}
-            selectedKey={inputKey}
-            refetchQueries={_refetchQueries}
-            hasError={!!formError}
-            onClose={onClose}
-            setFormError={setFormError}
-            handleOnNext={handleOnNext}
-            handleOnChangeExchange={handleOnChangeExchange} />
+                  <ErrorLine formError={formError} />
+                  {step === 1 && dataPicker && (
+                    <CreateRobotStep1
+                            dataPicker={dataPicker}
+                            exchange={variables.exchange}
+                    selectedKey={inputKey}
+                    refetchQueries={_refetchQueries}
+                    hasError={!!formError}
+                            onClose={onClose}
+                    setFormError={setFormError}
+                    handleOnNext={handleOnNext}
+                    handleOnChangeExchange={handleOnChangeExchange}
+                        />
+                    )}
+                    {step === 2 && (
+          <CreateRobotStep2
+                          handleOnCreate={handleOnCreate}
+                          handleOnBack={handleOnBack}
+                          asset={dataRobot ? dataRobot.robot.subs.asset : ''}
+                            limits={limits}
+                            volumeAsset={inputVolumeAsset}
+                          volumeCurrency={inputVolumeCurrency}
+                            setInputVolumeAsset={setInputVolumeAsset}
+                            setInputVolumeCurrency={setInputVolumeCurrency}
+                        />
           )}
-          {step === 2 && (
-            <CreateRobotStep2
-              handleOnCreate={handleOnCreate}
-              handleOnBack={handleOnBack}
-              asset={dataRobot ? dataRobot.robot.subs.asset : ''}
-              limits={limits}
-              volumeAsset={inputVolumeAsset}
-              volumeCurrency={inputVolumeCurrency}
-              setInputVolumeAsset={setInputVolumeAsset}
-              setInputVolumeCurrency={setInputVolumeCurrency} />
-          )}
-          {step === 3 && (
-            <CreateRobotStep3
-              robotName={dataRobot ? dataRobot.robot.name : null}
-              handleOnStart={handleOnStart}
-              onClose={onClose}
-            />
-          )}
+                    {step === 3 && (
+          <CreateRobotStep3
+                          robotName={dataRobot ? dataRobot.robot.name : null}
+                          handleOnStart={handleOnStart}
+                            onClose={onClose}
+                        />
+                    )}
+                </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

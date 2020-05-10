@@ -13,56 +13,68 @@ interface Props {
   displayType: string;
 }
 
-export const RobotsButtonItem: React.FC<Props> =
-({ isSubscribed, subscribeToggle, handleOnPressChangeVolume, handleOnPressDelete, displayType, robotStatus }) => {
+export const RobotsButtonItem: React.FC<Props> = ({
+  isSubscribed,
+  subscribeToggle,
+  handleOnPressChangeVolume,
+  handleOnPressDelete,
+  displayType,
+  robotStatus
+}) => {
   const { title, icon, type, hoverTitle, hoverIcon, hoverType } = displayData[displayType];
   const checker = displayType === 'signals' ? isSubscribed : robotStatus;
-  const canDisplayHover = () => (
+  const canDisplayHover = () =>
     (displayType === 'robots' && (robotStatus === 'started' || robotStatus === 'paused')) ||
-    (displayType === 'signals' && isSubscribed)
-  );
-  const canDisplayEdit = () => ((displayType === 'signals' && isSubscribed) || (displayType === 'robots' && robotStatus === 'stopped'));
-  const canDisplayDelete = () => ((displayType === 'robots' && robotStatus === 'stopped'));
+        (displayType === 'signals' && isSubscribed);
+  const canDisplayEdit = () =>
+    (displayType === 'signals' && isSubscribed) || (displayType === 'robots' && robotStatus === 'stopped');
+  const canDisplayDelete = () => displayType === 'robots' && robotStatus === 'stopped';
 
   return (
-    <div className={styles.cellAction}>
-      <Button
-        icon={icon(checker)}
-        title={title(checker)}
-        type={type(checker)}
-        isUppercase
-        width={120}
-        size='small'
-        disabled={displayType === 'robots' && robotStatus === 'stopping'}
-        hoverChanges={canDisplayHover() ? {
-          type: hoverType(robotStatus),
-          title: hoverTitle(robotStatus),
-          icon: hoverIcon(robotStatus)
-        } : null}
-        onClick={subscribeToggle}
-      />
-      { canDisplayEdit() && (
-      <Button
-        title='edit'
-        icon='settings'
-        size='small'
-        type='dimmed'
-        isUppercase
-        width={120}
-        style={{ marginTop: 6 }}
-        onClick={handleOnPressChangeVolume} />
-      )}
-      { canDisplayDelete() && (
-      <Button
-        title='delete'
-        icon='close'
-        size='small'
-        type='dimmed'
-        isUppercase
-        width={120}
-        style={{ marginTop: 6 }}
-        onClick={handleOnPressDelete} />
-      )}
-    </div>
+      <div className={styles.cellAction}>
+          <Button
+          icon={icon(checker)}
+                title={title(checker)}
+          type={type(checker)}
+                isUppercase
+          width={120}
+          size='small'
+          disabled={displayType === 'robots' && robotStatus === 'stopping'}
+                hoverChanges={
+                    canDisplayHover()
+                      ? {
+                        type: hoverType(robotStatus),
+                        title: hoverTitle(robotStatus),
+                        icon: hoverIcon(robotStatus)
+                      }
+                      : null
+                }
+          onClick={subscribeToggle}
+            />
+            {canDisplayEdit() && (
+        <Button
+                  title='edit'
+                  icon='settings'
+                  size='small'
+                  type='dimmed'
+                    isUppercase
+                  width={120}
+                    style={{ marginTop: 6 }}
+                  onClick={handleOnPressChangeVolume}
+                />
+        )}
+          {canDisplayDelete() && (
+            <Button
+                  title='delete'
+                  icon='close'
+                  size='small'
+                  type='dimmed'
+                  isUppercase
+                    width={120}
+                  style={{ marginTop: 6 }}
+                    onClick={handleOnPressDelete}
+                />
+            )}
+        </div>
   );
 };

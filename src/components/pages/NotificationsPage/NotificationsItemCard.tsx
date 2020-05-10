@@ -15,15 +15,13 @@ export const _NotificationsItemCard: React.FC<Props> = ({ item, routeNotificatio
   };
 
   return (
-    <div className={styles.card}>
-      <div className={styles.dateGroup}>
-        <div className={styles.dateText}>
-          {formatDate(item.timestamp)}
+      <div className={styles.card}>
+          <div className={styles.dateGroup}>
+                <div className={styles.dateText}>{formatDate(item.timestamp)}</div>
+          {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
         </div>
-        { !item.readed ? <div className={styles.mark}>&nbsp;*</div> : null }
-      </div>
-      { showMessage(item, handleOnPressNotification, true) }
-    </div>
+            {showMessage(item, handleOnPressNotification, true)}
+        </div>
   );
 };
 

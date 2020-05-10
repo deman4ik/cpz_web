@@ -22,34 +22,23 @@ export const SignalsSearchPage: React.FC = () => {
   };
 
   const setVisibleToolbarFilters = () => {
-    setIsVisibleFilters(prev => !prev);
+    setIsVisibleFilters((prev) => !prev);
   };
 
   return (
-    <Template
-      page={PageType.signals}
-      title='Signals Search'
-      width={width}
-      toolbar={(
-        <SearchToolbar
-          setVisibleToolbarFilters={setVisibleToolbarFilters}
-          displayType='signals' />
-      )}
-      hideToolbar
-      handlePressBack={handlePressBack}
-    >
-      <div className={styles.container}>
-        <SignalsSearchContainer
-          displayType='signals'
-          width={width} />
-      </div>
-      <Modal
-        isOpen={isVisibleFilters}
-        onClose={setVisibleToolbarFilters}
-        title='Filter Signals Search'
-      >
-        <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='signals' />
-      </Modal>
-    </Template>
+      <Template
+          page={PageType.signals}
+          title='Signals Search'
+            width={width}
+          toolbar={<SearchToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} displayType='signals' />}
+            hideToolbar
+            handlePressBack={handlePressBack}>
+          <div className={styles.container}>
+              <SignalsSearchContainer displayType='signals' width={width} />
+            </div>
+          <Modal isOpen={isVisibleFilters} onClose={setVisibleToolbarFilters} title='Filter Signals Search'>
+          <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='signals' />
+            </Modal>
+        </Template>
   );
 };

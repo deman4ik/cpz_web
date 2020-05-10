@@ -26,29 +26,31 @@ const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType
   };
 
   return (
-    <>
-      { isDesktopView ? (
-        <div className={styles.container}>
-          <PerformanceHeader />
-          { formatData.map(item => (
-            <PerformanceItem
-              key={item.id}
-              item={item}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          )) }
-        </div>
-      ) : (
-        <div className={styles.cardItemsContainer}>
-          { formatData.map(item => (
-            <PerformanceItemCard
-              key={item.id}
-              item={item}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          )) }
-          {DummyCards(dummyCards, cardWidth)}
-        </div>
-      )}
-    </>
+      <>
+      {isDesktopView ? (
+              <div className={styles.container}>
+                  <PerformanceHeader />
+                  {formatData.map((item) => (
+                        <PerformanceItem
+                      key={item.id}
+                      item={item}
+                            onRedirectToDetailView={handleRedirectToDetailView}
+                        />
+                ))}
+                </div>
+            ) : (
+                <div className={styles.cardItemsContainer}>
+                {formatData.map((item) => (
+                        <PerformanceItemCard
+                        key={item.id}
+                            item={item}
+                        onRedirectToDetailView={handleRedirectToDetailView}
+                        />
+                  ))}
+                {DummyCards(dummyCards, cardWidth)}
+              </div>
+            )}
+        </>
   );
 };
 

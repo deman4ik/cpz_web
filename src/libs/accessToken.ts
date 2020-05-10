@@ -19,20 +19,15 @@ export const setAccessToken = (token: string) => {
 
 export const getAccessToken = () => accessToken;
 
-export const getExpiredAccessToken = async ctx => {
+export const getExpiredAccessToken = async (ctx) => {
   if (accessToken.token.length === 0) {
     return accessToken.token;
   }
   let token = '';
   const isLocalhost =
-    ctx && ctx.headers
-      ? ctx.headers.host === LOCALHOST
-      : window.location.origin === `http://${LOCALHOST}`;
+        ctx && ctx.headers ? ctx.headers.host === LOCALHOST : window.location.origin === `http://${LOCALHOST}`;
   if (Date.now() >= accessToken.exp * 1000) {
-    token = await fetchAccessToken(
-      isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined,
-      isLocalhost
-    );
+    token = await fetchAccessToken(isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined, isLocalhost);
     if (!token) {
       redirect(ctx, '/auth/login');
     }

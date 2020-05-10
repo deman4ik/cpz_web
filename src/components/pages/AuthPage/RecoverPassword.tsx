@@ -21,21 +21,21 @@ const INITIAL_STATE = {
 export const RecoverPassword: React.FC = () => {
   const [ isFetching, setIsFetching ] = useState(false);
   const { data } = useQuery(USER);
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    errors,
-    isValid,
-    setValid
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+  const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
+    INITIAL_STATE,
+    validateAuth
+  );
 
   const handleOnPress = () => {
     handleSubmit();
   };
 
   const recoverPassword = async () => {
-    const result = await recover({ userId: data.userId, secretCode: values.verificationCode, password: values.password });
+    const result = await recover({
+      userId: data.userId,
+      secretCode: values.verificationCode,
+      password: values.password
+    });
     if (result.success) {
       Router.push('/auth/done');
     } else {
@@ -53,54 +53,58 @@ export const RecoverPassword: React.FC = () => {
   }, [ isValid ]);
 
   return (
-    <div className={styles.container}>
-      <PageHead title='Reset password' />
-      <div className={styles.header}>
-        <Header hasHomeButton />
-      </div>
-      <div className={styles.plate}>
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.title}>Reset password</div>
-            <Input
-              value={values.verificationCode}
-              error={errors.verificationCode}
-              placeholder='Verification code'
-              maxLength={6}
-              width={260}
-              onChangeText={(text: string) => handleChange('verificationCode', text)} />
-            <Input
-              value={values.password}
-              style={{ marginTop: 8 }}
-              maxLength={100}
-              error={errors.password}
-              placeholder='Password'
-              width={260}
-              type='password'
-              onChangeText={(text: string) => handleChange('password', text)} />
-            <Input
-              value={values.passwordRepeat}
-              style={{ marginTop: 8 }}
-              maxLength={100}
-              width={260}
-              error={errors.passwordRepeat}
-              placeholder='Repeat password'
-              type='password'
-              onChangeText={(text: string) => handleChange('passwordRepeat', text)} />
-            <Button
-              type='success'
-              size='big'
-              style={{ marginTop: 10 }}
-              title='Reset'
-              width={260}
-              isUppercase
-              isLoading={isFetching}
-              onClick={handleOnPress} />
-          </div>
-          <CartFooter />
+      <div className={styles.container}>
+          <PageHead title='Reset password' />
+          <div className={styles.header}>
+              <Header hasHomeButton />
+            </div>
+          <div className={styles.plate}>
+              <div className={styles.cardWrapper}>
+                    <div className={styles.card}>
+              <div className={styles.title}>Reset password</div>
+              <Input
+                          value={values.verificationCode}
+                          error={errors.verificationCode}
+                          placeholder='Verification code'
+                          maxLength={6}
+                            width={260}
+                          onChangeText={(text: string) => handleChange('verificationCode', text)}
+                        />
+              <Input
+                            value={values.password}
+                            style={{ marginTop: 8 }}
+                            maxLength={100}
+                          error={errors.password}
+                          placeholder='Password'
+                            width={260}
+                          type='password'
+                          onChangeText={(text: string) => handleChange('password', text)}
+                        />
+                        <Input
+                        value={values.passwordRepeat}
+                        style={{ marginTop: 8 }}
+                            maxLength={100}
+                        width={260}
+                        error={errors.passwordRepeat}
+                        placeholder='Repeat password'
+                        type='password'
+                        onChangeText={(text: string) => handleChange('passwordRepeat', text)}
+                        />
+              <Button
+                          type='success'
+                          size='big'
+                          style={{ marginTop: 10 }}
+                          title='Reset'
+                          width={260}
+                          isUppercase
+                            isLoading={isFetching}
+                          onClick={handleOnPress}
+                        />
+            </div>
+                    <CartFooter />
+                </div>
+            </div>
+          <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
   );
 };

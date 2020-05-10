@@ -14,27 +14,22 @@ export const RobotsPage: React.FC = () => {
   const { width } = useWindowDimensions();
 
   return (
-    <Template
-      page={PageType.robots}
-      title='Robots'
-      subTitle='Automated Trading'
-      width={width}
-      toolbar={<PageToolbar displayType='robots' />}
-    >
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <RobotPerformance
-            width={width}
-            type='robots' />
+      <Template
+          page={PageType.robots}
+          title='Robots'
+          subTitle='Automated Trading'
+          width={width}
+          toolbar={<PageToolbar displayType='robots' />}>
+            <div className={styles.container}>
+                <div className={styles.wrapper}>
+              <RobotPerformance width={width} type='robots' />
+            </div>
+          <div className={styles.wrapper}>
+              <RobotOpenPositions width={width} type='robots' />
+            </div>
         </div>
-        <div className={styles.wrapper}>
-          <RobotOpenPositions
-            width={width}
-            type='robots' />
-        </div>
-      </div>
-      <SignalRobots width={width} displayType='robots' />
-      <Modals />
-    </Template>
+          <SignalRobots width={width} displayType='robots' />
+          <Modals />
+        </Template>
   );
 };

@@ -18,27 +18,24 @@ const components = {
 export const SupportItem: React.FC<Props> = ({ item }) => {
   const SpecificIcon = components[item.icon];
   return (
-    <div className={styles.row}>
+      <div className={styles.row}>
       <div className={styles.col}>
-        <div className={styles.colBody}>
-          <div className={styles.iconWrapper}>
-            <SpecificIcon color={item.iconColor} size={70} />
-          </div>
-          <div className={styles.colTitle}>
-            {item.title}
-          </div>
-          <div className={styles.colText}>
-            {item.text}
-          </div>
+                <div className={styles.colBody}>
+              <div className={styles.iconWrapper}>
+                        <SpecificIcon color={item.iconColor} size={70} />
+                    </div>
+                    <div className={styles.colTitle}>{item.title}</div>
+              <div className={styles.colText}>{item.text}</div>
+            </div>
+                <div className={styles.colFooter}>
+                    <PrimaryButton
+                    className={styles.headerBtn}
+                    title={item.button}
+                        type={item.buttonType}
+                    href={item.href}
+                    />
+            </div>
+            </div>
         </div>
-        <div className={styles.colFooter}>
-          <PrimaryButton
-            className={styles.headerBtn}
-            title={item.button}
-            type={item.buttonType}
-            href={item.href} />
-        </div>
-      </div>
-    </div>
   );
 };

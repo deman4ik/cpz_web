@@ -18,42 +18,53 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
   const { user_signals: userSignals, robot } = robotData;
   const { isUserSignals } = robot;
   const {
-    loading, handleLoadMore, isLoadingMore, dataOpenPositions,
-    formatDataClosedPositions, formatSignals, quantyRecords
+    loading,
+    handleLoadMore,
+    isLoadingMore,
+    dataOpenPositions,
+    formatDataClosedPositions,
+    formatSignals,
+    quantyRecords
   } = useFetchPositionData(isUserSignals, userSignals, robot);
 
   return (
-    <>
-      <CandleChart
-        robot={robot}
-        signals={formatSignals}
-        width={width}
-        setIsChartLoaded={setIsChartLoaded} />
-      { loading ? <div className={styles.loading}><LoadingIndicator /></div> : (
-        !isChartLoaded ? <div className={styles.empty} /> : (
-          <>
-            <div className={styles.container}>
-              { Object.keys(floatPositions).map(key => (
+      <>
+          <CandleChart robot={robot} signals={formatSignals} width={width} setIsChartLoaded={setIsChartLoaded} />
+          {loading ? (
+              <div className={styles.loading}>
+                  <LoadingIndicator />
+                </div>
+            ) : !isChartLoaded ? (
+                <div className={styles.empty} />
+            ) : (
+                <>
+                <div className={styles.container}>
+                        {Object.keys(floatPositions).map((key) => (
                 <OpenPositionContainer
-                  key={key}
-                  robot={robot}
-                  data={key === 'signals'
-                    ? formatSignals
-                    : (dataOpenPositions && dataOpenPositions.robot_positions.length) ? dataOpenPositions.robot_positions : []}
-                  positionInfo={floatPositions[key]} />
-              )) }
-            </div>
-            <ClosedPositionContainer
-              robot={robot}
-              handleLoadMore={handleLoadMore}
-              data={formatDataClosedPositions}
-              quantyRecords={quantyRecords}
-              isLoadingMore={isLoadingMore}
-              width={width} />
-          </>
-        )
-      )}
-    </>
+                              key={key}
+                              robot={robot}
+                                data={
+                                    key === 'signals'
+                                      ? formatSignals
+                                      : dataOpenPositions && dataOpenPositions.robot_positions.length
+                                        ? dataOpenPositions.robot_positions
+                                        : []
+                                }
+                              positionInfo={floatPositions[key]}
+                            />
+              ))}
+                    </div>
+                    <ClosedPositionContainer
+                    robot={robot}
+                        handleLoadMore={handleLoadMore}
+                        data={formatDataClosedPositions}
+                    quantyRecords={quantyRecords}
+                        isLoadingMore={isLoadingMore}
+                        width={width}
+                    />
+              </>
+            )}
+        </>
   );
 };
 

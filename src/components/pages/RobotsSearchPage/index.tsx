@@ -19,34 +19,23 @@ export const RobotsSearchPage: React.FC = () => {
   };
 
   const setVisibleToolbarFilters = () => {
-    setIsVisibleFilters(prev => !prev);
+    setIsVisibleFilters((prev) => !prev);
   };
 
   return (
-    <Template
-      page={PageType.robots}
-      title='Robots Search'
-      width={width}
-      toolbar={(
-        <SearchToolbar
-          setVisibleToolbarFilters={setVisibleToolbarFilters}
-          displayType='robots' />
-      )}
-      hideToolbar
-      handlePressBack={handlePressBack}
-    >
-      <div className={styles.container}>
-        <RobotsSearchContainer
-          displayType='robots'
-          width={width} />
-      </div>
-      <Modal
-        isOpen={isVisibleFilters}
-        title='Filter Robots Search'
-        onClose={setVisibleToolbarFilters}
-      >
-        <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='robots' />
-      </Modal>
-    </Template>
+      <Template
+          page={PageType.robots}
+          title='Robots Search'
+          width={width}
+          toolbar={<SearchToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} displayType='robots' />}
+          hideToolbar
+            handlePressBack={handlePressBack}>
+            <div className={styles.container}>
+          <RobotsSearchContainer displayType='robots' width={width} />
+        </div>
+          <Modal isOpen={isVisibleFilters} title='Filter Robots Search' onClose={setVisibleToolbarFilters}>
+          <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType='robots' />
+            </Modal>
+        </Template>
   );
 };

@@ -65,11 +65,11 @@ export const toolTipArrowTemplate = (data: ToolTipArrow) => `
     <span style="color: ${white}">${data.volume}</span>
   </div>
   ${
-    data.exit
-      ? `<div>
-  <span style="color: ${data.profit > 0 ? positive : negative}">${
-          data.profit > 0 ? '+' : ''
-        }${data.profit.toFixed(2)} $</span>
+  data.exit
+    ? `<div>
+  <span style="color: ${data.profit > 0 ? positive : negative}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(
+  2
+)} $</span>
 </div>`
-      : ''
-  }`;
+    : ''
+}`;

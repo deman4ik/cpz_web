@@ -8,6 +8,6 @@ interface Props {
 
 export const NoRecentData: React.FC<Props> = ({ message, style }) => (
   <div className={styles.container} style={style}>
-    {message}
-  </div>
+      {message}
+    </div>
 );

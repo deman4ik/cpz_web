@@ -12,23 +12,19 @@ interface Props {
 
 const _HeaderRobotsRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => (
   <div className={styles.header}>
-    <div className={styles.container}>
-      <div className={styles.headerName}>
-        <div className={styles.robotNameWrapper}>
-          <div className={styles.robotName}>
-            {robotData.robot.name}
-          </div>
+      <div className={styles.container}>
+          <div className={styles.headerName}>
+              <div className={styles.robotNameWrapper}>
+                  <div className={styles.robotName}>{robotData.robot.name}</div>
+                </div>
+              <HeaderButtonRobotPage robotSubscribe={robotSubscribe} robotData={robotData} />
+            </div>
+          <div className={styles.headerMessage}>
+              {capitalize(robotData.user_robots ? robotData.user_robots.message : null)}
+            </div>
         </div>
-        <HeaderButtonRobotPage
-          robotSubscribe={robotSubscribe}
-          robotData={robotData} />
-      </div>
-      <div className={styles.headerMessage}>
-        {capitalize(robotData.user_robots ? robotData.user_robots.message : null)}
-      </div>
+      <HeaderStatsRobotPage robotData={robotData} />
     </div>
-    <HeaderStatsRobotPage robotData={robotData} />
-  </div>
 );
 
 export const HeaderRobotsRobotPage = memo(_HeaderRobotsRobotPage);

@@ -14,17 +14,11 @@ const _ExchangeKeysAddKey: React.FC<Props> = ({ handleSetVisibleModal }) => {
   };
 
   return (
-    <div className={styles.itemContainerCard}>
-      <div
-        className={styles.border}
-        onClick={handleOnPress}
-      >
-        <CaptionButton
-          title='Add New Key'
-          responsive={false}
-          icon='plus' />
-      </div>
-    </div>
+      <div className={styles.itemContainerCard}>
+          <div className={styles.border} onClick={handleOnPress}>
+              <CaptionButton title='Add New Key' responsive={false} icon='plus' />
+            </div>
+        </div>
   );
 };
 

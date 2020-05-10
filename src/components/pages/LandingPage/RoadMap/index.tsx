@@ -13,15 +13,17 @@ const _RoadMap: React.FC = () => {
     setShow(width > 0);
   }, [ width ]);
   return (
-    <>
-      { show ? (
-        <div className={styles.container}>
+      <>
+          {show ? (
+              <div className={styles.container}>
           <div className={styles.stepsContainer}>
-            {steps.map((step, idx) => <Step step={step} idx={idx} key={idx} isVertical={isVertical} />)}
-          </div>
+                        {steps.map((step, idx) => (
+              <Step step={step} idx={idx} key={idx} isVertical={isVertical} />
+            ))}
+                    </div>
         </div>
-      ) : null }
-    </>
+            ) : null}
+        </>
   );
 };
 

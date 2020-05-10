@@ -3,11 +3,10 @@ import dayjs from '../../../libs/dayjs';
 import { exchangeName } from '../../../config/utils';
 import { CheckedFilters } from './types';
 
-export const getFormatData = stats => {
-  if (!stats.length || !stats[0].statistics.performance)
-    return { chartData: null, robotStatistic: null };
+export const getFormatData = (stats) => {
+  if (!stats.length || !stats[0].statistics.performance) return { chartData: null, robotStatistic: null };
   return {
-    chartData: stats[0].statistics.performance.map(pos => ({
+    chartData: stats[0].statistics.performance.map((pos) => ({
       time: dayjs.utc(pos.x / 1000).valueOf(),
       value: pos.y
     })),
@@ -17,18 +16,14 @@ export const getFormatData = stats => {
 
 export const getSubTitle = (checkedFilters: CheckedFilters) =>
   Object.keys(checkedFilters)
-    .map(filter => (filter ? exchangeName(checkedFilters[filter]) : ''))
+    .map((filter) => (filter ? exchangeName(checkedFilters[filter]) : ''))
     .join(' ');
 
-export const getLabelCombinations = filters =>
+export const getLabelCombinations = (filters) =>
   filters.reduce(
     (acc, item) => {
-      Object.keys(item).forEach(key => {
-        if (
-          key !== '__typename' &&
-          item[key] &&
-          !acc[key].includes(item[key])
-        ) {
+      Object.keys(item).forEach((key) => {
+        if (key !== '__typename' && item[key] && !acc[key].includes(item[key])) {
           acc[key].push(item[key]);
         }
       });

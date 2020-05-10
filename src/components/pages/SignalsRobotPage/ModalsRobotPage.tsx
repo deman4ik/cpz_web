@@ -16,27 +16,20 @@ const _ModalsRobotPage: React.FC<Props> = ({ visibleModal, setVisibleModal }) =>
   };
 
   return (
-    <>
+      <>
       <Modal
-        isOpen={visibleModal.isVisible && visibleModal.type !== 'unsubscribe'}
-        onClose={handleSetVisible}
-        title={titleModal}
-      >
-        <SubscribeModal
+              isOpen={visibleModal.isVisible && visibleModal.type !== 'unsubscribe'}
+              onClose={handleSetVisible}
+                title={titleModal}>
+                <SubscribeModal onClose={handleSetVisible} setTitle={setTitleModal} type={visibleModal.type} />
+            </Modal>
+      <Modal
+          isOpen={visibleModal.isVisible && visibleModal.type === 'unsubscribe'}
           onClose={handleSetVisible}
-          setTitle={setTitleModal}
-          type={visibleModal.type} />
-      </Modal>
-      <Modal
-        isOpen={visibleModal.isVisible && visibleModal.type === 'unsubscribe'}
-        onClose={handleSetVisible}
-        title={titleModal}
-      >
-        <UnsubscribeModal
-          setTitle={setTitleModal}
-          onClose={handleSetVisible} />
-      </Modal>
-    </>
+                title={titleModal}>
+                <UnsubscribeModal setTitle={setTitleModal} onClose={handleSetVisible} />
+        </Modal>
+        </>
   );
 };
 

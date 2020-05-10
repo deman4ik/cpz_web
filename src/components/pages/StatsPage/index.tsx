@@ -28,7 +28,10 @@ export const StatsPage: React.FC = () => {
   const [ labelCombinations, setLabelCombinations ] = useState<LabelCombinations>({ exchange: [], asset: [] });
   const [ skipFilterQuery, setSkipFilterQuery ] = useState(false);
   const { exchange: _exchange, asset: _asset } = router.query;
-  const { checkedFilters, clearFilters, checkFilterButton, selectedFilter, confirmSelectedFilters } = useFilters(_exchange, _asset);
+  const { checkedFilters, clearFilters, checkFilterButton, selectedFilter, confirmSelectedFilters } = useFilters(
+    _exchange,
+    _asset
+  );
   const handlePressBack = () => {
     router.push(`/${displayType}`);
   };
@@ -53,14 +56,13 @@ export const StatsPage: React.FC = () => {
 
   const getAvailableFilters = (field: string, filter?: string, oppositeFilter?: string): string[] => {
     const oppositeFilterName: string = getOppositeFilterName(field);
-    return !oppositeFilter ? (filtersCombinations.filter(item =>
-      (item[field] === filter && item[oppositeFilterName] !== null))).map(item => (
-      item[oppositeFilterName]
-    )) :
-      (filtersCombinations.filter(item =>
-        (item[field] === filter && item[oppositeFilterName] === oppositeFilter))).map(item => (
-        item[oppositeFilterName]
-      ));
+    return !oppositeFilter
+      ? filtersCombinations
+        .filter((item) => item[field] === filter && item[oppositeFilterName] !== null)
+        .map((item) => item[oppositeFilterName])
+      : filtersCombinations
+        .filter((item) => item[field] === filter && item[oppositeFilterName] === oppositeFilter)
+        .map((item) => item[oppositeFilterName]);
   };
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export const StatsPage: React.FC = () => {
   const availableFilters = useMemo(() => {
     if (!skipFilterQuery) return { exchange: [], asset: [] };
     const filters = { exchange: [], asset: [] };
-    Object.keys(checkedFilters).forEach(item => {
+    Object.keys(checkedFilters).forEach((item) => {
       filters[getOppositeFilterName(item)] = getAvailableFilters(item, checkedFilters[item]);
     });
     return filters;
@@ -90,13 +92,12 @@ export const StatsPage: React.FC = () => {
   }, [ skipFilterQuery, selectedFilter ]);
 
   const formatData = useMemo(
-    () => ((!loading && data)
-      ? getFormatData(data.stats)
-      : { chartData: null, robotStatistic: null }), [ loading, data ]
+    () => (!loading && data ? getFormatData(data.stats) : { chartData: null, robotStatistic: null }),
+    [ loading, data ]
   );
 
   const setVisibleToolbarFilters = () => {
-    setIsVisibleFilters(prev => !prev);
+    setIsVisibleFilters((prev) => !prev);
   };
 
   const confirmSelectedFilter = () => {
@@ -105,62 +106,61 @@ export const StatsPage: React.FC = () => {
   };
 
   return (
-    <Template
-      page={PageType[displayType]}
-      title={`My ${capitalize(displayType)} Total Performance`}
-      subTitle={getSubTitle(selectedFilter)}
-      toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
-      width={width}
-      handlePressBack={handlePressBack}
-    >
-      <Modal
-        isOpen={isVisibleFilters}
-        title={`Filter My Total ${capitalize(displayType)} Performance`}
-        onClose={setVisibleToolbarFilters}
-      >
-        <div className={styles.filtersContainer}>
-          <div style={{ marginTop: 5 }}>
-            { Object.keys(labelCombinations).map((el: string) => (
-              <StatsPageFilters
-                key={el}
-                label={el}
-                labelsCombination={labelCombinations[el]}
-                filterItem={{ items: getAvailableFilters(getOppositeFilterName(el), checkedFilters[getOppositeFilterName(el)], checkedFilters[(el)]), label: el }}
-                checkedItem={checkedFilters[el]}
-                availableFilters={availableFilters[el]}
-                checkFilterButton={checkFilterButton} />
-            ))}
-          </div>
-          <div className={styles.btnsGroup}>
-            <Button
-              title='OK'
-              icon='check'
-              type='success'
-              onClick={confirmSelectedFilter}
-              isUppercase />
-            <Button
-              type='dimmed'
-              width={160}
-              title='clear filter'
-              style={{ marginLeft: 15 }}
-              onClick={clearFilters}
-              icon='close'
-              isUppercase />
-          </div>
-        </div>
-      </Modal>
-      <>
-        {!formatData.chartData || !formatData.robotStatistic ? (
-          <div className={styles.loadingContainer}>
-            <NoRecentData message='No recent data available' />
-          </div>
-        ) : (
-          <StatsPageComponent
-            formatData={formatData}
-            width={width}
-            displayType={displayType} />
-        ) }
-      </>
-    </Template>
+      <Template
+          page={PageType[displayType]}
+          title={`My ${capitalize(displayType)} Total Performance`}
+          subTitle={getSubTitle(selectedFilter)}
+          toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
+          width={width}
+          handlePressBack={handlePressBack}>
+          <Modal
+                isOpen={isVisibleFilters}
+              title={`Filter My Total ${capitalize(displayType)} Performance`}
+              onClose={setVisibleToolbarFilters}>
+              <div className={styles.filtersContainer}>
+                    <div style={{ marginTop: 5 }}>
+                        {Object.keys(labelCombinations).map((el: string) => (
+                        <StatsPageFilters
+                                key={el}
+                            label={el}
+                                labelsCombination={labelCombinations[el]}
+                            filterItem={{
+                                items: getAvailableFilters(
+                                        getOppositeFilterName(el),
+                                        checkedFilters[getOppositeFilterName(el)],
+                                  checkedFilters[el]
+                                ),
+                                label: el
+                              }}
+                                checkedItem={checkedFilters[el]}
+                            availableFilters={availableFilters[el]}
+                            checkFilterButton={checkFilterButton}
+                            />
+                      ))}
+                </div>
+                  <div className={styles.btnsGroup}>
+                      <Button title='OK' icon='check' type='success' onClick={confirmSelectedFilter} isUppercase />
+                      <Button
+                          type='dimmed'
+                          width={160}
+                          title='clear filter'
+                          style={{ marginLeft: 15 }}
+                            onClick={clearFilters}
+                          icon='close'
+                          isUppercase
+                        />
+                    </div>
+                </div>
+            </Modal>
+            <>
+                {!formatData.chartData || !formatData.robotStatistic ? (
+                <div className={styles.loadingContainer}>
+                    <NoRecentData message='No recent data available' />
+                    </div>
+              ) : (
+                  <StatsPageComponent formatData={formatData} width={width} displayType={displayType} />
+              )}
+        </>
+        </Template>
   );
 };

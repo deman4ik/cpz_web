@@ -10,10 +10,10 @@ type errors = {
 };
 
 export const useFormValidation = (initialState, validate) => {
-  const [values, setValues] = useState(initialState);
-  const [errors, setErrors] = useState<errors>({});
-  const [isSubmitting, setSubmitting] = useState(false);
-  const [isValid, setValid] = useState(false);
+  const [ values, setValues ] = useState(initialState);
+  const [ errors, setErrors ] = useState<errors>({});
+  const [ isSubmitting, setSubmitting ] = useState(false);
+  const [ isValid, setValid ] = useState(false);
 
   useEffect(() => {
     if (isSubmitting) {
@@ -21,7 +21,7 @@ export const useFormValidation = (initialState, validate) => {
       setValid(foundErrors);
       setSubmitting(foundErrors);
     }
-  }, [errors]);
+  }, [ errors ]);
 
   function handleChange(name: string, value: string) {
     setValues({

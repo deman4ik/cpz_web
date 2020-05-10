@@ -25,7 +25,7 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
   }
 
   const submit = () => {
-    sendData().then(response => {
+    sendData().then((response) => {
       if (response.data.changeName.success) {
         onClose();
       } else {
@@ -36,7 +36,7 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
 
   const isValid = () => inputValue && inputValue !== name && inputValue.length >= MIN_NAME_LENGTH;
 
-  const onKeyPress = e => {
+  const onKeyPress = (e) => {
     if (formError) setFormError('');
     if (e.nativeEvent.key === 'Enter' && isValid()) {
       submit();
@@ -44,41 +44,44 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
   };
 
   return (
-    <>
+      <>
       <div className={styles.form}>
-        <div className={styles.fieldset}>
-          <div className={styles.oneInputAlign}>
-            <Input
-              value={`${inputValue}`}
-              error={formError}
-              width={250}
-              responsive
-              onChangeText={value => setInputValue(value)}
-              onKeyPress={onKeyPress} />
-          </div>
-          <div className={styles.btns}>
-            <Button
-              className={styles.btn}
-              width={120}
-              title='Change'
-              icon='check'
-              type='success'
-              disabled={!isValid()}
-              isUppercase
-              isLoading={loading}
-              onClick={submit} />
-            <Button
-              className={styles.btn}
-              width={120}
-              title='Cancel'
-              icon='close'
-              type='dimmed'
-              isUppercase
-              onClick={onClose} />
-          </div>
-        </div>
-      </div>
-    </>
+              <div className={styles.fieldset}>
+                  <div className={styles.oneInputAlign}>
+                  <Input
+                            value={`${inputValue}`}
+                            error={formError}
+                          width={250}
+                          responsive
+                            onChangeText={(value) => setInputValue(value)}
+                          onKeyPress={onKeyPress}
+                        />
+                </div>
+                    <div className={styles.btns}>
+                        <Button
+                            className={styles.btn}
+                            width={120}
+                        title='Change'
+                        icon='check'
+                        type='success'
+                        disabled={!isValid()}
+                            isUppercase
+                        isLoading={loading}
+                        onClick={submit}
+                        />
+                  <Button
+                          className={styles.btn}
+                            width={120}
+                          title='Cancel'
+                          icon='close'
+                          type='dimmed'
+                          isUppercase
+                            onClick={onClose}
+                        />
+                </div>
+                </div>
+            </div>
+        </>
   );
 };
 

@@ -15,7 +15,7 @@ interface Props {
 
 export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, mini, href, gtag_conversation }) => {
   const getClassName = () => {
-    const composeClass = [ styles.btn, (mini ? styles.miniBtn : styles.normalBtn), styles[type] ];
+    const composeClass = [ styles.btn, mini ? styles.miniBtn : styles.normalBtn, styles[type] ];
     if (className) composeClass.push(className);
     return composeClass;
   };
@@ -34,8 +34,8 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
   };
 
   return (
-    <a className={getClassName().join(' ')} style={style} href={href} onClick={handleOnClick}>
+      <a className={getClassName().join(' ')} style={style} href={href} onClick={handleOnClick}>
       {title}
-    </a>
+        </a>
   );
 };

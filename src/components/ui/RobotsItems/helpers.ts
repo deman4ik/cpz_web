@@ -27,19 +27,15 @@ const hoverType = {
   started: 'negative'
 };
 
-export const formatVariables = (
-  item,
-  buttonType: string,
-  displayType?: string
-) => {
+export const formatVariables = (item, buttonType: string, displayType?: string) => {
   const type = displayType
     ? displayType === 'signals'
       ? item.isSubscribed
         ? 'unsubscribe'
         : 'subscribe'
       : !item.user_robots.status
-      ? 'create'
-      : statusTypes[item.user_robots.status]
+        ? 'create'
+        : statusTypes[item.user_robots.status]
     : buttonType;
   return {
     variables: {
@@ -59,21 +55,19 @@ export const formatVariables = (
 
 export const displayData = {
   signals: {
-    title: checker => (checker ? 'Following' : 'Follow'),
-    icon: checker => (checker ? 'check' : 'plus'),
-    type: checker => (checker ? 'success' : 'primary'),
-    hoverTitle: checker => (checker ? 'Following' : 'Unfollow'),
-    hoverIcon: checker => (checker ? 'check' : 'minus'),
-    hoverType: checker => (checker ? 'success' : 'negative')
+    title: (checker) => (checker ? 'Following' : 'Follow'),
+    icon: (checker) => (checker ? 'check' : 'plus'),
+    type: (checker) => (checker ? 'success' : 'primary'),
+    hoverTitle: (checker) => (checker ? 'Following' : 'Unfollow'),
+    hoverIcon: (checker) => (checker ? 'check' : 'minus'),
+    hoverType: (checker) => (checker ? 'success' : 'negative')
   },
   robots: {
-    title: checker => (!checker ? 'Add' : buttonName[checker]),
-    icon: checker =>
-      checker ? (checker === 'paused' ? 'close' : 'check') : 'plus',
-    type: checker =>
-      checker ? (checker === 'paused' ? 'negative' : 'success') : 'primary',
-    hoverTitle: checker => hoverTitle[checker],
-    hoverIcon: checker => hoverIcon[checker],
-    hoverType: checker => hoverType[checker]
+    title: (checker) => (!checker ? 'Add' : buttonName[checker]),
+    icon: (checker) => (checker ? (checker === 'paused' ? 'close' : 'check') : 'plus'),
+    type: (checker) => (checker ? (checker === 'paused' ? 'negative' : 'success') : 'primary'),
+    hoverTitle: (checker) => hoverTitle[checker],
+    hoverIcon: (checker) => hoverIcon[checker],
+    hoverType: (checker) => hoverType[checker]
   }
 };

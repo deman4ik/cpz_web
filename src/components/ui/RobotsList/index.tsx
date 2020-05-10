@@ -23,9 +23,9 @@ interface Props {
 
 const cartWidth = 408;
 const SHOW_LIMIT = 12;
-export const RobotsList: React.FC<Props> = props => {
+export const RobotsList: React.FC<Props> = (props) => {
   const { dummyCards } = useDummyCarts(props.width, cartWidth, props.data.length);
-  const renderLoadMoreButton = (props.data.length >= SHOW_LIMIT) && props.data.length < props.counts;
+  const renderLoadMoreButton = props.data.length >= SHOW_LIMIT && props.data.length < props.counts;
   const { showDimension: isDesktopView } = useShowDimension(props.width, SCREEN_TYPE.WIDE);
   const handleRedirectToDetailView = (code: string) => {
     Router.push(`/${props.displayType}/robot/${code}`);
@@ -40,39 +40,42 @@ export const RobotsList: React.FC<Props> = props => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        {isDesktopView ? (
-          <div className={styles.box}>
-            <RobotsHeader />
-            { props.data.map((item, idx) => (
-              <RobotsItem
-                key={item.id}
-                item={item}
-                robotSubscribe={robotSubscribe}
-                displayType={props.displayType}
-                lastItem={idx === (props.data.length - 1)}
-                onRedirectToDetailView={handleRedirectToDetailView} />
-            ))}
-          </div>
-        ) : (
-          <div className={styles.containerCart}>
-            { props.data.map((item) => (
-              <RobotsItemCard
-                key={item.id}
-                item={item}
-                robotSubscribe={robotSubscribe}
-                displayType={props.displayType}
-                onRedirectToDetailView={handleRedirectToDetailView} />
-            ))}
-            {DummyCards(dummyCards, cartWidth)}
-          </div>
-        )}
-      </div>
-      <RobotsLoadMore
-        renderLoadMoreButton={renderLoadMoreButton}
-        isLoadingMore={props.isLoadingMore}
-        onFetchMore={props.onFetchMore} />
-    </div>
+      <div className={styles.wrapper}>
+          <div className={styles.container}>
+              {isDesktopView ? (
+              <div className={styles.box}>
+                        <RobotsHeader />
+                        {props.data.map((item, idx) => (
+                            <RobotsItem
+                          key={item.id}
+                          item={item}
+                                robotSubscribe={robotSubscribe}
+                          displayType={props.displayType}
+                          lastItem={idx === props.data.length - 1}
+                          onRedirectToDetailView={handleRedirectToDetailView}
+                            />
+                ))}
+                    </div>
+            ) : (
+                    <div className={styles.containerCart}>
+                        {props.data.map((item) => (
+                        <RobotsItemCard
+                              key={item.id}
+                                item={item}
+                              robotSubscribe={robotSubscribe}
+                              displayType={props.displayType}
+                                onRedirectToDetailView={handleRedirectToDetailView}
+                            />
+                      ))}
+                {DummyCards(dummyCards, cartWidth)}
+              </div>
+            )}
+            </div>
+            <RobotsLoadMore
+          renderLoadMoreButton={renderLoadMoreButton}
+          isLoadingMore={props.isLoadingMore}
+          onFetchMore={props.onFetchMore}
+            />
+        </div>
   );
 };

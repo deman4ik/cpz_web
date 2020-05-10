@@ -8,7 +8,7 @@ interface Props {
   isActive: boolean;
   handleOnClick: () => void;
   textClassName?: string;
-  objectClassName? : string;
+  objectClassName?: string;
 }
 
 export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, textClassName, objectClassName }) => {
@@ -26,13 +26,8 @@ export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, tex
   };
 
   return (
-    <div
-      className={getBtnStyle().join(' ')}
-      onClick={handleOnClick}
-    >
-      <div className={getBtnTextStyle().join(' ')}>
-        {title}
-      </div>
-    </div>
+      <div className={getBtnStyle().join(' ')} onClick={handleOnClick}>
+      <div className={getBtnTextStyle().join(' ')}>{title}</div>
+        </div>
   );
 };

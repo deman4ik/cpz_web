@@ -10,16 +10,14 @@ const _CartFooter: React.FC = () => {
   };
 
   return (
-    <div className={styles.footer}>
-      <div className={styles.wrapper}>
-        <div className={styles.iconGroup} onClick={handleSwitchBackToLogin}>
-          <ChevronLeftIcon size={20} />
-          <div className={styles.text}>
-            Back to login
-          </div>
+      <div className={styles.footer}>
+          <div className={styles.wrapper}>
+          <div className={styles.iconGroup} onClick={handleSwitchBackToLogin}>
+                  <ChevronLeftIcon size={20} />
+                  <div className={styles.text}>Back to login</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
   );
 };
 

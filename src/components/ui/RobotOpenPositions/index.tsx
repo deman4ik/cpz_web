@@ -16,7 +16,7 @@ interface Props {
 const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
   const [ formatData, setFormatData ] = useState([]);
   const { data, loading } = useQuery(type === 'signals' ? USER_SIGNALS_ROBOT_OPEN_POS : GET_USER_POSITIONS_OPEN_POS, {
-    pollInterval: POLL_INTERVAL,
+    pollInterval: POLL_INTERVAL
   });
 
   const funcCall = {
@@ -30,12 +30,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
     }
   }, [ data, loading ]);
 
-  return (
-    <OpenPositionsComponent
-      formatData={formatData}
-      width={width}
-      displayType={type} />
-  );
+  return <OpenPositionsComponent formatData={formatData} width={width} displayType={type} />;
 };
 
 export const RobotOpenPositions = memo(_RobotOpenPositions);

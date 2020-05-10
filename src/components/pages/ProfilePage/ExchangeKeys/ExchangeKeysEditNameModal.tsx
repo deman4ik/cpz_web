@@ -31,7 +31,7 @@ const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
 
   const handleOnPress = () => {
     setIsFetchReponse(true);
-    editName().then(response => {
+    editName().then((response) => {
       setIsFetchReponse(false);
       if (response.data.userExchangeAccChangeName.success) {
         onClose();
@@ -42,42 +42,42 @@ const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
   };
 
   return (
-    <>
-      {formError && (
-        <ErrorLine formError={formError} />
-      )}
-      <div className={styles.container}>
-        <div>
-          <div className={styles.tableCellText}>Name</div>
-          <div className={styles.inputWrapper}>
-            <Input
-              value={inputName}
+      <>
+          {formError && <ErrorLine formError={formError} />}
+          <div className={styles.container}>
+              <div>
+                    <div className={styles.tableCellText}>Name</div>
+              <div className={styles.inputWrapper}>
+                      <Input
+                            value={inputName}
               placeholder='Name'
-              width={252}
-              onChangeText={value => handleOnChangeName(value)}
-            />
-          </div>
-        </div>
-        <div className={styles.groupBtn}>
-          <Button
-            type='success'
-            width={120}
-            title='save'
-            onClick={handleOnPress}
-            isLoading={isFetchReponse}
-            icon='check'
-            isUppercase />
-          <Button
-            type='dimmed'
-            width={120}
-            title='cancel'
-            style={{ marginLeft: 15 }}
-            onClick={onClose}
-            icon='close'
-            isUppercase />
-        </div>
-      </div>
-    </>
+                            width={252}
+              onChangeText={(value) => handleOnChangeName(value)}
+                        />
+                    </div>
+            </div>
+                <div className={styles.groupBtn}>
+              <Button
+                    type='success'
+                    width={120}
+                    title='save'
+                    onClick={handleOnPress}
+                    isLoading={isFetchReponse}
+                    icon='check'
+                        isUppercase
+                    />
+              <Button
+                    type='dimmed'
+                        width={120}
+                    title='cancel'
+                        style={{ marginLeft: 15 }}
+                        onClick={onClose}
+                    icon='close'
+                    isUppercase
+                    />
+            </div>
+            </div>
+        </>
   );
 };
 

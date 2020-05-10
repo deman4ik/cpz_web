@@ -13,19 +13,17 @@ const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelec
   const { updateNotifications } = useClearNotifications();
 
   return (
-    <div className='toolbar'>
-      <div>
-        <Select
-          data={headerSelectData}
-          width={110}
-          onValueChange={value => setInputSelect(value)}
-          value={inputSelect} />
-      </div>
-      <CaptionButton
-        title='Mark All as Readed'
-        icon='check'
-        onClick={updateNotifications} />
-    </div>
+      <div className='toolbar'>
+            <div>
+                <Select
+                data={headerSelectData}
+                    width={110}
+                onValueChange={(value) => setInputSelect(value)}
+                value={inputSelect}
+                />
+        </div>
+      <CaptionButton title='Mark All as Readed' icon='check' onClick={updateNotifications} />
+        </div>
   );
 };
 

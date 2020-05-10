@@ -18,14 +18,10 @@ const INITIAL_STATE = {
 export const ForgotPassword: React.FC = () => {
   const [ isFetching, setIsFetching ] = useState(false);
   const client = useApolloClient();
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    errors,
-    isValid,
-    setValid
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+  const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
+    INITIAL_STATE,
+    validateAuth
+  );
 
   const handleOnPress = () => {
     handleSubmit();
@@ -51,40 +47,41 @@ export const ForgotPassword: React.FC = () => {
   }, [ isValid ]);
 
   return (
-    <div className={styles.container}>
-      <PageHead title='Enter the Email you have registered with. We will send you the instructions there.' />
-      <div className={styles.header}>
-        <Header hasHomeButton />
-      </div>
-      <div className={styles.plate}>
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.title}>Forgot password?</div>
-            <div className={styles.titleDescription}>
-              Enter the Email you have registered with. We will send you the instructions there.
+      <div className={styles.container}>
+          <PageHead title='Enter the Email you have registered with. We will send you the instructions there.' />
+          <div className={styles.header}>
+              <Header hasHomeButton />
             </div>
-            <Input
-              value={values.email}
-              error={errors.email}
-              maxLength={255}
-              width={260}
-              placeholder='Email'
-              onChangeText={(text: string) => handleChange('email', text)}
-            />
-            <Button
-              style={{ marginTop: 25 }}
-              title='Request password reset'
-              type='success'
-              size='big'
-              width={260}
-              isUppercase
-              isLoading={isFetching}
-              onClick={handleOnPress} />
-          </div>
-          <CartFooter />
+            <div className={styles.plate}>
+          <div className={styles.cardWrapper}>
+                    <div className={styles.card}>
+              <div className={styles.title}>Forgot password?</div>
+              <div className={styles.titleDescription}>
+                        Enter the Email you have registered with. We will send you the instructions there.
+                        </div>
+              <Input
+                        value={values.email}
+                        error={errors.email}
+                            maxLength={255}
+                        width={260}
+                        placeholder='Email'
+                        onChangeText={(text: string) => handleChange('email', text)}
+                        />
+              <Button
+                            style={{ marginTop: 25 }}
+                          title='Request password reset'
+                          type='success'
+                          size='big'
+                            width={260}
+                            isUppercase
+                          isLoading={isFetching}
+                            onClick={handleOnPress}
+                        />
+            </div>
+                    <CartFooter />
+                </div>
         </div>
-      </div>
-      <Footer />
-    </div>
+          <Footer />
+        </div>
   );
 };

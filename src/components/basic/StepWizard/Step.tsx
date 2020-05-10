@@ -21,28 +21,33 @@ export const Step: React.FC<Props> = ({ step, idx = null, activeStep, steps, tit
   const isEmptyNextLine = (idx === null && !steps[activeStep]) || (idx !== null && idx === steps.length - 1);
 
   return (
-    <>
+      <>
       {(idx === null || idx > 0) && (
-        <div className={styles.line} style={{ backgroundColor: isActivePrevLine && color.primary }} />
-      )}
-      <div className={styles.circle} style={{ backgroundColor: isActiveCheck && color.primary }}>
-        <div className={styles.circleNumber}>{showDimension ? idx + 1 : activeStep}</div>
-        <div
+            <div className={styles.line} style={{ backgroundColor: isActivePrevLine && color.primary }} />
+            )}
+            <div className={styles.circle} style={{ backgroundColor: isActiveCheck && color.primary }}>
+                <div className={styles.circleNumber}>{showDimension ? idx + 1 : activeStep}</div>
+                <div
           className={styles.circleTitle}
-          style={{ width: titleWidth, marginLeft: -(titleWidth / 2), backgroundColor: isActiveTitle && color.primary }}>
-          <div className={styles.circleText}>{step}</div>
-          {isActiveTitle && (
+                    style={{
+              width: titleWidth,
+                        marginLeft: -(titleWidth / 2),
+              backgroundColor: isActiveTitle && color.primary
+                    }}>
+                    <div className={styles.circleText}>{step}</div>
+                    {isActiveTitle && (
             <div className={styles.arrow}>
-              <MenuDownIcon color={color.primary} size={40} />
-            </div>
-          )}
+                          <MenuDownIcon color={color.primary} size={40} />
+                        </div>
+                    )}
         </div>
-      </div>
-      {(idx === null || steps[idx + 1]) && (
+            </div>
+            {(idx === null || steps[idx + 1]) && (
         <div
-          className={styles.line}
-          style={{ backgroundColor: isEmptyNextLine ? 'transparent' : isActiveNextLine && color.primary }} />
-      )}
-    </>
+                  className={styles.line}
+                  style={{ backgroundColor: isEmptyNextLine ? 'transparent' : isActiveNextLine && color.primary }}
+                />
+        )}
+        </>
   );
 };

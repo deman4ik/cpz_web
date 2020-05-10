@@ -13,23 +13,20 @@ const _SignalsList: React.FC = () => {
   });
 
   return (
-    <>
-      { loading || !data ? <LoadingDummy /> : (
-        <div className={styles.container}>
-          {data.v_robots_stats.map(item => (
-            <SignalsListCard
-              key={item.robots.id}
-              robot={item.robots} />
-          ))}
-          <div className={styles.moreBtn}>
-            <PrimaryButton
-              title='More Robots'
-              href='/robots'
-              type='primary' />
-          </div>
-        </div>
-      )}
-    </>
+      <>
+      {loading || !data ? (
+              <LoadingDummy />
+            ) : (
+                <div className={styles.container}>
+                    {data.v_robots_stats.map((item) => (
+                    <SignalsListCard key={item.robots.id} robot={item.robots} />
+                  ))}
+                <div className={styles.moreBtn}>
+                      <PrimaryButton title='More Robots' href='/robots' type='primary' />
+                    </div>
+              </div>
+            )}
+        </>
   );
 };
 

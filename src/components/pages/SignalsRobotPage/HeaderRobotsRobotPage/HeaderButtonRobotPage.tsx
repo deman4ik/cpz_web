@@ -15,23 +15,21 @@ export const HeaderButtonRobotPage: React.FC<Props> = ({ robotSubscribe, robotDa
     robotSubscribe(createVariable(robotData, isUserSignals ? 'unsubscribe' : 'subscribe'));
   };
 
-  return (
-    isUserSignals ? (
+  return isUserSignals ? (
       <Button
-        title='Following'
-        type='success'
-        size='small'
-        icon='check'
-        width={112}
-        className={styles.headerButton}
-        hoverChanges={{
-          type: 'negative',
-          title: 'Unfollow',
-          icon: 'minus'
-        }}
-        isUppercase
-        onClick={handleOnPress}
-      />
-    ) : null
-  );
+          title='Following'
+          type='success'
+          size='small'
+          icon='check'
+            width={112}
+          className={styles.headerButton}
+          hoverChanges={{
+              type: 'negative',
+              title: 'Unfollow',
+              icon: 'minus'
+            }}
+          isUppercase
+            onClick={handleOnPress}
+        />
+  ) : null;
 };

@@ -10,26 +10,23 @@ export const Modals: React.FC = () => {
   const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
   return (
-    <>
+      <>
       <Modal
-        onClose={handleSetVisible}
-        isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
-        title={titleModal}
-      >
-        <SubscribeModal
-          onClose={handleSetVisible}
-          setTitle={setTitleModal}
-          type={dataModal.ModalVisible.type} />
-      </Modal>
-      <Modal
-        isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
-        onClose={handleSetVisible}
-        title={titleModal}
-      >
-        <UnsubscribeModal
-          setTitle={setTitleModal}
-          onClose={handleSetVisible} />
-      </Modal>
-    </>
+              onClose={handleSetVisible}
+              isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
+              title={titleModal}>
+              <SubscribeModal
+                    onClose={handleSetVisible}
+                    setTitle={setTitleModal}
+              type={dataModal.ModalVisible.type}
+                />
+            </Modal>
+            <Modal
+                isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}
+                onClose={handleSetVisible}
+          title={titleModal}>
+          <UnsubscribeModal setTitle={setTitleModal} onClose={handleSetVisible} />
+        </Modal>
+        </>
   );
 };

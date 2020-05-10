@@ -19,11 +19,10 @@ interface Props {
 }
 const LIMIT = 120;
 
-const LightWeightChartWithNoSSR = dynamic(
-  () => import('../../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
-    ssr: false }
-);
+const LightWeightChartWithNoSSR = dynamic(() => import('../../../charts/LightWeightChart'), {
+  loading: () => <LoadingIndicator style={{ height: 400 }} />,
+  ssr: false
+});
 
 export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsChartLoaded }) => {
   const candleName = `candles${robot.timeframe}`;
@@ -32,7 +31,8 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
   const [ limit, setLimit ] = useState(LIMIT);
 
   const { loading, data, fetchMore } = useQuery(
-    userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE(robot.timeframe) : ROBOT_POSITION_WITH_CANDLE(robot.timeframe), {
+    userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE(robot.timeframe) : ROBOT_POSITION_WITH_CANDLE(robot.timeframe),
+    {
       variables: {
         robotId: userRobots ? userRobots.id : robot.id,
         limit
@@ -62,24 +62,25 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
     });
   };
 
-  const formatData = useMemo(() =>
-    ((!loading && data)
-      ? getFormatData(data, asset, !!userRobots)
-      : { candles: [], markers: [] }), [ loading, data ]);
+  const formatData = useMemo(
+    () => (!loading && data ? getFormatData(data, asset, !!userRobots) : { candles: [], markers: [] }),
+    [ loading, data ]
+  );
 
   useEffect(() => {
     setChartData({ variables: { limit, robotId: robot.id, timeframe: robot.timeframe } });
   }, [ limit ]);
 
   return (
-    <LightWeightChartWithNoSSR
-      loading={loading}
-      data={formatData.candles}
-      onFetchMore={onFetchMore}
-      markers={formatData.markers}
-      legend={legend}
-      setIsChartLoaded={setIsChartLoaded}
-      size={{ width, height: 400 }}
-      type={ChartType.candle} />
+      <LightWeightChartWithNoSSR
+          loading={loading}
+          data={formatData.candles}
+            onFetchMore={onFetchMore}
+          markers={formatData.markers}
+            legend={legend}
+          setIsChartLoaded={setIsChartLoaded}
+          size={{ width, height: 400 }}
+            type={ChartType.candle}
+        />
   );
 };

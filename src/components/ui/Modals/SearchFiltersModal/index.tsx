@@ -26,38 +26,36 @@ const queryFilter = {
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const [ checkedButtons, setCheckedButtons ] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
   const [ inputKey, setInputKey ] = useState('recovery_factor');
-  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS,
-    { variables: { where: { robots: queryFilter[displayType]() } } });
+  const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS, {
+    variables: { where: { robots: queryFilter[displayType]() } }
+  });
   const [ setFilters ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
 
-  const filterData = useMemo(() => (
-    (!loading && data)
-      ? getFilterData(data.filters)
-      : { asset: [], exchange: [], timeframe: [] }
-  ), [ data, loading ]);
+  const filterData = useMemo(
+    () => (!loading && data ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }),
+    [ data, loading ]
+  );
 
   useEffect(() => {
     const filtersProps = getSearchProps(data, displayType);
     if (filtersProps) {
       const filters = filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
-      const obj = (Object.keys(filters).filter(el => el !== 'name').reduce((acc, item) => (
-        { ...acc,
-          [item]: filters[item]._in
-            ? [ ...filters[item]._in ]
-            : [] }
-      ), {}));
-      setCheckedButtons(prev => ({ ...prev, ...obj }));
+      const obj = Object.keys(filters)
+        .filter((el) => el !== 'name')
+        .reduce((acc, item) => ({ ...acc, [item]: filters[item]._in ? [ ...filters[item]._in ] : [] }), {});
+      setCheckedButtons((prev) => ({ ...prev, ...obj }));
       if (filtersProps.orders) {
         const orders = JSON.parse(filtersProps.orders);
-        setInputKey(Object.keys(orders).filter(el => el !== 'id')[0]);
+        setInputKey(Object.keys(orders).filter((el) => el !== 'id')[0]);
       }
     }
   }, [ filterData, data ]);
 
   const handleOnPressItem = (item: string, label: string) => {
-    setCheckedButtons(prev => ({ ...prev,
-      [label]: prev[label].find(el => el === item)
-        ? prev[label].filter(el => el !== item)
+    setCheckedButtons((prev) => ({
+      ...prev,
+      [label]: prev[label].find((el) => el === item)
+        ? prev[label].filter((el) => el !== item)
         : [ ...prev[label], item ]
     }));
   };
@@ -65,15 +63,21 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   const confirmSelectedFilter = () => {
     const filtersProps = getSearchProps(data, displayType);
     const filters = filtersProps && filtersProps.filters ? JSON.parse(filtersProps.filters) : {};
-    const searchFilters = Object.keys(filterData).reduce((acc, item) => ({
-      ...acc, [item]: { _in: checkedButtons[item].length ? [ ...checkedButtons[item] ] : null }
-    }), {});
+    const searchFilters = Object.keys(filterData).reduce(
+      (acc, item) => ({
+        ...acc,
+        [item]: { _in: checkedButtons[item].length ? [ ...checkedButtons[item] ] : null }
+      }),
+      {}
+    );
 
-    setFilters({ variables: {
-      filters: JSON.stringify({ ...searchFilters, ...filters.name ? { name: filters.name } : {} }),
-      type: displayType,
-      orders: JSON.stringify(ordersSortMethod[inputKey])
-    } }).then(_result => {
+    setFilters({
+      variables: {
+        filters: JSON.stringify({ ...searchFilters, ...(filters.name ? { name: filters.name } : {}) }),
+        type: displayType,
+        orders: JSON.stringify(ordersSortMethod[inputKey])
+      }
+    }).then((_result) => {
       onClose();
     });
   };
@@ -83,57 +87,53 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
   };
 
   return (
-    <>
-      <div className={styles.row}>
-        <div className={styles.label}>
+      <>
+          <div className={styles.row}>
+                <div className={styles.label}>
           <div className={styles.labelText}>Sort by:</div>
         </div>
-        <div className={styles.orderby}>
-          <Select
-            data={ordersSortList}
-            value={inputKey}
-            onValueChange={value => setInputKey(value)} />
+                <div className={styles.orderby}>
+          <Select data={ordersSortList} value={inputKey} onValueChange={(value) => setInputKey(value)} />
         </div>
-      </div>
-      {loading ? <LoadingIndicator /> : (
-        <div className={styles.container}>
-          {labels.map((label: string) => (
-            <div key={label} className={styles.row}>
-              <div className={styles.label}>
-                <div className={styles.labelText}>{`${capitalize(label)}:`}</div>
-              </div>
-              <div className={styles.btnContainer}>
-                {filterData[label].map(item => (
-                  <Button
-                    key={item.key}
-                    type={checkedButtons[label].includes(item.key) ? 'rounded-primary' : 'rounded'}
-                    title={item.label}
-                    style={{ marginLeft: 5, marginTop: 5 }}
-                    clickable={false}
-                    onClick={() => handleOnPressItem(item.key, label)} />
+        </div>
+            {loading ? (
+                <LoadingIndicator />
+        ) : (
+              <div className={styles.container}>
+                  {labels.map((label: string) => (
+                        <div key={label} className={styles.row}>
+                            <div className={styles.label}>
+                            <div className={styles.labelText}>{`${capitalize(label)}:`}</div>
+                            </div>
+                            <div className={styles.btnContainer}>
+                                {filterData[label].map((item) => (
+                                <Button
+                                      key={item.key}
+                                      type={checkedButtons[label].includes(item.key) ? 'rounded-primary' : 'rounded'}
+                                      title={item.label}
+                                        style={{ marginLeft: 5, marginTop: 5 }}
+                                      clickable={false}
+                                        onClick={() => handleOnPressItem(item.key, label)}
+                                    />
+                              ))}
+                          </div>
+                    </div>
                 ))}
-              </div>
-            </div>
-          ))}
-          <div className={styles.btnsGroup}>
-            <Button
-              title='OK'
-              icon='check'
-              type='success'
-              onClick={confirmSelectedFilter}
-              isUppercase />
-            <Button
-              type='dimmed'
-              width={160}
-              title='clear filter'
-              className={styles.btn}
-              onClick={clearFilters}
-              icon='filtervariantremove'
-              isUppercase />
-          </div>
-        </div>
-      )}
-    </>
+                    <div className={styles.btnsGroup}>
+                  <Button title='OK' icon='check' type='success' onClick={confirmSelectedFilter} isUppercase />
+                  <Button
+                        type='dimmed'
+                            width={160}
+                        title='clear filter'
+                            className={styles.btn}
+                            onClick={clearFilters}
+                        icon='filtervariantremove'
+                            isUppercase
+                        />
+                </div>
+                </div>
+        )}
+        </>
   );
 };
 

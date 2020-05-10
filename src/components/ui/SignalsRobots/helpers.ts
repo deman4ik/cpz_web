@@ -2,16 +2,7 @@ import dayjs from '../../../libs/dayjs';
 
 export const getFormatDataSignals = (signals: any) =>
   signals.map((signal: any) => {
-    const {
-      id,
-      name,
-      asset,
-      currency,
-      exchange,
-      started_at,
-      code,
-      user_signals
-    } = signal.robot;
+    const { id, name, asset, currency, exchange, started_at, code, user_signals } = signal.robot;
     const res = {
       cache: {
         id,
@@ -38,13 +29,7 @@ export const getFormatDataSignals = (signals: any) =>
       code
     };
     if (user_signals.length && user_signals[0].equity) {
-      const {
-        winRate,
-        maxDrawdown,
-        tradesCount,
-        changes,
-        profit
-      } = user_signals[0].equity;
+      const { winRate, maxDrawdown, tradesCount, changes, profit } = user_signals[0].equity;
       res.performance = changes || [];
       res.profit = profit || 0;
       res.winRate = winRate || 0;
@@ -56,15 +41,7 @@ export const getFormatDataSignals = (signals: any) =>
 
 export const getFormatDataRobots = (robots: any) =>
   robots.map((userRobot: any) => {
-    const {
-      id,
-      status,
-      started_at,
-      settings,
-      robot,
-      robot_id,
-      equity
-    } = userRobot;
+    const { id, status, started_at, settings, robot, robot_id, equity } = userRobot;
     const { name, asset, currency, exchange, active, code } = robot;
     return {
       cache: {

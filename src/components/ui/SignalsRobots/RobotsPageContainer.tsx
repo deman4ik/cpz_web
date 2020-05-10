@@ -37,35 +37,37 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
   };
 
   return (
-    <>
-      { isDesktopView ? (
-        <div className={styles.container}>
-          <RobotsHeader />
-          { data.map((item) => (
-            <RobotsItem
-              key={item.id}
-              item={item}
-              robotSubscribe={robotSubscribe}
-              displayType={displayType}
-              lastItem={false}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          ))}
-          <SignalRobotsAddSignals displayType={displayType} />
-        </div>
-      ) : (
-        <div className={styles.containerCard}>
-          { data.map((item) => (
-            <RobotsItemCard
-              key={item.id}
-              item={item}
-              robotSubscribe={robotSubscribe}
-              displayType={displayType}
-              onRedirectToDetailView={handleRedirectToDetailView} />
-          ))}
-          <SignalRobotsAddSignalsCard displayType={displayType} />
-          {DummyCards(dummyCards, cartWidth)}
-        </div>
-      )}
-    </>
+      <>
+      {isDesktopView ? (
+              <div className={styles.container}>
+                  <RobotsHeader />
+                  {data.map((item) => (
+                        <RobotsItem
+                      key={item.id}
+                      item={item}
+                      robotSubscribe={robotSubscribe}
+                      displayType={displayType}
+                            lastItem={false}
+                      onRedirectToDetailView={handleRedirectToDetailView}
+                        />
+                    ))}
+                  <SignalRobotsAddSignals displayType={displayType} />
+                </div>
+            ) : (
+                <div className={styles.containerCard}>
+                {data.map((item) => (
+                        <RobotsItemCard
+                    key={item.id}
+                    item={item}
+                            robotSubscribe={robotSubscribe}
+                    displayType={displayType}
+                            onRedirectToDetailView={handleRedirectToDetailView}
+                        />
+                    ))}
+                <SignalRobotsAddSignalsCard displayType={displayType} />
+                {DummyCards(dummyCards, cartWidth)}
+              </div>
+            )}
+        </>
   );
 };

@@ -19,24 +19,25 @@ export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) =
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        { value.length ? (
-          <div className={[ styles.icon, styles.pointer ].join(' ')} onClick={() => onChange('')}>
-            <CloseIcon color={color.accent} size={16} />
-          </div>
-        ) : (
-          <div className={styles.icon}>
-            <MagnifyIcon color={color.accent} size={16} />
-          </div>
-        ) }
-        <input
-          type='text'
-          className={styles.searchInput}
-          placeholder={placeholder || 'Search...'}
-          onChange={handleOnChange}
-          value={value} />
-      </div>
-    </div>
+      <div className={styles.wrapper}>
+          <div className={styles.container}>
+              {value.length ? (
+              <div className={[ styles.icon, styles.pointer ].join(' ')} onClick={() => onChange('')}>
+                  <CloseIcon color={color.accent} size={16} />
+                </div>
+                ) : (
+                <div className={styles.icon}>
+                      <MagnifyIcon color={color.accent} size={16} />
+                    </div>
+            )}
+                <input
+              type='text'
+              className={styles.searchInput}
+              placeholder={placeholder || 'Search...'}
+              onChange={handleOnChange}
+              value={value}
+                />
+            </div>
+        </div>
   );
 };

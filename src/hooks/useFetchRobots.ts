@@ -2,10 +2,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import {
-  GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS,
-  ROBOT_AGGREGATE_COUNT
-} from '../graphql/signals/queries';
+import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from '../graphql/signals/queries';
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from '../graphql/robots/queries';
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from '../graphql/local/queries';
 import { SET_SEARCH_LIMIT } from '../graphql/local/mutations';
@@ -27,26 +24,19 @@ const defaultOrderBy = {
   recovery_factor: 'desc_nulls_last'
 };
 
-export const useFetchRobots = (
-  dispayType: string,
-  formatRobotsData: (v_robots_stats: any) => {}
-) => {
-  const [counts, setCounts] = useState(0);
+export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => {}) => {
+  const [ counts, setCounts ] = useState(0);
   const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
   const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
-  const [limit, setLimit] = useState(searchLimit.Limit[dispayType]);
-  const [filtersQuery, setFiltersQuery] = useState({
+  const [ limit, setLimit ] = useState(searchLimit.Limit[dispayType]);
+  const [ filtersQuery, setFiltersQuery ] = useState({
     robots: {},
     hash: '',
     order_by: {}
   });
-  const [setSearchLimit] = useMutation(SET_SEARCH_LIMIT);
+  const [ setSearchLimit ] = useMutation(SET_SEARCH_LIMIT);
 
-  const {
-    data: data_count,
-    loading: loading_aggregate,
-    refetch: refetchCounts
-  } = useQuery(ROBOT_AGGREGATE_COUNT, {
+  const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(ROBOT_AGGREGATE_COUNT, {
     variables: {
       where: {
         [queryKey[dispayType]]: { _eq: true },
@@ -58,15 +48,13 @@ export const useFetchRobots = (
   });
 
   const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(
-    dispayType === 'signals'
-      ? GET_ROBOTS_BY_STATS_SIGNALS
-      : GET_ROBOTS_BY_STATS_ROBOTS,
+    dispayType === 'signals' ? GET_ROBOTS_BY_STATS_SIGNALS : GET_ROBOTS_BY_STATS_ROBOTS,
     {
       variables: {
         offset: 0,
         limit,
         hash: filtersQuery.hash,
-        order_by: [filtersQuery.order_by, { id: 'asc' }],
+        order_by: [ filtersQuery.order_by, { id: 'asc' } ],
         where: {
           robots: {
             ...queryFilter[dispayType](),
@@ -78,48 +66,39 @@ export const useFetchRobots = (
     }
   );
 
-  const robotsData = useMemo(
-    () => (!loading && data ? formatRobotsData(data.v_robots_stats) : []),
-    [loading, data]
-  );
+  const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [ loading, data ]);
 
   useEffect(() => {
-    if (
-      !loading_aggregate &&
-      data_count &&
-      data_count.robots_aggregate &&
-      data_count.robots_aggregate.aggregate
-    ) {
+    if (!loading_aggregate && data_count && data_count.robots_aggregate && data_count.robots_aggregate.aggregate) {
       setCounts(data_count.robots_aggregate.aggregate.count);
     }
-  }, [loading_aggregate, data_count]);
+  }, [ loading_aggregate, data_count ]);
 
   useEffect(() => {
     const addFields = () => {
       const hash = getHash(30);
       const search = getSearchProps(searchProps, dispayType);
       const result: { robots: any; hash: string; order_by: any } =
-        !search || !search.filters
-          ? { robots: {}, hash, order_by: defaultOrderBy }
-          : {
-              robots: { ...JSON.parse(search.filters) },
-              hash,
-              order_by: defaultOrderBy
-            };
-      result.order_by =
-        search && search.orders ? JSON.parse(search.orders) : defaultOrderBy;
+                !search || !search.filters
+                  ? { robots: {}, hash, order_by: defaultOrderBy }
+                  : {
+                    robots: { ...JSON.parse(search.filters) },
+                    hash,
+                    order_by: defaultOrderBy
+                  };
+      result.order_by = search && search.orders ? JSON.parse(search.orders) : defaultOrderBy;
       return result;
     };
 
     setFiltersQuery(addFields());
-  }, [searchProps]);
+  }, [ searchProps ]);
 
   useEffect(() => {
     refetchStats();
     refetchCounts();
-  }, [filtersQuery]);
+  }, [ filtersQuery ]);
 
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 
   const onFetchMore = () => {
     setIsLoadingMore(true);
@@ -139,10 +118,7 @@ export const useFetchRobots = (
           }
         });
         return {
-          v_robots_stats: [
-            ...prev.v_robots_stats,
-            ...fetchMoreResult.v_robots_stats
-          ]
+          v_robots_stats: [ ...prev.v_robots_stats, ...fetchMoreResult.v_robots_stats ]
         };
       }
     });

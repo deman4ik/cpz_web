@@ -7,12 +7,12 @@ interface Props {
 
 const _ErrorLine: React.FC<Props> = ({ formError }) => (
   <>
-    {formError ? (
-      <div className={styles.errorContainer}>
-        <div className={styles.errorText}>{formError}</div>
-      </div>
-    ) : null}
-  </>
+      {formError ? (
+          <div className={styles.errorContainer}>
+              <div className={styles.errorText}>{formError}</div>
+            </div>
+        ) : null}
+    </>
 );
 
 export const ErrorLine = memo(_ErrorLine);

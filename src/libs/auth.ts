@@ -9,7 +9,7 @@ interface Headers {
 const config = {
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    "Content-Type": 'application/json',
     credentials: 'same-origin'
   }
 };
@@ -17,7 +17,7 @@ const config = {
 const errorMessage = "can't fulfill the request";
 
 function timeout(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export const testind = async () => {
@@ -35,7 +35,7 @@ export const testindBool = async () => {
   return result;
 };
 
-export const loginTelegram = async data => {
+export const loginTelegram = async (data) => {
   const result = {
     success: false,
     error: ''
@@ -110,10 +110,7 @@ export const logout = async () => {
   return result;
 };
 
-export const register = async (
-  data: { email: string; password: string },
-  client
-) => {
+export const register = async (data: { email: string; password: string }, client) => {
   const result = {
     success: false,
     error: ''
@@ -151,15 +148,12 @@ export const confirm = async (data: { userId: string; secretCode: string }) => {
   const body = JSON.stringify(data);
 
   try {
-    const res = await fetch(
-      `${process.env.AUTH_API_URL}/auth/activate-account`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        body,
-        headers: config.headers
-      }
-    );
+    const res = await fetch(`${process.env.AUTH_API_URL}/auth/activate-account`, {
+      method: 'POST',
+      credentials: 'include',
+      body,
+      headers: config.headers
+    });
     const json = await res.json();
     if (json.success) {
       setAccessToken(json.accessToken);
@@ -218,11 +212,7 @@ export const reset = async (email: string, client: any) => {
   return result;
 };
 
-export const recover = async (data: {
-  userId: string;
-  secretCode: string;
-  password: string;
-}) => {
+export const recover = async (data: { userId: string; secretCode: string; password: string }) => {
   const result = {
     success: false,
     error: ''
@@ -230,15 +220,12 @@ export const recover = async (data: {
   const body = JSON.stringify(data);
 
   try {
-    const res = await fetch(
-      `${process.env.AUTH_API_URL}/auth/confirm-password-reset`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        body,
-        headers: config.headers
-      }
-    );
+    const res = await fetch(`${process.env.AUTH_API_URL}/auth/confirm-password-reset`, {
+      method: 'POST',
+      credentials: 'include',
+      body,
+      headers: config.headers
+    });
     const json = await res.json();
     if (json.success) {
       result.success = true;
@@ -274,14 +261,11 @@ export const recoverEncoded = async (encode: string, password: string) => {
   return result;
 };
 
-export const fetchAccessToken = async (
-  refresh_token?: string,
-  isLocalhost = false
-) => {
+export const fetchAccessToken = async (refresh_token?: string, isLocalhost = false) => {
   let accessToken = '';
   const headers: Headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+        "Content-Type": "application/json"
   };
   if (isLocalhost) {
     headers['x-refresh-token'] = refresh_token;

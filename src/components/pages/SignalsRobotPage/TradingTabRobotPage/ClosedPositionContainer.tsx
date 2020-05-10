@@ -19,47 +19,53 @@ interface Props {
   width: number;
 }
 
-const _ClosedPositionContainer: React.FC<Props> =
-({ robot, handleLoadMore, isLoadingMore, quantyRecords, data, width }) => {
+const _ClosedPositionContainer: React.FC<Props> = ({
+  robot,
+  handleLoadMore,
+  isLoadingMore,
+  quantyRecords,
+  data,
+  width
+}) => {
   const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.accordionTitle}>
-        Closed Positions
-      </div>
-      {data.length ? (
-        <>
-          <div className={styles.accordionSurface}>
-            {isDesktopView ? (
-              <>
-                <HeaderTradingTabRobotPage />
-                { data.map(item => (
-                  <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
-                )) }
-              </>
-            ) : (
-              <div className={styles.mobileCardContainer}>
-                { data.map(item => (
-                  <ClosedPositionsRobotPageItemCard
-                    key={item.id}
-                    item={item}
-                    robot={robot}
-                    activeTab={SectionType.closedPositions} />
-                ))}
-              </div>
-            )}
+      <div className={styles.wrapper}>
+          <div className={styles.accordionTitle}>Closed Positions</div>
+          {data.length ? (
+                <>
+              <div className={styles.accordionSurface}>
+                      {isDesktopView ? (
+                            <>
+                                <HeaderTradingTabRobotPage />
+                          {data.map((item) => (
+                                    <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
+                                ))}
+                        </>
+                        ) : (
+                        <div className={styles.mobileCardContainer}>
+                              {data.map((item) => (
+                                    <ClosedPositionsRobotPageItemCard
+                                        key={item.id}
+                                    item={item}
+                                        robot={robot}
+                                    activeTab={SectionType.closedPositions}
+                                    />
+                            ))}
+                            </div>
+                        )}
+                    </div>
+              <RobotsLoadMore
+                        renderLoadMoreButton={data.length < quantyRecords}
+                        isLoadingMore={isLoadingMore}
+                    onFetchMore={handleLoadMore}
+                    />
+            </>
+        ) : (
+                <div style={{ marginTop: 20 }}>
+            <NoRecentData message='No Closed Positions' />
           </div>
-          <RobotsLoadMore
-            renderLoadMoreButton={data.length < quantyRecords}
-            isLoadingMore={isLoadingMore}
-            onFetchMore={handleLoadMore} />
-        </>
-      ) : (
-        <div style={{ marginTop: 20 }}>
-          <NoRecentData message='No Closed Positions' />
+        )}
         </div>
-      )}
-    </div>
   );
 };
 

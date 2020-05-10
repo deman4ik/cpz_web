@@ -11,17 +11,15 @@ import { ToolbarProfilePage } from './ToolbarProfilePage';
 export const ProfilePage = () => {
   const { width } = useWindowDimensions();
   return (
-    <Template
-      page={PageType.profile}
-      title='Profile'
-      subTitle='Settings'
-      toolbar={<ToolbarProfilePage />}
-      width={width}
-    >
-      <UserContainer width={width} />
-      <ExchangeKeys
-        title='My Exchange API Keys' />
-      <NotifySettings />
-    </Template>
+      <Template
+          page={PageType.profile}
+          title='Profile'
+          subTitle='Settings'
+          toolbar={<ToolbarProfilePage />}
+          width={width}>
+          <UserContainer width={width} />
+          <ExchangeKeys title='My Exchange API Keys' />
+          <NotifySettings />
+        </Template>
   );
 };

@@ -21,33 +21,32 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
   const SpecificIcon = components[item.icon];
 
   return (
-    <>
+      <>
       <div className={styles.container}>
-        <div className={styles.column}>
+                <div className={styles.column}>
           <div className={styles.titleRow}>
-            <SpecificIcon color={color.accent} size={24} />
-            <div className={styles.titleText}>
-              {item.title}
-            </div>
-            <div className={styles.toolTip}>
-              <Tooltip message={item.message} location={isLast ? 'right' : 'left'} direction='up' />
-            </div>
-          </div>
+                      <SpecificIcon color={color.accent} size={24} />
+                        <div className={styles.titleText}>{item.title}</div>
+                      <div className={styles.toolTip}>
+                          <Tooltip message={item.message} location={isLast ? 'right' : 'left'} direction='up' />
+                        </div>
+                    </div>
           <div className={styles.checkboxGroup}>
-            {item.checkboxes.map(checkbox => (
+                        {item.checkboxes.map((checkbox) => (
               <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
-                <CheckBox
-                  checked={checkbox.isActive}
+                              <CheckBox
+                                    checked={checkbox.isActive}
                   onClick={() => toggleNotification(item.key, checkbox.name)}
                   label={capitalize(checkbox.name)}
                   isLoading={checkbox.isLoading}
-                  disabled={checkbox.disabled} />
-              </div>
+                  disabled={checkbox.disabled}
+                                />
+                            </div>
             ))}
-          </div>
+                    </div>
         </div>
-      </div>
-      { !isLast ? <div className={styles.separator} /> : null }
-    </>
+            </div>
+            {!isLast ? <div className={styles.separator} /> : null}
+        </>
   );
 };

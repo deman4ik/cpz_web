@@ -13,35 +13,45 @@ interface Props {
   newEmail: string;
 }
 
-export const EmailStep1: React.FC<Props> =
-({ error, newEmail, setNewEmail, onKeyPressChange, changeLoading, onAcceptEmail, onClose }) => (
+export const EmailStep1: React.FC<Props> = ({
+  error,
+  newEmail,
+  setNewEmail,
+  onKeyPressChange,
+  changeLoading,
+  onAcceptEmail,
+  onClose
+}) => (
   <>
-    <Input
+      <Input
       placeholder='Email'
       width={260}
       error={error}
-      value={newEmail}
-      onChangeText={value => setNewEmail(value)}
-      onKeyPress={onKeyPressChange} />
-    <div className={styles.btns}>
+            value={newEmail}
+      onChangeText={(value) => setNewEmail(value)}
+      onKeyPress={onKeyPressChange}
+        />
+        <div className={styles.btns}>
       <Button
-        className={styles.btn}
-        width={130}
-        title='Accept'
-        icon='check'
-        type='success'
-        disabled={error}
-        isUppercase
-        isLoading={changeLoading}
-        onClick={onAcceptEmail} />
+              className={styles.btn}
+                width={130}
+              title='Accept'
+              icon='check'
+              type='success'
+              disabled={error}
+                isUppercase
+              isLoading={changeLoading}
+              onClick={onAcceptEmail}
+            />
       <Button
-        className={styles.btn}
-        width={120}
-        title='Cancel'
-        icon='close'
-        type='dimmed'
-        isUppercase
-        onClick={onClose} />
+                className={styles.btn}
+              width={120}
+              title='Cancel'
+              icon='close'
+              type='dimmed'
+              isUppercase
+              onClick={onClose}
+            />
     </div>
-  </>
+    </>
 );

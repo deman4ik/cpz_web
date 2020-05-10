@@ -24,31 +24,41 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
   };
 
   return (
-    <>
+      <>
       {showDesktop ? (
-        <div className={styles.mainMenu}>
-          <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt='' />
-          <div className={styles.menuContainer}>
-            {MAINMENU_ITEMS.map(item => (
-              <MainMenuItem key={item.label} item={item} active={activeTab === item.label} handleOnClick={handleOnClick} />
-            ))}
-          </div>
-          <div className={styles.menuGroupLine} />
-          <div className={styles.menuContainer}>
-            {MAINMENU_DESKTOP_ITEMS.map(item => (
-              <MainMenuItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
-            ))}
-          </div>
-          <div className={styles.menuGroupLine} />
-        </div>
-      ) : (
-        <div className={styles.mainMenuMobile}>
-          {MAINMENU_ITEMS.map(item => (
-            <MainMenuItemMobile key={item.label} item={item} active={activeTab === item.label} handleOnClick={handleOnClick} />
-          ))}
-        </div>
-      )}
-    </>
+              <div className={styles.mainMenu}>
+                  <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt='' />
+                  <div className={styles.menuContainer}>
+                        {MAINMENU_ITEMS.map((item) => (
+                      <MainMenuItem
+                                key={item.label}
+                              item={item}
+                              active={activeTab === item.label}
+                                handleOnClick={handleOnClick}
+                            />
+                    ))}
+                    </div>
+                    <div className={styles.menuGroupLine} />
+                    <div className={styles.menuContainer}>
+                        {MAINMENU_DESKTOP_ITEMS.map((item) => (
+                            <MainMenuItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
+                      ))}
+                </div>
+                  <div className={styles.menuGroupLine} />
+                </div>
+            ) : (
+                <div className={styles.mainMenuMobile}>
+                    {MAINMENU_ITEMS.map((item) => (
+                    <MainMenuItemMobile
+                        key={item.label}
+                            item={item}
+                        active={activeTab === item.label}
+                            handleOnClick={handleOnClick}
+                        />
+                  ))}
+              </div>
+            )}
+        </>
   );
 };
 

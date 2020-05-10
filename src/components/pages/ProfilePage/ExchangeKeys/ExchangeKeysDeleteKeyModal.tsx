@@ -33,7 +33,7 @@ const _ExchangeKeysDeleteKeyModal: React.FC<Props> = ({ options, onClose }) => {
 
   const handleOnPressSubmit = () => {
     setIsFetchReponse(true);
-    deleteKey().then(response => {
+    deleteKey().then((response) => {
       setIsFetchReponse(false);
       if (response.data.userExchangeAccDelete.error) {
         setFormError(response.data.userExchangeAccDelete.error);
@@ -49,36 +49,28 @@ const _ExchangeKeysDeleteKeyModal: React.FC<Props> = ({ options, onClose }) => {
   }, [ loading, data ]);
 
   return (
-    <>
-      {formError && (
-        <ErrorLine formError={formError} />
-      )}
-      {disabledYes && (
-        <div className={styles.bodyTitle}>
-          <AlertIcon size={48} />
-          {'\n'}
-          <span className={styles.bodyText}>You can&apos;t delete API Keys with added Robots</span>
+      <>
+          {formError && <ErrorLine formError={formError} />}
+          {disabledYes && (
+            <div className={styles.bodyTitle}>
+                  <AlertIcon size={48} />
+                  {'\n'}
+                  <span className={styles.bodyText}>You can&apos;t delete API Keys with added Robots</span>
+                </div>
+            )}
+            <div className={styles.btnsContainer}>
+                <Button
+                className={styles.btn}
+                title='Yes'
+                icon='check'
+                type='success'
+                disabled={disabledYes}
+                isLoading={isFetchReponse}
+                    onClick={handleOnPressSubmit}
+                />
+          <Button className={styles.btn} title='No' icon='close' type='primary' onClick={onClose} />
         </div>
-      )}
-      <div className={styles.btnsContainer}>
-        <Button
-          className={styles.btn}
-          title='Yes'
-          icon='check'
-          type='success'
-          disabled={disabledYes}
-          isLoading={isFetchReponse}
-          onClick={handleOnPressSubmit}
-        />
-        <Button
-          className={styles.btn}
-          title='No'
-          icon='close'
-          type='primary'
-          onClick={onClose}
-        />
-      </div>
-    </>
+        </>
   );
 };
 

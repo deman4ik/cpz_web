@@ -1,4 +1,4 @@
-export const validateAuth = values => {
+export const validateAuth = (values) => {
   const errorFields: string[] = Object.keys(values);
   const errors: {
     email?: string;

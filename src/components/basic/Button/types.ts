@@ -1,14 +1,14 @@
 export type ButtonSize = 'big' | 'normal' | 'small';
 export type ButtonType =
-  | 'primary'
-  | 'success'
-  | 'dimmed'
-  | 'negative'
-  | 'outline'
-  | 'outline-white'
-  | 'rounded'
-  | 'rounded-primary'
-  | 'rounded-negative';
+    | 'primary'
+    | 'success'
+    | 'dimmed'
+    | 'negative'
+    | 'outline'
+    | 'outline-white'
+    | 'rounded'
+    | 'rounded-primary'
+    | 'rounded-negative';
 
 interface HoverChangesProps {
   type?: ButtonType;

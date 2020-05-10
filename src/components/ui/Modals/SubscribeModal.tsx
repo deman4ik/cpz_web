@@ -38,9 +38,10 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
   const [ subscribeSend, { loading: subscribeLoading } ] = useMutation(SUBSCRIBE_TO_SIGNALS);
   const [ subscribe ] = useMutation(SUBSCRIBE);
 
-  const limits = useMemo(() => ((!loading && data) ?
-    getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }
-  ), [ loading, data ]);
+  const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
+    loading,
+    data
+  ]);
 
   const handleOnChangeAsset = (value: string) => {
     setInputVolumeAsset(value);
@@ -56,43 +57,46 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
     if (dataRobot) {
       setInputVolumeAsset(dataRobot.robot.subs.volume);
       setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
-      setTitle(dataRobot.robot.subs.volume ?
-        `Following ${dataRobot.robot.name}` :
-        `Subscribing to ${dataRobot.robot.name} signals`);
+      setTitle(
+        dataRobot.robot.subs.volume
+          ? `Following ${dataRobot.robot.name}`
+          : `Subscribing to ${dataRobot.robot.name} signals`
+      );
     }
   }, [ dataRobot, limits ]);
 
   const handleOnSubmit = () => {
-    subscribeSend({ variables: {
-      robotId: dataRobot.robot.id,
-      volume: Number(inputVolumeAsset)
-    } })
-      .then(response => {
-        if (response.data.userSignalSusbcribe.success) {
-          subscribe({
-            variables: {
-              cache: dataRobot.robot.cache,
-              volume: Number(inputVolumeAsset),
-              type,
-              chartData: dataRobot.ChartData
-            }
-          });
-          if (type !== 'edit') {
-            event({
-              action: 'subscribe',
-              category: 'Signals',
-              label: 'subscribe',
-              value: dataRobot.robot.id
-            });
+    subscribeSend({
+      variables: {
+        robotId: dataRobot.robot.id,
+        volume: Number(inputVolumeAsset)
+      }
+    }).then((response) => {
+      if (response.data.userSignalSusbcribe.success) {
+        subscribe({
+          variables: {
+            cache: dataRobot.robot.cache,
+            volume: Number(inputVolumeAsset),
+            type,
+            chartData: dataRobot.ChartData
           }
-        } else {
-          setFormError(response.data.userSignalSusbcribe.error);
+        });
+        if (type !== 'edit') {
+          event({
+            action: 'subscribe',
+            category: 'Signals',
+            label: 'subscribe',
+            value: dataRobot.robot.id
+          });
         }
-        onClose();
-      });
+      } else {
+        setFormError(response.data.userSignalSusbcribe.error);
+      }
+      onClose();
+    });
   };
 
-  const isValid = () => (Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max);
+  const isValid = () => Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max;
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter' && isValid()) {
@@ -101,77 +105,84 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
   };
 
   return (
-    <>
+      <>
       {loading || subscribeLoading || !dataRobot ? (
-        <LoadingIndicator />
-      ) : (
+              <LoadingIndicator />
+            ) : (
         <>
-          <ErrorLine formError={formError} />
-          <div className={styles.container}>
-            <div className={styles.bodyTitle}>
-              Please enter desired trading volume
-            </div>
+                  <ErrorLine formError={formError} />
+                  <div className={styles.container}>
+            <div className={styles.bodyTitle}>Please enter desired trading amount</div>
             <div className={styles_subs.form}>
-              <div className={[ styles.bodyText, styles_subs.formComment ].join(' ')}>
-                <div className={styles.value_group}>
-                  <div className={styles_subs.label}>
-                    Minimum value is&nbsp;
+                        <div className={[ styles.bodyText, styles_subs.formComment ].join(' ')}>
+                                <div className={styles.value_group}>
+                                    <div className={styles_subs.label}>Minimum value is&nbsp;</div>
+                            <div className={styles.value_row}>
+                                      <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                                      <span style={{ color: 'white' }}>
+                                  {dataRobot ? dataRobot.robot.subs.asset : ''}
+                                        </span>
+                                      &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}
+                                      &nbsp;$
+                                    </div>
+                          </div>
                   </div>
-                  <div className={styles.value_row}>
-                    <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
-                    <span style={{ color: 'white' }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
-                    &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
+                        <div className={styles_subs.fieldset}>
+                    <div className={styles.input_group}>
+                                    <div className={styles.volume}>
+                                    <Input
+                                    type='number'
+                                    value={`${inputVolumeAsset}`}
+                                    width={150}
+                                    error={!isValid()}
+                                    right
+                                            onKeyPress={handleOnKeyPress}
+                                    onChangeText={(value) => handleOnChangeAsset(value)}
+                                        />
+                                    <span className={styles.volume_text}>
+                                    {dataRobot ? dataRobot.robot.subs.asset : ''}
+                                  </span>
+                                  </div>
+                                    <span className={styles.delimiter} style={{ marginTop: 3 }}>
+                                    ≈
+                                    </span>
+                                    <div className={styles.volume} style={{ marginTop: 3 }}>
+                                    <Input
+                                        type='number'
+                                        value={`${inputVolumeCurrency}`}
+                                        width={150}
+                                            right
+                                        onKeyPress={handleOnKeyPress}
+                                        onChangeText={(value) => handleOnChangeCurrency(value)}
+                                        />
+                                        <span className={styles.volume_text}>$</span>
+                                  </div>
+                              </div>
+                    <div className={styles_subs.btns}>
+                                  <Button
+                                      className={styles.btn}
+                                      title={type === 'edit' ? 'Change' : 'Subscribe'}
+                                      icon='check'
+                                      type='success'
+                                      disabled={!isValid()}
+                                        isUppercase
+                                      onClick={handleOnSubmit}
+                                    />
+                                  <Button
+                                      className={styles.btn}
+                                      title='Cancel'
+                                      icon='close'
+                                      type='dimmed'
+                                      isUppercase
+                                      onClick={onClose}
+                                    />
+                                </div>
                   </div>
-                </div>
-              </div>
-              <div className={styles_subs.fieldset}>
-                <div className={styles.input_group}>
-                  <div className={styles.volume}>
-                    <Input
-                      type='number'
-                      value={`${inputVolumeAsset}`}
-                      width={150}
-                      error={!isValid()}
-                      right
-                      onKeyPress={handleOnKeyPress}
-                      onChangeText={value => handleOnChangeAsset(value)} />
-                    <span className={styles.volume_text}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
-                  </div>
-                  <span className={styles.delimiter} style={{ marginTop: 3 }}>≈</span>
-                  <div className={styles.volume} style={{ marginTop: 3 }}>
-                    <Input
-                      type='number'
-                      value={`${inputVolumeCurrency}`}
-                      width={150}
-                      right
-                      onKeyPress={handleOnKeyPress}
-                      onChangeText={value => handleOnChangeCurrency(value)} />
-                    <span className={styles.volume_text}>$</span>
-                  </div>
-                </div>
-                <div className={styles_subs.btns}>
-                  <Button
-                    className={styles.btn}
-                    title={type === 'edit' ? 'Change' : 'Subscribe'}
-                    icon='check'
-                    type='success'
-                    disabled={!isValid()}
-                    isUppercase
-                    onClick={handleOnSubmit} />
-                  <Button
-                    className={styles.btn}
-                    title='Cancel'
-                    icon='close'
-                    type='dimmed'
-                    isUppercase
-                    onClick={onClose} />
-                </div>
-              </div>
-            </div>
+                      </div>
           </div>
+                </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

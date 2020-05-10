@@ -8,13 +8,9 @@ const _ToolbarProfilePage: React.FC = () => {
   const { logoutProcess } = useLogoutProcess();
 
   return (
-    <div className='toolbar'>
-      <CaptionButton
-        title='Log out'
-        icon='logout'
-        responsive={false}
-        onClick={logoutProcess} />
-    </div>
+      <div className='toolbar'>
+      <CaptionButton title='Log out' icon='logout' responsive={false} onClick={logoutProcess} />
+        </div>
   );
 };
 

@@ -22,15 +22,10 @@ const INITIAL_STATE = {
 
 const _PasswordModal: React.FC<Props> = ({ onClose }) => {
   const [ formError, setFormError ] = useState('');
-  const {
-    handleSubmit,
-    handleChange,
-    resetValues,
-    values,
-    errors,
-    isValid,
-    setValid
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+  const { handleSubmit, handleChange, resetValues, values, errors, isValid, setValid } = useFormValidation(
+    INITIAL_STATE,
+    validateAuth
+  );
 
   const [ sendPassword, { loading, error } ] = useMutation(SET_USER_PASSWORD, {
     variables: { oldPassword: values.passwordOld, password: values.password }
@@ -40,7 +35,7 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
   }
 
   const submit = () => {
-    sendPassword().then(response => {
+    sendPassword().then((response) => {
       if (response.data.changePassword.success) {
         resetValues();
         setFormError('');
@@ -58,83 +53,83 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
     }
   }, [ isValid ]);
 
-  const onKeyPress = e => {
+  const onKeyPress = (e) => {
     if (e.nativeEvent.key === 'Enter' && isValid) {
       handleSubmit();
     }
   };
 
   return (
-    <>
-      {formError && (
-      <ErrorLine formError={formError} />
-      )}
-      <div className={styles.form}>
-        <div className={styles.fieldset}>
-          <div className={styles_main.formRow}>
-            <div className={styles.label}>
-              Old Password
+      <>
+          {formError && <ErrorLine formError={formError} />}
+          <div className={styles.form}>
+              <div className={styles.fieldset}>
+              <div className={styles_main.formRow}>
+                      <div className={styles.label}>Old Password</div>
+                      <div className={styles_main.inputContainer}>
+                    <Input
+                              value={values.passwordOld}
+                              type='password'
+                              width={210}
+                              onChangeText={(text: string) => handleChange('passwordOld', text)}
+                              onKeyPress={onKeyPress}
+                            />
+                  </div>
+                    </div>
+                    <div className={styles_main.formRow}>
+                    <div className={styles.label}>
+                          New Password <span className={styles.star}>*</span>
+                        </div>
+                        <div className={styles_main.inputContainer}>
+                            <Input
+                            value={values.password}
+                            error={errors.password}
+                            width={210}
+                            type='password'
+                            onChangeText={(text: string) => handleChange('password', text)}
+                            onKeyPress={onKeyPress}
+                            />
+                      </div>
+                  </div>
+              <div className={styles_main.formRow}>
+                    <div className={styles.label}>
+                          Repeat Password <span className={styles.star}>*</span>
+                        </div>
+                    <div className={styles_main.inputContainer}>
+                            <Input
+                                value={values.passwordRepeat}
+                                error={errors.passwordRepeat}
+                  width={210}
+                  type='password'
+                  onChangeText={(text: string) => handleChange('passwordRepeat', text)}
+                  onKeyPress={onKeyPress}
+                            />
+                        </div>
+                  </div>
+                    <div className={styles.btns}>
+                    <Button
+                          className={styles.btn}
+                            width={120}
+                          title='Change'
+                          icon='check'
+                          type='success'
+                          isUppercase
+                            isLoading={loading}
+                            onClick={handleSubmit}
+                        />
+                    <Button
+                          className={styles.btn}
+                          width={120}
+                          title='Cancel'
+                          icon='close'
+                          type='dimmed'
+                          isUppercase
+                            onClick={onClose}
+                        />
+                  </div>
             </div>
-            <div className={styles_main.inputContainer}>
-              <Input
-                value={values.passwordOld}
-                type='password'
-                width={210}
-                onChangeText={(text: string) => handleChange('passwordOld', text)}
-                onKeyPress={onKeyPress} />
             </div>
-          </div>
-          <div className={styles_main.formRow}>
-            <div className={styles.label}>
-              New Password <span className={styles.star}>*</span>
-            </div>
-            <div className={styles_main.inputContainer}>
-              <Input
-                value={values.password}
-                error={errors.password}
-                width={210}
-                type='password'
-                onChangeText={(text: string) => handleChange('password', text)}
-                onKeyPress={onKeyPress}
-                />
-            </div>
-          </div>
-          <div className={styles_main.formRow}>
-            <div className={styles.label}>
-              Repeat Password <span className={styles.star}>*</span>
-            </div>
-            <div className={styles_main.inputContainer}>
-              <Input
-                value={values.passwordRepeat}
-                error={errors.passwordRepeat}
-                width={210}
-                type='password'
-                onChangeText={(text: string) => handleChange('passwordRepeat', text)}
-                onKeyPress={onKeyPress} />
-            </div>
-          </div>
-          <div className={styles.btns}>
-            <Button
-              className={styles.btn}
-              width={120}
-              title='Change'
-              icon='check'
-              type='success'
-              isUppercase
-              isLoading={loading}
-              onClick={handleSubmit} />
-            <Button
-              className={styles.btn}
-              width={120}
-              title='Cancel'
-              icon='close'
-              type='dimmed'
-              isUppercase
-              onClick={onClose} />
-          </div>
-        </div>
-      </div>
-    </>
+        </>
   );
 };
 

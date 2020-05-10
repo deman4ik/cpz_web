@@ -15,23 +15,20 @@ const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
   };
 
   return (
-    <div className='toolbar'>
-      {isUserSignals ? (
-        <CaptionButton
-          title='Edit'
-          icon='settings'
-          responsive
-          onClick={() => handleOnPressAction('edit')} />
-      ) : (
-        <Button
-          type='primary'
-          title='Follow'
-          icon='plus'
-          isUppercase
-          responsive
-          onClick={() => handleOnPressAction('subscribe')} />
-      )}
-    </div>
+      <div className='toolbar'>
+            {isUserSignals ? (
+          <CaptionButton title='Edit' icon='settings' responsive onClick={() => handleOnPressAction('edit')} />
+        ) : (
+              <Button
+                  type='primary'
+                  title='Follow'
+                  icon='plus'
+                  isUppercase
+                    responsive
+                  onClick={() => handleOnPressAction('subscribe')}
+                />
+        )}
+        </div>
   );
 };
 
