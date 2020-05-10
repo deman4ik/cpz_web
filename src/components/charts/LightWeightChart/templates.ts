@@ -67,9 +67,9 @@ export const toolTipArrowTemplate = (data: ToolTipArrow) => `
   ${
   data.exit
     ? `<div>
-  <span style="color: ${data.profit > 0 ? positive : negative}">${
-  data.profit > 0 ? '+' : ''
-}${data.profit.toFixed(2)} $</span>
+  <span style="color: ${data.profit > 0 ? positive : negative}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(
+  2
+)} $</span>
 </div>`
     : ''
 }`;

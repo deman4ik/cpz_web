@@ -10,12 +10,12 @@ const defaultFlex = 1;
 
 const _OpenPositionsHeader: React.FC = () => (
   <div className={styles.tableHeader}>
-    {positionTabHeaders.map((header) => (
-      <div key={header.title} className={styles.wrapper} style={{ flex: header.flex || defaultFlex }}>
-        <div className={styles.tableHeaderText}>{header.title}</div>
-      </div>
-    ))}
-  </div>
+      {positionTabHeaders.map((header) => (
+          <div key={header.title} className={styles.wrapper} style={{ flex: header.flex || defaultFlex }}>
+              <div className={styles.tableHeaderText}>{header.title}</div>
+            </div>
+        ))}
+    </div>
 );
 
 export const OpenPositionsHeader = memo(_OpenPositionsHeader);

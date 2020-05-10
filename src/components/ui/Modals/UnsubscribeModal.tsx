@@ -24,49 +24,42 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
   });
 
   const handleOnSubmit = () => {
-    unsubscribeSend({ variables: { robotId: data.robot.id } })
-      .then(response => {
-        if (response.data.userSignalUnsusbcribe.success) {
-          unsubscribe({
-            variables: { cache: data.robot.cache, chartData: data.ChartData }
-          });
-        } else {
-          setFormError(response.data.userSignalSusbcribe.error);
-        }
-        onClose();
-      });
+    unsubscribeSend({ variables: { robotId: data.robot.id } }).then((response) => {
+      if (response.data.userSignalUnsusbcribe.success) {
+        unsubscribe({
+          variables: { cache: data.robot.cache, chartData: data.ChartData }
+        });
+      } else {
+        setFormError(response.data.userSignalSusbcribe.error);
+      }
+      onClose();
+    });
   };
 
   return (
-    <>
-      {loading ? (
-        <LoadingIndicator />
-      ) : (
-        <>
-          <ErrorLine formError={formError} />
-          <div className={styles.bodyTitle}>
-            Are you sure you want to unsubscribe{'\n'}from {data ? data.robot.name : ''} signals?
-          </div>
-          <div className={styles.bodyText}>
-            You will lost all your signals statistics for this robot!
-          </div>
-          <div className={styles.btns}>
-            <Button
-              className={styles.btn}
-              title='Yes'
-              icon='check'
-              type='success'
-              onClick={handleOnSubmit} />
-            <Button
-              className={styles.btn}
-              title='No'
-              icon='close'
-              type='primary'
-              onClick={onClose} />
-          </div>
+      <>
+          {loading ? (
+              <LoadingIndicator />
+            ) : (
+                <>
+                <ErrorLine formError={formError} />
+                <div className={styles.bodyTitle}>
+                    Are you sure you want to unsubscribe{'\n'}from {data ? data.robot.name : ''} signals?
+                  </div>
+                    <div className={styles.bodyText}>You will lost all your signals statistics for this robot!</div>
+                <div className={styles.btns}>
+                        <Button
+                        className={styles.btn}
+                        title='Yes'
+                        icon='check'
+                        type='success'
+                        onClick={handleOnSubmit}
+                        />
+                    <Button className={styles.btn} title='No' icon='close' type='primary' onClick={onClose} />
+                  </div>
+              </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

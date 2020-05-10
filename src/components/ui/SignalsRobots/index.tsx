@@ -24,18 +24,13 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
     robots: () => getFormatDataRobots(data.robots)
   };
 
-  const formatData = useMemo(() => (
-    (!loading && data) ? funcCall[displayType]() : []
-  ), [ data, loading ]);
+  const formatData = useMemo(() => (!loading && data ? funcCall[displayType]() : []), [ data, loading ]);
 
   return (
-    <div style={{ marginTop: 10 }}>
-      <div className={styles.regionTitle}>{title[displayType]}</div>
-      <RobotsPageContainer
-        data={formatData}
-        displayType={displayType}
-        width={width} />
-    </div>
+      <div style={{ marginTop: 10 }}>
+          <div className={styles.regionTitle}>{title[displayType]}</div>
+          <RobotsPageContainer data={formatData} displayType={displayType} width={width} />
+        </div>
   );
 };
 

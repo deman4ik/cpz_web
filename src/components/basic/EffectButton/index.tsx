@@ -18,10 +18,10 @@ export const EffectButton: React.FC<Props> = ({ icon, onClick, color = 'white' }
   const SpecificIcon = components[icon];
 
   return (
-    <div className={[ styles.btn, styles.ripple ].join(' ')} onClick={onClick}>
+      <div className={[ styles.btn, styles.ripple ].join(' ')} onClick={onClick}>
       <i className={styles.icon}>
-        <SpecificIcon size={22} color={color} />
-      </i>
-    </div>
+              <SpecificIcon size={22} color={color} />
+            </i>
+        </div>
   );
 };

@@ -19,7 +19,7 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
   const [ formatData, setFormatData ] = useState([]);
   const { data, loading } = useQuery(GET_USER_AGGR_STATS_ALL, {
     variables: { type: { _eq: queryParam[type] } },
-    pollInterval: POLL_INTERVAL,
+    pollInterval: POLL_INTERVAL
   });
 
   useEffect(() => {
@@ -29,11 +29,14 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
   }, [ loading, data ]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.regionTitle}>{title[type]}</div>
-      { !formatData.length ? <PerformanceEmpty width={width} displayType={type} /> :
-      <PerformanceComponent width={width} formatData={formatData} displayType={type} /> }
-    </div>
+      <div className={styles.container}>
+          <div className={styles.regionTitle}>{title[type]}</div>
+          {!formatData.length ? (
+          <PerformanceEmpty width={width} displayType={type} />
+            ) : (
+            <PerformanceComponent width={width} formatData={formatData} displayType={type} />
+        )}
+        </div>
   );
 };
 

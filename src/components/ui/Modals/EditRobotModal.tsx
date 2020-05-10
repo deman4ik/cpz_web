@@ -89,88 +89,88 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
   };
 
   return (
-    <>
+      <>
       {loading || editRobotLoading ? (
-        <LoadingIndicator />
-      ) : (
-        <>
-          {formError && <ErrorLine formError={formError} />}
-          <div className={styles.container}>
+              <LoadingIndicator />
+            ) : (
+                <>
+                {formError && <ErrorLine formError={formError} />}
+                    <div className={styles.container}>
             <div className={styles.bodyTitle}>
-              Please enter desired trading amount in&nbsp;
-              <span style={{ color: color.white }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
-            </div>
-            <div className={styles.form}>
-              <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
-                <div className={styles.value_group}>
-                  <div className={styles.label}>Minimum value is&nbsp;</div>
-                  <div className={styles.value_row}>
-                      <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
-                      <span style={{ color: 'white' }}>
-                          {dataRobot ? dataRobot.robot.subs.asset : ''}
-                        </span>
-                      &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}
-                      &nbsp;$
+                          Please enter desired trading amount in&nbsp;
+                            <span style={{ color: color.white }}>{dataRobot ? dataRobot.robot.subs.asset : ''}</span>
                         </div>
-                </div>
-              </div>
-              <div className={styles.fieldset}>
-                <div className={styles.input_group}>
-                  <div className={styles.volume}>
-                      <Input
-                          error={!isValid()}
-                          type='number'
-                          width={150}
-                          value={inputVolumeAsset}
-                          selectTextOnFocus
-                          right
-                          onChangeText={(value) => handleOnChangeAsset(value)}
-                          onKeyPress={handleOnKeyPress}
+                        <div className={styles.form}>
+                        <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
+                                <div className={styles.value_group}>
+                            <div className={styles.label}>Minimum value is&nbsp;</div>
+                            <div className={styles.value_row}>
+                                    <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                                    <span style={{ color: 'white' }}>
+                                        {dataRobot ? dataRobot.robot.subs.asset : ''}
+                                      </span>
+                                    &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}
+                                    &nbsp;$
+                        </div>
+                          </div>
+                          </div>
+                            <div className={styles.fieldset}>
+                            <div className={styles.input_group}>
+                                  <div className={styles.volume}>
+                                        <Input
+                                      error={!isValid()}
+                                      type='number'
+                                      width={150}
+                                            value={inputVolumeAsset}
+                                      selectTextOnFocus
+                                            right
+                                      onChangeText={(value) => handleOnChangeAsset(value)}
+                                      onKeyPress={handleOnKeyPress}
                                         />
-                      <span className={styles.volume_text}>
-                          {dataRobot ? dataRobot.robot.subs.asset : ''}
+                                  <span className={styles.volume_text}>
+                                      {dataRobot ? dataRobot.robot.subs.asset : ''}
+                                    </span>
+                                </div>
+                                  <span className={styles.delimiter} style={{ marginTop: 3 }}>
+                                      ≈
                         </span>
-                    </div>
-                  <span className={styles.delimiter} style={{ marginTop: 3 }}>
-                      ≈
-                        </span>
-                  <div className={styles.volume} style={{ marginTop: 3 }}>
-                      <Input
-                          type='number'
-                          value={`${inputVolumeCurrency}`}
-                          width={150}
-                          right
-                          onKeyPress={handleOnKeyPress}
-                          onChangeText={(value) => handleOnChangeCurrency(value)}
+                                  <div className={styles.volume} style={{ marginTop: 3 }}>
+                                      <Input
+                                      type='number'
+                                      value={`${inputVolumeCurrency}`}
+                                      width={150}
+                                      right
+                                      onKeyPress={handleOnKeyPress}
+                                            onChangeText={(value) => handleOnChangeCurrency(value)}
                                         />
-                      <span className={styles.volume_text}>$</span>
-                    </div>
-                </div>
-                <div className={styles.btns}>
-                  <Button
-                      className={styles.btn}
-                      title='Save'
-                      icon='check'
-                      type='success'
-                      disabled={!isValid()}
-                      isUppercase
-                      onClick={handleOnSubmit}
+                                      <span className={styles.volume_text}>$</span>
+                                    </div>
+                                </div>
+                                <div className={styles.btns}>
+                            <Button
+                                        className={styles.btn}
+                                    title='Save'
+                                    icon='check'
+                                    type='success'
+                                        disabled={!isValid()}
+                                    isUppercase
+                                    onClick={handleOnSubmit}
                                     />
-                  <Button
-                      className={styles.btn}
-                      title='Cancel'
-                      icon='close'
-                      type='dimmed'
-                      isUppercase
-                      onClick={onClose}
+                            <Button
+                                      className={styles.btn}
+                                      title='Cancel'
+                                      icon='close'
+                                      type='dimmed'
+                                      isUppercase
+                                      onClick={onClose}
                                     />
-                </div>
-              </div>
-            </div>
+                          </div>
+                          </div>
+                      </div>
           </div>
+              </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

@@ -14,34 +14,37 @@ const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
   };
 
   return (
-    <div className='toolbar'>
+      <div className='toolbar'>
       {!robotData || !robotData.user_robots ? (
-        <Button
+                <Button
           icon='plus'
           title='Add'
           type='primary'
           isUppercase
-          responsive
-          onClick={() => handleOnPressAction('create')} />
-      ) : (
+                    responsive
+          onClick={() => handleOnPressAction('create')}
+                />
+            ) : (
         <>
-          {(robotData.user_robots && robotData.user_robots.status === 'stopped') ? (
+                  {robotData.user_robots && robotData.user_robots.status === 'stopped' ? (
             <>
-              <CaptionButton
-                title='edit'
-                icon='settings'
-                responsive
-                onClick={() => handleOnPressAction('edit')} />
-              <CaptionButton
-                title='delete'
-                icon='close'
-                responsive
-                onClick={() => handleOnPressAction('delete')} />
-            </>
+                          <CaptionButton
+                              title='edit'
+                              icon='settings'
+                              responsive
+                              onClick={() => handleOnPressAction('edit')}
+                            />
+                          <CaptionButton
+                              title='delete'
+                              icon='close'
+                                responsive
+                              onClick={() => handleOnPressAction('delete')}
+                            />
+                        </>
           ) : null}
-        </>
-      )}
-    </div>
+                </>
+            )}
+        </div>
   );
 };
 

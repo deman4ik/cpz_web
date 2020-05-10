@@ -18,7 +18,7 @@ interface Props {
   width: number;
 }
 
-const steps = [ 'Enter new Email', 'Confirm Email change' ];
+const steps = [ "Enter new Email", 'Confirm Email change'];
 const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   const [ formError, setFormError ] = useState('');
   const [ secretCode, setSecretCode ] = useState('');
@@ -43,7 +43,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   }, []);
 
   const onAcceptEmail = () => {
-    sendChangeEmail().then(response => {
+    sendChangeEmail().then((response) => {
       if (response.data.changeEmail.success) {
         setStep(2);
         setTitle(steps[step - 1].toString());
@@ -54,7 +54,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   };
 
   const onConfirmEmail = () => {
-    sendConfirmEmail().then(response => {
+    sendConfirmEmail().then((response) => {
       if (response.data.confirmChangeEmail.success) {
         onClose();
       } else {
@@ -66,7 +66,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   const isValidEmail = () => email !== newEmail && validateEmail(newEmail);
   const isValidSecretCode = () => secretCode && secretCode.length === SECRET_CODE_LENGTH;
 
-  const onKeyPressChange = e => {
+  const onKeyPressChange = (e) => {
     if (formError) {
       setFormError('');
     }
@@ -76,7 +76,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
     }
   };
 
-  const onKeyPressConfirm = e => {
+  const onKeyPressConfirm = (e) => {
     if (formError) {
       setFormError('');
     }
@@ -87,41 +87,36 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
   };
 
   return (
-    <>
+      <>
       <div className={styles.wizardContainer}>
-        <StepWizard
-          steps={steps}
-          activeStep={step}
-          height={90}
-          titleWidth={160}
-          width={width} />
-      </div>
-      <div className={styles.form}>
-        <div className={styles.fieldset}>
-          { step === 1
-            ? (
+              <StepWizard steps={steps} activeStep={step} height={90} titleWidth={160} width={width} />
+            </div>
+            <div className={styles.form}>
+                <div className={styles.fieldset}>
+                    {step === 1 ? (
               <EmailStep1
-                error={!isValidEmail()}
-                setNewEmail={setNewEmail}
-                onKeyPressChange={onKeyPressChange}
-                changeLoading={changeLoading}
-                onAcceptEmail={onAcceptEmail}
-                onClose={onClose}
-                newEmail={newEmail} />
-            )
-            : (
-              <EmailStep2
-                error={!isValidSecretCode()}
-                setSecretCode={setSecretCode}
-                onKeyPressConfirm={onKeyPressConfirm}
-                confirmLoading={confirmLoading}
-                setStep={setStep}
-                onConfirmEmail={onConfirmEmail}
-                secretCode={secretCode} />
+                            error={!isValidEmail()}
+                            setNewEmail={setNewEmail}
+                            onKeyPressChange={onKeyPressChange}
+                          changeLoading={changeLoading}
+                          onAcceptEmail={onAcceptEmail}
+                            onClose={onClose}
+                          newEmail={newEmail}
+                        />
+            ) : (
+                      <EmailStep2
+                            error={!isValidSecretCode()}
+                          setSecretCode={setSecretCode}
+                          onKeyPressConfirm={onKeyPressConfirm}
+                            confirmLoading={confirmLoading}
+                          setStep={setStep}
+                          onConfirmEmail={onConfirmEmail}
+                            secretCode={secretCode}
+                        />
             )}
+              </div>
         </div>
-      </div>
-    </>
+        </>
   );
 };
 

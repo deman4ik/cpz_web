@@ -7,8 +7,8 @@ interface Props {
 
 const _OpenPositionsLeft: React.FC<Props> = ({ title }) => (
   <div className={styles.left}>
-    <div className={styles.leftText}>{title}</div>
-  </div>
+      <div className={styles.leftText}>{title}</div>
+    </div>
 );
 
 export const OpenPositionsLeft = memo(_OpenPositionsLeft);

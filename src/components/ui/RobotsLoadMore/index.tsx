@@ -11,19 +11,20 @@ interface Props {
 
 export const _RobotsLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
   <>
-    {renderLoadMoreButton && (
-      <div className={styles.btnPosition}>
-        <Button
-          width={146}
-          title='load more'
-          type='dimmed'
-          icon='arrowdown'
-          isUppercase
-          isLoading={isLoadingMore}
-          onClick={onFetchMore} />
-      </div>
-    )}
-  </>
+      {renderLoadMoreButton && (
+        <div className={styles.btnPosition}>
+              <Button
+        width={146}
+        title='load more'
+        type='dimmed'
+        icon='arrowdown'
+        isUppercase
+        isLoading={isLoadingMore}
+                    onClick={onFetchMore}
+                />
+            </div>
+        )}
+    </>
 );
 
 export const RobotsLoadMore = memo(_RobotsLoadMore);

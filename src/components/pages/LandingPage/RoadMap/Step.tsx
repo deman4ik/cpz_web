@@ -26,17 +26,11 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
         renderTriangle = '/img/roadmap-triangle-will-mob.png';
       }
     } else if (isActiveCheck) {
-      renderTriangle = isOdd
-        ? '/img/roadmap-triangle-cur-odd.png'
-        : '/img/roadmap-triangle-cur.png';
+      renderTriangle = isOdd ? '/img/roadmap-triangle-cur-odd.png' : '/img/roadmap-triangle-cur.png';
     } else if (isActiveLine) {
-      renderTriangle = isOdd
-        ? '/img/roadmap-triangle-fin-odd.png'
-        : '/img/roadmap-triangle-fin.png';
+      renderTriangle = isOdd ? '/img/roadmap-triangle-fin-odd.png' : '/img/roadmap-triangle-fin.png';
     } else if (isFuture) {
-      renderTriangle = isOdd
-        ? '/img/roadmap-triangle-will-odd.png'
-        : '/img/roadmap-triangle-will.png';
+      renderTriangle = isOdd ? '/img/roadmap-triangle-will-odd.png' : '/img/roadmap-triangle-will.png';
     }
     return renderTriangle;
   };
@@ -70,34 +64,38 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
   const getLineStyle = () => {
     const line = [ styles.line ];
     if (isActiveLine) line.push(styles.activeLine);
-    if (isActiveCheck && (idx === 5)) line.push(styles.endActiveLine);
+    if (isActiveCheck && idx === 5) line.push(styles.endActiveLine);
     return line;
   };
 
   return (
-    <>
+      <>
       <div className={`${styles.line}${isActiveLine ? ` ${styles.activeLine}` : ''}`} />
       <div className={styles.circle}>
-        {isFuture ? (
+                {isFuture ? (
           <div className={styles.circleFuture} />
         ) : (
-          <img
-            className={`${styles.circleCheckActive} ${isActiveCheck ? styles.circleCheck : styles.circleUnCheck}`}
-            src='/img/roadmap-check.png'
-            alt='' />
+                  <img
+                        className={`${styles.circleCheckActive} ${
+                            isActiveCheck ? styles.circleCheck : styles.circleUnCheck
+                    }`}
+                      src='/img/roadmap-check.png'
+                      alt=''
+                    />
         )}
-        <div className={getCircleCloud().join(' ')}>
-          <img
-            className={getTriangleStyle().join(' ')}
-            src={getTringleImg()}
-            alt='' />
-          <div className={styles.circleBody}>
-            <div className={`${styles.circleTitle}${isFuture ? ` ${styles.isFutureText}` : ''}`}>{step.date}</div>
-            <div className={`${styles.circleText}${isFuture ? ` ${styles.isFutureText}` : ''}`}>{step.title}</div>
-          </div>
+              <div className={getCircleCloud().join(' ')}>
+          <img className={getTriangleStyle().join(' ')} src={getTringleImg()} alt='' />
+                    <div className={styles.circleBody}>
+                  <div className={`${styles.circleTitle}${isFuture ? ` ${styles.isFutureText}` : ''}`}>
+                        {step.date}
+                      </div>
+                  <div className={`${styles.circleText}${isFuture ? ` ${styles.isFutureText}` : ''}`}>
+                        {step.title}
+                        </div>
+                </div>
         </div>
-      </div>
+            </div>
       <div className={getLineStyle().join(' ')} />
-    </>
+        </>
   );
 };

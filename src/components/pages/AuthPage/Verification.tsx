@@ -13,19 +13,15 @@ import { Footer, PageHead, Header } from '../../layout';
 import styles from './index.module.css';
 
 const INITIAL_STATE = {
-  verificationCode: '',
+  verificationCode: ''
 };
 
 export const Verification: React.FC = () => {
   const { data, loading } = useQuery(USER);
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    errors,
-    isValid,
-    setValid
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+  const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
+    INITIAL_STATE,
+    validateAuth
+  );
 
   const confirmCode = async () => {
     const result = await confirm({ userId: data.userId, secretCode: values.verificationCode });
@@ -54,36 +50,40 @@ export const Verification: React.FC = () => {
   }, [ isValid ]);
 
   return (
-    <div className={styles.container}>
-      <PageHead title='Verification' />
-      <div className={styles.header}>
-        <Header hasHomeButton />
-      </div>
-      <div className={styles.plate}>
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.title}>Verification</div>
-            <div className={styles.titleDescription}>Enter the verification code you recieved via Email below.</div>
-            <Input
-              value={values.verificationCode}
-              error={errors.verificationCode}
-              placeholder='Verification code'
-              maxLength={6}
-              width={260}
-              onChangeText={(text: string) => handleChange('verificationCode', text)} />
-            <Button
-              size='big'
-              style={{ marginTop: 30 }}
-              title='Verify my email address'
-              type='success'
-              width={260}
-              onClick={handleOnPress}
-              isUppercase />
-          </div>
-          <CartFooter />
+      <div className={styles.container}>
+          <PageHead title='Verification' />
+          <div className={styles.header}>
+              <Header hasHomeButton />
+            </div>
+          <div className={styles.plate}>
+              <div className={styles.cardWrapper}>
+                    <div className={styles.card}>
+                    <div className={styles.title}>Verification</div>
+                    <div className={styles.titleDescription}>
+                        Enter the verification code you recieved via Email below.
+                        </div>
+                    <Input
+                          value={values.verificationCode}
+                            error={errors.verificationCode}
+                          placeholder='Verification code'
+                            maxLength={6}
+                          width={260}
+                          onChangeText={(text: string) => handleChange('verificationCode', text)}
+                        />
+                    <Button
+                          size='big'
+                          style={{ marginTop: 30 }}
+                          title='Verify my email address'
+                          type='success'
+                          width={260}
+                            onClick={handleOnPress}
+                          isUppercase
+                        />
+                  </div>
+              <CartFooter />
+            </div>
+            </div>
+            <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>
   );
 };

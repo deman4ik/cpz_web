@@ -2,10 +2,7 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import {
-  DISPLAY_CLOSED_POSITIONS,
-  POLL_INTERVAL
-} from '../../../../config/constants';
+import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from '../../../../config/constants';
 import {
   GET_ROBOT_POSITIONS_ROBOT,
   GET_ROBOT_POSITIONS_USER,
@@ -13,20 +10,13 @@ import {
 } from '../../../../graphql/robots/queries';
 import { ROBOT_POSITIONS_COUNT } from '../../../../graphql/signals/queries';
 
-export const useFetchPositionData = (
-  isUserRobot,
-  userRobots,
-  robot,
-  tableName
-) => {
-  const arrStatus = isUserRobot ? [ 'closed', 'closedAuto' ] : [ 'closed' ];
+export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) => {
+  const arrStatus = isUserRobot ? [ "closed", 'closedAuto'] : [ "closed" ];
   const [ isLoadingMore, setIsLoadingMore ] = useState(false);
   const [ limit, setLimit ] = useState(DISPLAY_CLOSED_POSITIONS);
 
   const { data, loading, fetchMore } = useQuery(
-    isUserRobot
-      ? GET_ROBOT_POSITIONS_USER('user_positions')
-      : GET_ROBOT_POSITIONS_ROBOT('robot_positions'),
+    isUserRobot ? GET_ROBOT_POSITIONS_USER('user_positions') : GET_ROBOT_POSITIONS_ROBOT('robot_positions'),
     {
       variables: {
         robotId: isUserRobot ? userRobots.id : robot.id,
@@ -63,10 +53,7 @@ export const useFetchPositionData = (
   );
 
   const quantyRecords = useMemo(
-    () =>
-      (!loadingAggregate && dataCount
-        ? dataCount[`${tableName}_aggregate`].aggregate.count
-        : 0),
+    () => (!loadingAggregate && dataCount ? dataCount[`${tableName}_aggregate`].aggregate.count : 0),
     [ dataCount, loadingAggregate ]
   );
 

@@ -14,12 +14,9 @@ const _PageToolbar: React.FC<Props> = ({ displayType }) => {
   };
 
   return (
-    <div className='toolbar'>
-      <CaptionButton
-        title={`Add ${displayType}`}
-        icon='plus'
-        onClick={handleOnPress} />
-    </div>
+      <div className='toolbar'>
+      <CaptionButton title={`Add ${displayType}`} icon='plus' onClick={handleOnPress} />
+        </div>
   );
 };
 

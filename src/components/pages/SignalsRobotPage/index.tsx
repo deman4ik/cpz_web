@@ -39,47 +39,41 @@ export const SignalsRobotPage = () => {
     }
   });
 
-  const robotData = useMemo(() => (
-    (!loading && data && data.robot.length) ? formatRobotData(data) : null
-  ), [ data, loading ]);
+  const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [
+    data,
+    loading
+  ]);
 
   const robotSubscribe = (variables) => {
     setRobotData(variables);
   };
 
   return (
-    <Template
-      page={PageType.signals}
-      title='Signals'
-      subTitle={robotData ? robotData.robot.name : ''}
-      width={width}
-      toolbar={robotData ? (
-        <ToolbarRobotPage
-          robotSubscribe={robotSubscribe}
-          robotData={robotData} />
-      ) : null}
-      handlePressBack={handlePressBack}
-    >
-      {loading ? <div className='loading'><LoadingIndicator /></div> : (
-        (!robotData) ? <NoRecentData message='No recent data available' /> : (
-          <>
-            <HeaderRobotsRobotPage
-              robotSubscribe={robotSubscribe}
-              robotData={robotData} />
-            <TabsHeaderRobotPage
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              isUserSignals={robotData.robot.isUserSignals} />
-            <TabsPagesRobotPage
-              robotData={robotData}
-              activeTab={activeTab}
-              width={width} />
-            <ModalsRobotPage
-              visibleModal={visibleModal}
-              setVisibleModal={setVisibleModal} />
-          </>
-        )
-      )}
-    </Template>
+      <Template
+          page={PageType.signals}
+          title='Signals'
+          subTitle={robotData ? robotData.robot.name : ''}
+          width={width}
+          toolbar={robotData ? <ToolbarRobotPage robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
+          handlePressBack={handlePressBack}>
+          {loading ? (
+              <div className='loading'>
+                    <LoadingIndicator />
+            </div>
+            ) : !robotData ? (
+            <NoRecentData message='No recent data available' />
+            ) : (
+                <>
+                <HeaderRobotsRobotPage robotSubscribe={robotSubscribe} robotData={robotData} />
+                <TabsHeaderRobotPage
+                    activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    isUserSignals={robotData.robot.isUserSignals}
+                    />
+                    <TabsPagesRobotPage robotData={robotData} activeTab={activeTab} width={width} />
+                <ModalsRobotPage visibleModal={visibleModal} setVisibleModal={setVisibleModal} />
+              </>
+            )}
+        </Template>
   );
 };

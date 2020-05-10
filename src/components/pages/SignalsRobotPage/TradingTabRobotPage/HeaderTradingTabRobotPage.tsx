@@ -12,12 +12,12 @@ const positionsTabHeaders = [
 const defaultFlex = 0.1;
 const _HeaderTradingTabRobotPage: React.FC = () => (
   <div className={styles.tableHeader}>
-    {positionsTabHeaders.map((header) => (
-      <div key={header.title} style={{ flex: header.flex || defaultFlex }}>
-        <div className={styles.tableHeaderText}>{header.title}</div>
-      </div>
-    ))}
-  </div>
+      {positionsTabHeaders.map((header) => (
+          <div key={header.title} style={{ flex: header.flex || defaultFlex }}>
+              <div className={styles.tableHeaderText}>{header.title}</div>
+            </div>
+        ))}
+    </div>
 );
 
 export const HeaderTradingTabRobotPage = memo(_HeaderTradingTabRobotPage);

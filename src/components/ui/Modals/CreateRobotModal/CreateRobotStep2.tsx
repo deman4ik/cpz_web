@@ -45,71 +45,71 @@ const _CreateRobotStep2: React.FC<Props> = ({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.bodyTitle}>Please enter desired trading amount</div>
-      <div className={styles.form}>
-        <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
-          <div className={styles.value_group}>
-            <div className={styles.label}>Minimum value is&nbsp;</div>
-            <div className={styles.value_row}>
-              <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
-              <span style={{ color: 'white' }}>{asset}</span>
-              &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
+      <div className={styles.container}>
+          <div className={styles.bodyTitle}>Please enter desired trading amount</div>
+          <div className={styles.form}>
+              <div className={[ styles.bodyText, styles.formComment ].join(' ')}>
+                    <div className={styles.value_group}>
+              <div className={styles.label}>Minimum value is&nbsp;</div>
+              <div className={styles.value_row}>
+                            <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                          <span style={{ color: 'white' }}>{asset}</span>
+                          &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
+                        </div>
             </div>
-          </div>
-        </div>
-        <div className={styles.fieldset}>
-          <div className={styles.input_group}>
-            <div className={styles.volume}>
-              <Input
-                error={!isValid()}
-                width={150}
-                type='number'
-                value={`${volumeAsset}`}
-                selectTextOnFocus
-                right
-                onChangeText={(value) => handleOnChangeAsset(value)}
-                onKeyPress={handleOnKeyPress}
+            </div>
+              <div className={styles.fieldset}>
+                    <div className={styles.input_group}>
+                    <div className={styles.volume}>
+                            <Input
+                        error={!isValid()}
+                                width={150}
+                        type='number'
+                                value={`${volumeAsset}`}
+                                selectTextOnFocus
+                        right
+                                onChangeText={(value) => handleOnChangeAsset(value)}
+                                onKeyPress={handleOnKeyPress}
                             />
-              <span className={styles.volume_text}>{asset}</span>
-            </div>
-            <span className={styles.delimiter} style={{ marginTop: 3 }}>
-              ≈
-            </span>
-            <div className={styles.volume} style={{ marginTop: 3 }}>
-              <Input
-                type='number'
-                value={`${volumeCurrency}`}
-                width={150}
-                right
-                onKeyPress={handleOnKeyPress}
-                onChangeText={(value) => handleOnChangeCurrency(value)}
+                            <span className={styles.volume_text}>{asset}</span>
+                        </div>
+                        <span className={styles.delimiter} style={{ marginTop: 3 }}>
+                        ≈
+                        </span>
+                    <div className={styles.volume} style={{ marginTop: 3 }}>
+                        <Input
+                            type='number'
+                            value={`${volumeCurrency}`}
+                                width={150}
+                            right
+                            onKeyPress={handleOnKeyPress}
+                                onChangeText={(value) => handleOnChangeCurrency(value)}
                             />
-              <span className={styles.volume_text}>$</span>
+                        <span className={styles.volume_text}>$</span>
+                      </div>
+                  </div>
             </div>
-          </div>
+            </div>
+          <div className={styles.btns}>
+          <Button
+                    className={styles.btn}
+                title='Back'
+                icon='chevronleft'
+                type='dimmed'
+                isUppercase
+                onClick={handleOnBack}
+                />
+          <Button
+                    className={styles.btn}
+                title='Next'
+                icon='chevronright'
+                type='success'
+                disabled={!isValid()}
+                    isUppercase
+                onClick={handleOnCreate}
+                />
         </div>
-      </div>
-      <div className={styles.btns}>
-        <Button
-          className={styles.btn}
-          title='Back'
-          icon='chevronleft'
-          type='dimmed'
-          isUppercase
-          onClick={handleOnBack}
-                />
-        <Button
-          className={styles.btn}
-          title='Next'
-          icon='chevronright'
-          type='success'
-          disabled={!isValid()}
-          isUppercase
-          onClick={handleOnCreate}
-                />
-      </div>
-    </div>
+        </div>
   );
 };
 

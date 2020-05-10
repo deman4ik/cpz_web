@@ -13,25 +13,25 @@ interface Props {
   displayType: string;
 }
 
-const LightWeightChartWithNoSSR = dynamic(
-  () => import('../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator />,
-    ssr: false }
-);
+const LightWeightChartWithNoSSR = dynamic(() => import('../../charts/LightWeightChart'), {
+  loading: () => <LoadingIndicator />,
+  ssr: false
+});
 
 const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width }) => (
   <>
-    {!formatData.chartData || !formatData.chartData.length ? <LoadingIndicator /> : (
-      <LightWeightChartWithNoSSR
-        data={formatData.chartData}
-        type={ChartType.area}
-        size={{ height: 470, width }} />
-    )}
-    <div className={styles.performanceTitle}>
-      {`My ${capitalize(displayType)} Total Statistics`}
-    </div>
-    <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
-  </>
+      {!formatData.chartData || !formatData.chartData.length ? (
+          <LoadingIndicator />
+        ) : (
+        <LightWeightChartWithNoSSR
+              data={formatData.chartData}
+              type={ChartType.area}
+              size={{ height: 470, width }}
+            />
+        )}
+      <div className={styles.performanceTitle}>{`My ${capitalize(displayType)} Total Statistics`}</div>
+      <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
+    </>
 );
 
 export const StatsPageComponent = memo(_StatsPageComponent);

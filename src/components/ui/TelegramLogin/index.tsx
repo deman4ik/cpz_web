@@ -24,11 +24,9 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = 'medium
 
   const [ error, setError ] = useState('');
   const [ loginLoading, setLoginLoading ] = useState(false);
-  const [ addTelegram, { loading: addLoading } ] = useMutation(
-    ADD_TELEGRAM_ACCOUNT
-  );
+  const [ addTelegram, { loading: addLoading } ] = useMutation(ADD_TELEGRAM_ACCOUNT);
 
-  const login = async data => {
+  const login = async (data) => {
     console.log('login');
     setLoginLoading(true);
     const result = await loginTelegram(data);
@@ -44,18 +42,18 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = 'medium
   useEffect(() => {
     (window as any).TelegramLoginWidget = userId
       ? {
-        dataOnauth: data =>
+        dataOnauth: (data) =>
           addTelegram({
             variables: { data },
             refetchQueries: [ { query: GET_USER_INFO } ]
-          }).then(response => {
+          }).then((response) => {
             if (response.data.setTelegram.error) {
               setError(response.data.setTelegram.error);
             }
           })
       }
       : {
-        dataOnauth: data => login(data)
+        dataOnauth: (data) => login(data)
       };
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?7';
@@ -70,25 +68,16 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = 'medium
   }, []);
 
   return (
-    <>
+      <>
       <div className={styles.container}>
-        {(loginLoading || addLoading) && (
-          <LoadingIndicator />
-        )}
-        <div className={styles.widget} ref={ref => (instance = ref)} />
-      </div>
-      {message && (
-      <div className={styles.telegramPlaceholder}>
-        {message}
-      </div>
-      )}
-      <Modal
-        title='Error'
-        isOpen={!!error}
-        onClose={() => setError('')}>
-        <div className={styles.errorText}>{error}</div>
-      </Modal>
-    </>
+              {(loginLoading || addLoading) && <LoadingIndicator />}
+              <div className={styles.widget} ref={(ref) => (instance = ref)} />
+            </div>
+            {message && <div className={styles.telegramPlaceholder}>{message}</div>}
+      <Modal title='Error' isOpen={!!error} onClose={() => setError('')}>
+                <div className={styles.errorText}>{error}</div>
+        </Modal>
+        </>
   );
 };
 

@@ -17,8 +17,6 @@ export const useVisibleModal = () => {
     titleModal,
     setTitleModal,
     handleSetVisible,
-    dataModal: !dataModal
-      ? { ModalVisible: { isVisible: false, type: '' } }
-      : dataModal
+    dataModal: !dataModal ? { ModalVisible: { isVisible: false, type: '' } } : dataModal
   };
 };

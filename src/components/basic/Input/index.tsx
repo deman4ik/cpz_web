@@ -22,9 +22,24 @@ interface Props {
   right?: boolean;
 }
 
-export const Input: React.FC<Props> =
-({ value, icon, placeholder, buttonTitle, type = 'text', onChangeText, onClickButton, style, right,
-  onKeyPress, width = 350, error, selectTextOnFocus, responsive, readonly, maxLength = 30 }) => {
+export const Input: React.FC<Props> = ({
+  value,
+  icon,
+  placeholder,
+  buttonTitle,
+  type = 'text',
+  onChangeText,
+  onClickButton,
+  style,
+  right,
+  onKeyPress,
+  width = 350,
+  error,
+  selectTextOnFocus,
+  responsive,
+  readonly,
+  maxLength = 30
+}) => {
   const [ inputValue, setInputValue ] = useState(value);
   const inputRef = useRef(null);
   const handleOnInput = (e) => {
@@ -50,7 +65,7 @@ export const Input: React.FC<Props> =
   };
 
   const getInputClass = () => {
-    const styleInput = [ 'input' ];
+    const styleInput = [ "input" ];
     if (error) styleInput.push('error');
     if (right) styleInput.push('right');
     return styleInput;
@@ -58,7 +73,7 @@ export const Input: React.FC<Props> =
 
   const handleOnFocus = () => {
     if (selectTextOnFocus) {
-      inputRef.current?.setSelectionRange(0, inputValue.length);
+            inputRef.current?.setSelectionRange(0, inputValue.length);
     }
   };
 
@@ -67,84 +82,87 @@ export const Input: React.FC<Props> =
   }, [ value ]);
 
   return (
-    <div className='wrapper' style={style}>
+      <div className='wrapper' style={style}>
       <div className='container'>
-        { icon ? (
-          <div className='icon'>
-            <Button
-              title={buttonTitle || 'Change'}
-              type='dimmed'
-              size='small'
-              onClick={onClickButton}
-              responsive
-              icon={icon} />
-          </div>
-        ) : null}
-        <input
+          {icon ? (
+                  <div className='icon'>
+              <Button
+                          title={buttonTitle || 'Change'}
+                          type='dimmed'
+                          size='small'
+                          onClick={onClickButton}
+                            responsive
+                            icon={icon}
+                        />
+            </div>
+                ) : null}
+                <input
           className={getInputClass().join(' ')}
-          placeholder={placeholder}
+                    placeholder={placeholder}
           maxLength={maxLength}
           ref={inputRef}
           type={type === 'number' ? 'text' : type}
           readOnly={readonly}
           onChange={handleOnInput}
           onKeyDown={formatInput}
-          onFocus={handleOnFocus}
-          value={inputValue} />
-        {error && (typeof error === 'string') && <div className='error_line'>{error}</div>}
-      </div>
-      <style jsx>{`
-        .wrapper {
-          width: ${width}px;
-        }
-        .container {
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          flex: 1; 
-        }
-        .error_line {
-          color: white;
-          background-color: var(--negative);
-          padding: 3px 10px 3px;
-          text-align: center;
-          font-size: var(--small2);
-          width: 100%; 
-        }
-        .input {
-          background-color: var(--darkBg);
-          color: var(--accent);
-          border-radius: 2px;
-          font-size: var(--normal1);
-          padding: 11px;
-          padding-right: ${icon ? '35px' : '11px'};
-        }
-        .input.right {
-          text-align: right;
-        }
-        .input.error {
-          border: 2px solid var(--negative);
-        }
-        .icon {
-          position: absolute;
-          right: 5px;
-          top: 6px;
-        }
-        .input::-webkit-input-placeholder,
-        .input::placeholder {
-          color: var(--accent);
-        }
-        .input::-webkit-inner-spin-button {
-          display: none;
-        }
-        
-        @media (max-width: 480px) {
-          .wrapper {
-            width: ${responsive ? width - (width / 100) * 14 : width}px;
-          }
-        }
-      `}
-      </style>
-    </div>
+                    onFocus={handleOnFocus}
+          value={inputValue}
+                />
+          {error && typeof error === 'string' && <div className='error_line'>{error}</div>}
+        </div>
+            <style jsx>
+          {`
+                    .wrapper {
+                        width: ${width}px;
+                    }
+                    .container {
+                        display: flex;
+                        flex-direction: column;
+                        position: relative;
+                        flex: 1;
+                    }
+                    .error_line {
+                        color: white;
+                        background-color: var(--negative);
+                        padding: 3px 10px 3px;
+                        text-align: center;
+                        font-size: var(--small2);
+                        width: 100%;
+                    }
+                    .input {
+                        background-color: var(--darkBg);
+                        color: var(--accent);
+                        border-radius: 2px;
+                        font-size: var(--normal1);
+                        padding: 11px;
+                        padding-right: ${icon ? '35px' : '11px'};
+                    }
+                    .input.right {
+                        text-align: right;
+                    }
+                    .input.error {
+                        border: 2px solid var(--negative);
+                    }
+                    .icon {
+                        position: absolute;
+                        right: 5px;
+                        top: 6px;
+                    }
+                    .input::-webkit-input-placeholder,
+                    .input::placeholder {
+                        color: var(--accent);
+                    }
+                    .input::-webkit-inner-spin-button {
+                        display: none;
+                    }
+
+                    @media (max-width: 480px) {
+                        .wrapper {
+                            width: ${responsive ? width - (width / 100) * 14 : width}px;
+                        }
+                    }
+                `}
+        </style>
+        </div>
   );
 };

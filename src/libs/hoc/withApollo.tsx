@@ -21,7 +21,7 @@ interface Definintion {
 }
 const ssrMode = !process.browser;
 const httpLink = createHttpLink({
-  uri: `https://${process.env.HASURA_URL}`,
+  uri: `https://${process.env.HASURA_URL}`
 });
 
 const connectionParams = async (ctx) => {
@@ -53,7 +53,7 @@ export default withApollo(
           return kind === 'OperationDefinition' && operation === 'subscription';
         },
         wsLink,
-        contextLink,
+        contextLink
       );
     }
 
@@ -64,7 +64,7 @@ export default withApollo(
       link,
       cache,
       resolvers,
-      connectToDevTools: (!ssrMode && process.env.NODE_ENV === 'development'),
+      connectToDevTools: !ssrMode && process.env.NODE_ENV === 'development',
       typeDefs,
       ssrMode
     });
@@ -80,9 +80,9 @@ export default withApollo(
       }
 
       return (
-        <ApolloProvider client={props.apollo}>
-          <Page {...props} />
-        </ApolloProvider>
+              <ApolloProvider client={props.apollo}>
+                  <Page {...props} />
+                </ApolloProvider>
       );
     }
   }

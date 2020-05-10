@@ -10,19 +10,18 @@ import redirect from '../redirect';
 const pathToRedirect = '/auth/login';
 const pathToRedirectIfLogin = '/robots';
 const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-const checkPath = (path: string) => ([ '/auth/login', '/auth/signup' ].includes(path));
+const checkPath = (path: string) => [ "/auth/login", '/auth/signup'].includes(path);
 
-export const withAuth = Page => {
-  const WithAuth = props => <Page {...props} />;
+export const withAuth = (Page) => {
+  const WithAuth = (props) => <Page {...props} />;
 
-  WithAuth.getInitialProps = async ctx => {
+  WithAuth.getInitialProps = async (ctx) => {
     const isLanding = ctx.pathname === '/';
     let accessToken = '';
 
     if (ctx.res) {
-      const refresh_token = ctx.req.headers.host === LOCALHOST
-        ? hardCodeRefreshToken
-        : nextCookie(ctx).refresh_token;
+      const refresh_token =
+                ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
 
       if (refresh_token) {
         accessToken = await fetchAccessToken(refresh_token);
@@ -53,7 +52,7 @@ export const withAuth = Page => {
     }
     return {
       ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
-      accessToken,
+      accessToken
     };
   };
 

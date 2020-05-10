@@ -23,17 +23,9 @@ export const Tooltip: React.FC<Props> = ({ message, direction, location }) => {
   };
 
   return (
-    <div
-      className={styles.hover}
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
-    >
-      <HelpIcon color={color.accent} size={24} />
-      <TooltipComponent
-        show={hover}
-        message={message}
-        direction={direction}
-        location={location} />
-    </div>
+      <div className={styles.hover} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+          <HelpIcon color={color.accent} size={24} />
+          <TooltipComponent show={hover} message={message} direction={direction} location={location} />
+        </div>
   );
 };

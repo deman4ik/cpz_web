@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CheckedFilters } from '../components/pages/StatsPage/types';
 
-export const useFilters = (
-  _exchange: string | string[] | undefined,
-  _asset: string | string[] | undefined
-) => {
+export const useFilters = (_exchange: string | string[] | undefined, _asset: string | string[] | undefined) => {
   const [ checkedFilters, setCheckedFilters ] = useState<CheckedFilters>({
     exchange: null,
     asset: null
@@ -16,16 +13,15 @@ export const useFilters = (
 
   const checkFilterButton = (label: string, item: string) => {
     if (checkedFilters[label] === item) {
-      setCheckedFilters(prev => ({ ...prev, [label]: null }));
+      setCheckedFilters((prev) => ({ ...prev, [label]: null }));
     } else {
-      setCheckedFilters(prev => ({ ...prev, [label]: item }));
+      setCheckedFilters((prev) => ({ ...prev, [label]: item }));
     }
   };
 
   useEffect(() => {
     const filters = {
-      exchange:
-        _exchange === 'null' || !_exchange ? null : (_exchange as string),
+      exchange: _exchange === 'null' || !_exchange ? null : (_exchange as string),
       asset: _asset === 'null' || !_asset ? null : (_asset as string)
     };
 
@@ -38,10 +34,7 @@ export const useFilters = (
   };
 
   const confirmSelectedFilters = () => {
-    if (
-      selectedFilter.asset !== checkedFilters.asset ||
-      selectedFilter.exchange !== checkedFilters.exchange
-    ) {
+    if (selectedFilter.asset !== checkedFilters.asset || selectedFilter.exchange !== checkedFilters.exchange) {
       setSelectedFilter(checkedFilters);
     } else {
       checkFilterButton(selectedFilter.exchange, selectedFilter.asset);

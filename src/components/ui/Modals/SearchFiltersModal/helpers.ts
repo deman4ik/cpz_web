@@ -2,12 +2,12 @@ import { exchangeName } from '../../../../config/utils';
 import { timeFrameFormat } from '../../../../config/constants';
 import { FilterData } from './types';
 
-export const labels = [ 'exchange', 'asset', 'timeframe' ];
+export const labels = [ "exchange", 'asset', 'timeframe'];
 
 const formatData = {
-  asset: key => key,
-  exchange: key => exchangeName(key),
-  timeframe: key => timeFrameFormat[key].abbr
+  asset: (key) => key,
+  exchange: (key) => exchangeName(key),
+  timeframe: (key) => timeFrameFormat[key].abbr
 };
 
 const sortFunc = {
@@ -16,11 +16,11 @@ const sortFunc = {
   timeframe: (a, b) => a.key - b.key
 };
 
-export const getFilterData = filters => {
+export const getFilterData = (filters) => {
   const result = filters.reduce(
     (acc: FilterData, item) => {
-      labels.forEach(key => {
-        if (!acc[key].find(el => el.key === item.robots[key])) {
+      labels.forEach((key) => {
+        if (!acc[key].find((el) => el.key === item.robots[key])) {
           acc[key].push({
             key: item.robots[key],
             label: formatData[key](item.robots[key])
@@ -31,7 +31,7 @@ export const getFilterData = filters => {
     },
     { asset: [], exchange: [], timeframe: [] }
   );
-  labels.forEach(key => {
+  labels.forEach((key) => {
     result[key].sort(sortFunc[key]);
   });
 

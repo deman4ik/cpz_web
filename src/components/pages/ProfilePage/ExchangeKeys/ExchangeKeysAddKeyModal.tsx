@@ -131,92 +131,92 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
     }, [loadingCheck, dataCheck]);
 
     return (
-        <>
+    <>
             {responseError.error && (
                 <div className={styles.errorContainer} style={{ marginTop: 0 }}>
                     <div className={styles.errorText}>{responseError.msg}</div>
-                </div>
-            )}
-            <div className={styles.container}>
+            </div>
+          )}
+        <div className={styles.container}>
                 <div style={{ marginBottom: 20 }}>
                     <div className={styles.tableCellText}>My Exchange API Key Name</div>
-                    <div style={{ marginTop: 6 }}>
+            <div style={{ marginTop: 6 }}>
                         <Input
-                            value={inputName}
+                        value={inputName}
                             selectTextOnFocus
-                            width={260}
-                            readonly={!!options}
+                        width={260}
+                        readonly={!!options}
                             onChangeText={(value) => handleOnChangeName(value)}
                         />
-                    </div>
-                </div>
-                <div style={{ marginBottom: 20 }}>
-                    <div className={styles.tableCellText}>Exchange</div>
+                  </div>
+          </div>
+              <div style={{ marginBottom: 20 }}>
+            <div className={styles.tableCellText}>Exchange</div>
                     <div style={{ marginTop: 6 }}>
-                        <Select
+                    <Select
                             value={inputExchange}
-                            data={dataPicker}
-                            width={260}
-                            enabled={!isExchangeDisabled}
+                        data={dataPicker}
+                        width={260}
+                        enabled={!isExchangeDisabled}
                             onValueChange={(itemValue) => handleOnChangeExchange(itemValue)}
                         />
-                    </div>
-                </div>
-                <div className={styles.areaGroup}>
+                  </div>
+          </div>
+              <div className={styles.areaGroup}>
                     <div className={styles.row}>
                         <div className={styles.apikeyGroup}>
                             <div className={styles.tableCellText}>API Key (Public Key)&nbsp;</div>
-                            <div className={styles.tableCellText} style={{ color: color.negative }}>
-                                *
+                <div className={styles.tableCellText} style={{ color: color.negative }}>
+                              *
                             </div>
-                        </div>
-                        <div style={{ marginTop: 6 }}>
+              </div>
+                  <div style={{ marginTop: 6 }}>
                             <Textarea
-                                value={inputKeys.public}
+                            value={inputKeys.public}
                                 rows={5}
-                                onChangeText={(text) => handleOnChangeKeys(text, "public")}
+                            onChangeText={(text) => handleOnChangeKeys(text, 'public')}
                             />
-                        </div>
+              </div>
                     </div>
                     <div className={styles.row}>
-                        <div className={styles.apikeyGroup}>
+                  <div className={styles.apikeyGroup}>
                             <div className={styles.tableCellText}>API Secret (Private Key)&nbsp;</div>
-                            <div className={styles.tableCellText} style={{ color: color.negative }}>
-                                *
+                        <div className={styles.tableCellText} style={{ color: color.negative }}>
+                            *
                             </div>
-                        </div>
-                        <div style={{ marginTop: 6 }}>
-                            <Textarea
+                      </div>
+                  <div style={{ marginTop: 6 }}>
+                          <Textarea
                                 value={inputKeys.secret}
-                                rows={5}
-                                onChangeText={(text) => handleOnChangeKeys(text, "secret")}
+                              rows={5}
+                              onChangeText={(text) => handleOnChangeKeys(text, 'secret')}
                             />
                         </div>
-                    </div>
                 </div>
-                <div className={styles.apikeyGroup}>
-                    <Button
-                        type="success"
+                </div>
+              <div className={styles.apikeyGroup}>
+                  <Button
+                      type='success'
                         width={125}
-                        title={options ? "edit key" : "add key"}
+                      title={options ? 'edit key' : 'add key'}
                         onClick={handleOnPress}
-                        isLoading={isFetchResponse}
+                      isLoading={isFetchResponse}
                         disabled={disabledEdit}
-                        icon="check"
-                        isUppercase
+                      icon='check'
+                      isUppercase
                     />
-                    <Button
-                        type="dimmed"
-                        width={125}
-                        title="cancel"
+                  <Button
+                  type='dimmed'
+                  width={125}
+                  title='cancel'
                         style={{ marginLeft: 15 }}
-                        onClick={onClose}
-                        icon="close"
+                  onClick={onClose}
+                  icon='close'
                         isUppercase
                     />
                 </div>
             </div>
-        </>
+      </>
     );
 };
 

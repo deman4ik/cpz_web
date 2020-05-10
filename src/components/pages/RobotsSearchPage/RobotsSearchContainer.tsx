@@ -12,21 +12,25 @@ interface Props {
 }
 
 export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
-  const { robotsData, counts, loading, isLoadingMore, onFetchMore } =
-    useFetchRobots(displayType, formatRobotsData);
+  const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
 
   return (
-    <>
-      { loading ? <div className='loading'><LoadingIndicator /></div> : (
+      <>
+      {loading ? (
+              <div className='loading'>
+          <LoadingIndicator />
+        </div>
+            ) : (
         <RobotsList
-          data={robotsData}
-          isLoadingMore={isLoadingMore}
-          onFetchMore={onFetchMore}
-          counts={counts}
-          width={width}
-          displayType={displayType} />
-      )}
-      <Modals width={width} />
-    </>
+                  data={robotsData}
+                    isLoadingMore={isLoadingMore}
+                  onFetchMore={onFetchMore}
+                  counts={counts}
+                    width={width}
+                  displayType={displayType}
+                />
+            )}
+            <Modals width={width} />
+        </>
   );
 };

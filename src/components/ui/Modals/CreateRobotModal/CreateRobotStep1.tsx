@@ -19,8 +19,16 @@ interface Props {
 }
 
 const _CreateRobotStep1: React.FC<Props> = ({
-  exchange, selectedKey, hasError, dataPicker, refetchQueries, handleOnNext,
-  handleOnChangeExchange, setFormError, onClose }) => {
+  exchange,
+  selectedKey,
+  hasError,
+  dataPicker,
+  refetchQueries,
+  handleOnNext,
+  handleOnChangeExchange,
+  setFormError,
+  onClose
+}) => {
   const [ newName, setNewName ] = useState('');
   const [ isAddKeyVisible, setIsAddKeyVisible ] = useState(!dataPicker.length);
 
@@ -41,7 +49,7 @@ const _CreateRobotStep1: React.FC<Props> = ({
 
   useEffect(() => {
     if (newName) {
-      handleOnChangeExchange(dataPicker.find(item => item.label === newName).id);
+      handleOnChangeExchange(dataPicker.find((item) => item.label === newName).id);
       setNewName('');
     } else if (dataPicker[0]) {
       handleOnChangeExchange(dataPicker[0].id);
@@ -49,62 +57,66 @@ const _CreateRobotStep1: React.FC<Props> = ({
   }, []);
 
   return (
-    <>
+      <>
       <div className={styles.container}>
-        {dataPicker.length ? (
-          <div className={styles.selectGroup}>
-            <div className={styles.select}>
-              <Select
-                data={dataPicker}
-                value={selectedKey}
-                enabled={!isAddKeyVisible}
-                onValueChange={value => handleOnChangeExchange(value)} />
-            </div>
-            <Button
-              className={styles.btnSelectGroup}
-              title='Add New API Key'
-              icon='plus'
-              type='dimmed'
-              isUppercase
-              onClick={handleOnAddKey} />
-          </div>
+              {dataPicker.length ? (
+                    <div className={styles.selectGroup}>
+                    <div className={styles.select}>
+                          <Select
+                          data={dataPicker}
+                                value={selectedKey}
+                          enabled={!isAddKeyVisible}
+                                onValueChange={(value) => handleOnChangeExchange(value)}
+                            />
+                        </div>
+                    <Button
+                            className={styles.btnSelectGroup}
+                  title='Add New API Key'
+                  icon='plus'
+                  type='dimmed'
+                  isUppercase
+                  onClick={handleOnAddKey}
+                        />
+                  </div>
         ) : (
-          <div className={styles.noKeysText}>
-            Exchange API Keys for {exchangeName(exchange)} not found.{'\n'}
-            Please create new API Keys.
-          </div>
+                    <div className={styles.noKeysText}>
+                Exchange API Keys for {exchangeName(exchange)} not found.{'\n'}
+                Please create new API Keys.
+                    </div>
         )}
-        {isAddKeyVisible ? (
+                {isAddKeyVisible ? (
           <ExchangeKeysAddKeyModal
-            exchange={exchange}
-            refetchQueries={refetchQueries}
-            isExchangeDisabled
-            onClose={onClose}
-            handleOnSubmit={handleOnSubmit}
-          />
+                      exchange={exchange}
+                        refetchQueries={refetchQueries}
+                      isExchangeDisabled
+                      onClose={onClose}
+                        handleOnSubmit={handleOnSubmit}
+                    />
         ) : (
-          <>
-            <div className={styles.btns}>
-              <Button
-                className={styles.btn}
+                  <>
+                <div className={styles.btns}>
+                            <Button
+                                className={styles.btn}
                 title='Cancel'
                 icon='close'
                 type='dimmed'
-                isUppercase
-                onClick={onClose} />
-              <Button
-                className={styles.btn}
-                title='Next'
-                icon='chevronright'
-                type='success'
-                disabled={hasError || !selectedKey}
-                isUppercase
-                onClick={handleOnNext} />
-            </div>
-          </>
+                                isUppercase
+                onClick={onClose}
+                            />
+                          <Button
+                              className={styles.btn}
+                              title='Next'
+                              icon='chevronright'
+                              type='success'
+                              disabled={hasError || !selectedKey}
+                                isUppercase
+                                onClick={handleOnNext}
+                            />
+                        </div>
+              </>
         )}
-      </div>
-    </>
+            </div>
+        </>
   );
 };
 

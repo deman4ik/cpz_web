@@ -10,7 +10,7 @@ import styles from './OpenPositionsItem.module.css';
 
 const components = {
   arrowdown: ArrowDownIcon,
-  arrowup: ArrowUpIcon,
+  arrowup: ArrowUpIcon
 };
 
 export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRedirectToDetailView }) => {
@@ -20,29 +20,35 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
   };
 
   return (
-    <div className={styles.tableRow}>
-      <div className={styles.positionGroup} onClick={handleOnPress}>
-        <div className={styles.limitWrapper}>
-          <div className={styles.codeGroup}>
-            <div className={styles.tableCellText} style={colorDirection(item.direction)}>{capitalize(item.direction)}</div>
-            <div className={styles.tableCellText} style={{ marginLeft: 4 }}>{item.code}</div>
-          </div>
-          <div className={styles.secondaryText} style={{ marginTop: 2 }}>{item.robot.name}</div>
+      <div className={styles.tableRow}>
+          <div className={styles.positionGroup} onClick={handleOnPress}>
+              <div className={styles.limitWrapper}>
+              <div className={styles.codeGroup}>
+                      <div className={styles.tableCellText} style={colorDirection(item.direction)}>
+                          {capitalize(item.direction)}
+                        </div>
+                        <div className={styles.tableCellText} style={{ marginLeft: 4 }}>
+                  {item.code}
+                </div>
+                    </div>
+                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                  {item.robot.name}
+                </div>
+                </div>
+              <ChevronRightIcon color={color.white} size={26} />
+            </div>
+            <div className={styles.volumeGroup}>
+          <div style={{ marginTop: 2 }}>
+                <SpecificIcon color={getColor(item.direction === 'short')} size={16} />
+              </div>
+          <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
         </div>
-        <ChevronRightIcon color={color.white} size={26} />
-      </div>
-      <div className={styles.volumeGroup}>
-        <div style={{ marginTop: 2 }}>
-          <SpecificIcon color={getColor(item.direction === 'short')} size={16} />
+            <div className={styles.col} style={{ flex: 0.48 }}>
+          <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
+          <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                  {item.entry_date}
+                </div>
         </div>
-        <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
-      </div>
-      <div className={styles.col} style={{ flex: 0.48 }}>
-        <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
-        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-          {item.entry_date}
         </div>
-      </div>
-    </div>
   );
 };

@@ -24,23 +24,19 @@ const _PerformanceEmpty: React.FC<Props> = ({ width, displayType }) => {
   const item = getItem(displayType);
 
   return (
-    <>
-      { isDesktopView ? (
-        <div className={styles.container}>
+      <>
+      {isDesktopView ? (
+                <div className={styles.container}>
           <PerformanceHeader />
-          <PerformanceItem
-            item={item}
-            onRedirectToDetailView={handleRedirectToDetailView} />
+                    <PerformanceItem item={item} onRedirectToDetailView={handleRedirectToDetailView} />
         </div>
-      ) : (
+            ) : (
         <div className={styles.cardItemsContainer}>
-          <PerformanceItemCard
-            item={item}
-            onRedirectToDetailView={handleRedirectToDetailView} />
-          { DummyCards(1, cardWidth) }
-        </div>
-      )}
-    </>
+                    <PerformanceItemCard item={item} onRedirectToDetailView={handleRedirectToDetailView} />
+                  {DummyCards(1, cardWidth)}
+                </div>
+            )}
+        </>
   );
 };
 

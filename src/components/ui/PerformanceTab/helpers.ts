@@ -1,6 +1,6 @@
 import { moneyFormat, formatDate, capitalize } from '../../../config/utils';
 
-export const tableHeaders = [ '', 'All Trades', 'Long Trades', 'Short Trades' ];
+export const tableHeaders = [ "", 'All Trades', 'Long Trades', 'Short Trades'];
 
 const formatAsDates = (row) => ({
   all: row.all ? formatDate(row.all) : '-',
@@ -15,7 +15,7 @@ const propsSimple = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]:
 const propsToNull = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: obj[k] || '-' }), {});
 
 export const getRobotStatistic = (robotStatistic) =>
-  (!robotStatistic
+  !robotStatistic
     ? null
     : {
       profit: [
@@ -119,7 +119,7 @@ export const getRobotStatistic = (robotStatistic) =>
           ...robotStatistic.maxConsecLosses
         }
       ]
-    });
+    };
 
 export const tabName = {
   myStatistic: 'My Statistic',

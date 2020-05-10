@@ -28,9 +28,10 @@ export const RobotsRobotPage: React.FC = () => {
     variables: { code: router.query.code },
     pollInterval: POLL_INTERVAL
   });
-  const robotData = useMemo(() => (
-    (!loading && data && data.robot.length) ? formatRobotData(data) : null
-  ), [ data, loading ]);
+  const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [
+    data,
+    loading
+  ]);
 
   const [ setRobotData ] = useMutation(SET_ROBOT_DATA, {
     onCompleted: (resolve) => {
@@ -43,39 +44,36 @@ export const RobotsRobotPage: React.FC = () => {
   };
 
   return (
-    <Template
-      page={PageType.robots}
-      title='Trading Robot'
-      subTitle={robotData ? robotData.robot.name : ''}
-      width={width}
-      toolbar={robotData ? (
-        <ToolbarRobotPage
-          robotSubscribe={robotSubscribe}
-          robotData={robotData} />
-      ) : null}
-      handlePressBack={handlePressBack}>
-      {loading ? <div className='loading'><LoadingIndicator /></div> : (
-        (!robotData) ? <NoRecentData message='No recent data available' /> : (
-          <>
-            <HeaderRobotsRobotPage
-              robotSubscribe={robotSubscribe}
-              robotData={robotData} />
-            <TabsHeaderRobotPage
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              isUserRobots={robotData.robot.isUserRobot} />
-            <TabsPagesRobotPage
-              robotData={robotData}
-              activeTab={activeTab}
-              width={width} />
-            <ModalsRobotPage
-              visibleModal={visibleModal}
-              setVisibleModal={setVisibleModal}
-              code={router.query.code as string}
-              width={width} />
-          </>
-        )
-      )}
-    </Template>
+      <Template
+          page={PageType.robots}
+          title='Trading Robot'
+          subTitle={robotData ? robotData.robot.name : ''}
+          width={width}
+            toolbar={robotData ? <ToolbarRobotPage robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
+          handlePressBack={handlePressBack}>
+            {loading ? (
+          <div className='loading'>
+                <LoadingIndicator />
+              </div>
+        ) : !robotData ? (
+              <NoRecentData message='No recent data available' />
+        ) : (
+                <>
+                <HeaderRobotsRobotPage robotSubscribe={robotSubscribe} robotData={robotData} />
+                <TabsHeaderRobotPage
+                        activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    isUserRobots={robotData.robot.isUserRobot}
+                    />
+                <TabsPagesRobotPage robotData={robotData} activeTab={activeTab} width={width} />
+                <ModalsRobotPage
+                      visibleModal={visibleModal}
+                        setVisibleModal={setVisibleModal}
+                      code={router.query.code as string}
+                      width={width}
+                    />
+              </>
+        )}
+        </Template>
   );
 };

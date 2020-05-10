@@ -16,17 +16,11 @@ const _SignalRobotsAddSignalsCard: React.FC<Props> = ({ displayType }) => {
   };
 
   return (
-    <div className={styles.itemContainerCard}>
-      <div
-        className={styles.border}
-        onClick={handleOnPress}
-      >
-        <CaptionButton
-          title={`Add ${displayType}`}
-          icon='plus'
-          responsive={false} />
-      </div>
-    </div>
+      <div className={styles.itemContainerCard}>
+          <div className={styles.border} onClick={handleOnPress}>
+          <CaptionButton title={`Add ${displayType}`} icon='plus' responsive={false} />
+        </div>
+        </div>
   );
 };
 

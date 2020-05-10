@@ -21,8 +21,17 @@ const heightButton = 27;
 
 const baseButtonOffset = 60;
 
-export const _LightWeightChart: React.FC<PropsLighweightChart> =
-({ loading, data, markers, lines, onFetchMore, size, type, legend, setIsChartLoaded }) => {
+export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
+  loading,
+  data,
+  markers,
+  lines,
+  onFetchMore,
+  size,
+  type,
+  legend,
+  setIsChartLoaded
+}) => {
   const chartRef = useRef(null);
   const toolTipRef = useRef(null);
   const buttonRef = useRef(null);
@@ -39,15 +48,15 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
       height: size.height,
       layout: {
         backgroundColor: color.dark,
-        textColor: color.accent,
+        textColor: color.accent
       },
       grid: {
         vertLines: {
-          color: '#38466a',
+          color: '#38466a'
         },
         horzLines: {
-          color: '#38466a',
-        },
+          color: '#38466a'
+        }
       },
       crosshair: {
         mode: 0,
@@ -62,16 +71,16 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
       },
       priceScale: {
         borderColor: '#38466a',
-        borderVisible: true,
+        borderVisible: true
       },
       timeScale: {
         timeVisible: true,
         secondsVisible: false,
-        borderColor: '#38466a',
+        borderColor: '#38466a'
       },
       localization: {
-        locale: 'en-US',
-      },
+        locale: 'en-US'
+      }
     });
 
     let series;
@@ -83,7 +92,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
         borderUpColor: color.positive,
         wickDownColor: color.negative,
         wickUpColor: color.positive,
-        priceLineVisible: false,
+        priceLineVisible: false
       });
       legendRef.current.innerText = legend;
     }
@@ -97,12 +106,12 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
         lineWidth: 2,
         crosshairMarkerVisible: true,
         crosshairMarkerRadius: 2,
-        priceLineVisible: false,
+        priceLineVisible: false
       });
     }
 
-    buttonRef.current.style.left = `${(size.width - widthButton - baseButtonOffset)}px`;
-    buttonRef.current.style.top = `${(size.height - heightButton - 30)}px`;
+    buttonRef.current.style.left = `${size.width - widthButton - baseButtonOffset}px`;
+    buttonRef.current.style.top = `${size.height - heightButton - 30}px`;
     buttonRef.current.style.color = '#4c525e';
 
     setChart({ field: currentCart, series });
@@ -111,17 +120,26 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
 
   const setCurrentButtonLeft = (lastLine: any) => {
     const numberCheck = type === ChartType.area ? lastLine.value : lastLine.high;
-    buttonRef.current.style.left = `${(size.width - widthButton - (baseButtonOffset + getLeftOffsetButton(numberCheck)))}px`;
+    buttonRef.current.style.left = `${
+      size.width - widthButton - (baseButtonOffset + getLeftOffsetButton(numberCheck))
+    }px`;
   };
 
   const handleCrosshairMoved = useCallback((param) => {
-    if (!param.time || !param.point.y || !param.point.x ||
-      param.point.x < 0 || param.point.x > size.width || param.point.y < 0 ||
-      param.point.y > size.height || !subscibeRef.current) {
+    if (
+      !param.time ||
+            !param.point.y ||
+            !param.point.x ||
+            param.point.x < 0 ||
+            param.point.x > size.width ||
+            param.point.y < 0 ||
+            param.point.y > size.height ||
+            !subscibeRef.current
+    ) {
       toolTipRef.current.style.display = 'none';
       return;
     }
-    const item = subscibeRef.current.data.find(el => el.time === param.time);
+    const item = subscibeRef.current.data.find((el) => el.time === param.time);
     if (!item) return;
 
     const { y, x } = param.point;
@@ -129,7 +147,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
 
     if (type === ChartType.candle) {
       if (param.hoveredMarkerId) {
-        const arrow = subscibeRef.current.markers.find(el => el.id === param.hoveredMarkerId);
+        const arrow = subscibeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
         toolTipRef.current.innerHTML = toolTipArrowTemplate(arrow);
       } else {
         toolTipRef.current.innerHTML = toolTipTemplate(item);
@@ -174,8 +192,8 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
       chart.series.setData(data);
       if (data.length <= 120) {
         chart.field.timeScale().setVisibleRange({
-          from: (data[0].time),
-          to: (data[data.length - 1].time),
+          from: data[0].time,
+          to: data[data.length - 1].time
         });
       }
       subscibeRef.current = { data, markers };
@@ -222,14 +240,19 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
     e.preventDefault();
     chartRef.current.style.cursor = 'grab';
     if (!data) return;
-    setMouseEvent({ isDown: true, screenPos: e.screenX, dragOffset: 0, chartOffset: chart.field.timeScale().scrollPosition() });
+    setMouseEvent({
+      isDown: true,
+      screenPos: e.screenX,
+      dragOffset: 0,
+      chartOffset: chart.field.timeScale().scrollPosition()
+    });
   };
 
   const handleOnMouseMoveCanvas = (e) => {
     if (!mouseEvent.isDown) return;
     chartRef.current.style.cursor = 'grabbing';
     const dragOffset = mouseEvent.screenPos - e.screenX;
-    setMouseEvent(prev => ({ ...prev, dragOffset }));
+    setMouseEvent((prev) => ({ ...prev, dragOffset }));
   };
 
   const handleOnMouseUpCanvas = () => {
@@ -256,28 +279,30 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> =
   }, [ size.width, size.height ]);
 
   return (
-    <div
+      <div
       onMouseDown={handleOnMouseDownCanvas}
       onMouseMove={handleOnMouseMoveCanvas}
       onMouseUp={handleOnMouseUpCanvas}
       style={styles.container}
-      ref={chartRef}>
+            ref={chartRef}>
+      <div style={styles.legend} ref={legendRef} />
+      <div style={styles.toolTip} ref={toolTipRef} />
       <div
-        style={styles.legend}
-        ref={legendRef} />
-      <div
-        style={styles.toolTip}
-        ref={toolTipRef} />
-      <div
-        onClick={handleOnClickBtn}
-        onMouseOver={handleOnMouseOver}
-        onMouseOut={handleOnMouseOut}
-        style={styles.btn}
-        ref={buttonRef}>
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' width='14' height='14'>
-          <path fill='none' stroke='currentColor' strokeLinecap='round' strokeWidth='2' d='M6.5 1.5l5 5.5-5 5.5M3 4l2.5 3L3 10' />
-        </svg>
-      </div>
-    </div>
+              onClick={handleOnClickBtn}
+                onMouseOver={handleOnMouseOver}
+              onMouseOut={handleOnMouseOut}
+                style={styles.btn}
+              ref={buttonRef}>
+              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' width='14' height='14'>
+              <path
+                      fill='none'
+                      stroke='currentColor'
+                      strokeLinecap='round'
+                      strokeWidth='2'
+                      d='M6.5 1.5l5 5.5-5 5.5M3 4l2.5 3L3 10'
+                    />
+            </svg>
+            </div>
+        </div>
   );
 };

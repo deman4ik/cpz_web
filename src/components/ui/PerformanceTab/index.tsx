@@ -16,44 +16,54 @@ interface Props {
   width: number;
 }
 
-const LightWeightChartWithNoSSR = dynamic(
-  () => import('../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
-    ssr: false }
-);
+const LightWeightChartWithNoSSR = dynamic(() => import('../../charts/LightWeightChart'), {
+  loading: () => <LoadingIndicator style={{ height: 400 }} />,
+  ssr: false
+});
 
 const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) => {
   const [ isChartLoaded, setIsChartLoaded ] = useState(false);
-  const chartData = useMemo(() => (
-    (!stat.statistics || !stat.statistics.performance) ? null :
-      stat.statistics.performance.map(pos => ({
-        time: dayjs.utc(pos.x / 1000).valueOf(), value: pos.y
-      }))
-  ), [ stat ]);
+  const chartData = useMemo(
+    () =>
+      !stat.statistics || !stat.statistics.performance
+        ? null
+        : stat.statistics.performance.map((pos) => ({
+          time: dayjs.utc(pos.x / 1000).valueOf(),
+          value: pos.y
+        })),
+    [ stat ]
+  );
 
-  const robotStatistic = useMemo(() => (
-    (!stat.statistics || !stat.statistics.performance) ? null :
-      getRobotStatistic(stat.statistics)
-  ), [ stat ]);
+  const robotStatistic = useMemo(
+    () => (!stat.statistics || !stat.statistics.performance ? null : getRobotStatistic(stat.statistics)),
+    [ stat ]
+  );
 
   return (
-    <>
-      {!stat ? <LoadingIndicator /> : (
+      <>
+      {!stat ? (
+              <LoadingIndicator />
+            ) : (
         <>
-          { !chartData
-            ? (<NoRecentData message='No recent data available' style={{ marginTop: 20 }} />)
-            : (<LightWeightChartWithNoSSR data={chartData} type={ChartType.area} size={{ height: 400, width }} setIsChartLoaded={setIsChartLoaded} />)}
-          {isChartLoaded ? (
-            <>
-              <div className={styles.performanceTitle}>
-                {tabName[TabType[activeTab]]}
-              </div>
-              <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
-            </>
-          ) : null}
+                    {!chartData ? (
+                    <NoRecentData message='No recent data available' style={{ marginTop: 20 }} />
+                    ) : (
+                  <LightWeightChartWithNoSSR
+                        data={chartData}
+                        type={ChartType.area}
+                            size={{ height: 400, width }}
+                            setIsChartLoaded={setIsChartLoaded}
+                        />
+                  )}
+                {isChartLoaded ? (
+                    <>
+                            <div className={styles.performanceTitle}>{tabName[TabType[activeTab]]}</div>
+                          <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
+                        </>
+                  ) : null}
+              </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

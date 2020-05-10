@@ -15,19 +15,13 @@ export const Accordion: React.FC<Props> = ({ title, children, left }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={[ styles.title, styles.ripple ].join(' ')} onClick={handleOnClick}>
-        {left}
-        {title}
-        <div className={styles.icon}>
-          {isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+      <div className={styles.container}>
+          <div className={[ styles.title, styles.ripple ].join(' ')} onClick={handleOnClick}>
+                {left}
+          {title}
+                <div className={styles.icon}>{isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}</div>
         </div>
-      </div>
-      {isExpanded ? (
-        <div>
-          {children}
+            {isExpanded ? <div>{children}</div> : null}
         </div>
-      ) : null }
-    </div>
   );
 };

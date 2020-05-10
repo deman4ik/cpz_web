@@ -40,21 +40,21 @@ export const Activate: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+      <div className={styles.container}>
       <PageHead title='Done!' />
-      <div className={styles.header}>
-        <Header hasHomeButton />
-      </div>
-      <div className={styles.plate}>
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.title}>Done!</div>
-            <div className={styles.titleDescription}>You have successfully Activate your account</div>
-          </div>
-          <CartFooter />
+            <div className={styles.header}>
+                <Header hasHomeButton />
         </div>
-      </div>
-      <Footer />
-    </div>
+      <div className={styles.plate}>
+              <div className={styles.cardWrapper}>
+                  <div className={styles.card}>
+                        <div className={styles.title}>Done!</div>
+                      <div className={styles.titleDescription}>You have successfully Activate your account</div>
+                    </div>
+                    <CartFooter />
+                </div>
+            </div>
+            <Footer />
+        </div>
   );
 };

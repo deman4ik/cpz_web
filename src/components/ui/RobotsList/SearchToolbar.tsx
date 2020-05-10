@@ -24,13 +24,13 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
   const [ setFilter ] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [ { query: GET_SEARCH_PROPS } ] });
   const { data } = useQuery(GET_SEARCH_PROPS);
 
-  const onSignalsSearch = text => {
+  const onSignalsSearch = (text) => {
     setValue(text);
   };
 
   const handleOnPressClearFilter = () => {
     const search = getSearchProps(data, displayType);
-    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
+    const filters = search && search.filters ? JSON.parse(search.filters) : {};
     const searchFilters = filters.name && filters.name._ilike ? JSON.stringify({ name: filters.name }) : '';
 
     setFilter({
@@ -44,40 +44,29 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
 
   useEffect(() => {
     const search = getSearchProps(data, displayType);
-    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
+    const filters = search && search.filters ? JSON.parse(search.filters) : {};
     if (filters.name && filters.name._ilike) {
-      setValue((filters.name._ilike).slice(1, -1));
+      setValue(filters.name._ilike.slice(1, -1));
     }
   }, []);
 
   useEffect(() => {
     const search = getSearchProps(data, displayType);
-    const filters = (search && search.filters) ? JSON.parse(search.filters) : {};
+    const filters = search && search.filters ? JSON.parse(search.filters) : {};
     setFilter({
       variables: {
         filters: JSON.stringify({ ...filters, name: { _ilike: debounceValue ? `%${debounceValue}%` : null } }),
-        orders: (search && search.orders) ? search.orders : '',
+        orders: search && search.orders ? search.orders : '',
         type: displayType
       }
     });
   }, [ debounceValue ]);
 
   return (
-    <div className={styles.container}>
-      <SearchInput
-        value={value}
-        onChange={onSignalsSearch}
-        placeholder={`Search ${displayType}...`} />
-      <CaptionButton
-        title='filter'
-        icon='filtervariant'
-        responsive
-        onClick={setVisibleToolbarFilters} />
-      <CaptionButton
-        title='clear'
-        icon='filtervariantremove'
-        responsive
-        onClick={handleOnPressClearFilter} />
-    </div>
+      <div className={styles.container}>
+          <SearchInput value={value} onChange={onSignalsSearch} placeholder={`Search ${displayType}...`} />
+          <CaptionButton title='filter' icon='filtervariant' responsive onClick={setVisibleToolbarFilters} />
+          <CaptionButton title='clear' icon='filtervariantremove' responsive onClick={handleOnPressClearFilter} />
+        </div>
   );
 };

@@ -28,45 +28,47 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.leftContainer}>
-        {hasHomeButton && (
-          <div className={styles.btnWrapper} onClick={() => hahdleOnClick('/')}>
-            <Link href='/' replace>
-              <a className={styles.btnTitle}>Cryptuoso</a>
-            </Link>
-          </div>
-        )}
-        {!!token && (
-        <>
-          {linksHeader.map((item, idx) => (
-            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
-              <Link href={item.href} replace>
-                <a className={styles.btnTitle}>{item.title}</a>
-              </Link>
+      <div className={styles.container}>
+          <div className={styles.leftContainer}>
+                {hasHomeButton && (
+            <div className={styles.btnWrapper} onClick={() => hahdleOnClick('/')}>
+                      <Link href='/' replace>
+                    <a className={styles.btnTitle}>Cryptuoso</a>
+                        </Link>
+                    </div>
+            )}
+                {!!token && (
+            <>
+                        {linksHeader.map((item, idx) => (
+                <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
+                                <Link href={item.href} replace>
+                                    <a className={styles.btnTitle}>{item.title}</a>
+                  </Link>
+                            </div>
+              ))}
+                    </>
+            )}
+        </div>
+            <div className={styles.rightContainer}>
+                {token ? (
+                <div className={styles.btnWrapper}>
+                        <div className={styles.btnTitle} onClick={logoutProcess}>
+                        Log out
+                        </div>
             </div>
-          ))}
-        </>
-        )}
-      </div>
-      <div className={styles.rightContainer}>
-        {token ? (
-          <div className={styles.btnWrapper}>
-            <div className={styles.btnTitle} onClick={logoutProcess}>Log out</div>
-          </div>
-        ) : (
-          <>
-            {authHeader.map((item, idx) => (
-              <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
-                <Link href={item.href} replace>
-                  <a className={styles.btnTitle}>{item.title}</a>
-                </Link>
-              </div>
-            ))}
-          </>
-        )}
-      </div>
-    </div>
+              ) : (
+                  <>
+                        {authHeader.map((item, idx) => (
+                            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
+                                <Link href={item.href} replace>
+                            <a className={styles.btnTitle}>{item.title}</a>
+                          </Link>
+                            </div>
+                      ))}
+                </>
+              )}
+        </div>
+        </div>
   );
 };
 

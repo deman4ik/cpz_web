@@ -27,9 +27,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
   }, [ data ]);
   const [ actionOnRobot ] = useMutation(type === 'delete' ? DELETE_ROBOT : ACTION_ROBOT);
   const [ userRobotAction, { loading } ] = useMutation(
-    type === 'delete' ?
-      USER_ROBOT_DELETE :
-      type === 'start' ? USER_ROBOT_START : USER_ROBOT_STOP
+    type === 'delete' ? USER_ROBOT_DELETE : type === 'start' ? USER_ROBOT_START : USER_ROBOT_STOP
   );
 
   const handleOnPressSubmit = () => {
@@ -47,8 +45,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
       stop: 'userRobotStop'
     };
     userRobotAction({
-      variables,
-    }).then(response => {
+      variables
+    }).then((response) => {
       const result = response.data[action[type]].success;
       if (result) {
         if (type !== 'delete') {
@@ -71,37 +69,29 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
   };
 
   return (
-    <>
+      <>
       <ErrorLine formError={formError} />
       <div className={styles.container}>
-        <div className={styles.textWrapper}>
+                <div className={styles.textWrapper}>
           <div className={styles.bodyTitle}>
-            Are you sure you want to {type} this {data ? data.robot.name : ''} robot?
-          </div>
-          <div className={styles.bodyText}>
-            {actionText[type]}
-          </div>
+                      Are you sure you want to {type} this {data ? data.robot.name : ''} robot?
+                    </div>
+          <div className={styles.bodyText}>{actionText[type]}</div>
         </div>
-        <div className={styles.btns}>
-          <Button
-            className={styles.btn}
-            title='Yes'
-            icon='check'
-            width={70.61}
-            type='success'
-            isLoading={loading}
-            onClick={handleOnPressSubmit}
-          />
-          <Button
-            className={styles.btn}
-            title='No'
-            icon='close'
-            type='primary'
-            onClick={onClose}
-          />
-        </div>
-      </div>
-    </>
+              <div className={styles.btns}>
+                  <Button
+                  className={styles.btn}
+                  title='Yes'
+                  icon='check'
+                        width={70.61}
+                  type='success'
+                  isLoading={loading}
+                  onClick={handleOnPressSubmit}
+                    />
+                  <Button className={styles.btn} title='No' icon='close' type='primary' onClick={onClose} />
+                </div>
+            </div>
+        </>
   );
 };
 

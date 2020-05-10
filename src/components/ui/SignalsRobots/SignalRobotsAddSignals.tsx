@@ -16,15 +16,10 @@ export const SignalRobotsAddSignals: React.FC<Props> = ({ displayType }) => {
   };
 
   return (
-    <div className={styles.itemContainer}>
-      <div
-        className={styles.border}
-        onClick={handleOnClick}
-      >
-        <CaptionButton
-          title={`Add ${displayType}`}
-          icon='plus' />
-      </div>
-    </div>
+      <div className={styles.itemContainer}>
+      <div className={styles.border} onClick={handleOnClick}>
+              <CaptionButton title={`Add ${displayType}`} icon='plus' />
+            </div>
+        </div>
   );
 };

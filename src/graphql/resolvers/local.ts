@@ -26,10 +26,10 @@ export const setChartData = (_root: any, variables: any, context: any) => {
 export const setSearchProps = (_root: any, variables: any, context: any) => {
   const { filters, type, orders } = variables;
   const dataProps = context.cache.readQuery({ query: GET_SEARCH_PROPS });
-  const itemProps = dataProps.SearchProps.props.find(el => el.type === type);
+  const itemProps = dataProps.SearchProps.props.find((el) => el.type === type);
   let data;
   if (itemProps) {
-    data = dataProps.SearchProps.props.map(el => {
+    data = dataProps.SearchProps.props.map((el) => {
       if (el.type === type) {
         return { ...el, filters, orders };
       }
@@ -52,11 +52,7 @@ export const setSearchLimit = (_root: any, variables: any, context: any) => {
   });
 };
 
-export const setNotificationsProps = (
-  _root: any,
-  variables: any,
-  context: any
-) => {
+export const setNotificationsProps = (_root: any, variables: any, context: any) => {
   const { filters } = variables;
   console.log('filters', filters);
   context.client.writeData({

@@ -46,17 +46,11 @@ export const formatRobotsData = (v_robots_stats: any) =>
       res.subscribed = dayjs.utc(userSignals.subscribed_at).fromNow(true);
       res.isSubscribed = true;
       res.volume = userSignals.volume;
-      res.profit =
-        userSignals.equity && userSignals.equity.profit
-          ? userSignals.equity.profit
-          : 0;
+      res.profit = userSignals.equity && userSignals.equity.profit ? userSignals.equity.profit : 0;
       res.winRate = userSignals.equity ? userSignals.equity.winRate : 0;
       res.maxDrawdown = userSignals.equity ? userSignals.equity.maxDrawdown : 0;
       res.tradesCount = userSignals.equity ? userSignals.equity.tradesCount : 0;
-      res.performance =
-        userSignals.equity && userSignals.equity.changes
-          ? userSignals.equity.changes
-          : [];
+      res.performance = userSignals.equity && userSignals.equity.changes ? userSignals.equity.changes : [];
     }
     return res;
   });

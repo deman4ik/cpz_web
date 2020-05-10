@@ -10,11 +10,11 @@ interface Props {
 
 export const UserContainer: React.FC<Props> = ({ width }) => (
   <div className={styles.blocksContainer}>
-    <div className={styles.block}>
-      <UserInfo width={width} />
+      <div className={styles.block}>
+          <UserInfo width={width} />
+        </div>
+      <div className={styles.block}>
+          <AccountBalance />
+        </div>
     </div>
-    <div className={styles.block}>
-      <AccountBalance />
-    </div>
-  </div>
 );

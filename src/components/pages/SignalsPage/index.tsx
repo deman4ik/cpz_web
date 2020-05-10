@@ -14,27 +14,22 @@ export const SignalsPage = () => {
   const { width } = useWindowDimensions();
 
   return (
-    <Template
-      page={PageType.signals}
-      title='Signals'
-      subTitle='Manual Trading'
-      toolbar={<PageToolbar displayType='signals' />}
-      width={width}
-    >
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <RobotPerformance
-            width={width}
-            type='signals' />
+      <Template
+          page={PageType.signals}
+          title='Signals'
+          subTitle='Manual Trading'
+          toolbar={<PageToolbar displayType='signals' />}
+            width={width}>
+            <div className={styles.container}>
+          <div className={styles.wrapper}>
+                  <RobotPerformance width={width} type='signals' />
+                </div>
+                <div className={styles.wrapper}>
+                <RobotOpenPositions width={width} type='signals' />
+              </div>
         </div>
-        <div className={styles.wrapper}>
-          <RobotOpenPositions
-            width={width}
-            type='signals' />
-        </div>
-      </div>
-      <SignalRobots width={width} displayType='signals' />
-      <Modals />
-    </Template>
+          <SignalRobots width={width} displayType='signals' />
+          <Modals />
+        </Template>
   );
 };

@@ -7,11 +7,8 @@ interface Props {
 
 const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) => (
   <div className='toolbar'>
-    <CaptionButton
-      title='filter'
-      icon='filtervariant'
-      onClick={setVisibleToolbarFilters} />
-  </div>
+      <CaptionButton title='filter' icon='filtervariant' onClick={setVisibleToolbarFilters} />
+    </div>
 );
 
 export const StatsPageButtonToolbar = memo(_StatsPageButtonToolbar);

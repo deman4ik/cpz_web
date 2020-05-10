@@ -21,7 +21,7 @@ interface Props {
   code?: string;
   width: number;
 }
-const steps = [ 'Choose Exchange API Keys', 'Enter trading amount', 'Start Trading Robot' ];
+const steps = [ "Choose Exchange API Keys", 'Enter trading amount', 'Start Trading Robot'];
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   const [ inputKey, setInputKey ] = useState('');
   const [ inputVolumeAsset, setInputVolumeAsset ] = useState('0');
@@ -142,12 +142,12 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
 
   const dataPicker = useMemo(
     () =>
-      (!loading && data && data.userExchange
+      !loading && data && data.userExchange
         ? data.userExchange.map((item) => ({
           label: exchangeName(item.name),
           value: item.id
         }))
-        : []),
+        : [],
     [ loading, data ]
   );
 
@@ -162,50 +162,50 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
   }, [ dataPicker ]);
 
   return (
-    <>
+      <>
       {loading || createRobotLoading || startLoading ? (
-        <LoadingIndicator />
-      ) : (
+              <LoadingIndicator />
+            ) : (
         <>
-          <div className={styles.wizardContainer}>
+                    <div className={styles.wizardContainer}>
             <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
           </div>
-          <ErrorLine formError={formError} />
-          {step === 1 && dataPicker && (
-            <CreateRobotStep1
-              dataPicker={dataPicker}
-              exchange={variables.exchange}
-              selectedKey={inputKey}
-              refetchQueries={_refetchQueries}
-              hasError={!!formError}
-              onClose={onClose}
-              setFormError={setFormError}
-              handleOnNext={handleOnNext}
-              handleOnChangeExchange={handleOnChangeExchange}
+                  <ErrorLine formError={formError} />
+                  {step === 1 && dataPicker && (
+                    <CreateRobotStep1
+                            dataPicker={dataPicker}
+                            exchange={variables.exchange}
+                    selectedKey={inputKey}
+                    refetchQueries={_refetchQueries}
+                    hasError={!!formError}
+                            onClose={onClose}
+                    setFormError={setFormError}
+                    handleOnNext={handleOnNext}
+                    handleOnChangeExchange={handleOnChangeExchange}
+                        />
+                    )}
+                    {step === 2 && (
+          <CreateRobotStep2
+                          handleOnCreate={handleOnCreate}
+                          handleOnBack={handleOnBack}
+                          asset={dataRobot ? dataRobot.robot.subs.asset : ''}
+                            limits={limits}
+                            volumeAsset={inputVolumeAsset}
+                          volumeCurrency={inputVolumeCurrency}
+                            setInputVolumeAsset={setInputVolumeAsset}
+                            setInputVolumeCurrency={setInputVolumeCurrency}
                         />
           )}
-          {step === 2 && (
-            <CreateRobotStep2
-              handleOnCreate={handleOnCreate}
-              handleOnBack={handleOnBack}
-              asset={dataRobot ? dataRobot.robot.subs.asset : ''}
-              limits={limits}
-              volumeAsset={inputVolumeAsset}
-              volumeCurrency={inputVolumeCurrency}
-              setInputVolumeAsset={setInputVolumeAsset}
-              setInputVolumeCurrency={setInputVolumeCurrency}
+                    {step === 3 && (
+          <CreateRobotStep3
+                          robotName={dataRobot ? dataRobot.robot.name : null}
+                          handleOnStart={handleOnStart}
+                            onClose={onClose}
                         />
-          )}
-          {step === 3 && (
-            <CreateRobotStep3
-              robotName={dataRobot ? dataRobot.robot.name : null}
-              handleOnStart={handleOnStart}
-              onClose={onClose}
-                        />
-          )}
+                    )}
+                </>
+            )}
         </>
-      )}
-    </>
   );
 };
 

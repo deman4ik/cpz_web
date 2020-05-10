@@ -2,7 +2,7 @@ export const GA_TRACKING_ID = 'G-37BGBQ6GCK';
 export const AW_CONVERSION_ID = 'AW-971308941';
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export const pageview = url => {
+export const pageview = (url) => {
   if (process.env.NODE_ENV === 'development') return;
   (window as any).gtag('config', GA_TRACKING_ID, {
     page_path: url

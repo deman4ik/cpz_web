@@ -15,10 +15,10 @@ export const _ExchangeKeys: React.FC<Props> = ({ title }) => {
   const formatData = useMemo(() => (!loading && data ? data.userExchange : []), [ loading, data ]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.regionTitle}>{title}</div>
-      {loading ? <LoadingIndicator /> : <ExchangeKeysContainer formatData={formatData} />}
-    </div>
+      <div className={styles.container}>
+          <div className={styles.regionTitle}>{title}</div>
+          {loading ? <LoadingIndicator /> : <ExchangeKeysContainer formatData={formatData} />}
+        </div>
   );
 };
 

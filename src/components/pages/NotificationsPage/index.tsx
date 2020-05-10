@@ -10,27 +10,37 @@ import { NotificationsContainer } from './NotificationsContainer';
 
 export const NotificationsPage: React.FC = () => {
   const { width } = useWindowDimensions();
-  const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading, inputSelect, setFilters } = useFetchData();
+  const {
+    isLoadingMore,
+    recordsCount,
+    formatData,
+    handleLoadMore,
+    loading,
+    inputSelect,
+    setFilters
+  } = useFetchData();
 
   return (
-    <Template
+      <Template
       page={PageType.notifications}
       title='Notifications'
       width={width}
-      toolbar={<ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}
-    >
-      { loading ? <div className='loading'><LoadingIndicator /></div> : (
-        !formatData.length ? (
-          <NoRecentData message='You have no notifications yet' style={{ marginTop: 20 }} />
+            toolbar={<ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}>
+      {loading ? (
+          <div className='loading'>
+                    <LoadingIndicator />
+                </div>
+        ) : !formatData.length ? (
+              <NoRecentData message='You have no notifications yet' style={{ marginTop: 20 }} />
         ) : (
-          <NotificationsContainer
+                <NotificationsContainer
             handleLoadMore={handleLoadMore}
             isLoadingMore={isLoadingMore}
-            recordsCount={recordsCount}
+                    recordsCount={recordsCount}
             formatData={formatData}
-            width={width} />
-        )
-      )}
-    </Template>
+            width={width}
+                />
+        )}
+        </Template>
   );
 };

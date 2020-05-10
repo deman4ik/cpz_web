@@ -13,7 +13,7 @@ interface Props {
   title?: string;
 }
 
-export const Modal: React.FC<Props> = props => {
+export const Modal: React.FC<Props> = (props) => {
   if (!props.isOpen) return null;
   const modalRef = useRef(null);
 
@@ -30,14 +30,14 @@ export const Modal: React.FC<Props> = props => {
   }, [ modalRef ]);
 
   return (
-    <ClientOnlyPortal selector='#modal'>
+      <ClientOnlyPortal selector='#modal'>
       <div className={styles.backdrop}>
-        <div ref={modalRef} className={styles.modal}>
+                <div ref={modalRef} className={styles.modal}>
           <ModalTemplate title={props.title} onClose={props.onClose}>
-            {props.children}
-          </ModalTemplate>
+                        {props.children}
+                    </ModalTemplate>
         </div>
-      </div>
-    </ClientOnlyPortal>
+            </div>
+        </ClientOnlyPortal>
   );
 };

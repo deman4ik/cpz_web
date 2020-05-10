@@ -18,11 +18,10 @@ interface Props {
   setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
 const LIMIT = 120;
-const LightWeightChartWithNoSSR = dynamic(
-  () => import('../../../charts/LightWeightChart'),
-  { loading: () => <LoadingIndicator style={{ height: 400 }} />,
-    ssr: false }
-);
+const LightWeightChartWithNoSSR = dynamic(() => import('../../../charts/LightWeightChart'), {
+  loading: () => <LoadingIndicator style={{ height: 400 }} />,
+  ssr: false
+});
 
 const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded }) => {
   const candleName = `candles${robot.timeframe}`;
@@ -41,8 +40,8 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
   const { data: dataUpdate } = useSubscription(ROBOT_POSITION_WITH_CANDLE_SUB(robot.timeframe), {
     variables: {
-      robotId: robot.id,
-    },
+      robotId: robot.id
+    }
   });
 
   const [ setChartData ] = useMutation(SET_CHART_DATA);
@@ -74,10 +73,11 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
   useEffect(() => {
     if (data && dataUpdate && dataUpdate.candles.length) {
       const updateCandle = getFormatUpdateData(dataUpdate, asset);
-      if (updateCandle.candles.time && !formatData.candles.find(el => el.time === updateCandle.candles.time)) {
-        setFormatData(prev => ({
+      if (updateCandle.candles.time && !formatData.candles.find((el) => el.time === updateCandle.candles.time)) {
+        setFormatData((prev) => ({
           candles: [ ...prev.candles, updateCandle.candles ],
-          markers: [ ...prev.markers, ...updateCandle.markers ] }));
+          markers: [ ...prev.markers, ...updateCandle.markers ]
+        }));
         setLimit(limit + 1);
       }
     }
@@ -88,16 +88,17 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
   }, [ limit ]);
 
   return (
-    <LightWeightChartWithNoSSR
-      loading={loading}
-      data={formatData.candles}
-      onFetchMore={onFetchMore}
-      markers={formatData.markers}
-      lines={signals}
-      size={{ width, height: 400 }}
-      legend={legend}
-      setIsChartLoaded={setIsChartLoaded}
-      type={ChartType.candle} />
+      <LightWeightChartWithNoSSR
+          loading={loading}
+          data={formatData.candles}
+          onFetchMore={onFetchMore}
+          markers={formatData.markers}
+            lines={signals}
+          size={{ width, height: 400 }}
+          legend={legend}
+          setIsChartLoaded={setIsChartLoaded}
+            type={ChartType.candle}
+        />
   );
 };
 

@@ -18,25 +18,30 @@ const _HeaderButtonRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) 
   };
 
   return (
-    <>
-      { robotStatus ? (
-        <Button
-          icon={icon(robotStatus)}
-          title={title(robotStatus)}
-          type={type(robotStatus)}
-          className={styles.headerButton}
-          disabled={robotStatus === 'stopping'}
-          size='small'
-          width={112}
-          hoverChanges={(robotStatus === 'started' || robotStatus === 'paused') ? {
-            type: hoverType(robotStatus),
-            title: hoverTitle(robotStatus),
-            icon: hoverIcon(robotStatus)
-          } : null}
-          isUppercase
-          onClick={handleOnPress} />
-      ) : null}
-    </>
+      <>
+      {robotStatus ? (
+              <Button
+                    icon={icon(robotStatus)}
+                  title={title(robotStatus)}
+                    type={type(robotStatus)}
+                  className={styles.headerButton}
+                  disabled={robotStatus === 'stopping'}
+                  size='small'
+                  width={112}
+                  hoverChanges={
+                        robotStatus === 'started' || robotStatus === 'paused'
+                          ? {
+                            type: hoverType(robotStatus),
+                            title: hoverTitle(robotStatus),
+                            icon: hoverIcon(robotStatus)
+                          }
+                          : null
+                    }
+                  isUppercase
+                  onClick={handleOnPress}
+                />
+            ) : null}
+        </>
   );
 };
 

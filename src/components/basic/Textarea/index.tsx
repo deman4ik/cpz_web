@@ -12,11 +12,5 @@ export const Textarea: React.FC<Props> = ({ value, onChangeText, rows }) => {
     onChangeText(e.target.value);
   };
 
-  return (
-    <textarea
-      value={value}
-      rows={rows}
-      onChange={handleOnChange}
-      className={styles.textarea} />
-  );
+  return <textarea value={value} rows={rows} onChange={handleOnChange} className={styles.textarea} />;
 };

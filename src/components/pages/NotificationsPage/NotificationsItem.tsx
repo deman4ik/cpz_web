@@ -15,17 +15,15 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
   };
 
   return (
-    <div className={styles.tableRow}>
-      <div className={styles.lineGroup}>
-        <div className={styles.dateGroup}>
-          <div className={styles.dateText}>
-            {formatDate(item.timestamp)}
-          </div>
-          { !item.readed ? <div className={styles.mark}>&nbsp;*</div> : null }
+      <div className={styles.tableRow}>
+          <div className={styles.lineGroup}>
+              <div className={styles.dateGroup}>
+                  <div className={styles.dateText}>{formatDate(item.timestamp)}</div>
+                  {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
+                </div>
+                {showMessage(item, handleOnPressNotification)}
+            </div>
         </div>
-        { showMessage(item, handleOnPressNotification) }
-      </div>
-    </div>
   );
 };
 
