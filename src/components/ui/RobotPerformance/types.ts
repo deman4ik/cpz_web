@@ -1,1 +1,1 @@
-export type displayType = 'signals' | 'robots';
+export type displayType = "signals" | "robots";

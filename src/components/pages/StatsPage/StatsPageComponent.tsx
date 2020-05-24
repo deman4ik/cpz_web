@@ -1,36 +1,36 @@
-import React, { memo } from 'react';
-import dynamic from 'next/dynamic';
+import React, { memo } from "react";
+import dynamic from "next/dynamic";
 
-import { ChartType } from '../../charts/LightWeightChart/types';
-import { capitalize } from '../../../config/utils';
-import { PerformanceTabComponent } from '../../ui/PerformanceTab/PerformanceTabComponent';
-import { LoadingIndicator } from '../../common';
-import styles from './index.module.css';
+import { ChartType } from "../../charts/LightWeightChart/types";
+import { capitalize } from "../../../config/utils";
+import { PerformanceTabComponent } from "../../ui/PerformanceTab/PerformanceTabComponent";
+import { LoadingIndicator } from "../../common";
+import styles from "./index.module.css";
 
 interface Props {
-  formatData: any;
-  width: number;
-  displayType: string;
+    formatData: any;
+    width: number;
+    displayType: string;
 }
 
-const LightWeightChartWithNoSSR = dynamic(() => import('../../charts/LightWeightChart'), {
-  loading: () => <LoadingIndicator />,
-  ssr: false
+const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeightChart"), {
+    loading: () => <LoadingIndicator />,
+    ssr: false
 });
 
 const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width }) => (
-  <>
-      {!formatData.chartData || !formatData.chartData.length ? (
-          <LoadingIndicator />
+    <>
+        {!formatData.chartData || !formatData.chartData.length ? (
+            <LoadingIndicator />
         ) : (
-        <LightWeightChartWithNoSSR
-              data={formatData.chartData}
-              type={ChartType.area}
-              size={{ height: 470, width }}
+            <LightWeightChartWithNoSSR
+                data={formatData.chartData}
+                type={ChartType.area}
+                size={{ height: 470, width }}
             />
         )}
-      <div className={styles.performanceTitle}>{`My ${capitalize(displayType)} Total Statistics`}</div>
-      <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
+        <div className={styles.performanceTitle}>{`My ${capitalize(displayType)} Total Statistics`}</div>
+        <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
     </>
 );
 

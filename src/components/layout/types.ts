@@ -1,6 +1,6 @@
 export interface MainMenuItemProps {
-  label: string;
-  icon: string;
-  route?: string;
-  href?: string;
+    label: string;
+    icon: string;
+    route?: string;
+    href?: string;
 }

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const SUBSCRIBE_TO_SIGNALS = gql`
     mutation subscribeToSignals($robotId: String!, $volume: Float!) {

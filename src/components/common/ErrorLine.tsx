@@ -1,15 +1,15 @@
-import React, { memo } from 'react';
-import styles from './ErrorLine.module.css';
+import React, { memo } from "react";
+import styles from "./ErrorLine.module.css";
 
 interface Props {
-  formError: string;
+    formError: string;
 }
 
 const _ErrorLine: React.FC<Props> = ({ formError }) => (
-  <>
-      {formError ? (
-          <div className={styles.errorContainer}>
-              <div className={styles.errorText}>{formError}</div>
+    <>
+        {formError ? (
+            <div className={styles.errorContainer}>
+                <div className={styles.errorText}>{formError}</div>
             </div>
         ) : null}
     </>

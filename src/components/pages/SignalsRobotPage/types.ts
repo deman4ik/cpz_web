@@ -1,10 +1,10 @@
 export enum SectionType {
-  signals,
-  openPositions,
-  closedPositions
+    signals,
+    openPositions,
+    closedPositions
 }
 
 export type VisibleModal = {
-  isVisible: boolean;
-  type: string;
+    isVisible: boolean;
+    type: string;
 };

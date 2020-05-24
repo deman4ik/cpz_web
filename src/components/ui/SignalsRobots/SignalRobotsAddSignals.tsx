@@ -1,25 +1,25 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react';
-import Router from 'next/router';
+import React from "react";
+import Router from "next/router";
 
-import { CaptionButton } from '../../basic';
-import styles from './SignalRobotsAddSignals.module.css';
+import { CaptionButton } from "../../basic";
+import styles from "./SignalRobotsAddSignals.module.css";
 
 interface Props {
-  displayType: string;
+    displayType: string;
 }
 
 export const SignalRobotsAddSignals: React.FC<Props> = ({ displayType }) => {
-  const handleOnClick = () => {
-    Router.push(`/${displayType}/search`);
-  };
+    const handleOnClick = () => {
+        Router.push(`/${displayType}/search`);
+    };
 
-  return (
-      <div className={styles.itemContainer}>
-      <div className={styles.border} onClick={handleOnClick}>
-              <CaptionButton title={`Add ${displayType}`} icon='plus' />
+    return (
+        <div className={styles.itemContainer}>
+            <div className={styles.border} onClick={handleOnClick}>
+                <CaptionButton title={`Add ${displayType}`} icon="plus" />
             </div>
         </div>
-  );
+    );
 };

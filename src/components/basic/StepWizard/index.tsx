@@ -1,47 +1,47 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { SCREEN_TYPE } from '../../../config/constants';
-import { useShowDimension } from '../../../hooks/useShowDimension';
-import { Step } from './Step';
+import { SCREEN_TYPE } from "../../../config/constants";
+import { useShowDimension } from "../../../hooks/useShowDimension";
+import { Step } from "./Step";
 
 interface Props {
-  steps: string[];
-  activeStep: number;
-  height?: number;
-  titleWidth?: number;
-  width: number;
+    steps: string[];
+    activeStep: number;
+    height?: number;
+    titleWidth?: number;
+    width: number;
 }
 
 export const _StepWizard: React.FC<Props> = ({ steps, activeStep, height, width, titleWidth }) => {
-  const { showDimension } = useShowDimension(width, SCREEN_TYPE.TABLET);
+    const { showDimension } = useShowDimension(width, SCREEN_TYPE.TABLET);
 
-  return (
-      <div className='container'>
-      <div className='stepsContainer'>
-          {showDimension ? (
-                  steps.map((step, idx) => (
-                      <Step
-                      key={idx}
-                      step={step}
+    return (
+        <div className="container">
+            <div className="stepsContainer">
+                {showDimension ? (
+                    steps.map((step, idx) => (
+                        <Step
+                            key={idx}
+                            step={step}
                             idx={idx}
-                      steps={steps}
-                      titleWidth={titleWidth}
+                            steps={steps}
+                            titleWidth={titleWidth}
                             activeStep={activeStep}
-                      showDimension={showDimension}
+                            showDimension={showDimension}
                         />
-                  ))
+                    ))
                 ) : (
-            <Step
+                    <Step
                         step={steps[activeStep - 1]}
-                    steps={steps}
-                    titleWidth={titleWidth}
+                        steps={steps}
+                        titleWidth={titleWidth}
                         activeStep={activeStep}
-                    showDimension={showDimension}
+                        showDimension={showDimension}
                     />
                 )}
             </div>
             <style jsx>
-          {`
+                {`
                     .container {
                         display: flex;
                         flex-direction: column;
@@ -65,9 +65,9 @@ export const _StepWizard: React.FC<Props> = ({ steps, activeStep, height, width,
                         }
                     }
                 `}
-        </style>
+            </style>
         </div>
-  );
+    );
 };
 
 export const StepWizard = memo(_StepWizard);
