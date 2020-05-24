@@ -24,7 +24,7 @@ const defaultOrderBy = {
     recovery_factor: "desc_nulls_last"
 };
 
-export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => {}) => {
+export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
     const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);

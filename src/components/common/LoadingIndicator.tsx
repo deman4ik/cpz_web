@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-    style?: object;
+    style?: React.CSSProperties;
     size?: number;
     color?: string;
 }

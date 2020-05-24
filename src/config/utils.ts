@@ -42,10 +42,10 @@ export const getLegend = (robot) =>
 
 export const roundFormat = (value: number): number => Math.round(value * 100) / 100;
 
-export const colorAction = (check: boolean): object => ({
+export const colorAction = (check: boolean): any => ({
     color: check ? color.positive : color.negative
 });
-export const colorDirection = (direction: string): object => ({
+export const colorDirection = (direction: string): any => ({
     color: ["long", "closeShort"].includes(direction) ? color.positive : color.negative
 });
 

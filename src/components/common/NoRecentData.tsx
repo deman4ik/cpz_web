@@ -3,7 +3,7 @@ import styles from "./NoRecentData.module.css";
 
 interface Props {
     message: string;
-    style?: object;
+    style?: React.CSSProperties;
 }
 
 export const NoRecentData: React.FC<Props> = ({ message, style }) => (

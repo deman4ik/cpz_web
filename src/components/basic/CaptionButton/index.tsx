@@ -12,7 +12,7 @@ import {
 
 interface Props {
     title: string;
-    style?: object;
+    style?: React.CSSProperties;
     icon?: string;
     width?: number;
     onClick?: () => void;

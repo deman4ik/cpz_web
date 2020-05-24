@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 interface Props {
     title: string;
     type: string;
-    style?: object;
+    style?: React.CSSProperties;
     className?: string;
     mini?: boolean;
     href: string;

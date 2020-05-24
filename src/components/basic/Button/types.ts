@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export type ButtonSize = "big" | "normal" | "small";
 export type ButtonType =
     | "primary"
@@ -20,7 +22,7 @@ export interface ButtonProps {
     title?: string;
     icon?: string;
     type?: string;
-    style?: object;
+    style?: CSSProperties;
     isUppercase?: boolean;
     isLoading?: boolean;
     size?: ButtonSize;

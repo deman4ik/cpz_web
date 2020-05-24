@@ -62,6 +62,8 @@ module.exports = {
     "react/jsx-closing-bracket-location": 0,
     "react/no-array-index-key": 0,
     "react/destructuring-assignment": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": 2,
   }
 };

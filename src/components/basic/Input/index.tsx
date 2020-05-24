@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, CSSProperties } from "react";
 
 import { Button } from "../Button";
 
@@ -18,7 +18,7 @@ interface Props {
     error?: string | boolean;
     selectTextOnFocus?: boolean;
     readonly?: boolean;
-    style?: object;
+    style?: CSSProperties;
     right?: boolean;
 }
 
@@ -73,7 +73,7 @@ export const Input: React.FC<Props> = ({
 
     const handleOnFocus = () => {
         if (selectTextOnFocus) {
-            inputRef.current?.setSelectionRange(0, inputValue.length);
+            inputRef?.current?.setSelectionRange(0, inputValue.length);
         }
     };
 
