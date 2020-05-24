@@ -73,7 +73,7 @@ export const Button: React.FC<ButtonProps> = ({
                 )}
             </div>
             {hoverChanges && (
-                <div className={classNamesHover.join(" ")}>
+                <div className={classNamesHover.join(" ")} onClick={handleOnClick}>
                     <ButtonInnerComponent
                         size={size}
                         style={style}
