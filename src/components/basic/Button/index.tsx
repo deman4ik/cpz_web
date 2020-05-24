@@ -6,89 +6,85 @@ import { LoadingIndicator } from "../../common";
 import ButtonInnerComponent from "./ButtonInner";
 
 export const Button: React.FC<ButtonProps> = ({
-  title,
-  type,
-  style,
-  icon,
-  isUppercase,
-  isLoading,
-  onClick,
-  width,
-  className,
-  disabled,
-  responsive,
-  size = "normal",
-  hoverChanges,
-  clickable = true,
+    title,
+    type,
+    style,
+    icon,
+    isUppercase,
+    isLoading,
+    onClick,
+    width,
+    className,
+    disabled,
+    responsive,
+    size = "normal",
+    hoverChanges,
+    clickable = true
 }) => {
-  const rounded = type?.includes("roundend");
-  const iconSize = 15;
+    const rounded = type?.includes("roundend");
+    const iconSize = 15;
 
-  const withHover = hoverChanges ? "with-hover" : "";
+    const withHover = hoverChanges ? "with-hover" : "";
 
-  /*Параметры Hover*/
-  const hoverChangesParams = {
-    type: hoverChanges?.type || type,
-    title: hoverChanges?.title || title,
-    icon: hoverChanges?.icon || icon,
-  };
+    /*Параметры Hover*/
+    const hoverChangesParams = {
+        type: hoverChanges?.type || type,
+        title: hoverChanges?.title || title,
+        icon: hoverChanges?.icon || icon
+    };
 
-  /*Обработка классов*/
-  const getClassName = () => {
-    const composeClass = ["btn"];
-    if (className) composeClass.push(className);
-    if (isUppercase) composeClass.push("uppercase");
-    if (isLoading) composeClass.push("loading");
-    return composeClass;
-  };
+    /*Обработка классов*/
+    const getClassName = () => {
+        const composeClass = ["btn"];
+        if (className) composeClass.push(className);
+        if (isUppercase) composeClass.push("uppercase");
+        if (isLoading) composeClass.push("loading");
+        return composeClass;
+    };
 
-  /*classNames для кнопок*/
-  const classNamesMain = [...getClassName(), "main-button"];
-  const classNamesHover = withHover && [...getClassName(), "hovered-button"];
-  if (type) classNamesMain.push(type);
-  if (withHover) classNamesHover.push(hoverChangesParams.type);
+    /*classNames для кнопок*/
+    const classNamesMain = [...getClassName(), "main-button"];
+    const classNamesHover = withHover && [...getClassName(), "hovered-button"];
+    if (type) classNamesMain.push(type);
+    if (withHover) classNamesHover.push(hoverChangesParams.type);
 
-  /*Обработчик клика*/
-  const handleOnClick = () => {
-    if (!isLoading && !disabled && onClick) {
-      onClick();
-    }
-  };
+    /*Обработчик клика*/
+    const handleOnClick = () => {
+        if (!isLoading && !disabled && onClick) {
+            onClick();
+        }
+    };
 
-  return (
-    <div className={withHover}>
-      <div
-        className={classNamesMain.join(" ")}
-        style={style}
-        onClick={handleOnClick}
-      >
-        {isLoading ? (
-          <LoadingIndicator color="white" size={props[size].indicator} />
-        ) : (
-          <ButtonInnerComponent
-            size={size}
-            type={type}
-            icon={icon}
-            title={title}
-            style={style}
-            responsive={responsive}
-            iconSize={iconSize}
-          />
-        )}
-      </div>
-      {hoverChanges && (
-        <div className={classNamesHover.join(" ")}>
-          <ButtonInnerComponent
-            size={size}
-            style={style}
-            responsive={responsive}
-            iconSize={iconSize}
-            {...hoverChangesParams}
-          />
-        </div>
-      )}
-      <style jsx>
-        {`   
+    return (
+        <div className={withHover}>
+            <div className={classNamesMain.join(" ")} style={style} onClick={handleOnClick}>
+                {isLoading ? (
+                    <LoadingIndicator color="white" size={props[size].indicator} />
+                ) : (
+                    <ButtonInnerComponent
+                        size={size}
+                        type={type}
+                        icon={icon}
+                        title={title}
+                        style={style}
+                        responsive={responsive}
+                        iconSize={iconSize}
+                    />
+                )}
+            </div>
+            {hoverChanges && (
+                <div className={classNamesHover.join(" ")}>
+                    <ButtonInnerComponent
+                        size={size}
+                        style={style}
+                        responsive={responsive}
+                        iconSize={iconSize}
+                        {...hoverChangesParams}
+                    />
+                </div>
+            )}
+            <style jsx>
+                {`   
           .hovered-button {
             display: none !important;
           }
@@ -155,16 +151,10 @@ export const Button: React.FC<ButtonProps> = ({
             }
             .btn {
               width: 
-              ${
-                responsive
-                  ? "min-content"
-                  : width
-                  ? `${width}px`
-                  : "min-content"
-              };
+              ${responsive ? "min-content" : width ? `${width}px` : "min-content"};
           }
         `}
-      </style>
-    </div>
-  );
+            </style>
+        </div>
+    );
 };
