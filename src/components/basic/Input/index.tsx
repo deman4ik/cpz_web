@@ -1,117 +1,117 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, CSSProperties } from "react";
 
-import { Button } from '../Button';
+import { Button } from "../Button";
 
 interface Props {
-  value: string;
-  icon?: string;
-  placeholder?: string;
-  buttonTitle?: string;
-  maxLength?: number;
-  type?: string;
-  onChangeText?: (value) => void;
-  onKeyPress?: (e: any) => void;
-  onClickButton?: () => void;
-  width?: number;
-  responsive?: boolean;
-  error?: string | boolean;
-  selectTextOnFocus?: boolean;
-  readonly?: boolean;
-  style?: object;
-  right?: boolean;
+    value: string;
+    icon?: string;
+    placeholder?: string;
+    buttonTitle?: string;
+    maxLength?: number;
+    type?: string;
+    onChangeText?: (value) => void;
+    onKeyPress?: (e: any) => void;
+    onClickButton?: () => void;
+    width?: number;
+    responsive?: boolean;
+    error?: string | boolean;
+    selectTextOnFocus?: boolean;
+    readonly?: boolean;
+    style?: CSSProperties;
+    right?: boolean;
 }
 
 export const Input: React.FC<Props> = ({
-  value,
-  icon,
-  placeholder,
-  buttonTitle,
-  type = 'text',
-  onChangeText,
-  onClickButton,
-  style,
-  right,
-  onKeyPress,
-  width = 350,
-  error,
-  selectTextOnFocus,
-  responsive,
-  readonly,
-  maxLength = 30
+    value,
+    icon,
+    placeholder,
+    buttonTitle,
+    type = "text",
+    onChangeText,
+    onClickButton,
+    style,
+    right,
+    onKeyPress,
+    width = 350,
+    error,
+    selectTextOnFocus,
+    responsive,
+    readonly,
+    maxLength = 30
 }) => {
-  const [ inputValue, setInputValue ] = useState(value);
-  const inputRef = useRef(null);
-  const handleOnInput = (e) => {
-    if (type === 'number') {
-      e.target.value = e.target.value.toString().slice(0, 8);
-    }
-    if (onChangeText) {
-      onChangeText(e.target.value);
-    }
-    setInputValue(e.target.value);
-  };
-
-  const formatInput = (e) => {
-    if (type === 'number') {
-      if (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 190 || e.keyCode === 13) {
-        if (e.keyCode === 13) {
-          if (onKeyPress) onKeyPress(e);
+    const [inputValue, setInputValue] = useState(value);
+    const inputRef = useRef(null);
+    const handleOnInput = (e) => {
+        if (type === "number") {
+            e.target.value = e.target.value.toString().slice(0, 8);
         }
-      } else if (e.keyCode < 48 || e.keyCode > 57) {
-        e.preventDefault();
-      }
-    } else if (onKeyPress) onKeyPress(e);
-  };
+        if (onChangeText) {
+            onChangeText(e.target.value);
+        }
+        setInputValue(e.target.value);
+    };
 
-  const getInputClass = () => {
-    const styleInput = [ "input" ];
-    if (error) styleInput.push('error');
-    if (right) styleInput.push('right');
-    return styleInput;
-  };
+    const formatInput = (e) => {
+        if (type === "number") {
+            if (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 190 || e.keyCode === 13) {
+                if (e.keyCode === 13) {
+                    if (onKeyPress) onKeyPress(e);
+                }
+            } else if (e.keyCode < 48 || e.keyCode > 57) {
+                e.preventDefault();
+            }
+        } else if (onKeyPress) onKeyPress(e);
+    };
 
-  const handleOnFocus = () => {
-    if (selectTextOnFocus) {
-            inputRef.current?.setSelectionRange(0, inputValue.length);
-    }
-  };
+    const getInputClass = () => {
+        const styleInput = ["input"];
+        if (error) styleInput.push("error");
+        if (right) styleInput.push("right");
+        return styleInput;
+    };
 
-  useEffect(() => {
-    setInputValue(value);
-  }, [ value ]);
+    const handleOnFocus = () => {
+        if (selectTextOnFocus) {
+            inputRef?.current?.setSelectionRange(0, inputValue.length);
+        }
+    };
 
-  return (
-      <div className='wrapper' style={style}>
-      <div className='container'>
-          {icon ? (
-                  <div className='icon'>
-              <Button
-                          title={buttonTitle || 'Change'}
-                          type='dimmed'
-                          size='small'
-                          onClick={onClickButton}
+    useEffect(() => {
+        setInputValue(value);
+    }, [value]);
+
+    return (
+        <div className="wrapper" style={style}>
+            <div className="container">
+                {icon ? (
+                    <div className="icon">
+                        <Button
+                            title={buttonTitle || "Change"}
+                            type="dimmed"
+                            size="small"
+                            onClick={onClickButton}
                             responsive
                             icon={icon}
                         />
-            </div>
+                    </div>
                 ) : null}
                 <input
-          className={getInputClass().join(' ')}
+                    className={getInputClass().join(" ")}
                     placeholder={placeholder}
-          maxLength={maxLength}
-          ref={inputRef}
-          type={type === 'number' ? 'text' : type}
-          readOnly={readonly}
-          onChange={handleOnInput}
-          onKeyDown={formatInput}
+                    maxLength={maxLength}
+                    ref={inputRef}
+                    type={type === "number" ? "text" : type}
+                    readOnly={readonly}
+                    onChange={handleOnInput}
+                    onKeyDown={formatInput}
                     onFocus={handleOnFocus}
-          value={inputValue}
+                    value={inputValue}
                 />
-          {error && typeof error === 'string' && <div className='error_line'>{error}</div>}
-        </div>
+                {error && typeof error === "string" && <div className="error_line">{error}</div>}
+            </div>
             <style jsx>
-          {`
+                {`
                     .wrapper {
                         width: ${width}px;
                     }
@@ -135,7 +135,7 @@ export const Input: React.FC<Props> = ({
                         border-radius: 2px;
                         font-size: var(--normal1);
                         padding: 11px;
-                        padding-right: ${icon ? '35px' : '11px'};
+                        padding-right: ${icon ? "35px" : "11px"};
                     }
                     .input.right {
                         text-align: right;
@@ -162,7 +162,7 @@ export const Input: React.FC<Props> = ({
                         }
                     }
                 `}
-        </style>
+            </style>
         </div>
-  );
+    );
 };

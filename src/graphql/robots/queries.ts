@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GET_LANDING_ROBOTS = gql`
     query robots_by_stats($limit: Int) {

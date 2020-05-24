@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const ROBOT_POSITION_WITH_CANDLE_SUB = (timeframe: number) => gql`
   subscription candles(

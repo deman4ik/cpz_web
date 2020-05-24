@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const USER_ROBOT_CREATE = gql`
     mutation userRobotCreate($robotId: String!, $volume: Float!, $userExAccId: String!) {

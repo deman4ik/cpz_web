@@ -1,15 +1,15 @@
-import dayjs from '../../../libs/dayjs';
-import { ToolTip, ToolTipArrow, ToolTipArea } from './types';
-import { color } from '../../../config/constants';
-import { roundFormat } from '../../../config/utils';
+import dayjs from "../../../libs/dayjs";
+import { ToolTip, ToolTipArrow, ToolTipArea } from "./types";
+import { color } from "../../../config/constants";
+import { roundFormat } from "../../../config/utils";
 
 const { white, accent, positive, negative } = color;
 
 export const toolTipTemplate = (data: ToolTip) => `
   <div>    
     <span style="color: ${white}">${dayjs(data.time * 1000)
-  .utc()
-  .format('DD MMM YYYY HH:mm')}</span>
+    .utc()
+    .format("DD MMM YYYY HH:mm")}</span>
   </div>
   <div>    
     <span style="color: ${accent}">o</span>
@@ -41,8 +41,8 @@ export const toolTipTemplate = (data: ToolTip) => `
 export const toolTipTemplateArea = (data: ToolTipArea) => `
   <div>    
     <span style="color: ${white}">${dayjs(data.time * 1000)
-  .utc()
-  .format('DD MMM YYYY HH:mm')}</span>
+    .utc()
+    .format("DD MMM YYYY HH:mm")}</span>
   </div>
   <div>
     <span style="color: ${white}">${roundFormat(data.value)} $</span>
@@ -51,8 +51,8 @@ export const toolTipTemplateArea = (data: ToolTipArea) => `
 export const toolTipArrowTemplate = (data: ToolTipArrow) => `
   <div>    
     <span style="color: ${white}">${dayjs(data.tooltipTime * 1000)
-  .utc()
-  .format('DD MMM YYYY HH:mm')}</span>
+    .utc()
+    .format("DD MMM YYYY HH:mm")}</span>
   </div>
   <div>
     <span style="color: ${data.colorAction}">${data.action}</span>
@@ -65,11 +65,11 @@ export const toolTipArrowTemplate = (data: ToolTipArrow) => `
     <span style="color: ${white}">${data.volume}</span>
   </div>
   ${
-  data.exit
-    ? `<div>
-  <span style="color: ${data.profit > 0 ? positive : negative}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(
-  2
-)} $</span>
+      data.exit
+          ? `<div>
+  <span style="color: ${data.profit > 0 ? positive : negative}">${data.profit > 0 ? "+" : ""}${data.profit.toFixed(
+                2
+            )} $</span>
 </div>`
-    : ''
-}`;
+          : ""
+  }`;

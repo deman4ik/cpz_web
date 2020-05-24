@@ -1,51 +1,51 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { Button, CaptionButton } from '../../basic';
-import { createVariable } from './helpers';
+import { Button, CaptionButton } from "../../basic";
+import { createVariable } from "./helpers";
 
 interface Props {
-  robotData: any;
-  robotSubscribe: (variables: any) => void;
+    robotData: any;
+    robotSubscribe: (variables: any) => void;
 }
 
 const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
-  const handleOnPressAction = (action: string) => {
-    robotSubscribe(createVariable(robotData, action));
-  };
+    const handleOnPressAction = (action: string) => {
+        robotSubscribe(createVariable(robotData, action));
+    };
 
-  return (
-      <div className='toolbar'>
-      {!robotData || !robotData.user_robots ? (
+    return (
+        <div className="toolbar">
+            {!robotData || !robotData.user_robots ? (
                 <Button
-          icon='plus'
-          title='Add'
-          type='primary'
-          isUppercase
+                    icon="plus"
+                    title="Add"
+                    type="primary"
+                    isUppercase
                     responsive
-          onClick={() => handleOnPressAction('create')}
+                    onClick={() => handleOnPressAction("create")}
                 />
             ) : (
-        <>
-                  {robotData.user_robots && robotData.user_robots.status === 'stopped' ? (
-            <>
-                          <CaptionButton
-                              title='edit'
-                              icon='settings'
-                              responsive
-                              onClick={() => handleOnPressAction('edit')}
-                            />
-                          <CaptionButton
-                              title='delete'
-                              icon='close'
+                <>
+                    {robotData.user_robots && robotData.user_robots.status === "stopped" ? (
+                        <>
+                            <CaptionButton
+                                title="edit"
+                                icon="settings"
                                 responsive
-                              onClick={() => handleOnPressAction('delete')}
+                                onClick={() => handleOnPressAction("edit")}
+                            />
+                            <CaptionButton
+                                title="delete"
+                                icon="close"
+                                responsive
+                                onClick={() => handleOnPressAction("delete")}
                             />
                         </>
-          ) : null}
+                    ) : null}
                 </>
             )}
         </div>
-  );
+    );
 };
 
 export const ToolbarRobotPage = memo(_ToolbarRobotPage);

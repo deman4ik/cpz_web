@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 
-import { useFetchRobots } from '../../../hooks/useFetchRobots';
-import { RobotsList } from '../../ui/RobotsList';
-import { LoadingIndicator } from '../../common';
-import { Modals } from './Modals';
-import { formatRobotsData } from './helpers';
+import { useFetchRobots } from "../../../hooks/useFetchRobots";
+import { RobotsList } from "../../ui/RobotsList";
+import { LoadingIndicator } from "../../common";
+import { Modals } from "./Modals";
+import { formatRobotsData } from "./helpers";
 
 interface Props {
-  displayType: string;
-  width: number;
+    displayType: string;
+    width: number;
 }
 
 export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
-  const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
+    const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
 
-  return (
-      <>
-      {loading ? (
-              <div className='loading'>
-          <LoadingIndicator />
-        </div>
+    return (
+        <>
+            {loading ? (
+                <div className="loading">
+                    <LoadingIndicator />
+                </div>
             ) : (
-        <RobotsList
-                  data={robotsData}
+                <RobotsList
+                    data={robotsData}
                     isLoadingMore={isLoadingMore}
-                  onFetchMore={onFetchMore}
-                  counts={counts}
+                    onFetchMore={onFetchMore}
+                    counts={counts}
                     width={width}
-                  displayType={displayType}
+                    displayType={displayType}
                 />
             )}
             <Modals width={width} />
         </>
-  );
+    );
 };

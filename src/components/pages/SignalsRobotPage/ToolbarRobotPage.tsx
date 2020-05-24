@@ -1,35 +1,35 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { Button, CaptionButton } from '../../basic';
-import { createVariable } from './helpers';
+import { Button, CaptionButton } from "../../basic";
+import { createVariable } from "./helpers";
 
 interface Props {
-  robotData: any;
-  robotSubscribe: (variables: any) => void;
+    robotData: any;
+    robotSubscribe: (variables: any) => void;
 }
 
 const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
-  const { isUserSignals } = robotData.robot;
-  const handleOnPressAction = (action: string) => {
-    robotSubscribe(createVariable(robotData, action));
-  };
+    const { isUserSignals } = robotData.robot;
+    const handleOnPressAction = (action: string) => {
+        robotSubscribe(createVariable(robotData, action));
+    };
 
-  return (
-      <div className='toolbar'>
+    return (
+        <div className="toolbar">
             {isUserSignals ? (
-          <CaptionButton title='Edit' icon='settings' responsive onClick={() => handleOnPressAction('edit')} />
-        ) : (
-              <Button
-                  type='primary'
-                  title='Follow'
-                  icon='plus'
-                  isUppercase
+                <CaptionButton title="Edit" icon="settings" responsive onClick={() => handleOnPressAction("edit")} />
+            ) : (
+                <Button
+                    type="primary"
+                    title="Follow"
+                    icon="plus"
+                    isUppercase
                     responsive
-                  onClick={() => handleOnPressAction('subscribe')}
+                    onClick={() => handleOnPressAction("subscribe")}
                 />
-        )}
+            )}
         </div>
-  );
+    );
 };
 
 export const ToolbarRobotPage = memo(_ToolbarRobotPage);

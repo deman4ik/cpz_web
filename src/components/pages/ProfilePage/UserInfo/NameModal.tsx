@@ -1,88 +1,88 @@
-import React, { memo, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import React, { memo, useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
 
-import { SET_USER_NAME } from '../../../../graphql/user/mutations';
-import { GET_USER_INFO } from '../../../../graphql/user/queries';
-import { Button, Input } from '../../../basic';
-import { MIN_NAME_LENGTH } from '../../../../config/constants';
-import styles from './PasswordModal.module.css';
+import { SET_USER_NAME } from "../../../../graphql/user/mutations";
+import { GET_USER_INFO } from "../../../../graphql/user/queries";
+import { Button, Input } from "../../../basic";
+import { MIN_NAME_LENGTH } from "../../../../config/constants";
+import styles from "./PasswordModal.module.css";
 
 interface Props {
-  name: string;
-  onClose: () => void;
+    name: string;
+    onClose: () => void;
 }
 
 const _NameModal: React.FC<Props> = ({ name, onClose }) => {
-  const [ formError, setFormError ] = useState('');
-  const [ inputValue, setInputValue ] = useState(name);
-  const [ sendData, { loading, error } ] = useMutation(SET_USER_NAME, {
-    variables: { name: inputValue },
-    refetchQueries: [ { query: GET_USER_INFO } ]
-  });
-
-  if (error) {
-    console.error(error);
-  }
-
-  const submit = () => {
-    sendData().then((response) => {
-      if (response.data.changeName.success) {
-        onClose();
-      } else {
-        setFormError(response.data.changeName.error);
-      }
+    const [formError, setFormError] = useState("");
+    const [inputValue, setInputValue] = useState(name);
+    const [sendData, { loading, error }] = useMutation(SET_USER_NAME, {
+        variables: { name: inputValue },
+        refetchQueries: [{ query: GET_USER_INFO }]
     });
-  };
 
-  const isValid = () => inputValue && inputValue !== name && inputValue.length >= MIN_NAME_LENGTH;
-
-  const onKeyPress = (e) => {
-    if (formError) setFormError('');
-    if (e.nativeEvent.key === 'Enter' && isValid()) {
-      submit();
+    if (error) {
+        console.error(error);
     }
-  };
 
-  return (
-      <>
-      <div className={styles.form}>
-              <div className={styles.fieldset}>
-                  <div className={styles.oneInputAlign}>
-                  <Input
+    const submit = () => {
+        sendData().then((response) => {
+            if (response.data.changeName.success) {
+                onClose();
+            } else {
+                setFormError(response.data.changeName.error);
+            }
+        });
+    };
+
+    const isValid = () => inputValue && inputValue !== name && inputValue.length >= MIN_NAME_LENGTH;
+
+    const onKeyPress = (e) => {
+        if (formError) setFormError("");
+        if (e.nativeEvent.key === "Enter" && isValid()) {
+            submit();
+        }
+    };
+
+    return (
+        <>
+            <div className={styles.form}>
+                <div className={styles.fieldset}>
+                    <div className={styles.oneInputAlign}>
+                        <Input
                             value={`${inputValue}`}
                             error={formError}
-                          width={250}
-                          responsive
+                            width={250}
+                            responsive
                             onChangeText={(value) => setInputValue(value)}
-                          onKeyPress={onKeyPress}
+                            onKeyPress={onKeyPress}
                         />
-                </div>
+                    </div>
                     <div className={styles.btns}>
                         <Button
                             className={styles.btn}
                             width={120}
-                        title='Change'
-                        icon='check'
-                        type='success'
-                        disabled={!isValid()}
+                            title="Change"
+                            icon="check"
+                            type="success"
+                            disabled={!isValid()}
                             isUppercase
-                        isLoading={loading}
-                        onClick={submit}
+                            isLoading={loading}
+                            onClick={submit}
                         />
-                  <Button
-                          className={styles.btn}
+                        <Button
+                            className={styles.btn}
                             width={120}
-                          title='Cancel'
-                          icon='close'
-                          type='dimmed'
-                          isUppercase
+                            title="Cancel"
+                            icon="close"
+                            type="dimmed"
+                            isUppercase
                             onClick={onClose}
                         />
-                </div>
+                    </div>
                 </div>
             </div>
         </>
-  );
+    );
 };
 
 export const NameModal = memo(_NameModal);
