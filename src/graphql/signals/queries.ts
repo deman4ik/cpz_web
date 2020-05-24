@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GET_ROBOTS_BY_STATS = gql`
     query robots_by_stats(

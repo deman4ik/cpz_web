@@ -1,29 +1,29 @@
-import React from 'react';
+import React from "react";
 
 interface Props {
-  data: any;
-  value: string;
-  width?: number;
-  enabled?: boolean;
-  onValueChange: (itemValue: string) => void;
+    data: any;
+    value: string;
+    width?: number;
+    enabled?: boolean;
+    onValueChange: (itemValue: string) => void;
 }
 
 export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 200, enabled = true }) => {
-  const onChange = (e) => {
-    onValueChange(e.target.value);
-  };
+    const onChange = (e) => {
+        onValueChange(e.target.value);
+    };
 
-  return (
-      <div className='select_container'>
-      <select value={value} onChange={onChange} className='select' disabled={!enabled}>
-          {data.map((item) => (
-                  <option key={item.value} value={item.value}>
-                      {item.label}
+    return (
+        <div className="select_container">
+            <select value={value} onChange={onChange} className="select" disabled={!enabled}>
+                {data.map((item) => (
+                    <option key={item.value} value={item.value}>
+                        {item.label}
                     </option>
                 ))}
             </select>
             <style jsx>
-          {`
+                {`
                     .select {
                         background-color: var(--darkBg);
                         color: var(--accent);
@@ -60,7 +60,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 20
                         display: none;
                     }
                 `}
-        </style>
+            </style>
         </div>
-  );
+    );
 };

@@ -1,52 +1,52 @@
-import React from 'react';
+import React from "react";
 
 import {
-  PlusIcon,
-  CheckIcon,
-  LogoutIcon,
-  FilterVariantIcon,
-  FilterVariantRemoveIcon,
-  SettingsIcon,
-  CloseIcon
-} from '../../../assets/icons/svg';
+    PlusIcon,
+    CheckIcon,
+    LogoutIcon,
+    FilterVariantIcon,
+    FilterVariantRemoveIcon,
+    SettingsIcon,
+    CloseIcon
+} from "../../../assets/icons/svg";
 
 interface Props {
-  title: string;
-  style?: object;
-  icon?: string;
-  width?: number;
-  onClick?: () => void;
-  responsive?: boolean;
+    title: string;
+    style?: object;
+    icon?: string;
+    width?: number;
+    onClick?: () => void;
+    responsive?: boolean;
 }
 
 const components = {
-  check: CheckIcon,
-  plus: PlusIcon,
-  logout: LogoutIcon,
-  filtervariant: FilterVariantIcon,
-  filtervariantremove: FilterVariantRemoveIcon,
-  settings: SettingsIcon,
-  close: CloseIcon
+    check: CheckIcon,
+    plus: PlusIcon,
+    logout: LogoutIcon,
+    filtervariant: FilterVariantIcon,
+    filtervariantremove: FilterVariantRemoveIcon,
+    settings: SettingsIcon,
+    close: CloseIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {
-  const SpecificIcon = components[icon];
-  const getClassName = () => {
-    const composeClass = [ "btn" ];
-    return composeClass;
-  };
+    const SpecificIcon = components[icon];
+    const getClassName = () => {
+        const composeClass = ["btn"];
+        return composeClass;
+    };
 
-  return (
-      <div className={getClassName().join(' ')} style={style} onClick={onClick}>
-      <div className='wrapper'>
-          <div className='btn-text'>{title}</div>
-          <i className='icon' style={{ width: 20, height: 20 }}>
-          <SpecificIcon size={20} />
-        </i>
-        </div>
-      <div className='aligner' />
-      <style jsx>
-              {`
+    return (
+        <div className={getClassName().join(" ")} style={style} onClick={onClick}>
+            <div className="wrapper">
+                <div className="btn-text">{title}</div>
+                <i className="icon" style={{ width: 20, height: 20 }}>
+                    <SpecificIcon size={20} />
+                </i>
+            </div>
+            <div className="aligner" />
+            <style jsx>
+                {`
                     .btn-text {
                         width: 100%;
                         color: white;
@@ -72,7 +72,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
                     .btn {
                         display: flex;
                         cursor: pointer;
-                        width: ${width ? `${width}px` : 'min-content'};
+                        width: ${width ? `${width}px` : "min-content"};
                         height: 34px;
                         padding-left: 5px;
                         padding-right: 5px;
@@ -95,7 +95,7 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
                     }
                     @media (max-width: 768px) {
                         .btn-text {
-                            display: ${responsive ? 'none' : 'block'};
+                            display: ${responsive ? "none" : "block"};
                         }
                         .icon {
                             top: ${responsive ? -12 : -6}px;
@@ -116,5 +116,5 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
                 `}
             </style>
         </div>
-  );
+    );
 };

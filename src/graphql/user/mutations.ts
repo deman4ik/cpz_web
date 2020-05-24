@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const SET_USER_NAME = gql`
     mutation changeName($name: String!) {

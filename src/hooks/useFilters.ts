@@ -1,51 +1,51 @@
-import { useState, useEffect } from 'react';
-import { CheckedFilters } from '../components/pages/StatsPage/types';
+import { useState, useEffect } from "react";
+import { CheckedFilters } from "../components/pages/StatsPage/types";
 
 export const useFilters = (_exchange: string | string[] | undefined, _asset: string | string[] | undefined) => {
-  const [ checkedFilters, setCheckedFilters ] = useState<CheckedFilters>({
-    exchange: null,
-    asset: null
-  });
-  const [ selectedFilter, setSelectedFilter ] = useState<CheckedFilters>({
-    exchange: null,
-    asset: null
-  });
+    const [checkedFilters, setCheckedFilters] = useState<CheckedFilters>({
+        exchange: null,
+        asset: null
+    });
+    const [selectedFilter, setSelectedFilter] = useState<CheckedFilters>({
+        exchange: null,
+        asset: null
+    });
 
-  const checkFilterButton = (label: string, item: string) => {
-    if (checkedFilters[label] === item) {
-      setCheckedFilters((prev) => ({ ...prev, [label]: null }));
-    } else {
-      setCheckedFilters((prev) => ({ ...prev, [label]: item }));
-    }
-  };
-
-  useEffect(() => {
-    const filters = {
-      exchange: _exchange === 'null' || !_exchange ? null : (_exchange as string),
-      asset: _asset === 'null' || !_asset ? null : (_asset as string)
+    const checkFilterButton = (label: string, item: string) => {
+        if (checkedFilters[label] === item) {
+            setCheckedFilters((prev) => ({ ...prev, [label]: null }));
+        } else {
+            setCheckedFilters((prev) => ({ ...prev, [label]: item }));
+        }
     };
 
-    setCheckedFilters(filters);
-    setSelectedFilter(filters);
-  }, [ _exchange, _asset ]);
+    useEffect(() => {
+        const filters = {
+            exchange: _exchange === "null" || !_exchange ? null : (_exchange as string),
+            asset: _asset === "null" || !_asset ? null : (_asset as string)
+        };
 
-  const clearFilters = () => {
-    setCheckedFilters({ exchange: null, asset: null });
-  };
+        setCheckedFilters(filters);
+        setSelectedFilter(filters);
+    }, [_exchange, _asset]);
 
-  const confirmSelectedFilters = () => {
-    if (selectedFilter.asset !== checkedFilters.asset || selectedFilter.exchange !== checkedFilters.exchange) {
-      setSelectedFilter(checkedFilters);
-    } else {
-      checkFilterButton(selectedFilter.exchange, selectedFilter.asset);
-    }
-  };
+    const clearFilters = () => {
+        setCheckedFilters({ exchange: null, asset: null });
+    };
 
-  return {
-    checkedFilters,
-    clearFilters,
-    checkFilterButton,
-    selectedFilter,
-    confirmSelectedFilters
-  };
+    const confirmSelectedFilters = () => {
+        if (selectedFilter.asset !== checkedFilters.asset || selectedFilter.exchange !== checkedFilters.exchange) {
+            setSelectedFilter(checkedFilters);
+        } else {
+            checkFilterButton(selectedFilter.exchange, selectedFilter.asset);
+        }
+    };
+
+    return {
+        checkedFilters,
+        clearFilters,
+        checkFilterButton,
+        selectedFilter,
+        confirmSelectedFilters
+    };
 };

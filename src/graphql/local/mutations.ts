@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const SET_MODAL_STATE = gql`
     mutation setModalState($cache: CacheData!, $robot: Robot!, $subs: SubsData, $type: String!, $isVisible: Boolean!) {

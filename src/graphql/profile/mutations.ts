@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const UPDATE_EXCHANGE_KEY = gql`
     mutation userExchangeAccUpsert($exchange: String!, $id: ID!, $name: String, $keys: ExchangeKeys!) {

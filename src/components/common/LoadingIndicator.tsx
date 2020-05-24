@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
 interface Props {
-  style?: object;
-  size?: number;
-  color?: string;
+    style?: object;
+    size?: number;
+    color?: string;
 }
 
-export const LoadingIndicator: React.FC<Props> = ({ style, size = 12, color = 'white' }) => (
-  <div className='indicator' style={style}>
-      <div className='loader' />
-      <style jsx>
-          {`
+export const LoadingIndicator: React.FC<Props> = ({ style, size = 12, color = "white" }) => (
+    <div className="indicator" style={style}>
+        <div className="loader" />
+        <style jsx>
+            {`
                 .loader {
                     width: ${size * 2}px;
                     height: ${size * 2}px;

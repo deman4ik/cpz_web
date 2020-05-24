@@ -1,88 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { ButtonProps } from './types';
-import { components, props } from './helpers';
-import { LoadingIndicator } from '../../common';
+import { ButtonProps } from "./types";
+import { components, props } from "./helpers";
+import { LoadingIndicator } from "../../common";
 
 export const Button: React.FC<ButtonProps> = ({
-  title,
-  type,
-  style,
-  icon,
-  isUppercase,
-  isLoading,
-  onClick,
-  width,
-  className,
-  disabled,
-  responsive,
-  size = 'normal',
-  hoverChanges,
-  clickable = true
+    title,
+    type,
+    style,
+    icon,
+    isUppercase,
+    isLoading,
+    onClick,
+    width,
+    className,
+    disabled,
+    responsive,
+    size = "normal",
+    hoverChanges,
+    clickable = true
 }) => {
-  const [ base, setBase ] = useState({ title, icon, type });
-  const SpecificIcon = components[base.icon];
-  const rounded = type && type.indexOf('rounded') === 0;
-  const iconSize = 15;
-  const getClassName = () => {
-    const composeClass = [ "btn" ];
-    if (className) composeClass.push(className);
-    if (isUppercase) composeClass.push('uppercase');
-    if (isLoading) composeClass.push('loading');
-    if (base.type) composeClass.push(base.type);
-    return composeClass;
-  };
+    const [base, setBase] = useState({ title, icon, type });
+    const SpecificIcon = components[base.icon];
+    const rounded = type && type.indexOf("rounded") === 0;
+    const iconSize = 15;
+    const getClassName = () => {
+        const composeClass = ["btn"];
+        if (className) composeClass.push(className);
+        if (isUppercase) composeClass.push("uppercase");
+        if (isLoading) composeClass.push("loading");
+        if (base.type) composeClass.push(base.type);
+        return composeClass;
+    };
 
-  const handleOnClick = () => {
-    if (!isLoading && !disabled && onClick) {
-      onClick();
-    }
-  };
+    const handleOnClick = () => {
+        if (!isLoading && !disabled && onClick) {
+            onClick();
+        }
+    };
 
-  const handleMouseEnter = () => {
-    if (hoverChanges) {
-      setBase({
-        type: hoverChanges.type || type,
-        title: hoverChanges.title || title,
-        icon: hoverChanges.icon || icon
-      });
-    }
-  };
+    const handleMouseEnter = () => {
+        if (hoverChanges) {
+            setBase({
+                type: hoverChanges.type || type,
+                title: hoverChanges.title || title,
+                icon: hoverChanges.icon || icon
+            });
+        }
+    };
 
-  const handleMouseLeave = () => {
-    setBase({ title, icon, type });
-  };
+    const handleMouseLeave = () => {
+        setBase({ title, icon, type });
+    };
 
-  useEffect(() => {
-    setBase((prev) => ({ ...prev, type, title, icon }));
-  }, [ type, title, icon ]);
+    useEffect(() => {
+        setBase((prev) => ({ ...prev, type, title, icon }));
+    }, [type, title, icon]);
 
-  return (
-      <div
-          className={getClassName().join(' ')}
-          style={style}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleOnClick}>
-          {isLoading ? (
-              <LoadingIndicator color='white' size={props[size].indicator} />
+    return (
+        <div
+            className={getClassName().join(" ")}
+            style={style}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleOnClick}>
+            {isLoading ? (
+                <LoadingIndicator color="white" size={props[size].indicator} />
             ) : (
-        <>
-                  <div className='btn-text'>{base.title}</div>
-                  {base.icon ? (
-                <i className='icon'>
-                      <SpecificIcon size={iconSize} />
-                    </i>
-              ) : null}
-                  <div className='aligner' />
+                <>
+                    <div className="btn-text">{base.title}</div>
+                    {base.icon ? (
+                        <i className="icon">
+                            <SpecificIcon size={iconSize} />
+                        </i>
+                    ) : null}
+                    <div className="aligner" />
                 </>
             )}
             <style jsx>
-          {`
+                {`
                     .btn-text {
                         width: 100%;
-                        color: ${base.type === 'rounded-negative' ? 'var(--negative)' : 'white'};
-                        font-size: ${size === 'small' ? 12 : 14}px;
+                        color: ${base.type === "rounded-negative" ? "var(--negative)" : "white"};
+                        font-size: ${size === "small" ? 12 : 14}px;
                         text-align: center;
                         white-space: nowrap;
                         padding-left: 4px;
@@ -103,8 +103,8 @@ export const Button: React.FC<ButtonProps> = ({
                     }
                     .btn {
                         display: flex;
-                        cursor: ${disabled ? 'auto' : 'pointer'};
-                        width: ${width ? `${width}px` : 'min-content'};
+                        cursor: ${disabled ? "auto" : "pointer"};
+                        width: ${width ? `${width}px` : "min-content"};
                         height: ${props[size].height}px;
                         padding-left: 10px;
                         padding-right: 10px;
@@ -142,20 +142,20 @@ export const Button: React.FC<ButtonProps> = ({
                     }
                     @media (max-width: 768px) {
                         .btn-text {
-                            display: ${responsive ? 'none' : 'block'};
+                            display: ${responsive ? "none" : "block"};
                         }
                         .btn {
-                            width: ${responsive ? 'min-content' : width ? `${width}px` : 'min-content'};
+                            width: ${responsive ? "min-content" : width ? `${width}px` : "min-content"};
                         }
                         .aligner {
-                            width: ${base.icon ? (responsive ? '12px' : '20px') : 0};
+                            width: ${base.icon ? (responsive ? "12px" : "20px") : 0};
                         }
                         .icon {
-                            right: ${responsive && style ? 0 : '8px'};
+                            right: ${responsive && style ? 0 : "8px"};
                         }
                     }
                 `}
-        </style>
+            </style>
         </div>
-  );
+    );
 };
