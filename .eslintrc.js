@@ -65,5 +65,14 @@ module.exports = {
     "react/display-name": 0,
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": 2,
-  }
+    "import/order": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
 };
