@@ -5,10 +5,15 @@ import { components } from "./helpers";
 /*Компонент внутренностей кнопки*/
 const ButtonInnerComponent: React.FC<ButtonInnerProps> = ({ icon, title, iconSize, type, size, style, responsive }) => {
     const SpecificIcon = components[icon];
+    console.log(iconSize);
     return (
         <>
             <div className="btn-text">{title}</div>
-            {icon && <SpecificIcon size={iconSize} />}
+            {icon && (
+                <i className="icon">
+                    <SpecificIcon size={iconSize} />
+                </i>
+            )}
             <div className="aligner" />
             <style jsx>
                 {`
