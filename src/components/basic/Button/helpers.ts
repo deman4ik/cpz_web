@@ -13,7 +13,7 @@ import {
     FilterVariantMinusIcon,
     EmailIcon,
     AccountIcon
-} from "../../../assets/icons/svg";
+} from "assets/icons/svg";
 
 export const components = {
     check: CheckIcon,

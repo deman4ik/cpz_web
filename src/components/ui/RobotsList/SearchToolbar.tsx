@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { useDebounce } from "../../../hooks/useDebounce";
-import { SET_SEARCH_PROPS } from "../../../graphql/local/mutations";
-import { GET_SEARCH_PROPS } from "../../../graphql/local/queries";
-import { SearchInput, CaptionButton } from "../../basic";
-import { getSearchProps } from "../../../config/utils";
+import { useDebounce } from "hooks/useDebounce";
+import { SET_SEARCH_PROPS } from "graphql/local/mutations";
+import { GET_SEARCH_PROPS } from "graphql/local/queries";
+import { SearchInput, CaptionButton } from "components/basic";
+import { getSearchProps } from "config/utils";
 import styles from "./SearchToolbar.module.css";
 
 interface Props {

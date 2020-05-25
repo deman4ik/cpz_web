@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
-import { Footer, PageHead, Header } from "../../layout";
-import { AW_CONVERSION_ID } from "../../../libs/gtag";
+import { Footer, PageHead, Header } from "components//layout";
+import { AW_CONVERSION_ID } from "libs/gtag";
 import styles from "./index.module.css";
 
 export const Done: React.FC = () => {

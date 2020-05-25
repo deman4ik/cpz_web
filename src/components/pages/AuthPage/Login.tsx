@@ -3,18 +3,18 @@ import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
 
-import { useFormValidation } from "../../../hooks/useFormValidation";
-import { validateAuth } from "../../../config/validation";
-import { login } from "../../../libs/auth";
-import { Input, Button } from "../../basic";
-import { PageHead, Header, Footer } from "../../layout";
+import { useFormValidation } from "hooks/useFormValidation";
+import { validateAuth } from "config/validation";
+import { login } from "libs/auth";
+import { Input, Button } from "components/basic";
+import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {
     email: ""
 };
 
-const TelegramLoginWithNoSSR = dynamic(() => import("../../ui/TelegramLogin"), { ssr: false });
+const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 const message =
     "If you do not see the Telegram login widget here, it seems that the Telegram is blocked in your country. Please use a proxy or VPN to access the Telegram login widget.";
 export const Login: React.FC = () => {

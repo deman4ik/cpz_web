@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 
-import { color } from "../../../config/constants";
-import { CloseIcon, MagnifyIcon } from "../../../assets/icons/svg";
+import { color } from "config/constants";
+import { CloseIcon, MagnifyIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
 interface Props {

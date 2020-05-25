@@ -1,4 +1,4 @@
-import dayjs from "../../../libs/dayjs";
+import dayjs from "libs/dayjs";
 
 export const formatRobotsData = (v_robots_stats: any) =>
     v_robots_stats.map((el: any) => {

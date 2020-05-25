@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Button } from "../../basic/Button";
+import { Button } from "components/basic/Button";
 import styles from "./index.module.css";
 
 interface Props {

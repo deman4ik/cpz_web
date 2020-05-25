@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 
-import { ArrowDownIcon, ArrowUpIcon } from "../../../assets/icons/svg";
-import { Button } from "../../basic";
-import { colorDirection, capitalize, getIconName, getColor } from "../../../config/utils";
+import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
+import { Button } from "components/basic";
+import { colorDirection, capitalize, getIconName, getColor } from "config/utils";
 import styles from "./OpenPositionsItemCard.module.css";
 import { PropsOpenPositionsItem } from "./types";
 

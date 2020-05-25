@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../../basic";
+import { Button } from "components/basic";
 
 interface Props {
     icon: string;

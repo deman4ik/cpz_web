@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS } from "./helpers";
 import { MainMenuItem } from "./MainMenuItem";
 import { MainMenuItemMobile } from "./MainMenuItemMobile";
-import logoAccent from "../../assets/img/logo-accent.png";
-import { PageType } from "../../config/types";
+import logoAccent from "assets/img/logo-accent.png";
+import { PageType } from "config/types";
 import styles from "./MainMenu.module.css";
 
 interface Props {

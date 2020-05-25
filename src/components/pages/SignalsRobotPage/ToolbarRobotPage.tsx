@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Button, CaptionButton } from "../../basic";
+import { Button, CaptionButton } from "components/basic";
 import { createVariable } from "./helpers";
 
 interface Props {

@@ -1,12 +1,12 @@
 import React from "react";
 
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
-import { Template } from "../../layout";
-import { PageType } from "../../../config/types";
-import { PageToolbar } from "../../common";
-import { RobotPerformance } from "../../ui/RobotPerformance";
-import { RobotOpenPositions } from "../../ui/RobotOpenPositions";
-import { SignalRobots } from "../../ui/SignalsRobots";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { Template } from "components/layout";
+import { PageType } from "config/types";
+import { PageToolbar } from "components/common";
+import { RobotPerformance } from "components/ui/RobotPerformance";
+import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
+import { SignalRobots } from "components/ui/SignalsRobots";
 import { Modals } from "./Modals";
 import styles from "./index.module.css";
 

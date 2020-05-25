@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 
-import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "../../../assets/icons/svg";
-import { capitalize, getColor, getIconName, colorDirection } from "../../../config/utils";
-import { color } from "../../../config/constants";
+import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
+import { capitalize, getColor, getIconName, colorDirection } from "config/utils";
+import { color } from "config/constants";
 import { PropsOpenPositionsItem } from "./types";
 import styles from "./OpenPositionsItem.module.css";
 

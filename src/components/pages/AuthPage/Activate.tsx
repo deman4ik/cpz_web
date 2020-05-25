@@ -4,9 +4,9 @@ import Router, { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 
 import { CartFooter } from "./common/CartFooter";
-import { USER } from "../../../graphql/local/queries";
-import { activate } from "../../../libs/auth";
-import { Footer, PageHead, Header } from "../../layout";
+import { USER } from "graphql/local/queries";
+import { activate } from "libs/auth";
+import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
 export const Activate: React.FC = () => {

@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { Robot, SectionType } from "../types";
 import { ClosedPositionsRobotPageItemCard } from "./ClosedPositionsRobotPageItemCard";
-import { NoRecentData } from "../../../common";
+import { NoRecentData } from "components/common";
 import styles from "./OpenPositionContainer.module.css";
 
 interface Props {

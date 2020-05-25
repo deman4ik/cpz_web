@@ -8,7 +8,7 @@ import {
     FilterVariantRemoveIcon,
     SettingsIcon,
     CloseIcon
-} from "../../../assets/icons/svg";
+} from "assets/icons/svg";
 
 interface Props {
     title: string;

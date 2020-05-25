@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { HeaderButtonRobotPage } from "./HeaderButtonRobotPage";
 import { HeaderStatsRobotPage } from "./HeaderStatsRobotPage";
-import { capitalize } from "../../../../config/utils";
+import { capitalize } from "config/utils";
 import styles from "./index.module.css";
 
 interface Props {

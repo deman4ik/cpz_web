@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 
-import { SubscribeModal, UnsubscribeModal } from "../../ui/Modals";
-import { Modal } from "../../basic";
+import { SubscribeModal, UnsubscribeModal } from "components/ui/Modals";
+import { Modal } from "components/basic";
 import { VisibleModal } from "./types";
 
 interface Props {

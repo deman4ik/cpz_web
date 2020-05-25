@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { colorAction } from "../../../config/utils";
+import { colorAction } from "config/utils";
 import styles from "./OpenPositionsTitle.module.css";
 
 interface Props {

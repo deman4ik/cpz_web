@@ -3,10 +3,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { moneyFormat, colorAction } from "../../../config/utils";
+import { moneyFormat, colorAction } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { formatVariables } from "./helpers";
-import { ChevronRightIcon } from "../../../assets/icons/svg";
+import { ChevronRightIcon } from "assets/icons/svg";
 import { RobotItemStatusBlock, RobotsButtonItem } from ".";
 import styles from "./RobotsItem.module.css";
 
@@ -18,7 +18,7 @@ interface Props {
     lastItem: boolean;
 }
 
-const DinamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const RobotsItem: React.FC<Props> = ({
     item,

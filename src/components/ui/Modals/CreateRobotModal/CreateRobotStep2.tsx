@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-import { Button, Input } from "../../../basic";
+import { Button, Input } from "components/basic";
 import styles from "../index.module.css";
-import { moneyFormat } from "../../../../config/utils";
+import { moneyFormat } from "config/utils";
 import { calculateCurrency, calculateAsset } from "../helpers";
 
 interface Props {

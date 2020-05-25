@@ -2,11 +2,11 @@
 import { useMemo, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from "../../../graphql/user/queries";
-import { GET_NOTIFICATIONS_PROPS } from "../../../graphql/local/queries";
-import { SET_NOTIFICATIONS_PROPS } from "../../../graphql/local/mutations";
-import { UPDATE_NOTIFICATIONS } from "../../../graphql/user/mutations";
-import { POLL_INTERVAL } from "../../../config/constants";
+import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from "graphql/user/queries";
+import { GET_NOTIFICATIONS_PROPS } from "graphql/local/queries";
+import { SET_NOTIFICATIONS_PROPS } from "graphql/local/mutations";
+import { UPDATE_NOTIFICATIONS } from "graphql/user/mutations";
+import { POLL_INTERVAL } from "config/constants";
 import { getFormatData, filters } from "./helpers";
 
 const RECORDS_LIMIT = 10;

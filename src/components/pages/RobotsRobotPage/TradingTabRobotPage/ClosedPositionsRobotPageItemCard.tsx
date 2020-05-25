@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formatDate, valueWithSign, colorAction, moneyFormat, splitCapitaize } from "../../../../config/utils";
+import { formatDate, valueWithSign, colorAction, moneyFormat, splitCapitaize } from "config/utils";
 import { VolumePositionRobotPageItem } from "./VolumePositionRobotPageItem";
 import { Robot, SectionType } from "../types";
 import styles from "./ClosedPositionsRobotPageItemCard.module.css";

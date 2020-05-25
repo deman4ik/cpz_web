@@ -2,18 +2,18 @@
 import React, { useState, useEffect, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { ROBOT } from "../../../../graphql/local/queries";
-import { GET_USER_EXCHANGES_WITH_MARKETS } from "../../../../graphql/profile/queries";
-import { USER_ROBOT_CREATE, USER_ROBOT_START } from "../../../../graphql/robots/mutations";
-import { CREATE_ROBOT, ACTION_ROBOT } from "../../../../graphql/local/mutations";
-import { exchangeName } from "../../../../config/utils";
-import { StepWizard } from "../../../basic";
+import { ROBOT } from "graphql/local/queries";
+import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
+import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
+import { CREATE_ROBOT, ACTION_ROBOT } from "graphql/local/mutations";
+import { exchangeName } from "config/utils";
+import { StepWizard } from "components/basic";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
-import { ErrorLine, LoadingIndicator } from "../../../common";
+import { ErrorLine, LoadingIndicator } from "components/common";
 import { getLimits, calculateCurrency } from "../helpers";
-import { event } from "../../../../libs/gtag";
+import { event } from "libs/gtag";
 import styles from "../index.module.css";
 
 interface Props {

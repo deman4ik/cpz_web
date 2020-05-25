@@ -1,7 +1,7 @@
-import dayjs from "../../../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { ToolTip, ToolTipArrow, ToolTipArea } from "./types";
-import { color } from "../../../config/constants";
-import { roundFormat } from "../../../config/utils";
+import { color } from "config/constants";
+import { roundFormat } from "config/utils";
 
 const { white, accent, positive, negative } = color;
 

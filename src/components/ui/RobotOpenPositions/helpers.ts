@@ -1,5 +1,5 @@
-import { color } from "../../../config/constants";
-import { formatDate, moneyFormat, round } from "../../../config/utils";
+import { color } from "config/constants";
+import { formatDate, moneyFormat, round } from "config/utils";
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");

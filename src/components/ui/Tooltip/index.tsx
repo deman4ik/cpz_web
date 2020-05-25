@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { HelpIcon } from "../../../assets/icons/svg";
-import { color } from "../../../config/constants";
+import { HelpIcon } from "assets/icons/svg";
+import { color } from "config/constants";
 import { TooltipComponent } from "./TooltipComponent";
 import styles from "./index.module.css";
 

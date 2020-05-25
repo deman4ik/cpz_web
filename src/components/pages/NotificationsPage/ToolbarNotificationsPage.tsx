@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { useClearNotifications } from "../../../hooks/useClearNotifications";
-import { CaptionButton, Select } from "../../basic";
+import { useClearNotifications } from "hooks/useClearNotifications";
+import { CaptionButton, Select } from "components/basic";
 import { headerSelectData } from "./helpers";
 
 interface Props {

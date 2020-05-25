@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { HeaderButtonRobotPage } from "./HeaderButtonRobotPage";
 import { HeaderStatsRobotPage } from "./HeaderStatsRobotPage";
-import { Tooltip } from "../../../ui/Tooltip";
+import { Tooltip } from "components/ui/Tooltip";
 // import { TooltipButton } from '../../ui/Tooltip/TooltipButton';
 // import { TooltipText } from '../../ui/Tooltip/TooltipText';
 // import { styles, responsive } from './HeaderRobotsRobotPage.style';

@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 
 import { CandleChart } from "./CandleChart";
-import { LoadingIndicator } from "../../../common";
+import { LoadingIndicator } from "components/common";
 import { floatPositions } from "../helpers";
 import { useFetchPositionData } from "./useFetchPositionData";
 import { ClosedPositionContainer } from "./ClosedPositionContainer";

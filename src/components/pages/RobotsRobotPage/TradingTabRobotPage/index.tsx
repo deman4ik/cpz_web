@@ -4,7 +4,7 @@ import { CandleChart } from "./CandleChart";
 import { useFetchPositionData } from "./useFetchPositionData";
 import { ClosedPositionContainer } from "./ClosedPositionContainer";
 import { OpenPositionContainer } from "./OpenPositionContainer";
-import { LoadingIndicator } from "../../../common";
+import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {

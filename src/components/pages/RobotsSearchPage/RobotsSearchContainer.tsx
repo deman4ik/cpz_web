@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useFetchRobots } from "../../../hooks/useFetchRobots";
-import { RobotsList } from "../../ui/RobotsList";
-import { LoadingIndicator } from "../../common";
+import { useFetchRobots } from "hooks/useFetchRobots";
+import { RobotsList } from "components/ui/RobotsList";
+import { LoadingIndicator } from "components/common";
 import { Modals } from "./Modals";
 import { formatRobotsData } from "./helpers";
 

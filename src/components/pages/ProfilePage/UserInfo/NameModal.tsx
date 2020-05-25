@@ -1,10 +1,10 @@
 import React, { memo, useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
-import { SET_USER_NAME } from "../../../../graphql/user/mutations";
-import { GET_USER_INFO } from "../../../../graphql/user/queries";
-import { Button, Input } from "../../../basic";
-import { MIN_NAME_LENGTH } from "../../../../config/constants";
+import { SET_USER_NAME } from "graphql/user/mutations";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { Button, Input } from "components/basic";
+import { MIN_NAME_LENGTH } from "config/constants";
 import styles from "./PasswordModal.module.css";
 
 interface Props {

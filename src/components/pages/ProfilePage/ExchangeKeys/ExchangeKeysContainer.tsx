@@ -7,7 +7,7 @@ import { ExchangeKeysDeleteKeyModal } from "./ExchangeKeysDeleteKeyModal";
 import { ExchangeKeysCard } from "./ExchangeKeysCard";
 import { ModalKey } from "./types";
 import styles from "./ExchangeKeysContainer.module.css";
-import { Modal } from "../../../basic";
+import { Modal } from "components/basic";
 
 interface Props {
     formatData: any;

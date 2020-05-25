@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { event } from "../../libs/gtag";
+import { event } from "libs/gtag";
 import { footerLinks, footerIcons, specificIcon } from "./helpers";
 import styles from "./Footer.module.css";
 

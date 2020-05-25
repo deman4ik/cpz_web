@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 
-import { ChevronDownIcon, ChevronUpIcon } from "../../../assets/icons/svg";
+import { ChevronDownIcon, ChevronUpIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
 interface Props {

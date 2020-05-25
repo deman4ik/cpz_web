@@ -2,7 +2,7 @@ import React from "react";
 
 import { DeviceContext } from "../deviceContext";
 import { getDisplayName } from "../getDisplayName";
-import { DeviceProps } from "../../config/types";
+import { DeviceProps } from "config/types";
 
 export const withDevice = (Page) => {
     const WithDevice = (props) => (

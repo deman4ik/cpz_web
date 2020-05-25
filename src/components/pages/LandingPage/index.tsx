@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHead } from "../../layout/PageHead";
+import { PageHead } from "components/layout/PageHead";
 
 import styles from "./index.module.css";
 import { Caption } from "./Caption";
@@ -9,7 +9,7 @@ import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
-import { Footer } from "../../layout";
+import { Footer } from "components/layout";
 
 const _LandingPage = () => (
     <>

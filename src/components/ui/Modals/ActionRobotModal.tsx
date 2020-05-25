@@ -2,14 +2,14 @@
 import React, { memo, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { ROBOT } from "../../../graphql/local/queries";
-import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "../../../graphql/robots/mutations";
-import { DELETE_ROBOT, ACTION_ROBOT } from "../../../graphql/local/mutations";
-import { capitalize } from "../../../config/utils";
-import { ErrorLine } from "../../common";
-import { Button } from "../../basic";
+import { ROBOT } from "graphql/local/queries";
+import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "graphql/robots/mutations";
+import { DELETE_ROBOT, ACTION_ROBOT } from "graphql/local/mutations";
+import { capitalize } from "config/utils";
+import { ErrorLine } from "components/common";
+import { Button } from "components/basic";
 import { actionText } from "./helpers";
-import { event } from "../../../libs/gtag";
+import { event } from "libs/gtag";
 import styles from "./index.module.css";
 
 interface Props {

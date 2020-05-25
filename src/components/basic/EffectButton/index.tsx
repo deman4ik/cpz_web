@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArrowLeftIcon, WindowCloseIcon } from "../../../assets/icons/svg";
+import { ArrowLeftIcon, WindowCloseIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
 interface Props {

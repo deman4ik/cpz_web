@@ -9,9 +9,9 @@ import {
     NotificationsIcon,
     HelpIcon,
     TelegramIcon
-} from "../../assets/icons/svg";
-import { NotificationCounter } from "../ui/NotificationCounter";
-import { PageType } from "../../config/types";
+} from "assets/icons/svg";
+import { NotificationCounter } from "components/ui/NotificationCounter";
+import { PageType } from "config/types";
 import styles from "./MainMenu.module.css";
 
 interface Props {

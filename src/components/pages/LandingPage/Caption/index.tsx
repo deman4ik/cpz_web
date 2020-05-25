@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
-import BigLogo from "../../../../assets/img/big-logo.png";
-import { PrimaryButton } from "../../../basic";
-import { Header } from "../../../layout";
-import { DOCS_URL } from "../../../../config/constants";
+import BigLogo from "assets/img/big-logo.png";
+import { PrimaryButton } from "components/basic";
+import { Header } from "components/layout";
+import { DOCS_URL } from "config/constants";
 import styles from "./index.module.css";
 
 const DinamicImageWithNoSSR = dynamic(() => import("./DinamicImage"), {

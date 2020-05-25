@@ -3,19 +3,19 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
-import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "../../../graphql/signals/queries";
-import { POLL_INTERVAL } from "../../../config/constants";
-import { NoRecentData } from "../../common";
-import { useFilters } from "../../../hooks/useFilters";
-import { Template } from "../../layout";
-import { capitalize } from "../../../config/utils";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
+import { POLL_INTERVAL } from "config/constants";
+import { NoRecentData } from "components/common";
+import { useFilters } from "hooks/useFilters";
+import { Template } from "components/layout";
+import { capitalize } from "config/utils";
 import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from "./helpers";
-import { PageType } from "../../../config/types";
+import { PageType } from "config/types";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
-import { Button, Modal } from "../../basic";
+import { Button, Modal } from "components/basic";
 import { CheckedFilters, LabelCombinations } from "./types";
 import styles from "./index.module.css";
 

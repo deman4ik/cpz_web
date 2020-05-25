@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "../../basic";
+import { Button } from "components/basic";
 import { displayData } from "./helpers";
 import styles from "./RobotsItem.module.css";
 

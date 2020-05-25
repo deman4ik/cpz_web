@@ -1,6 +1,6 @@
-import { capitalize } from "../../../config/utils";
-import { color } from "../../../config/constants";
-import dayjs from "../../../libs/dayjs";
+import { capitalize } from "config/utils";
+import { color } from "config/constants";
+import dayjs from "libs/dayjs";
 
 export const formatRobotData = (data: any) => {
     const {
