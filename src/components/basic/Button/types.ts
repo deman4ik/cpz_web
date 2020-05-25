@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React from "react";
 
 export type ButtonSize = "big" | "normal" | "small";
 export type ButtonType =
@@ -18,19 +18,23 @@ interface HoverChangesProps {
     icon?: string;
 }
 
-export interface ButtonProps {
+export interface ButtonInnerProps {
     title?: string;
     icon?: string;
     type?: string;
-    style?: CSSProperties;
+    style?: React.CSSProperties;
+    responsive?: boolean;
+    iconSize?: number;
+    size?: ButtonSize;
+}
+
+export interface ButtonProps extends ButtonInnerProps {
     isUppercase?: boolean;
     isLoading?: boolean;
-    size?: ButtonSize;
     width?: number;
     disabled?: boolean;
     onClick?: () => void;
     className?: string;
     hoverChanges?: HoverChangesProps;
-    responsive?: boolean;
     clickable?: boolean;
 }
