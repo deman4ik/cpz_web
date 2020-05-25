@@ -49,6 +49,7 @@ export const GET_ROBOT_INFO = gql`
             }
             started_at
             user_signals {
+                id
                 subscribed_at
                 volume
                 statistics
@@ -120,7 +121,9 @@ export const GET_ROBOT_POSITIONS = (key: string) => gql`
       alerts
       volume
       robot {
+        id
         user_signals {
+          id
           volume
         }
       }
@@ -228,7 +231,9 @@ export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
       position_entry
       position_exit
       robot {
+        id
         user_signals {
+          id
           volume
           subscribed_at
         }
@@ -260,6 +265,7 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
       position_entry
       position_exit
       user_robot {
+        id
         settings
       }
     }
@@ -285,6 +291,7 @@ export const USER_ROBOTS = gql`
             started_at
             equity
             robot {
+                id
                 name
                 asset
                 currency
@@ -386,7 +393,9 @@ export const GET_USER_POSITIONS_OPEN_POS = gql`
             asset
             exchange
             user_robot {
+                id
                 robot {
+                    id
                     name
                     code
                 }

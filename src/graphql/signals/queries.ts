@@ -24,6 +24,7 @@ export const GET_ROBOTS_BY_STATS = gql`
                     volume
                 }
                 user_signals {
+                    id
                     subscribed_at
                     volume
                     equity
@@ -37,6 +38,7 @@ export const SEARCH_SIGNALS_FILTERS = gql`
     query signals_filters($where: v_robots_stats_bool_exp) {
         filters: v_robots_stats(where: $where) {
             robots {
+                id
                 exchange
                 asset
                 timeframe
@@ -128,6 +130,7 @@ export const USER_SIGNALS = gql`
                 currency
                 exchange
                 user_signals {
+                    id
                     subscribed_at
                     volume
                     equity
@@ -152,12 +155,14 @@ export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
             entry_date
             entry_price
             robot {
+                id
                 code
                 name
                 asset
                 exchange
             }
             user_signal {
+                id
                 volume
             }
         }
