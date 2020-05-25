@@ -8,7 +8,11 @@ const ButtonInnerComponent: React.FC<ButtonInnerProps> = ({ icon, title, iconSiz
     return (
         <>
             <div className="btn-text">{title}</div>
-            {icon && <SpecificIcon size={iconSize} />}
+            {icon && (
+                <i className="icon">
+                    <SpecificIcon size={iconSize} />
+                </i>
+            )}
             <div className="aligner" />
             <style jsx>
                 {`
