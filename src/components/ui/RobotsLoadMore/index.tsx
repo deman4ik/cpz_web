@@ -1,25 +1,25 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { Button } from '../../basic/Button';
-import styles from './index.module.css';
+import { Button } from "../../basic/Button";
+import styles from "./index.module.css";
 
 interface Props {
-  onFetchMore: () => void;
-  isLoadingMore: boolean;
-  renderLoadMoreButton: boolean;
+    onFetchMore: () => void;
+    isLoadingMore: boolean;
+    renderLoadMoreButton: boolean;
 }
 
 export const _RobotsLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
-  <>
-      {renderLoadMoreButton && (
-        <div className={styles.btnPosition}>
-              <Button
-        width={146}
-        title='load more'
-        type='dimmed'
-        icon='arrowdown'
-        isUppercase
-        isLoading={isLoadingMore}
+    <>
+        {renderLoadMoreButton && (
+            <div className={styles.btnPosition}>
+                <Button
+                    width={146}
+                    title="load more"
+                    type="dimmed"
+                    icon="arrowdown"
+                    isUppercase
+                    isLoading={isLoadingMore}
                     onClick={onFetchMore}
                 />
             </div>

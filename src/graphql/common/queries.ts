@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GET_MARKETS = gql`
     query markets($asset: String!, $exchange: String!, $currency: String!) {

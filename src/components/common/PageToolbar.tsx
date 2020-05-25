@@ -1,23 +1,23 @@
-import React, { memo } from 'react';
-import Router from 'next/router';
+import React, { memo } from "react";
+import Router from "next/router";
 
-import { CaptionButton } from '../basic';
+import { CaptionButton } from "../basic";
 //import styles from '../../config/common.module.css';
 
 interface Props {
-  displayType: string;
+    displayType: string;
 }
 
 const _PageToolbar: React.FC<Props> = ({ displayType }) => {
-  const handleOnPress = () => {
-    Router.push(`/${displayType}/search`);
-  };
+    const handleOnPress = () => {
+        Router.push(`/${displayType}/search`);
+    };
 
-  return (
-      <div className='toolbar'>
-      <CaptionButton title={`Add ${displayType}`} icon='plus' onClick={handleOnPress} />
+    return (
+        <div className="toolbar">
+            <CaptionButton title={`Add ${displayType}`} icon="plus" onClick={handleOnPress} />
         </div>
-  );
+    );
 };
 
 export const PageToolbar = memo(_PageToolbar);

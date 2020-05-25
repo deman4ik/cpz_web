@@ -1,55 +1,55 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { useShowDimension } from '../../../hooks/useShowDimension';
-import { SCREEN_TYPE } from '../../../config/constants';
-import { NoRecentData } from '../../common';
-import { PerformanceTabItem } from './PerformanceTabItem';
-import { PerformanceTabItemCard } from './PerformanceTabItemCard';
-import { PerformanceTabStatisticts } from './PerformanceTabStatisticts';
-import { capitalize } from '../../../config/utils';
-import styles from './PerformanceTabComponent.module.css';
+import { useShowDimension } from "../../../hooks/useShowDimension";
+import { SCREEN_TYPE } from "../../../config/constants";
+import { NoRecentData } from "../../common";
+import { PerformanceTabItem } from "./PerformanceTabItem";
+import { PerformanceTabItemCard } from "./PerformanceTabItemCard";
+import { PerformanceTabStatisticts } from "./PerformanceTabStatisticts";
+import { capitalize } from "../../../config/utils";
+import styles from "./PerformanceTabComponent.module.css";
 
 interface Props {
-  robotStatistic: any;
-  width: number;
+    robotStatistic: any;
+    width: number;
 }
 
 const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) => {
-  const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
+    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
 
-  return (
-      <>
-      {!robotStatistic ? (
-              <NoRecentData message='No recent data available' />
+    return (
+        <>
+            {!robotStatistic ? (
+                <NoRecentData message="No recent data available" />
             ) : (
-        <div className={styles.accordionSurface}>
+                <div className={styles.accordionSurface}>
                     {isDesktopView && <PerformanceTabStatisticts />}
                     <>
                         {Object.keys(robotStatistic).map((subtitle) => (
                             <div key={subtitle}>
-                            {isDesktopView ? (
-                                  <>
-                                      <div className={styles.tableTitle}>
-                                      <div className={styles.tableTitleText}>{capitalize(subtitle)}</div>
-                                    </div>
+                                {isDesktopView ? (
+                                    <>
+                                        <div className={styles.tableTitle}>
+                                            <div className={styles.tableTitleText}>{capitalize(subtitle)}</div>
+                                        </div>
                                         {robotStatistic[subtitle].map((item, idx) => (
-                                      <PerformanceTabItem key={idx} item={item} />
-                                    ))}
+                                            <PerformanceTabItem key={idx} item={item} />
+                                        ))}
                                     </>
                                 ) : (
-                      <>
+                                    <>
                                         {robotStatistic[subtitle].map((item, idx) => (
-                            <PerformanceTabItemCard key={idx} item={item} subtitle={subtitle} />
-                          ))}
+                                            <PerformanceTabItemCard key={idx} item={item} subtitle={subtitle} />
+                                        ))}
                                     </>
                                 )}
-                          </div>
-                      ))}
-          </>
+                            </div>
+                        ))}
+                    </>
                 </div>
             )}
         </>
-  );
+    );
 };
 
 export const PerformanceTabComponent = memo(_PerformanceTabComponent);

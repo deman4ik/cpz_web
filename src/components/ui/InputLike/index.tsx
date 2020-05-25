@@ -1,30 +1,30 @@
-import React from 'react';
-import { Button } from '../../basic';
+import React from "react";
+import { Button } from "../../basic";
 
 interface Props {
-  icon: string;
-  value: string;
-  buttonTitle?: string;
-  onClickButton?: () => void;
-  width?: number;
+    icon: string;
+    value: string;
+    buttonTitle?: string;
+    onClickButton?: () => void;
+    width?: number;
 }
 
 export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width = 350, buttonTitle }) => {
-  const handleOnClick = (e) => {
-    e.stopPropagation();
-    onClickButton();
-  };
+    const handleOnClick = (e) => {
+        e.stopPropagation();
+        onClickButton();
+    };
 
-  return (
-      <div className='wrapper' onClick={handleOnClick}>
-      <div className='container'>
-          <div className='icon'>
-          <Button title={buttonTitle || 'Change'} type='dimmed' size='small' responsive icon={icon} />
+    return (
+        <div className="wrapper" onClick={handleOnClick}>
+            <div className="container">
+                <div className="icon">
+                    <Button title={buttonTitle || "Change"} type="dimmed" size="small" responsive icon={icon} />
                 </div>
-          <div className='input'>{value}</div>
-        </div>
+                <div className="input">{value}</div>
+            </div>
             <style jsx>
-          {`
+                {`
                     .wrapper {
                         width: ${width}px;
                         cursor: pointer;
@@ -41,7 +41,7 @@ export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width =
                         color: var(--accent);
                         border-radius: 2px;
                         padding: 11px;
-                        padding-right: ${icon ? '35px' : '11px'};
+                        padding-right: ${icon ? "35px" : "11px"};
                         height: 38px;
                     }
                     .searchInput.error {
@@ -62,7 +62,7 @@ export const InputLike: React.FC<Props> = ({ icon, value, onClickButton, width =
                         }
                     }
                 `}
-        </style>
+            </style>
         </div>
-  );
+    );
 };

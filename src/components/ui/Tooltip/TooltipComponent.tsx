@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
 interface Props {
-  show: boolean;
-  message: string;
-  direction: string;
-  location: string;
+    show: boolean;
+    message: string;
+    direction: string;
+    location: string;
 }
 
 export const TooltipComponent: React.FC<Props> = ({ show, message, direction, location }) => (
-  <div className='tooltip' style={{ visibility: show ? 'visible' : 'hidden' }}>
-      <div className='text'>{message}</div>
+    <div className="tooltip" style={{ visibility: show ? "visible" : "hidden" }}>
+        <div className="text">{message}</div>
         <style jsx>
-      {`
+            {`
                 .tooltip {
                     display: flex;
                     position: absolute;
@@ -21,7 +21,7 @@ export const TooltipComponent: React.FC<Props> = ({ show, message, direction, lo
                     background-color: var(--lightBg);
                     padding: 15px 20px;
                     box-shadow: var(--shadow);
-                    ${direction === 'down' ? 'top' : 'bottom'}: 30px;
+                    ${direction === "down" ? "top" : "bottom"}: 30px;
                     right: -200px;
                     width: 400px;
                     height: auto;
@@ -34,17 +34,17 @@ export const TooltipComponent: React.FC<Props> = ({ show, message, direction, lo
                 }
                 @media (max-width: 768px) {
                     .tooltip {
-                        right: ${direction === 'down' ? -70 : -55}px;
-                        ${direction === 'up' && location === 'left' ? 'left: -140px;' : ''}
+                        right: ${direction === "down" ? -70 : -55}px;
+                        ${direction === "up" && location === "left" ? "left: -140px;" : ""}
                     }
                 }
                 @media (max-width: 480px) {
                     .tooltip {
                         width: 300px;
-                        ${direction === 'up' ? 'left: -193px;' : 'right: -20px;'}
+                        ${direction === "up" ? "left: -193px;" : "right: -20px;"}
                     }
                 }
             `}
-    </style>
+        </style>
     </div>
 );
