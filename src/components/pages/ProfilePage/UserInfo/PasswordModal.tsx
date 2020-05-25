@@ -2,11 +2,11 @@
 import React, { memo, useEffect, useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
-import { useFormValidation } from "../../../../hooks/useFormValidation";
-import { SET_USER_PASSWORD } from "../../../../graphql/user/mutations";
-import { validateAuth } from "../../../../config/validation";
-import { Input, Button } from "../../../basic";
-import { ErrorLine } from "../../../common";
+import { useFormValidation } from "hooks/useFormValidation";
+import { SET_USER_PASSWORD } from "graphql/user/mutations";
+import { validateAuth } from "config/validation";
+import { Input, Button } from "components/basic";
+import { ErrorLine } from "components/common";
 import styles from "./PasswordModal.module.css";
 import styles_main from "./index.module.css";
 

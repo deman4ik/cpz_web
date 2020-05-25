@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Input, Button } from "../../../basic";
+import { Input, Button } from "components/basic";
 import styles from "./EmailModal.module.css";
 
 interface Props {

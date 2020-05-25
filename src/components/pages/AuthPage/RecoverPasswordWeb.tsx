@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 
-import { Footer, PageHead, Header } from "../../layout";
+import { Footer, PageHead, Header } from "components/layout";
 import { CartFooter } from "./common/CartFooter";
-import { Button, Input } from "../../basic";
-import { useFormValidation } from "../../../hooks/useFormValidation";
-import { validateAuth } from "../../../config/validation";
-import { recoverEncoded } from "../../../libs/auth";
+import { Button, Input } from "components/basic";
+import { useFormValidation } from "hooks/useFormValidation";
+import { validateAuth } from "config/validation";
+import { recoverEncoded } from "libs/auth";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {

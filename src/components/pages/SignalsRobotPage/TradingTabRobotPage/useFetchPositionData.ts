@@ -2,9 +2,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { GET_ROBOT_POSITIONS } from "../../../../graphql/robots/queries";
-import { ROBOT_POSITIONS_COUNT } from "../../../../graphql/signals/queries";
-import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "../../../../config/constants";
+import { GET_ROBOT_POSITIONS } from "graphql/robots/queries";
+import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
+import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 import { getFormatDataClosedPositions, getAlerts } from "../helpers";
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {

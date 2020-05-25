@@ -1,6 +1,6 @@
 import * as Sets from "./NotificationsSets";
 import * as SetsCard from "./NotificationsSetsCard";
-import { color, DOCS_URL, SUPPORT_URL } from "../../../config/constants";
+import { color, DOCS_URL, SUPPORT_URL } from "config/constants";
 
 const actionTypes = ["long", "closeShort"];
 const actionSignals = ["long", "short"];

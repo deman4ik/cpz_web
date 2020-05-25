@@ -1,11 +1,11 @@
 import React from "react";
 import Router from "next/router";
 
-import { useShowDimension } from "../../../hooks/useShowDimension";
-import { SCREEN_TYPE } from "../../../config/constants";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
 import { NotificationsItem } from "./NotificationsItem";
 import { NotificationsItemCard } from "./NotificationsItemCard";
-import { RobotsLoadMore } from "../../ui/RobotsLoadMore";
+import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 
 import styles from "./NotificationsContainer.module.css";
 

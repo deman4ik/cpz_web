@@ -2,13 +2,13 @@ import React from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/react-hooks";
 
-import { SET_MODAL_STATE } from "../../../graphql/local/mutations";
-import { MODAL_VISIBLE } from "../../../graphql/local/queries";
-import { SCREEN_TYPE } from "../../../config/constants";
-import { useShowDimension } from "../../../hooks/useShowDimension";
+import { SET_MODAL_STATE } from "graphql/local/mutations";
+import { MODAL_VISIBLE } from "graphql/local/queries";
+import { SCREEN_TYPE } from "config/constants";
+import { useShowDimension } from "hooks/useShowDimension";
 import { RobotsHeader, RobotsItem, RobotsItemCard } from "../RobotsItems";
-import { useDummyCarts } from "../../../hooks/useDummyCarts";
-import { DummyCards } from "../../common/DummyCards";
+import { useDummyCarts } from "hooks/useDummyCarts";
+import { DummyCards } from "components/common/DummyCards";
 import { RobotsLoadMore } from "../RobotsLoadMore";
 import styles from "./index.module.css";
 

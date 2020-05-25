@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-import { Button } from "../../../basic";
-import { AlertIcon } from "../../../../assets/icons/svg";
-import { color } from "../../../../config/constants";
+import { Button } from "components/basic";
+import { AlertIcon } from "assets/icons/svg";
+import { color } from "config/constants";
 import styles from "../index.module.css";
 
 interface Props {

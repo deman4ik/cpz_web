@@ -1,14 +1,7 @@
 import React from "react";
 
 import { SectionType } from "../types";
-import {
-    formatDate,
-    valueWithSign,
-    colorAction,
-    capitalize,
-    moneyFormat,
-    splitCapitaize
-} from "../../../../config/utils";
+import { formatDate, valueWithSign, colorAction, capitalize, moneyFormat, splitCapitaize } from "config/utils";
 import { renderAction, renderVolume } from "./ComposedItems";
 import styles from "./ClosedPositionsRobotPageItemCard.module.css";
 

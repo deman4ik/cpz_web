@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-import tradingApp from "../../../assets/img/trading-app.png";
-import { PrimaryButton } from "../../basic";
-import { CircleIcon } from "../../../assets/icons/svg";
+import tradingApp from "assets/img/trading-app.png";
+import { PrimaryButton } from "components/basic";
+import { CircleIcon } from "assets/icons/svg";
 import { tradingSteps } from "./helpers";
 import { TradingStepType } from "./types";
 import styles from "./TradingApp.module.css";

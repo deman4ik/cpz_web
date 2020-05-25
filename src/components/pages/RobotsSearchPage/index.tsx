@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Router from "next/router";
 
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
-import { Template } from "../../layout";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { Template } from "components/layout";
 import { RobotsSearchContainer } from "./RobotsSearchContainer";
-import { SearchToolbar } from "../../ui/RobotsList/SearchToolbar";
-import { Modal } from "../../basic";
-import { PageType } from "../../../config/types";
-import { SearchFiltersModal } from "../../ui/Modals";
+import { SearchToolbar } from "components/ui/RobotsList/SearchToolbar";
+import { Modal } from "components/basic";
+import { PageType } from "config/types";
+import { SearchFiltersModal } from "components/ui/Modals";
 import styles from "./index.module.css";
 
 export const RobotsSearchPage: React.FC = () => {

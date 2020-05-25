@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import Router from "next/router";
 
-import { confirm } from "../../../libs/auth";
-import { useFormValidation } from "../../../hooks/useFormValidation";
-import { validateAuth } from "../../../config/validation";
-import { USER } from "../../../graphql/local/queries";
+import { confirm } from "libs/auth";
+import { useFormValidation } from "hooks/useFormValidation";
+import { validateAuth } from "config/validation";
+import { USER } from "graphql/local/queries";
 import { CartFooter } from "./common/CartFooter";
-import { Button, Input } from "../../basic";
-import { Footer, PageHead, Header } from "../../layout";
+import { Button, Input } from "components/basic";
+import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {

@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-import { PrimaryButton } from "../../basic";
-import phoneImg from "../../../assets/img/phone-img.png";
-import { CircleIcon } from "../../../assets/icons/svg";
+import { PrimaryButton } from "components/basic";
+import phoneImg from "assets/img/phone-img.png";
+import { CircleIcon } from "assets/icons/svg";
 import styles from "./TradingApp.module.css";
 
 const _TelegramBot: React.FC = () => (

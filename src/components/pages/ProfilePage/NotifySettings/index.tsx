@@ -1,10 +1,10 @@
 import React, { memo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { GET_USER_INFO } from "../../../../graphql/user/queries";
-import { SET_NOTIFICATION_SETTINGS } from "../../../../graphql/user/mutations";
-import { LoadingIndicator } from "../../../common";
-import { capitalize } from "../../../../config/utils";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { SET_NOTIFICATION_SETTINGS } from "graphql/user/mutations";
+import { LoadingIndicator } from "components/common";
+import { capitalize } from "config/utils";
 import { extraSettings, serviceName } from "./helpers";
 import { NotificationProps } from "./types";
 import { Notify } from "./Notify";

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { SCREEN_TYPE } from "../../../config/constants";
-import { useShowDimension } from "../../../hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
+import { useShowDimension } from "hooks/useShowDimension";
 import { Step } from "./Step";
 
 interface Props {

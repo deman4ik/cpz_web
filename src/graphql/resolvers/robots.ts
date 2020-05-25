@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import dayjs from "../../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { USER_ROBOTS, GET_ROBOTS_BY_STATS, GET_ROBOT_INFO_USER_ROBOTS } from "../robots/queries";
 
 export const deleteRobot = (_root: any, variables: any, context: any) => {

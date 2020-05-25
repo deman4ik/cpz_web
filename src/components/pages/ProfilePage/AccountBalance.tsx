@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { BetaIcon } from "../../../assets/icons/svg";
-import { color } from "../../../config/constants";
+import { BetaIcon } from "assets/icons/svg";
+import { color } from "config/constants";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: React.FC = () => (

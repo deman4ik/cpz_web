@@ -9,7 +9,7 @@ import { createChart } from "lightweight-charts";
 import { styles } from "./LightWeightChart.style";
 import { toolTipTemplate, toolTipArrowTemplate, toolTipTemplateArea } from "./templates";
 import { PropsLighweightChart, ChartType } from "./types";
-import { color } from "../../../config/constants";
+import { color } from "config/constants";
 import { getLeftOffsetButton } from "./helpers";
 
 const toolTipWidth = 140;

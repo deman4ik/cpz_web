@@ -2,10 +2,10 @@ import React, { memo, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
-import { GET_USER_INFO } from "../../../../graphql/user/queries";
-import { Button, Modal } from "../../../basic";
-import { InputLike } from "../../../ui/InputLike";
-import { LoadingIndicator, NoRecentData } from "../../../common";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { Button, Modal } from "components/basic";
+import { InputLike } from "components/ui/InputLike";
+import { LoadingIndicator, NoRecentData } from "components/common";
 import { NameModal } from "./NameModal";
 import { EmailModal } from "./EmailModal";
 import { PasswordModal } from "./PasswordModal";
@@ -16,7 +16,7 @@ interface Props {
     width: number;
 }
 
-const TelegramLoginWithNoSSR = dynamic(() => import("../../../ui/TelegramLogin"), { ssr: false });
+const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 
 const _UserInfo: React.FC<Props> = ({ width }) => {
     const { data, loading } = useQuery(GET_USER_INFO);

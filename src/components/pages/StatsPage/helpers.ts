@@ -1,6 +1,6 @@
-import { getRobotStatistic } from "../../ui/PerformanceTab/helpers";
-import dayjs from "../../../libs/dayjs";
-import { exchangeName } from "../../../config/utils";
+import { getRobotStatistic } from "components/ui/PerformanceTab/helpers";
+import dayjs from "libs/dayjs";
+import { exchangeName } from "config/utils";
 import { CheckedFilters } from "./types";
 
 export const getFormatData = (stats) => {

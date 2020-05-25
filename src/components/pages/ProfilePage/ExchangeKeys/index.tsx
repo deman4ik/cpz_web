@@ -1,9 +1,9 @@
 import React, { useMemo, memo } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { GET_USER_EXCHANGES } from "../../../../graphql/profile/queries";
+import { GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { ExchangeKeysContainer } from "./ExchangeKeysContainer";
-import { LoadingIndicator } from "../../../common";
+import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { RobotIcon, LiveHelpIcon, TelegramIcon } from "../../../../assets/icons/svg";
-import { PrimaryButton } from "../../../basic";
+import { RobotIcon, LiveHelpIcon, TelegramIcon } from "assets/icons/svg";
+import { PrimaryButton } from "components/basic";
 import { SupportItemType } from "../types";
 import styles from "./SupportItem.module.css";
 

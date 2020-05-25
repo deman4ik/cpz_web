@@ -1,10 +1,10 @@
 import React, { useState, memo } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
-import { UPDATE_EXCHANGE_NAME } from "../../../../graphql/profile/mutations";
-import { GET_USER_EXCHANGES } from "../../../../graphql/profile/queries";
-import { Button, Input } from "../../../basic";
-import { ErrorLine } from "../../../common";
+import { UPDATE_EXCHANGE_NAME } from "graphql/profile/mutations";
+import { GET_USER_EXCHANGES } from "graphql/profile/queries";
+import { Button, Input } from "components/basic";
+import { ErrorLine } from "components/common";
 import styles from "./ExchangeKeysEditNameModal.module.css";
 import { EditName } from "./types";
 

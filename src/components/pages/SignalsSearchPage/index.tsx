@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Router from "next/router";
 
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import useWindowDimensions from "hooks/useWindowDimensions";
 //import { useDebounce } from '../../../hooks/useDebounce';
-import { Template } from "../../layout";
+import { Template } from "components/layout";
 import { SignalsSearchContainer } from "./SignalsSearchContainer";
-import { Modal } from "../../basic";
-import { SearchToolbar } from "../../ui/RobotsList/SearchToolbar";
-import { PageType } from "../../../config/types";
-import { SearchFiltersModal } from "../../ui/Modals";
+import { Modal } from "components/basic";
+import { SearchToolbar } from "components/ui/RobotsList/SearchToolbar";
+import { PageType } from "config/types";
+import { SearchFiltersModal } from "components/ui/Modals";
 import styles from "./index.module.css";
 
 export const SignalsSearchPage: React.FC = () => {

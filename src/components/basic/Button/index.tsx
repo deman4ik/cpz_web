@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonProps } from "./types";
 import { props } from "./helpers";
-import { LoadingIndicator } from "../../common";
+import { LoadingIndicator } from "components/common";
 // components parts
 import ButtonInnerComponent from "./ButtonInner";
 

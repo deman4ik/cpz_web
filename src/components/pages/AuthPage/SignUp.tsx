@@ -4,11 +4,11 @@ import { useApolloClient } from "@apollo/react-hooks";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
-import { useFormValidation } from "../../../hooks/useFormValidation";
-import { validateAuth } from "../../../config/validation";
-import { register } from "../../../libs/auth";
-import { Button, Input } from "../../basic";
-import { PageHead, Footer, Header } from "../../layout";
+import { useFormValidation } from "hooks/useFormValidation";
+import { validateAuth } from "config/validation";
+import { register } from "libs/auth";
+import { Button, Input } from "components/basic";
+import { PageHead, Footer, Header } from "components/layout";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {

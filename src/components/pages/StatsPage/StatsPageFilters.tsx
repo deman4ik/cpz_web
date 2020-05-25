@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { Button } from "../../basic";
-import { exchangeName, capitalize } from "../../../config/utils";
+import { Button } from "components/basic";
+import { exchangeName, capitalize } from "config/utils";
 import styles from "./StatsPageFilters.module.css";
 
 interface Props {

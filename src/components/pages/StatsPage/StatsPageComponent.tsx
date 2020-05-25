@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
-import { ChartType } from "../../charts/LightWeightChart/types";
-import { capitalize } from "../../../config/utils";
-import { PerformanceTabComponent } from "../../ui/PerformanceTab/PerformanceTabComponent";
-import { LoadingIndicator } from "../../common";
+import { ChartType } from "components/charts/LightWeightChart/types";
+import { capitalize } from "config/utils";
+import { PerformanceTabComponent } from "components/ui/PerformanceTab/PerformanceTabComponent";
+import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
     displayType: string;
 }
 
-const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeightChart"), {
+const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
     loading: () => <LoadingIndicator />,
     ssr: false
 });

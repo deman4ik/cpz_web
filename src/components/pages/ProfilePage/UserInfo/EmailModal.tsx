@@ -2,11 +2,11 @@
 import React, { memo, useState, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
-import { SECRET_CODE_LENGTH } from "../../../../config/constants";
-import { CHANGE_USER_EMAIL, CONFIRM_USER_EMAIL } from "../../../../graphql/user/mutations";
-import { GET_USER_INFO } from "../../../../graphql/user/queries";
-import { validateEmail } from "../../../../config/validation";
-import { StepWizard } from "../../../basic";
+import { SECRET_CODE_LENGTH } from "config/constants";
+import { CHANGE_USER_EMAIL, CONFIRM_USER_EMAIL } from "graphql/user/mutations";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { validateEmail } from "config/validation";
+import { StepWizard } from "components/basic";
 import { EmailStep1 } from "./EmailStep1";
 import { EmailStep2 } from "./EmailStep2";
 import styles from "./EmailModal.module.css";

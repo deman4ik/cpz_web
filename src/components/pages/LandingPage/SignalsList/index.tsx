@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { GET_LANDING_ROBOTS } from "../../../../graphql/robots/queries";
-import { PrimaryButton } from "../../../basic";
+import { GET_LANDING_ROBOTS } from "graphql/robots/queries";
+import { PrimaryButton } from "components/basic";
 import { SignalsListCard } from "./SignalsListCard";
 import { LoadingDummy } from "./LoadingDummy";
 import styles from "./index.module.css";

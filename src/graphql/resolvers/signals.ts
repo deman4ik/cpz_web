@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import dayjs from "../../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { USER_SIGNALS, GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS } from "../signals/queries";
 import { ROBOT_POSITION_WITH_CANDLE } from "../robots/queries";
 

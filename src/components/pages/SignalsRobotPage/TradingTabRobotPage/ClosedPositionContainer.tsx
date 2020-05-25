@@ -2,13 +2,13 @@ import React, { memo } from "react";
 
 import { HeaderTradingTabRobotPage } from "./HeaderTradingTabRobotPage";
 import { ClosedPositionsRobotPageItem } from "./ClosedPositionsRobotPageItem";
-import { useShowDimension } from "../../../../hooks/useShowDimension";
-import { SCREEN_TYPE } from "../../../../config/constants";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
 import { ClosedPositionsRobotPageItemCard } from "./ClosedPositionsRobotPageItemCard";
 import { SectionType } from "../types";
 import styles from "./ClosedPositionContainer.module.css";
-import { RobotsLoadMore } from "../../../ui/RobotsLoadMore";
-import { NoRecentData } from "../../../common";
+import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
+import { NoRecentData } from "components/common";
 
 interface Props {
     robot: any;

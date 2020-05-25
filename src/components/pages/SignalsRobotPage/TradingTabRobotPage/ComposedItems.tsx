@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ArrowDownIcon, ArrowUpIcon } from "../../../../assets/icons/svg";
+import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { SectionType } from "../types";
-import { colorAction, getIconName, getColor, getIconNameAction } from "../../../../config/utils";
+import { colorAction, getIconName, getColor, getIconNameAction } from "config/utils";
 import styles from "./ClosedPositionsRobotPageItemCard.module.css";
 
 const components = {

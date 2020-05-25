@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { displayData, statusTypes } from "../../../ui/RobotsItems/helpers";
-import { Button } from "../../../basic";
+import { displayData, statusTypes } from "components/ui/RobotsItems/helpers";
+import { Button } from "components/basic";
 import { createVariable } from "../helpers";
 import styles from "./HeaderButtonRobotPage.module.css";
 

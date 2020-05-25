@@ -1,4 +1,4 @@
-import { moneyFormat } from "../../../config/utils";
+import { moneyFormat } from "config/utils";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account and you use it at your own risk!",

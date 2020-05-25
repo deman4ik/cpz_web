@@ -1,7 +1,7 @@
 import React from "react";
 
-import { formatDate, capitalize, valueWithSign, colorDirection, moneyFormat } from "../../../../config/utils";
-import { color } from "../../../../config/constants";
+import { formatDate, capitalize, valueWithSign, colorDirection, moneyFormat } from "config/utils";
+import { color } from "config/constants";
 import { Robot } from "../types";
 import styles from "./ClosedPositionsRobotPageItem.module.css";
 
