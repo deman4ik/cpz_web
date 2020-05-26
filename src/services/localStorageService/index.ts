@@ -24,17 +24,28 @@ class LocalStorageService {
 
     /**
      * Метод получения элементов
-     * @param items {Array<>string>} - массив элементов названия
+     * @param keys {Array<string>} - массив ключей
      * @param type {string} - тип возвращаемого объекта
      * @return {array | object} -  массив элементов или объект элементов
      */
-    getItems = (items: Array<string>, type?: string): any => {
+    getItems = (keys: Array<string>, type?: string): any => {
         if (type === "object") {
             const result = {};
-            items.forEach((key: string) => (result[key] = this.storage?.getItem(key)));
+            keys.forEach((key: string) => (result[key] = this.storage?.getItem(key)));
             return result;
         }
-        return items.map((key: string) => ({ [key]: this.storage?.getItem(key) }));
+        return keys.map((key: string) => ({ [key]: this.storage?.getItem(key) }));
+    };
+
+    /**
+     * Функция отчистки из localStorage
+     * @param keys -  массив ключей
+     */
+    clearItems = (keys: Array<string>): void => {
+        const itemsObj = this.getItems(keys, "object");
+        keys.forEach((key) => {
+            if (itemsObj[key]) this.storage.removeItem(key);
+        });
     };
 
     /**
