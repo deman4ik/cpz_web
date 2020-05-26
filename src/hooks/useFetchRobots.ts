@@ -8,6 +8,8 @@ import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "../graphql/local/queries";
 import { SET_SEARCH_LIMIT } from "../graphql/local/mutations";
 import { POLL_INTERVAL } from "../config/constants";
 import { getHash, getSearchProps } from "../config/utils";
+// services
+import LocalStorageService from "services/LocalStorageService";
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -25,10 +27,15 @@ const defaultOrderBy = {
 };
 
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
+    /* Получение настроек состояния  страницы localStorage */
+    const storageData = LocalStorageService.getItems([`${dispayType}_limit`, `${dispayType}_filters`], "object");
+    const storageLimit = Number(storageData[`${dispayType}_limit`]);
+    // const storageFilters = storageData[`${dispayType}_filters`];
+
     const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
-    const [limit, setLimit] = useState(searchLimit.Limit[dispayType]);
+    const [limit, setLimit] = useState(storageLimit || searchLimit.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
         robots: {},
         hash: "",
@@ -111,6 +118,15 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
                 setLimit(data.v_robots_stats.length + SHOW_LIMIT);
+
+                /*Запоминание лимита  данных на странице*/
+                LocalStorageService.writeItems([
+                    {
+                        key: `${dispayType}_limit`,
+                        value: data.v_robots_stats.length + SHOW_LIMIT
+                    }
+                ]);
+
                 setSearchLimit({
                     variables: {
                         limit: data.v_robots_stats.length + SHOW_LIMIT,
