@@ -1,4 +1,4 @@
-const globalAny: any = global; // констната глобал для обращения к window
+import { globalAny } from "config/constants"; // констната глобал для обращения к localStorage
 
 /**
  * Сервис работы с localStorage
