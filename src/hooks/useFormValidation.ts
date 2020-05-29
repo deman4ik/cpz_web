@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
 type errors = {
@@ -21,7 +20,7 @@ export const useFormValidation = (initialState, validate) => {
             setValid(foundErrors);
             setSubmitting(foundErrors);
         }
-    }, [errors]);
+    }, [errors, isSubmitting]);
 
     function handleChange(name: string, value: string) {
         setValues({

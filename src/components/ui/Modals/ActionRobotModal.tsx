@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
@@ -24,7 +23,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
 
     useEffect(() => {
         setTitle(`${capitalize(type)} ${data ? data.robot.name : null}`);
-    }, [data]);
+    }, [data, setTitle, type]);
     const [actionOnRobot] = useMutation(type === "delete" ? DELETE_ROBOT : ACTION_ROBOT);
     const [userRobotAction, { loading }] = useMutation(
         type === "delete" ? USER_ROBOT_DELETE : type === "start" ? USER_ROBOT_START : USER_ROBOT_STOP
