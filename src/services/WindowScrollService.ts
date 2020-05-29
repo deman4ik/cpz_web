@@ -27,7 +27,7 @@ class WindowScrollService {
      * @param position {object}  - координаты по которым нужно совершить скролл
      * @return void
      */
-    scrollTo = ({ positionX, positionY }: scrollPositionsProps): void => this.window.scroll(positionX, positionY);
+    scrollTo = ({ positionX, positionY }: scrollPositionsProps): void => this.window.scrollTo(positionX, positionY);
 
     /**
      * Метод вешает обработчик на событие скролла окна
