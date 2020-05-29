@@ -59,7 +59,7 @@ export const Button: React.FC<ButtonProps> = ({
         <div className={withHover}>
             <div className={classNamesMain.join(" ")} style={style} onClick={handleOnClick}>
                 {isLoading ? (
-                    <LoadingIndicator color="white" size={props[size].indicator} />
+                    <LoadingIndicator color="white" size={props[size].indicator} style={{ margin: "auto" }} />
                 ) : (
                     <ButtonInnerComponent
                         size={size}
