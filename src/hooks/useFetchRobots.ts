@@ -4,10 +4,12 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from "../graphql/signals/queries";
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from "../graphql/robots/queries";
-import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "../graphql/local/queries";
-import { SET_SEARCH_LIMIT } from "../graphql/local/mutations";
-import { POLL_INTERVAL } from "../config/constants";
-import { getHash, getSearchProps } from "../config/utils";
+import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
+import { SET_SEARCH_LIMIT, SET_SEARCH_PROPS } from "graphql/local/mutations";
+import { POLL_INTERVAL } from "config/constants";
+import { getHash, getSearchProps } from "config/utils";
+// services
+import LocalStorageService from "services/localStorageService";
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -25,16 +27,22 @@ const defaultOrderBy = {
 };
 
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
+    /* Получение настроек состояния  страницы localStorage */
+    const storageData = LocalStorageService.getItems([`${dispayType}_limit`, `${dispayType}_filters`], "object");
+    const storageLimit = Number(storageData[`${dispayType}_limit`]);
+    const storageFilters = storageData[`${dispayType}_filters`] && JSON.parse(storageData[`${dispayType}_filters`]);
+
     const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
-    const [limit, setLimit] = useState(searchLimit.Limit[dispayType]);
+    const [limit, setLimit] = useState(storageLimit || searchLimit.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
         robots: {},
         hash: "",
         order_by: {}
     });
     const [setSearchLimit] = useMutation(SET_SEARCH_LIMIT);
+    const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
 
     const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(ROBOT_AGGREGATE_COUNT, {
         variables: {
@@ -67,6 +75,13 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     );
 
     const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [loading, data]);
+
+    /* Установка начального значения фильтров */
+    useEffect(() => {
+        if (storageFilters) {
+            setFilters({ variables: storageFilters });
+        }
+    }, []);
 
     useEffect(() => {
         if (!loading_aggregate && data_count && data_count.robots_aggregate && data_count.robots_aggregate.aggregate) {
@@ -111,6 +126,15 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
                 setLimit(data.v_robots_stats.length + SHOW_LIMIT);
+
+                /*Запоминание лимита  данных на странице*/
+                LocalStorageService.writeItems([
+                    {
+                        key: `${dispayType}_limit`,
+                        value: data.v_robots_stats.length + SHOW_LIMIT
+                    }
+                ]);
+
                 setSearchLimit({
                     variables: {
                         limit: data.v_robots_stats.length + SHOW_LIMIT,
