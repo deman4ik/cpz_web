@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { useLogoutProcess } from "../../../hooks/useLogoutProcess";
-import { CaptionButton } from "../../basic";
+import { useLogoutProcess } from "hooks/useLogoutProcess";
+import { CaptionButton } from "components/basic";
 //import styles from '../../../config/common.module.css';
 
 const _ToolbarProfilePage: React.FC = () => {

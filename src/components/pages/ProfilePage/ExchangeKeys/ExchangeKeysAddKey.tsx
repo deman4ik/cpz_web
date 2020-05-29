@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { CaptionButton } from "../../../basic";
+import { CaptionButton } from "components/basic";
 import { ModalKey } from "./types";
 import styles from "./ExchangeKeysAddKey.module.css";
 

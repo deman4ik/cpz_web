@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import Router from "next/router";
 
-import { ChevronLeftIcon } from "../../../../assets/icons/svg";
+import { ChevronLeftIcon } from "assets/icons/svg";
 import styles from "./CartFooter.module.css";
 
 const _CartFooter: React.FC = () => {

@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 
-import { ArrowDownIcon, ArrowUpIcon } from "../../../../assets/icons/svg";
+import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 //import { getColor, getIconName } from '../../../ui/RobotOpenPositions/helpers';
 import { SectionType } from "../types";
-import { getIconName, getColor } from "../../../../config/utils";
+import { getIconName, getColor } from "config/utils";
 import styles from "./ClosedPositionsRobotPageItemCard.module.css";
 
 interface Props {

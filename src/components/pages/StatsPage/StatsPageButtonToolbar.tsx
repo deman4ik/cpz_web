@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { CaptionButton } from "../../basic";
+import { CaptionButton } from "components/basic";
 
 interface Props {
     setVisibleToolbarFilters: () => void;

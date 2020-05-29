@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 
-import { moneyFormat, capitalize } from "../../../../config/utils";
+import { moneyFormat, capitalize } from "config/utils";
 import { activeDays, startedAt, getProfit } from "../helpers";
-import { color } from "../../../../config/constants";
+import { color } from "config/constants";
 import styles from "./HeaderStatsRobotPage.module.css";
 
 interface Props {

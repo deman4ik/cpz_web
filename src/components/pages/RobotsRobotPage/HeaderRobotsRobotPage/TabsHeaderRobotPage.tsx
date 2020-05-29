@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import { TabType } from "../../../../config/types";
-import { TabButton } from "../../../basic";
+import { TabType } from "config/types";
+import { TabButton } from "components/basic";
 import { tabNames } from "../helpers";
 import styles from "./TabsHeaderRobotPage.module.css";
 

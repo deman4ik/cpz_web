@@ -1,10 +1,10 @@
 import React from "react";
 
-import { RobotIcon, ChartLineIcon } from "../../../../assets/icons/svg";
-import { Tooltip } from "../../../ui/Tooltip";
-import { CheckBox } from "../../../basic";
-import { color } from "../../../../config/constants";
-import { capitalize } from "../../../../config/utils";
+import { RobotIcon, ChartLineIcon } from "assets/icons/svg";
+import { Tooltip } from "components/ui/Tooltip";
+import { CheckBox } from "components/basic";
+import { color } from "config/constants";
+import { capitalize } from "config/utils";
 import styles from "./Notify.module.css";
 
 interface Props {

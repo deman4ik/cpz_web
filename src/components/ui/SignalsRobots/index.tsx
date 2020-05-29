@@ -2,9 +2,9 @@
 import React, { memo, useMemo } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { USER_SIGNALS } from "../../../graphql/signals/queries";
-import { USER_ROBOTS } from "../../../graphql/robots/queries";
-import { POLL_INTERVAL } from "../../../config/constants";
+import { USER_SIGNALS } from "graphql/signals/queries";
+import { USER_ROBOTS } from "graphql/robots/queries";
+import { POLL_INTERVAL } from "config/constants";
 import { RobotsPageContainer } from "./RobotsPageContainer";
 import { getFormatDataSignals, getFormatDataRobots, title } from "./helpers";
 import styles from "./index.module.css";

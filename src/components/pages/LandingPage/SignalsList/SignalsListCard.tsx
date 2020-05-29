@@ -1,15 +1,15 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
-import { PrimaryButton } from "../../../basic";
-import { moneyFormat, valueWithSign } from "../../../../config/utils";
+import { PrimaryButton } from "components/basic";
+import { moneyFormat, valueWithSign } from "config/utils";
 import styles from "./SignalsListCard.module.css";
 
 interface Props {
     robot: any;
 }
 
-const DinamicAreaChart = dynamic(() => import("../../../charts/AreaChart"));
+const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
     const money = <div className={styles.primaryText}>{moneyFormat(robot.equity.profit)} $</div>;

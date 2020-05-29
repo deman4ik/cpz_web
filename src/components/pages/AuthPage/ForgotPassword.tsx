@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { useApolloClient } from "@apollo/react-hooks";
 
-import { useFormValidation } from "../../../hooks/useFormValidation";
-import { validateAuth } from "../../../config/validation";
+import { useFormValidation } from "hooks/useFormValidation";
+import { validateAuth } from "config/validation";
 import { CartFooter } from "./common/CartFooter";
-import { Input, Button } from "../../basic";
-import { PageHead, Footer, Header } from "../../layout";
-import { reset } from "../../../libs/auth";
+import { Input, Button } from "components/basic";
+import { PageHead, Footer, Header } from "components/layout";
+import { reset } from "libs/auth";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {

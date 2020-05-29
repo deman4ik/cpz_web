@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, memo, useEffect } from "react";
 
-import { exchangeName } from "../../../../config/utils";
-import { Button, Select } from "../../../basic";
-import { ExchangeKeysAddKeyModal } from "../../../pages/ProfilePage/ExchangeKeys/ExchangeKeysAddKeyModal";
+import { exchangeName } from "config/utils";
+import { Button, Select } from "components/basic";
+import { ExchangeKeysAddKeyModal } from "components/pages/ProfilePage/ExchangeKeys/ExchangeKeysAddKeyModal";
 import styles from "../index.module.css";
 
 interface Props {

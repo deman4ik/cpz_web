@@ -2,12 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { useDebounce } from "../../../hooks/useDebounce";
-import { SET_SEARCH_PROPS } from "../../../graphql/local/mutations";
-import { GET_SEARCH_PROPS } from "../../../graphql/local/queries";
-import { SearchInput, CaptionButton } from "../../basic";
-import { getSearchProps } from "../../../config/utils";
+import { useDebounce } from "hooks/useDebounce";
+import { SET_SEARCH_PROPS } from "graphql/local/mutations";
+import { GET_SEARCH_PROPS } from "graphql/local/queries";
+import { SearchInput, CaptionButton } from "components/basic";
+import { getSearchProps } from "config/utils";
 import styles from "./SearchToolbar.module.css";
+/*services*/
+import LocalStorageService from "services/localStorageService";
+// helpers
+import getSearchFromStorage from "./getSearchFromStorage";
 
 interface Props {
     setVisibleToolbarFilters?: () => void;
@@ -19,7 +23,8 @@ const defaultOrderBy = {
 };
 
 export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
-    const [value, setValue] = useState("");
+    const initialState = getSearchFromStorage(displayType); // получаем значение поиска из localStorage
+    const [value, setValue] = useState(initialState);
     const debounceValue = useDebounce(value, 500);
     const [setFilter] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
     const { data } = useQuery(GET_SEARCH_PROPS);
@@ -32,14 +37,21 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
         const search = getSearchProps(data, displayType);
         const filters = search && search.filters ? JSON.parse(search.filters) : {};
         const searchFilters = filters.name && filters.name._ilike ? JSON.stringify({ name: filters.name }) : "";
+        const variables = {
+            filters: searchFilters,
+            orders: JSON.stringify(defaultOrderBy),
+            type: displayType
+        };
 
-        setFilter({
-            variables: {
-                filters: searchFilters,
-                orders: JSON.stringify(defaultOrderBy),
-                type: displayType
+        /*Установка сброса фильтров в localStorage*/
+        LocalStorageService.writeItems([
+            {
+                key: `${displayType}_filters`,
+                value: JSON.stringify(variables)
             }
-        });
+        ]);
+
+        setFilter({ variables });
     };
 
     useEffect(() => {
@@ -53,13 +65,20 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
     useEffect(() => {
         const search = getSearchProps(data, displayType);
         const filters = search && search.filters ? JSON.parse(search.filters) : {};
-        setFilter({
-            variables: {
-                filters: JSON.stringify({ ...filters, name: { _ilike: debounceValue ? `%${debounceValue}%` : null } }),
-                orders: search && search.orders ? search.orders : "",
-                type: displayType
+        const variables = {
+            filters: JSON.stringify({ ...filters, name: { _ilike: debounceValue ? `%${debounceValue}%` : null } }),
+            orders: search && search.orders ? search.orders : "",
+            type: displayType
+        };
+
+        /*Установка поиска в localStorage*/
+        LocalStorageService.writeItems([
+            {
+                key: `${displayType}_filters`,
+                value: JSON.stringify(variables)
             }
-        });
+        ]);
+        setFilter({ variables });
     }, [debounceValue]);
 
     return (

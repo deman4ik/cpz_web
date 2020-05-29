@@ -3,9 +3,9 @@ import React, { memo, useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
 import { OpenPositionsComponent } from "./OpenPositionsComponent";
-import { USER_SIGNALS_ROBOT_OPEN_POS } from "../../../graphql/signals/queries";
-import { GET_USER_POSITIONS_OPEN_POS } from "../../../graphql/robots/queries";
-import { POLL_INTERVAL } from "../../../config/constants";
+import { USER_SIGNALS_ROBOT_OPEN_POS } from "graphql/signals/queries";
+import { GET_USER_POSITIONS_OPEN_POS } from "graphql/robots/queries";
+import { POLL_INTERVAL } from "config/constants";
 import { getFormatDataSignals, getFormatDataRobots } from "./helpers";
 
 interface Props {

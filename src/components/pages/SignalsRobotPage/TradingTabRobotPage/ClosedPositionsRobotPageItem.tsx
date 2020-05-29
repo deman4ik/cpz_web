@@ -1,8 +1,8 @@
 import React from "react";
 
-import { formatDate, capitalize, valueWithSign, moneyFormat, colorDirection } from "../../../../config/utils";
+import { formatDate, capitalize, valueWithSign, moneyFormat, colorDirection } from "config/utils";
 import styles from "./ClosedPositionsRobotPageItem.module.css";
-import { color } from "../../../../config/constants";
+import { color } from "config/constants";
 
 interface Props {
     item: any;

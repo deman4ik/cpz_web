@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useVisibleModal } from "../../../hooks/useVisibleModal";
-import { SubscribeModal, UnsubscribeModal } from "../../ui/Modals";
-import { Modal } from "../../basic";
+import { useVisibleModal } from "hooks/useVisibleModal";
+import { SubscribeModal, UnsubscribeModal } from "components/ui/Modals";
+import { Modal } from "components/basic";
 import { getIsVisibleStatus } from "../helpers";
 import { modalType } from "../types";
 

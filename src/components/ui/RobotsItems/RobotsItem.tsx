@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
-import dynamic from "next/dynamic";
 
-import { moneyFormat, colorAction } from "../../../config/utils";
+import { moneyFormat, colorAction } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { formatVariables } from "./helpers";
-import { ChevronRightIcon } from "../../../assets/icons/svg";
+import { ChevronRightIcon } from "assets/icons/svg";
 import { RobotItemStatusBlock, RobotsButtonItem } from ".";
 import styles from "./RobotsItem.module.css";
+import AreaChart from "components/charts/AreaChart";
 
 interface Props {
     item: SignalItem;
@@ -17,8 +17,6 @@ interface Props {
     displayType: string;
     lastItem: boolean;
 }
-
-const DinamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
 
 export const RobotsItem: React.FC<Props> = ({
     item,
@@ -62,7 +60,7 @@ export const RobotsItem: React.FC<Props> = ({
             </div>
             <div className={styles.cellPerformance}>
                 {item.performance && item.performance.length ? (
-                    <DinamicAreaChart height={120} positive={item.profit > 0} data={item.performance} />
+                    <AreaChart height={120} positive={item.profit > 0} data={item.performance} />
                 ) : null}
             </div>
             <div className={styles.cellStatistics}>

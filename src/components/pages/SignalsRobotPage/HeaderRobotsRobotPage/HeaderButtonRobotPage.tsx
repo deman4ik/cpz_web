@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "../../../basic";
+import { Button } from "components//basic";
 import { createVariable } from "../helpers";
 import styles from "./HeaderButtonRobotPage.module.css";
 

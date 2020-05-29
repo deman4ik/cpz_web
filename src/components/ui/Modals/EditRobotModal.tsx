@@ -2,15 +2,15 @@
 import React, { useState, useEffect, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { ROBOT } from "../../../graphql/local/queries";
-import { GET_MARKETS } from "../../../graphql/common/queries";
-import { EDIT_ROBOT } from "../../../graphql/local/mutations";
-import { USER_ROBOT_EDIT } from "../../../graphql/robots/mutations";
-import { ErrorLine, LoadingIndicator } from "../../common";
-import { Button, Input } from "../../basic";
-import { moneyFormat } from "../../../config/utils";
+import { ROBOT } from "graphql/local/queries";
+import { GET_MARKETS } from "graphql/common/queries";
+import { EDIT_ROBOT } from "graphql/local/mutations";
+import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { ErrorLine, LoadingIndicator } from "components/common";
+import { Button, Input } from "components/basic";
+import { moneyFormat } from "config/utils";
 import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
-import { color } from "../../../config/constants";
+import { color } from "config/constants";
 import styles from "./index.module.css";
 
 interface Props {

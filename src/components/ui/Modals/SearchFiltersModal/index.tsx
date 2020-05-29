@@ -3,15 +3,17 @@
 import React, { useMemo, useState, memo, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { SEARCH_SIGNALS_FILTERS } from "../../../../graphql/signals/queries";
-import { GET_SEARCH_PROPS } from "../../../../graphql/local/queries";
-import { SET_SEARCH_PROPS } from "../../../../graphql/local/mutations";
-import { LoadingIndicator } from "../../../common";
-import { Button, Select } from "../../../basic";
-import { capitalize, getSearchProps } from "../../../../config/utils";
+import { SEARCH_SIGNALS_FILTERS } from "graphql/signals/queries";
+import { GET_SEARCH_PROPS } from "graphql/local/queries";
+import { SET_SEARCH_PROPS } from "graphql/local/mutations";
+import { LoadingIndicator } from "components/common";
+import { Button, Select } from "components/basic";
+import { capitalize, getSearchProps } from "config/utils";
 import { labels, getFilterData, ordersSortList, ordersSortMethod } from "./helpers";
 import { CheckedFilter } from "./types";
 import styles from "./index.module.css";
+// services
+import LocalStorageService from "services/localStorageService";
 
 interface Props {
     onClose: () => void;
@@ -70,14 +72,21 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
             }),
             {}
         );
+        const variables = {
+            filters: JSON.stringify({ ...searchFilters, ...(filters.name ? { name: filters.name } : {}) }),
+            type: displayType,
+            orders: JSON.stringify(ordersSortMethod[inputKey])
+        };
 
-        setFilters({
-            variables: {
-                filters: JSON.stringify({ ...searchFilters, ...(filters.name ? { name: filters.name } : {}) }),
-                type: displayType,
-                orders: JSON.stringify(ordersSortMethod[inputKey])
+        /*Установка запоминания фильтров*/
+        LocalStorageService.writeItems([
+            {
+                key: `${displayType}_filters`,
+                value: JSON.stringify(variables)
             }
-        }).then((_result) => {
+        ]);
+
+        setFilters({ variables }).then((_result) => {
             onClose();
         });
     };

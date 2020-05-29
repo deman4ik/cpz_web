@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 
-import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from "../../assets/icons/svg";
+import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from "assets/icons/svg";
 import { NotificationCounter } from "../ui/NotificationCounter";
-import { PageType } from "../../config/types";
+import { PageType } from "config/types";
 import styles from "./MainMenu.module.css";
 
 interface Props {

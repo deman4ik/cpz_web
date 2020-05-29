@@ -1,8 +1,9 @@
 import React from "react";
 
-import { useFetchRobots } from "../../../hooks/useFetchRobots";
-import { RobotsList } from "../../ui/RobotsList";
-import { LoadingIndicator } from "../../common";
+import { useFetchRobots } from "hooks/useFetchRobots";
+import useSaveScroll from "hooks/useSaveScroll";
+import { RobotsList } from "components/ui/RobotsList";
+import { LoadingIndicator } from "components/common";
 import { Modals } from "./Modals";
 import { formatRobotsData } from "./helpers";
 
@@ -13,6 +14,8 @@ interface Props {
 
 export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
     const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
+    /*Hook сохранения позиции скролла*/
+    useSaveScroll(displayType, loading);
 
     return (
         <>

@@ -3,11 +3,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { moneyFormat, colorAction } from "../../../config/utils";
+import { moneyFormat, colorAction } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { RobotsButtonItemCard, RobotItemStatusBlock } from ".";
 import { formatVariables } from "./helpers";
-import { Button } from "../../basic";
+import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
     robotSubscribe: (variables: any) => void;
 }
 
-const DinamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe, onRedirectToDetailView }) => {
     const subscribeToggle = () => {

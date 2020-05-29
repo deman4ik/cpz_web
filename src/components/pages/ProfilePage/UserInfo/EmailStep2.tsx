@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Input, Button } from "../../../basic";
-import { SECRET_CODE_LENGTH } from "../../../../config/constants";
+import { Input, Button } from "components/basic";
+import { SECRET_CODE_LENGTH } from "config/constants";
 import styles from "./EmailModal.module.css";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { MenuDownIcon } from "../../../assets/icons/svg";
-import { color } from "../../../config/constants";
+import { MenuDownIcon } from "assets/icons/svg";
+import { color } from "config/constants";
 import styles from "./Step.module.css";
 
 interface Props {

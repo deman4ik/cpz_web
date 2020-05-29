@@ -1,11 +1,11 @@
 import React from "react";
 
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFetchData } from "./useFetchData";
-import { NoRecentData, LoadingIndicator } from "../../common";
+import { NoRecentData, LoadingIndicator } from "components/common";
 import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
-import { Template } from "../../layout";
-import { PageType } from "../../../config/types";
+import { Template } from "components/layout";
+import { PageType } from "config/types";
 import { NotificationsContainer } from "./NotificationsContainer";
 
 export const NotificationsPage: React.FC = () => {

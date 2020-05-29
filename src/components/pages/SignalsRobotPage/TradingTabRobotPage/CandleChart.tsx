@@ -3,13 +3,13 @@ import React, { useState, useEffect, memo } from "react";
 import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
-import { ChartType } from "../../../charts/LightWeightChart/types";
-import { LoadingIndicator } from "../../../common";
-import { ROBOT_POSITION_WITH_CANDLE } from "../../../../graphql/robots/queries";
-import { ROBOT_POSITION_WITH_CANDLE_SUB } from "../../../../graphql/robots/subscribtions";
-import { SET_CHART_DATA } from "../../../../graphql/local/mutations";
+import { ChartType } from "components/charts/LightWeightChart/types";
+import { LoadingIndicator } from "components/common";
+import { ROBOT_POSITION_WITH_CANDLE } from "graphql/robots/queries";
+import { ROBOT_POSITION_WITH_CANDLE_SUB } from "graphql/robots/subscribtions";
+import { SET_CHART_DATA } from "graphql/local/mutations";
 import { getFormatData, getFormatUpdateData } from "../helpers";
-import { getLegend } from "../../../../config/utils";
+import { getLegend } from "config/utils";
 
 interface Props {
     robot: any;
@@ -18,7 +18,7 @@ interface Props {
     setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
 const LIMIT = 120;
-const LightWeightChartWithNoSSR = dynamic(() => import("../../../charts/LightWeightChart"), {
+const LightWeightChartWithNoSSR = dynamic(() => import("components//charts/LightWeightChart"), {
     loading: () => <LoadingIndicator style={{ height: 400 }} />,
     ssr: false
 });

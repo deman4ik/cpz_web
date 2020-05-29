@@ -10,9 +10,9 @@ import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "@apollo/react-hooks";
 
-import { resolvers } from "../../graphql/resolvers";
-import { typeDefs } from "../../graphql/typeDefs";
-import { defaultState } from "../../graphql/defaultState";
+import { resolvers } from "graphql/resolvers";
+import { typeDefs } from "graphql/typeDefs";
+import { defaultState } from "graphql/defaultState";
 import { setAccessToken, getExpiredAccessToken } from "../accessToken";
 
 interface Definintion {

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { formatDate } from "../../../config/utils";
+import { formatDate } from "config/utils";
 import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItem.module.css";
 

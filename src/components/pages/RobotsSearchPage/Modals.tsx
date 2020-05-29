@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useVisibleModal } from "../../../hooks/useVisibleModal";
-import { Modal } from "../../basic";
-import { ActionRobotModal, EditRobotModal, CreateRobotModal } from "../../ui/Modals";
+import { useVisibleModal } from "hooks/useVisibleModal";
+import { Modal } from "components//basic";
+import { ActionRobotModal, EditRobotModal, CreateRobotModal } from "components//ui/Modals";
 import { getIsVisibleStatus } from "../helpers";
 import { modalType } from "../types";
 

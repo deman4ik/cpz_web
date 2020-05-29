@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 
-import { Button } from "../../../basic";
+import { Button } from "components/basic";
 import { ModalKey } from "./types";
-import { ChevronRightIcon } from "../../../../assets/icons/svg";
-import { capitalize, exchangeName, truncate, getColor } from "../../../../config/utils";
-import { color } from "../../../../config/constants";
+import { ChevronRightIcon } from "assets/icons/svg";
+import { capitalize, exchangeName, truncate, getColor } from "config/utils";
+import { color } from "config/constants";
 import styles from "./ExchangeKeysCard.module.css";
 
 interface Props {

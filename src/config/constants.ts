@@ -66,3 +66,5 @@ export const color = {
         primary: "rgba(105, 135, 185, 0.2)"
     }
 };
+
+export const globalAny: any = global;

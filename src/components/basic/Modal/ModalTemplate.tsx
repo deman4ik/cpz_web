@@ -1,7 +1,7 @@
 import React from "react";
 
 import { EffectButton } from "..";
-import { color } from "../../../config/constants";
+import { color } from "config/constants";
 import styles from "./ModalTemplate.module.css";
 
 interface Props {

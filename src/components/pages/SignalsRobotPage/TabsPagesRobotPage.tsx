@@ -1,8 +1,8 @@
 import React from "react";
 
 import { TradingTabRobotPage } from "./TradingTabRobotPage";
-import { PerformanceTabRobotPage } from "../../ui/PerformanceTab";
-import { TabType } from "../../../config/types";
+import { PerformanceTabRobotPage } from "components/ui/PerformanceTab";
+import { TabType } from "config/types";
 
 interface Props {
     robotData: any;

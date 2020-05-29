@@ -1,8 +1,8 @@
 import React from "react";
 
 import { NotificationsNode } from "./NotificationsNode";
-import { ArrowDownIcon, ArrowUpIcon } from "../../../assets/icons/svg";
-import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from "../../../config/utils";
+import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
+import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from "config/utils";
 import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
 import styles from "./NotificationsSets.module.css";
 

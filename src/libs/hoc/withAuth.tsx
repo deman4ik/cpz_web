@@ -1,7 +1,7 @@
 import React from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST } from "../../config/constants";
+import { LOCALHOST } from "config/constants";
 import { fetchAccessToken } from "../auth";
 import { getAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";

@@ -2,13 +2,13 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "../../../../config/constants";
+import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 import {
     GET_ROBOT_POSITIONS_ROBOT,
     GET_ROBOT_POSITIONS_USER,
     ROBOT_POSITIONS_COUNT_USER
-} from "../../../../graphql/robots/queries";
-import { ROBOT_POSITIONS_COUNT } from "../../../../graphql/signals/queries";
+} from "graphql/robots/queries";
+import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
 
 export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) => {
     const arrStatus = isUserRobot ? ["closed", "closedAuto"] : ["closed"];

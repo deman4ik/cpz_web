@@ -1,13 +1,13 @@
 import React, { memo, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "../../../../graphql/robots/queries";
-import { GET_USER_EXCHANGES } from "../../../../graphql/profile/queries";
-import { DELETE_EXCHANGE_BY_ID } from "../../../../graphql/profile/mutations";
+import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
+import { GET_USER_EXCHANGES } from "graphql/profile/queries";
+import { DELETE_EXCHANGE_BY_ID } from "graphql/profile/mutations";
 import { DeleteKey } from "./types";
-import { Button } from "../../../basic";
-import { ErrorLine } from "../../../common";
-import { AlertIcon } from "../../../../assets/icons/svg";
+import { Button } from "components/basic";
+import { ErrorLine } from "components/common";
+import { AlertIcon } from "assets/icons/svg";
 import styles from "./ExchangeKeysDeleteKeyModal.module.css";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 
-import { EditRobotModal, CreateRobotModal, ActionRobotModal } from "../../ui/Modals";
-import { Modal } from "../../basic";
+import { EditRobotModal, CreateRobotModal, ActionRobotModal } from "components/ui/Modals";
+import { Modal } from "components/basic";
 import { VisibleModal } from "./types";
 
 interface Props {

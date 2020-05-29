@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { ROBOT } from "../../../graphql/local/queries";
-import { UNSUBSCRIBE_FROM_SIGNALS } from "../../../graphql/signals/mutations";
-import { UNSUBSCRIBE } from "../../../graphql/local/mutations";
-import { Button } from "../../basic";
-import { LoadingIndicator, ErrorLine } from "../../common";
+import { ROBOT } from "graphql/local/queries";
+import { UNSUBSCRIBE_FROM_SIGNALS } from "graphql/signals/mutations";
+import { UNSUBSCRIBE } from "graphql/local/mutations";
+import { Button } from "components/basic";
+import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {
