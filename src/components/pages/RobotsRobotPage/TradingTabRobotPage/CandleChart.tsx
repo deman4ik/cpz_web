@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
@@ -64,12 +63,12 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
 
     const formatData = useMemo(
         () => (!loading && data ? getFormatData(data, asset, !!userRobots) : { candles: [], markers: [] }),
-        [loading, data]
+        [loading, data, asset, userRobots]
     );
 
     useEffect(() => {
         setChartData({ variables: { limit, robotId: robot.id, timeframe: robot.timeframe } });
-    }, [limit]);
+    }, [limit, robot.id, robot.timeframe, setChartData]);
 
     return (
         <LightWeightChartWithNoSSR

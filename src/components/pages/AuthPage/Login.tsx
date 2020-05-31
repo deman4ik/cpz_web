@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
@@ -33,21 +32,6 @@ export const Login: React.FC = () => {
         handleSubmit();
     };
 
-    const loginUser = async () => {
-        const result = await login({
-            email: values.email,
-            password
-        });
-
-        if (result.success) {
-            Router.push("/robots");
-        } else {
-            errors.password = result.error;
-            setValid(false);
-            setIsFetching(false);
-        }
-    };
-
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
             Router.push("/auth/signup");
@@ -57,11 +41,25 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
+        const loginUser = async () => {
+            const result = await login({
+                email: values.email,
+                password
+            });
+
+            if (result.success) {
+                Router.push("/robots");
+            } else {
+                errors.password = result.error;
+                setValid(false);
+                setIsFetching(false);
+            }
+        };
         if (isValid) {
             setIsFetching(true);
             loginUser();
         }
-    }, [isValid]);
+    }, [errors, isValid, password, setValid, values.email]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>

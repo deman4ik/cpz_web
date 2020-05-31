@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useMemo } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -24,7 +23,12 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
         robots: () => getFormatDataRobots(data.robots)
     };
 
-    const formatData = useMemo(() => (!loading && data ? funcCall[displayType]() : []), [data, loading]);
+    const formatData = useMemo(() => (!loading && data ? funcCall[displayType]() : []), [
+        data,
+        displayType,
+        funcCall,
+        loading
+    ]);
 
     return (
         <div style={{ marginTop: 10 }}>
