@@ -26,7 +26,11 @@ const defaultOrderBy = {
     recovery_factor: "desc_nulls_last"
 };
 
-export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
+export const useFetchRobots = (
+    dispayType: string,
+    formatRobotsData: (v_robots_stats: any) => any,
+    isAuth?: boolean
+) => {
     /* Получение настроек состояния  страницы localStorage */
     const storageData = LocalStorageService.getItems([`${dispayType}_limit`, `${dispayType}_filters`], "object");
     const storageLimit = Number(storageData[`${dispayType}_limit`]);
@@ -73,7 +77,6 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
             pollInterval: POLL_INTERVAL
         }
     );
-
     const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [loading, data]);
 
     /* Установка начального значения фильтров */

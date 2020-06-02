@@ -10,9 +10,11 @@ import { formatRobotsData } from "./helpers";
 interface Props {
     displayType: string;
     width: number;
+    isAuth?: boolean;
 }
 
-export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
+export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width, isAuth }) => {
+    console.log(isAuth);
     const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
     /*Hook сохранения позиции скролла*/
     useSaveScroll(displayType, loading);

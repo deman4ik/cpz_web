@@ -326,13 +326,6 @@ export const GET_ROBOTS_BY_STATS = gql`
                 robot_settings {
                     volume
                 }
-                user_robots {
-                    id
-                    status
-                    settings
-                    started_at
-                    equity
-                }
             }
         }
     }
