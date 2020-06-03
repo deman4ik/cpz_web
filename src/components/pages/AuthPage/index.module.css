@@ -30,7 +30,7 @@
 }
 
 .loginDescription {
-  font-size: var(--small1);
+  font-size: var(--small2);
   color: white;
   padding-top: 22px;
   padding-bottom: 20px;
@@ -38,7 +38,7 @@
 }
 
 .telegramDesription {
-  font-size: var(--small2);
+  font-size: var(--small1);
   color: white;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -77,10 +77,32 @@
   flex-direction: row;
 }
 
+.divider_container {
+    width: 55px;
+   display: flex;
+   justify-content: center;
+   position: relative;
+}
+
 .divider {
   min-width: 1px;
   min-height: 1px;
   background-color: var(--lightBg);
+}
+
+.divider_text {
+   position: absolute;
+   margin: auto;
+   top: 50%;
+   transform: translateY(-50%);
+   background-color: var(--dark);
+   color:var(--whiteFaded);
+   left: 0;
+   right: 0;
+   padding: 2px;
+   width: 24px;
+   display: flex;
+   justify-content: center;
 }
 
 .telegramGroup {
@@ -121,6 +143,13 @@
   }
   .content {
     flex-direction: column;
+  }
+  .divider_container{
+    flex-direction: column;
+    width: 100%;
+  }
+  .divider_text{
+    padding: 15px;
   }
 }
 
