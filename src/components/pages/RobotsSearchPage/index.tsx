@@ -10,7 +10,7 @@ import { PageType } from "config/types";
 import { SearchFiltersModal } from "components/ui/Modals";
 import styles from "./index.module.css";
 
-export const RobotsSearchPage: React.FC = ({ accessToken }: any) => {
+export const RobotsSearchPage: React.FC = () => {
     const [isVisibleFilters, setIsVisibleFilters] = useState(false);
     const { width } = useWindowDimensions();
 
@@ -31,7 +31,7 @@ export const RobotsSearchPage: React.FC = ({ accessToken }: any) => {
             hideToolbar
             handlePressBack={handlePressBack}>
             <div className={styles.container}>
-                <RobotsSearchContainer displayType="robots" width={width} isAuth={Boolean(accessToken)} />
+                <RobotsSearchContainer displayType="robots" width={width} />
             </div>
             <Modal isOpen={isVisibleFilters} title="Filter Robots Search" onClose={setVisibleToolbarFilters}>
                 <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType="robots" />

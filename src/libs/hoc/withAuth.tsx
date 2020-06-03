@@ -1,7 +1,7 @@
 import React from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST, EXCLUDE_ROUTES } from "config/constants";
+import { LOCALHOST } from "config/constants";
 import { fetchAccessToken } from "../auth";
 import { getAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
@@ -9,17 +9,8 @@ import redirect from "../redirect";
 
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
-
 const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-const checkPath = (path: string) => {
-    let match = false;
-    EXCLUDE_ROUTES.forEach((route: string) => {
-        if (path.includes(route)) {
-            match = path.includes(route);
-        }
-    });
-    return match;
-};
+const checkPath = (path: string) => ["/auth/login", "/auth/signup"].includes(path);
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => <Page {...props} />;

@@ -30,7 +30,7 @@ export const formatRobotsData = (v_robots_stats: any) =>
             tradesCount: equity && equity.tradesCount ? equity.tradesCount : null
         };
 
-        if (user_robots?.length) {
+        if (user_robots.length) {
             res.user_robots.status = user_robots[0].status;
             res.user_robots.id = user_robots[0].id;
             res.volume = user_robots[0].settings.volume;
