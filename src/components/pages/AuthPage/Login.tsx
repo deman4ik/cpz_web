@@ -118,9 +118,7 @@ export const Login: React.FC = () => {
                         </div>
                         <div className={styles.divider_container}>
                             <div className={styles.divider} />
-                            <div className={styles.divider_text}>
-                                OR
-                            </div>
+                            <div className={styles.divider_text}>OR</div>
                         </div>
                         <div className={styles.card} style={{ justifyContent: "center", textAlign: "center" }}>
                             <div className={styles.telegramGroup}>
