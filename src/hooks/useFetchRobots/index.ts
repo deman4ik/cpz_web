@@ -1,39 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-
-import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from "../graphql/signals/queries";
-import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS } from "../graphql/robots/queries";
+// graphql
+import { ROBOT_AGGREGATE_COUNT } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
 import { SET_SEARCH_LIMIT, SET_SEARCH_PROPS } from "graphql/local/mutations";
+// constants
 import { POLL_INTERVAL } from "config/constants";
+import { SHOW_LIMIT, AUTH_QUERIES, QUERY_KEY, QUERY_FILTER, DEFAULT_ORDER_BY } from "./constants";
+// utils
 import { getHash, getSearchProps } from "config/utils";
 // services
 import LocalStorageService from "services/localStorageService";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
-const SHOW_LIMIT = 12;
-const queryKey = {
-    signals: "signals",
-    robots: "trading"
-};
-
-const queryFilter = {
-    signals: () => ({ signals: { _eq: true } }),
-    robots: () => ({ trading: { _eq: true } })
-};
-
-const defaultOrderBy = {
-    recovery_factor: "desc_nulls_last"
-};
-
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-    console.log(isAuth);
+    const QUERIES_TYPE = AUTH_QUERIES[Number(isAuth)];
+
     /* Получение настроек состояния  страницы localStorage */
     const storageData = LocalStorageService.getItems([`${dispayType}_limit`, `${dispayType}_filters`], "object");
     const storageLimit = Number(storageData[`${dispayType}_limit`]);
@@ -54,7 +42,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(ROBOT_AGGREGATE_COUNT, {
         variables: {
             where: {
-                [queryKey[dispayType]]: { _eq: true },
+                [QUERY_KEY[dispayType]]: { _eq: true },
                 ...filtersQuery.robots
             },
             hash: filtersQuery.hash
@@ -62,24 +50,21 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         pollInterval: POLL_INTERVAL
     });
 
-    const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(
-        dispayType === "signals" ? GET_ROBOTS_BY_STATS_SIGNALS : GET_ROBOTS_BY_STATS_ROBOTS,
-        {
-            variables: {
-                offset: 0,
-                limit,
-                hash: filtersQuery.hash,
-                order_by: [filtersQuery.order_by, { id: "asc" }],
-                where: {
-                    robots: {
-                        ...queryFilter[dispayType](),
-                        ...filtersQuery.robots
-                    }
-                }
-            },
-            pollInterval: POLL_INTERVAL
-        }
-    );
+    /*Обработка получения данных*/
+    let robotsWhere = { ...filtersQuery.robots };
+    if (isAuth) robotsWhere = { ...robotsWhere, ...QUERY_FILTER[dispayType]() };
+    const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(QUERIES_TYPE[dispayType], {
+        variables: {
+            offset: 0,
+            limit,
+            hash: filtersQuery.hash,
+            order_by: [filtersQuery.order_by, { id: "asc" }],
+            where: {
+                robots: { ...robotsWhere }
+            }
+        },
+        pollInterval: POLL_INTERVAL
+    });
 
     const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [loading, data]);
 
@@ -102,13 +87,13 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
             const search = getSearchProps(searchProps, dispayType);
             const result: { robots: any; hash: string; order_by: any } =
                 !search || !search.filters
-                    ? { robots: {}, hash, order_by: defaultOrderBy }
+                    ? { robots: {}, hash, order_by: DEFAULT_ORDER_BY }
                     : {
                           robots: { ...JSON.parse(search.filters) },
                           hash,
-                          order_by: defaultOrderBy
+                          order_by: DEFAULT_ORDER_BY
                       };
-            result.order_by = search && search.orders ? JSON.parse(search.orders) : defaultOrderBy;
+            result.order_by = search && search.orders ? JSON.parse(search.orders) : DEFAULT_ORDER_BY;
             return result;
         };
 

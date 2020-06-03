@@ -338,6 +338,34 @@ export const GET_ROBOTS_BY_STATS = gql`
     }
 `;
 
+export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
+    query robots_by_stats(
+        $where: v_robots_stats_bool_exp
+        $hash: String!
+        $limit: Int
+        $offset: Int
+        $order_by: [v_robots_stats_order_by!]
+    ) {
+        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+            @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
+            robots {
+                id
+                code
+                name
+                exchange
+                asset
+                currency
+                status
+                active: started_at
+                equity
+                robot_settings {
+                    volume
+                }
+            }
+        }
+    }
+`;
+
 export const ROBOT_POSITIONS_COUNT_USER = gql`
     query aggregateUserPositions($robotId: uuid!, $status: String_comparison_exp) {
         user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
