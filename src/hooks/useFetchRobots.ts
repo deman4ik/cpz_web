@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { GET_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_SIGNALS, ROBOT_AGGREGATE_COUNT } from "../graphql/signals/queries";
@@ -10,6 +10,8 @@ import { POLL_INTERVAL } from "config/constants";
 import { getHash, getSearchProps } from "config/utils";
 // services
 import LocalStorageService from "services/localStorageService";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 const SHOW_LIMIT = 12;
 const queryKey = {
@@ -27,6 +29,11 @@ const defaultOrderBy = {
 };
 
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
+    /*Обработка контекста аутентификации*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+    console.log(isAuth);
     /* Получение настроек состояния  страницы localStorage */
     const storageData = LocalStorageService.getItems([`${dispayType}_limit`, `${dispayType}_filters`], "object");
     const storageLimit = Number(storageData[`${dispayType}_limit`]);

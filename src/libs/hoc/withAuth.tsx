@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST } from "config/constants";
+import { LOCALHOST, EXCLUDE_ROUTES, EXLUDE_AUTH_ROUTES } from "config/constants";
 import { fetchAccessToken } from "../auth";
 import { getAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
+// context
+import { AuthContextProvider, AuthContext } from "libs/hoc/authContext";
 
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
+
 const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-const checkPath = (path: string) => ["/auth/login", "/auth/signup"].includes(path);
+
+const checkPath = (path: string) => {
+    let match = false;
+    EXCLUDE_ROUTES.forEach((route: string) => {
+        if (path.includes(route)) {
+            match = path.includes(route);
+        }
+    });
+
+    return match;
+};
 
 export const withAuth = (Page) => {
-    const WithAuth = (props) => <Page {...props} />;
+    const WithAuth = (props) => {
+        /*Установка контекста аутентификации*/
+        const { setAuthState } = useContext(AuthContext);
+        useEffect(() => {
+            if (props?.accessToken) {
+                setAuthState({ isAuth: Boolean(props.accessToken) });
+            }
+        }, [props.accessToken, props?.accessToken, setAuthState]);
+
+        return <Page {...props} />;
+    };
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
@@ -28,10 +51,8 @@ export const withAuth = (Page) => {
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
-            } else if (!isLanding && !checkPath(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
             }
-            if (accessToken && !isLanding && checkPath(ctx.pathname)) {
+            if (accessToken && !isLanding && EXLUDE_AUTH_ROUTES.includes(ctx.pathname)) {
                 redirect(ctx, pathToRedirectIfLogin);
             }
         } else {

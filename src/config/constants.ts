@@ -68,3 +68,18 @@ export const color = {
 };
 
 export const globalAny: any = global;
+
+export const EXLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
+
+/*массив исключений для доступности роутов*/
+export const EXCLUDE_ROUTES: Array<string> = [
+    ...EXLUDE_AUTH_ROUTES,
+    "/profile",
+    "/notifications",
+    "/signals",
+    "/robots",
+    "/signals/search",
+    "/robots/search",
+    "/signals/robot/",
+    "/robots/robot/"
+];
