@@ -38,7 +38,7 @@ export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot,
                 {activeTab === SectionType.signals && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
                         <div className={styles.mobileCardTextKey}>Action</div>
-                        {renderAction(item.entry_action)}
+                        {renderAction(item.action)}
                         {renderVolume(activeTab, item, asset)}
                     </div>
                 )}
