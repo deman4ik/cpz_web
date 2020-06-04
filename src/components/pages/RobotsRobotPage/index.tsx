@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -6,7 +6,7 @@ import { NoRecentData, LoadingIndicator } from "components/common";
 import { Template } from "components/layout";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { PageType, TabType } from "config/types";
-import { GET_ROBOT_INFO_USER_ROBOTS } from "graphql/robots/queries";
+import { GET_ROBOT_INFO_USER_ROBOTS, GET_ROBOT_INFO_NOT_AUTH_ROBOTS } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
@@ -15,8 +15,16 @@ import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
 import { ToolbarRobotPage } from "./ToolbarRobotPage";
 import { ModalsRobotPage } from "./ModalsRobotPage";
 import { formatRobotData } from "./helpers";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const RobotsRobotPage: React.FC = () => {
+    /*Определение контекста для страницы робота*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+    const robotInfoQuery = isAuth ? GET_ROBOT_INFO_USER_ROBOTS : GET_ROBOT_INFO_NOT_AUTH_ROBOTS;
+
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });
@@ -24,7 +32,7 @@ export const RobotsRobotPage: React.FC = () => {
     const handlePressBack = () => {
         router.back();
     };
-    const { data, loading } = useQuery(GET_ROBOT_INFO_USER_ROBOTS, {
+    const { data, loading } = useQuery(robotInfoQuery, {
         variables: { code: router.query.code },
         pollInterval: POLL_INTERVAL
     });
