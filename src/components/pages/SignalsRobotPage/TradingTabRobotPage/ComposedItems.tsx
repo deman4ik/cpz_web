@@ -29,7 +29,7 @@ export const renderAction = (action) => {
     const SpecificIcon = components[getIconNameAction(actionUp)];
     return (
         <div className={`${styles.iconLine} ${styles.mobileCardTextValue}`}>
-            <div style={colorAction(action)}>{actionUp ? "BUY" : "SELL"}</div>
+            <div style={colorAction(actionUp)}>{actionUp ? "BUY" : "SELL"}</div>
             <div style={{ marginLeft: 0, marginTop: 1 }}>
                 <SpecificIcon color={getColor(!actionUp)} size={16} />
             </div>

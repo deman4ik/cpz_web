@@ -100,7 +100,8 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
             dataSignals &&
             dataSignals.robot_positions.length &&
             Object.keys(dataSignals.robot_positions[0].alerts).length
-                ? getAlerts(dataSignals.robot_positions[0])
+                ? // Берется первый элемент так как робот работает с первой позицей за раз
+                  getAlerts(dataSignals.robot_positions[0])
                 : [],
         [loadingOpenSignals, dataSignals]
     );
