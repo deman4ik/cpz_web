@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Template } from "components/layout/Template";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -7,8 +7,15 @@ import { UserContainer } from "./UserContainer";
 import { NotifySettings } from "./NotifySettings";
 import { PageType } from "config/types";
 import { ToolbarProfilePage } from "./ToolbarProfilePage";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const ProfilePage = () => {
+    /*Контекст аутентификации для отображения данных*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const { width } = useWindowDimensions();
     return (
         <Template
@@ -19,7 +26,7 @@ export const ProfilePage = () => {
             width={width}>
             <UserContainer width={width} />
             <ExchangeKeys title="My Exchange API Keys" />
-            <NotifySettings />
+            {isAuth && <NotifySettings />}
         </Template>
     );
 };

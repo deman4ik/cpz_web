@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFetchData } from "./useFetchData";
@@ -7,8 +7,23 @@ import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
 import { Template } from "components/layout";
 import { PageType } from "config/types";
 import { NotificationsContainer } from "./NotificationsContainer";
+import { RedirectLoginButton } from "components/basic";
+
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const NotificationsPage: React.FC = () => {
+    /*Контекст аутентификации*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
+    const nothingComponent = isAuth ? (
+        <NoRecentData message="You have no notifications yet" style={{ marginTop: 20 }} />
+    ) : (
+        <RedirectLoginButton style={{ margin: "200px auto" }} />
+    );
+
     const { width } = useWindowDimensions();
     const {
         isLoadingMore,
@@ -31,7 +46,7 @@ export const NotificationsPage: React.FC = () => {
                     <LoadingIndicator />
                 </div>
             ) : !formatData.length ? (
-                <NoRecentData message="You have no notifications yet" style={{ marginTop: 20 }} />
+                nothingComponent
             ) : (
                 <NotificationsContainer
                     handleLoadMore={handleLoadMore}

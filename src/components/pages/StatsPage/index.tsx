@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -15,11 +15,20 @@ import { PageType } from "config/types";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
-import { Button, Modal } from "components/basic";
+import { Button, Modal, RedirectLoginButton } from "components/basic";
 import { CheckedFilters, LabelCombinations } from "./types";
 import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const StatsPage: React.FC = () => {
+    /*Контекст аутентификации*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
+    const nothingComponent = isAuth ? <NoRecentData message="No recent data available" /> : <RedirectLoginButton />;
+
     const { width } = useWindowDimensions();
     const router = useRouter();
     const displayType = router.route.split("/")[1];
@@ -154,9 +163,7 @@ export const StatsPage: React.FC = () => {
             </Modal>
             <>
                 {!formatData.chartData || !formatData.robotStatistic ? (
-                    <div className={styles.loadingContainer}>
-                        <NoRecentData message="No recent data available" />
-                    </div>
+                    <div className={styles.loadingContainer}>{nothingComponent}</div>
                 ) : (
                     <StatsPageComponent formatData={formatData} width={width} displayType={displayType} />
                 )}
