@@ -6,7 +6,6 @@ import { useQuery } from "@apollo/react-hooks";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
 import { POLL_INTERVAL } from "config/constants";
-import { NoRecentData } from "components/common";
 import { useFilters } from "hooks/useFilters";
 import { Template } from "components/layout";
 import { capitalize } from "config/utils";
@@ -15,19 +14,12 @@ import { PageType } from "config/types";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
-import { Button, Modal, RedirectLoginButton } from "components/basic";
+import { Button, Modal } from "components/basic";
 import { CheckedFilters, LabelCombinations } from "./types";
+import NothingComponent from "components/common/NothingComponent/";
 import styles from "./index.module.css";
-// context
-import { AuthContext } from "libs/hoc/authContext";
 
 export const StatsPage: React.FC = () => {
-    /*Контекст аутентификации*/
-    const {
-        authState: { isAuth }
-    } = useContext(AuthContext);
-
-    const nothingComponent = isAuth ? <NoRecentData message="No recent data available" /> : <RedirectLoginButton />;
 
     const { width } = useWindowDimensions();
     const router = useRouter();
@@ -163,7 +155,9 @@ export const StatsPage: React.FC = () => {
             </Modal>
             <>
                 {!formatData.chartData || !formatData.robotStatistic ? (
-                    <div className={styles.loadingContainer}>{nothingComponent}</div>
+                    <div className={styles.loadingContainer}>
+                        <NothingComponent beforeButtonKeyWord="stats" buttonSize="normal" />
+                    </div>
                 ) : (
                     <StatsPageComponent formatData={formatData} width={width} displayType={displayType} />
                 )}

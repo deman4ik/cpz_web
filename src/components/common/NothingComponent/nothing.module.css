@@ -1,0 +1,12 @@
+.nothing_description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: var(--normal0);
+    color: var(--whiteFaded);
+}
+
+.nothing_description_icon {
+  padding-right: 10px;
+}

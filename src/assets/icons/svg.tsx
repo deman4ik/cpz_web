@@ -226,3 +226,15 @@ export const CancelIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
       <path d='M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z' />
     </svg>
 );
+
+export const CardAccount: React.FC<Props> = ({color="white",size})=>(
+  <svg width={`${size}px`} height={`${size}px`}  viewBox="0 0 24 24" fill={color}>
+    <path fill="currentColor" d="M2,3H22C23.05,3 24,3.95 24,5V19C24,20.05 23.05,21 22,21H2C0.95,21 0,20.05 0,19V5C0,3.95 0.95,3 2,3M14,6V7H22V6H14M14,8V9H21.5L22,9V8H14M14,10V11H21V10H14M8,13.91C6,13.91 2,15 2,17V18H14V17C14,15 10,13.91 8,13.91M8,6A3,3 0 0,0 5,9A3,3 0 0,0 8,12A3,3 0 0,0 11,9A3,3 0 0,0 8,6Z" />
+  </svg>
+)
+
+export const ChartAreaSpline: React.FC<Props> = ({color="white",size})=>(
+  <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L22,21Z" />
+  </svg>
+)
