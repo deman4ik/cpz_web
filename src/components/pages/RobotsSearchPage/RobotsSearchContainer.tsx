@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) => {
-
     const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
     /*Hook сохранения позиции скролла*/
     useSaveScroll(displayType, loading);

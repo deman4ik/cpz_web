@@ -22,7 +22,7 @@ export const ProfilePage = () => {
             page={PageType.profile}
             title="Profile"
             subTitle="Settings"
-            toolbar={<ToolbarProfilePage />}
+            toolbar={isAuth && <ToolbarProfilePage />}
             width={width}>
             <UserContainer width={width} />
             <ExchangeKeys title="My Exchange API Keys" />

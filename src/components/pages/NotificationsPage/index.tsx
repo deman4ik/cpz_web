@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFetchData } from "./useFetchData";
@@ -8,8 +8,14 @@ import { Template } from "components/layout";
 import { PageType } from "config/types";
 import { NotificationsContainer } from "./NotificationsContainer";
 import NothingComponent from "components/common/NothingComponent";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const NotificationsPage: React.FC = () => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const { width } = useWindowDimensions();
     const {
         isLoadingMore,
@@ -26,7 +32,7 @@ export const NotificationsPage: React.FC = () => {
             page={PageType.notifications}
             title="Notifications"
             width={width}
-            toolbar={<ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}>
+            toolbar={isAuth && <ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}>
             {loading ? (
                 <div className="loading">
                     <LoadingIndicator />

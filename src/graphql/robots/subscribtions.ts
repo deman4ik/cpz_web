@@ -55,4 +55,3 @@ export const ROBOT_POSITION_WITH_CANDLE_SUB_NOT_AUTH = (timeframe: number) => gq
     }
   }
 `;
-

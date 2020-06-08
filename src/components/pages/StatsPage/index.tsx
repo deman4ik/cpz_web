@@ -18,8 +18,13 @@ import { Button, Modal } from "components/basic";
 import { CheckedFilters, LabelCombinations } from "./types";
 import NothingComponent from "components/common/NothingComponent/";
 import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const StatsPage: React.FC = () => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
     const router = useRouter();
@@ -111,7 +116,7 @@ export const StatsPage: React.FC = () => {
             page={PageType[displayType]}
             title={`My ${capitalize(displayType)} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
-            toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
+            toolbar={isAuth && <StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
             width={width}
             handlePressBack={handlePressBack}>
             <Modal

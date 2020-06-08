@@ -13,7 +13,6 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-    debugger;
     const robotPositionsQuery = isAuth ? GET_ROBOT_POSITIONS : GET_ROBOT_POSITIONS_NOT_AUTH;
 
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);

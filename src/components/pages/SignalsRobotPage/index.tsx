@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useContext } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { Template } from "components/layout/Template";
@@ -54,7 +54,11 @@ export const SignalsRobotPage = () => {
     ]);
 
     const robotSubscribe = (variables) => {
-        setRobotData(variables);
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            setRobotData(variables);
+        }
     };
 
     return (

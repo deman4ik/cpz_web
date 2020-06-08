@@ -23,7 +23,6 @@ interface Props {
 
 const cardWidth = 310;
 const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, width }) => {
-
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
     const countDummyCards = (dataLength) => {
         const cardsInARow = width - 200 <= 0 ? 1 : Math.floor((width - 200) / cardWidth);

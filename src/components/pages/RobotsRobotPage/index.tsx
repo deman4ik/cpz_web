@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useContext } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
+
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { NoRecentData, LoadingIndicator } from "components/common";
@@ -48,7 +49,11 @@ export const RobotsRobotPage: React.FC = () => {
     });
 
     const robotSubscribe = (variables) => {
-        setRobotData(variables);
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            setRobotData(variables);
+        }
     };
 
     return (
