@@ -39,17 +39,16 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-
     const candleQueries = isAuth
-        ? [USER_ROBOTS_POSITION_WITH_CANDLE, ROBOT_POSITION_WITH_CANDLE]
-        : [ROBOT_POSITION_WITH_CANDLE_NOT_AUTH, USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH];
+        ? [ROBOT_POSITION_WITH_CANDLE_NOT_AUTH, USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH]
+        : [USER_ROBOTS_POSITION_WITH_CANDLE, ROBOT_POSITION_WITH_CANDLE];
 
     const candleName = `candles${robot.timeframe}`;
     const legend = getLegend(robot);
     const { asset } = robot;
     const [limit, setLimit] = useState(LIMIT);
 
-    const { loading, data, fetchMore } = useQuery(candleQueries[Number(userRobots)](robot.timeframe), {
+    const { loading, data, fetchMore } = useQuery(candleQueries[Number(Boolean(userRobots))](robot.timeframe), {
         variables: {
             robotId: userRobots ? userRobots.id : robot.id,
             limit
@@ -57,7 +56,6 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
         pollInterval: POLL_INTERVAL,
         notifyOnNetworkStatusChange: true
     });
-
     const [setChartData] = useMutation(SET_CHART_DATA);
     const onFetchMore = () => {
         fetchMore({
