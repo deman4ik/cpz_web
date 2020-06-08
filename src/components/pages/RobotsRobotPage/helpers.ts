@@ -28,9 +28,9 @@ export const formatRobotData = (data: any) => {
             statistics,
             equity,
             active,
-            isUserRobot: user_robots.length > 0
+            isUserRobot: user_robots?.length > 0
         },
-        user_robots: user_robots.length ? user_robots[0] : null
+        user_robots: user_robots?.length ? user_robots[0] : null
     };
 };
 

@@ -1,14 +1,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from "react";
-
+import React, { useContext } from "react";
+import Router from "next/router";
+// helpers
 import { moneyFormat, colorAction } from "config/utils";
-import { SignalItem } from "../RobotsList/types";
 import { formatVariables } from "./helpers";
+// types
+import { SignalItem } from "../RobotsList/types";
+// components
 import { ChevronRightIcon } from "assets/icons/svg";
 import { RobotItemStatusBlock, RobotsButtonItem } from ".";
-import styles from "./RobotsItem.module.css";
 import AreaChart from "components/charts/AreaChart";
+// styles
+import styles from "./RobotsItem.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     item: SignalItem;
@@ -25,8 +31,16 @@ export const RobotsItem: React.FC<Props> = ({
     onRedirectToDetailView,
     lastItem
 }) => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const subscribeToggle = () => {
-        robotSubscribe(formatVariables(item, "", displayType));
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            robotSubscribe(formatVariables(item, "", displayType));
+        }
     };
 
     const handleOnPressChangeVolume = () => {

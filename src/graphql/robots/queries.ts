@@ -62,6 +62,32 @@ export const GET_ROBOT_INFO = gql`
     }
 `;
 
+export const GET_ROBOT_INFO_NOT_AUTH = gql`
+    query robotInfo($code: String) {
+        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_signals") {
+            id
+            name
+            code
+            mod
+            exchange
+            asset
+            currency
+            timeframe
+            available
+            status
+            equity
+            statistics
+            robot_settings {
+                volume
+            }
+            started_at
+            strategyByStrategy {
+                description
+            }
+        }
+    }
+`;
+
 export const GET_PUBLIC_STATISTICS = gql`
     query public_statistics($robotId: uuid!) {
         robots(where: { id: { _eq: $robotId } }) {
@@ -127,6 +153,60 @@ export const GET_ROBOT_POSITIONS = (key: string) => gql`
           volume
         }
       }
+    }
+  }
+`;
+
+export const GET_ROBOT_POSITIONS_NOT_AUTH = (key: string) => gql`
+  query robotPositions(
+    $robotId: uuid!
+    $status: String_comparison_exp
+    $dateFrom: timestamp
+    $dateTo: timestamp
+    $limit: Int
+    $offset: Int
+    $orderBy: [robot_positions_order_by!]
+  ) {
+    robot_positions(
+      where: {
+        robot_id: { _eq: $robotId }
+        status: $status
+        _or: [
+          {
+            _and: [
+              { entry_candle_timestamp: { _gte: $dateFrom } }
+              { entry_candle_timestamp: { _lte: $dateTo } }
+            ]
+          }
+          {
+            _and: [
+              { exit_candle_timestamp: { _gte: $dateFrom } }
+              { exit_candle_timestamp: { _lte: $dateTo } }
+            ]
+          }
+        ]
+      }
+      limit: $limit
+      offset: $offset
+      order_by: $orderBy
+    ) @connection(key: ${key}) {
+      id
+      code
+      direction
+      status
+      entry_date
+      entry_candle_timestamp
+      entry_price
+      entry_action
+      exit_date
+      exit_candle_timestamp
+      exit_price
+      exit_action
+      bars_held
+      profit
+      fee
+      alerts
+      volume
     }
   }
 `;
@@ -242,6 +322,32 @@ export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   }
 `;
 
+export const ROBOT_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
+  query candles(
+    $limit: Int
+    $robotId: uuid!
+  ) {
+    candles: v_candles${timeframe}_positions(
+      where: {
+        robot_id: { _eq: $robotId }
+      }
+      limit: $limit
+    ) {
+      candle {
+        id
+        time
+        open
+        high
+        low
+        close
+        volume
+      }
+      position_entry
+      position_exit
+    }
+  }
+`;
+
 export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   query candles(
     $limit: Int
@@ -268,6 +374,32 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
         id
         settings
       }
+    }
+  }
+`;
+
+export const USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
+  query candles(
+    $limit: Int
+    $robotId: uuid!
+  ) {
+    candles: v_candles${timeframe}_user_positions(
+      where: {
+        user_robot_id: { _eq: $robotId }
+      }
+      limit: $limit
+    ) {
+      candle {
+        id
+        time
+        open
+        high
+        low
+        close
+        volume
+      }
+      position_entry
+      position_exit
     }
   }
 `;
@@ -338,6 +470,34 @@ export const GET_ROBOTS_BY_STATS = gql`
     }
 `;
 
+export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
+    query robots_by_stats(
+        $where: v_robots_stats_bool_exp
+        $hash: String!
+        $limit: Int
+        $offset: Int
+        $order_by: [v_robots_stats_order_by!]
+    ) {
+        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+            @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
+            robots {
+                id
+                code
+                name
+                exchange
+                asset
+                currency
+                status
+                active: started_at
+                equity
+                robot_settings {
+                    volume
+                }
+            }
+        }
+    }
+`;
+
 export const ROBOT_POSITIONS_COUNT_USER = gql`
     query aggregateUserPositions($robotId: uuid!, $status: String_comparison_exp) {
         user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
@@ -373,6 +533,26 @@ export const GET_ROBOT_INFO_USER_ROBOTS = gql`
                 message
                 equity
             }
+        }
+    }
+`;
+// TODO: Переименовать  константу на более логическое название
+export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
+    query robotInfo($code: String) {
+        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
+            id
+            name
+            code
+            exchange
+            asset
+            currency
+            timeframe
+            equity
+            statistics
+            robot_settings {
+                volume
+            }
+            active: started_at
         }
     }
 `;

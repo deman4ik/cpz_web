@@ -41,7 +41,7 @@ export const formatRobotsData = (v_robots_stats: any) =>
             tradesCount: equity && equity.tradesCount ? equity.tradesCount : null
         };
 
-        if (user_signals.length && user_signals[0].subscribed_at) {
+        if (user_signals?.length && user_signals[0]?.subscribed_at) {
             const userSignals = user_signals[0];
             res.subscribed = dayjs.utc(userSignals.subscribed_at).fromNow(true);
             res.isSubscribed = true;

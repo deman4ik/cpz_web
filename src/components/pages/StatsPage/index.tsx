@@ -1,25 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 
+// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
-import { POLL_INTERVAL } from "config/constants";
-import { NoRecentData } from "components/common";
 import { useFilters } from "hooks/useFilters";
+// graphql
+import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
+// constants
+import { POLL_INTERVAL } from "config/constants";
+// components
 import { Template } from "components/layout";
-import { capitalize } from "config/utils";
-import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from "./helpers";
-import { PageType } from "config/types";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
 import { Button, Modal } from "components/basic";
+import NothingComponent from "components/common/NothingComponent/";
+// helpers
+import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from "./helpers";
+import { capitalize } from "config/utils";
+// types
+import { PageType } from "config/types";
 import { CheckedFilters, LabelCombinations } from "./types";
+// styles
 import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const StatsPage: React.FC = () => {
+    /*Контекст аутентификации*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const { width } = useWindowDimensions();
     const router = useRouter();
     const displayType = router.route.split("/")[1];
@@ -110,7 +124,7 @@ export const StatsPage: React.FC = () => {
             page={PageType[displayType]}
             title={`My ${capitalize(displayType)} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
-            toolbar={<StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
+            toolbar={isAuth && <StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
             width={width}
             handlePressBack={handlePressBack}>
             <Modal
@@ -155,7 +169,7 @@ export const StatsPage: React.FC = () => {
             <>
                 {!formatData.chartData || !formatData.robotStatistic ? (
                     <div className={styles.loadingContainer}>
-                        <NoRecentData message="No recent data available" />
+                        <NothingComponent beforeButtonKeyWord="stats" buttonSize="normal" />
                     </div>
                 ) : (
                     <StatsPageComponent formatData={formatData} width={width} displayType={displayType} />

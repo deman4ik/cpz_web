@@ -34,6 +34,34 @@ export const GET_ROBOTS_BY_STATS = gql`
     }
 `;
 
+export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
+    query robots_by_stats(
+        $limit: Int
+        $offset: Int
+        $where: v_robots_stats_bool_exp
+        $hash: String!
+        $order_by: [v_robots_stats_order_by!]
+    ) {
+        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+            @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
+            robots {
+                id
+                code
+                name
+                exchange
+                asset
+                currency
+                status
+                started_at
+                equity
+                robot_settings {
+                    volume
+                }
+            }
+        }
+    }
+`;
+
 export const SEARCH_SIGNALS_FILTERS = gql`
     query signals_filters($where: v_robots_stats_bool_exp) {
         filters: v_robots_stats(where: $where) {
