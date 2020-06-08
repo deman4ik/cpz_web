@@ -1,7 +1,12 @@
-import React, { memo } from "react";
-
+import React, { memo, useContext } from "react";
+import Router from "next/router";
+// components
 import { CaptionButton } from "components/basic";
+// types
 import { ModalKey } from "./types";
+// context
+import { AuthContext } from "libs/hoc/authContext";
+// styles
 import styles from "./ExchangeKeysAddKey.module.css";
 
 interface Props {
@@ -9,8 +14,17 @@ interface Props {
 }
 
 const _ExchangeKeysAddKey: React.FC<Props> = ({ handleSetVisibleModal }) => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const handleOnPress = () => {
-        handleSetVisibleModal(ModalKey.addKey);
+        if (!isAuth) {
+            // редирект если пользователь не аутентифицирован
+            Router.push("/auth/login");
+        } else {
+            handleSetVisibleModal(ModalKey.addKey);
+        }
     };
 
     return (

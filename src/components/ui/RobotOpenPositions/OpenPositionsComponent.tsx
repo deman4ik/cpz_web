@@ -1,17 +1,23 @@
 import React, { Fragment, memo } from "react";
 import Router from "next/router";
 
+// components
 import { Accordion } from "components/basic";
-import { useShowDimension } from "hooks/useShowDimension";
-import { SCREEN_TYPE } from "config/constants";
-import { NoRecentData, DummyCards } from "components/common";
+import { DummyCards } from "components/common";
 import { OpenPositionsHeader } from "./OpenPositionsHeader";
 import { OpenPositionsItem } from "./OpenPositionsItem";
 import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
 import { OpenPositionsLeft } from "./OpenPositionsLeft";
 import { OpenPositionsTitle } from "./OpenPositionsTitle";
+import NothingComponent from "components/common/NothingComponent/";
+// hooks
+import { useShowDimension } from "hooks/useShowDimension";
+// constants
+import { SCREEN_TYPE } from "config/constants";
+// helpers
 import { exchangeName } from "config/utils";
 import { title } from "./helpers";
+// styles
 import styles from "./OpenPositionsComponent.module.css";
 
 interface Props {
@@ -37,7 +43,14 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
         <div className={styles.container}>
             <div className={styles.regionTitle}>{title[displayType]}</div>
             {!formatData.length ? (
-                <NoRecentData message="No recent data available" />
+                <div style={{ marginTop: "20px" }}>
+                    <NothingComponent
+                        beforeButtonKeyWord={displayType}
+                        beforeButtonMessage={`${displayType} positions`}
+                        buttonSize="normal"
+                        buttonStyles={{ width: "200px", margin: "auto" }}
+                    />
+                </div>
             ) : (
                 formatData.map((titleItem) => (
                     <div key={titleItem.exchange} style={{ marginTop: 5 }}>

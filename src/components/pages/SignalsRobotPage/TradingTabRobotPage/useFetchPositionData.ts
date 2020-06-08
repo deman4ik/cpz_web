@@ -1,18 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
-import { GET_ROBOT_POSITIONS } from "graphql/robots/queries";
+// graphql
+import { GET_ROBOT_POSITIONS, GET_ROBOT_POSITIONS_NOT_AUTH } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
+// constants
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
+// helpers
 import { getFormatDataClosedPositions, getAlerts } from "../helpers";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+    const robotPositionsQuery = isAuth ? GET_ROBOT_POSITIONS : GET_ROBOT_POSITIONS_NOT_AUTH;
+
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const { data: dataSignals, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions_open_signals"),
+        robotPositionsQuery("robot_positions_open_signals"),
         {
             variables: {
                 robotId: robot.id,
@@ -25,7 +34,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     );
 
     const { data: dataOpenPositions, loading: loadingOpenPositions, refetch: refetch_open } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions_open"),
+        robotPositionsQuery("robot_positions_open"),
         {
             variables: {
                 robotId: robot.id,
@@ -38,7 +47,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     );
 
     const { data: dataClosedPositions, loading: loadingClosedPositions, fetchMore, refetch: refetch_closed } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions"),
+        robotPositionsQuery("robot_positions"),
         {
             variables: {
                 robotId: robot.id,

@@ -1,22 +1,37 @@
-import React, { useState, useMemo } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useMemo, useContext } from "react";
+import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
+// components
 import { Template } from "components/layout/Template";
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { PageType, TabType } from "config/types";
-import { GET_ROBOT_INFO } from "graphql/robots/queries";
-import { SET_ROBOT_DATA } from "graphql/local/mutations";
-import { POLL_INTERVAL } from "config/constants";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { ToolbarRobotPage } from "./ToolbarRobotPage";
 import { ModalsRobotPage } from "./ModalsRobotPage";
+// hooks
+import useWindowDimensions from "hooks/useWindowDimensions";
+// types
+import { PageType, TabType } from "config/types";
+// graphql
+import { GET_ROBOT_INFO, GET_ROBOT_INFO_NOT_AUTH } from "graphql/robots/queries";
+import { SET_ROBOT_DATA } from "graphql/local/mutations";
+// constants
+import { POLL_INTERVAL } from "config/constants";
+// helpers
 import { formatRobotData } from "./helpers";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const SignalsRobotPage = () => {
+    /*Определение контекста для страницы робота*/
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
+    const robotsInfoQuery = isAuth ? GET_ROBOT_INFO : GET_ROBOT_INFO_NOT_AUTH;
+
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });
@@ -26,7 +41,7 @@ export const SignalsRobotPage = () => {
         router.back();
     };
 
-    const { data, loading } = useQuery(GET_ROBOT_INFO, {
+    const { data, loading } = useQuery(robotsInfoQuery, {
         variables: {
             code: router.query.code
         },
@@ -45,7 +60,11 @@ export const SignalsRobotPage = () => {
     ]);
 
     const robotSubscribe = (variables) => {
-        setRobotData(variables);
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            setRobotData(variables);
+        }
     };
 
     return (
