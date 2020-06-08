@@ -172,9 +172,9 @@ export const USER_SIGNALS = gql`
 `;
 
 export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
-    query user_signals_robot_pos {
+    query user_signals_robot_pos($user_id: uuid) {
         positions: v_user_signals_positions(
-            where: { status: { _eq: "open" } }
+            where: { status: { _eq: "open" }, user_id: { _eq: $user_id } }
             order_by: { entry_date: desc, robot: { exchange: asc, asset: asc } }
         ) {
             id

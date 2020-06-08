@@ -3,7 +3,7 @@ import nextCookie from "next-cookies";
 
 import { LOCALHOST, EXCLUDE_ROUTES, EXLUDE_AUTH_ROUTES } from "config/constants";
 import { fetchAccessToken } from "../auth";
-import { getAccessToken } from "../accessToken";
+import { getAccessToken, getUserIdFromAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
@@ -31,7 +31,7 @@ export const withAuth = (Page) => {
         const { setAuthState } = useContext(AuthContext);
         useEffect(() => {
             if (props?.accessToken) {
-                setAuthState({ isAuth: Boolean(props.accessToken) });
+                setAuthState({ isAuth: Boolean(props.accessToken), user_id: getUserIdFromAccessToken() });
             }
         }, [props.accessToken, props?.accessToken, setAuthState]);
 

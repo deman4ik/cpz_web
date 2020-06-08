@@ -37,3 +37,14 @@ export const getExpiredAccessToken = async (ctx) => {
     }
     return token;
 };
+
+/**
+ *  Функция получения user_id из jwt токена
+ */
+export const getUserIdFromAccessToken = (): string | null => {
+    if (accessToken) {
+        const { userId } = jwtDecode(accessToken.token);
+        return userId;
+    }
+    return null;
+};

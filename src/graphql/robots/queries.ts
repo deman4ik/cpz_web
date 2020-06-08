@@ -558,9 +558,9 @@ export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
 `;
 
 export const GET_USER_POSITIONS_OPEN_POS = gql`
-    query user_positions_open {
+    query user_positions_open($user_id: uuid) {
         positions: user_positions(
-            where: { status: { _eq: "open" } }
+            where: { status: { _eq: "open" }, user_id: { _eq: $user_id } }
             order_by: { entry_date: desc, exchange: asc, asset: asc }
         ) {
             id
@@ -572,6 +572,7 @@ export const GET_USER_POSITIONS_OPEN_POS = gql`
             code
             asset
             exchange
+            user_id
             user_robot {
                 id
                 robot {
