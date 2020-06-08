@@ -2,13 +2,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext } from "react";
 import Router from "next/router";
+// helpers
 import { moneyFormat, colorAction } from "config/utils";
-import { SignalItem } from "../RobotsList/types";
 import { formatVariables } from "./helpers";
+// types
+import { SignalItem } from "../RobotsList/types";
+// components
 import { ChevronRightIcon } from "assets/icons/svg";
 import { RobotItemStatusBlock, RobotsButtonItem } from ".";
-import styles from "./RobotsItem.module.css";
 import AreaChart from "components/charts/AreaChart";
+// styles
+import styles from "./RobotsItem.module.css";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 

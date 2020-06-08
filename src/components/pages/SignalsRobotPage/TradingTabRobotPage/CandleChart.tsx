@@ -3,11 +3,14 @@ import React, { useState, useEffect, memo, useContext } from "react";
 import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
+// components
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { LoadingIndicator } from "components/common";
+// graphql
 import { ROBOT_POSITION_WITH_CANDLE, ROBOT_POSITION_WITH_CANDLE_NOT_AUTH } from "graphql/robots/queries";
 import { ROBOT_POSITION_WITH_CANDLE_SUB, ROBOT_POSITION_WITH_CANDLE_SUB_NOT_AUTH } from "graphql/robots/subscribtions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
+// helpers
 import { getFormatData, getFormatUpdateData } from "../helpers";
 import { getLegend } from "config/utils";
 // context

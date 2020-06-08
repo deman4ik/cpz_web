@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 
+// hooks
 import { useFetchRobots } from "hooks/useFetchRobots";
+// components
 import useSaveScroll from "hooks/useSaveScroll";
 import { RobotsList } from "components/ui/RobotsList";
 import { LoadingIndicator } from "components/common";
 import { Modals } from "./Modals";
+// helpers
 import { formatRobotsData } from "./helpers";
-// context
-import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     displayType: string;

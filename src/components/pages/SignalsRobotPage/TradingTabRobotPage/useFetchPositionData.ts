@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
+// graphql
 import { GET_ROBOT_POSITIONS, GET_ROBOT_POSITIONS_NOT_AUTH } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
+// constants
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
+// helpers
 import { getFormatDataClosedPositions, getAlerts } from "../helpers";
 // context
 import { AuthContext } from "libs/hoc/authContext";

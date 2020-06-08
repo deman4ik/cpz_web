@@ -1,8 +1,10 @@
 import React, { memo, useContext } from "react";
 import Router from "next/router";
-// context
+// components
 import { CaptionButton } from "components/basic";
+// types
 import { ModalKey } from "./types";
+// context
 import { AuthContext } from "libs/hoc/authContext";
 // styles
 import styles from "./ExchangeKeysAddKey.module.css";

@@ -2,18 +2,24 @@ import React, { useState, useMemo, useContext } from "react";
 import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
+// components
 import { Template } from "components/layout/Template";
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { PageType, TabType } from "config/types";
-import { GET_ROBOT_INFO, GET_ROBOT_INFO_NOT_AUTH } from "graphql/robots/queries";
-import { SET_ROBOT_DATA } from "graphql/local/mutations";
-import { POLL_INTERVAL } from "config/constants";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { ToolbarRobotPage } from "./ToolbarRobotPage";
 import { ModalsRobotPage } from "./ModalsRobotPage";
+// hooks
+import useWindowDimensions from "hooks/useWindowDimensions";
+// types
+import { PageType, TabType } from "config/types";
+// graphql
+import { GET_ROBOT_INFO, GET_ROBOT_INFO_NOT_AUTH } from "graphql/robots/queries";
+import { SET_ROBOT_DATA } from "graphql/local/mutations";
+// constants
+import { POLL_INTERVAL } from "config/constants";
+// helpers
 import { formatRobotData } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/authContext";

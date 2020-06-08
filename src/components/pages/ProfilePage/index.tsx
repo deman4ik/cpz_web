@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
-import { Template } from "components/layout/Template";
-
+// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
+// components
 import { ExchangeKeys } from "./ExchangeKeys";
 import { UserContainer } from "./UserContainer";
 import { NotifySettings } from "./NotifySettings";
 import { PageType } from "config/types";
 import { ToolbarProfilePage } from "./ToolbarProfilePage";
+import { Template } from "components/layout/Template";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 

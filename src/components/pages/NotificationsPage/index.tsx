@@ -1,17 +1,21 @@
 import React, { useContext } from "react";
 
+// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFetchData } from "./useFetchData";
+// components
 import { LoadingIndicator } from "components/common";
 import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
 import { Template } from "components/layout";
-import { PageType } from "config/types";
 import { NotificationsContainer } from "./NotificationsContainer";
 import NothingComponent from "components/common/NothingComponent";
+// types
+import { PageType } from "config/types";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
 export const NotificationsPage: React.FC = () => {
+    /*Контекст аутентификации*/
     const {
         authState: { isAuth }
     } = useContext(AuthContext);

@@ -69,6 +69,7 @@ export const color = {
 
 export const globalAny: any = global;
 
+/*Роуты с аутентификацией*/
 export const EXLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
 
 /*массив исключений для доступности роутов*/

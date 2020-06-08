@@ -3,19 +3,23 @@ import Router, { useRouter } from "next/router";
 
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
+// components
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { Template } from "components/layout";
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { PageType, TabType } from "config/types";
-import { GET_ROBOT_INFO_USER_ROBOTS, GET_ROBOT_INFO_NOT_AUTH_ROBOTS } from "graphql/robots/queries";
-import { SET_ROBOT_DATA } from "graphql/local/mutations";
-import { POLL_INTERVAL } from "config/constants";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
 import { ToolbarRobotPage } from "./ToolbarRobotPage";
 import { ModalsRobotPage } from "./ModalsRobotPage";
 import { formatRobotData } from "./helpers";
+// hooks
+import useWindowDimensions from "hooks/useWindowDimensions";
+// graphql
+import { GET_ROBOT_INFO_USER_ROBOTS, GET_ROBOT_INFO_NOT_AUTH_ROBOTS } from "graphql/robots/queries";
+import { SET_ROBOT_DATA } from "graphql/local/mutations";
+// constants
+import { PageType, TabType } from "config/types";
+import { POLL_INTERVAL } from "config/constants";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 

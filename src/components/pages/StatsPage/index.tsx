@@ -3,25 +3,33 @@ import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 
+// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
-import { POLL_INTERVAL } from "config/constants";
 import { useFilters } from "hooks/useFilters";
+// graphql
+import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
+// constants
+import { POLL_INTERVAL } from "config/constants";
+// components
 import { Template } from "components/layout";
-import { capitalize } from "config/utils";
-import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from "./helpers";
-import { PageType } from "config/types";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
 import { Button, Modal } from "components/basic";
-import { CheckedFilters, LabelCombinations } from "./types";
 import NothingComponent from "components/common/NothingComponent/";
+// helpers
+import { getFormatData, getSubTitle, getLabelCombinations, getQueueType } from "./helpers";
+import { capitalize } from "config/utils";
+// types
+import { PageType } from "config/types";
+import { CheckedFilters, LabelCombinations } from "./types";
+// styles
 import styles from "./index.module.css";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
 export const StatsPage: React.FC = () => {
+    /*Контекст аутентификации*/
     const {
         authState: { isAuth }
     } = useContext(AuthContext);

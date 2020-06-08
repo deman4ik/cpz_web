@@ -3,8 +3,10 @@ import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
+// components
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { LoadingIndicator } from "components/common";
+// graphql
 import {
     ROBOT_POSITION_WITH_CANDLE,
     USER_ROBOTS_POSITION_WITH_CANDLE,
@@ -12,6 +14,7 @@ import {
     USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH
 } from "graphql/robots/queries";
 import { SET_CHART_DATA } from "graphql/local/mutations";
+// constants
 import { POLL_INTERVAL } from "config/constants";
 import { getFormatData } from "../helpers";
 import { getLegend } from "config/utils";

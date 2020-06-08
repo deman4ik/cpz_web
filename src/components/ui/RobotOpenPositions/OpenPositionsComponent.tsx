@@ -1,19 +1,24 @@
 import React, { Fragment, memo } from "react";
 import Router from "next/router";
 
+// components
 import { Accordion } from "components/basic";
-import { useShowDimension } from "hooks/useShowDimension";
-import { SCREEN_TYPE } from "config/constants";
 import { DummyCards } from "components/common";
 import { OpenPositionsHeader } from "./OpenPositionsHeader";
 import { OpenPositionsItem } from "./OpenPositionsItem";
 import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
 import { OpenPositionsLeft } from "./OpenPositionsLeft";
 import { OpenPositionsTitle } from "./OpenPositionsTitle";
+import NothingComponent from "components/common/NothingComponent/";
+// hooks
+import { useShowDimension } from "hooks/useShowDimension";
+// constants
+import { SCREEN_TYPE } from "config/constants";
+// helpers
 import { exchangeName } from "config/utils";
 import { title } from "./helpers";
+// styles
 import styles from "./OpenPositionsComponent.module.css";
-import NothingComponent from "components/common/NothingComponent/";
 
 interface Props {
     formatData: any;
