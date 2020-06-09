@@ -1,17 +1,25 @@
-import React, { useMemo, memo } from "react";
+import React, { useMemo, memo, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
 import { GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { ExchangeKeysContainer } from "./ExchangeKeysContainer";
 import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     title: string;
 }
 
 export const _ExchangeKeys: React.FC<Props> = ({ title }) => {
-    const { data, loading } = useQuery(GET_USER_EXCHANGES);
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
+    const { data, loading } = useQuery(GET_USER_EXCHANGES, {
+        variables: { user_id }
+    });
     const formatData = useMemo(() => (!loading && data ? data.userExchange : []), [loading, data]);
 
     return (

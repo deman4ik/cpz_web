@@ -10,8 +10,7 @@ import { LoadingIndicator } from "components/common";
 import {
     ROBOT_POSITION_WITH_CANDLE,
     USER_ROBOTS_POSITION_WITH_CANDLE,
-    ROBOT_POSITION_WITH_CANDLE_NOT_AUTH,
-    USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH
+    ROBOT_POSITION_WITH_CANDLE_NOT_AUTH
 } from "graphql/robots/queries";
 import { SET_CHART_DATA } from "graphql/local/mutations";
 // constants
@@ -39,16 +38,18 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-    const candleQueries = isAuth
-        ? [ROBOT_POSITION_WITH_CANDLE_NOT_AUTH, USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH]
-        : [USER_ROBOTS_POSITION_WITH_CANDLE, ROBOT_POSITION_WITH_CANDLE];
+
+    let candleQuery = ROBOT_POSITION_WITH_CANDLE_NOT_AUTH;
+    if (isAuth) {
+        candleQuery = userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE : ROBOT_POSITION_WITH_CANDLE;
+    }
 
     const candleName = `candles${robot.timeframe}`;
     const legend = getLegend(robot);
     const { asset } = robot;
     const [limit, setLimit] = useState(LIMIT);
 
-    const { loading, data, fetchMore } = useQuery(candleQueries[Number(Boolean(userRobots))](robot.timeframe), {
+    const { loading, data, fetchMore } = useQuery(candleQuery(robot.timeframe), {
         variables: {
             robotId: userRobots ? userRobots.id : robot.id,
             limit

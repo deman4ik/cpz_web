@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_USER_INFO = gql`
-    query userInfo {
-        users {
+    query userInfo($user_id: uuid) {
+        users(where: { id: { _eq: $user_id } }) {
             id
             name
             email

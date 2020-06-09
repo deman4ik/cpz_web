@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { GET_USER_INFO } from "graphql/user/queries";
@@ -9,8 +9,14 @@ import { extraSettings, serviceName } from "./helpers";
 import { NotificationProps } from "./types";
 import { Notify } from "./Notify";
 import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 const _NotifySettings: React.FC = () => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [notifications, setNotifications] = useState<NotificationProps[]>([]);
 
     const { loading } = useQuery(GET_USER_INFO, {
@@ -30,7 +36,8 @@ const _NotifySettings: React.FC = () => {
                     ...extraSettings[key]
                 }))
             );
-        }
+        },
+        variables: { user_id }
     });
     const [saveNotifications] = useMutation(SET_NOTIFICATION_SETTINGS);
 
