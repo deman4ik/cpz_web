@@ -414,14 +414,16 @@ export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
 `;
 
 export const USER_ROBOTS = gql`
-    query user_robots {
-        robots: user_robots(order_by: { started_at: asc, id: asc }) @connection(key: "user_robots_robots") {
+    query user_robots($user_id: uuid) {
+        robots: user_robots(order_by: { started_at: asc, id: asc }, where: { user_id: { _eq: $user_id } })
+            @connection(key: "user_robots_robots") {
             id
             status
             settings
             robot_id
             started_at
             equity
+            user_id
             robot {
                 id
                 name
@@ -442,6 +444,7 @@ export const GET_ROBOTS_BY_STATS = gql`
         $limit: Int
         $offset: Int
         $order_by: [v_robots_stats_order_by!]
+        $user_id: uuid
     ) {
         v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
@@ -449,7 +452,7 @@ export const GET_ROBOTS_BY_STATS = gql`
                 id
                 code
                 name
-                exchange
+                exchange    
                 asset
                 currency
                 status
@@ -458,8 +461,9 @@ export const GET_ROBOTS_BY_STATS = gql`
                 robot_settings {
                     volume
                 }
-                user_robots {
+                user_robots(where: { user_id: { _eq: $user_id } }) {
                     id
+                    user_id
                     status
                     settings
                     started_at
