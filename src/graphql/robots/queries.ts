@@ -378,32 +378,6 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   }
 `;
 
-export const USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
-  query candles(
-    $limit: Int
-    $robotId: uuid!
-  ) {
-    candles: v_candles${timeframe}_user_positions(
-      where: {
-        user_robot_id: { _eq: $robotId }
-      }
-      limit: $limit
-    ) {
-      candle {
-        id
-        time
-        open
-        high
-        low
-        close
-        volume
-      }
-      position_entry
-      position_exit
-    }
-  }
-`;
-
 export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
     query user_robots($user_ex_acc_id: uuid!) {
         user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id } }) {
