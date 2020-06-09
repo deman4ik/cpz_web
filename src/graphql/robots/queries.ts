@@ -426,7 +426,7 @@ export const GET_ROBOTS_BY_STATS = gql`
                 id
                 code
                 name
-                exchange    
+                exchange
                 asset
                 currency
                 status
