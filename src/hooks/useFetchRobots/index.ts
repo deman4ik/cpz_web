@@ -18,7 +18,7 @@ import { AuthContext } from "libs/hoc/authContext";
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const QUERIES_TYPE = AUTH_QUERIES[Number(isAuth)];
 
@@ -61,7 +61,8 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
             order_by: [filtersQuery.order_by, { id: "asc" }],
             where: {
                 robots: { ...robotsWhere }
-            }
+            },
+            user_id
         },
         pollInterval: POLL_INTERVAL
     });

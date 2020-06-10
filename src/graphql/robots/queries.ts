@@ -378,32 +378,6 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   }
 `;
 
-export const USER_ROBOTS_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
-  query candles(
-    $limit: Int
-    $robotId: uuid!
-  ) {
-    candles: v_candles${timeframe}_user_positions(
-      where: {
-        user_robot_id: { _eq: $robotId }
-      }
-      limit: $limit
-    ) {
-      candle {
-        id
-        time
-        open
-        high
-        low
-        close
-        volume
-      }
-      position_entry
-      position_exit
-    }
-  }
-`;
-
 export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
     query user_robots($user_ex_acc_id: uuid!) {
         user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id } }) {
@@ -414,14 +388,16 @@ export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
 `;
 
 export const USER_ROBOTS = gql`
-    query user_robots {
-        robots: user_robots(order_by: { started_at: asc, id: asc }) @connection(key: "user_robots_robots") {
+    query user_robots($user_id: uuid) {
+        robots: user_robots(order_by: { started_at: asc, id: asc }, where: { user_id: { _eq: $user_id } })
+            @connection(key: "user_robots_robots") {
             id
             status
             settings
             robot_id
             started_at
             equity
+            user_id
             robot {
                 id
                 name
@@ -442,6 +418,7 @@ export const GET_ROBOTS_BY_STATS = gql`
         $limit: Int
         $offset: Int
         $order_by: [v_robots_stats_order_by!]
+        $user_id: uuid
     ) {
         v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
@@ -458,8 +435,9 @@ export const GET_ROBOTS_BY_STATS = gql`
                 robot_settings {
                     volume
                 }
-                user_robots {
+                user_robots(where: { user_id: { _eq: $user_id } }) {
                     id
+                    user_id
                     status
                     settings
                     started_at
@@ -558,9 +536,9 @@ export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
 `;
 
 export const GET_USER_POSITIONS_OPEN_POS = gql`
-    query user_positions_open {
+    query user_positions_open($user_id: uuid) {
         positions: user_positions(
-            where: { status: { _eq: "open" } }
+            where: { status: { _eq: "open" }, user_id: { _eq: $user_id } }
             order_by: { entry_date: desc, exchange: asc, asset: asc }
         ) {
             id
@@ -572,6 +550,7 @@ export const GET_USER_POSITIONS_OPEN_POS = gql`
             code
             asset
             exchange
+            user_id
             user_robot {
                 id
                 robot {

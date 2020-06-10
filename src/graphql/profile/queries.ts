@@ -10,13 +10,16 @@ export const GET_EXCHANGES = gql`
 `;
 
 export const GET_USER_EXCHANGES = gql`
-    query user_exchange_accs {
-        userExchange: user_exchange_accs {
+    query user_exchange_accs($user_id: uuid) {
+        userExchange: user_exchange_accs(where: { user: { id: { _eq: $user_id } } }) {
             created_at
             exchange
             id
             name
             status
+            user {
+                id
+            }
         }
     }
 `;
