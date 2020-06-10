@@ -18,7 +18,8 @@ const Main: React.FC = () => {
             <div className={stylesMain.contact_support_card}>
                 <div className={stylesMain.contact_support_card_title}>Telegram Community Support</div>
                 <div className={stylesMain.contact_support_card_description}>
-                  Having common questions with signals or robots? <br/>Ask it in our Telegram Community and we will help you.
+                    Having common questions with signals or robots? <br />
+                    Ask it in our Telegram Community and we will help you.
                 </div>
             </div>
         </div>
