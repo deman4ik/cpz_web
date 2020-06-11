@@ -7,7 +7,11 @@
 /*chat form*/
 .support_chat_container{
    margin: 30px auto;
-   position: relative;;
+   position: relative;
+}
+
+.support_chat_textarea_wrapper{
+    position: relative;
 }
 
 .support_chat_textarea {
@@ -18,6 +22,11 @@
   padding: 10px;
   overflow-y: auto;
   background-color: var(--darkBg);
+  display: block;
+  width: 100%;
+  color: var(--whiteFaded);
+  font-size: var(--small1);
+  font-family: inherit;
 }
 
 .support_chat_textarea:focus .support_chat_textarea_placeholder {

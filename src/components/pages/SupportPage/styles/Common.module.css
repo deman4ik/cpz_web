@@ -55,6 +55,25 @@
     color: var(--whiteFaded);
 }
 
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.68);
+    border-radius: 5px;
+}
+
+.error{
+    padding-top: 10px;
+    color: #ff0000;
+    font-size: var(--small2);
+}
+
 /*common responsive*/
 @media (min-width: 500px) {
   .card_support_title{
