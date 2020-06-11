@@ -3,7 +3,6 @@
     composes: card from "./Common.module.css";
     margin: 15px auto;
     display: flex;
-    color: var(--whiteFaded);
     cursor: pointer;
     padding: 25px;
     align-items: center;
@@ -22,14 +21,6 @@
   color: var(--whiteFaded);
 }
 
-.contact_support_card_title {
-  text-align: center;
-  font-size: var(--big1);
-}
-.contact_support_card_description{
-  padding: 15px 0 10px 15%;
-}
-
 /*additional*/
 .step_card:active{
   transform: translateY(10px) scale(0.98);
@@ -42,8 +33,5 @@
   }
   .contact_support_card{
     width: 60%;
-  }
-  .contact_support_card_title{
-    text-align: left;
   }
 }

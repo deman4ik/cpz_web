@@ -7,11 +7,6 @@
 
 .content_container{
   margin: 15px 0;
-  /*border:1px solid red;*/
-}
-
-.content_card{
-   margin: 10px 0;
 }
 
 .section_title {
@@ -27,5 +22,42 @@
   box-shadow: var(--shadow);
   padding: 10px;
   margin: 15px 0;
+  color: var(--whiteFaded);
 }
 
+.card_support_title {
+  text-align: center;
+  font-size: var(--big1);
+}
+
+.card_support_description {
+  padding: 15px 0 10px 15%;
+}
+
+.message_container {
+  display: flex;
+  margin-bottom: 15px;
+}
+.message {
+    min-width: 200px;
+    max-width: 60%;
+    border-radius: 5px;
+    padding: 15px 15px 34px 15px;
+    color: #ffffff;
+    position: relative;
+}
+
+.date_message {
+    position: absolute;
+    padding: 5px 0;
+    bottom: 1px;
+    font-size: var(--small1);
+    color: var(--whiteFaded);
+}
+
+/*common responsive*/
+@media (min-width: 500px) {
+  .card_support_title{
+    text-align: left;
+  }
+}

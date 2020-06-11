@@ -23,8 +23,8 @@ const Main: React.FC = () => {
             {StepsCards}
             <div className={styles.section_title}>Contact Support</div>
             <div className={stylesMain.contact_support_card}>
-                <div className={stylesMain.contact_support_card_title}>Telegram Community Support</div>
-                <div className={stylesMain.contact_support_card_description} onClick={handleTGClick}>
+                <div className={styles.card_support_title}>Telegram Community Support</div>
+                <div className={styles.card_support_description} onClick={handleTGClick}>
                     Having common questions with signals or robots? <br />
                     Ask it in our Telegram Community and we will help you.
                 </div>

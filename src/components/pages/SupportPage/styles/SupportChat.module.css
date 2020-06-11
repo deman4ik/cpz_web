@@ -1,0 +1,94 @@
+.support_chat_card {
+  composes: card from "./Common.module.css";
+  margin: 40px auto;
+  padding: 15px;
+}
+
+/*chat form*/
+.support_chat_container{
+   margin: 30px auto;
+   position: relative;;
+}
+
+.support_chat_textarea {
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  height: 150px;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: var(--darkBg);
+}
+
+.support_chat_textarea:focus .support_chat_textarea_placeholder {
+    display: none;
+}
+
+.support_chat_button {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.support_chat_description {
+    padding-bottom: 15px;
+}
+
+/*messages*/
+.messages_container {
+    composes: content_container from "./Common.module.css";
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    height: 250px;
+    overflow-y: auto;
+    padding: 15px 10px;
+    position: relative;
+    background-color: var(--darkBg);
+}
+
+/*messages right or left*/
+.message_container_out {
+     composes: message_container from "./Common.module.css";
+     justify-content: flex-end;
+}
+.message_container_in {
+  composes: message_container from "./Common.module.css";
+}
+
+.message_out{
+   composes: message from "./Common.module.css";
+   background-color: var(--primary);
+}
+.message_in{
+  composes: message from "./Common.module.css";
+  background-color: var(--rgbaPrimary);
+}
+
+.date_out{
+    composes: date_message from "./Common.module.css";
+    left:7px;
+}
+.date_in{
+  composes: date_message from "./Common.module.css";
+  right:7px;
+}
+
+
+/* responsive */
+@media (min-width: 768px) {
+  .support_chat_button{
+      justify-content: flex-end;
+  }
+  /*chat form*/
+  .support_chat_container{
+    margin: 30px auto;
+    position: relative;
+    width: 60%;
+  }
+}
+
+@media (min-width: 500px) {
+  .support_chat_card{
+    width: 70%;
+  }
+}
