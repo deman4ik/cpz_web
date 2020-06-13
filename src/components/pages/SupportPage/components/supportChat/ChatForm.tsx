@@ -8,20 +8,13 @@ import supportChatStyles from "../../styles/SupportChat.module.css";
 import styles from "../../styles/Common.module.css";
 // graphql
 import { SEND_SUPPOT_MESSAGE } from "graphql/support/mutations";
-import { GET_SUPPORT_MESSAGES } from "graphql/support/queries";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
 const ChatForm: React.FC = () => {
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
-
     const [clear, setClear] = useState(false);
     const [message, setMessage] = useState("");
-    const [sendSupportMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE, {
-        refetchQueries: [{ query: GET_SUPPORT_MESSAGES, variables: { user_id } }]
-    });
+    const [sendSupportMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE);
 
     /* form handlers*/
     const onchangeMessage = (e): void => {
@@ -55,6 +48,7 @@ const ChatForm: React.FC = () => {
                     className={supportChatStyles.support_chat_textarea}
                     onChange={onchangeMessage}
                     value={message}
+                    placeholder="Enter your message here..."
                 />
                 {loading && (
                     <div className={styles.loader}>

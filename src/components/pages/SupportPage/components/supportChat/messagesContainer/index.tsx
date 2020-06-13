@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useSubscription } from "@apollo/react-hooks";
 // graphql
-import { GET_SUPPORT_MESSAGES } from "graphql/support/queries";
+import { GET_SUPPORT_MESSAGES } from "graphql/support/subscribtions";
 // components
 import Message from "./Message";
 // styles
@@ -28,9 +28,8 @@ const MessagesContainer: React.FC = () => {
     } = useContext(AuthContext);
 
     const [messages, setMessages] = useState([]);
-    const { data, error, loading } = useQuery(GET_SUPPORT_MESSAGES, {
-        variables: { user_id },
-        notifyOnNetworkStatusChange: true
+    const { data, error, loading } = useSubscription(GET_SUPPORT_MESSAGES, {
+        variables: { user_id }
     });
 
     useEffect(() => {
