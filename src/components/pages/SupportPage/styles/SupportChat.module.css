@@ -43,6 +43,11 @@
     padding-bottom: 15px;
 }
 
+.support_chat_error {
+    padding-top: 8px;
+    color: #ff0000;
+}
+
 /*messages*/
 .messages_container {
     composes: content_container from "./Common.module.css";

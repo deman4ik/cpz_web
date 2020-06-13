@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button } from "components/basic";
 import { useMutation } from "@apollo/react-hooks";
 // components
@@ -8,11 +8,20 @@ import supportChatStyles from "../../styles/SupportChat.module.css";
 import styles from "../../styles/Common.module.css";
 // graphql
 import { SEND_SUPPOT_MESSAGE } from "graphql/support/mutations";
+import { GET_SUPPORT_MESSAGES } from "graphql/support/queries";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 const ChatForm: React.FC = () => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [clear, setClear] = useState(false);
     const [message, setMessage] = useState("");
-    const [sendSupportMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE);
+    const [sendSupportMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE, {
+        refetchQueries: [{ query: GET_SUPPORT_MESSAGES, variables: { user_id } }]
+    });
 
     /* form handlers*/
     const onchangeMessage = (e): void => {
@@ -52,7 +61,10 @@ const ChatForm: React.FC = () => {
                         <LoadingIndicator />
                     </div>
                 )}
-                {error || (data?.supportMessage?.error && <div>Error, please try again!</div>)}
+                {error ||
+                    (data?.supportMessage?.error && (
+                        <div className={supportChatStyles.support_chat_error}>Error, please try again!</div>
+                    ))}
             </div>
             <div className={supportChatStyles.support_chat_button}>
                 <Button type="success" size="normal" title="Send message" onClick={onSumbit} width={180} isUppercase />
