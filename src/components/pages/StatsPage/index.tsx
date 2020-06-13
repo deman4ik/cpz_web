@@ -31,7 +31,7 @@ import { AuthContext } from "libs/hoc/authContext";
 export const StatsPage: React.FC = () => {
     /*Контекст аутентификации*/
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
@@ -54,7 +54,8 @@ export const StatsPage: React.FC = () => {
         variables: {
             asset: selectedFilter.asset ? { _eq: selectedFilter.asset } : { _is_null: true },
             exchange: selectedFilter.exchange ? { _eq: selectedFilter.exchange } : { _is_null: true },
-            type: getQueueType(displayType)
+            type: getQueueType(displayType),
+            user_id
         },
         pollInterval: POLL_INTERVAL
     });
