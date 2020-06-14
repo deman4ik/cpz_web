@@ -7,11 +7,13 @@ import Main from "./components/main";
 import SupportChat from "./components/supportChat";
 //styles
 import styles from "./styles/Common.module.css";
+// types
+import { PageType } from "config/types";
 
 const SupportPage: React.FC<any> = () => {
     const { width } = useWindowDimensions();
     return (
-        <Template title="Support" subTitle="Support page" width={width}>
+        <Template title="Support" page={PageType.support} subTitle="Support page" width={width}>
             <div className={styles.content_wrapper}>
                 <Main />
                 <SupportChat />

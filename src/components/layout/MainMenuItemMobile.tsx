@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 
-import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon } from "assets/icons/svg";
+import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon } from "assets/icons/svg";
 import { NotificationCounter } from "../ui/NotificationCounter";
 import { PageType } from "config/types";
 import styles from "./MainMenu.module.css";
@@ -17,7 +17,8 @@ const components = {
     robot: RobotIcon,
     signals: MultiLineChartIcon,
     notifications: NotificationsIcon,
-    profile: AssignmentIcon
+    profile: AssignmentIcon,
+    help: HelpIcon
 };
 
 export const MainMenuItemMobile: React.FC<Props> = ({ item, active, handleOnClick }) => {
