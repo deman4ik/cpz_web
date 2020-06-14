@@ -4,7 +4,7 @@ import { RobotIcon, MultiLineChartIcon, SettingsIcon } from "assets/icons/svg";
 
 /*icons constant*/
 export const ICON_SIZE = 50;
-export const ICON_COLOR = "rgba(255, 255, 255, 0.7)";
+export const ICON_COLOR = "#ffffff";
 export const STEP_CARD_ICONS = {
     robots: <RobotIcon size={ICON_SIZE} color={ICON_COLOR} />,
     signals: <MultiLineChartIcon size={ICON_SIZE} color={ICON_COLOR} />,

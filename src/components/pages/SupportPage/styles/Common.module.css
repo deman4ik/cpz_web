@@ -22,7 +22,7 @@
   box-shadow: var(--shadow);
   padding: 10px;
   margin: 15px 0;
-  color: var(--whiteFaded);
+  color: #ffffff;
 }
 
 .card_support_title {

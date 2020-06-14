@@ -21,30 +21,44 @@ const renderMessages = (messages) => {
 };
 
 const MessagesContainer: React.FC = () => {
-    const containerRef = useRef(null);
-
+    const containerRef = useRef(null); // контейнер с сообщениями
+    /*контекст аутентификации*/
     const {
         authState: { user_id }
     } = useContext(AuthContext);
 
     const [messages, setMessages] = useState([]);
+
+    /*подписка на загрузку сообщений*/
     const { data, error, loading } = useSubscription(GET_SUPPORT_MESSAGES, {
         variables: { user_id }
     });
 
+    /*Установка состояния сообщений*/
     useEffect(() => {
-        if (!loading && data) {
-            setMessages(data.messages);
+        if (!loading && data?.messages) {
+            setMessages(data?.messages);
         }
-    }, [loading, error, data, user_id]);
+    }, [loading, error, data, user_id, data?.messages]);
 
+    /*Скролл вниз при апдейте компнента*/
     useEffect(() => {
         containerRef.current.scrollTop = containerRef.current.scrollHeight;
     });
 
+    const renderContent = () => {
+        if (loading) {
+            return <div className={supportChatStyles.messages_container_not_data}>Loading...</div>;
+        }
+        if (!messages?.length) {
+            return <div className={supportChatStyles.messages_container_not_data}> No messages yet!</div>;
+        }
+        return renderMessages(messages);
+    };
+
     return (
         <div className={supportChatStyles.messages_container} ref={containerRef}>
-            {messages && renderMessages(messages)}
+            {renderContent()}
         </div>
     );
 };

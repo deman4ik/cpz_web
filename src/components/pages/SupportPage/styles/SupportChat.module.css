@@ -24,9 +24,13 @@
   background-color: var(--darkBg);
   display: block;
   width: 100%;
-  color: var(--whiteFaded);
+  color: #ffffff;
   font-size: var(--small1);
   font-family: inherit;
+}
+
+.support_chat_textarea::placeholder{
+    color: var(--whiteFaded);
 }
 
 .support_chat_textarea:focus .support_chat_textarea_placeholder {
@@ -58,6 +62,17 @@
     padding: 15px 10px;
     position: relative;
     background-color: var(--darkBg);
+    position: relative;
+}
+.messages_container_not_data{
+    position: absolute;
+    left:0;
+    right: 0;
+    margin:auto;
+    top:50%;
+    transform: translateY(-50%);
+    text-align: center;
+   font-size: var(--normal3);
 }
 
 /*messages right or left*/
@@ -103,6 +118,6 @@
 
 @media (min-width: 500px) {
   .support_chat_card{
-    width: 70%;
+    width: 60%;
   }
 }

@@ -4,7 +4,7 @@ import supportChatStyles from "components/pages/SupportPage/styles/SupportChat.m
 
 export interface MessageProps {
     type: "in" | "out";
-    message: string;
+    message: any;
     date: string;
 }
 
@@ -12,7 +12,7 @@ const Message: React.FC<MessageProps> = ({ message, type, date }) => {
     return (
         <div className={supportChatStyles[`message_container_${type}`]}>
             <div className={supportChatStyles[`message_${type}`]}>
-                {message}
+                <div dangerouslySetInnerHTML={message} />
                 <div className={supportChatStyles[`date_${type}`]}>{date}</div>
             </div>
         </div>
