@@ -17,7 +17,7 @@
 .support_chat_textarea {
   border: 1px solid var(--accent);
   border-radius: 5px;
-  height: 150px;
+  height: 70px;
   box-sizing: border-box;
   padding: 10px;
   overflow-y: auto;
@@ -27,6 +27,7 @@
   color: #ffffff;
   font-size: var(--small1);
   font-family: inherit;
+  resize: none;
 }
 
 .support_chat_textarea::placeholder{
@@ -57,7 +58,7 @@
     composes: content_container from "./Common.module.css";
     border: 1px solid var(--accent);
     border-radius: 5px;
-    height: 250px;
+    height: 350px;
     overflow-y: auto;
     padding: 15px 10px;
     position: relative;
@@ -112,12 +113,6 @@
   .support_chat_container{
     margin: 30px auto;
     position: relative;
-    width: 60%;
-  }
-}
-
-@media (min-width: 500px) {
-  .support_chat_card{
     width: 60%;
   }
 }

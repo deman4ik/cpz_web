@@ -10,10 +10,8 @@ const SupportChat = () => {
     return (
         <div className={styles.content_container}>
             <div className={supportChatStyles.support_chat_card}>
-                <div className={styles.card_support_title}>Cryptuoso Support Team</div>
-                <ChatForm />
-                <div className={styles.card_support_title}>Messages history</div>
                 <MessagesContainer />
+                <ChatForm />
             </div>
         </div>
     );

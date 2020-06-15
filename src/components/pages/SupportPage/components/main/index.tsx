@@ -12,21 +12,20 @@ import { TELEGRAM_COMMUNITY_URL } from "config/constants";
 const StepsCards = STEPS_CARDS.map((item, index) => <StepCard {...item} key={index} />);
 
 const Main: React.FC = () => {
-    /*TG community link open*/
-    const handleTGClick = () => {
-        window.location.href = TELEGRAM_COMMUNITY_URL;
-    };
-
     return (
-        <div className={styles.content_container}>
-            <div className={styles.section_title}>First steps</div>
-            {StepsCards}
-            <div className={styles.section_title}>Contact Support</div>
-            <div className={stylesMain.contact_support_card}>
-                <div className={styles.card_support_title}>Telegram Community Support</div>
-                <div className={styles.card_support_description} onClick={handleTGClick}>
-                    Having common questions with signals or robots? <br />
-                    Ask it in our Telegram Community and we will help you.
+        <div className={stylesMain.main_content_container}>
+            <div className={stylesMain.main_content_section}>
+                <div className={styles.section_title}>First steps</div>
+                {StepsCards}
+            </div>
+            <div className={stylesMain.main_content_section}>
+                <div className={styles.section_title}>Contact Support</div>
+                <div className={stylesMain.contact_support_container}>
+                    <StepCard
+                        title="Having common questions with signals or robots? Ask it in our Telegram Community and we will help you."
+                        icon="community"
+                        link={TELEGRAM_COMMUNITY_URL}
+                    />
                 </div>
             </div>
         </div>

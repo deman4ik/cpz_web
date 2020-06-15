@@ -1,4 +1,11 @@
-/*cards*/
+.main_content_container {
+    composes: content_container from "./Common.module.css";
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+  /*cards*/
 .step_card {
     composes: card from "./Common.module.css";
     margin: 15px auto;
@@ -9,15 +16,16 @@
 }
 
 .step_card_icon {
-    min-width: 80px;
+    min-width: 60px;
 }
 
 /*contact support*/
-.contact_support_card {
-  composes: card from "./Common.module.css";
-  margin: 15px auto;
-  padding: 15px;
-  cursor: pointer;
+
+.contact_support_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /*additional*/
@@ -25,12 +33,17 @@
   transform: translateY(10px) scale(0.98);
 }
 
-/* responsive */
-@media (min-width: 500px) {
-  .step_card {
-    width: 60%;
+
+/*RESPONSIVE*/
+@media (min-width:920px){
+  .main_content_container{
+      flex-direction: row;
   }
-  .contact_support_card{
-    width: 60%;
+  .main_content_section:first-child {
+    margin-right: 15px;
+    width: 55%;
+  }
+  .main_content_section:nth-child(2) {
+    width: 45%;
   }
 }

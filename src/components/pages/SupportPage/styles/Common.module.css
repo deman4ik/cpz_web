@@ -3,6 +3,7 @@
     box-sizing: border-box;
     padding: 15px;
     margin-bottom: 40px;
+    margin: auto;
 }
 
 .content_container{
@@ -13,7 +14,7 @@
   text-align: center;
   padding-left: 20px;
   padding-right: 20px;
-  font-size: var(--big2);
+  font-size: var(--normal3);
   color: var(--accent);
 }
 
@@ -23,15 +24,6 @@
   padding: 10px;
   margin: 15px 0;
   color: #ffffff;
-}
-
-.card_support_title {
-  text-align: center;
-  font-size: var(--big1);
-}
-
-.card_support_description {
-  padding: 15px 0 10px 15%;
 }
 
 .message_container {
@@ -78,5 +70,11 @@
 @media (min-width: 500px) {
   .card_support_title{
     text-align: left;
+  }
+}
+
+@media (min-width:700px){
+  .content_wrapper{
+      width: 80%;
   }
 }
