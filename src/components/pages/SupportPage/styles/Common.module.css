@@ -34,7 +34,7 @@
     min-width: 200px;
     max-width: 60%;
     border-radius: 5px;
-    padding: 15px 15px 34px 15px;
+    padding: 34px 15px 15px 15px;
     color: #ffffff;
     position: relative;
 }
@@ -42,10 +42,19 @@
 .date_message {
     position: absolute;
     padding: 5px 0;
-    bottom: 1px;
-    font-size: var(--small1);
-    color: var(--whiteFaded);
+    top: 2px;
+    font-size: var(--small2);
 }
+.date_message_in {
+  composes: date_message;
+  color: var(--accent);
+}
+
+.date_message_out{
+  composes: date_message;
+  color: #ffffff;
+}
+
 
 .loader{
     display: flex;

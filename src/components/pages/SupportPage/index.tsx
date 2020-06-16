@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
@@ -9,14 +9,20 @@ import SupportChat from "./components/supportChat";
 import styles from "./styles/Common.module.css";
 // types
 import { PageType } from "config/types";
+// auth context
+import { AuthContext } from "libs/hoc/authContext";
 
 const SupportPage: React.FC<any> = () => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const { width } = useWindowDimensions();
     return (
         <Template title="Support" page={PageType.support} subTitle="Support page" width={width}>
             <div className={styles.content_wrapper}>
                 <Main />
-                <SupportChat />
+                {isAuth && <SupportChat />}
             </div>
         </Template>
     );

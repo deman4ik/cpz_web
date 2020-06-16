@@ -15,7 +15,6 @@
 }
 
 .support_chat_textarea {
-  border: 1px solid var(--accent);
   border-radius: 5px;
   height: 70px;
   box-sizing: border-box;
@@ -24,14 +23,14 @@
   background-color: var(--darkBg);
   display: block;
   width: 100%;
-  color: #ffffff;
+  color: var(--accent);
   font-size: var(--small1);
   font-family: inherit;
   resize: none;
 }
 
 .support_chat_textarea::placeholder{
-    color: var(--whiteFaded);
+  color: var(--accent);
 }
 
 .support_chat_textarea:focus .support_chat_textarea_placeholder {
@@ -56,7 +55,6 @@
 /*messages*/
 .messages_container {
     composes: content_container from "./Common.module.css";
-    border: 1px solid var(--accent);
     border-radius: 5px;
     height: 350px;
     overflow-y: auto;
@@ -94,15 +92,6 @@
   background-color: var(--rgbaPrimary);
 }
 
-.date_out{
-    composes: date_message from "./Common.module.css";
-    left:7px;
-}
-.date_in{
-  composes: date_message from "./Common.module.css";
-  right:7px;
-}
-
 
 /* responsive */
 @media (min-width: 768px) {
@@ -113,6 +102,5 @@
   .support_chat_container{
     margin: 30px auto;
     position: relative;
-    width: 60%;
   }
 }
