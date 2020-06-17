@@ -42,9 +42,20 @@ export const getExpiredAccessToken = async (ctx) => {
  *  Функция получения user_id из jwt токена
  */
 export const getUserIdFromAccessToken = (): string | null => {
-    if (accessToken) {
+    if (accessToken?.token) {
         const { userId } = jwtDecode(accessToken.token);
         return userId;
+    }
+    return null;
+};
+
+/**
+ *  Функция получения роли пользователея
+ */
+export const getUserRoleFromAccesToken = (): string | null => {
+    if (accessToken?.token) {
+        const { role } = jwtDecode(accessToken.token);
+        return role;
     }
     return null;
 };
