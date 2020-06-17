@@ -52,7 +52,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
             <>
                 Learn about manual сryptocurrency trading with{" "}
                 <a href="https://support.cryptuoso.com/signals" className={styles.step_card_accent}>
-                    Cryptuoso Signals
+                    Cryptuoso Signals.
                 </a>
             </>
         ),
@@ -65,7 +65,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
                 <Link href="/signals/search">
                     <span className={styles.step_card_accent}>Signals Page</span>
                 </Link>{" "}
-                <a href="https://support.cryptuoso.com/signals#howtochooseasignalrobottofollow?">Learn how to here</a>
+                <a href="https://support.cryptuoso.com/signals#howtochooseasignalrobottofollow?">Learn how to here.</a>
             </>
         ),
         icon: "textSearch"
@@ -77,7 +77,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
                 <a
                     href="https://support.cryptuoso.com/signals#howtosubscribeonsignalsinourwebapp?"
                     className={styles.step_card_accent}>
-                    Learn how to here
+                    Learn how to here.
                 </a>
             </>
         ),
@@ -88,7 +88,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
             <>
                 Wait for Signals and execute them on your exchange{" "}
                 <Link href="/signals/search">
-                    <span className={styles.step_card_accent}>Signals Page</span>
+                    <span className={styles.step_card_accent}>Signals Page.</span>
                 </Link>
             </>
         ),
@@ -101,7 +101,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
                 <Link href="/profile">
                     <span className={styles.step_card_accent}>Profile Page</span>
                 </Link>{" "}
-                to immediately receive signals
+                to immediately receive signals.
             </>
         ),
         icon: "community"
@@ -115,7 +115,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
             <>
                 Learn about automated сryptocurrency trading with{" "}
                 <a href="https://support.cryptuoso.com/robots" className={styles.step_card_accent}>
-                    Cryptuoso Robots
+                    Cryptuoso Robots.
                 </a>
             </>
         ),
@@ -126,7 +126,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
             <>
                 Generate your API Keys on your exchange and add them to your Cryptuoso Account.{" "}
                 <a href="https://support.cryptuoso.com/exchange-accounts" className={styles.step_card_accent}>
-                    Learn how to here
+                    Learn how to here.
                 </a>
             </>
         ),
@@ -139,7 +139,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
                 <Link href="/robots/search">
                     <span className={styles.step_card_accent}>Robots Page</span>
                 </Link>{" "}
-                <a href="https://support.cryptuoso.com/robots#howtochoosearobot?">Learn how to here</a>
+                <a href="https://support.cryptuoso.com/robots#howtochoosearobot?">Learn how to here.</a>
             </>
         ),
         icon: "textSearch"
@@ -185,7 +185,7 @@ export const NOT_AUTH_CARD = {
             <Link href="/auth/login">
                 <span className={stylesMain.step_card_accent}>Cryptuoso Account</span>
             </Link>{" "}
-            with Telegram or Email
+            with Telegram or Email.
         </>
     ),
     icon: "accountPlus"

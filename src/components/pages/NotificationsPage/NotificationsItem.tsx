@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-
+import Link from "next/link";
 import { formatDate } from "config/utils";
 import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItem.module.css";
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification }) => {
+    console.log(item);
     const handleOnPressNotification = () => {
         routeNotification(getRedirectionLink(item));
     };
@@ -22,6 +23,13 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
                     {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
                 </div>
                 {showMessage(item, handleOnPressNotification)}
+                {item?.type === "message.support-reply" && (
+                    <Link href="/support">
+                        <a className={styles.support_link} href="/support">
+                            Support
+                        </a>
+                    </Link>
+                )}
             </div>
         </div>
     );
