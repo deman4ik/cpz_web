@@ -64,7 +64,8 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
                 Choose robot for manual trading on{" "}
                 <Link href="/signals/search">
                     <span className={styles.step_card_accent}>Signals Page</span>
-                </Link>{" "}
+                </Link>
+                .{" "}
                 <a href="https://support.cryptuoso.com/signals#howtochooseasignalrobottofollow?">Learn how to here.</a>
             </>
         ),
@@ -73,7 +74,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
     {
         title: (
             <>
-                Subscribe to Signal Robot and enter your trading amount{" "}
+                Subscribe to Signal Robot and enter your trading amount.{" "}
                 <a
                     href="https://support.cryptuoso.com/signals#howtosubscribeonsignalsinourwebapp?"
                     className={styles.step_card_accent}>
@@ -138,8 +139,8 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
                 Choose robot for automated trading on{" "}
                 <Link href="/robots/search">
                     <span className={styles.step_card_accent}>Robots Page</span>
-                </Link>{" "}
-                <a href="https://support.cryptuoso.com/robots#howtochoosearobot?">Learn how to here.</a>
+                </Link>
+                . <a href="https://support.cryptuoso.com/robots#howtochoosearobot?">Learn how to here.</a>
             </>
         ),
         icon: "textSearch"
