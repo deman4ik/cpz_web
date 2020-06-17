@@ -82,5 +82,6 @@ export const EXCLUDE_ROUTES: Array<string> = [
     "/signals/search",
     "/robots/search",
     "/signals/robot/",
-    "/robots/robot/"
+    "/robots/robot/",
+    "/support"
 ];

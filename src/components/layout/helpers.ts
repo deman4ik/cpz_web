@@ -14,14 +14,10 @@ export const MAINMENU_ITEMS: MainMenuItemProps[] = [
         icon: "notifications",
         route: "notifications"
     },
-    { label: PageType.profile, icon: "profile", route: "profile" }
+    { label: PageType.profile, icon: "profile", route: "profile" },
+    { label: PageType.support, icon: "help", route: "support" }
 ];
 export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
-    {
-        label: PageType.support,
-        icon: "help",
-        href: DOCS_URL
-    },
     {
         label: PageType.community,
         icon: "telegram",
@@ -90,7 +86,7 @@ export const footerLinks = [
         name: "Privacy"
     },
     {
-        href: `${DOCS_URL}${SUPPORT_URL}`,
+        href: `${SUPPORT_URL}`,
         name: "Support"
     }
 ];
