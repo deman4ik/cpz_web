@@ -1,0 +1,42 @@
+.main_content_container {
+    composes: content_container from "./Common.module.css";
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+  /*cards*/
+.step_card {
+    composes: card from "./Common.module.css";
+    margin: 15px auto;
+    display: flex;
+    padding: 25px;
+    align-items: center;
+}
+
+.step_card_accent {
+    color: var(--accent);
+    cursor: pointer;
+}
+
+/*Последняя карточка для анонимных пользователей*/
+.last_step_card_container {
+  margin: auto;
+}
+
+/*contact support*/
+.contact_support_container {
+  margin: auto;
+}
+
+/*RESPONSIVE*/
+@media (min-width:920px){
+  .main_content_container{
+      flex-direction: row;
+  }
+  .main_content_section {
+    width: 48%;
+  }
+
+}
