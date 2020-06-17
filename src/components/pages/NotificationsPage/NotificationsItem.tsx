@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification }) => {
-    console.log(item);
     const handleOnPressNotification = () => {
         routeNotification(getRedirectionLink(item));
     };
