@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    justify-content: space-between;
 }
 
   /*cards*/
@@ -10,17 +11,13 @@
     composes: card from "./Common.module.css";
     margin: 15px auto;
     display: flex;
-    cursor: pointer;
     padding: 25px;
     align-items: center;
 }
 
 .step_card_accent {
     color: var(--accent);
-}
-
-.step_card_icon {
-    min-width: 60px;
+    cursor: pointer;
 }
 
 /*Последняя карточка для анонимных пользователей*/
@@ -30,10 +27,7 @@
 
 /*contact support*/
 .contact_support_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  margin: auto;
 }
 
 /*RESPONSIVE*/
@@ -41,14 +35,8 @@
   .main_content_container{
       flex-direction: row;
   }
-  .main_content_section:first-child {
-    margin-right: 15px;
-    width: 55%;
+  .main_content_section {
+    width: 48%;
   }
-  .main_content_section:nth-child(2) {
-    width: 45%;
-  }
-  .last_step_card_container {
-    width: 80%;
-  }
+
 }

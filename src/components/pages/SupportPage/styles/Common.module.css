@@ -2,12 +2,20 @@
 .content_wrapper {
     box-sizing: border-box;
     padding: 15px;
-    margin: auto;
     margin-bottom: 50px;
 }
 
 .content_container{
   margin: 15px 0;
+}
+
+.card_description{
+   display: flex;
+   justify-content: center;
+}
+
+.card_icon{
+  min-width: 60px;
 }
 
 .section_title {
@@ -82,8 +90,3 @@
   }
 }
 
-@media (min-width:700px){
-  .content_wrapper{
-      width: 80%;
-  }
-}

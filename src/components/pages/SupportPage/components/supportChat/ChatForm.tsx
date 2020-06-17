@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "components/basic";
 import { useMutation } from "@apollo/react-hooks";
 // components
@@ -8,8 +8,6 @@ import supportChatStyles from "../../styles/SupportChat.module.css";
 import styles from "../../styles/Common.module.css";
 // graphql
 import { SEND_SUPPOT_MESSAGE } from "graphql/support/mutations";
-// context
-import { AuthContext } from "libs/hoc/authContext";
 
 const ChatForm: React.FC = () => {
     const [clear, setClear] = useState(false);
@@ -40,9 +38,6 @@ const ChatForm: React.FC = () => {
 
     return (
         <div className={supportChatStyles.support_chat_container}>
-            <div className={supportChatStyles.support_chat_description}>
-                Have a personal problem regarding connecting an exchange or billing? Send message here:
-            </div>
             <div className={supportChatStyles.support_chat_textarea_wrapper}>
                 <textarea
                     className={supportChatStyles.support_chat_textarea}
@@ -61,7 +56,13 @@ const ChatForm: React.FC = () => {
                     ))}
             </div>
             <div className={supportChatStyles.support_chat_button}>
-                <Button type="success" size="normal" title="Send message" onClick={onSumbit} width={180} isUppercase />
+                <Button
+                    type="success"
+                    title="Send"
+                    style={{ height: "50px", width: "100%" }}
+                    onClick={onSumbit}
+                    isUppercase
+                />
             </div>
         </div>
     );
