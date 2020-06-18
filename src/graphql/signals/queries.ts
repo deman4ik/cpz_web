@@ -194,6 +194,7 @@ export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
             direction
             entry_date
             entry_price
+            user_id
             robot {
                 id
                 code
