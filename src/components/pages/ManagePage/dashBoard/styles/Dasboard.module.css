@@ -33,5 +33,5 @@
 .stats_item_cnt {
    padding-top: 5px;
    text-align: center;
-   color: rgb(28, 164, 107);
+   color: var(--secondary);
 }
