@@ -3,20 +3,24 @@ import React, { useContext } from "react";
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
 import { Template } from "components/layout/Template";
+import { Card } from "components/basic";
+import TotalStats from "./TotalStats";
 // auth context
 import { AuthContext } from "libs/hoc/authContext";
+// styles
+import styles from "./styles/Common.module.css";
 
 const MangeDashboard: React.FC<any> = () => {
     const {
         authState: { user_id, isManager }
     } = useContext(AuthContext);
 
-    console.log(isManager);
-
     const { width } = useWindowDimensions();
     return (
         <Template title="Dasboard" subTitle="Users dashboard" width={width}>
-            <div>manage dasboard</div>
+            <Card style={{ minHeight: "305px", margin: "15px" }}>
+                <TotalStats />
+            </Card>
         </Template>
     );
 };
