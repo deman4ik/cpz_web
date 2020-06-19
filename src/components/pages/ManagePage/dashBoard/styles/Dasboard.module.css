@@ -1,3 +1,14 @@
+/*
+TODO: Вынести стили в отдельный модуль для каждой карточки
+*/
+
+/**/
+.cards_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 /*common styles*/
 .stats_wrapper {
     padding: 15px;
@@ -21,17 +32,18 @@
 /*stats item*/
 .stats_item{
     padding: 10px 0;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .stats_item_title{
-  font-size: var(--normal2);
-  border-bottom: 1px solid #ffffff;
+  font-size: var(--normal1);
+  border-bottom: 1px solid var(--accent);
   padding-bottom: 5px;
   text-align: center;
+  color: var(--accent);
 }
 .stats_item_cnt {
    padding-top: 5px;
    text-align: center;
-   color: var(--secondary);
+   font-size: var(--big1);
 }

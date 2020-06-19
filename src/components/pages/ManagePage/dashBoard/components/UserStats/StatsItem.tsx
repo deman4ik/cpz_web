@@ -1,6 +1,6 @@
 import React from "react";
 // styles
-import styles from "../styles/Dasboard.module.css";
+import styles from "../../styles/Dasboard.module.css";
 
 export interface StatsInterface {
     title: string;
@@ -9,10 +9,18 @@ export interface StatsInterface {
 }
 
 const StatsItem: React.FC<any> = ({ title, count, plus }) => {
+    /*color count*/
+    let colorCount = "#ffffff";
+    if (!count) {
+        colorCount = "var(--negative)";
+    }
+    if (count && plus) {
+        colorCount = "var(--secondary)";
+    }
     return (
         <div className={styles.stats_item}>
             <div className={styles.stats_item_title}>{title}</div>
-            <div className={styles.stats_item_cnt}>
+            <div className={styles.stats_item_cnt} style={{ color: colorCount }}>
                 {plus && "+"}
                 {count}
             </div>
