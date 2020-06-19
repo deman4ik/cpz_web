@@ -1,7 +1,7 @@
 import React from "react";
 // components
 import StatsItem from "./StatsItem";
-import styles from "components/pages/ManagePage/dashBoard/styles/Dasboard.module.css";
+import styles from "components/pages/ManagePage/dashBoard/styles/UserStats.module.css";
 // types
 import { StatsInterface } from "./StatsItem";
 

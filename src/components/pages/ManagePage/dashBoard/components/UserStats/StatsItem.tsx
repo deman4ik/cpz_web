@@ -1,6 +1,6 @@
 import React from "react";
 // styles
-import styles from "../../styles/Dasboard.module.css";
+import styles from "../../styles/UserStats.module.css";
 
 export interface StatsInterface {
     title: string;
