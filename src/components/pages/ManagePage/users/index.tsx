@@ -38,7 +38,7 @@ const headerData = [
     }
 ];
 
-const tableBody = [
+const tableRows = [
     {
         cells: [
             {
@@ -115,8 +115,8 @@ const ManageUsers = () => {
     const { width } = useWindowDimensions();
 
     return (
-        <Template title="Dashboard" subTitle="Users dashboard" width={width}>
-            <SearchTable headerData={headerData} columnsWidth={columnsWidth} tableBody={tableBody} />
+        <Template title="Dashboard" subTitle="Search users" width={width}>
+            <SearchTable headerData={headerData} columnsWidth={columnsWidth} tableRows={tableRows} />
         </Template>
     );
 };
