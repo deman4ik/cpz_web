@@ -24,7 +24,7 @@ interface SearchTableProps {
  * @param tableRows - данные таблицы
  */
 const renderNotDesktop = (CustomView, tableRows) => {
-    return CustomView ? <CustomView {...tableRows} /> : <DefaultNotDesktop {...tableRows} />;
+    return CustomView ? <CustomView tableRows={tableRows} /> : <DefaultNotDesktop tableRows={tableRows} />;
 };
 
 /**
@@ -33,7 +33,6 @@ const renderNotDesktop = (CustomView, tableRows) => {
 const SearchTable: React.FC<SearchTableProps> = ({ headerData, tableRows, columnsWidth, NotDesktopComponent }) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
-
     return (
         <div className={styles.wrapper}>
             {isDesktopView ? (

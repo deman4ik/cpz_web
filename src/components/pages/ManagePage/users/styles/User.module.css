@@ -1,0 +1,33 @@
+/*table*/
+.user_text_cell {
+    width: 100%;
+    color: #ffffff;
+    font-size: var(--small1);
+    box-sizing: border-box;
+    word-break: break-word;
+    padding-right: 7px;
+}
+
+/*not desktop value*/
+.not_desktop_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.not_desktop_item {
+    width: 48%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.not_desktop_item_title{
+  font-size: var(--small1);
+  color: var(--accent);
+  padding-bottom: 5px;
+}
+
+.not_desktop_item_val{
+  color: #ffffff;
+  font-size: var(--small1);
+}

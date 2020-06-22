@@ -14,12 +14,16 @@ const TableBody: React.FC<TableBodyProps> = ({ tableRows, columnsWidth }) => {
     let content = [];
     if (!columnsWidth) {
         content = tableRows.map((row) => {
-            const cellsData = row.map((cell) => (
+            const cellsData = row.cells.map((cell) => (
                 <td className={styles.table_cell} {...cell?.props}>
                     {cell.component}
                 </td>
             ));
-            return <tr {...row} className={bodyStyles.body_row}>{cellsData}</tr>;
+            return (
+                <tr {...row} className={bodyStyles.body_row}>
+                    {cellsData}
+                </tr>
+            );
         });
     } else {
         content = tableRows.map((row) => {
@@ -28,7 +32,11 @@ const TableBody: React.FC<TableBodyProps> = ({ tableRows, columnsWidth }) => {
                     {row.cells[index]?.component}
                 </td>
             ));
-            return <tr {...row} className={bodyStyles.body_row}>{cellsData}</tr>;
+            return (
+                <tr {...row} className={bodyStyles.body_row}>
+                    {cellsData}
+                </tr>
+            );
         });
     }
     return <tbody>{content}</tbody>;
