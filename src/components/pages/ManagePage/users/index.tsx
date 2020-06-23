@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/react-hooks";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
@@ -6,6 +7,11 @@ import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
 import UserCellText from "./components/UserCellText";
 import UserCellNotDesktopView from "./components/UserNotDesktopView";
+import SearchPanel from "../common/SearchPanel";
+// utils
+import { getWhereVariables } from "./utils";
+// graphql
+import { GET_USERS } from "graphql/manage/queries";
 
 const USER_TITLES_SCHEME = {
     name: "Name",
@@ -111,7 +117,8 @@ const tableRows = [
                 notDesktopVal: "settings",
                 component: (
                     <UserCellText>
-                        Notifications: email, telegram<br />
+                        Notifications: email, telegram
+                        <br />
                         Trading: email, telegram
                     </UserCellText>
                 )
@@ -146,10 +153,23 @@ const tableRows = [
 const columnsWidth = ["10.5%", "13%", "13.07%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
 
 const ManageUsers = () => {
+    const [filters, setFilters] = useState(getWhereVariables(""));
     const { width } = useWindowDimensions();
+    const { loading, data } = useQuery(GET_USERS, {
+        variables: { where: filters }
+    });
+
+    /*Коллбэк на поиск*/
+    const searchCallback = (value) => {
+        setFilters(getWhereVariables(value));
+    };
 
     return (
-        <Template title="Dashboard" subTitle="Search users" width={width}>
+        <Template
+            title="Dashboard"
+            subTitle="Search users"
+            width={width}
+            toolbar={<SearchPanel callback={searchCallback} />}>
             <SearchTable headerData={headerData} columnsWidth={columnsWidth} tableRows={tableRows} />
         </Template>
     );
