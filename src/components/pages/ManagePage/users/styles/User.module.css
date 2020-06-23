@@ -2,10 +2,10 @@
 .user_text_cell {
     width: 100%;
     color: #ffffff;
-    font-size: var(--small1);
+    font-size: 13px;
     box-sizing: border-box;
     word-break: break-word;
-    padding-right: 7px;
+    padding-right: 5px;
 }
 
 /*not desktop value*/
