@@ -1,4 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
+import { v4 as uuid } from "uuid";
 // styles
 import styles from "./styles/Common.module.css";
 import bodyStyles from "./styles/TableBody.module.css";
@@ -8,19 +9,18 @@ export interface TableBodyProps {
     columnsWidth?: Array<string>;
 }
 
-//TODO:  пробросить keys
 /*Тело таблицы*/
 const TableBody: React.FC<TableBodyProps> = ({ tableRows, columnsWidth }) => {
     let content = [];
     if (!columnsWidth) {
         content = tableRows.map((row) => {
             const cellsData = row.cells.map((cell) => (
-                <td className={styles.table_cell} {...cell?.props}>
+                <td className={styles.table_cell} {...cell?.props} key={uuid()}>
                     {cell.component}
                 </td>
             ));
             return (
-                <tr {...row} className={bodyStyles.body_row}>
+                <tr style={row?.style} className={bodyStyles.body_row} key={uuid()}>
                     {cellsData}
                 </tr>
             );
@@ -28,12 +28,12 @@ const TableBody: React.FC<TableBodyProps> = ({ tableRows, columnsWidth }) => {
     } else {
         content = tableRows.map((row) => {
             const cellsData = columnsWidth.map((width, index) => (
-                <td style={{ width }} className={styles.table_cell} {...row.cells[index]?.props}>
+                <td style={{ width }} className={styles.table_cell} {...row.cells[index]?.props} key={uuid()}>
                     {row.cells[index]?.component}
                 </td>
             ));
             return (
-                <tr {...row} className={bodyStyles.body_row}>
+                <tr style={row?.style} className={bodyStyles.body_row} key={uuid()}>
                     {cellsData}
                 </tr>
             );
@@ -42,4 +42,4 @@ const TableBody: React.FC<TableBodyProps> = ({ tableRows, columnsWidth }) => {
     return <tbody>{content}</tbody>;
 };
 
-export default TableBody;
+export default memo(TableBody);

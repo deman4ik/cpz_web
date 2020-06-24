@@ -9,86 +9,27 @@ import UserCellText from "./components/UserCellText";
 import UserCellNotDesktopView from "./components/UserNotDesktopView";
 import SearchPanel from "../common/SearchPanel";
 // utils
-import { getWhereVariables } from "./utils";
+import { getWhereVariables, formatUsers } from "./utils";
+// constants
+import { USER_TITLES_SCHEME, CENTRED_CELL, HEADER_TABLE_DATA,COLUMNS_WIDTH } from "./constants";
 // graphql
 import { GET_USERS } from "graphql/manage/queries";
-
-const USER_TITLES_SCHEME = {
-    name: "Name",
-    id: "Id",
-    email: "Email",
-    telegram: {
-        title: "Telegram",
-        telegram_username: "Username:",
-        telegram_id: "Id:"
-    },
-    roles: {
-        title: "Roles",
-        defaultRole: "Default:",
-        allowedRoles: "Allowed:"
-    },
-    settings: {
-        title: "Settings",
-        notifications: "Notifications:",
-        trading: "Trading:"
-    },
-    entries: {
-        title: "Entries",
-        user_robots: "Robots:",
-        user_signals: "Signals:",
-        user_exchange_accs: "Exchange:"
-    },
-    status: "Status",
-    created_at: "Created"
-};
-
-const centerdCell: React.CSSProperties = { textAlign: "center" };
-
-const headerData = [
-    {
-        text: USER_TITLES_SCHEME.name
-    },
-    {
-        text: USER_TITLES_SCHEME.id
-    },
-    {
-        text: USER_TITLES_SCHEME.email
-    },
-    {
-        text: USER_TITLES_SCHEME.telegram.title
-    },
-    {
-        text: USER_TITLES_SCHEME.roles.title
-    },
-    {
-        text: USER_TITLES_SCHEME.settings.title
-    },
-    {
-        text: USER_TITLES_SCHEME.entries.title
-    },
-    {
-        text: USER_TITLES_SCHEME.status
-    },
-    {
-        text: <div style={centerdCell}> {USER_TITLES_SCHEME.created_at}</div>
-    }
-];
 
 const tableRows = [
     {
         cells: [
             {
-                title: USER_TITLES_SCHEME.name,
+                title: USER_TITLES_SCHEME.name.title,
                 notDesktopVal: "modecrywork",
                 component: <UserCellText>modecrywork</UserCellText>
             },
             {
-                title: USER_TITLES_SCHEME.id,
+                title: USER_TITLES_SCHEME.id.title,
                 notDesktopVal: "dsadsadsadsadas",
                 component: <UserCellText>b6d0e992-f716-42d5-b69c-6a0b29ef4172</UserCellText>
             },
             {
-                title: USER_TITLES_SCHEME.email,
+                title: USER_TITLES_SCHEME.email.title,
                 notDesktopVal: "modecry@gmail.com",
                 component: <UserCellText>modecry@gmail.com</UserCellText>
             },
@@ -136,21 +77,20 @@ const tableRows = [
                 )
             },
             {
-                title: USER_TITLES_SCHEME.status,
+                title: USER_TITLES_SCHEME.status.title,
                 notDesktopVal: "status",
                 component: <UserCellText>active</UserCellText>
             },
             {
-                title: USER_TITLES_SCHEME.created_at,
+                title: USER_TITLES_SCHEME.created_at.title,
                 notDesktopVal: "created_at",
-                component: <UserCellText style={centerdCell}>10.15.2020</UserCellText>
+                component: <UserCellText style={CENTRED_CELL}>10.15.2020</UserCellText>
             }
         ],
         NotDesktopView: UserCellNotDesktopView
     }
 ];
 
-const columnsWidth = ["10.5%", "13%", "13.07%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
 
 const ManageUsers = () => {
     const [filters, setFilters] = useState(getWhereVariables(""));
@@ -163,14 +103,16 @@ const ManageUsers = () => {
     const searchCallback = (value) => {
         setFilters(getWhereVariables(value));
     };
-
+    if (data?.users?.length) {
+        formatUsers(data.users);
+    }
     return (
         <Template
             title="Dashboard"
             subTitle="Search users"
             width={width}
             toolbar={<SearchPanel callback={searchCallback} />}>
-            <SearchTable headerData={headerData} columnsWidth={columnsWidth} tableRows={tableRows} />
+            <SearchTable headerData={HEADER_TABLE_DATA} columnsWidth={COLUMNS_WIDTH} tableRows={tableRows} />
         </Template>
     );
 };
