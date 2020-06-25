@@ -45,16 +45,16 @@ export const withAuth = (Page) => {
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         let accessToken = "";
-
         if (ctx.res) {
             const refresh_token =
                 ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
-
             if (refresh_token) {
                 accessToken = await fetchAccessToken(refresh_token);
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
+            } else if (!isLanding && !checkPath(ctx.pathname)) {
+                redirect(ctx, pathToRedirect);
             }
             if (accessToken && !isLanding) {
                 if (
