@@ -3,6 +3,7 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import DefaultNotDesktop from "./components/DefaultNotDesktop";
+import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 // constants
 import { SCREEN_TYPE } from "config/constants";
 
@@ -16,6 +17,12 @@ interface SearchTableProps {
     tableRows: Array<any>;
     columnsWidth?: Array<string>;
     NotDesktopComponent?: React.Component | React.FC;
+    moreButton: {
+        handleFetchMore: () => void;
+        maxCount: number;
+        limitStep: number;
+        isSearch: boolean;
+    };
 }
 
 /**
@@ -30,9 +37,21 @@ const renderNotDesktop = (CustomView, tableRows) => {
 /**
  * Таблица отображаемая в разделах с поиском
  */
-const SearchTable: React.FC<SearchTableProps> = ({ headerData, tableRows, columnsWidth, NotDesktopComponent }) => {
+const SearchTable: React.FC<SearchTableProps> = ({
+    headerData,
+    tableRows,
+    columnsWidth,
+    NotDesktopComponent,
+    moreButton: { handleFetchMore, maxCount, limitStep, isSearch }
+}) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
+    const loadButtonProps = {
+        onFetchMore: handleFetchMore,
+        isLoadingMore: false,
+        renderLoadMoreButton: tableRows.length + limitStep < maxCount && !isSearch
+    };
+
     return (
         <div className={styles.wrapper}>
             {isDesktopView ? (
@@ -47,6 +66,9 @@ const SearchTable: React.FC<SearchTableProps> = ({ headerData, tableRows, column
             ) : (
                 renderNotDesktop(NotDesktopComponent, tableRows)
             )}
+            <div>
+                <RobotsLoadMore {...loadButtonProps} />
+            </div>
         </div>
     );
 };

@@ -17,14 +17,14 @@ export const USER_TITLES_SCHEME = {
     },
     settings: {
         title: "Settings",
-        notifications: "Notifications:",
-        trading: "Trading:"
+        notifications: "Notifications Signals: ",
+        trading: "Trading: "
     },
     entries: {
         title: "Entries",
-        user_robots: "Robots:",
-        user_signals: "Signals:",
-        user_exchange_accs: "Exchange:"
+        user_robots: "Robots: ",
+        user_signals: "Signals: ",
+        user_exchange_accs: "Exchange: "
     },
     status: { title: "Status" },
     created_at: { title: "Created" }

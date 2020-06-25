@@ -13,12 +13,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    height: 100%;
 }
 
 .not_desktop_item {
     width: 48%;
     box-sizing: border-box;
     padding: 10px;
+}
+.not_desktop_item:last-child{
+    text-align: center;
 }
 
 .not_desktop_item_title{

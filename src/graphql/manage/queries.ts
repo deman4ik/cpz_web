@@ -22,8 +22,8 @@ export const GET_USER_STATS_DURING_PERIOD = gql`
 `;
 
 export const GET_USERS = gql`
-    query getUsers($where: users_bool_exp) {
-        users(where: $where) {
+    query getUsers($where: users_bool_exp, $limit: Int) {
+        users(limit: $limit, where: $where) {
             name
             id
             email
@@ -41,6 +41,16 @@ export const GET_USERS = gql`
             }
             user_exchange_accs {
                 id
+            }
+        }
+    }
+`;
+
+export const USERS_AGGREGATE = gql`
+    query users_aggr {
+        users_aggregate {
+            aggregate {
+                count
             }
         }
     }
