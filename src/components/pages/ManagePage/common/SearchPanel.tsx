@@ -20,7 +20,7 @@ const SearchPanel: React.FC<SearchPanelInterface> = ({ callback }) => {
 
     return (
         <div className={styles.container_search}>
-            <SearchInput placeholder="search here" value={value} onChange={onChangeValue} />
+            <SearchInput placeholder="Search users..." value={value} onChange={onChangeValue} />
         </div>
     );
 };

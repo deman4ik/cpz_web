@@ -1,6 +1,6 @@
-/*Схема тайтлов для данных*/
 import React from "react";
 
+/*Схема тайтлов для данных*/
 export const USER_TITLES_SCHEME = {
     name: { title: "Name" },
     id: { title: "Id" },
@@ -62,4 +62,9 @@ export const HEADER_TABLE_DATA = [
     }
 ];
 
-export const COLUMNS_WIDTH = ["10.5%", "13%", "13.07%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
+export const COLUMNS_WIDTH = ["10%", "13%", "14.02%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
+
+export const REGEXS = {
+    telegram_id: /^\d{9}/g,
+    uuid: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+};

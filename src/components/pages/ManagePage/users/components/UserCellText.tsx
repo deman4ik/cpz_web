@@ -7,7 +7,7 @@ import styles from "../styles/User.module.css";
  */
 const UserCellText = (props) => {
     return (
-        <div {...props} className={styles.user_text_cell}>
+        <div style={props?.style} className={styles.user_text_cell}>
             {props.children}
         </div>
     );

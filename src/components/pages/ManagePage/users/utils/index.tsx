@@ -3,15 +3,9 @@ import React from "react";
 import UserCellText from "../components/UserCellText";
 import UserCellNotDesktopView from "../components/UserNotDesktopView";
 // constants
-import { USER_TITLES_SCHEME, CENTRED_CELL } from "../constants";
+import { USER_TITLES_SCHEME, CENTRED_CELL, REGEXS } from "../constants";
 // utils
 import { formatDate } from "config/utils";
-
-const REGEXS = {
-    telegram_id: /^\d{9}/g,
-    uuid: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-};
-
 /**
  *  Функция позволяющаяя вернуть переменные которые требуются для фильтров
  */
@@ -32,24 +26,30 @@ export const getWhereVariables = (value: string): any => {
         const id = { id: { _eq: value } };
         where._or.push(id);
     }
-    return where;
+    return where; // возвращаемое значение where  для фильтров
 };
 
 /*Форматирование данных для вывода в таблицу*/
-export const formatUsers = (data: any) => {
-    // функция для фоматирования настроек
+export const formatUsers = (data: Array<any>): Array<any> => {
+    /*Функция для фоматирования настроек пользователя*/
     const formatSettings = (object) =>
         Object.keys(object)
             .filter((key) => object[key])
             .join(", ");
 
-    const newData = data.map((user) => {
-        const userItem = { cells: [], NotDesktopView: UserCellNotDesktopView };
+    /*Форматинг и обработка дыннх для отображения в таблице*/
+    return data.map((user) => {
+        const userItem = { cells: [], NotDesktopView: UserCellNotDesktopView }; // экземпляр строки
         const userCellsScheme: any = {}; // схема ячеек
+
+        /*Форматинг на основе схемы заголовков*/
         Object.keys(USER_TITLES_SCHEME).forEach((key) => {
-            let innerComponent;
+            let innerComponent; // переопределяемая переменная компонента
+            /*Переменные настроек*/
+
             let notifications;
             let trading;
+            /*Форматинг по ключам*/
             switch (key) {
                 case "telegram":
                     innerComponent = user.telegram_id ? (
@@ -154,5 +154,4 @@ export const formatUsers = (data: any) => {
         });
         return userItem;
     });
-    return newData;
 };

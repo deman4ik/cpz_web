@@ -1,24 +1,25 @@
-import React from "react";
+import React, { memo } from "react";
+import { v4 as uuid } from "uuid";
 // styles
 import notDesktopStyles from "../styles/NotDesktop.module.css";
 
-interface NotDesktopProps {
+export interface NotDesktopProps {
     tableRows: Array<any>;
 }
-// TODO: пробросить key
-/*Мобильное отображение данных таблицы*/
-const DefaultNotDesktop: React.FC<NotDesktopProps> = ({ tableRows }) => {
+
+/*Респонсив отображение данных таблицы*/
+const DefaultNotDesktop: React.FC<NotDesktopProps> = memo(({ tableRows }) => {
     return (
         <div className={notDesktopStyles.not_desktop_wrapper}>
             {tableRows.map(({ cells, NotDesktopView }) => {
                 return (
-                    <div className={notDesktopStyles.not_desktop_item_wrapper}>
+                    <div className={notDesktopStyles.not_desktop_item_wrapper} key={uuid()}>
                         <NotDesktopView data={cells} />
                     </div>
                 );
             })}
         </div>
     );
-};
+});
 
 export default DefaultNotDesktop;

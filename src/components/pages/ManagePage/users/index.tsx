@@ -14,13 +14,17 @@ import { POLL_INTERVAL } from "config/constants";
 // graphql
 import { GET_USERS, USERS_AGGREGATE } from "graphql/manage/queries";
 
-const LIMIT_STEP = 10;
+const LIMIT_STEP = 10; // шаг пагинации
 
 const ManageUsers = () => {
+    /*States*/
     const [limit, setLimit] = useState(LIMIT_STEP);
     const [isSearch, setIsSearch] = useState(false);
     const [filters, setFilters] = useState(getWhereVariables(""));
-    const { width } = useWindowDimensions();
+
+    const { width } = useWindowDimensions(); // width hook
+
+    /*Fetch data*/
     const { data } = useQuery(GET_USERS, {
         variables: { where: filters, limit }
     });
@@ -28,7 +32,7 @@ const ManageUsers = () => {
         pollInterval: POLL_INTERVAL
     });
 
-    /*Коллбэк на поиск*/
+    /*Handlers*/
     const searchCallback = (value) => {
         setFilters(getWhereVariables(value));
         if (value) {
@@ -38,18 +42,16 @@ const ManageUsers = () => {
         }
         setIsSearch(Boolean(value));
     };
-
     const callbackMore = () => {
         setLimit(data.users.length + LIMIT_STEP);
     };
 
     return (
         <Template
-            title="Dashboard"
-            subTitle="Search users"
+            title="Users"
             width={width}
             toolbar={<SearchPanel callback={searchCallback} />}>
-            {data?.users?.length && aggrData?.users_aggregate?.aggregate && (
+            {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable
                     headerData={HEADER_TABLE_DATA}
                     columnsWidth={COLUMNS_WIDTH}
@@ -61,7 +63,7 @@ const ManageUsers = () => {
                         isSearch
                     }}
                 />
-            )}
+            ) : null}
         </Template>
     );
 };

@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles/Common.module.css";
 import headerStyles from "./styles/TableHeader.module.css";
 
-interface TableHeaderProps {
+export interface TableHeaderProps {
     headerData: Array<any>;
     columnsWidth?: Array<string>;
 }

@@ -6,22 +6,23 @@ import DefaultNotDesktop from "./components/DefaultNotDesktop";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 // constants
 import { SCREEN_TYPE } from "config/constants";
-
 // styles
 import styles from "./styles/Common.module.css";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 
-interface SearchTableProps {
-    headerData: Array<any>;
-    tableRows: Array<any>;
-    columnsWidth?: Array<string>;
-    NotDesktopComponent?: React.Component | React.FC;
+/*types*/
+export interface SearchTableProps {
+    headerData: Array<any>; // Заголовки колнок
+    tableRows: Array<any>; // Массив строк содержащий ячейки
+    columnsWidth?: Array<string>; // Ширина колнок
+    NotDesktopComponent?: React.Component | React.FC; // Респонсив представление
     moreButton: {
-        handleFetchMore: () => void;
-        maxCount: number;
-        limitStep: number;
-        isSearch: boolean;
+        // Кнопка показать больше
+        handleFetchMore: () => void; // Коллбэк
+        maxCount: number; // Максимальное значение загружаемых данных
+        limitStep: number; // Шаг пагинации
+        isSearch: boolean; // Флаг состояния поиска
     };
 }
 
@@ -36,6 +37,10 @@ const renderNotDesktop = (CustomView, tableRows) => {
 
 /**
  * Таблица отображаемая в разделах с поиском
+ * Nuances:
+ * 1) headerData, tableRows[item].cells, columnsWidth - должны быть одинаковыми по количеству колнок
+ * 2) columnsWidth - отвечает за ширину каждлой колонки
+ * TODO: Прописать авторасчет ширины пропорциональный количиству элементов в процентах (так как пропс не обязатален)
  */
 const SearchTable: React.FC<SearchTableProps> = ({
     headerData,
@@ -44,8 +49,10 @@ const SearchTable: React.FC<SearchTableProps> = ({
     NotDesktopComponent,
     moreButton: { handleFetchMore, maxCount, limitStep, isSearch }
 }) => {
+    /*Работа с форматом отображения*/
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
+    /*Определение пропсов кнопки*/
     const loadButtonProps = {
         onFetchMore: handleFetchMore,
         isLoadingMore: false,
