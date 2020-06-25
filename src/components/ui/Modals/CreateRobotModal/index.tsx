@@ -107,8 +107,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         label: "create",
                         value: dataRobot.robot.id
                     });
-                    handleOnNext();
                 });
+                handleOnNext();
             } else {
                 setFormError(response.data.userRobotCreate.error);
             }
@@ -132,8 +132,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         label: "start",
                         value: dataRobot.robot.id
                     });
-                    onClose();
                 });
+                onClose();
             } else {
                 setFormError(response.data.userRobotStart.error);
             }
