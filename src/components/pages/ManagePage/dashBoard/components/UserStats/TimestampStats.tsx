@@ -11,9 +11,7 @@ import StatsContainer from "./StatsContainer";
  */
 const TimestampStats = () => {
     const timeStampsPeriods = useFetchTimestamp(); // хук фетчинга периодов
-    return (
-        timeStampsPeriods && <StatsContainer title="New users" data={formatPeriodUsers(timeStampsPeriods)} />
-    );
+    return timeStampsPeriods && <StatsContainer title="New users" data={formatPeriodUsers(timeStampsPeriods)} />;
 };
 
 export default TimestampStats;

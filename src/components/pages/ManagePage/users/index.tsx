@@ -47,10 +47,7 @@ const ManageUsers = () => {
     };
 
     return (
-        <Template
-            title="Users"
-            width={width}
-            toolbar={<SearchPanel callback={searchCallback} />}>
+        <Template title="Users" width={width} toolbar={<SearchPanel callback={searchCallback} />}>
             {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable
                     headerData={HEADER_TABLE_DATA}
