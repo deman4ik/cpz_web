@@ -12,12 +12,12 @@ export const getFormatDataSignals = (signals: any) =>
             asset,
             currency,
             exchange,
-            volume: user_signals[0].volume,
+            volume: user_signals[0]?.volume,
             user_robots: {
                 status: null,
                 id: null
             },
-            subscribed: dayjs.utc(user_signals[0].subscribed_at).fromNow(true),
+            subscribed: dayjs.utc(user_signals[0]?.subscribed_at)?.fromNow(true),
             active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
             performance: [],
             profit: 0,
