@@ -7,10 +7,11 @@ import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
 import SearchPanel from "../common/SearchPanel";
 // utils
-import { getWhereVariables, formatUsers } from "./utils";
+import { formatUsers, getWhereVariables } from "./utils";
 // constants
-import { HEADER_TABLE_DATA, COLUMNS_WIDTH } from "./constants";
+import { COLUMNS_WIDTH, HEADER_TABLE_DATA } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
+import { PageType } from "config/types";
 // graphql
 import { GET_USERS, USERS_AGGREGATE } from "graphql/manage/queries";
 
@@ -47,7 +48,7 @@ const ManageUsers = () => {
     };
 
     return (
-        <Template title="Users" width={width} toolbar={<SearchPanel callback={searchCallback} />}>
+        <Template title="Users" width={width} toolbar={<SearchPanel callback={searchCallback} />} page={PageType.users}>
             {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable
                     headerData={HEADER_TABLE_DATA}

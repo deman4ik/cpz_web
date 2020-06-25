@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { useRouter } from "next/router";
 
-import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS } from "./helpers";
+import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS, MANAGE_MENU_ITEMS } from "./helpers";
 import { MainMenuItem } from "./MainMenuItem";
 import { MainMenuItemMobile } from "./MainMenuItemMobile";
 import logoAccent from "assets/img/logo-accent.png";
@@ -23,13 +23,15 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
         }
     };
 
+    const MenuItems = [...MAINMENU_ITEMS, ...MANAGE_MENU_ITEMS];
+
     return (
         <>
             {showDesktop ? (
                 <div className={styles.mainMenu}>
                     <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
                     <div className={styles.menuContainer}>
-                        {MAINMENU_ITEMS.map((item) => (
+                        {MenuItems.map((item) => (
                             <MainMenuItem
                                 key={item.label}
                                 item={item}

@@ -5,7 +5,9 @@ export enum PageType {
     profile = "Profile",
     robotStats = "Robot Stats",
     support = "Support",
-    community = "Community"
+    community = "Community",
+    dasHboard = "Dashboard",
+    users = "Users"
 }
 
 export enum TabType {
