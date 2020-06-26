@@ -24,7 +24,7 @@ export const USER_TITLES_SCHEME = {
         title: "Entries",
         user_robots: "Robots: ",
         user_signals: "Signals: ",
-        user_exchange_accs: "Exchange: "
+        user_exchange_accs: "Keys: "
     },
     status: { title: "Status" },
     created_at: { title: "Created" }

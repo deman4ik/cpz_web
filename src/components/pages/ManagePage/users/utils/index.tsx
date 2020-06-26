@@ -52,13 +52,11 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             /*Форматинг по ключам*/
             switch (key) {
                 case "telegram":
-                    innerComponent = user.telegram_id ? (
+                    innerComponent = user.telegram_id && (
                         <UserCellText>
                             <p>{`${USER_TITLES_SCHEME.telegram.telegram_id}  ${user.telegram_id}`}</p>
                             <p>{`${USER_TITLES_SCHEME.telegram.telegram_username} ${user.telegram_username}`}</p>
                         </UserCellText>
-                    ) : (
-                        <UserCellText>Not telegram</UserCellText>
                     );
                     userCellsScheme.telegram = {
                         title: USER_TITLES_SCHEME.telegram.title,
@@ -142,7 +140,7 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     break;
                 default:
                     if (Object.prototype.hasOwnProperty.call(user, key)) {
-                        innerComponent = <UserCellText>{user[key] ? user[key] : "Not info"}</UserCellText>;
+                        innerComponent = <UserCellText>{user[key]}</UserCellText>;
                         userCellsScheme[key] = {
                             title: USER_TITLES_SCHEME[key].title,
                             notDesktopVal: innerComponent,
