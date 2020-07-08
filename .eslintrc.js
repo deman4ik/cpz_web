@@ -29,7 +29,7 @@ module.exports = {
     "react/jsx-filename-extension": [1, { extensions: [".ts", ".tsx"] }],
     "import/extensions": 0,
     "react/prop-types": 0,
-    "react/jsx-props-no-spreading": ["error", { custom: "ignore" }],
+    "react/jsx-props-no-spreading": 0,
     "prettier/prettier": "error",
     "operator-linebreak": 0,
     "no-underscore-dangle": 0,
@@ -65,7 +65,7 @@ module.exports = {
     "react/display-name": 0,
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": 2,
-    "import/order": 0
+    "import/order": 0,
   },
   "settings": {
     "import/resolver": {

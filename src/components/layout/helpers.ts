@@ -17,6 +17,12 @@ export const MAINMENU_ITEMS: MainMenuItemProps[] = [
     { label: PageType.profile, icon: "profile", route: "profile" },
     { label: PageType.support, icon: "help", route: "support" }
 ];
+
+export const MANAGE_MENU_ITEMS: MainMenuItemProps[] = [
+    { label: PageType.dasHboard, icon: "dashboard", route: "manage" },
+    { label: PageType.users, icon: "users", route: "manage/users" }
+];
+
 export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
     {
         label: PageType.community,

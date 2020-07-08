@@ -1,0 +1,83 @@
+import React from "react";
+// components
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import DefaultNotDesktop from "./components/DefaultNotDesktop";
+import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
+// constants
+import { SCREEN_TYPE } from "config/constants";
+// styles
+import styles from "./styles/Common.module.css";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useShowDimension } from "hooks/useShowDimension";
+
+/*types*/
+export interface SearchTableProps {
+    headerData: Array<any>; // Заголовки колнок
+    tableRows: Array<any>; // Массив строк содержащий ячейки
+    columnsWidth?: Array<string>; // Ширина колнок
+    NotDesktopComponent?: React.Component | React.FC; // Респонсив представление
+    moreButton: {
+        // Кнопка показать больше
+        handleFetchMore: () => void; // Коллбэк
+        maxCount: number; // Максимальное значение загружаемых данных
+        limitStep: number; // Шаг пагинации
+        isSearch: boolean; // Флаг состояния поиска
+    };
+}
+
+/**
+ * Функция рендерера не десктопного отображения таблицы
+ * @param CustomView - Кастомный компонент для рендера  не десктопной версии
+ * @param tableRows - данные таблицы
+ */
+const renderNotDesktop = (CustomView, tableRows) => {
+    return CustomView ? <CustomView tableRows={tableRows} /> : <DefaultNotDesktop tableRows={tableRows} />;
+};
+
+/**
+ * Таблица отображаемая в разделах с поиском
+ * Nuances:
+ * 1) headerData, tableRows[item].cells, columnsWidth - должны быть одинаковыми по количеству колнок
+ * 2) columnsWidth - отвечает за ширину каждлой колонки
+ * TODO: Прописать авторасчет ширины пропорциональный количиству элементов в процентах (так как пропс не обязатален)
+ */
+const SearchTable: React.FC<SearchTableProps> = ({
+    headerData,
+    tableRows,
+    columnsWidth,
+    NotDesktopComponent,
+    moreButton: { handleFetchMore, maxCount, limitStep, isSearch }
+}) => {
+    /*Работа с форматом отображения*/
+    const { width } = useWindowDimensions();
+    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
+    /*Определение пропсов кнопки*/
+    const loadButtonProps = {
+        onFetchMore: handleFetchMore,
+        isLoadingMore: false,
+        renderLoadMoreButton: tableRows.length + limitStep < maxCount && !isSearch
+    };
+
+    return (
+        <div className={styles.wrapper}>
+            {isDesktopView ? (
+                <>
+                    <table className={styles.table}>
+                        <TableHeader headerData={headerData} columnsWidth={columnsWidth} />
+                    </table>
+                    <table className={styles.table}>
+                        <TableBody tableRows={tableRows} columnsWidth={columnsWidth} />
+                    </table>
+                </>
+            ) : (
+                renderNotDesktop(NotDesktopComponent, tableRows)
+            )}
+            <div>
+                <RobotsLoadMore {...loadButtonProps} />
+            </div>
+        </div>
+    );
+};
+
+export default SearchTable;

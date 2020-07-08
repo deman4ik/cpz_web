@@ -1,12 +1,14 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import { useRouter } from "next/router";
 
-import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS } from "./helpers";
+import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS, MANAGE_MENU_ITEMS } from "./helpers";
 import { MainMenuItem } from "./MainMenuItem";
 import { MainMenuItemMobile } from "./MainMenuItemMobile";
 import logoAccent from "assets/img/logo-accent.png";
 import { PageType } from "config/types";
 import styles from "./MainMenu.module.css";
+// auth context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     activeTab: PageType;
@@ -14,6 +16,10 @@ interface Props {
 }
 
 const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
+    const {
+        authState: { isManager }
+    } = useContext(AuthContext);
+
     const router = useRouter();
     const handleOnClick = (path: string, external: boolean) => {
         if (external) {
@@ -23,13 +29,15 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
         }
     };
 
+    const MenuItems = !isManager ? MAINMENU_ITEMS : [...MAINMENU_ITEMS, ...MANAGE_MENU_ITEMS];
+
     return (
         <>
             {showDesktop ? (
                 <div className={styles.mainMenu}>
                     <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
                     <div className={styles.menuContainer}>
-                        {MAINMENU_ITEMS.map((item) => (
+                        {MenuItems.map((item) => (
                             <MainMenuItem
                                 key={item.label}
                                 item={item}

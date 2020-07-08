@@ -33,6 +33,7 @@
     "react-dom": "16.13.1",
     "react-particles-js": "^3.1.0",
     "subscriptions-transport-ws": "^0.9.16",
+    "uuid": "^8.1.0",
     "victory": "^34.2.1"
   },
   "devDependencies": {
