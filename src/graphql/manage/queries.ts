@@ -42,6 +42,21 @@ export const GET_USERS = gql`
             user_exchange_accs {
                 id
             }
+            user_robots_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            user_signals_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            user_exchange_accs_aggregate {
+                aggregate {
+                    count
+                }
+            }
         }
     }
 `;

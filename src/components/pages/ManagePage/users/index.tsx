@@ -6,6 +6,8 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
 import SearchPanel from "../common/SearchPanel";
+import UserFilters from "./components/UserFilters";
+import { Modal } from "components/basic";
 // utils
 import { formatUsers, getWhereVariables } from "./utils";
 // constants
@@ -19,6 +21,7 @@ const LIMIT_STEP = 10; // шаг пагинации
 
 const ManageUsers = () => {
     /*States*/
+    const [isOpenModal, setIsOpenModal] = useState(true);
     const [limit, setLimit] = useState(LIMIT_STEP);
     const [isSearch, setIsSearch] = useState(false);
     const [filters, setFilters] = useState(getWhereVariables(""));
@@ -46,9 +49,14 @@ const ManageUsers = () => {
     const callbackMore = () => {
         setLimit(data.users.length + LIMIT_STEP);
     };
+    const setOpenModal = () => setIsOpenModal((prev) => !prev);
 
     return (
-        <Template title="Users" width={width} toolbar={<SearchPanel callback={searchCallback} />} page={PageType.users}>
+        <Template
+            title="Users"
+            width={width}
+            toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} />}
+            page={PageType.users}>
             {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable
                     headerData={HEADER_TABLE_DATA}
@@ -62,6 +70,9 @@ const ManageUsers = () => {
                     }}
                 />
             ) : null}
+            <Modal isOpen={isOpenModal} title="Filter Users Search" onClose={setOpenModal}>
+                <UserFilters />
+            </Modal>
         </Template>
     );
 };
