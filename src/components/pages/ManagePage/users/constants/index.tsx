@@ -1,4 +1,5 @@
 import React from "react";
+import exp from "constants";
 
 /*Схема тайтлов для данных*/
 export const USER_TITLES_SCHEME = {
@@ -78,10 +79,75 @@ export interface InitialFiltersInterface {
     filters: any;
 }
 
+/*filters*/
+export const USERS_FILTERS_VARIANTS = {
+    email: { email: { _is_null: false } },
+    telegram: { telegram_id: { _is_null: false } },
+    active: { status: { _eq: 1 } },
+    notActive: { status: { _eq: 0 } },
+    robots: { user_robots: { equity: { _is_null: false } } },
+    signals: { user_signals: { equity: { _is_null: false } } },
+    keys: { user_exchange_accs: { exchange: { _gt: "0" } } }
+};
+
+export const USERS_FILTERS = {
+    contacts: {
+        label: "Contacts:",
+        filters: [
+            {
+                name: "With Email",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.email
+            },
+            {
+                name: "With Telegram",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.telegram
+            }
+        ]
+    },
+    statuses: {
+        label: "Status:",
+        filters: [
+            {
+                name: "Active",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.active
+            },
+            {
+                name: "Not Active",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.notActive
+            }
+        ]
+    },
+    user_stats: {
+        label: "Stats:",
+        filters: [
+            {
+                name: "With Robots",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.robots
+            },
+            {
+                name: "With Signals",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.signals
+            },
+            {
+                name: "With Keys",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.keys
+            }
+        ]
+    }
+};
+
+/*filters initial state*/
 export const INITIAL_FILTERS: InitialFiltersInterface = {
     order: {
         name: null,
         order_by: {}
     },
-    filters: null
+    filters: USERS_FILTERS
 };

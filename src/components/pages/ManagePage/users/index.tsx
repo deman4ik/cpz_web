@@ -9,7 +9,7 @@ import SearchPanel from "../common/SearchPanel";
 import UserFilters from "./components/UserFilters";
 import { Modal } from "components/basic";
 // utils
-import { formatUsers, getWhereVariables } from "./utils";
+import { formatUsers, getWhereVariables, aggregateUserFilters } from "./utils";
 // constants
 import { COLUMNS_WIDTH, HEADER_TABLE_DATA, INITIAL_FILTERS } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
@@ -30,11 +30,15 @@ const ManageUsers = () => {
 
     /*Fetch data*/
     const {
-        order: { order_by }
+        order: { order_by },
+        filters
     } = filtersState; // filters data
-    // const whereData = whereFilters ? { ...where, ...whereFilters } : where;  TODO: добавление фильтрпов
+
+    const filtersWhere = aggregateUserFilters(filters);
+    const whereData = filtersWhere ? { ...where, ...filtersWhere } : where;
+
     const { data } = useQuery(GET_USERS, {
-        variables: { where, limit, order_by }
+        variables: { where: whereData, limit, order_by }
     });
     const { data: aggrData } = useQuery(USERS_AGGREGATE, {
         pollInterval: POLL_INTERVAL
