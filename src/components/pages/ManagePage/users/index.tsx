@@ -11,7 +11,7 @@ import { Modal } from "components/basic";
 // utils
 import { formatUsers, getWhereVariables } from "./utils";
 // constants
-import { COLUMNS_WIDTH, HEADER_TABLE_DATA } from "./constants";
+import { COLUMNS_WIDTH, HEADER_TABLE_DATA, INITIAL_FILTERS } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
 import { PageType } from "config/types";
 // graphql
@@ -24,13 +24,17 @@ const ManageUsers = () => {
     const [isOpenModal, setIsOpenModal] = useState(true);
     const [limit, setLimit] = useState(LIMIT_STEP);
     const [isSearch, setIsSearch] = useState(false);
-    const [filters, setFilters] = useState(getWhereVariables(""));
-
+    const [where, setWhere] = useState(getWhereVariables(""));
+    const [filtersState, setFiltersState] = useState(INITIAL_FILTERS);
     const { width } = useWindowDimensions(); // width hook
 
     /*Fetch data*/
+    const {
+        order: { order_by }
+    } = filtersState; // filters data
+    // const whereData = whereFilters ? { ...where, ...whereFilters } : where;  TODO: добавление фильтрпов
     const { data } = useQuery(GET_USERS, {
-        variables: { where: filters, limit }
+        variables: { where, limit, order_by }
     });
     const { data: aggrData } = useQuery(USERS_AGGREGATE, {
         pollInterval: POLL_INTERVAL
@@ -38,7 +42,7 @@ const ManageUsers = () => {
 
     /*Handlers*/
     const searchCallback = (value) => {
-        setFilters(getWhereVariables(value));
+        setWhere(getWhereVariables(value));
         if (value) {
             setLimit(aggrData.users_aggregate.aggregate.count);
         } else {
@@ -71,7 +75,7 @@ const ManageUsers = () => {
                 />
             ) : null}
             <Modal isOpen={isOpenModal} title="Filter Users Search" onClose={setOpenModal}>
-                <UserFilters />
+                <UserFilters filtersState={filtersState} setFiltersState={setFiltersState} closeModal={setOpenModal} />
             </Modal>
         </Template>
     );

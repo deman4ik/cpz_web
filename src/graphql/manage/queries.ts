@@ -22,8 +22,8 @@ export const GET_USER_STATS_DURING_PERIOD = gql`
 `;
 
 export const GET_USERS = gql`
-    query getUsers($where: users_bool_exp, $limit: Int) {
-        users(limit: $limit, where: $where) {
+    query getUsers($where: users_bool_exp, $order_by: [users_order_by!], $limit: Int) {
+        users(limit: $limit, where: $where, order_by: $order_by) {
             name
             id
             email

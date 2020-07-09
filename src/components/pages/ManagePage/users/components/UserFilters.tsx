@@ -1,11 +1,12 @@
-import React, { useMemo, useState, memo, useEffect } from "react";
+import React, { useState, memo } from "react";
+// constants
+import { INITIAL_FILTERS, InitialFiltersInterface } from "../constants";
 // components
-import { Select } from "components/basic";
-
+import { Button, Select } from "components/basic";
 // filters styles
 import styles from "components/ui/Modals/SearchFiltersModal/index.module.css";
 
-// helpers
+// sort variants
 const orderSortList = [
     { value: "user_robots_up", label: "User robots ↑" },
     { value: "user_robots_down", label: "User robots ↓" },
@@ -28,8 +29,34 @@ const orderSortMethod = {
     created_down: { created_at: { count: "desc" } }
 };
 
-const UserFilters = () => {
-    const [sortState, setSortState] = useState("user_robots_down");
+// types
+export interface UserFiltersState {
+    filtersState: InitialFiltersInterface;
+    setFiltersState: any;
+    closeModal: () => void;
+}
+
+const UserFilters: React.FC<UserFiltersState> = ({ filtersState: { order, filters }, setFiltersState, closeModal }) => {
+    const [sortState, setSortState] = useState(order.name || "user_robots_up");
+
+    /*confirm filters and sort*/
+    const confirmFilters = (): void => {
+        const newFilters: InitialFiltersInterface = {
+            filters,
+            order: {
+                name: sortState,
+                order_by: orderSortMethod[sortState]
+            }
+        };
+        setFiltersState(newFilters);
+        closeModal();
+    };
+
+    /*clear filters and set default state*/
+    const clearFilters = (): void => {
+        setFiltersState(INITIAL_FILTERS);
+        closeModal();
+    };
 
     return (
         <>
@@ -41,8 +68,20 @@ const UserFilters = () => {
                     <Select data={orderSortList} value={sortState} onValueChange={(value) => setSortState(value)} />
                 </div>
             </div>
+            <div className={styles.btnsGroup}>
+                <Button title="OK" icon="check" type="success" onClick={confirmFilters} isUppercase />
+                <Button
+                    type="dimmed"
+                    width={160}
+                    title="clear filter"
+                    className={styles.btn}
+                    onClick={clearFilters}
+                    icon="filtervariantremove"
+                    isUppercase
+                />
+            </div>
         </>
     );
 };
 
-export default UserFilters;
+export default memo(UserFilters);
