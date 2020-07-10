@@ -41,6 +41,7 @@ const renderNotDesktop = (CustomView, tableRows) => {
  * 1) headerData, tableRows[item].cells, columnsWidth - должны быть одинаковыми по количеству колнок
  * 2) columnsWidth - отвечает за ширину каждлой колонки
  * TODO: Прописать авторасчет ширины пропорциональный количиству элементов в процентах (так как пропс не обязатален)
+ * TODO: Описать типы
  */
 const SearchTable: React.FC<SearchTableProps> = ({
     headerData,
