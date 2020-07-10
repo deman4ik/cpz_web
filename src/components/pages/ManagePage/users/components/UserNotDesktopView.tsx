@@ -6,7 +6,7 @@ import styles from "../styles/User.module.css";
 export interface NotDesktopProps {
     data: Array<any>;
 }
-
+//TODO: Перенести в общие компоненты таблицы
 const UserCellNotDesktopView: React.FC<NotDesktopProps> = memo(({ data }) => {
     return (
         <div className={styles.not_desktop_container}>

@@ -70,3 +70,29 @@ export const USERS_AGGREGATE = gql`
         }
     }
 `;
+
+export const GET_ROBOTS = gql`
+    query get_robots($limit: Int) {
+        robots(limit: $limit) {
+            id
+            code
+            status
+            equity
+            settings
+            trade_settings
+            signals
+            trading
+            exchange
+            asset
+            currency
+            timeframe
+            strategy
+            user_signals {
+                id
+            }
+            user_robots {
+                id
+            }
+        }
+    }
+`;

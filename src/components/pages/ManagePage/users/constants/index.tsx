@@ -1,5 +1,4 @@
 import React from "react";
-import exp from "constants";
 
 /*Схема тайтлов для данных*/
 export const USER_TITLES_SCHEME = {
