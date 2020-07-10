@@ -6,12 +6,14 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
 import SearchPanel from "../common/SearchPanel";
-import UserFilters from "./components/UserFilters";
+import OrderModalInner from "../common/OrderModalInner";
 import { Modal } from "components/basic";
 // utils
-import { formatUsers, getWhereVariables, aggregateUserFilters } from "./utils";
+import { formatUsers, getWhereVariables } from "./utils";
+import { aggregateOrderModalFilters } from "../common/OrderModalInner/utils";
+import { INITIAL_ORDER, SORT_SETTINGS } from "./constants/Order.settings";
 // constants
-import { COLUMNS_WIDTH, HEADER_TABLE_DATA, INITIAL_FILTERS } from "./constants";
+import { COLUMNS_WIDTH, HEADER_TABLE_DATA } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
 import { PageType } from "config/types";
 // graphql
@@ -21,22 +23,22 @@ const LIMIT_STEP = 10; // шаг пагинации
 
 const ManageUsers = () => {
     /*States*/
-    const [isOpenModal, setIsOpenModal] = useState(true);
+    const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
     const [isSearch, setIsSearch] = useState(false);
     const [where, setWhere] = useState(getWhereVariables(""));
-    const [filtersState, setFiltersState] = useState(INITIAL_FILTERS);
+    const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
 
-    /*Fetch data*/
+    /*aggregate filters and  sort*/
     const {
-        order: { order_by },
+        sort: { order_by },
         filters
-    } = filtersState; // filters data
-
-    const filtersWhere = aggregateUserFilters(filters);
+    } = orderState;
+    const filtersWhere = aggregateOrderModalFilters(filters);
     const whereData = filtersWhere ? { ...where, ...filtersWhere } : where;
 
+    /*Fetch data*/
     const { data } = useQuery(GET_USERS, {
         variables: { where: whereData, limit, order_by }
     });
@@ -58,12 +60,27 @@ const ManageUsers = () => {
         setLimit(data.users.length + LIMIT_STEP);
     };
     const setOpenModal = () => setIsOpenModal((prev) => !prev);
+    const clearOrder = () => {
+        setOrderState(INITIAL_ORDER);
+        setOpenModal();
+    };
+    const clearAll = () => {
+        setOrderState(INITIAL_ORDER);
+        setWhere(getWhereVariables(""));
+    };
 
     return (
         <Template
             title="Users"
             width={width}
-            toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} />}
+            toolbar={
+                <SearchPanel
+                    callback={searchCallback}
+                    setOpenModal={setOpenModal}
+                    placeholder="Search users..."
+                    clear={clearAll}
+                />
+            }
             page={PageType.users}>
             {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable
@@ -79,7 +96,14 @@ const ManageUsers = () => {
                 />
             ) : null}
             <Modal isOpen={isOpenModal} title="Filter Users Search" onClose={setOpenModal}>
-                <UserFilters filtersState={filtersState} setFiltersState={setFiltersState} closeModal={setOpenModal} />
+                <OrderModalInner
+                    orderState={orderState}
+                    setOrderState={setOrderState}
+                    closeModal={setOpenModal}
+                    clearOrder={clearOrder}
+                    sortSettings={SORT_SETTINGS}
+                    defaultOrder={INITIAL_ORDER}
+                />
             </Modal>
         </Template>
     );

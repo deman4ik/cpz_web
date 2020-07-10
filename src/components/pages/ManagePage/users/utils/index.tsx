@@ -153,19 +153,3 @@ export const formatUsers = (data: Array<any>): Array<any> => {
         return userItem;
     });
 };
-
-/**
- * Утилита агрегирущая фильтры по пользователеям
- * @param filters - объект вильтров
- * @param where -  исходное состояние для фильтров запросам
- */
-export const aggregateUserFilters = (filters) => {
-    let where = {};
-    Object.keys(filters).forEach((key) => {
-        filters[key].filters.forEach(({ active, filterValue }) => {
-            if (active) where = { ...where, ...filterValue };
-        });
-    });
-
-    return where;
-};
