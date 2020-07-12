@@ -1,5 +1,5 @@
-/*table*/
-.user_text_cell {
+/*table cells*/
+.default_cells_wrapper {
   width: 100%;
   color: #ffffff;
   font-size: 13px;
@@ -8,6 +8,6 @@
   padding-right: 5px;
 }
 
-.user_text_cell span {
-  color: var(--accent);
+.default_cells_wrapper span {
+    color: var(--accent);
 }

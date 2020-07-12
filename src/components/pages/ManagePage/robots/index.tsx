@@ -6,7 +6,7 @@ import SearchTable from "components/basic/SearchTable";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // constants
-import { ROBOTS_TABLE_HEADER_DATA, COLUMNS_WIDTH, FAKE_ROWS } from "./constants";
+import { ROBOTS_TABLE_HEADER_DATA, COLUMNS_WIDTH } from "./constants";
 //graphql
 import { GET_ROBOTS } from "graphql/manage/queries";
 // utils

@@ -5,7 +5,7 @@ import {
     filtersVariantType,
     filtersProps,
     OrderInterface
-} from "../../common/OrderModalInner/types";
+} from "../common/OrderModalInner/types";
 
 /*sorting settings*/
 export const SORT_TYPES_LIST: Array<SortType> = [

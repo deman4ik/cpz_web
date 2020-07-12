@@ -1,7 +1,7 @@
 import React from "react";
 // components
-import RobotCellText from "components/pages/ManagePage/robots/components/RobotCellText";
-import RobotsNotDesktopView from "components/pages/ManagePage/robots/components/RobotsNotDesktopView";
+import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
+import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
 import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
 
@@ -12,7 +12,7 @@ import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constan
 export const formatRobotsRows = (data: Array<any>) => {
     /*Форматирование  и обработка данных в таблице*/
     return data.map((robot) => {
-        const robotItem = { cells: [], NotDesktopView: RobotsNotDesktopView };
+        const robotItem = { cells: [], NotDesktopView: DefaultNotDesktopView };
         const cellsAggregated: any = {};
         Object.keys(ROBOTS_TITLES_SCHEME).forEach((key) => {
             let innerComponent;
@@ -20,7 +20,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "info":
                     const { id, code, status } = robot;
                     innerComponent = (
-                        <RobotCellText>
+                        <DefaultCellWrapper>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.info.id}</span> {id}
                             </p>
@@ -30,7 +30,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.info.status}</span> {status}
                             </p>
-                        </RobotCellText>
+                        </DefaultCellWrapper>
                     );
                     cellsAggregated.info = {
                         title: ROBOTS_TITLES_SCHEME.info.title,
@@ -44,7 +44,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                     if (settings) {
                         const { volume, requiredHistoryMaxBars, strategyParameters } = settings;
                         innerComponent = (
-                            <RobotCellText>
+                            <DefaultCellWrapper>
                                 {volume && (
                                     <p>
                                         <span>{ROBOTS_TITLES_SCHEME.settings.volume}</span>
@@ -64,7 +64,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                                         {requiredHistoryMaxBars}
                                     </p>
                                 )}
-                            </RobotCellText>
+                            </DefaultCellWrapper>
                         );
                     }
                     cellsAggregated.settings = {
@@ -89,9 +89,9 @@ export const formatRobotsRows = (data: Array<any>) => {
                         .map(({ name }) => name);
 
                     innerComponent = (
-                        <RobotCellText>
+                        <DefaultCellWrapper>
                             {robotTypesArray.length ? robotTypesArray.join(" | ") : robotTypesArray[0]}
-                        </RobotCellText>
+                        </DefaultCellWrapper>
                     );
                     cellsAggregated.types = {
                         title: ROBOTS_TITLES_SCHEME.types.title,
@@ -102,7 +102,7 @@ export const formatRobotsRows = (data: Array<any>) => {
 
                 case "entries":
                     innerComponent = (
-                        <RobotCellText>
+                        <DefaultCellWrapper>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.entries.user_robots}</span>
                                 {robot.user_robots.length}
@@ -111,7 +111,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                                 <span>{ROBOTS_TITLES_SCHEME.entries.user_signals}</span>
                                 {robot.user_signals.length}
                             </p>
-                        </RobotCellText>
+                        </DefaultCellWrapper>
                     );
 
                     cellsAggregated.entries = {

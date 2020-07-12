@@ -11,7 +11,7 @@ import { Modal } from "components/basic";
 // utils
 import { formatUsers, getWhereVariables } from "./utils";
 import { aggregateOrderModalFilters } from "../common/OrderModalInner/utils";
-import { INITIAL_ORDER, SORT_SETTINGS } from "./constants/Order.settings";
+import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
 // constants
 import { COLUMNS_WIDTH, HEADER_TABLE_DATA } from "./constants";
 import { POLL_INTERVAL } from "config/constants";

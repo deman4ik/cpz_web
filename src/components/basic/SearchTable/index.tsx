@@ -2,7 +2,7 @@ import React from "react";
 // components
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
-import DefaultNotDesktop from "./components/DefaultNotDesktop";
+import DefaultNotDesktopWrapper from "./components/DefaultNotDesktopWrapper";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 // constants
 import { SCREEN_TYPE } from "config/constants";
@@ -16,7 +16,7 @@ export interface SearchTableProps {
     headerData: Array<any>; // Заголовки колнок
     tableRows: Array<any>; // Массив строк содержащий ячейки
     columnsWidth?: Array<string>; // Ширина колнок
-    NotDesktopComponent?: React.Component | React.FC; // Респонсив представление
+    NotDesktopWrapper?: React.Component | React.FC; // Респонсив представление обертки
     moreButton: {
         // Кнопка показать больше
         handleFetchMore: () => void; // Коллбэк
@@ -31,8 +31,8 @@ export interface SearchTableProps {
  * @param CustomView - Кастомный компонент для рендера  не десктопной версии
  * @param tableRows - данные таблицы
  */
-const renderNotDesktop = (CustomView, tableRows) => {
-    return CustomView ? <CustomView tableRows={tableRows} /> : <DefaultNotDesktop tableRows={tableRows} />;
+const renderNotDesktopWrapper = (CustomView, tableRows) => {
+    return CustomView ? <CustomView tableRows={tableRows} /> : <DefaultNotDesktopWrapper tableRows={tableRows} />;
 };
 
 /**
@@ -47,7 +47,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
     headerData,
     tableRows,
     columnsWidth,
-    NotDesktopComponent,
+    NotDesktopWrapper,
     moreButton: { handleFetchMore, maxCount, limitStep, isSearch }
 }) => {
     /*Работа с форматом отображения*/
@@ -72,7 +72,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
                     </table>
                 </>
             ) : (
-                renderNotDesktop(NotDesktopComponent, tableRows)
+                renderNotDesktopWrapper(NotDesktopWrapper, tableRows)
             )}
             <div>
                 <RobotsLoadMore {...loadButtonProps} />
