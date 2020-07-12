@@ -18,7 +18,6 @@ export interface OrderModalInnerProps {
         sort_types: Array<SortType>;
         default_sort_name: string;
     };
-    defaultOrder: OrderInterface;
 }
 
 const OrderModalInner: React.FC<OrderModalInnerProps> = ({
@@ -26,7 +25,6 @@ const OrderModalInner: React.FC<OrderModalInnerProps> = ({
     setOrderState,
     closeModal,
     sortSettings: { sort_methods, sort_types, default_sort_name },
-    defaultOrder,
     clearOrder
 }) => {
     const [sortState, setSortState] = useState(sort.name || default_sort_name);

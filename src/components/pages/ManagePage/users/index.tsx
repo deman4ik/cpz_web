@@ -102,7 +102,6 @@ const ManageUsers = () => {
                     closeModal={setOpenModal}
                     clearOrder={clearOrder}
                     sortSettings={SORT_SETTINGS}
-                    defaultOrder={INITIAL_ORDER}
                 />
             </Modal>
         </Template>
