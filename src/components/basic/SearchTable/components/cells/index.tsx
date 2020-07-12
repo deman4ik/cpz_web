@@ -1,5 +1,6 @@
 import React from "react";
 /*CELLS*/
 import DefaultCellWrapper from "./DefaultCellWrapper";
+import RobotChartCell from "./RobotChartCell";
 
-export { DefaultCellWrapper };
+export { DefaultCellWrapper, RobotChartCell };

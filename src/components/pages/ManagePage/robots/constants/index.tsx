@@ -39,7 +39,7 @@ export const ROBOTS_TITLES_SCHEME = {
     }
 };
 
-export const COLUMNS_WIDTH = ["20%", "20%", "30%", "15%", "15%"];
+export const COLUMNS_WIDTH = ["20%", "12%", "37%", "15%", "15%"];
 
 /*HEAD TITLES*/
 export const ROBOTS_TABLE_HEADER_DATA = Object.keys(ROBOTS_TITLES_SCHEME).map((key) => ({

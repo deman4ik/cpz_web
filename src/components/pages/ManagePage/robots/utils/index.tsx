@@ -1,6 +1,6 @@
 import React from "react";
 // components
-import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
+import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
 import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
@@ -121,10 +121,23 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "statistics":
+                    const { equity } = robot;
+                    const profit = equity && equity.profit ? equity.profit : 0;
+                    const performance = equity && equity.changes ? equity.changes : [];
+
+                    innerComponent = performance?.length ? (
+                        <RobotChartCell
+                            style={{ paddingRight: "25px" }}
+                            perfomance={performance}
+                            profit={profit}
+                            height={120}
+                        />
+                    ) : null;
+
                     cellsAggregated.statistics = {
                         title: ROBOTS_TITLES_SCHEME.statistics.title,
-                        notDesktopVal: "Заглушка",
-                        component: "Заглушка"
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
                     };
                     break;
             }
