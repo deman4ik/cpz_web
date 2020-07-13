@@ -72,10 +72,10 @@ export const USERS_AGGREGATE = gql`
 `;
 
 export const GET_ROBOTS = gql`
-    query get_robots($limit: Int) {
-        robots(limit: $limit) {
+    query get_robots($limit: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
+        robots(limit: $limit, where: $where, order_by: $order_by) {
             id
-            code
+            name
             status
             equity
             settings
@@ -87,11 +87,22 @@ export const GET_ROBOTS = gql`
             currency
             timeframe
             strategy
+            exchange
             user_signals {
                 id
             }
             user_robots {
                 id
+            }
+        }
+    }
+`;
+
+export const ROBOTS_AGGREGATE = gql`
+    query robots_aggr {
+        robots_aggregate {
+            aggregate {
+                count
             }
         }
     }

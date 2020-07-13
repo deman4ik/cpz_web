@@ -18,14 +18,14 @@ export const formatRobotsRows = (data: Array<any>) => {
             let innerComponent;
             switch (key) {
                 case "info":
-                    const { id, code, status } = robot;
+                    const { id, name, status } = robot;
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.info.id}</span> {id}
                             </p>
                             <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.code}</span> {code}
+                                <span>{ROBOTS_TITLES_SCHEME.info.name}</span> {name}
                             </p>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.info.status}</span> {status}
@@ -146,3 +146,5 @@ export const formatRobotsRows = (data: Array<any>) => {
         return robotItem;
     });
 };
+
+export const getWhereSearch = (value: string) => ({ name: { _like: `%${value}%` } });

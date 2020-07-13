@@ -1,7 +1,8 @@
+//TODO: Скорректировать схему добавить name
 export const ROBOTS_TITLES_SCHEME = {
     info: {
         title: "Info",
-        code: "Code: ",
+        name: "Name: ",
         id: "ID: ",
         status: "Status: "
     },

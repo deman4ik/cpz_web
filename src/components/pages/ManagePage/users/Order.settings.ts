@@ -2,7 +2,6 @@
 import {
     SortType,
     SortMethodType,
-    filtersVariantType,
     filtersProps,
     OrderInterface
 } from "../common/OrderModalInner/types";
@@ -37,7 +36,7 @@ export const SORT_SETTINGS = {
 };
 
 /*FILTERS*/
-export const USERS_FILTERS_VARIANTS: filtersVariantType = {
+export const USERS_FILTERS_VARIANTS: any = {
     email: { email: { _is_null: false } },
     telegram: { telegram_id: { _is_null: false } },
     active: { status: { _eq: 1 } },
