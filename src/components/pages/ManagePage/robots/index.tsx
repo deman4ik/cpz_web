@@ -14,8 +14,7 @@ import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
 //graphql
 import { GET_ROBOTS, ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
-import { formatRobotsRows, getWhereSearch } from "./utils";
-import { aggregateOrderModalFilters } from "../common/OrderModalInner/utils";
+import { formatRobotsRows, getWhereSearch, aggregateRobotsFilters } from "./utils";
 import { POLL_INTERVAL } from "config/constants";
 
 const LIMIT_STEP = 10;
@@ -33,8 +32,7 @@ const ManageRobots = () => {
         sort: { order_by },
         filters
     } = orderState;
-    const filtersWhere = aggregateOrderModalFilters(filters);
-
+    const filtersWhere = aggregateRobotsFilters(filters);
     /*fetch data*/
     const whereData = filtersWhere ? { ...where, ...filtersWhere } : where;
     const { data } = useQuery(GET_ROBOTS, {
@@ -60,9 +58,11 @@ const ManageRobots = () => {
     };
     const clearAll = () => {
         setWhere(getWhereSearch(""));
+        setOrderState(INITIAL_ORDER);
     };
     const clearOrder = () => {
         setOrderState(INITIAL_ORDER);
+        setOpenModal();
     };
 
     return (
@@ -77,19 +77,19 @@ const ManageRobots = () => {
                     clear={clearAll}
                 />
             }>
-            {data?.robots?.length && (
+            {data?.robots?.length && aggrData?.robots_aggregate?.aggregate ? (
                 <SearchTable
                     columnsWidth={COLUMNS_WIDTH}
                     headerData={ROBOTS_TABLE_HEADER_DATA}
                     tableRows={formatRobotsRows(data.robots)}
                     moreButton={{
                         limitStep: LIMIT_STEP,
-                        maxCount: 88,
+                        maxCount: aggrData.robots_aggregate.aggregate.count,
                         handleFetchMore: callbackMore,
                         isSearch
                     }}
                 />
-            )}
+            ) : null}
             <Modal isOpen={isOpenModal} title="Filter Robots Search" onClose={setOpenModal}>
                 <OrderModalInner
                     orderState={orderState}

@@ -4,6 +4,8 @@ import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
 import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
+// types
+import { filtersProps } from "../../common/OrderModalInner/types";
 
 /**
  * Форматирвоание строк роботов
@@ -148,3 +150,16 @@ export const formatRobotsRows = (data: Array<any>) => {
 };
 
 export const getWhereSearch = (value: string) => ({ name: { _like: `%${value}%` } });
+
+export const aggregateRobotsFilters = (filtersObject: filtersProps) => {
+    let where = null;
+    Object.keys(filtersObject).forEach((key) => {
+        const filters = filtersObject[key].filters
+            .filter(({ active }) => Boolean(active))
+            .map(({ filterValue }) => filterValue);
+        if (filters.length) {
+            where = { ...where, [key]: { _in: filters } };
+        }
+    });
+    return where;
+};

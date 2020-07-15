@@ -10,7 +10,7 @@ export const aggregateOrderModalFilters = (filters: filtersProps): filtersVarian
     let where = null;
     Object.keys(filters).forEach((key) => {
         filters[key].filters.forEach(({ active, filterValue }) => {
-            if (active) where = { ...where, ...filterValue };
+            if (active && filterValue instanceof Object) where = { ...where, ...filterValue };
         });
     });
 

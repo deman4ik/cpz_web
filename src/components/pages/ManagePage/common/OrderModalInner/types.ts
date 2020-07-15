@@ -3,7 +3,7 @@ export type filtersVariantType = (val: string) => { [key: string]: any } | { [ke
 export type filterItemType = {
     name: string;
     active: boolean;
-    filterValue: filtersVariantType;
+    filterValue: string | filtersVariantType;
 };
 export interface filtersProps {
     [key: string]: {
