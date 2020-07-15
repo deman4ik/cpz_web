@@ -134,3 +134,37 @@ export const USER_SIGNALS_AGGREGATE = gql`
         }
     }
 `;
+
+export const GET_USER_ROBOTS = gql`
+    query get_user_robots($limit: Int, $where: user_robots_bool_exp, $order_by: [user_robots_order_by!]) {
+        user_robots(limit: $limit, where: $where, order_by: $order_by) {
+            user {
+                name
+                id
+            }
+            robot {
+                name
+                id
+                equity
+                exchange
+                asset
+                robot_settings {
+                    volume
+                }
+            }
+            status
+            stopped_at
+            created_at
+        }
+    }
+`;
+
+export const USER_ROBOTS_AGGREGATE = gql`
+    query user_robots_aggr {
+        user_robots_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+`;
