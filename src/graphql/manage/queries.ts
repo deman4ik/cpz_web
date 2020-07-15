@@ -107,3 +107,30 @@ export const ROBOTS_AGGREGATE = gql`
         }
     }
 `;
+
+export const GET_USER_SIGNALS = gql`
+    query get_user_signals($limit: Int, $where: user_signals_bool_exp, $order_by: [user_signals_order_by!]) {
+        user_signals(limit: $limit, where: $where, order_by: $order_by) {
+            id
+            robot {
+                code
+            }
+            user {
+                name
+                id
+            }
+            subscribed_at
+            volume
+        }
+    }
+`;
+
+export const USER_SIGNALS_AGGREGATE = gql`
+    query user_signals_aggr {
+        user_signals_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }
+`;

@@ -62,27 +62,28 @@ const OrderModalInner: React.FC<OrderModalInnerProps> = ({
                     <Select data={sort_types} value={sortState} onValueChange={(value) => setSortState(value)} />
                 </div>
             </div>
-            {Object.keys(filtersState).map((key) => (
-                <div key={key} className={styles.row}>
-                    <div className={styles.label}>
-                        <div className={styles.labelText}>{filtersState[key].label}</div>
+            {filtersState &&
+                Object.keys(filtersState).map((key) => (
+                    <div key={key} className={styles.row}>
+                        <div className={styles.label}>
+                            <div className={styles.labelText}>{filtersState[key].label}</div>
+                        </div>
+                        <div className={styles.btnContainer}>
+                            {filtersState[key].filters.map(({ name, active }) => (
+                                <Button
+                                    key={name}
+                                    type={active ? "rounded-primary" : "rounded"}
+                                    title={name}
+                                    style={{ marginLeft: 5, marginTop: 5 }}
+                                    clickable={false}
+                                    onClick={() => {
+                                        changeLocalFilter({ parent: key, itemName: name });
+                                    }}
+                                />
+                            ))}
+                        </div>
                     </div>
-                    <div className={styles.btnContainer}>
-                        {filtersState[key].filters.map(({ name, active }) => (
-                            <Button
-                                key={name}
-                                type={active ? "rounded-primary" : "rounded"}
-                                title={name}
-                                style={{ marginLeft: 5, marginTop: 5 }}
-                                clickable={false}
-                                onClick={() => {
-                                    changeLocalFilter({ parent: key, itemName: name });
-                                }}
-                            />
-                        ))}
-                    </div>
-                </div>
-            ))}
+                ))}
             <div className={styles.btnsGroup}>
                 <Button title="OK" icon="check" type="success" onClick={confirmOrder} isUppercase />
                 <Button

@@ -21,5 +21,5 @@ export interface OrderInterface {
         name: string | null;
         order_by: null | SortMethodType;
     };
-    filters: filtersProps;
+    filters?: filtersProps;
 }
