@@ -12,7 +12,7 @@ export const USER_SIGNALS_TITLES_SCHEME = {
         title: "User ID"
     },
     subscribe_at: {
-        title: "Subscribe at"
+        title: "Subscribed"
     },
     volume: {
         title: "Volume"

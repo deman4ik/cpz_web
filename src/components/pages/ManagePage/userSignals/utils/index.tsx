@@ -50,7 +50,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                     break;
                 case "subscribe_at":
                     innerComponent = (
-                        <DefaultCellWrapper style={cellStyles}>{formatDate(signal.subscribe_at)}</DefaultCellWrapper>
+                        <DefaultCellWrapper style={cellStyles}>{formatDate(signal.subscribed_at)}</DefaultCellWrapper>
                     );
                     cellsAggregated.subscribe_at = {
                         title: USER_SIGNALS_TITLES_SCHEME.subscribe_at.title,
