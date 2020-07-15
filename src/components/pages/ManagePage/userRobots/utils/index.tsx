@@ -24,6 +24,9 @@ export const formatRobotsRows = (data: Array<any>) => {
         const cellsAggregated: any = {};
         Object.keys(TITLES_SCHEME).forEach((key) => {
             let innerComponent;
+            /*vars data*/
+            let profit;
+            let performance;
             switch (key) {
                 case "user":
                     innerComponent = (
@@ -68,9 +71,9 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "statistics":
-                    const { equity } = robot.robot;
-                    const profit = equity && equity.profit ? equity.profit : 0;
-                    const performance = equity && equity.changes ? equity.changes : [];
+                    profit = robot?.robot?.equity && robot?.robot?.equity?.profit ? robot?.robot?.equity?.profit : 0;
+                    performance =
+                        robot?.robot?.equity && robot?.robot?.equity?.changes ? robot?.robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
                         <RobotChartCell
@@ -88,17 +91,16 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "activity":
-                    const { status, created_at } = robot;
-                    console.log(status);
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>
                                 <span>{TITLES_SCHEME.activity.status}</span>
-                                {status} {robot[STATUSES[status]] && `| ${formatDate(robot[STATUSES[status]])}`}
+                                {robot.status}{" "}
+                                {robot[STATUSES[robot.status]] && `| ${formatDate(robot[STATUSES[robot.status]])}`}
                             </p>
                             <p>
                                 <span>{TITLES_SCHEME.activity.date}</span>
-                                {formatDate(created_at)}
+                                {formatDate(robot.created_at)}
                             </p>
                         </DefaultCellWrapper>
                     );
@@ -107,6 +109,16 @@ export const formatRobotsRows = (data: Array<any>) => {
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
+                    break;
+                default:
+                    if (Object.prototype.hasOwnProperty.call(robot, key)) {
+                        innerComponent = <DefaultCellWrapper>{robot[key]}</DefaultCellWrapper>;
+                        cellsAggregated[key] = {
+                            title: TITLES_SCHEME[key].title,
+                            notDesktopVal: innerComponent,
+                            component: innerComponent
+                        };
+                    }
                     break;
             }
             robotItem.cells.push(cellsAggregated[key]);

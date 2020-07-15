@@ -27,7 +27,6 @@ export const SORT_SETTINGS = {
 const filterMapper = (item) => ({ name: item, active: false, filterValue: item });
 
 const timeFrameFormat = {
-    // Todo rename to constant name
     1: "1m",
     5: "5m",
     15: "15m",

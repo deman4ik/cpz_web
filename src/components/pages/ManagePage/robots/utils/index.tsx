@@ -18,19 +18,23 @@ export const formatRobotsRows = (data: Array<any>) => {
         const cellsAggregated: any = {};
         Object.keys(ROBOTS_TITLES_SCHEME).forEach((key) => {
             let innerComponent;
+            /*data vars*/
+            let robotTypesArray;
+            let profit;
+            let performance;
+
             switch (key) {
                 case "info":
-                    const { id, name, status } = robot;
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.id}</span> {id}
+                                <span>{ROBOTS_TITLES_SCHEME.info.id}</span> {robot.id}
                             </p>
                             <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.name}</span> {name}
+                                <span>{ROBOTS_TITLES_SCHEME.info.name}</span> {robot.name}
                             </p>
                             <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.status}</span> {status}
+                                <span>{ROBOTS_TITLES_SCHEME.info.status}</span> {robot.status}
                             </p>
                         </DefaultCellWrapper>
                     );
@@ -41,10 +45,9 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "settings":
-                    const { settings } = robot;
                     innerComponent = "";
-                    if (settings) {
-                        const { volume, requiredHistoryMaxBars, strategyParameters } = settings;
+                    if (robot?.settings) {
+                        const { volume, requiredHistoryMaxBars, strategyParameters } = robot?.settings;
                         innerComponent = (
                             <DefaultCellWrapper>
                                 {volume && (
@@ -76,15 +79,14 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "types":
-                    const { signals, trading } = robot;
-                    const robotTypesArray = [
+                    robotTypesArray = [
                         {
                             name: "Signals",
-                            value: signals
+                            value: robot.signals
                         },
                         {
                             name: "Trading",
-                            value: trading
+                            value: robot.trading
                         }
                     ]
                         .filter(({ value }) => value)
@@ -123,9 +125,8 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "statistics":
-                    const { equity } = robot;
-                    const profit = equity && equity.profit ? equity.profit : 0;
-                    const performance = equity && equity.changes ? equity.changes : [];
+                    profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
+                    performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
                         <RobotChartCell
@@ -141,6 +142,16 @@ export const formatRobotsRows = (data: Array<any>) => {
                         notDesktopVal: innerComponent,
                         component: innerComponent
                     };
+                    break;
+                default:
+                    if (Object.prototype.hasOwnProperty.call(robot, key)) {
+                        innerComponent = <DefaultCellWrapper>{robot[key]}</DefaultCellWrapper>;
+                        cellsAggregated[key] = {
+                            title: ROBOTS_TITLES_SCHEME[key].title,
+                            notDesktopVal: innerComponent,
+                            component: innerComponent
+                        };
+                    }
                     break;
             }
             robotItem.cells.push(cellsAggregated[key]);

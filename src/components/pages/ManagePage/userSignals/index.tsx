@@ -18,7 +18,6 @@ import { PageType } from "config/types";
 //graphql
 import { GET_USER_SIGNALS, USER_SIGNALS_AGGREGATE } from "graphql/manage/queries";
 
-
 const LIMIT_STEP = 10;
 
 const ManageUserSignals = () => {

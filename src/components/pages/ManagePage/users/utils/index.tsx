@@ -131,7 +131,9 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "created_at":
-                    innerComponent = <DefaultCellWrapper style={CENTRED_CELL}>{formatDate(user.created_at)}</DefaultCellWrapper>;
+                    innerComponent = (
+                        <DefaultCellWrapper style={CENTRED_CELL}>{formatDate(user.created_at)}</DefaultCellWrapper>
+                    );
                     userCellsScheme.created_at = {
                         title: USER_TITLES_SCHEME.created_at.title,
                         notDesktopVal: innerComponent,
