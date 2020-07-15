@@ -71,7 +71,13 @@ export const globalAny: any = global;
 
 /*Роуты с аутентификацией*/
 export const EXCLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
-export const EXCLUDE_MANAGE_ROUTES = ["/manage"];
+export const EXCLUDE_MANAGE_ROUTES = [
+    "/manage",
+    "/manage/users",
+    "/manage/robots",
+    "/manage/user_signals",
+    "/manage/user_robots"
+];
 
 /*массив исключений для доступности роутов*/
 export const EXCLUDE_ROUTES: Array<string> = [

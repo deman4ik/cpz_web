@@ -14,8 +14,10 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { HEADER_TABLE_DATA, COLUMNS_WIDTH } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
+import { PageType } from "config/types";
 //graphql
 import { GET_USER_SIGNALS, USER_SIGNALS_AGGREGATE } from "graphql/manage/queries";
+
 
 const LIMIT_STEP = 10;
 
@@ -67,6 +69,7 @@ const ManageUserSignals = () => {
         <Template
             title="User signals"
             width={width}
+            page={PageType.userSignals}
             toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} clear={clearAll} />}>
             {data?.user_signals?.length && aggrData?.user_signals_aggregate ? (
                 <SearchTable

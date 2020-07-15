@@ -10,7 +10,10 @@ import {
     HelpIcon,
     TelegramIcon,
     DashBoard,
-    Users
+    Users,
+    ListBulleted,
+    AccountStar,
+    AccountDetails
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
@@ -30,7 +33,10 @@ const components = {
     help: HelpIcon,
     telegram: TelegramIcon,
     dashboard: DashBoard,
-    users: Users
+    users: Users,
+    manageRobots: ListBulleted,
+    userSignals: AccountStar,
+    userRobots: AccountDetails
 };
 
 const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {

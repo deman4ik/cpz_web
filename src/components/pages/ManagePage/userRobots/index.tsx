@@ -9,11 +9,12 @@ import SearchPanel from "../common/SearchPanel";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // constants
-import { TABLE_HEADER_DATA, COLUMNS_WIDTH } from "./constants";
+import { COLUMNS_WIDTH, TABLE_HEADER_DATA } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
+import { PageType } from "config/types";
 // utils
-import { formatRobotsRows, getSearchWhere, aggregateRobotsFilters } from "./utils";
+import { aggregateRobotsFilters, formatRobotsRows, getSearchWhere } from "./utils";
 //graphql
 import { GET_USER_ROBOTS, USER_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 
@@ -70,6 +71,7 @@ const ManageUserRobots = () => {
         <Template
             title="User robots"
             width={width}
+            page={PageType.userRobots}
             toolbar={
                 <SearchPanel
                     callback={searchCallback}

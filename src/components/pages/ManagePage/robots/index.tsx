@@ -11,6 +11,7 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 // constants
 import { ROBOTS_TABLE_HEADER_DATA, COLUMNS_WIDTH } from "./constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
+import { PageType } from "config/types";
 //graphql
 import { GET_ROBOTS, ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
@@ -69,6 +70,7 @@ const ManageRobots = () => {
         <Template
             title="Robots"
             width={width}
+            page={PageType.manageRobots}
             toolbar={
                 <SearchPanel
                     callback={searchCallback}
