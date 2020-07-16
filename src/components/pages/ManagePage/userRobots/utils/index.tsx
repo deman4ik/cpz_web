@@ -131,15 +131,17 @@ export const getSearchWhere = (value: string) => ({
     _or: [{ user: { name: { _like: `%${value}%` } } }, { robot: { name: { _like: `%${value}%` } } }]
 });
 
-export const aggregateRobotsFilters = (filtersObject: filtersProps) => {
+export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
     let where = null;
-    Object.keys(filtersObject).forEach((key) => {
-        const filters = filtersObject[key].filters
-            .filter(({ active }) => Boolean(active))
-            .map(({ filterValue }) => filterValue);
-        if (filters.length) {
-            where = { ...where, [key]: { _in: filters } };
-        }
-    });
+    if (filtersObject) {
+        Object.keys(filtersObject).forEach((key) => {
+            const filters = filtersObject[key].filters
+                .filter(({ active }) => Boolean(active))
+                .map(({ filterValue }) => filterValue);
+            if (filters.length) {
+                where = { ...where, [key]: { _in: filters } };
+            }
+        });
+    }
     return where;
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 // components
 import { Template } from "components/layout/Template";
@@ -6,17 +6,19 @@ import SearchTable from "components/basic/SearchTable";
 import { Modal } from "components/basic";
 import OrderModalInner from "../common/OrderModalInner";
 import SearchPanel from "../common/SearchPanel";
+import { LoadingIndicator } from "components/common";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // constants
 import { COLUMNS_WIDTH, TABLE_HEADER_DATA } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
-import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
+import { INITIAL_ORDER, SORT_SETTINGS, FILTERS_SCHEME } from "./Order.settings";
 import { PageType } from "config/types";
 // utils
 import { aggregateRobotsFilters, formatRobotsRows, getSearchWhere } from "./utils";
+import { formatFilters } from "../common/OrderModalInner/utils";
 //graphql
-import { GET_USER_ROBOTS, USER_ROBOTS_AGGREGATE } from "graphql/manage/queries";
+import { GET_USER_ROBOTS, USER_ROBOTS_AGGREGATE, GET_USER_ROBOTS_STATS } from "graphql/manage/queries";
 
 const LIMIT_STEP = 10;
 
@@ -44,6 +46,16 @@ const ManageUserRobots = () => {
     const { data: aggrData } = useQuery(USER_ROBOTS_AGGREGATE, {
         pollInterval: POLL_INTERVAL
     });
+
+    const { data: statsData, loading } = useQuery(GET_USER_ROBOTS_STATS);
+
+    /*Filters change*/
+    useEffect(() => {
+        if (statsData?.stats && !orderState?.filters) {
+            const formatedFilters = formatFilters(FILTERS_SCHEME, statsData.stats);
+            setOrderState({ ...orderState, filters: formatedFilters });
+        }
+    }, [orderState, orderState?.filters, statsData, statsData?.stats]);
 
     /*handlers*/
     const searchCallback = (value) => {
@@ -94,13 +106,17 @@ const ManageUserRobots = () => {
                 />
             ) : null}
             <Modal isOpen={isOpenModal} title="Filter User Robots" onClose={setOpenModal}>
-                <OrderModalInner
-                    orderState={orderState}
-                    setOrderState={setOrderState}
-                    closeModal={setOpenModal}
-                    clearOrder={clearOrder}
-                    sortSettings={SORT_SETTINGS}
-                />
+                {loading ? (
+                    <LoadingIndicator />
+                ) : (
+                    <OrderModalInner
+                        orderState={orderState}
+                        setOrderState={setOrderState}
+                        closeModal={setOpenModal}
+                        clearOrder={clearOrder}
+                        sortSettings={SORT_SETTINGS}
+                    />
+                )}
             </Modal>
         </Template>
     );

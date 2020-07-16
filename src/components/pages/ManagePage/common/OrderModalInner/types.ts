@@ -23,3 +23,13 @@ export interface OrderInterface {
     };
     filters?: filtersProps;
 }
+
+/*filter mapper*/
+export type filterMapperSignature = (item: string) => filterItemType;
+
+/*filter scheme*/
+export interface FiltersSchemeInterface {
+    label: string;
+    key: string;
+    mapper?: filterMapperSignature;
+}

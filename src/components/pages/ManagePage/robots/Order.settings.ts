@@ -1,5 +1,7 @@
 /*settings types*/
-import { SortType, SortMethodType, filtersProps, OrderInterface } from "../common/OrderModalInner/types";
+import { SortType, SortMethodType, OrderInterface, FiltersSchemeInterface } from "../common/OrderModalInner/types";
+/*filters mappers*/
+import { underscoreMapper, timeframeMapper, tradingMapper } from "../common/OrderModalInner/dataMappers";
 
 export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "robots_statistics_up", label: "Robots statistic ↑" },
@@ -23,108 +25,46 @@ export const SORT_SETTINGS = {
     default_sort_name: "robots_statistics"
 };
 
-/*FILTERS*/
-const filterMapper = (item) => ({ name: item, active: false, filterValue: item });
-
-const timeFrameFormat = {
-    1: "1m",
-    5: "5m",
-    15: "15m",
-    30: "30m",
-    60: "1h",
-    120: "2h",
-    240: "4h",
-    480: "8h",
-    720: "12h",
-    1440: "1d"
-};
-
-export const USERS_FILTERS: filtersProps = {
-    exchange: {
+/*Filters map scheme*/
+export const FILTERS_SCHEME: Array<FiltersSchemeInterface> = [
+    {
+        key: "exchange",
         label: "Exchange",
-        filters: [
-            {
-                name: "Binance Futures",
-                active: false,
-                filterValue: "binance_futures"
-            },
-            {
-                name: "Bitfinex",
-                active: false,
-                filterValue: "bitfinex"
-            },
-            {
-                name: "Kraken",
-                active: false,
-                filterValue: "kraken"
-            }
-        ]
+        mapper: underscoreMapper
     },
-    asset: {
-        label: "Asset",
-        filters: [
-            "BTC",
-            "NEO",
-            "ZEC",
-            "DASH",
-            "ETH",
-            "EOS",
-            "XRP",
-            "TRX",
-            "LTC",
-            "BCH",
-            "ATOM",
-            "BAT",
-            "XMR",
-            "XTZ",
-            "XLM"
-        ].map(filterMapper)
+    {
+        key: "asset",
+        label: "Asset"
     },
-    currency: {
-        label: "Currency",
-        filters: ["USD", "USDT"].map(filterMapper)
+    {
+        key: "currency",
+        label: "Currency"
     },
-    strategy: {
+    {
+        key: "strategy",
         label: "Strategy",
-        filters: ["Parabolic", "Breakout", "Breakout_v2", "T2_Trend_Friend", "Channels"].map((item) => ({
-            name: item.replace(/_/g, " "),
-            active: false,
-            filterValue: item.toLowerCase()
-        }))
+        mapper: underscoreMapper
     },
-    timeframe: {
+    {
+        key: "timeframe",
         label: "Timeframe",
-        filters: Object.keys(timeFrameFormat).map((key) => ({
-            name: timeFrameFormat[key],
-            active: false,
-            filterValue: key
-        }))
+        mapper: timeframeMapper
     },
-    trading: {
-        label: "Tading",
-        filters: [
-            {
-                name: "Active",
-                active: false,
-                filterValue: "true"
-            },
-            {
-                name: "Not Active",
-                active: false,
-                filterValue: "false"
-            }
-        ]
+    {
+        key: "trading",
+        label: "Trading",
+        mapper: tradingMapper
     },
-    status: {
-        label: "Status",
-        filters: ["Stopped", "Started"].map((item) => ({ name: item, active: false, filterValue: item.toLowerCase() }))
+    {
+        key: "status",
+        label: "Status"
     }
-};
+];
 
+/*Initial order state*/
 export const INITIAL_ORDER: OrderInterface = {
     sort: {
         name: null,
         order_by: null
-    },
-    filters: USERS_FILTERS
+    }
 };

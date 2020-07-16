@@ -32,7 +32,6 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
         variables: { where: { robots: queryFilter[displayType]() } }
     });
     const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
-
     const filterData = useMemo(
         () => (!loading && data ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }),
         [data, loading]

@@ -1,5 +1,12 @@
+/*filters mappers*/
+import { underscoreMapper } from "../common/OrderModalInner/dataMappers";
 /*settings types*/
-import { SortType, SortMethodType, filtersProps, OrderInterface } from "../common/OrderModalInner/types";
+import {
+    SortType,
+    SortMethodType,
+    OrderInterface,
+    FiltersSchemeInterface
+} from "../common/OrderModalInner/types";
 
 export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "created_at_up", label: "Created ↑" },
@@ -26,55 +33,21 @@ export const SORT_SETTINGS = {
 };
 
 /*Filters*/
-const filterMapper = (item) => ({ name: item, active: false, filterValue: item });
-
-export const FILTERS: filtersProps = {
-    exchange: {
+export const FILTERS_SCHEME: Array<FiltersSchemeInterface> = [
+    {
+        key: "exchange",
         label: "Exchange",
-        filters: [
-            {
-                name: "Binance Futures",
-                active: false,
-                filterValue: "binance_futures"
-            },
-            {
-                name: "Bitfinex",
-                active: false,
-                filterValue: "bitfinex"
-            },
-            {
-                name: "Kraken",
-                active: false,
-                filterValue: "kraken"
-            }
-        ]
+        mapper: underscoreMapper
     },
-    asset: {
-        label: "Asset",
-        filters: [
-            "BTC",
-            "NEO",
-            "ZEC",
-            "DASH",
-            "ETH",
-            "EOS",
-            "XRP",
-            "TRX",
-            "LTC",
-            "BCH",
-            "ATOM",
-            "BAT",
-            "XMR",
-            "XTZ",
-            "XLM"
-        ].map(filterMapper)
+    {
+        key: "asset",
+        label: "Asset"
     }
-};
+];
 
 export const INITIAL_ORDER: OrderInterface = {
     sort: {
         name: null,
         order_by: null
-    },
-    filters: FILTERS
+    }
 };

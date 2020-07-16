@@ -1,5 +1,5 @@
 // types
-import { filtersVariantType, filtersProps } from "./types";
+import { filtersVariantType, filtersProps, FiltersSchemeInterface } from "./types";
 
 /**
  * Утилита обработки active фильтров
@@ -15,4 +15,25 @@ export const aggregateOrderModalFilters = (filters: filtersProps): filtersVarian
     });
 
     return where;
+};
+
+/**
+ *  Утилита формирует данные для фильтров из  запроса
+ * @param scheme - схема фильтров
+ * @param data - данные запроса
+ */
+export const formatFilters = (scheme: Array<FiltersSchemeInterface>, data: Array<any>): filtersProps => {
+    const formatedFilters: any = {};
+    scheme.forEach(({ key, label, mapper }) => {
+        const filtersValues = [...new Set(data.map((item) => item[key]))];
+        const filters = mapper
+            ? filtersValues.map(mapper)
+            : filtersValues.map((item) => ({ name: item, active: false, filterValue: item }));
+        formatedFilters[key] = {
+            label,
+            filters
+        };
+    });
+
+    return formatedFilters;
 };

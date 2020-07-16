@@ -168,3 +168,26 @@ export const USER_ROBOTS_AGGREGATE = gql`
         }
     }
 `;
+
+export const GET_ROBOTS_STATS = gql`
+    query v_robots_stats {
+        stats: robots {
+            exchange
+            asset
+            currency
+            strategy
+            timeframe
+            trading
+            status
+        }
+    }
+`;
+
+export const GET_USER_ROBOTS_STATS = gql`
+    query v_robots_stats {
+        stats: robots {
+            exchange
+            asset
+        }
+    }
+`;
