@@ -29,7 +29,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     const [checkedButtons, setCheckedButtons] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
     const [inputKey, setInputKey] = useState("recovery_factor");
     const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS, {
-        variables: { where: { robots: queryFilter[displayType]() } }
+        variables: { where: queryFilter[displayType]() }
     });
     const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
     const filterData = useMemo(

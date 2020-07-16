@@ -17,6 +17,7 @@ const sortFunc = {
 };
 
 export const getFilterData = (filters) => {
+    debugger;
     const result = filters.reduce(
         (acc: FilterData, item) => {
             labels.forEach((key) => {
