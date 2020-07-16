@@ -1,12 +1,7 @@
 /*filters mappers*/
 import { underscoreMapper } from "../common/OrderModalInner/dataMappers";
 /*settings types*/
-import {
-    SortType,
-    SortMethodType,
-    OrderInterface,
-    FiltersSchemeInterface
-} from "../common/OrderModalInner/types";
+import { SortType, SortMethodType, OrderInterface, FiltersSchemeInterface } from "../common/OrderModalInner/types";
 
 export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "created_at_up", label: "Created ↑" },
