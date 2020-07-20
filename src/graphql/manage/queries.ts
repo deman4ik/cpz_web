@@ -170,7 +170,7 @@ export const USER_ROBOTS_AGGREGATE = gql`
 `;
 
 export const GET_ROBOTS_STATS = gql`
-    query getRobotsStats {
+    query get_manage_robots_filters {
         stats: robots(distinct_on: [exchange, asset, currency, strategy, timeframe, trading, status]) {
             exchange
             asset
@@ -184,7 +184,7 @@ export const GET_ROBOTS_STATS = gql`
 `;
 
 export const GET_USER_ROBOTS_STATS = gql`
-    query getRobotsStats {
+    query get_user_robots_filters {
         stats: robots(distinct_on: [exchange, asset]) {
             exchange
             asset
