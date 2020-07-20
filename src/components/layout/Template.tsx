@@ -27,8 +27,8 @@ const container_default = {
     maxWidth: "1400px"
 };
 const navbar_default = {
-  maxWidth: "1200px"
-}
+    maxWidth: "1200px"
+};
 
 export const Template: React.FC<Props> = ({
     title,
