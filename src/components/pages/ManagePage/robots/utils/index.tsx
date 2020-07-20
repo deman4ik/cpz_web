@@ -6,6 +6,8 @@ import { DefaultNotDesktopView } from "components/basic/SearchTable/components/n
 import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
+// utils
+import { getItemsFromTitles } from "../../utils";
 
 /**
  * Форматирвоание строк роботов
@@ -127,14 +129,17 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "statistics":
                     profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
                     performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
-
                     innerComponent = performance?.length ? (
-                        <RobotChartCell
-                            style={{ paddingRight: "25px" }}
-                            perfomance={performance}
-                            profit={profit}
-                            height={120}
-                        />
+                        <DefaultCellWrapper>
+                            {robot.equity?.tradesCount &&
+                                getItemsFromTitles(robot.equity, ROBOTS_TITLES_SCHEME.statistics.stats)}
+                            <RobotChartCell
+                                style={{ paddingRight: "25px" }}
+                                perfomance={performance}
+                                profit={profit}
+                                height={120}
+                            />
+                        </DefaultCellWrapper>
                     ) : null;
 
                     cellsAggregated.statistics = {

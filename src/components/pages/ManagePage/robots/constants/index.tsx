@@ -27,7 +27,12 @@ export const ROBOTS_TITLES_SCHEME = {
         requiredHistoryMaxBars: "HistoryMaxBars"
     },
     statistics: {
-        title: "Statistics"
+        title: "Statistics",
+        stats: {
+            winRate: "Win Rate: ",
+            maxDrawdown: "Max Drawdon: ",
+            tradesCount: "Trades count: "
+        }
     },
     types: {
         title: "Types"

@@ -16,7 +16,12 @@ export const TITLES_SCHEME = {
         volume: "Volume: "
     },
     statistics: {
-        title: "Statistics"
+        title: "Statistics",
+        stats: {
+            winRate: "Win Rate: ",
+            maxDrawdown: "Max Drawdon: ",
+            tradesCount: "Trades count: "
+        }
     },
     activity: {
         title: "Activity",

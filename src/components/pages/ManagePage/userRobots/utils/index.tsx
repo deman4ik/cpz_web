@@ -6,8 +6,10 @@ import { DefaultNotDesktopView } from "components/basic/SearchTable/components/n
 import { TITLES_SCHEME } from "components/pages/ManagePage/userRobots/constants";
 // utils
 import { formatDate } from "config/utils";
+import { getItemsFromTitles } from "../../utils";
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
+import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
 
 const STATUSES = {
     stopped: "stopped_at",
@@ -76,12 +78,16 @@ export const formatRobotsRows = (data: Array<any>) => {
                         robot?.robot?.equity && robot?.robot?.equity?.changes ? robot?.robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
-                        <RobotChartCell
-                            style={{ paddingRight: "25px" }}
-                            perfomance={performance}
-                            profit={profit}
-                            height={120}
-                        />
+                        <DefaultCellWrapper>
+                            {robot.equity?.tradesCount &&
+                                getItemsFromTitles(robot.equity, ROBOTS_TITLES_SCHEME.statistics.stats)}
+                            <RobotChartCell
+                                style={{ paddingRight: "25px" }}
+                                perfomance={performance}
+                                profit={profit}
+                                height={120}
+                            />
+                        </DefaultCellWrapper>
                     ) : null;
 
                     cellsAggregated[key] = {
