@@ -21,7 +21,17 @@ export const unsubscribe = (_root: any, variables: any, context: any) => {
             __typename: "robots",
             id: variables.cache.id
         });
-        context.cache.writeData({ id: idRobots, data: { user_signals: [] } });
+        context.cache.writeQuery({
+            query: gql`
+                query writeCacheData @client {
+                    id
+                    data {
+                        user_signals
+                    }
+                }
+            `,
+            data: { id: idRobots, data: { user_signals: [] } }
+        });
         if (variables.cache.tableName === "charts") {
             const { limit, robotId, timeframe } = variables.chartData;
             const dataCandles = context.cache.readQuery({
@@ -66,7 +76,16 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 volume: variables.volume
             }));
             const data = { ...row, user_signals: row_user_signals };
-            context.cache.writeData({ id: idRobots, data });
+            context.cache.writeQuery({
+                query: gql`
+                    query {
+                        data @client {
+                            userId
+                        }
+                    }
+                `,
+                data: { id: idRobots, data }
+            });
 
             if (variables.cache.tableName === "charts") {
                 const { limit, robotId, timeframe } = variables.chartData;

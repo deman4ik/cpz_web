@@ -19,7 +19,8 @@ interface Definintion {
 }
 
 const cacheQuery = gql`
-    query default_state {
+    query default_state @client{
+        user_id
         Limit {
             signals
             robots
