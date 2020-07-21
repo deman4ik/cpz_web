@@ -89,7 +89,7 @@ const ManageUsers = () => {
                     moreButton={{
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.users_aggregate.aggregate.count,
-                        handleFetchMore: callbackMore,
+                        handleFetchMore: callbackMore
                     }}
                 />
             ) : null}

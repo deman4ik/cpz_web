@@ -97,7 +97,7 @@ const ManageRobots = () => {
                     moreButton={{
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.robots_aggregate.aggregate.count,
-                        handleFetchMore: callbackMore,
+                        handleFetchMore: callbackMore
                     }}
                 />
             ) : null}

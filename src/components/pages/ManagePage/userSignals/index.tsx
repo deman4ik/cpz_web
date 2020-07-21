@@ -77,7 +77,7 @@ const ManageUserSignals = () => {
                     moreButton={{
                         limitStep: 10,
                         maxCount: aggrData.user_signals_aggregate.aggregate.count,
-                        handleFetchMore: callbackMore,
+                        handleFetchMore: callbackMore
                     }}
                 />
             ) : null}
