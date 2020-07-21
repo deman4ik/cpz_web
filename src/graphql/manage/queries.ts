@@ -171,8 +171,8 @@ export const GET_USER_SIGNALS = gql`
  *  @where -  фильтрация
  */
 export const USER_SIGNALS_AGGREGATE = gql`
-    query user_signals_aggr($where:user_signals_bool_exp) {
-        user_signals_aggregate(where:$where) {
+    query user_signals_aggr($where: user_signals_bool_exp) {
+        user_signals_aggregate(where: $where) {
             aggregate {
                 count
             }
@@ -218,7 +218,7 @@ export const GET_USER_ROBOTS = gql`
  */
 export const USER_ROBOTS_AGGREGATE = gql`
     query user_robots_aggr($where: user_robots_bool_exp) {
-        user_robots_aggregate(where:$where) {
+        user_robots_aggregate(where: $where) {
             aggregate {
                 count
             }
