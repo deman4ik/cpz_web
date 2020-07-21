@@ -24,7 +24,6 @@ const ManageUserSignals = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
-    const [isSearch, setIsSearch] = useState(false);
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
     const [where, setWhere] = useState(getSearchWhere(""));
@@ -38,6 +37,7 @@ const ManageUserSignals = () => {
     });
 
     const { data: aggrData } = useQuery(USER_SIGNALS_AGGREGATE, {
+        variables: { where },
         pollInterval: POLL_INTERVAL
     });
 
@@ -53,7 +53,6 @@ const ManageUserSignals = () => {
         } else {
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const clearAll = () => {
         setOrderState(INITIAL_ORDER);
@@ -79,7 +78,6 @@ const ManageUserSignals = () => {
                         limitStep: 10,
                         maxCount: aggrData.user_signals_aggregate.aggregate.count,
                         handleFetchMore: callbackMore,
-                        isSearch
                     }}
                 />
             ) : null}

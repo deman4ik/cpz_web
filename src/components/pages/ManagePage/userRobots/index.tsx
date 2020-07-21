@@ -25,7 +25,6 @@ const LIMIT_STEP = 10;
 const ManageUserRobots = () => {
     /*states*/
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [isSearch, setIsSearch] = useState(false);
     const [where, setWhere] = useState(getSearchWhere(""));
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const [limit, setLimit] = useState(LIMIT_STEP);
@@ -44,6 +43,7 @@ const ManageUserRobots = () => {
     });
 
     const { data: aggrData } = useQuery(USER_ROBOTS_AGGREGATE, {
+        variables: { where: whereData },
         pollInterval: POLL_INTERVAL
     });
 
@@ -65,7 +65,6 @@ const ManageUserRobots = () => {
         } else {
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const setOpenModal = () => setIsOpenModal((prev) => !prev);
     const callbackMore = () => {
@@ -101,7 +100,6 @@ const ManageUserRobots = () => {
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.user_robots_aggregate.aggregate.count,
                         handleFetchMore: callbackMore,
-                        isSearch
                     }}
                 />
             ) : null}

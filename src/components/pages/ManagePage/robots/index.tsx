@@ -26,7 +26,6 @@ const ManageRobots = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
-    const [isSearch, setIsSearch] = useState(false);
     const [where, setWhere] = useState(getWhereSearch(""));
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
@@ -42,6 +41,7 @@ const ManageRobots = () => {
         variables: { limit, where: whereData, order_by }
     });
     const { data: aggrData } = useQuery(ROBOTS_AGGREGATE, {
+        variables: { where: whereData },
         pollInterval: POLL_INTERVAL
     });
     const { data: statsData, loading } = useQuery(GET_ROBOTS_STATS);
@@ -66,7 +66,6 @@ const ManageRobots = () => {
         } else {
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const clearAll = () => {
         setWhere(getWhereSearch(""));
@@ -99,7 +98,6 @@ const ManageRobots = () => {
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.robots_aggregate.aggregate.count,
                         handleFetchMore: callbackMore,
-                        isSearch
                     }}
                 />
             ) : null}

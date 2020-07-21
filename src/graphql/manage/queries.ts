@@ -77,14 +77,14 @@ export const GET_USERS = gql`
     }
 `;
 
-
 /**
  *  Общее количество пользователей
  *  Использование:  manage/users
+ *  @where -  фильтрация
  */
 export const USERS_AGGREGATE = gql`
-    query users_aggr {
-        users_aggregate {
+    query users_aggr($where: users_bool_exp) {
+        users_aggregate(where: $where) {
             aggregate {
                 count
             }
@@ -129,10 +129,11 @@ export const GET_ROBOTS = gql`
 /**
  *  Общее количество роботов
  *  Использование:  manage/users
+ *  @where -  фильтрация
  */
 export const ROBOTS_AGGREGATE = gql`
-    query robots_aggr {
-        robots_aggregate {
+    query robots_aggr($where: robots_bool_exp) {
+        robots_aggregate(where: $where) {
             aggregate {
                 count
             }
@@ -167,10 +168,11 @@ export const GET_USER_SIGNALS = gql`
 /**
  *  Общее значение подписок на сигналы
  *  Использование:  manage/user_signals
+ *  @where -  фильтрация
  */
 export const USER_SIGNALS_AGGREGATE = gql`
-    query user_signals_aggr {
-        user_signals_aggregate {
+    query user_signals_aggr($where:user_signals_bool_exp) {
+        user_signals_aggregate(where:$where) {
             aggregate {
                 count
             }
@@ -209,14 +211,14 @@ export const GET_USER_ROBOTS = gql`
     }
 `;
 
-
 /**
  *  Общее количество пользовательских роботов
  *  Использование:  manage/user_signals
+ *  @where -  фильтрация
  */
 export const USER_ROBOTS_AGGREGATE = gql`
-    query user_robots_aggr {
-        user_robots_aggregate {
+    query user_robots_aggr($where: user_robots_bool_exp) {
+        user_robots_aggregate(where:$where) {
             aggregate {
                 count
             }
@@ -241,7 +243,6 @@ export const GET_ROBOTS_STATS = gql`
         }
     }
 `;
-
 
 /**
  *  Фильтры пользовательских роботов

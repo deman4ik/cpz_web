@@ -25,7 +25,6 @@ const ManageUsers = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
-    const [isSearch, setIsSearch] = useState(false);
     const [where, setWhere] = useState(getWhereVariables(""));
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
@@ -43,6 +42,7 @@ const ManageUsers = () => {
         variables: { where: whereData, limit, order_by }
     });
     const { data: aggrData } = useQuery(USERS_AGGREGATE, {
+        variables: { where: whereData },
         pollInterval: POLL_INTERVAL
     });
 
@@ -54,7 +54,6 @@ const ManageUsers = () => {
         } else {
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const callbackMore = () => {
         setLimit(data.users.length + LIMIT_STEP);
@@ -91,7 +90,6 @@ const ManageUsers = () => {
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.users_aggregate.aggregate.count,
                         handleFetchMore: callbackMore,
-                        isSearch
                     }}
                 />
             ) : null}

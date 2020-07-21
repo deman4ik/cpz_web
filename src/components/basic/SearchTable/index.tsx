@@ -22,7 +22,6 @@ export interface SearchTableProps {
         handleFetchMore: () => void; // Коллбэк
         maxCount: number; // Максимальное значение загружаемых данных
         limitStep: number; // Шаг пагинации
-        isSearch: boolean; // Флаг состояния поиска
     };
 }
 
@@ -48,7 +47,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
     tableRows,
     columnsWidth,
     NotDesktopWrapper,
-    moreButton: { handleFetchMore, maxCount, limitStep, isSearch }
+    moreButton: { handleFetchMore, maxCount, limitStep }
 }) => {
     /*Работа с форматом отображения*/
     const { width } = useWindowDimensions();
@@ -57,7 +56,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
     const loadButtonProps = {
         onFetchMore: handleFetchMore,
         isLoadingMore: false,
-        renderLoadMoreButton: tableRows.length + limitStep < maxCount && !isSearch
+        renderLoadMoreButton: tableRows.length + limitStep < maxCount
     };
 
     return (
