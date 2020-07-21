@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 /**
- * Запрос на получение  количества user_robots user_signals
+ * Количество роботов и подписок на сигналы по всем пользователям
  * Использование:  manage/dashboard
  */
 export const GET_USER_STATS = gql`
@@ -18,7 +18,7 @@ export const GET_USER_STATS = gql`
 `;
 
 /**
- *  Получение данных за определенный период
+ *  Количество пользователей за определенный период
  *  @period - дата за определенный период
  *  Использование:  manage/dashboard
  */
@@ -31,7 +31,7 @@ export const GET_USER_STATS_DURING_PERIOD = gql`
 `;
 
 /**
- * Получение данных юзерам
+ * Список пользователей
  * @where -  фильтрация
  * @order_by - сортировка
  * @limit - для пагинации
@@ -79,7 +79,7 @@ export const GET_USERS = gql`
 
 
 /**
- *  Получение значения по общему количеству users
+ *  Общее количество пользователей
  *  Использование:  manage/users
  */
 export const USERS_AGGREGATE = gql`
@@ -93,7 +93,7 @@ export const USERS_AGGREGATE = gql`
 `;
 
 /**
- * Получение данных по всем  robots
+ * Список роботов
  * @where -  фильтрация
  * @order_by - сортировка
  * @limit - для пагинации
@@ -127,7 +127,7 @@ export const GET_ROBOTS = gql`
 `;
 
 /**
- *  Получение значения по общему количеству robots
+ *  Общее количество роботов
  *  Использование:  manage/users
  */
 export const ROBOTS_AGGREGATE = gql`
@@ -141,7 +141,7 @@ export const ROBOTS_AGGREGATE = gql`
 `;
 
 /**
- * Получение данных  user_signals
+ * Список подписок на сигналы
  * @where -  фильтрация
  * @order_by - сортировка
  * @limit - для пагинации
@@ -165,7 +165,7 @@ export const GET_USER_SIGNALS = gql`
 `;
 
 /**
- *  Получение значения по общему количеству user_signals
+ *  Общее значение подписок на сигналы
  *  Использование:  manage/user_signals
  */
 export const USER_SIGNALS_AGGREGATE = gql`
@@ -179,7 +179,7 @@ export const USER_SIGNALS_AGGREGATE = gql`
 `;
 
 /**
- * Получение данных  user_robots
+ * Список пользовательских роботов
  * @where -  фильтрация
  * @order_by - сортировка
  * @limit - для пагинации
@@ -211,7 +211,7 @@ export const GET_USER_ROBOTS = gql`
 
 
 /**
- *  Получение значения по общему количеству user_robots
+ *  Общее количество пользовательских роботов
  *  Использование:  manage/user_signals
  */
 export const USER_ROBOTS_AGGREGATE = gql`
@@ -225,7 +225,7 @@ export const USER_ROBOTS_AGGREGATE = gql`
 `;
 
 /**
- *  Запрос на получение данных по фильтрам
+ *  Фильтры роботов
  *  Использование:  manage/robots
  */
 export const GET_ROBOTS_STATS = gql`
@@ -244,7 +244,7 @@ export const GET_ROBOTS_STATS = gql`
 
 
 /**
- *  Запрос на получение данных по фильтрам
+ *  Фильтры пользовательских роботов
  *  Использование:  manage/user_robots
  */
 export const GET_USER_ROBOTS_STATS = gql`
