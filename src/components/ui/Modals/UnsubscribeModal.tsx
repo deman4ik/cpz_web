@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { UNSUBSCRIBE_FROM_SIGNALS } from "graphql/signals/mutations";

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { useDebounce } from "hooks/useDebounce";
 import { SET_SEARCH_PROPS } from "graphql/local/mutations";

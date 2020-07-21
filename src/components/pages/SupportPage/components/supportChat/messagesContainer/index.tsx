@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useSubscription } from "@apollo/react-hooks";
+import { useSubscription } from "@apollo/client";
 // graphql
 import { GET_SUPPORT_MESSAGES } from "graphql/support/subscribtions";
 // components

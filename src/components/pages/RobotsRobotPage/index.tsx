@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useContext } from "react";
 import Router, { useRouter } from "next/router";
 
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 // components
 import { NoRecentData, LoadingIndicator } from "components/common";

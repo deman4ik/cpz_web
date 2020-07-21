@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 // graphql
 import { GET_ROBOT_POSITIONS, GET_ROBOT_POSITIONS_NOT_AUTH } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";

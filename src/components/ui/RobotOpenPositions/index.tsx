@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 // components
 import { OpenPositionsComponent } from "./OpenPositionsComponent";

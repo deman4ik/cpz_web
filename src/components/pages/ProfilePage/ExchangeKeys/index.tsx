@@ -1,5 +1,5 @@
 import React, { useMemo, memo, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 import { GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { ExchangeKeysContainer } from "./ExchangeKeysContainer";

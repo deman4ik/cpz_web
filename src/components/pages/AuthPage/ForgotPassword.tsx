@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";

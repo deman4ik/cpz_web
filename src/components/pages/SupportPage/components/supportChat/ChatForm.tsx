@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "components/basic";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 // components
 import { LoadingIndicator } from "components/common";
 // styles

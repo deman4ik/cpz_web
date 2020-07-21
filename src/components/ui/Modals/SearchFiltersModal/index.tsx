@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useMemo, useState, memo, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { SEARCH_SIGNALS_FILTERS } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS } from "graphql/local/queries";

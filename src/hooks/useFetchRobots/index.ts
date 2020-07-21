@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 // graphql
 import { ROBOT_AGGREGATE_COUNT } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";

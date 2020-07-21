@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo, memo } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";

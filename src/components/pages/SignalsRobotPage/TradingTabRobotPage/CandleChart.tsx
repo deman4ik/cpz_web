@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, memo, useContext } from "react";
-import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
+import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import dynamic from "next/dynamic";
 
 // components

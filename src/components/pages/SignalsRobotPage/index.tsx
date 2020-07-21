@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useContext } from "react";
 import Router, { useRouter } from "next/router";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 
 // components
 import { Template } from "components/layout/Template";
