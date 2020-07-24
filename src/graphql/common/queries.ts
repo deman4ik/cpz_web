@@ -25,8 +25,8 @@ export const GET_MARKETS = gql`
  * Использование: /robots/search  /signals/search
  * @where - алиас для отбора только роботов или сигналов, имеет вид: ({ signals: { _eq: true } }) или  ({ trading: { _eq: true } })
  */
-export const GET_MAIN_FILTERS = gql`
-    query get_main_filters($where: robots_bool_exp) {
+export const GET_ROBOTS_FILTERS = gql`
+    query get_robots_filters($where: robots_bool_exp) {
         filters: robots(where: $where, distinct_on: [exchange, asset, timeframe]) {
             exchange
             asset
