@@ -7,10 +7,11 @@ interface Props {
     toolbar: any;
     hideToolbar: boolean;
     handlePressBack: () => void;
+    style?: React.CSSProperties;
 }
 
-const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, hideToolbar }) => (
-    <div className="navBar">
+const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, hideToolbar, style }) => (
+    <div className="navBar" style={style}>
         <div className="wrapper">
             {handlePressBack ? <EffectButton onClick={handlePressBack} icon="arrowleft" /> : null}
             <div className="titleGroup" style={{ marginLeft: handlePressBack ? 38 : 10 }}>
@@ -22,7 +23,6 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
         <style jsx>
             {`
                 .navBar {
-                    max-width: 1200px;
                     margin-left: 200px;
                     background-color: var(--dark);
                     height: 56px;

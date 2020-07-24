@@ -8,7 +8,7 @@ export interface NotDesktopProps {
 }
 
 /*Респонсив отображение данных таблицы*/
-const DefaultNotDesktop: React.FC<NotDesktopProps> = memo(({ tableRows }) => {
+const DefaultNotDesktopWrapper: React.FC<NotDesktopProps> = memo(({ tableRows }) => {
     return (
         <div className={notDesktopStyles.not_desktop_wrapper}>
             {tableRows.map(({ cells, NotDesktopView }) => {
@@ -22,4 +22,4 @@ const DefaultNotDesktop: React.FC<NotDesktopProps> = memo(({ tableRows }) => {
     );
 });
 
-export default DefaultNotDesktop;
+export default DefaultNotDesktopWrapper;

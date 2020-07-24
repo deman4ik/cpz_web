@@ -29,7 +29,7 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
         }
     };
 
-    const MenuItems = !isManager ? MAINMENU_ITEMS : [...MAINMENU_ITEMS, ...MANAGE_MENU_ITEMS];
+    const MenuItems = isManager && router.pathname.includes("/manage") ? MANAGE_MENU_ITEMS : MAINMENU_ITEMS;
 
     return (
         <>

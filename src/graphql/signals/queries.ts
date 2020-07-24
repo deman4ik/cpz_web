@@ -65,14 +65,12 @@ export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
 `;
 
 export const SEARCH_SIGNALS_FILTERS = gql`
-    query signals_filters($where: v_robots_stats_bool_exp) {
-        filters: v_robots_stats(where: $where) {
-            robots {
-                id
-                exchange
-                asset
-                timeframe
-            }
+    query signals_filters($where: robots_bool_exp) {
+        filters: robots(where: $where, distinct_on: [id, exchange, asset, timeframe]) {
+            id
+            exchange
+            asset
+            timeframe
         }
         SearchProps @client {
             props {

@@ -7,7 +7,10 @@ export enum PageType {
     support = "Support",
     community = "Community",
     dasHboard = "Dashboard",
-    users = "Users"
+    users = "Users",
+    manageRobots = "Manage Robots",
+    userRobots = "User Robots",
+    userSignals = "User Signals"
 }
 
 export enum TabType {
