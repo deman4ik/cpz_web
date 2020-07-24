@@ -64,28 +64,6 @@ export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
     }
 `;
 
-/**
- * Фильтры роботов/сигналов
- * Использование: /robots/search и /signals/search
- * @where - алиас для отбора только роботов или сигналов, имеет вид: ({ signals: { _eq: true } }) или  ({ trading: { _eq: true } })
- */
-export const SEARCH_SIGNALS_FILTERS = gql`
-    query signals_filters($where: robots_bool_exp) {
-        filters: robots(where: $where, distinct_on: [exchange, asset, timeframe]) {
-            exchange
-            asset
-            timeframe
-        }
-        SearchProps @client {
-            props {
-                type
-                filters
-                orders
-            }
-        }
-    }
-`;
-
 export const ROBOT_AGGREGATE_COUNT = gql`
     query aggregate($hash: String!, $where: robots_bool_exp) {
         robots_aggregate(where: $where) @connection(key: "robots_aggregate", filter: ["hash"]) {

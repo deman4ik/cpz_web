@@ -19,3 +19,25 @@ export const GET_MARKETS = gql`
         }
     }
 `;
+
+/**
+ * Фильтры роботов/сигналов на страницах поиска
+ * Использование: /robots/search  /signals/search
+ * @where - алиас для отбора только роботов или сигналов, имеет вид: ({ signals: { _eq: true } }) или  ({ trading: { _eq: true } })
+ */
+export const GET_MAIN_FILTERS = gql`
+    query get_main_filters($where: robots_bool_exp) {
+        filters: robots(where: $where, distinct_on: [exchange, asset, timeframe]) {
+            exchange
+            asset
+            timeframe
+        }
+        SearchProps @client {
+            props {
+                type
+                filters
+                orders
+            }
+        }
+    }
+`;
