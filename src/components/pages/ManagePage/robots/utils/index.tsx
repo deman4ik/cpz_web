@@ -8,7 +8,8 @@ import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constan
 import { filtersProps } from "../../common/OrderModalInner/types";
 // utils
 import { getItemsFromTitles } from "../../utils";
-
+// constants
+import { STATUSES_COLORS, ROBOTS_AVAILABLE_CODES } from "config/constants";
 /**
  * Форматирвоание строк роботов
  * @param data - array robots
@@ -29,14 +30,13 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "info":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.id}</span> {robot.id}
-                            </p>
-                            <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.name}</span> {robot.name}
-                            </p>
-                            <p>
-                                <span>{ROBOTS_TITLES_SCHEME.info.status}</span> {robot.status}
+                            <p>{robot.id}</p>
+                            <p>{robot.name}</p>
+                            <p
+                                style={{
+                                    color: STATUSES_COLORS[robot.status] ? STATUSES_COLORS[robot.status] : "#ffffff"
+                                }}>
+                                {robot.status}
                             </p>
                         </DefaultCellWrapper>
                     );
@@ -144,6 +144,23 @@ export const formatRobotsRows = (data: Array<any>) => {
 
                     cellsAggregated.statistics = {
                         title: ROBOTS_TITLES_SCHEME.statistics.title,
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
+                    };
+                    break;
+                case "available":
+                    console.log(robot);
+                    innerComponent = (
+                        <DefaultCellWrapper>
+                            <p>
+                                {ROBOTS_AVAILABLE_CODES[robot.available]
+                                    ? ROBOTS_AVAILABLE_CODES[robot.available]
+                                    : robot.avaliable}
+                            </p>
+                        </DefaultCellWrapper>
+                    );
+                    cellsAggregated.available = {
+                        title: ROBOTS_TITLES_SCHEME.available.title,
                         notDesktopVal: innerComponent,
                         component: innerComponent
                     };

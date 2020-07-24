@@ -59,12 +59,19 @@ export const color = {
     negative: "#CD3E60",
     lightRed: "#CC6FA3",
     lightGreen: "#70e2bc",
+    yellow: "#FEE338",
     rgba: {
         white: "rgba(255, 255, 255, 0.7)",
         whiteLight: "rgba(255, 255, 255, 0.15)",
         dark: "rgba(36, 43, 74, 0.7)",
         primary: "rgba(105, 135, 185, 0.2)"
     }
+};
+
+export const STATUSES_COLORS = {
+    started: color.positive,
+    stopped: color.negative,
+    paused: color.yellow
 };
 
 export const globalAny: any = global;
@@ -92,3 +99,11 @@ export const EXCLUDE_ROUTES: Array<string> = [
     "/robots/robot/",
     "/support"
 ];
+
+export enum ROBOTS_AVAILABLE_CODES {
+    No,
+    Manager = 5,
+    VIP = 10,
+    User = 15,
+    Anonymous = 20
+}

@@ -54,8 +54,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                 case "telegram":
                     innerComponent = user.telegram_id && (
                         <DefaultCellWrapper>
-                            <p>{`${USER_TITLES_SCHEME.telegram.telegram_id}  ${user.telegram_id}`}</p>
-                            <p>{`${USER_TITLES_SCHEME.telegram.telegram_username} ${user.telegram_username}`}</p>
+                            <p>{user.telegram_id}</p>
+                            <p>{user.telegram_username}</p>
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.telegram = {
@@ -67,8 +67,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                 case "roles":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{`${USER_TITLES_SCHEME.roles.defaultRole} ${user.roles.defaultRole}`}</p>
-                            <p>{`${USER_TITLES_SCHEME.roles.allowedRoles} ${user.roles.allowedRoles.join(", ")}`}</p>
+                            <p>{user.roles.defaultRole}</p>
+                            <p>{user.roles.allowedRoles.join(", ")}</p>
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.roles = {
@@ -78,17 +78,17 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "settings":
-                    notifications = formatSettings(user.settings.notifications.signals);
+                    // notifications = formatSettings(user.settings.notifications.signals);
                     trading = formatSettings(user.settings.notifications.trading);
 
                     innerComponent = (
                         <DefaultCellWrapper>
+                            {/*<p>*/}
+                            {/*    {USER_TITLES_SCHEME.settings.notifications}*/}
+                            {/*    {notifications}*/}
+                            {/*</p>*/}
                             <p>
-                                {USER_TITLES_SCHEME.settings.notifications}
-                                {notifications}
-                            </p>
-                            <p>
-                                {USER_TITLES_SCHEME.settings.trading}
+                                <span>{USER_TITLES_SCHEME.settings.trading}</span>
                                 {trading}
                             </p>
                         </DefaultCellWrapper>
@@ -103,15 +103,15 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>
-                                {USER_TITLES_SCHEME.entries.user_robots}
+                                <span>{USER_TITLES_SCHEME.entries.user_robots}</span>
                                 {user.user_robots.length}
                             </p>
                             <p>
-                                {USER_TITLES_SCHEME.entries.user_signals}
+                                <span>{USER_TITLES_SCHEME.entries.user_signals}</span>
                                 {user.user_signals.length}
                             </p>
                             <p>
-                                {USER_TITLES_SCHEME.entries.user_exchange_accs}
+                                <span>{USER_TITLES_SCHEME.entries.user_exchange_accs}</span>
                                 {user.user_exchange_accs.length}
                             </p>
                         </DefaultCellWrapper>
@@ -131,9 +131,7 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "created_at":
-                    innerComponent = (
-                        <DefaultCellWrapper style={CENTRED_CELL}>{formatDate(user.created_at)}</DefaultCellWrapper>
-                    );
+                    innerComponent = <DefaultCellWrapper>{formatDate(user.created_at)}</DefaultCellWrapper>;
                     userCellsScheme.created_at = {
                         title: USER_TITLES_SCHEME.created_at.title,
                         notDesktopVal: innerComponent,
@@ -152,6 +150,7 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             }
             userItem.cells.push(userCellsScheme[key]);
         });
+        console.log(userItem.cells);
         return userItem;
     });
 };

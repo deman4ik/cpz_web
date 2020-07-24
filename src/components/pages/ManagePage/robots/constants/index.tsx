@@ -34,6 +34,9 @@ export const ROBOTS_TITLES_SCHEME = {
             tradesCount: "Trades count: "
         }
     },
+    available: {
+        title: "Available"
+    },
     types: {
         title: "Types"
     },
@@ -44,7 +47,7 @@ export const ROBOTS_TITLES_SCHEME = {
     }
 };
 
-export const COLUMNS_WIDTH = ["20%", "12%", "37%", "15%", "15%"];
+export const COLUMNS_WIDTH = ["16.6%", "16.6%", "16.6%", "16.6%", "16.6%", "16.6%"];
 
 /*HEAD TITLES*/
 export const ROBOTS_TABLE_HEADER_DATA = Object.keys(ROBOTS_TITLES_SCHEME).map((key) => ({
