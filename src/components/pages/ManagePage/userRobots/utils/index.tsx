@@ -103,10 +103,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                                 {robot.status}{" "}
                                 {robot[STATUSES[robot.status]] && `| ${formatDate(robot[STATUSES[robot.status]])}`}
                             </p>
-                            <p>
-                                <span>{TITLES_SCHEME.activity.date}</span>
-                                {formatDate(robot.created_at)}
-                            </p>
+                            <p>{formatDate(robot.created_at)}</p>
                         </DefaultCellWrapper>
                     );
                     cellsAggregated[key] = {

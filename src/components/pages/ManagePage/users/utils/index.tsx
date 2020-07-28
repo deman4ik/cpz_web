@@ -47,8 +47,9 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             let innerComponent; // переопределяемая переменная компонента
             /*Переменные настроек*/
 
-            let notifications;
-            let trading;
+            let notificationsSetting;
+            let tradingSetting;
+            let signalsSetting;
             /*Форматинг по ключам*/
             switch (key) {
                 case "telegram":
@@ -68,7 +69,7 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>{user.roles.defaultRole}</p>
-                            <p>{user.roles.allowedRoles.join(", ")}</p>
+                            <p>({user.roles.allowedRoles.join(", ")})</p>
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.roles = {
@@ -78,15 +79,20 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "settings":
-                    notifications = formatSettings(user.settings.notifications.signals);
-                    trading = formatSettings(user.settings.notifications.trading);
+                    notificationsSetting = formatSettings(user.settings.notifications.signals);
+                    tradingSetting = formatSettings(user.settings.notifications.trading);
 
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{notifications}</p>
+                            {notificationsSetting && (
+                                <p>
+                                    <span>{USER_TITLES_SCHEME.settings.notifications}</span>
+                                    {notificationsSetting}
+                                </p>
+                            )}
                             <p>
                                 <span>{USER_TITLES_SCHEME.settings.trading}</span>
-                                {trading}
+                                {tradingSetting}
                             </p>
                         </DefaultCellWrapper>
                     );
@@ -147,7 +153,6 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             }
             userItem.cells.push(userCellsScheme[key]);
         });
-        console.log(userItem.cells);
         return userItem;
     });
 };

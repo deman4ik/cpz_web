@@ -20,9 +20,6 @@
 .table_cell:first-child{
   padding-left: 20px;
 }
-.table_cell:last-child{
-  padding-right: 20px;
-}
 
 
 /*mdedia queries*/

@@ -25,7 +25,7 @@ export const USER_TITLES_SCHEME = {
     },
     settings: {
         title: "Settings",
-        notifications: "Notifications Signals: ",
+        notifications: "Signals: ",
         trading: "Trading: "
     }
 };
@@ -62,9 +62,7 @@ export const HEADER_TABLE_DATA = [
     }
 ];
 
-//                                id     NAME   EMAIL     TEL   ROLE    SET      ENT    STATUS  DT
-//export const COLUMNS_WIDTH = ["10%", "13%", "14.02%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
-export const COLUMNS_WIDTH = ["10%", "10", "14.02%", "12%", "6.5%", "12%", "11%", "9%", "15.02%"];
+export const COLUMNS_WIDTH = ["17%", "10%", "16.02%", "10%", "6.5%", "11%", "11%", "7%", "10.02%"];
 
 export const REGEXS = {
     telegram_id: /^\d{9}/g,
