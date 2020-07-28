@@ -58,16 +58,19 @@ export const formatRobotsRows = (data: Array<any>) => {
                                         {volume}
                                     </p>
                                 )}
-                                {strategyParameters &&
-                                    Object.keys(strategyParameters).map((itemKey) => (
-                                        <p key={itemKey}>
-                                            <span>{ROBOTS_TITLES_SCHEME.settings.strategyParameters[itemKey]}</span>
-                                            {strategyParameters[itemKey]}
-                                        </p>
-                                    ))}
+                                {strategyParameters && (
+                                    <div style={{ paddingTop: "10px" }}>
+                                        {Object.keys(strategyParameters).map((itemKey) => (
+                                            <p key={itemKey}>
+                                                <span>{ROBOTS_TITLES_SCHEME.settings.strategyParameters[itemKey]}</span>
+                                                {strategyParameters[itemKey]}
+                                            </p>
+                                        ))}
+                                    </div>
+                                )}
                                 {requiredHistoryMaxBars && (
                                     <p>
-                                        <span>{ROBOTS_TITLES_SCHEME.settings.volume}</span>
+                                        <span>{ROBOTS_TITLES_SCHEME.settings.requiredHistoryMaxBars}</span>
                                         {requiredHistoryMaxBars}
                                     </p>
                                 )}
@@ -96,7 +99,9 @@ export const formatRobotsRows = (data: Array<any>) => {
 
                     innerComponent = (
                         <DefaultCellWrapper>
-                            {robotTypesArray.length ? robotTypesArray.join(" | ") : robotTypesArray[0]}
+                            {robotTypesArray.length
+                                ? robotTypesArray.map((item) => <p key={item}>{item}</p>)
+                                : robotTypesArray[0]}
                         </DefaultCellWrapper>
                     );
                     cellsAggregated.types = {
@@ -126,19 +131,28 @@ export const formatRobotsRows = (data: Array<any>) => {
                         component: innerComponent
                     };
                     break;
-                case "statistics":
+                case "performance":
                     profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
                     performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
                     innerComponent = performance?.length ? (
+                        <RobotChartCell
+                            style={{ paddingRight: "25px" }}
+                            perfomance={performance}
+                            profit={profit}
+                            height={120}
+                        />
+                    ) : null;
+
+                    cellsAggregated.performance = {
+                        title: ROBOTS_TITLES_SCHEME.performance.title,
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
+                    };
+                    break;
+                case "statistics":
+                    innerComponent = robot?.equity ? (
                         <DefaultCellWrapper>
-                            {robot.equity?.tradesCount &&
-                                getItemsFromTitles(robot.equity, ROBOTS_TITLES_SCHEME.statistics.stats)}
-                            <RobotChartCell
-                                style={{ paddingRight: "25px" }}
-                                perfomance={performance}
-                                profit={profit}
-                                height={120}
-                            />
+                            {getItemsFromTitles(robot.equity, ROBOTS_TITLES_SCHEME.statistics.stats)}
                         </DefaultCellWrapper>
                     ) : null;
 
@@ -149,7 +163,6 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "available":
-                    console.log(robot);
                     innerComponent = (
                         <DefaultCellWrapper>
                             <p>

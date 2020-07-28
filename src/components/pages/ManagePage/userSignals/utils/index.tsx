@@ -22,28 +22,32 @@ export const userSignalsFormat = (data: Array<any>) => {
         Object.keys(USER_SIGNALS_TITLES_SCHEME).forEach((key) => {
             let innerComponent;
             switch (key) {
-                case "code":
+                case "signal_robot":
                     innerComponent = (
-                        <DefaultCellWrapper style={{ ...cellStyles }}>{signal.robot.code}</DefaultCellWrapper>
+                        <DefaultCellWrapper style={{ ...cellStyles }}>
+                            <p>{signal.robot.code}</p>
+                            <p>
+                                <span>{signal.id}</span>
+                            </p>
+                        </DefaultCellWrapper>
                     );
-                    cellsAggregated.code = {
-                        title: USER_SIGNALS_TITLES_SCHEME.code.title,
+                    cellsAggregated.signal_robot = {
+                        title: USER_SIGNALS_TITLES_SCHEME.signal_robot.title,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
                     break;
-                case "user_name":
-                    innerComponent = <DefaultCellWrapper style={cellStyles}>{signal.user.name}</DefaultCellWrapper>;
-                    cellsAggregated.user_name = {
-                        title: USER_SIGNALS_TITLES_SCHEME.user_name.title,
-                        component: innerComponent,
-                        notDesktopVal: innerComponent
-                    };
-                    break;
-                case "user_id":
-                    innerComponent = <DefaultCellWrapper style={cellStyles}>{signal.user.id}</DefaultCellWrapper>;
-                    cellsAggregated.user_id = {
-                        title: USER_SIGNALS_TITLES_SCHEME.user_id.title,
+                case "user":
+                    innerComponent = (
+                        <DefaultCellWrapper style={cellStyles}>
+                            <p>{signal.user.name}</p>
+                            <p>
+                                <span>{signal.user.id}</span>
+                            </p>
+                        </DefaultCellWrapper>
+                    );
+                    cellsAggregated.user = {
+                        title: USER_SIGNALS_TITLES_SCHEME.user.title,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
