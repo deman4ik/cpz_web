@@ -54,7 +54,6 @@ export const setSearchLimit = (_root: any, variables: any, context: any) => {
 
 export const setNotificationsProps = (_root: any, variables: any, context: any) => {
     const { filters } = variables;
-    console.log("filters", filters);
     context.client.writeData({
         data: { NotificationsProps: { filters, __typename: "NotificationsProps" } }
     });
