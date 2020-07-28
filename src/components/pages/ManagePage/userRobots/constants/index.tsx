@@ -4,20 +4,24 @@ import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 
 export const TITLES_SCHEME = {
-    user: {
-        title: "User Info",
-        name: "Name: ",
-        id: "ID: "
-    },
     robot: {
         title: "Robot Info",
         name: "Name: ",
         id: "ID: ",
         volume: "Volume: "
     },
+    user: {
+        title: "User Info",
+        name: "Name: ",
+        id: "ID: "
+    },
+    performance: {
+        title: "Performance"
+    },
     statistics: {
         title: "Statistics",
         stats: {
+            profit: "Profit: ",
             winRate: "Win Rate: ",
             maxDrawdown: "Max Drawdon: ",
             tradesCount: "Trades count: "
@@ -30,7 +34,7 @@ export const TITLES_SCHEME = {
     }
 };
 
-export const COLUMNS_WIDTH = ["25%", "20%", "30%", "20%"];
+export const COLUMNS_WIDTH = ["22.5%", "22.5%", "15%", "20%", "20%"];
 
 /*HEAD TITLES*/
 export const TABLE_HEADER_DATA = Object.keys(TITLES_SCHEME).map((key) => ({

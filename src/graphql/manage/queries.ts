@@ -116,6 +116,7 @@ export const GET_ROBOTS = gql`
             timeframe
             strategy
             exchange
+            available
             user_signals {
                 id
             }

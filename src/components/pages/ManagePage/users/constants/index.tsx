@@ -2,42 +2,42 @@ import React from "react";
 
 /*Схема тайтлов для данных*/
 export const USER_TITLES_SCHEME = {
+    id: { title: "ID" },
     name: { title: "Name" },
-    id: { title: "Id" },
     email: { title: "Email" },
     telegram: {
         title: "Telegram",
         telegram_username: "Username:",
         telegram_id: "Id:"
     },
+    status: { title: "Status" },
     roles: {
         title: "Roles",
         defaultRole: "Default:",
         allowedRoles: "Allowed:"
     },
-    settings: {
-        title: "Settings",
-        notifications: "Notifications Signals: ",
-        trading: "Trading: "
-    },
+    created_at: { title: "Created" },
     entries: {
         title: "Entries",
         user_robots: "Robots: ",
         user_signals: "Signals: ",
-        user_exchange_accs: "Keys: "
+        user_exchange_accs: "API Keys: "
     },
-    status: { title: "Status" },
-    created_at: { title: "Created" }
+    settings: {
+        title: "Settings",
+        notifications: "Notifications Signals: ",
+        trading: "Trading: "
+    }
 };
 
 export const CENTRED_CELL: React.CSSProperties = { textAlign: "center" };
 
 export const HEADER_TABLE_DATA = [
     {
-        text: USER_TITLES_SCHEME.name.title
+        text: USER_TITLES_SCHEME.id.title
     },
     {
-        text: USER_TITLES_SCHEME.id.title
+        text: USER_TITLES_SCHEME.name.title
     },
     {
         text: USER_TITLES_SCHEME.email.title
@@ -46,23 +46,25 @@ export const HEADER_TABLE_DATA = [
         text: USER_TITLES_SCHEME.telegram.title
     },
     {
+        text: USER_TITLES_SCHEME.status.title
+    },
+    {
         text: USER_TITLES_SCHEME.roles.title
     },
     {
-        text: USER_TITLES_SCHEME.settings.title
+        text: USER_TITLES_SCHEME.created_at.title
     },
     {
         text: USER_TITLES_SCHEME.entries.title
     },
     {
-        text: USER_TITLES_SCHEME.status.title
-    },
-    {
-        text: <div style={CENTRED_CELL}> {USER_TITLES_SCHEME.created_at.title}</div>
+        text: USER_TITLES_SCHEME.settings.title
     }
 ];
 
-export const COLUMNS_WIDTH = ["10%", "13%", "14.02%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
+//                                id     NAME   EMAIL     TEL   ROLE    SET      ENT    STATUS  DT
+//export const COLUMNS_WIDTH = ["10%", "13%", "14.02%", "12%", "14%", "15.02%", "9%", "4.5%", "9%"];
+export const COLUMNS_WIDTH = ["10%", "10", "14.02%", "12%", "6.5%", "12%", "11%", "9%", "15.02%"];
 
 export const REGEXS = {
     telegram_id: /^\d{9}/g,

@@ -9,7 +9,6 @@ import { formatDate } from "config/utils";
 import { getItemsFromTitles } from "../../utils";
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
-import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
 
 const STATUSES = {
     stopped: "stopped_at",
@@ -33,13 +32,9 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "user":
                     innerComponent = (
                         <DefaultCellWrapper>
+                            <p>{robot.user.name}</p>
                             <p>
-                                <span>{TITLES_SCHEME.user.name}</span>
-                                {robot.user.name}
-                            </p>
-                            <p>
-                                <span>{TITLES_SCHEME.user.id}</span>
-                                {robot.user.id}
+                                <span>{robot.user.id}</span>
                             </p>
                         </DefaultCellWrapper>
                     );
@@ -52,18 +47,11 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "robot":
                     innerComponent = (
                         <DefaultCellWrapper>
+                            <p>{robot.robot.name}</p>
                             <p>
-                                <span>{TITLES_SCHEME.robot.name}</span>
-                                {robot.robot.name}
+                                <span>{robot.robot.id}</span>
                             </p>
-                            <p>
-                                <span>{TITLES_SCHEME.robot.id}</span>
-                                {robot.robot.id}
-                            </p>
-                            <p>
-                                <span>{TITLES_SCHEME.robot.volume}</span>
-                                {robot.robot.robot_settings.volume}
-                            </p>
+                            <p>{robot.robot.robot_settings.volume}</p>
                         </DefaultCellWrapper>
                     );
                     cellsAggregated[key] = {
@@ -72,15 +60,13 @@ export const formatRobotsRows = (data: Array<any>) => {
                         notDesktopVal: innerComponent
                     };
                     break;
-                case "statistics":
+                case "performance":
                     profit = robot?.robot?.equity && robot?.robot?.equity?.profit ? robot?.robot?.equity?.profit : 0;
                     performance =
                         robot?.robot?.equity && robot?.robot?.equity?.changes ? robot?.robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
                         <DefaultCellWrapper>
-                            {robot.equity?.tradesCount &&
-                                getItemsFromTitles(robot.equity, ROBOTS_TITLES_SCHEME.statistics.stats)}
                             <RobotChartCell
                                 style={{ paddingRight: "25px" }}
                                 perfomance={performance}
@@ -91,9 +77,22 @@ export const formatRobotsRows = (data: Array<any>) => {
                     ) : null;
 
                     cellsAggregated[key] = {
-                        title: TITLES_SCHEME.statistics.title,
+                        title: TITLES_SCHEME.performance.title,
                         component: innerComponent,
                         notDesktopVal: innerComponent
+                    };
+                    break;
+                case "statistics":
+                    innerComponent = robot?.robot?.equity ? (
+                        <DefaultCellWrapper>
+                            {getItemsFromTitles(robot.robot.equity, TITLES_SCHEME.statistics.stats)}
+                        </DefaultCellWrapper>
+                    ) : null;
+
+                    cellsAggregated.statistics = {
+                        title: TITLES_SCHEME.statistics.title,
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
                     };
                     break;
                 case "activity":

@@ -6,11 +6,14 @@ import React from "react";
  */
 export const getItemsFromTitles = (item: any, titlesScheme: { [key: string]: string }) => {
     return Object.keys(titlesScheme).map((keyTitle) => {
-        return (
-            <p key={keyTitle}>
-                <span>{titlesScheme[keyTitle]}</span>
-                {item[keyTitle]}
-            </p>
-        );
+        if (item[keyTitle]) {
+            return (
+                <p key={keyTitle}>
+                    <span>{titlesScheme[keyTitle]}</span>
+                    {item[keyTitle]}
+                </p>
+            );
+        }
+        return null;
     });
 };

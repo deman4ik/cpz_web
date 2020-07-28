@@ -24,15 +24,22 @@ export const ROBOTS_TITLES_SCHEME = {
             orderStopLoss: "Order Stop Loss: ",
             orderTakeProfit: "OrderTakeProfit: "
         },
-        requiredHistoryMaxBars: "HistoryMaxBars"
+        requiredHistoryMaxBars: "Max bars: "
+    },
+    performance: {
+        title: "Performance"
     },
     statistics: {
         title: "Statistics",
         stats: {
+            profit: "Profit: ",
             winRate: "Win Rate: ",
             maxDrawdown: "Max Drawdon: ",
             tradesCount: "Trades count: "
         }
+    },
+    available: {
+        title: "Available"
     },
     types: {
         title: "Types"
@@ -44,7 +51,7 @@ export const ROBOTS_TITLES_SCHEME = {
     }
 };
 
-export const COLUMNS_WIDTH = ["20%", "12%", "37%", "15%", "15%"];
+export const COLUMNS_WIDTH = ["18.4%", "14%", "14.2%", "14.2%", "10.2%", "14.2%", "14.2%"];
 
 /*HEAD TITLES*/
 export const ROBOTS_TABLE_HEADER_DATA = Object.keys(ROBOTS_TITLES_SCHEME).map((key) => ({

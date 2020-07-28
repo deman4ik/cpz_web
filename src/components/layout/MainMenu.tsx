@@ -46,13 +46,23 @@ const _MainMenu: React.FC<Props> = ({ activeTab, showDesktop }) => {
                             />
                         ))}
                     </div>
-                    <div className={styles.menuGroupLine} />
-                    <div className={styles.menuContainer}>
-                        {MAINMENU_DESKTOP_ITEMS.map((item) => (
-                            <MainMenuItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
-                        ))}
-                    </div>
-                    <div className={styles.menuGroupLine} />
+
+                    {!router.pathname.includes("/manage") && (
+                        <>
+                            <div className={styles.menuGroupLine} />
+                            <div className={styles.menuContainer}>
+                                {MAINMENU_DESKTOP_ITEMS.map((item) => (
+                                    <MainMenuItem
+                                        key={item.label}
+                                        item={item}
+                                        active={false}
+                                        handleOnClick={handleOnClick}
+                                    />
+                                ))}
+                            </div>
+                            <div className={styles.menuGroupLine} />
+                        </>
+                    )}
                 </div>
             ) : (
                 <div className={styles.mainMenuMobile}>
