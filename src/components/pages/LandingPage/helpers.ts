@@ -49,7 +49,7 @@ export const steps: StepProps[] = [
 export const tradingSteps: TradingStepType[] = [
     {
         accent: "Inspect",
-        text: " robots public statistics we collected on over 2,5 years of trading in&nbsp;the cryptocurrency market."
+        text: " robots public statistics we collected on over 2,5 years of trading in the cryptocurrency market."
     },
     {
         accent: "Choose",
@@ -57,7 +57,7 @@ export const tradingSteps: TradingStepType[] = [
     },
     {
         accent: "Combine",
-        text: " robots into a single unit as&nbsp;a&nbsp;portfolio of automated trading systems."
+        text: " robots into a single unit as a portfolio of automated trading systems."
     }
 ];
 
