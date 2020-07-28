@@ -78,15 +78,12 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "settings":
-                    // notifications = formatSettings(user.settings.notifications.signals);
+                    notifications = formatSettings(user.settings.notifications.signals);
                     trading = formatSettings(user.settings.notifications.trading);
 
                     innerComponent = (
                         <DefaultCellWrapper>
-                            {/*<p>*/}
-                            {/*    {USER_TITLES_SCHEME.settings.notifications}*/}
-                            {/*    {notifications}*/}
-                            {/*</p>*/}
+                            <p>{notifications}</p>
                             <p>
                                 <span>{USER_TITLES_SCHEME.settings.trading}</span>
                                 {trading}
