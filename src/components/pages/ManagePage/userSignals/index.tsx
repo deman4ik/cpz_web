@@ -68,6 +68,7 @@ const ManageUserSignals = () => {
             title="User signals"
             width={width}
             page={PageType.userSignals}
+            hideToolbar
             toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} clear={clearAll} />}>
             {data?.user_signals?.length && aggrData?.user_signals_aggregate ? (
                 <SearchTable
