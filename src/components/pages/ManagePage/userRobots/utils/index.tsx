@@ -62,8 +62,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                     break;
                 case "performance":
                     profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
-                    performance =
-                        robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
+                    performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
                         <DefaultCellWrapper>

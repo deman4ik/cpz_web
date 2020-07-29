@@ -3,7 +3,7 @@ import nextCookie from "next-cookies";
 
 import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { fetchAccessToken } from "../auth";
-import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken} from "../accessToken";
+import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
