@@ -2,8 +2,7 @@ import React from "react";
 
 /*Схема тайтлов для данных*/
 export const USER_TITLES_SCHEME = {
-    id: { title: "ID" },
-    name: { title: "Name" },
+    user: { title: "User" },
     email: { title: "Email" },
     telegram: {
         title: "Telegram",
@@ -34,10 +33,7 @@ export const CENTRED_CELL: React.CSSProperties = { textAlign: "center" };
 
 export const HEADER_TABLE_DATA = [
     {
-        text: USER_TITLES_SCHEME.id.title
-    },
-    {
-        text: USER_TITLES_SCHEME.name.title
+        text: USER_TITLES_SCHEME.user.title
     },
     {
         text: USER_TITLES_SCHEME.email.title
@@ -62,7 +58,7 @@ export const HEADER_TABLE_DATA = [
     }
 ];
 
-export const COLUMNS_WIDTH = ["17%", "10%", "16.02%", "10%", "6.5%", "11%", "11%", "7%", "10.02%"];
+export const COLUMNS_WIDTH = ["24%", "17%", "12%", "5%", "12%", "12%", "10%", "8%"];
 
 export const REGEXS = {
     telegram_id: /^\d{9}/g,

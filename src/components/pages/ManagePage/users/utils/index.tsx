@@ -32,16 +32,19 @@ export const getWhereVariables = (value: string): any => {
 /*Форматирование данных для вывода в таблицу*/
 export const formatUsers = (data: Array<any>): Array<any> => {
     /*Функция для фоматирования настроек пользователя*/
-    const formatSettings = (object) =>
-        Object.keys(object)
-            .filter((key) => object[key])
-            .join(", ");
+    const formatSettings = (object) => {
+        if (object) {
+            return Object.keys(object)
+                .filter((key) => object[key])
+                .join(", ");
+        }
+        return null;
+    };
 
     /*Форматинг и обработка дыннх для отображения в таблице*/
     return data.map((user) => {
         const userItem = { cells: [], NotDesktopView: DefaultNotDesktopView }; // экземпляр строки
         const userCellsScheme: any = {}; // схема ячеек
-
         /*Форматинг на основе схемы заголовков*/
         Object.keys(USER_TITLES_SCHEME).forEach((key) => {
             let innerComponent; // переопределяемая переменная компонента
@@ -52,6 +55,21 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             let signalsSetting;
             /*Форматинг по ключам*/
             switch (key) {
+                case "user":
+                    innerComponent = (
+                        <DefaultCellWrapper>
+                            {user?.name && <p>{user.name}</p>}
+                            <p>
+                                <span>{user.id}</span>
+                            </p>
+                        </DefaultCellWrapper>
+                    );
+                    userCellsScheme.user = {
+                        title: USER_TITLES_SCHEME.user.title,
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
+                    };
+                    break;
                 case "telegram":
                     innerComponent = user.telegram_id && (
                         <DefaultCellWrapper>
@@ -68,8 +86,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                 case "roles":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{user.roles.defaultRole}</p>
-                            <p>({user.roles.allowedRoles.join(", ")})</p>
+                            {user?.roles?.defaultRole && <p>{user.roles.defaultRole}</p>}
+                            {user?.roles?.allowedRoles && <p>({user.roles.allowedRoles.join(", ")})</p>}
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.roles = {
@@ -79,8 +97,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "settings":
-                    notificationsSetting = formatSettings(user.settings.notifications.signals);
-                    tradingSetting = formatSettings(user.settings.notifications.trading);
+                    notificationsSetting = formatSettings(user?.settings?.notifications?.signals);
+                    tradingSetting = formatSettings(user?.settings?.notifications?.trading);
 
                     innerComponent = (
                         <DefaultCellWrapper>
@@ -90,10 +108,12 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                                     {notificationsSetting}
                                 </p>
                             )}
-                            <p>
-                                <span>{USER_TITLES_SCHEME.settings.trading}</span>
-                                {tradingSetting}
-                            </p>
+                            {tradingSetting && (
+                                <p>
+                                    <span>{USER_TITLES_SCHEME.settings.trading}</span>
+                                    {tradingSetting}
+                                </p>
+                            )}
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.settings = {
@@ -107,15 +127,15 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                         <DefaultCellWrapper>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_robots}</span>
-                                {user.user_robots.length}
+                                {user.user_robots_aggregate.aggregate.count}
                             </p>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_signals}</span>
-                                {user.user_signals.length}
+                                {user.user_signals_aggregate.aggregate.count}
                             </p>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_exchange_accs}</span>
-                                {user.user_exchange_accs.length}
+                                {user.user_exchange_accs_aggregate.aggregate.count}
                             </p>
                         </DefaultCellWrapper>
                     );

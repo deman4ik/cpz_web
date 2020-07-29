@@ -40,7 +40,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                 case "user":
                     innerComponent = (
                         <DefaultCellWrapper style={cellStyles}>
-                            <p>{signal.user.name}</p>
+                            {signal?.user?.name && <p>{signal.user.name}</p>}
                             <p>
                                 <span>{signal.user.id}</span>
                             </p>

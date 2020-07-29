@@ -33,8 +33,8 @@ export const withAuth = (Page) => {
             if (props?.accessToken) {
                 setAuthState({
                     isAuth: Boolean(props.accessToken),
-                    user_id: getUserIdFromAccessToken(),
-                    isManager: Boolean(getUserRoleFromAccesToken() === "manager")
+                    user_id: getUserIdFromAccessToken(props.accessToken),
+                    isManager: getUserRoleFromAccesToken(props.accessToken) === "manager"
                 });
             }
         }, [props.accessToken, props?.accessToken, setAuthState]);
@@ -59,7 +59,8 @@ export const withAuth = (Page) => {
             if (accessToken && !isLanding) {
                 if (
                     EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken() !== "manager") // редирект если роль не менеджера
+                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
+                        getUserRoleFromAccesToken(accessToken) !== "manager") // редирект если роль не менеджера
                 ) {
                     redirect(ctx, pathToRedirectIfLogin);
                 }

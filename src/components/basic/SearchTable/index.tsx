@@ -56,7 +56,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
     const loadButtonProps = {
         onFetchMore: handleFetchMore,
         isLoadingMore: false,
-        renderLoadMoreButton: tableRows.length + limitStep < maxCount
+        renderLoadMoreButton: tableRows.length < maxCount
     };
 
     return (
