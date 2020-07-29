@@ -46,6 +46,7 @@ const ManageUsers = () => {
         pollInterval: POLL_INTERVAL
     });
 
+
     /*Handlers*/
     const searchCallback = (value) => {
         setWhere(getWhereVariables(value));
@@ -82,14 +83,14 @@ const ManageUsers = () => {
             }
             hideToolbar
             page={PageType.users}>
-            {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
+            {data?.users?.length && aggrData?.users_aggregate?.aggregate?.count ? (
                 <SearchTable
                     headerData={HEADER_TABLE_DATA}
                     columnsWidth={COLUMNS_WIDTH}
                     tableRows={formatUsers(data.users)}
                     moreButton={{
                         limitStep: LIMIT_STEP,
-                        maxCount: aggrData.users_aggregate.aggregate.count,
+                        maxCount: aggrData?.users_aggregate?.aggregate?.count,
                         handleFetchMore: callbackMore
                     }}
                 />

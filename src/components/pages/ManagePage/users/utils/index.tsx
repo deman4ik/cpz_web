@@ -41,7 +41,6 @@ export const formatUsers = (data: Array<any>): Array<any> => {
     return data.map((user) => {
         const userItem = { cells: [], NotDesktopView: DefaultNotDesktopView }; // экземпляр строки
         const userCellsScheme: any = {}; // схема ячеек
-
         /*Форматинг на основе схемы заголовков*/
         Object.keys(USER_TITLES_SCHEME).forEach((key) => {
             let innerComponent; // переопределяемая переменная компонента
@@ -68,8 +67,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                 case "roles":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{user.roles.defaultRole}</p>
-                            <p>({user.roles.allowedRoles.join(", ")})</p>
+                            {user?.roles?.defaultRole && <p>{user.roles.defaultRole}</p>}
+                            {user?.roles?.allowedRoles && <p>({user.roles.allowedRoles.join(", ")})</p>}
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.roles = {
@@ -107,15 +106,15 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                         <DefaultCellWrapper>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_robots}</span>
-                                {user.user_robots.length}
+                                {user.user_robots_aggregate.aggregate.count}
                             </p>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_signals}</span>
-                                {user.user_signals.length}
+                                {user.user_signals_aggregate.aggregate.count}
                             </p>
                             <p>
                                 <span>{USER_TITLES_SCHEME.entries.user_exchange_accs}</span>
-                                {user.user_exchange_accs.length}
+                                {user.user_exchange_accs_aggregate.aggregate.count}
                             </p>
                         </DefaultCellWrapper>
                     );

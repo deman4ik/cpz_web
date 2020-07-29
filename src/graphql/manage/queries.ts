@@ -49,15 +49,6 @@ export const GET_USERS = gql`
             status
             telegram_id
             settings
-            user_robots {
-                id
-            }
-            user_signals {
-                id
-            }
-            user_exchange_accs {
-                id
-            }
             user_robots_aggregate {
                 aggregate {
                     count
