@@ -64,26 +64,6 @@ export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
     }
 `;
 
-export const SEARCH_SIGNALS_FILTERS = gql`
-    query signals_filters($where: v_robots_stats_bool_exp) {
-        filters: v_robots_stats(where: $where) {
-            robots {
-                id
-                exchange
-                asset
-                timeframe
-            }
-        }
-        SearchProps @client {
-            props {
-                type
-                filters
-                orders
-            }
-        }
-    }
-`;
-
 export const ROBOT_AGGREGATE_COUNT = gql`
     query aggregate($hash: String!, $where: robots_bool_exp) {
         robots_aggregate(where: $where) @connection(key: "robots_aggregate", filter: ["hash"]) {

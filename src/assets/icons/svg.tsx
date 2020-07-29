@@ -227,69 +227,100 @@ export const CancelIcon: React.FC<Props> = ({ color = 'white', size = 24 }) => (
     </svg>
 );
 
-export const CardAccount: React.FC<Props> = ({color="white",size})=>(
+export const CardAccount: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg width={`${size}px`} height={`${size}px`}  viewBox="0 0 24 24" fill={color}>
     <path fill="currentColor" d="M2,3H22C23.05,3 24,3.95 24,5V19C24,20.05 23.05,21 22,21H2C0.95,21 0,20.05 0,19V5C0,3.95 0.95,3 2,3M14,6V7H22V6H14M14,8V9H21.5L22,9V8H14M14,10V11H21V10H14M8,13.91C6,13.91 2,15 2,17V18H14V17C14,15 10,13.91 8,13.91M8,6A3,3 0 0,0 5,9A3,3 0 0,0 8,12A3,3 0 0,0 11,9A3,3 0 0,0 8,6Z" />
   </svg>
 )
 
-export const ChartAreaSpline: React.FC<Props> = ({color="white",size})=>(
+export const ChartAreaSpline: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L22,21Z" />
   </svg>
 )
 
-export const AccountPlus: React.FC<Props> = ({color="white",size})=>(
+export const AccountPlus: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg  width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
   </svg>
 )
 
-export const ForumIcon: React.FC<Props> = ({color="white",size})=>(
+export const ForumIcon: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg width={`${size}px`}  height={`${size}px`} fill={color}  viewBox="0 0 24 24">
     <path fill="currentColor" d="M17,12V3A1,1 0 0,0 16,2H3A1,1 0 0,0 2,3V17L6,13H16A1,1 0 0,0 17,12M21,6H19V15H6V17A1,1 0 0,0 7,18H18L22,22V7A1,1 0 0,0 21,6Z" />
   </svg>
 )
 
-export const TextSearch: React.FC<Props> = ({color="white",size})=>(
+export const TextSearch: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg width={`${size}px`}  height={`${size}px`} fill={color}  viewBox="0 0 24 24">
     <path fill="currentColor" d="M19.31 18.9L22.39 22L21 23.39L17.88 20.32C17.19 20.75 16.37 21 15.5 21C13 21 11 19 11 16.5C11 14 13 12 15.5 12C18 12 20 14 20 16.5C20 17.38 19.75 18.21 19.31 18.9M15.5 19C16.88 19 18 17.88 18 16.5C18 15.12 16.88 14 15.5 14C14.12 14 13 15.12 13 16.5C13 17.88 14.12 19 15.5 19M21 4V6H3V4H21M3 16V14H9V16H3M3 11V9H21V11H18.97C17.96 10.37 16.77 10 15.5 10C14.23 10 13.04 10.37 12.03 11H3Z" />
   </svg>
 )
 
-export const PlayListCheck: React.FC<Props> = ({color="white",size})=>(
+export const PlayListCheck: React.FC<Props> = ({ color = 'white', size = 24 })=>(
   <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M14,10H2V12H14V10M14,6H2V8H14V6M2,16H10V14H2V16M21.5,11.5L23,13L16,20L11.5,15.5L13,14L16,17L21.5,11.5Z" />
   </svg>
 )
 
-export const MessageAlert: React.FC<Props> = ({color="white",size})=>(
-  <svg width={`${size}px`}  height={`${size}px`} viewBox="0 0 24 24">
+export const MessageAlert: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M13,10H11V6H13M13,14H11V12H13M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
   </svg>
 )
 
-export const SheildKey: React.FC<Props> = ({color="white",size})=>(
-  <svg width={`${size}px`}  height={`${size}px`} viewBox="0 0 24 24">
+export const SheildKey: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M12,8A1,1 0 0,1 13,9A1,1 0 0,1 12,10A1,1 0 0,1 11,9A1,1 0 0,1 12,8M21,11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1L21,5V11M12,6A3,3 0 0,0 9,9C9,10.31 9.83,11.42 11,11.83V18H13V16H15V14H13V11.83C14.17,11.42 15,10.31 15,9A3,3 0 0,0 12,6Z" />
   </svg>
 )
 
-export const TextBoxSearch: React.FC<Props> = ({color="white",size})=>(
-  <svg width={`${size}px`}  height={`${size}px`} viewBox="0 0 24 24">
+export const TextBoxSearch: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M7,15V17H9C9.14,18.55 9.8,19.94 10.81,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19A2,2 0 0,1 21,5V13.03C19.85,11.21 17.82,10 15.5,10C14.23,10 13.04,10.37 12.04,11H7V13H10C9.64,13.6 9.34,14.28 9.17,15H7M17,9V7H7V9H17Z" />
   </svg>
 )
 
-export const PlusBox: React.FC<Props> = ({color="white",size})=>(
-  <svg width={`${size}px`}  height={`${size}px`} viewBox="0 0 24 24">
+export const PlusBox: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
   </svg>
 )
 
-export const Check: React.FC<Props> = ({color="white",size})=>(
-  <svg width={`${size}px`}  height={`${size}px`} viewBox="0 0 24 24">
+export const Check: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} fill={color} viewBox="0 0 24 24">
     <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
   </svg>
 )
 
+export const DashBoard: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg width={`${size}px`}  height={`${size}px`} color={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M21,14V4H3V14H21M21,2A2,2 0 0,1 23,4V16A2,2 0 0,1 21,18H14L16,21V22H8V21L10,18H3C1.89,18 1,17.1 1,16V4C1,2.89 1.89,2 3,2H21M4,5H15V10H4V5M16,5H20V7H16V5M20,8V13H16V8H20M4,11H9V13H4V11M10,11H15V13H10V11Z" />
+  </svg>
+)
+
+export const Users: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg style={{ width: size, height: size }} color={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z" />
+  </svg>
+)
+
+
+export const ListBulleted: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg style={{ width: size, height: size }} color={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z" />
+  </svg>
+)
+
+export const AccountStar: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg style={{ width: size, height: size }} color={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z" />
+  </svg>
+)
+
+
+export const AccountDetails: React.FC<Props> = ({ color = 'white', size = 24 })=>(
+  <svg style={{ width: size, height: size }} color={color} viewBox="0 0 24 24">
+    <path fill="currentColor" d="M11 9C11 10.66 9.66 12 8 12C6.34 12 5 10.66 5 9C5 7.34 6.34 6 8 6C9.66 6 11 7.34 11 9M14 20H2V18C2 15.79 4.69 14 8 14C11.31 14 14 15.79 14 18M22 12V14H13V12M22 8V10H13V8M22 4V6H13V4Z" />
+  </svg>
+)

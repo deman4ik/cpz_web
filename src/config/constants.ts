@@ -59,6 +59,7 @@ export const color = {
     negative: "#CD3E60",
     lightRed: "#CC6FA3",
     lightGreen: "#70e2bc",
+    yellow: "#FEE338",
     rgba: {
         white: "rgba(255, 255, 255, 0.7)",
         whiteLight: "rgba(255, 255, 255, 0.15)",
@@ -67,14 +68,27 @@ export const color = {
     }
 };
 
+export const STATUSES_COLORS = {
+    started: color.positive,
+    stopped: color.negative,
+    paused: color.yellow
+};
+
 export const globalAny: any = global;
 
 /*Роуты с аутентификацией*/
-export const EXLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
+export const EXCLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
+export const EXCLUDE_MANAGE_ROUTES = [
+    "/manage",
+    "/manage/users",
+    "/manage/robots",
+    "/manage/user_signals",
+    "/manage/user_robots"
+];
 
 /*массив исключений для доступности роутов*/
 export const EXCLUDE_ROUTES: Array<string> = [
-    ...EXLUDE_AUTH_ROUTES,
+    ...EXCLUDE_AUTH_ROUTES,
     "/profile",
     "/notifications",
     "/signals",
@@ -85,3 +99,11 @@ export const EXCLUDE_ROUTES: Array<string> = [
     "/robots/robot/",
     "/support"
 ];
+
+export enum ROBOTS_AVAILABLE_CODES {
+    No,
+    Manager = 5,
+    VIP = 10,
+    User = 15,
+    Anonymous = 20
+}

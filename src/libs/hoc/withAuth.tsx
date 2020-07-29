@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST, EXCLUDE_ROUTES, EXLUDE_AUTH_ROUTES } from "config/constants";
+import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { fetchAccessToken } from "../auth";
-import { getAccessToken, getUserIdFromAccessToken } from "../accessToken";
+import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
@@ -13,7 +13,7 @@ const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
 
 const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-
+/*Проверка доступности разрешаемых роутов*/
 const checkPath = (path: string) => {
     let match = false;
     EXCLUDE_ROUTES.forEach((route: string) => {
@@ -31,7 +31,11 @@ export const withAuth = (Page) => {
         const { setAuthState } = useContext(AuthContext);
         useEffect(() => {
             if (props?.accessToken) {
-                setAuthState({ isAuth: Boolean(props.accessToken), user_id: getUserIdFromAccessToken() });
+                setAuthState({
+                    isAuth: Boolean(props.accessToken),
+                    user_id: getUserIdFromAccessToken(),
+                    isManager: Boolean(getUserRoleFromAccesToken() === "manager")
+                });
             }
         }, [props.accessToken, props?.accessToken, setAuthState]);
 
@@ -41,19 +45,24 @@ export const withAuth = (Page) => {
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         let accessToken = "";
-
         if (ctx.res) {
             const refresh_token =
                 ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
-
             if (refresh_token) {
                 accessToken = await fetchAccessToken(refresh_token);
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
+            } else if (!isLanding && !checkPath(ctx.pathname)) {
+                redirect(ctx, pathToRedirect);
             }
-            if (accessToken && !isLanding && EXLUDE_AUTH_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirectIfLogin);
+            if (accessToken && !isLanding) {
+                if (
+                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
+                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken() !== "manager") // редирект если роль не менеджера
+                ) {
+                    redirect(ctx, pathToRedirectIfLogin);
+                }
             }
         } else {
             const accessTokenFull = getAccessToken();
