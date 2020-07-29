@@ -13,15 +13,15 @@ const PERIODS_TEXTS = {
 /**
  * Функция обработки данных тотал
  */
-export const formatTotalUsers = (data: any): Array<StatsInterface> => {
-    const total = { title: "Total", count: data.length };
+export const formatTotalUsers = (activeUsers, usersSignals, startedRobots): Array<StatsInterface> => {
+    const total = { title: "Total", count: activeUsers.length };
     const signals = {
         title: "With Signals",
-        count: data.filter(({ user_signals }) => Boolean(user_signals.length)).length
+        count: usersSignals?.length
     };
     const robots = {
         title: "With Robots",
-        count: data.filter(({ user_robots }) => Boolean(user_robots.length)).length
+        count: startedRobots?.length
     };
     return [total, signals, robots];
 };

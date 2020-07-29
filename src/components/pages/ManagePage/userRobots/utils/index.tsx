@@ -32,7 +32,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "user":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{robot.user.name}</p>
+                            {robot?.user?.name && <p>{robot.user.name}</p>}
                             <p>
                                 <span>{robot.user.id}</span>
                             </p>
@@ -47,11 +47,11 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "robot":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{robot.robot.name}</p>
+                            {robot?.robot?.name && <p>{robot.robot.name}</p>}
                             <p>
                                 <span>{robot.robot.id}</span>
                             </p>
-                            <p>{robot.robot.robot_settings.volume}</p>
+                            {robot?.settings?.volume && <p>{robot?.settings?.volume}</p>}
                         </DefaultCellWrapper>
                     );
                     cellsAggregated[key] = {
@@ -61,9 +61,8 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "performance":
-                    profit = robot?.robot?.equity && robot?.robot?.equity?.profit ? robot?.robot?.equity?.profit : 0;
-                    performance =
-                        robot?.robot?.equity && robot?.robot?.equity?.changes ? robot?.robot?.equity?.changes : [];
+                    profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
+                    performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
 
                     innerComponent = performance?.length ? (
                         <DefaultCellWrapper>
@@ -83,9 +82,9 @@ export const formatRobotsRows = (data: Array<any>) => {
                     };
                     break;
                 case "statistics":
-                    innerComponent = robot?.robot?.equity ? (
+                    innerComponent = robot?.equity ? (
                         <DefaultCellWrapper>
-                            {getItemsFromTitles(robot.robot.equity, TITLES_SCHEME.statistics.stats)}
+                            {getItemsFromTitles(robot.equity, TITLES_SCHEME.statistics.stats)}
                         </DefaultCellWrapper>
                     ) : null;
 
@@ -100,8 +99,8 @@ export const formatRobotsRows = (data: Array<any>) => {
                         <DefaultCellWrapper>
                             <p>
                                 <span>{TITLES_SCHEME.activity.status}</span>
-                                {robot.status}{" "}
-                                {robot[STATUSES[robot.status]] && `| ${formatDate(robot[STATUSES[robot.status]])}`}
+                                {robot.status}
+                                {robot[STATUSES[robot.status]] && `: ${formatDate(robot[STATUSES[robot.status]])}`}
                             </p>
                             <p>{formatDate(robot.created_at)}</p>
                         </DefaultCellWrapper>

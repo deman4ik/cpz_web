@@ -30,8 +30,10 @@ export const formatRobotsRows = (data: Array<any>) => {
                 case "info":
                     innerComponent = (
                         <DefaultCellWrapper>
-                            <p>{robot.id}</p>
-                            <p>{robot.name}</p>
+                            {robot?.name && <p>{robot.name}</p>}
+                            <p>
+                                <span>{robot.id}</span>
+                            </p>
                             <p
                                 style={{
                                     color: STATUSES_COLORS[robot.status] ? STATUSES_COLORS[robot.status] : "#ffffff"
@@ -116,11 +118,11 @@ export const formatRobotsRows = (data: Array<any>) => {
                         <DefaultCellWrapper>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.entries.user_robots}</span>
-                                {robot.user_robots.length}
+                                {robot.user_robots_aggregate.aggregate.count}
                             </p>
                             <p>
                                 <span>{ROBOTS_TITLES_SCHEME.entries.user_signals}</span>
-                                {robot.user_signals.length}
+                                {robot.user_signals_aggregate.aggregate.count}
                             </p>
                         </DefaultCellWrapper>
                     );
