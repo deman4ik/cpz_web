@@ -47,16 +47,18 @@ const ManageUserSignals = () => {
         setLimit(data.user_signals.length + LIMIT_STEP);
     };
     const searchCallback = (value) => {
-        setWhere(getSearchWhere(value));
-        if (value) {
+        const trimedVal = value.trim();
+        if (trimedVal) {
+            setWhere(getSearchWhere(trimedVal));
             setLimit(aggrData.user_signals_aggregate.aggregate.count);
         } else {
+            setWhere(null);
             setLimit(LIMIT_STEP);
         }
     };
     const clearAll = () => {
         setOrderState(INITIAL_ORDER);
-        setWhere(getSearchWhere(""));
+        setWhere(null);
     };
     const clearOrder = () => {
         setOrderState(INITIAL_ORDER);

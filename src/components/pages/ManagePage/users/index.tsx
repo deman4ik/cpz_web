@@ -25,7 +25,7 @@ const ManageUsers = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
-    const [where, setWhere] = useState(getWhereVariables(""));
+    const [where, setWhere] = useState(null);
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
 
@@ -46,13 +46,14 @@ const ManageUsers = () => {
         pollInterval: POLL_INTERVAL
     });
 
-
     /*Handlers*/
     const searchCallback = (value) => {
-        setWhere(getWhereVariables(value));
-        if (value) {
+        const trimedVal = value.trim();
+        if (trimedVal) {
+            setWhere(getWhereVariables(trimedVal));
             setLimit(aggrData.users_aggregate.aggregate.count);
         } else {
+            setWhere(null);
             setLimit(LIMIT_STEP);
         }
     };
@@ -66,7 +67,7 @@ const ManageUsers = () => {
     };
     const clearAll = () => {
         setOrderState(INITIAL_ORDER);
-        setWhere(getWhereVariables(""));
+        setWhere(null);
     };
 
     return (
