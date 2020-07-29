@@ -1,18 +1,14 @@
 import gql from "graphql-tag";
 
 /**
- * Количество роботов и подписок на сигналы по всем пользователям
+ * Общее количество активных пользователей/подписок на сигналы/ запущенных роботов
+ * @where -  фильтрация для получения отдельных данных по сигналам, роботам и пользователям
  * Использование:  manage/dashboard
  */
-export const GET_USER_STATS = gql`
-    query {
-        users {
-            user_robots {
-                id
-            }
-            user_signals {
-                id
-            }
+export const GET_USERS_STATS = gql`
+    query getUserStats($where: users_bool_exp) {
+        users(where: $where) {
+            status
         }
     }
 `;
@@ -24,7 +20,7 @@ export const GET_USER_STATS = gql`
  */
 export const GET_USER_STATS_DURING_PERIOD = gql`
     query getUsersStatsDuringPeriod($period: timestamp) {
-        users(where: { created_at: { _gte: $period } }) {
+        users(where: { created_at: { _gte: $period }, status: { _eq: 1 } }) {
             created_at
         }
     }
@@ -108,11 +104,15 @@ export const GET_ROBOTS = gql`
             strategy
             exchange
             available
-            user_signals {
-                id
+            user_signals_aggregate {
+                aggregate {
+                    count
+                }
             }
-            user_robots {
-                id
+            user_robots_aggregate {
+                aggregate {
+                    count
+                }
             }
         }
     }
@@ -186,15 +186,11 @@ export const GET_USER_ROBOTS = gql`
                 name
                 id
             }
+            equity
+            settings
             robot {
                 name
                 id
-                equity
-                exchange
-                asset
-                robot_settings {
-                    volume
-                }
             }
             status
             stopped_at

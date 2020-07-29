@@ -32,10 +32,14 @@ export const getWhereVariables = (value: string): any => {
 /*Форматирование данных для вывода в таблицу*/
 export const formatUsers = (data: Array<any>): Array<any> => {
     /*Функция для фоматирования настроек пользователя*/
-    const formatSettings = (object) =>
-        Object.keys(object)
-            .filter((key) => object[key])
-            .join(", ");
+    const formatSettings = (object) => {
+        if (object) {
+            return Object.keys(object)
+                .filter((key) => object[key])
+                .join(", ");
+        }
+        return null;
+    };
 
     /*Форматинг и обработка дыннх для отображения в таблице*/
     return data.map((user) => {
@@ -51,6 +55,21 @@ export const formatUsers = (data: Array<any>): Array<any> => {
             let signalsSetting;
             /*Форматинг по ключам*/
             switch (key) {
+                case "user":
+                    innerComponent = (
+                        <DefaultCellWrapper>
+                            {user?.name && <p>{user.name}</p>}
+                            <p>
+                                <span>{user.id}</span>
+                            </p>
+                        </DefaultCellWrapper>
+                    );
+                    userCellsScheme.user = {
+                        title: USER_TITLES_SCHEME.user.title,
+                        notDesktopVal: innerComponent,
+                        component: innerComponent
+                    };
+                    break;
                 case "telegram":
                     innerComponent = user.telegram_id && (
                         <DefaultCellWrapper>
@@ -78,8 +97,8 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                     };
                     break;
                 case "settings":
-                    notificationsSetting = formatSettings(user.settings.notifications.signals);
-                    tradingSetting = formatSettings(user.settings.notifications.trading);
+                    notificationsSetting = formatSettings(user?.settings?.notifications?.signals);
+                    tradingSetting = formatSettings(user?.settings?.notifications?.trading);
 
                     innerComponent = (
                         <DefaultCellWrapper>
@@ -89,10 +108,12 @@ export const formatUsers = (data: Array<any>): Array<any> => {
                                     {notificationsSetting}
                                 </p>
                             )}
-                            <p>
-                                <span>{USER_TITLES_SCHEME.settings.trading}</span>
-                                {tradingSetting}
-                            </p>
+                            {tradingSetting && (
+                                <p>
+                                    <span>{USER_TITLES_SCHEME.settings.trading}</span>
+                                    {tradingSetting}
+                                </p>
+                            )}
                         </DefaultCellWrapper>
                     );
                     userCellsScheme.settings = {
