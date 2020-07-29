@@ -27,7 +27,6 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
 
     const login = async (data) => {
-        console.log("login");
         setLoginLoading(true);
         const result = await loginTelegram(data);
         setLoginLoading(false);

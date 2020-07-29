@@ -80,6 +80,7 @@ const ManageUsers = () => {
                     clear={clearAll}
                 />
             }
+            hideToolbar
             page={PageType.users}>
             {data?.users?.length && aggrData?.users_aggregate?.aggregate ? (
                 <SearchTable

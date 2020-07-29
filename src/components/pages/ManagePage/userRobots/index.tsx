@@ -83,6 +83,7 @@ const ManageUserRobots = () => {
             title="User robots"
             width={width}
             page={PageType.userRobots}
+            hideToolbar
             toolbar={
                 <SearchPanel
                     callback={searchCallback}
