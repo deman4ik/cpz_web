@@ -195,7 +195,7 @@ export const formatRobotsRows = (data: Array<any>) => {
     });
 };
 
-export const getWhereSearch = (value: string) => ({ name: { _like: `%${value}%` } });
+export const getWhereSearch = (value: string) => ({ name: { _ilike: `%${value}%` } });
 
 export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
     let where = null;

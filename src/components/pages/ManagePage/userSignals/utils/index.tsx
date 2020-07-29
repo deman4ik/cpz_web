@@ -87,5 +87,5 @@ export const userSignalsFormat = (data: Array<any>) => {
 };
 
 export const getSearchWhere = (value: string) => ({
-    _or: [{ user: { name: { _like: `%${value}%` } } }, { robot: { name: { _like: `%${value}%` } } }]
+    _or: [{ user: { name: { _ilike: `%${value}%` } } }, { robot: { name: { _ilike: `%${value}%` } } }]
 });
