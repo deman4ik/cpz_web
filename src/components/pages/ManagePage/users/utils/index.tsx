@@ -12,9 +12,9 @@ import { formatDate } from "config/utils";
 export const getWhereVariables = (value: string): any => {
     const where: any = {
         _or: [
-            { name: { _like: `%${value}%` } },
-            { telegram_username: { _like: `%${value}%` } },
-            { email: { _like: `%${value}%` } }
+            { name: { _ilike: `%${value}%` } },
+            { telegram_username: { _ilike: `%${value}%` } },
+            { email: { _ilike: `%${value}%` } }
         ]
     };
     if (value.match(REGEXS.telegram_id)) {
