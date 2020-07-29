@@ -13,7 +13,6 @@ interface Props {
 
 export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot, activeTab }) => {
     const { asset } = robot;
-
     return (
         <div className={styles.posCard}>
             <div className={styles.rowCard}>
@@ -49,7 +48,7 @@ export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot,
                         {activeTab === SectionType.signals ? "Price" : "Entry"}
                     </div>
                     <div className={styles.mobileCardPrice}>{moneyFormat(item.entry_price || item.price)} $</div>
-                    <div className={styles.mobileCardDate}>{formatDate(item.entry_date)}</div>
+                    <div className={styles.mobileCardDate}>{formatDate(item.entry_date || item?.timestamp)}</div>
                 </div>
                 {activeTab === SectionType.signals && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
@@ -61,7 +60,7 @@ export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot,
                     <div className={styles.mobileCardRow}>
                         <div className={styles.mobileCardTextKey}>Exit</div>
                         <div className={styles.mobileCardPrice}>{moneyFormat(item.exit_price)} $</div>
-                        <div className={styles.mobileCardDate}>{formatDate(item.exit_date)}</div>
+                        <div className={styles.mobileCardDate}>{formatDate(item.exit_date || item?.timestamp)}</div>
                     </div>
                 )}
             </div>
