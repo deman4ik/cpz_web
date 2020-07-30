@@ -1,9 +1,7 @@
-import React from 'react';
-import { RecoverPasswordWeb } from '../../../src/components/pages/AuthPage/RecoverPasswordWeb';
-import { withApollo } from '../../../src/libs/hoc';
+import React from "react";
+import { RecoverPasswordWeb } from "../../../src/components/pages/AuthPage/RecoverPasswordWeb";
+import { withApollo, withHeaders } from "../../../src/libs/hoc";
 
-const Page = () => (
-  <RecoverPasswordWeb />
-);
+const Page = () => <RecoverPasswordWeb />;
 
-export default withApollo(Page);
+export default withHeaders(withApollo(Page));

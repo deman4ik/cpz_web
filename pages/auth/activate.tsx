@@ -1,9 +1,9 @@
 import React from 'react';
 import { Activate } from '../../src/components/pages/AuthPage/Activate';
-import { withApollo } from '../../src/libs/hoc';
+import { withApollo, withHeaders } from "../../src/libs/hoc";
 
 const Page = () => (
   <Activate />
 );
 
-export default withApollo(Page);
+export default withHeaders(withApollo(Page));
