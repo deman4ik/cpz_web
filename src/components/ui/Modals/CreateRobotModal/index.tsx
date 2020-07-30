@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useMemo, memo } from "react";
+import React, { useState, useContext, useEffect, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
@@ -23,6 +25,11 @@ interface Props {
 }
 const steps = ["Choose Exchange API Keys", "Enter trading amount", "Start Trading Robot"];
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
+    /*User context*/
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [inputKey, setInputKey] = useState("");
     const [inputVolumeAsset, setInputVolumeAsset] = useState("0");
     const [inputVolumeCurrency, setInputVolumeCurrency] = useState("0");
@@ -43,7 +50,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const variables = {
         exchange: !dataRobot ? null : dataRobot.robot.subs.exchange,
         asset: !dataRobot ? null : dataRobot.robot.subs.asset,
-        currency: !dataRobot ? null : dataRobot.robot.subs.currency
+        currency: !dataRobot ? null : dataRobot.robot.subs.currency,
+        user_id
     };
 
     const _refetchQueries = [

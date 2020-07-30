@@ -141,7 +141,9 @@ export const GET_USER_AGGR_STATS_FILTERS = gql`
 
 export const USER_SIGNALS = gql`
     query user_signals($user_id: uuid) {
-        signals: user_signals(order_by: { subscribed_at: asc, id: asc }) @connection(key: "user_signals_robots") {
+        signals: user_signals(order_by: { subscribed_at: asc, id: asc }, where: { user_id: { _eq: $user_id } })
+            @connection(key: "user_signals_robots") {
+            user_id
             robot {
                 id
                 name
