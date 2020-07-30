@@ -1,14 +1,24 @@
 import gql from "graphql-tag";
-
 /**
  * Общее количество активных пользователей/подписок на сигналы/ запущенных роботов
- * @where -  фильтрация для получения отдельных данных по сигналам, роботам и пользователям
  * Использование:  manage/dashboard
  */
-export const GET_USERS_STATS = gql`
-    query getUserStats($where: users_bool_exp) {
-        users(where: $where) {
-            status
+export const GET_USERS_COUNT = gql`
+    query usersCount {
+        usersTotal: users_aggregate(where: { status: { _eq: 1 } }) {
+            aggregate {
+                count
+            }
+        }
+        usersWithSignals: user_signals_aggregate(distinct_on: [user_id]) {
+            aggregate {
+                count
+            }
+        }
+        usersWithRobots: user_robots_aggregate(where: { status: { _eq: "started" } }, distinct_on: [user_id]) {
+            aggregate {
+                count
+            }
         }
     }
 `;

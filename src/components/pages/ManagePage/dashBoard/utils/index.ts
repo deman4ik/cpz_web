@@ -10,20 +10,20 @@ const PERIODS_TEXTS = {
     monthAgo: "Month"
 };
 
+const TOTAL_USERS_TITLES = {
+    usersTotal: "Total",
+    usersWithRobots: "With Robots",
+    usersWithSignals: "With Signals"
+};
+
 /**
  * Функция обработки данных тотал
  */
-export const formatTotalUsers = (activeUsers, usersSignals, startedRobots): Array<StatsInterface> => {
-    const total = { title: "Total", count: activeUsers.length };
-    const signals = {
-        title: "With Signals",
-        count: usersSignals?.length
-    };
-    const robots = {
-        title: "With Robots",
-        count: startedRobots?.length
-    };
-    return [total, signals, robots];
+export const formatTotalUsers = (data): Array<StatsInterface> => {
+    return Object.keys(data).map((key) => ({
+        title: TOTAL_USERS_TITLES[key],
+        count: data[key].aggregate.count
+    }));
 };
 
 /**
