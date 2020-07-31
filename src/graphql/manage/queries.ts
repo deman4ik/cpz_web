@@ -254,3 +254,19 @@ export const GET_USER_ROBOTS_STATS = gql`
         }
     }
 `;
+
+/**
+ *  Обращение пользователей в саппорт и их последние сообщение из чата
+ *  использование: manage/support
+ */
+export const GET_USERS_SUPPORT_REQUESTS = gql`
+    query get_users_support_requests {
+        support_requests: users(where: { messages: {} }) {
+            user_id:id
+            user_name:name
+            messages(limit: 1, order_by: { timestamp: desc }) {
+                data
+            }
+        }
+    }
+`;
