@@ -31,7 +31,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components//charts/Light
 const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded }) => {
     /*Определение контекста для отображения данных графика*/
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
     const candleQueries = isAuth
@@ -44,19 +44,19 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const [limit, setLimit] = useState(LIMIT);
     const [formatData, setFormatData] = useState({ candles: [], markers: [] });
 
+    const varsQueries = isAuth ? { robotId: robot.id, limit, user_id } : { robotId: robot.id, limit };
+
     const { loading, data, fetchMore } = useQuery(candleQueries.candle(robot.timeframe), {
-        variables: {
-            robotId: robot.id,
-            limit
-        },
+        variables: varsQueries,
         notifyOnNetworkStatusChange: true
     });
 
+    const varsSubscription = isAuth ? { robotId: robot.id, user_id } : { robotId: robot.id };
+
     const { data: dataUpdate } = useSubscription(candleQueries.candleSub(robot.timeframe), {
-        variables: {
-            robotId: robot.id
-        }
+        variables: varsSubscription
     });
+
 
     const [setChartData] = useMutation(SET_CHART_DATA);
     const onFetchMore = () => {

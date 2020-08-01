@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const ROBOT_POSITION_WITH_CANDLE_SUB = (timeframe: number) => gql`
   subscription candles(
     $robotId: uuid!
+    $user_id: uuid  
   ) {
     candles: v_candles${timeframe}_positions(
       where: {
@@ -22,7 +23,7 @@ export const ROBOT_POSITION_WITH_CANDLE_SUB = (timeframe: number) => gql`
       position_entry
       position_exit
       robot {
-        user_signals {
+        user_signals(where:{user_id:{_eq:$user_id}}) {
           volume
           subscribed_at
         }
