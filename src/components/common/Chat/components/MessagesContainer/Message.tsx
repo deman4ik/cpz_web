@@ -6,6 +6,10 @@ export interface MessageProps {
     message: any;
     date: string;
 }
+
+/**
+ * Компонент собщения
+ */
 const Message: React.FC<MessageProps> = ({ message, type, date }) => {
     return (
         <div className={messagesStyles[`message_container_${type}`]}>

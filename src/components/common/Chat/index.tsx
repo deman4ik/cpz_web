@@ -21,8 +21,6 @@ export const Chat: React.FC<ChatProps> = ({ title, containerProps, chatFormProps
         <div className={styles.content_container}>
             <Card
                 style={{
-                    padding: "10px",
-                    margin: "10px",
                     color: "#ffffff"
                 }}>
                 <div style={{ paddingLeft: "9px", display: "flex", alignItems: "center" }}>
@@ -32,7 +30,7 @@ export const Chat: React.FC<ChatProps> = ({ title, containerProps, chatFormProps
                     <div>{title}</div>
                 </div>
                 <MessagesContainer {...containerProps} />
-                {containerProps?.messages?.length ? <ChatForm {...chatFormProps} /> : null}
+                <ChatForm {...chatFormProps} />
             </Card>
         </div>
     );

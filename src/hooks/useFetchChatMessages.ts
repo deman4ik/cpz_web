@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { AuthContext } from "libs/hoc/authContext";
+import { useEffect, useState } from "react";
 import { useSubscription } from "@apollo/react-hooks";
-import { GET_SUPPORT_MESSAGES } from "graphql/support/subscribtions";
 
 /**
  * Hook фетчинга сообщений для чата
