@@ -7,7 +7,6 @@ import { useSubscription } from "@apollo/react-hooks";
  * @param user_id - параметр для фетчинга с конкретного юзера
  */
 const useFetchChatMessages = (messagesQuery, user_id) => {
-    console.log(user_id);
     /*messages state*/
     const [messages, setMessages] = useState([]);
 
