@@ -1,8 +1,16 @@
 import gql from "graphql-tag";
 
-/*users filters*/
-export const SET_USERS_FILTERS = gql`
-    mutation setUsersFilters($filters: String, $orders: String) {
-        setSearchProps(filters: $filters, orders: $orders) @client
+/**
+ * Ответ пользователю в чате
+ * @nmessage - сообщение
+ * @to - id пользователя которому нужно выслать ответ
+ * использование: manage/support/[user_id]
+ */
+export const REPLY_SUPPORT_MESSAGE = gql`
+    mutation reply_support_message($message: String!, $to: String!) {
+        replySupportMessage(message: $message, to: $to) {
+            success
+            error
+        }
     }
 `;

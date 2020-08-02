@@ -53,7 +53,7 @@ export const withAuth = (Page) => {
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
-            } else if (!isLanding && !checkPath(ctx.pathname)) {
+            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
                 redirect(ctx, pathToRedirect);
             }
             if (accessToken && !isLanding) {
@@ -71,12 +71,18 @@ export const withAuth = (Page) => {
             const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
             if (accessToken.length === 0) {
                 accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
+                if (
+                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+                ) {
                     redirect(ctx, pathToRedirect);
                 }
             } else if (Date.now() >= accessTokenFull.exp * 1000) {
                 accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
+                if (
+                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+                ) {
                     redirect(ctx, pathToRedirect);
                 }
             }

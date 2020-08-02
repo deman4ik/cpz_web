@@ -13,7 +13,8 @@ import {
     Users,
     ListBulleted,
     AccountStar,
-    AccountDetails
+    AccountDetails,
+    MessageAlert
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
@@ -36,7 +37,8 @@ const components = {
     users: Users,
     manageRobots: ListBulleted,
     userSignals: AccountStar,
-    userRobots: AccountDetails
+    userRobots: AccountDetails,
+    supportRequests: MessageAlert
 };
 
 const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {

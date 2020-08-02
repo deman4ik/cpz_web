@@ -34,55 +34,6 @@
   color: #ffffff;
 }
 
-.message_container {
-  display: flex;
-  margin-bottom: 15px;
-}
-.message {
-    min-width: 200px;
-    max-width: 60%;
-    border-radius: 5px;
-    padding: 34px 15px 15px 15px;
-    color: #ffffff;
-    position: relative;
-}
-
-.date_message {
-    position: absolute;
-    padding: 5px 0;
-    top: 2px;
-    font-size: var(--small2);
-}
-.date_message_in {
-  composes: date_message;
-  color: var(--accent);
-}
-
-.date_message_out{
-  composes: date_message;
-  color: #ffffff;
-}
-
-
-.loader{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    top:0;
-    left:0;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.68);
-    border-radius: 5px;
-}
-
-.error{
-    padding-top: 10px;
-    color: #ff0000;
-    font-size: var(--small2);
-}
-
 /*common responsive*/
 @media (min-width: 500px) {
   .card_support_title{

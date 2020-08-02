@@ -29,7 +29,7 @@ const SearchPanel: React.FC<SearchPanelInterface> = ({ callback, setOpenModal, p
                 onChange={onChangeValue}
                 style={{ width: "400px" }}
             />
-            <CaptionButton title="filter" icon="filtervariant" responsive onClick={setOpenModal} />
+            {setOpenModal && <CaptionButton title="filter" icon="filtervariant" responsive onClick={setOpenModal} />}
             <CaptionButton
                 title="clear"
                 icon="filtervariantremove"

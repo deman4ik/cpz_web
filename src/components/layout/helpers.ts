@@ -23,7 +23,8 @@ export const MANAGE_MENU_ITEMS: MainMenuItemProps[] = [
     { label: PageType.users, icon: "users", route: "manage/users" },
     { label: PageType.manageRobots, icon: "manageRobots", route: "manage/robots" },
     { label: PageType.userSignals, icon: "userSignals", route: "manage/user_signals" },
-    { label: PageType.userRobots, icon: "userRobots", route: "manage/user_robots" }
+    { label: PageType.userRobots, icon: "userRobots", route: "manage/user_robots" },
+    { label: PageType.supportRequests, icon: "supportRequests", route: "manage/support" }
 ];
 
 export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
