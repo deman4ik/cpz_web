@@ -262,8 +262,8 @@ export const GET_USER_ROBOTS_STATS = gql`
 export const GET_USERS_SUPPORT_REQUESTS = gql`
     query get_users_support_requests($where: users_bool_exp) {
         support_requests: users(where: $where) {
-            user_id:id
-            user_name:name
+            user_id: id
+            user_name: name
             messages(limit: 1, order_by: { timestamp: desc }) {
                 data
             }
