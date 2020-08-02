@@ -27,7 +27,7 @@ const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
 
     return (
         <Chat
-            title="Support chat"
+            title="Have a personal problem regarding connecting an exchange or billing? Send message here:"
             containerProps={{
                 loading,
                 messages,

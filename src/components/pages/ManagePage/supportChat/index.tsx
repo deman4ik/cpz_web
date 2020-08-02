@@ -14,12 +14,14 @@ import styles from "./styles/SupportChat.module.css";
 // graphql
 import { GET_SUPPORT_MESSAGES } from "graphql/common/queries";
 import { REPLY_SUPPORT_MESSAGE } from "graphql/manage/mutations";
+// types
+import { PageType } from "config/types";
 
 const ManageSupportChat = () => {
     const { width } = useWindowDimensions(); // width hook
     /*user_id*/
-    const { query } = useRouter();
-    const { user_id } = query;
+    const router = useRouter();
+    const { user_id } = router.query;
     /*fetch chat data*/
     const { messages, error, loading } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
     /*reply support message mutation*/
@@ -30,8 +32,12 @@ const ManageSupportChat = () => {
         replySupportMessage({ variables: { message, to: user_id } });
     };
 
+    const handlePressBack = () => {
+        router.back();
+    };
+
     return (
-        <Template title="Support chat" width={width}>
+        <Template title="Support chat" width={width} handlePressBack={handlePressBack} page={PageType.supportRequests}>
             <div className={styles.support_chat_wrapper}>
                 <Chat
                     title="Chat with User"
