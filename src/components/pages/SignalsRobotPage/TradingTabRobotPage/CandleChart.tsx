@@ -57,7 +57,6 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         variables: varsSubscription
     });
 
-
     const [setChartData] = useMutation(SET_CHART_DATA);
     const onFetchMore = () => {
         fetchMore({

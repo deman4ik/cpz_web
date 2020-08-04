@@ -30,6 +30,7 @@ export const GET_ROBOT_INFO = gql`
         $limit: Int
         $offset: Int
         $orderBy: [robot_positions_order_by!]
+        $user_id: uuid
     ) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_signals") {
             id
@@ -48,7 +49,7 @@ export const GET_ROBOT_INFO = gql`
                 volume
             }
             started_at
-            user_signals {
+            user_signals(where: { user_id: { _eq: $user_id } }) {
                 id
                 subscribed_at
                 volume
@@ -387,8 +388,8 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
 `;
 
 export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
-    query user_robots($user_ex_acc_id: uuid!) {
-        user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id } }) {
+    query user_robots($user_ex_acc_id: uuid!, $user_id: uuid) {
+        user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id }, user_id: { _eq: $user_id } }) {
             id
             status
         }

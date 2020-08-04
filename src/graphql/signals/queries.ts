@@ -131,8 +131,8 @@ export const GET_USER_AGGR_STATS_ALL = gql`
 `;
 
 export const GET_USER_AGGR_STATS_FILTERS = gql`
-    query user_aggr_stats_filters($type: String_comparison_exp) {
-        filters: user_aggr_stats(where: { type: $type, equity: { _has_key: "profit" } }) {
+    query user_aggr_stats_filters($type: String_comparison_exp, $user_id: uuid) {
+        filters: user_aggr_stats(where: { type: $type, equity: { _has_key: "profit" }, user_id: { _eq: $user_id } }) {
             asset
             exchange
         }
@@ -168,7 +168,7 @@ export const USER_SIGNALS = gql`
 export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
     query user_signals_robot_pos($user_id: uuid) {
         positions: v_user_signals_positions(
-            where: { status: { _eq: "open" }, user_id: { _eq: $user_id } }
+            where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_signal: { user_id: { _eq: $user_id } } }
             order_by: { entry_date: desc, robot: { exchange: asc, asset: asc } }
         ) {
             id
