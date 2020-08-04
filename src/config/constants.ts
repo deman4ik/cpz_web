@@ -83,7 +83,8 @@ export const EXCLUDE_MANAGE_ROUTES = [
     "/manage/users",
     "/manage/robots",
     "/manage/user_signals",
-    "/manage/user_robots"
+    "/manage/user_robots",
+    "/manage/support"
 ];
 
 /*массив исключений для доступности роутов*/
