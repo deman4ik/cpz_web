@@ -17,25 +17,33 @@ import { PageType } from "config/types";
 
 const ManageSupportRequests = () => {
     const { width } = useWindowDimensions(); // width hook
-    const [where, setWhere] = useState(null);
+    const [search, setSearch] = useState(null);
+    let _and = [
+        {
+            _or: [{ messages: {} }, { messagesByTo: {} }]
+        }
+    ];
+    if (search) _and = [..._and, { ...search }];
 
     // fetch data
     const { data } = useQuery(GET_USERS_SUPPORT_REQUESTS, {
-        variables: { where: { messages: {}, ...where } },
+        variables: {
+            where: { _and }
+        },
         pollInterval: POLL_INTERVAL
     });
 
     const searchCallback = (value) => {
         const trimedVal = value.trim();
         if (trimedVal) {
-            setWhere(getSearchParams(trimedVal));
+            setSearch(getSearchParams(trimedVal));
         } else {
-            setWhere(null);
+            setSearch(null);
         }
     };
 
     const clearAll = () => {
-        setWhere(null);
+        setSearch(null);
     };
 
     return (

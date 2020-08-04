@@ -44,14 +44,14 @@ export const GET_ROBOTS_FILTERS = gql`
 
 export const GET_SUPPORT_MESSAGES = gql`
     subscription get_support_messages($user_id: uuid) {
-        messages(where: { userByFrom: { id: { _eq: $user_id } } }) {
+        messages(where: {_or:[
+            {from:{_eq:$user_id}}
+            {to:{_eq:$user_id}}
+        ]}  order_by:{timestamp:asc}) {
             data
             from
             to
             timestamp
-            userByFrom {
-                id
-            }
         }
     }
 `;
