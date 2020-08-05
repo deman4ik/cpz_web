@@ -3,7 +3,7 @@ import React from "react";
 import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
-import { USER_TITLES_SCHEME, CENTRED_CELL, REGEXS } from "../constants";
+import { USER_TITLES_SCHEME, REGEXS } from "../constants";
 // utils
 import { formatDate } from "config/utils";
 /**

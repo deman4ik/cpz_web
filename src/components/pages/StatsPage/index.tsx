@@ -62,7 +62,8 @@ export const StatsPage: React.FC = () => {
 
     const { data: dataFilter, loading: loadingFilter } = useQuery(GET_USER_AGGR_STATS_FILTERS, {
         variables: {
-            type: getQueueType(displayType)
+            type: getQueueType(displayType),
+            user_id
         },
         skip: skipFilterQuery
     });

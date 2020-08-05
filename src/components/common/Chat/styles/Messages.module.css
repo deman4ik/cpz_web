@@ -1,0 +1,54 @@
+/*messages*/
+.messages_container {
+  margin: 15px 0;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 15px 10px;
+  position: relative;
+  background-color: var(--darkBg);
+  height: 500px;
+}
+.messages_container_not_data{
+  position: absolute;
+  left:0;
+  right: 0;
+  margin:auto;
+  top:50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: var(--normal3);
+}
+
+/*messages right or left*/
+.message_container_out {
+  composes: message_container from "./Common.module.css";
+  justify-content: flex-end;
+}
+.message_container_in {
+  composes: message_container from "./Common.module.css";
+}
+
+.message_out{
+  composes: message from "./Common.module.css";
+  background-color: var(--primary);
+}
+.message_in{
+  composes: message from "./Common.module.css";
+  background-color: var(--rgbaPrimary);
+}
+
+.date_message {
+  position: absolute;
+  padding: 5px 0;
+  top: 2px;
+  font-size: var(--small2);
+}
+.date_message_in {
+  composes: date_message;
+  color: var(--accent);
+}
+
+.date_message_out{
+  composes: date_message;
+  color: #ffffff;
+}
