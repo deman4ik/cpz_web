@@ -31,7 +31,7 @@ const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
             containerProps={{
                 loading,
                 messages,
-                formatCallback: formatMessage
+                formatCallback: (data) => formatMessage(data, { username: "Me" })
             }}
             chatFormProps={{
                 loading: loadingSend,
