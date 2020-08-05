@@ -13,48 +13,54 @@ import { AuthContext } from "libs/hoc/authContext";
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const robotPositionsQuery = isAuth ? GET_ROBOT_POSITIONS : GET_ROBOT_POSITIONS_NOT_AUTH;
 
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+    const vars = isAuth ? { user_id } : null;
     const { data: dataSignals, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
-        robotPositionsQuery("robot_positions_open_signals"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _in: ["new", "open"] },
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                key: "robot_positions_open_signals",
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
     );
 
     const { data: dataOpenPositions, loading: loadingOpenPositions, refetch: refetch_open } = useQuery(
-        robotPositionsQuery("robot_positions_open"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _eq: "open" },
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                key: "robot_positions_open",
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
     );
 
     const { data: dataClosedPositions, loading: loadingClosedPositions, fetchMore, refetch: refetch_closed } = useQuery(
-        robotPositionsQuery("robot_positions"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _eq: "closed" },
                 limit,
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                key: "robot_positions",
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
