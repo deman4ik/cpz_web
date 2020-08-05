@@ -13,13 +13,13 @@ export interface filtersProps {
 }
 /*sorting types*/
 export type SortType = { value: string; label: string };
-export type SortMethodType = { [key: string]: { [key: string]: any } };
+export type SortMethodType = { [key: string]: string | { [key: string]: any } };
 
 /*initial order interface*/
 export interface OrderInterface {
     sort: {
         name: string | null;
-        order_by: null | SortMethodType;
+        order_by: null | string | SortMethodType;
     };
     filters?: filtersProps;
 }
