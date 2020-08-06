@@ -16,7 +16,9 @@ const LatestMessage: React.FC<LatestMessageProps> = ({ message, timestamp }) => 
     return (
         <div className={styles.latest_message_container}>
             <div className={styles.message} dangerouslySetInnerHTML={formatHtmlString(message, " ")} />
-            <time className={styles.date} dateTime={timestamp}>{timestamp}</time>
+            <time className={styles.date} dateTime={timestamp}>
+                {timestamp}
+            </time>
         </div>
     );
 };
