@@ -264,8 +264,23 @@ export const GET_USERS_SUPPORT_REQUESTS = gql`
         support_requests: users(where: $where) {
             user_id: id
             user_name: name
-            messages(limit: 1, order_by: { timestamp: desc }) {
+            messages(limit: 1, order_by: { timestamp: desc }, where: { to: { _is_null: true } }) {
                 data
+                timestamp
+            }
+            messagesByTo(limit: 1, order_by: { timestamp: desc }, where: { data: {} }) {
+                data
+                timestamp
+            }
+            messages_aggregate(where: { to: { _is_null: true } }) {
+                aggregate {
+                    count
+                }
+            }
+            messagesByTo_aggregate {
+                aggregate {
+                    count
+                }
             }
         }
     }

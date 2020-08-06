@@ -4,27 +4,6 @@
 .chat_icon {
   min-width: 60px;
 }
-.message {
-  min-width: 200px;
-  max-width: 60%;
-  border-radius: 5px;
-  padding: 34px 15px 15px 15px;
-  color: #ffffff;
-  position: relative;
-}
-
-.message_container {
-  display: flex;
-  margin-bottom: 15px;
-}
-.message {
-  min-width: 200px;
-  max-width: 60%;
-  border-radius: 5px;
-  padding: 34px 15px 15px 15px;
-  color: #ffffff;
-  position: relative;
-}
 
 .loader{
   display: flex;

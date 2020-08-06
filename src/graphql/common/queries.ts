@@ -41,17 +41,3 @@ export const GET_ROBOTS_FILTERS = gql`
         }
     }
 `;
-
-export const GET_SUPPORT_MESSAGES = gql`
-    subscription get_support_messages($user_id: uuid) {
-        messages(where: { userByFrom: { id: { _eq: $user_id } } }) {
-            data
-            from
-            to
-            timestamp
-            userByFrom {
-                id
-            }
-        }
-    }
-`;
