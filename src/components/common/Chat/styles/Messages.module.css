@@ -33,13 +33,17 @@
 .message_text{
   padding: 10px 0;
 }
+.message_container {
+  display: flex;
+  margin-bottom: 15px;
+}
 
 .message_container_out {
-  composes: message_container from "./Common.module.css";
+  composes: message_container;
   justify-content: flex-end;
 }
 .message_container_in {
-  composes: message_container from "./Common.module.css";
+  composes: message_container;
 }
 
 .message_out{
