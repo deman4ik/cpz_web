@@ -10,10 +10,17 @@ interface SearchPanelInterface {
     callback: (value: string) => any; // callback функция которая  обрабатывает значения
     setOpenModal?: () => void; // Модалка с фильтрами
     placeholder?: string;
+    orderTitle?: string;
     clear: () => void;
 }
 
-const SearchPanel: React.FC<SearchPanelInterface> = ({ callback, setOpenModal, placeholder, clear }) => {
+const SearchPanel: React.FC<SearchPanelInterface> = ({
+    callback,
+    setOpenModal,
+    placeholder,
+    clear,
+    orderTitle = "filter"
+}) => {
     const [value, setValue] = useState("");
 
     const onChangeValue = (val) => {
@@ -29,7 +36,9 @@ const SearchPanel: React.FC<SearchPanelInterface> = ({ callback, setOpenModal, p
                 onChange={onChangeValue}
                 style={{ width: "400px" }}
             />
-            {setOpenModal && <CaptionButton title="filter" icon="filtervariant" responsive onClick={setOpenModal} />}
+            {setOpenModal && (
+                <CaptionButton title={orderTitle} icon="filtervariant" responsive onClick={setOpenModal} />
+            )}
             <CaptionButton
                 title="clear"
                 icon="filtervariantremove"

@@ -59,8 +59,3 @@ export const HEADER_TABLE_DATA = [
 ];
 
 export const COLUMNS_WIDTH = ["24%", "17%", "12%", "5%", "12%", "12%", "10%", "8%"];
-
-export const REGEXS = {
-    telegram_id: /^\d{9}/g,
-    uuid: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-};
