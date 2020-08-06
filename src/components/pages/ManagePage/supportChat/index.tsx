@@ -12,7 +12,7 @@ import { formatMessage } from "components/common/Chat/utils";
 // styles
 import styles from "./styles/SupportChat.module.css";
 // graphql
-import { GET_SUPPORT_MESSAGES } from "graphql/common/queries";
+import { GET_SUPPORT_MESSAGES } from "graphql/common/subscribtions";
 import { REPLY_SUPPORT_MESSAGE } from "graphql/manage/mutations";
 import { GET_USER_INFO } from "graphql/user/queries";
 // types
