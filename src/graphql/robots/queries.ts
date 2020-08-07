@@ -497,8 +497,7 @@ export const ROBOT_POSITIONS_COUNT_USER = gql`
 
 export const GET_ROBOT_INFO_USER_ROBOTS = gql`
     query robotInfo($code: String, $user_id: uuid) {
-        robot: robots(where: { code: { _eq: $code }, user_robots: { user_id: { _eq: $user_id } } })
-            @connection(key: "robots_info_user_robots") {
+        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
             code
@@ -512,7 +511,7 @@ export const GET_ROBOT_INFO_USER_ROBOTS = gql`
                 volume
             }
             active: started_at
-            user_robots {
+            user_robots(where: { user_id: { _eq: $user_id } }) {
                 id
                 status
                 settings
