@@ -7,7 +7,7 @@ import useFetchChatMessages from "hooks/useFetchChatMessages";
 // utils
 import { formatMessage } from "components/common/Chat/utils";
 // graohql
-import { GET_SUPPORT_MESSAGES } from "graphql/common/queries";
+import { GET_SUPPORT_MESSAGES } from "graphql/common/subscribtions";
 import { SEND_SUPPOT_MESSAGE } from "graphql/support/mutations";
 
 export interface SupportChatProps {
@@ -31,7 +31,7 @@ const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
             containerProps={{
                 loading,
                 messages,
-                formatCallback: formatMessage
+                formatCallback: (data) => formatMessage(data, { username: "Me" })
             }}
             chatFormProps={{
                 loading: loadingSend,
