@@ -28,7 +28,6 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _in: ["new", "open"] },
                 orderBy: { entry_date: "desc" },
-                key: "robot_positions_open_signals",
                 ...vars
             },
             pollInterval: POLL_INTERVAL
@@ -43,7 +42,6 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _eq: "open" },
                 orderBy: { entry_date: "desc" },
-                key: "robot_positions_open",
                 ...vars
             },
             pollInterval: POLL_INTERVAL
@@ -59,7 +57,6 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
                 status: { _eq: "closed" },
                 limit,
                 orderBy: { entry_date: "desc" },
-                key: "robot_positions",
                 ...vars
             },
             pollInterval: POLL_INTERVAL

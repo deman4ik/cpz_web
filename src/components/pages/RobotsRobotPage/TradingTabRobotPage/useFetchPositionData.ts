@@ -14,13 +14,11 @@ import { AuthContext } from "libs/hoc/authContext";
 
 export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) => {
     const arrStatus = isUserRobot ? ["closed", "closedAuto"] : ["closed"];
-    const key = isUserRobot ? "user_positions_open" : "robot_positions_open";
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
     const {
         authState: { user_id }
     } = useContext(AuthContext);
-
     const mainVariables = {
         robotId: isUserRobot ? userRobots.id : robot.id,
         status: { _in: arrStatus },
@@ -30,7 +28,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
     };
 
     const { data, loading, fetchMore } = useQuery(isUserRobot ? GET_ROBOT_POSITIONS_USER : GET_ROBOT_POSITIONS_ROBOT, {
-        variables: isUserRobot ? { ...mainVariables, user_id, key } : { ...mainVariables, key },
+        variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
         pollInterval: POLL_INTERVAL
     });
     const { data: dataCount, loading: loadingAggregate } = useQuery(
@@ -52,10 +50,12 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
     const { data: dataOpenPos, loading: loadingOpenPos } = useQuery(
         userRobots ? GET_ROBOT_POSITIONS_USER : GET_ROBOT_POSITIONS_ROBOT,
         {
-            variables: userRobots ? { ...dataOpenPosVars, user_id, key } : { ...dataOpenPosVars, key },
+            variables: userRobots ? { ...dataOpenPosVars, user_id } : { ...dataOpenPosVars },
             pollInterval: POLL_INTERVAL
         }
     );
+
+    console.log(dataOpenPos);
 
     const quantyRecords = useMemo(
         () => (!loadingAggregate && dataCount ? dataCount[`${tableName}_aggregate`].aggregate.count : 0),
