@@ -55,8 +55,6 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         }
     );
 
-    console.log(dataOpenPos);
-
     const quantyRecords = useMemo(
         () => (!loadingAggregate && dataCount ? dataCount[`${tableName}_aggregate`].aggregate.count : 0),
         [dataCount, loadingAggregate]
