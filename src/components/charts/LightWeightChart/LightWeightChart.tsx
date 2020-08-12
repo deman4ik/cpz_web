@@ -184,7 +184,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         if (!loading && data && data.length && chart.series) {
             if (!fetchData) {
                 setFetchData(true);
-                chart.field.subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+                chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
                 chart.field.subscribeCrosshairMove(handleCrosshairMoved);
             } else {
                 chartRef.current.style.cursor = "crosshair";

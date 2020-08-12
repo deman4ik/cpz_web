@@ -23,7 +23,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "jwt-decode": "^2.2.0",
-    "lightweight-charts": "^2.0.0",
+    "lightweight-charts": "^3.1.5",
     "next": "9.5.1",
     "next-compose-plugins": "^2.2.0",
     "next-cookies": "^2.0.3",
