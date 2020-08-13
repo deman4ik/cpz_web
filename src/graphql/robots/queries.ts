@@ -32,7 +32,7 @@ export const GET_ROBOT_INFO = gql`
         $orderBy: [robot_positions_order_by!]
         $user_id: uuid
     ) {
-        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_signals") {
+        robot: robots(where: { code: { _eq: $code } }) {
             id
             name
             code
@@ -65,7 +65,7 @@ export const GET_ROBOT_INFO = gql`
 
 export const GET_ROBOT_INFO_NOT_AUTH = gql`
     query robotInfo($code: String) {
-        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_signals") {
+        robot: robots(where: { code: { _eq: $code } }) {
             id
             name
             code
@@ -100,7 +100,6 @@ export const GET_PUBLIC_STATISTICS = gql`
 export const GET_ROBOT_POSITIONS = gql`
     query robotPositions(
         $user_id: uuid
-        $key: String
         $robotId: uuid!
         $status: String_comparison_exp
         $dateFrom: timestamp
@@ -131,7 +130,7 @@ export const GET_ROBOT_POSITIONS = gql`
             limit: $limit
             offset: $offset
             order_by: $orderBy
-        ) @connection(key: $key) {
+        ) {
             id
             code
             direction
@@ -168,7 +167,6 @@ export const GET_ROBOT_POSITIONS_NOT_AUTH = gql`
         $dateTo: timestamp
         $limit: Int
         $offset: Int
-        $key: String
         $orderBy: [robot_positions_order_by!]
     ) {
         robot_positions(
@@ -193,7 +191,7 @@ export const GET_ROBOT_POSITIONS_NOT_AUTH = gql`
             limit: $limit
             offset: $offset
             order_by: $orderBy
-        ) @connection(key: $key) {
+        ) {
             id
             code
             direction
@@ -222,14 +220,13 @@ export const GET_ROBOT_POSITIONS_ROBOT = gql`
         $limit: Int
         $offset: Int
         $orderBy: [robot_positions_order_by!]
-        $key: string
     ) {
         robot_positions(
             where: { robot_id: { _eq: $robotId }, status: $status }
             limit: $limit
             offset: $offset
             order_by: $orderBy
-        ) @connection(key: $key) {
+        ) {
             id
             code
             direction
@@ -258,7 +255,6 @@ export const GET_ROBOT_POSITIONS_USER = gql`
         $limit: Int
         $offset: Int
         $orderBy: [user_positions_order_by!]
-        $key: String
         $user_id: uuid
     ) {
         user_positions(
@@ -271,7 +267,7 @@ export const GET_ROBOT_POSITIONS_USER = gql`
             limit: $limit
             offset: $offset
             order_by: $orderBy
-        ) @connection(key: $key) {
+        ) {
             id
             code
             direction
@@ -497,8 +493,7 @@ export const ROBOT_POSITIONS_COUNT_USER = gql`
 
 export const GET_ROBOT_INFO_USER_ROBOTS = gql`
     query robotInfo($code: String, $user_id: uuid) {
-        robot: robots(where: { code: { _eq: $code }, user_robots: { user_id: { _eq: $user_id } } })
-            @connection(key: "robots_info_user_robots") {
+        robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
             code
@@ -512,7 +507,7 @@ export const GET_ROBOT_INFO_USER_ROBOTS = gql`
                 volume
             }
             active: started_at
-            user_robots {
+            user_robots(where: { user_id: { _eq: $user_id } }) {
                 id
                 status
                 settings
