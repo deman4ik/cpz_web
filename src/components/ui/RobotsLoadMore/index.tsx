@@ -9,6 +9,7 @@ interface Props {
     renderLoadMoreButton: boolean;
 }
 
+// TODO: Переместить к searchTable
 export const _RobotsLoadMore: React.FC<Props> = ({ renderLoadMoreButton, isLoadingMore, onFetchMore }) => (
     <>
         {renderLoadMoreButton && (

@@ -8,15 +8,16 @@ interface Props {
     value: string;
     onChange: (str: string) => void;
     placeholder: string;
+    style?: React.CSSProperties;
 }
 
-export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder }) => {
+export const SearchInput: React.FC<Props> = ({ value, onChange, placeholder, style }) => {
     const handleOnChange = (e) => {
         onChange(e.target.value);
     };
 
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} style={style}>
             <div className={styles.container}>
                 {value.length ? (
                     <div className={[styles.icon, styles.pointer].join(" ")} onClick={() => onChange("")}>

@@ -3,7 +3,7 @@
 import React, { useMemo, useState, memo, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { SEARCH_SIGNALS_FILTERS } from "graphql/signals/queries";
+import { GET_ROBOTS_FILTERS } from "graphql/common/queries";
 import { GET_SEARCH_PROPS } from "graphql/local/queries";
 import { SET_SEARCH_PROPS } from "graphql/local/mutations";
 import { LoadingIndicator } from "components/common";
@@ -28,11 +28,10 @@ const queryFilter = {
 const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
     const [checkedButtons, setCheckedButtons] = useState<CheckedFilter>({ asset: [], exchange: [], timeframe: [] });
     const [inputKey, setInputKey] = useState("recovery_factor");
-    const { data, loading } = useQuery(SEARCH_SIGNALS_FILTERS, {
-        variables: { where: { robots: queryFilter[displayType]() } }
+    const { data, loading } = useQuery(GET_ROBOTS_FILTERS, {
+        variables: { where: queryFilter[displayType]() }
     });
     const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
-
     const filterData = useMemo(
         () => (!loading && data ? getFilterData(data.filters) : { asset: [], exchange: [], timeframe: [] }),
         [data, loading]

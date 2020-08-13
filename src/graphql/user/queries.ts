@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_USER_INFO = gql`
-    query userInfo {
-        users {
+    query userInfo($user_id: uuid) {
+        users(where: { id: { _eq: $user_id } }) {
             id
             name
             email
@@ -14,8 +14,8 @@ export const GET_USER_INFO = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-    query notifications($limit: Int!, $offset: Int, $type: [String!]) {
-        notifications(limit: $limit, offset: $offset, where: { type: { _in: $type } }, order_by: { timestamp: desc })
+    query notifications($limit: Int!, $offset: Int, $where: notifications_bool_exp) {
+        notifications(limit: $limit, offset: $offset, where: $where, order_by: { timestamp: desc })
             @connection(key: "notifications") {
             type
             data

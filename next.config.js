@@ -10,6 +10,7 @@ module.exports = withPlugins([[withImages, { esModule: true }]], {
         AUTH_API_URL: process.env.AUTH_API_URL,
         TELEGRAM_BOT_NAME: process.env.TELEGRAM_BOT_NAME,
         DEV_REFRESH_TOKEN: process.env.DEV_REFRESH_TOKEN,
-        POLL_INTERVAL: process.env.POLL_INTERVAL,
+        POLL_INTERVAL: process.env.POLL_INTERVAL
     },
+    poweredByHeader: false
 });

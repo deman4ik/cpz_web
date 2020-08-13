@@ -1,38 +1,69 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST } from "config/constants";
+import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { fetchAccessToken } from "../auth";
-import { getAccessToken } from "../accessToken";
+import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
+
 const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-const checkPath = (path: string) => ["/auth/login", "/auth/signup"].includes(path);
+/*Проверка доступности разрешаемых роутов*/
+const checkPath = (path: string) => {
+    let match = false;
+    EXCLUDE_ROUTES.forEach((route: string) => {
+        if (path.includes(route)) {
+            match = path.includes(route);
+        }
+    });
+
+    return match;
+};
 
 export const withAuth = (Page) => {
-    const WithAuth = (props) => <Page {...props} />;
+    const WithAuth = (props) => {
+        /*Установка контекста аутентификации*/
+        const { setAuthState } = useContext(AuthContext);
+        useEffect(() => {
+            if (props?.accessToken) {
+                setAuthState({
+                    isAuth: Boolean(props.accessToken),
+                    user_id: getUserIdFromAccessToken(props.accessToken),
+                    isManager: getUserRoleFromAccesToken(props.accessToken) === "manager"
+                });
+            }
+        }, [props.accessToken, props?.accessToken, setAuthState]);
+
+        return <Page {...props} />;
+    };
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         let accessToken = "";
-
         if (ctx.res) {
             const refresh_token =
                 ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
-
             if (refresh_token) {
                 accessToken = await fetchAccessToken(refresh_token);
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
-            } else if (!isLanding && !checkPath(ctx.pathname)) {
+            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
                 redirect(ctx, pathToRedirect);
             }
-            if (accessToken && !isLanding && checkPath(ctx.pathname)) {
-                redirect(ctx, pathToRedirectIfLogin);
+            if (accessToken && !isLanding) {
+                if (
+                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
+                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
+                        getUserRoleFromAccesToken(accessToken) !== "manager") // редирект если роль не менеджера
+                ) {
+                    redirect(ctx, pathToRedirectIfLogin);
+                }
             }
         } else {
             const accessTokenFull = getAccessToken();
@@ -40,12 +71,18 @@ export const withAuth = (Page) => {
             const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
             if (accessToken.length === 0) {
                 accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
+                if (
+                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+                ) {
                     redirect(ctx, pathToRedirect);
                 }
             } else if (Date.now() >= accessTokenFull.exp * 1000) {
                 accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
+                if (
+                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+                ) {
                     redirect(ctx, pathToRedirect);
                 }
             }

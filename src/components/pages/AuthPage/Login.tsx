@@ -100,11 +100,10 @@ export const Login: React.FC = () => {
                                 isLoading={isFetching}
                                 onClick={handleLogin}
                             />
-                        </div>
-                        <div className={styles.divider} />
-                        <div className={styles.card}>
                             <div className={styles.loginDescription}>
-                                If you don’t already have an account click the button below to create your account.
+                                If you don’t already have an account and have not used our
+                                <a href={`https://t.me/${process.env.TELEGRAM_BOT_NAME}`}> Telegram bot</a> yet click
+                                the button below to create your account with email.
                             </div>
                             <Button
                                 type="primary"
@@ -114,8 +113,18 @@ export const Login: React.FC = () => {
                                 isUppercase
                                 onClick={() => handleSwitchToStep("signUp")}
                             />
+                        </div>
+                        <div className={styles.divider_container}>
+                            <div className={styles.divider} />
+                            <div className={styles.divider_text}>OR</div>
+                        </div>
+                        <div className={styles.card} style={{ justifyContent: "center", textAlign: "center" }}>
                             <div className={styles.telegramGroup}>
-                                <div className={styles.telegramDesription}>OR SIGN UP USING TELEGRAM</div>
+                                <div className={styles.telegramDesription}>
+                                    If you have a Telegram account and want to use our
+                                    <a href={`https://t.me/${process.env.TELEGRAM_BOT_NAME}`}> Telegram bot</a> just log
+                                    in using Telegram
+                                </div>
                                 <TelegramLoginWithNoSSR message={message} buttonSize="large" />
                             </div>
                         </div>

@@ -1,31 +1,44 @@
-import React, { useMemo, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useMemo, useState, useContext } from "react";
+import Router, { useRouter } from "next/router";
+
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
+// components
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { Template } from "components/layout";
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { PageType, TabType } from "config/types";
-import { GET_ROBOT_INFO_USER_ROBOTS } from "graphql/robots/queries";
-import { SET_ROBOT_DATA } from "graphql/local/mutations";
-import { POLL_INTERVAL } from "config/constants";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
 import { ToolbarRobotPage } from "./ToolbarRobotPage";
 import { ModalsRobotPage } from "./ModalsRobotPage";
 import { formatRobotData } from "./helpers";
+// hooks
+import useWindowDimensions from "hooks/useWindowDimensions";
+// graphql
+import { GET_ROBOT_INFO_USER_ROBOTS, GET_ROBOT_INFO_NOT_AUTH_ROBOTS } from "graphql/robots/queries";
+import { SET_ROBOT_DATA } from "graphql/local/mutations";
+// constants
+import { PageType, TabType } from "config/types";
+import { POLL_INTERVAL } from "config/constants";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const RobotsRobotPage: React.FC = () => {
+    /*Определение контекста для страницы робота*/
+    const {
+        authState: { isAuth, user_id }
+    } = useContext(AuthContext);
+    const robotInfoQuery = isAuth ? GET_ROBOT_INFO_USER_ROBOTS : GET_ROBOT_INFO_NOT_AUTH_ROBOTS;
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });
     const router = useRouter();
+    const vars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
     const handlePressBack = () => {
         router.back();
     };
-    const { data, loading } = useQuery(GET_ROBOT_INFO_USER_ROBOTS, {
-        variables: { code: router.query.code },
+    const { data, loading } = useQuery(robotInfoQuery, {
+        variables: vars,
         pollInterval: POLL_INTERVAL
     });
     const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [
@@ -40,7 +53,11 @@ export const RobotsRobotPage: React.FC = () => {
     });
 
     const robotSubscribe = (variables) => {
-        setRobotData(variables);
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            setRobotData(variables);
+        }
     };
 
     return (

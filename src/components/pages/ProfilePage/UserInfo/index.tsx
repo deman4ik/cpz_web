@@ -1,16 +1,21 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
 import { GET_USER_INFO } from "graphql/user/queries";
+// components
 import { Button, Modal } from "components/basic";
 import { InputLike } from "components/ui/InputLike";
-import { LoadingIndicator, NoRecentData } from "components/common";
+import { LoadingIndicator } from "components/common";
 import { NameModal } from "./NameModal";
 import { EmailModal } from "./EmailModal";
 import { PasswordModal } from "./PasswordModal";
+import NothingComponent from "components/common/NothingComponent";
+// styles
 import styles from "./index.module.css";
 import styles_ext from "../AccountBalance.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     width: number;
@@ -19,7 +24,13 @@ interface Props {
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 
 const _UserInfo: React.FC<Props> = ({ width }) => {
-    const { data, loading } = useQuery(GET_USER_INFO);
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
+    const { data, loading } = useQuery(GET_USER_INFO, {
+        variables: { user_id }
+    });
     const [title, setTitle] = useState("");
     const [isNameModalVisible, setNameModalVisible] = useState(false);
     const [isEmailModalVisible, setEmailModalVisible] = useState(false);
@@ -44,7 +55,7 @@ const _UserInfo: React.FC<Props> = ({ width }) => {
                 {loading ? (
                     <LoadingIndicator />
                 ) : !data ? (
-                    <NoRecentData message="No data received" />
+                    <NothingComponent beforeButtonKeyWord="user info" />
                 ) : (
                     <div className={styles.wrapper}>
                         <div className={styles.container}>

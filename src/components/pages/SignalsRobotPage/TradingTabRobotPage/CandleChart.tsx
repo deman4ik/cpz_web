@@ -1,15 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useContext } from "react";
 import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
+// components
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { LoadingIndicator } from "components/common";
-import { ROBOT_POSITION_WITH_CANDLE } from "graphql/robots/queries";
-import { ROBOT_POSITION_WITH_CANDLE_SUB } from "graphql/robots/subscribtions";
+// graphql
+import { ROBOT_POSITION_WITH_CANDLE, ROBOT_POSITION_WITH_CANDLE_NOT_AUTH } from "graphql/robots/queries";
+import { ROBOT_POSITION_WITH_CANDLE_SUB, ROBOT_POSITION_WITH_CANDLE_SUB_NOT_AUTH } from "graphql/robots/subscribtions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
+// helpers
 import { getFormatData, getFormatUpdateData } from "../helpers";
 import { getLegend } from "config/utils";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     robot: any;
@@ -24,24 +29,32 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components//charts/Light
 });
 
 const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded }) => {
+    /*Определение контекста для отображения данных графика*/
+    const {
+        authState: { isAuth, user_id }
+    } = useContext(AuthContext);
+
+    const candleQueries = isAuth
+        ? { candle: ROBOT_POSITION_WITH_CANDLE, candleSub: ROBOT_POSITION_WITH_CANDLE_SUB }
+        : { candle: ROBOT_POSITION_WITH_CANDLE_NOT_AUTH, candleSub: ROBOT_POSITION_WITH_CANDLE_SUB_NOT_AUTH };
+
     const candleName = `candles${robot.timeframe}`;
     const legend = getLegend(robot);
     const { asset } = robot;
     const [limit, setLimit] = useState(LIMIT);
     const [formatData, setFormatData] = useState({ candles: [], markers: [] });
 
-    const { loading, data, fetchMore } = useQuery(ROBOT_POSITION_WITH_CANDLE(robot.timeframe), {
-        variables: {
-            robotId: robot.id,
-            limit
-        },
+    const varsQueries = isAuth ? { robotId: robot.id, limit, user_id } : { robotId: robot.id, limit };
+
+    const { loading, data, fetchMore } = useQuery(candleQueries.candle(robot.timeframe), {
+        variables: varsQueries,
         notifyOnNetworkStatusChange: true
     });
 
-    const { data: dataUpdate } = useSubscription(ROBOT_POSITION_WITH_CANDLE_SUB(robot.timeframe), {
-        variables: {
-            robotId: robot.id
-        }
+    const varsSubscription = isAuth ? { robotId: robot.id, user_id } : { robotId: robot.id };
+
+    const { data: dataUpdate } = useSubscription(candleQueries.candleSub(robot.timeframe), {
+        variables: varsSubscription
     });
 
     const [setChartData] = useMutation(SET_CHART_DATA);

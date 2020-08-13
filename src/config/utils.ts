@@ -1,13 +1,21 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color } from "./constants";
 
-export const moneyFormat = (value: number, toFixed = 2): string =>
-    !value
-        ? "0"
-        : value
-              .toFixed(toFixed)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const moneyFormat = (value: number, toFixed = 2): string => {
+    let val = "0";
+
+    if (value) {
+        if (value.toString().match(/^0|-0\./g) && toFixed === 2) {
+            val = value.toFixed(6).toString().replace(/0*$/, ""); // отображение до 6 символов после точки
+        } else {
+            val = value
+                .toFixed(toFixed)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+    return val;
+};
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 

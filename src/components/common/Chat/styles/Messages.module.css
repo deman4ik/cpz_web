@@ -1,0 +1,88 @@
+/*messages*/
+.messages_container {
+  margin: 15px 0;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 15px 10px;
+  position: relative;
+  background-color: var(--darkBg);
+  height: 500px;
+}
+.messages_container_not_data{
+  position: absolute;
+  left:0;
+  right: 0;
+  margin:auto;
+  top:50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: var(--normal3);
+}
+
+.message {
+  min-width: 200px;
+  max-width: 60%;
+  border-radius: 5px;
+  padding: 10px;
+  color: #ffffff;
+  position: relative;
+}
+
+
+/*messages right or left*/
+.message_text{
+  padding: 10px 0;
+}
+.message_container {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.message_container_out {
+  composes: message_container;
+  justify-content: flex-end;
+}
+.message_container_in {
+  composes: message_container;
+}
+
+.message_out{
+  composes: message;
+  background-color: var(--primary);
+}
+.message_in{
+  composes: message;
+  background-color: var(--rgbaPrimary);
+}
+
+.message_info {
+  font-size: var(--small1);
+}
+
+.message_subject {
+  composes: message_info;
+}
+.message_date{
+  composes: message_info;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 4px;
+}
+
+.message_date_in, .message_date_out {
+  composes: message_date;
+}
+
+.message_subject_in,.message_subject_out {
+  composes: message_subject;
+  font-weight: 600;
+}
+
+.message_date_in .message_subject_in {
+  color: var(--accent);
+}
+
+.message_date_out, .message_subject_out {
+    color: #ffffff;
+}

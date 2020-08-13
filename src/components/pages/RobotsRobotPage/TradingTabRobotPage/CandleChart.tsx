@@ -1,14 +1,24 @@
-import React, { useMemo, useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import dynamic from "next/dynamic";
 
+// components
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { LoadingIndicator } from "components/common";
-import { ROBOT_POSITION_WITH_CANDLE, USER_ROBOTS_POSITION_WITH_CANDLE } from "graphql/robots/queries";
+// graphql
+import {
+    ROBOT_POSITION_WITH_CANDLE,
+    USER_ROBOTS_POSITION_WITH_CANDLE,
+    ROBOT_POSITION_WITH_CANDLE_NOT_AUTH
+} from "graphql/robots/queries";
 import { SET_CHART_DATA } from "graphql/local/mutations";
+// constants
 import { POLL_INTERVAL } from "config/constants";
 import { getFormatData } from "../helpers";
 import { getLegend } from "config/utils";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     robot: any;
@@ -24,22 +34,29 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightW
 });
 
 export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsChartLoaded }) => {
+    /*Определение контекста для отображения данных графика*/
+    const {
+        authState: { isAuth, user_id }
+    } = useContext(AuthContext);
+
+    let candleQuery = ROBOT_POSITION_WITH_CANDLE_NOT_AUTH;
+    if (isAuth) {
+        candleQuery = userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE : ROBOT_POSITION_WITH_CANDLE;
+    }
+
     const candleName = `candles${robot.timeframe}`;
     const legend = getLegend(robot);
     const { asset } = robot;
     const [limit, setLimit] = useState(LIMIT);
 
-    const { loading, data, fetchMore } = useQuery(
-        userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE(robot.timeframe) : ROBOT_POSITION_WITH_CANDLE(robot.timeframe),
-        {
-            variables: {
-                robotId: userRobots ? userRobots.id : robot.id,
-                limit
-            },
-            pollInterval: POLL_INTERVAL,
-            notifyOnNetworkStatusChange: true
-        }
-    );
+    const vars = isAuth
+        ? { robotId: userRobots ? userRobots.id : robot.id, limit, user_id }
+        : { robotId: userRobots ? userRobots.id : robot.id, limit };
+    const { loading, data, fetchMore } = useQuery(candleQuery(robot.timeframe), {
+        variables: vars,
+        pollInterval: POLL_INTERVAL,
+        notifyOnNetworkStatusChange: true
+    });
 
     const [setChartData] = useMutation(SET_CHART_DATA);
     const onFetchMore = () => {
@@ -63,12 +80,12 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
 
     const formatData = useMemo(
         () => (!loading && data ? getFormatData(data, asset, !!userRobots) : { candles: [], markers: [] }),
-        [loading, data, asset, userRobots]
+        [loading, data]
     );
 
     useEffect(() => {
         setChartData({ variables: { limit, robotId: robot.id, timeframe: robot.timeframe } });
-    }, [limit, robot.id, robot.timeframe, setChartData]);
+    }, [limit]);
 
     return (
         <LightWeightChartWithNoSSR

@@ -38,25 +38,25 @@ export const formatRobotData = (data) => {
             status,
             mod,
             started_at,
-            isUserSignals: user_signals.length > 0,
+            isUserSignals: user_signals?.length > 0,
             strategyByStrategy
         },
-        user_signals: user_signals.length ? user_signals[0] : null
+        user_signals: user_signals?.length ? user_signals[0] : null
     };
 };
 
 export const getProfit = (robotData: any, isUserSignals: boolean) => {
-    const equity = isUserSignals ? robotData.user_signals.equity : robotData.robot.equity;
+    const equity = isUserSignals ? robotData?.user_signals.equity : robotData.robot.equity;
     return equity ? equity.profit : 0;
 };
 
-export const subscribeAt = (robotData: any) => dayjs.utc(robotData.user_signals.subscribed_at).fromNow(true);
+export const subscribeAt = (robotData: any) => dayjs.utc(robotData?.user_signals.subscribed_at).fromNow(true);
 
 export const activeDays = (robotData: any) =>
     robotData.robot.started_at ? dayjs.utc(robotData.robot.started_at).fromNow(true) : 0;
 
 export const getVolume = (robotData: any) =>
-    robotData.robot.isUserSignals ? robotData.user_signals.volume : robotData.robot.volume;
+    robotData.robot.isUserSignals ? robotData?.user_signals.volume : robotData.robot.volume;
 
 export const getFormatDataClosedPositions = (dataClosedPositions, isUserSignals, volume) =>
     dataClosedPositions.robot_positions.map((item) => {
@@ -87,7 +87,7 @@ const getEntryMarker = (position_entry, candleRobot, asset) => {
     const { entry_action, entry_date, entry_candle_timestamp, entry_price, id, code, status } = position_entry;
     const entryAction = position_entry.entry_action === "short";
     const volume = `${
-        candleRobot.user_signals.length ? candleRobot.user_signals[0].volume : position_entry.volume
+        candleRobot?.user_signals.length ? candleRobot?.user_signals[0].volume : position_entry.volume
     } ${asset}`;
 
     return {
@@ -111,10 +111,10 @@ const getExitMarker = (position_exit, candleRobot, asset) => {
     const { exit_action, exit_candle_timestamp, exit_date, exit_price, balance, id, code, status } = position_exit;
     const exitAction = exit_action === "closeShort";
     const volume = `${
-        candleRobot.user_signals.length ? candleRobot.user_signals[0].volume : position_exit.volume
+        candleRobot?.user_signals.length ? candleRobot?.user_signals[0].volume : position_exit.volume
     } ${asset}`;
-    const profit = candleRobot.user_signals.length
-        ? candleRobot.user_signals[0].volume * balance
+    const profit = candleRobot?.user_signals.length
+        ? candleRobot?.user_signals[0].volume * balance
         : position_exit.profit;
     return {
         time: dayjs.utc(exit_candle_timestamp).valueOf() / 1000,
@@ -146,10 +146,10 @@ export const getFormatData = (data, asset) => {
                 const { time, open, high, low, close, volume } = candle;
                 if (position_entry) {
                     canAddPosition = true;
-                    if (candleRobot.user_signals.length) {
+                    if (candleRobot?.user_signals?.length) {
                         canAddPosition = compareDates(
                             position_entry[0].entry_date,
-                            candleRobot.user_signals[0].subscribed_at
+                            candleRobot?.user_signals[0].subscribed_at
                         );
                     }
                     if (canAddPosition) {
@@ -159,10 +159,10 @@ export const getFormatData = (data, asset) => {
                 }
                 if (position_exit) {
                     canAddPosition = true;
-                    if (candleRobot.user_signals.length) {
+                    if (candleRobot?.user_signals?.length) {
                         canAddPosition = compareDates(
                             position_exit[0].exit_date,
-                            candleRobot.user_signals[0].subscribed_at
+                            candleRobot?.user_signals[0].subscribed_at
                         );
                     }
                     if (canAddPosition) {
@@ -195,8 +195,8 @@ export const getFormatUpdateData = (data, asset) => {
         const { time, open, high, low, close, volume } = candle;
         if (position_entry) {
             canAddPosition = true;
-            if (candleRobot.user_signals.length) {
-                canAddPosition = compareDates(position_entry[0].entry_date, candleRobot.user_signals[0].subscribed_at);
+            if (candleRobot?.user_signals.length) {
+                canAddPosition = compareDates(position_entry[0].entry_date, candleRobot?.user_signals[0].subscribed_at);
             }
             if (canAddPosition) {
                 const markerItem = getEntryMarker(position_entry[0], candleRobot, asset);
@@ -205,8 +205,8 @@ export const getFormatUpdateData = (data, asset) => {
         }
         if (position_exit) {
             canAddPosition = true;
-            if (candleRobot.user_signals.length) {
-                canAddPosition = compareDates(position_exit[0].exit_date, candleRobot.user_signals[0].subscribed_at);
+            if (candleRobot?.user_signals.length) {
+                canAddPosition = compareDates(position_exit[0].exit_date, candleRobot?.user_signals[0].subscribed_at);
             }
             if (canAddPosition) {
                 const markerItem = getExitMarker(position_exit[0], candleRobot, asset);

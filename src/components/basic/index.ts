@@ -11,3 +11,4 @@ export * from "./Modal";
 export * from "./Select";
 export * from "./Textarea";
 export * from "./StepWizard";
+export * from "./Card";

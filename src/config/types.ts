@@ -5,7 +5,13 @@ export enum PageType {
     profile = "Profile",
     robotStats = "Robot Stats",
     support = "Support",
-    community = "Community"
+    community = "Community",
+    dasHboard = "Dashboard",
+    users = "Users",
+    manageRobots = "Manage Robots",
+    userRobots = "User Robots",
+    userSignals = "User Signals",
+    supportRequests = "Support Requests"
 }
 
 export enum TabType {

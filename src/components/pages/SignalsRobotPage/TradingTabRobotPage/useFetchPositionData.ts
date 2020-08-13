@@ -1,51 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
-import { GET_ROBOT_POSITIONS } from "graphql/robots/queries";
+// graphql
+import { GET_ROBOT_POSITIONS, GET_ROBOT_POSITIONS_NOT_AUTH } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
+// constants
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
+// helpers
 import { getFormatDataClosedPositions, getAlerts } from "../helpers";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
+    const {
+        authState: { isAuth, user_id }
+    } = useContext(AuthContext);
+    const robotPositionsQuery = isAuth ? GET_ROBOT_POSITIONS : GET_ROBOT_POSITIONS_NOT_AUTH;
+
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+    const vars = isAuth ? { user_id } : null;
     const { data: dataSignals, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions_open_signals"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _in: ["new", "open"] },
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
     );
 
     const { data: dataOpenPositions, loading: loadingOpenPositions, refetch: refetch_open } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions_open"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _eq: "open" },
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
     );
 
     const { data: dataClosedPositions, loading: loadingClosedPositions, fetchMore, refetch: refetch_closed } = useQuery(
-        GET_ROBOT_POSITIONS("robot_positions"),
+        robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
                 dateFrom: isUserSignals ? userSignals.subscribed_at : null,
                 status: { _eq: "closed" },
                 limit,
-                orderBy: { entry_date: "desc" }
+                orderBy: { entry_date: "desc" },
+                ...vars
             },
             pollInterval: POLL_INTERVAL
         }
@@ -100,7 +112,8 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
             dataSignals &&
             dataSignals.robot_positions.length &&
             Object.keys(dataSignals.robot_positions[0].alerts).length
-                ? getAlerts(dataSignals.robot_positions[0])
+                ? // Берется первый элемент так как робот работает с первой позицей за раз
+                  getAlerts(dataSignals.robot_positions[0])
                 : [],
         [loadingOpenSignals, dataSignals]
     );

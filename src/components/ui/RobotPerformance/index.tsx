@@ -1,14 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
-import { GET_USER_AGGR_STATS_ALL } from "../../../graphql/signals/queries";
-import { POLL_INTERVAL } from "../../../config/constants";
+// graphql
+import { GET_USER_AGGR_STATS_ALL } from "graphql/signals/queries";
+// constants
+import { POLL_INTERVAL } from "config/constants";
+// components
 import { PerformanceEmpty } from "./PerformanceEmpty";
 import { PerformanceComponent } from "./PerformanceComponent";
+// helpers
 import { getFormatData, queryParam, title } from "./helpers";
-import styles from "./index.module.css";
+// types
 import { displayType } from "./types";
+// styles
+import styles from "./index.module.css";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 interface Props {
     width: number;
@@ -16,9 +23,13 @@ interface Props {
 }
 
 const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [formatData, setFormatData] = useState([]);
     const { data, loading } = useQuery(GET_USER_AGGR_STATS_ALL, {
-        variables: { type: { _eq: queryParam[type] } },
+        variables: { type: { _eq: queryParam[type] }, user_id },
         pollInterval: POLL_INTERVAL
     });
 
