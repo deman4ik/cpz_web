@@ -69,7 +69,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
                     color: color.accent
                 }
             },
-            priceScale: {
+            rightPriceScale: {
                 borderColor: "#38466a",
                 borderVisible: true
             },
