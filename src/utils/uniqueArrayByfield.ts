@@ -7,7 +7,6 @@ const uniqueArrayByfield = (array, field) => {
             uniequeArray.push(item);
         }
     });
-    console.log(uniequeArray);
     return uniequeArray;
 };
 

@@ -24,7 +24,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
     return (
         <div className={styles.container}>
             <_LightWeightChart
-                data={data}
+                data={data.sort((a, b) => a.time - b.time)}
                 loading={loading}
                 type={type}
                 markers={markers}
