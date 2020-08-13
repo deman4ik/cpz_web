@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 // graphql
@@ -94,9 +93,9 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         refetch_open_signals();
         refetch_open();
         refetch_closed();
-    }, [isUserSignals]);
+    }, [refetch_closed, refetch_open, refetch_open_signals, isUserSignals]);
 
-    const volume = useMemo(() => (isUserSignals ? userSignals.volume : 0), [userSignals]);
+    const volume = useMemo(() => (isUserSignals ? userSignals.volume : 0), [isUserSignals, userSignals]);
 
     const formatDataClosedPositions = useMemo(
         () =>

@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 
-import { _LightWeightChart } from "./LightWeightChart";
+import { _LightWeightChart as ChartLightWeight } from "./LightWeightChart";
 import styles from "./index.module.css";
 import { PropsWrapChart } from "./types";
 
@@ -23,7 +22,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
 
     return (
         <div className={styles.container}>
-            <_LightWeightChart
+            <ChartLightWeight
                 data={data}
                 loading={loading}
                 type={type}

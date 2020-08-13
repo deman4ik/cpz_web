@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -63,7 +62,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                     : `Subscribing to ${dataRobot.robot.name} signals`
             );
         }
-    }, [dataRobot, limits]);
+    }, [setTitle, dataRobot, limits]);
 
     const handleOnSubmit = () => {
         subscribeSend({

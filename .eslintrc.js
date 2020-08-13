@@ -66,6 +66,8 @@ module.exports = {
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": 2,
     "import/order": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "no-return-await":0
   },
   "settings": {
     "import/resolver": {

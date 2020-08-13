@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState, memo } from "react";
 import dynamic from "next/dynamic";
 

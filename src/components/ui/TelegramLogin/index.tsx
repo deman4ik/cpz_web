@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/react-hooks";
@@ -64,7 +63,7 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
         script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, []);
+    }, [addTelegram, buttonSize, instance, userId]);
 
     return (
         <>

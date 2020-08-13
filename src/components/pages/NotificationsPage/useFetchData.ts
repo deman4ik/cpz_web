@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -97,12 +96,12 @@ export const useFetchData = () => {
                 }
             });
         }
-    }, [formatData]);
+    }, [updateReaded, formatData]);
 
     useEffect(() => {
         refetch();
         refetch_aggregate();
-    }, [inputSelect]);
+    }, [refetch_aggregate, refetch, inputSelect]);
 
     const setFilters = (value: string) => {
         setNotificationsFilters({

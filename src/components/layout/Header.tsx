@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { memo } from "react";
 import Link from "next/link";
 
@@ -33,7 +30,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                 {hasHomeButton && (
                     <div className={styles.btnWrapper} onClick={() => hahdleOnClick("/")}>
                         <Link href="/" replace>
-                            <a className={styles.btnTitle}>Cryptuoso</a>
+                            <span className={styles.btnTitle}>Cryptuoso</span>
                         </Link>
                     </div>
                 )}
@@ -42,7 +39,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                         {linksHeader.map((item, idx) => (
                             <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
                                 <Link href={item.href} replace>
-                                    <a className={styles.btnTitle}>{item.title}</a>
+                                    <span className={styles.btnTitle}>{item.title}</span>
                                 </Link>
                             </div>
                         ))}
@@ -61,7 +58,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                         {authHeader.map((item, idx) => (
                             <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
                                 <Link href={item.href} replace>
-                                    <a className={styles.btnTitle}>{item.title}</a>
+                                    <span className={styles.btnTitle}>{item.title}</span>
                                 </Link>
                             </div>
                         ))}
