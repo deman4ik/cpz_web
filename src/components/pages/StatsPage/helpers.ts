@@ -11,9 +11,7 @@ export const getFormatData = (stats) => {
         time: dayjs.utc(pos.x / 1000).valueOf(),
         value: pos.y
     }));
-    if (chartData.length >= 400) {
-        chartData.splice(0, 200);
-    }
+
     return {
         chartData: uniqueArrayByfield(chartData, "time"),
         robotStatistic: getRobotStatistic(stats[0].statistics)
