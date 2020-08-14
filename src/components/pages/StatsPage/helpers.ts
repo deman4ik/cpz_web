@@ -2,14 +2,18 @@ import { getRobotStatistic } from "components/ui/PerformanceTab/helpers";
 import dayjs from "libs/dayjs";
 import { exchangeName } from "config/utils";
 import { CheckedFilters } from "./types";
+// utils
+import uniqueArrayByfield from "utils/uniqueArrayByfield";
 
 export const getFormatData = (stats) => {
     if (!stats.length || !stats[0].statistics.performance) return { chartData: null, robotStatistic: null };
+    const chartData = stats[0].statistics.performance.map((pos) => ({
+        time: dayjs.utc(pos.x / 1000).valueOf(),
+        value: pos.y
+    }));
+
     return {
-        chartData: stats[0].statistics.performance.map((pos) => ({
-            time: dayjs.utc(pos.x / 1000).valueOf(),
-            value: pos.y
-        })),
+        chartData: uniqueArrayByfield(chartData, "time"),
         robotStatistic: getRobotStatistic(stats[0].statistics)
     };
 };
