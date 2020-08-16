@@ -66,14 +66,19 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         pollInterval: POLL_INTERVAL
     });
 
-    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [loading, data]);
+    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [
+        formatRobotsData,
+        loading,
+        data
+    ]);
 
     /* Установка начального значения фильтров */
     useEffect(() => {
         if (storageFilters) {
             setFilters({ variables: storageFilters });
         }
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setFilters]);
 
     useEffect(() => {
         if (!loading_aggregate && data_count && data_count.robots_aggregate && data_count.robots_aggregate.aggregate) {
@@ -98,12 +103,12 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         };
 
         setFiltersQuery(addFields());
-    }, [searchProps]);
+    }, [dispayType, searchProps]);
 
     useEffect(() => {
         refetchStats();
         refetchCounts();
-    }, [filtersQuery]);
+    }, [refetchStats, refetchCounts, filtersQuery]);
 
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
