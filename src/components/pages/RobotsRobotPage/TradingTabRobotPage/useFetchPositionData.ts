@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
