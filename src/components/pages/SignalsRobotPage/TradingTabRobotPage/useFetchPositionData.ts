@@ -102,7 +102,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
             !loadingClosedPositions && dataClosedPositions
                 ? getFormatDataClosedPositions(dataClosedPositions, isUserSignals, volume)
                 : [],
-        [dataClosedPositions, loadingClosedPositions, volume]
+        [isUserSignals, dataClosedPositions, loadingClosedPositions, volume]
     );
 
     const formatSignals = useMemo(
