@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 import {

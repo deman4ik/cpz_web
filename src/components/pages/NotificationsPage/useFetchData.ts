@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from "graphql/user/queries";
 import { GET_NOTIFICATIONS_PROPS } from "graphql/local/queries";

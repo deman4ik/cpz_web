@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 // components
 import { Chat } from "components/common";
 // hooks
