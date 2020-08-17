@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import React, { memo, useState, useEffect, useContext } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
@@ -9,6 +9,8 @@ import { Button, Select, Input, Textarea } from "components/basic";
 import { color } from "config/constants";
 import { event } from "libs/gtag";
 import { AddKey } from "./types";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 import styles from "./ExchangeKeysAddKeyModal.module.css";
 
 interface Props {
@@ -37,6 +39,10 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
     const [dataPicker, setDataPicker] = useState([]);
     const { data, loading } = useQuery(GET_EXCHANGES);
 
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [addKey] = useMutation(UPDATE_EXCHANGE_KEY, {
         variables: {
             name: inputName || null,
@@ -50,7 +56,8 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
 
     const { data: dataCheck, loading: loadingCheck } = useQuery(GET_USER_ROBOTS_BY_EXCHANGE_ID, {
         variables: {
-            user_ex_acc_id: options ? options.id : null
+            user_ex_acc_id: options ? options.id : null,
+            user_id
         }
     });
     const handleOnChangeName = (value: string) => {

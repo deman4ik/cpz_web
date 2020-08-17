@@ -27,11 +27,11 @@ import { AuthContext } from "libs/hoc/authContext";
 export const SignalsRobotPage = () => {
     /*Определение контекста для страницы робота*/
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
     const robotsInfoQuery = isAuth ? GET_ROBOT_INFO : GET_ROBOT_INFO_NOT_AUTH;
-
+    const userId = isAuth ? { user_id } : null;
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });
@@ -43,7 +43,8 @@ export const SignalsRobotPage = () => {
 
     const { data, loading } = useQuery(robotsInfoQuery, {
         variables: {
-            code: router.query.code
+            code: router.query.code,
+            ...userId
         },
         pollInterval: POLL_INTERVAL
     });

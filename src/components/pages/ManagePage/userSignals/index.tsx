@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 // components
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
@@ -24,7 +24,6 @@ const ManageUserSignals = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
-    const [isSearch, setIsSearch] = useState(false);
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
     const [where, setWhere] = useState(getSearchWhere(""));
@@ -38,6 +37,7 @@ const ManageUserSignals = () => {
     });
 
     const { data: aggrData } = useQuery(USER_SIGNALS_AGGREGATE, {
+        variables: { where },
         pollInterval: POLL_INTERVAL
     });
 
@@ -47,17 +47,18 @@ const ManageUserSignals = () => {
         setLimit(data.user_signals.length + LIMIT_STEP);
     };
     const searchCallback = (value) => {
-        setWhere(getSearchWhere(value));
-        if (value) {
+        const trimedVal = value.trim();
+        if (trimedVal) {
+            setWhere(getSearchWhere(trimedVal));
             setLimit(aggrData.user_signals_aggregate.aggregate.count);
         } else {
+            setWhere(null);
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const clearAll = () => {
         setOrderState(INITIAL_ORDER);
-        setWhere(getSearchWhere(""));
+        setWhere(null);
     };
     const clearOrder = () => {
         setOrderState(INITIAL_ORDER);
@@ -69,6 +70,7 @@ const ManageUserSignals = () => {
             title="User signals"
             width={width}
             page={PageType.userSignals}
+            hideToolbar
             toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} clear={clearAll} />}>
             {data?.user_signals?.length && aggrData?.user_signals_aggregate ? (
                 <SearchTable
@@ -78,8 +80,7 @@ const ManageUserSignals = () => {
                     moreButton={{
                         limitStep: 10,
                         maxCount: aggrData.user_signals_aggregate.aggregate.count,
-                        handleFetchMore: callbackMore,
-                        isSearch
+                        handleFetchMore: callbackMore
                     }}
                 />
             ) : null}

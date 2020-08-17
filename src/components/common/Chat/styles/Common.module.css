@@ -1,0 +1,19 @@
+.content_container{
+  margin: 15px 0;
+}
+.chat_icon {
+  min-width: 60px;
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.68);
+  border-radius: 5px;
+}

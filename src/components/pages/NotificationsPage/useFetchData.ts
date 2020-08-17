@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMemo, useState, useEffect, useContext } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { GET_NOTIFICATIONS, GET_NOTIFICATIONS_AGGREGATE } from "graphql/user/queries";
 import { GET_NOTIFICATIONS_PROPS } from "graphql/local/queries";
@@ -8,19 +8,32 @@ import { SET_NOTIFICATIONS_PROPS } from "graphql/local/mutations";
 import { UPDATE_NOTIFICATIONS } from "graphql/user/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { getFormatData, filters } from "./helpers";
+// context
+import { AuthContext } from "libs/hoc/authContext";
 
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
+    /*auth context*/
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const { data: notificationsProps } = useQuery(GET_NOTIFICATIONS_PROPS);
     const [inputSelect, setInputSelect] = useState(notificationsProps.NotificationsProps.filters);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [changeStatus, setChangeStatus] = useState(false);
     const [limit, setLimit] = useState(RECORDS_LIMIT);
+
+    let where = { user_id: { _eq: user_id } };
+    if (filters[inputSelect]) {
+        where = { ...where, ...{ type: { _in: filters[inputSelect] } } };
+    }
+
     const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
         variables: {
             offset: 0,
             limit,
-            type: filters[inputSelect]
+            where
         },
         pollInterval: POLL_INTERVAL,
         notifyOnNetworkStatusChange: changeStatus
@@ -31,7 +44,7 @@ export const useFetchData = () => {
             {
                 query: GET_NOTIFICATIONS_AGGREGATE,
                 variables: {
-                    where: { readed: { _eq: false }, type: { _in: filters[inputSelect] } }
+                    where: { readed: { _eq: false }, type: { _in: filters[inputSelect] }, user_id: { _eq: user_id } }
                 }
             }
         ]
@@ -43,7 +56,7 @@ export const useFetchData = () => {
         GET_NOTIFICATIONS_AGGREGATE,
         {
             variables: {
-                where: { type: { _in: filters[inputSelect] } }
+                where: { type: { _in: filters[inputSelect] }, user_id: { _eq: user_id } }
             }
         }
     );

@@ -26,19 +26,19 @@ import { AuthContext } from "libs/hoc/authContext";
 export const RobotsRobotPage: React.FC = () => {
     /*Определение контекста для страницы робота*/
     const {
-        authState: { isAuth }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const robotInfoQuery = isAuth ? GET_ROBOT_INFO_USER_ROBOTS : GET_ROBOT_INFO_NOT_AUTH_ROBOTS;
-
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });
     const router = useRouter();
+    const vars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
     const handlePressBack = () => {
         router.back();
     };
     const { data, loading } = useQuery(robotInfoQuery, {
-        variables: { code: router.query.code },
+        variables: vars,
         pollInterval: POLL_INTERVAL
     });
     const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [

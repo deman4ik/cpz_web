@@ -20,10 +20,10 @@ export const getFilterData = (filters) => {
     const result = filters.reduce(
         (acc: FilterData, item) => {
             labels.forEach((key) => {
-                if (!acc[key].find((el) => el.key === item.robots[key])) {
+                if (!acc[key].find((el) => el.key === item[key])) {
                     acc[key].push({
-                        key: item.robots[key],
-                        label: formatData[key](item.robots[key])
+                        key: item[key],
+                        label: formatData[key](item[key])
                     });
                 }
             });

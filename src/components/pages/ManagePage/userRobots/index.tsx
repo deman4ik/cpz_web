@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 // components
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
@@ -25,8 +25,7 @@ const LIMIT_STEP = 10;
 const ManageUserRobots = () => {
     /*states*/
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [isSearch, setIsSearch] = useState(false);
-    const [where, setWhere] = useState(getSearchWhere(""));
+    const [where, setWhere] = useState(null);
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const [limit, setLimit] = useState(LIMIT_STEP);
     const { width } = useWindowDimensions(); // width hook
@@ -44,6 +43,7 @@ const ManageUserRobots = () => {
     });
 
     const { data: aggrData } = useQuery(USER_ROBOTS_AGGREGATE, {
+        variables: { where: whereData },
         pollInterval: POLL_INTERVAL
     });
 
@@ -59,20 +59,22 @@ const ManageUserRobots = () => {
 
     /*handlers*/
     const searchCallback = (value) => {
-        setWhere(getSearchWhere(value));
-        if (value) {
+        const trimedVal = value.trim();
+        if (trimedVal) {
+            setWhere(getSearchWhere(trimedVal));
             setLimit(aggrData.user_robots_aggregate.aggregate.count);
         } else {
+            setWhere(null);
             setLimit(LIMIT_STEP);
         }
-        setIsSearch(Boolean(value));
     };
     const setOpenModal = () => setIsOpenModal((prev) => !prev);
     const callbackMore = () => {
         setLimit(data.user_robots.length + LIMIT_STEP);
     };
     const clearAll = () => {
-        setWhere(getSearchWhere(""));
+        setOrderState(INITIAL_ORDER);
+        setWhere(null);
     };
     const clearOrder = () => {
         setOrderState(INITIAL_ORDER);
@@ -84,6 +86,7 @@ const ManageUserRobots = () => {
             title="User robots"
             width={width}
             page={PageType.userRobots}
+            hideToolbar
             toolbar={
                 <SearchPanel
                     callback={searchCallback}
@@ -100,8 +103,7 @@ const ManageUserRobots = () => {
                     moreButton={{
                         limitStep: LIMIT_STEP,
                         maxCount: aggrData.user_robots_aggregate.aggregate.count,
-                        handleFetchMore: callbackMore,
-                        isSearch
+                        handleFetchMore: callbackMore
                     }}
                 />
             ) : null}

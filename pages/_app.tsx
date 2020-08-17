@@ -1,4 +1,5 @@
 import React from "react";
+import withSecureHeaders from "next-secure-headers";
 import Router from "next/router";
 
 import { pageview } from "../src/libs/gtag";
@@ -10,10 +11,21 @@ import { AuthContextProvider } from "libs/hoc/authContext";
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
     return (
         <AuthContextProvider>
             <Component {...pageProps} />
         </AuthContextProvider>
     );
 }
+
+MyApp.getInitialProps = async ({ Component, ctx }) => {
+    let pageProps = {};
+
+    if (Component?.getInitialProps) {
+        pageProps = await Component.getInitialProps(ctx);
+    }
+    return { pageProps };
+};
+
+export default withSecureHeaders()(MyApp);
