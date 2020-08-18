@@ -1,4 +1,3 @@
-/* eslint-disable no-return-await */
 import React from "react";
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";

@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useRef } from "react";
 
 import { ModalTemplate } from "./ModalTemplate";
@@ -14,9 +12,7 @@ interface Props {
 }
 
 export const Modal: React.FC<Props> = (props) => {
-    if (!props.isOpen) return null;
     const modalRef = useRef(null);
-
     useEffect(() => {
         function handleClickOutside(event) {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -27,8 +23,8 @@ export const Modal: React.FC<Props> = (props) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [modalRef]);
-
+    }, [modalRef, props]);
+    if (!props.isOpen) return null;
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>

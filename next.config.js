@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-unresolved */
 const withPlugins = require("next-compose-plugins");
 const withImages = require("next-images");
 require("dotenv").config();

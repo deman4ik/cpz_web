@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useState, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -40,7 +39,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
 
     useEffect(() => {
         setTitle(steps[0]);
-    }, []);
+    }, [setTitle]);
 
     const onAcceptEmail = () => {
         sendChangeEmail().then((response) => {

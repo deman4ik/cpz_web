@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useMemo, useState, memo, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -50,7 +48,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
                 setInputKey(Object.keys(orders).filter((el) => el !== "id")[0]);
             }
         }
-    }, [filterData, data]);
+    }, [displayType, filterData, data]);
 
     const handleOnPressItem = (item: string, label: string) => {
         setCheckedButtons((prev) => ({

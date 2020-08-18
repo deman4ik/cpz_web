@@ -1,9 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-param-reassign */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { createChart } from "lightweight-charts";
 import { styles } from "./LightWeightChart.style";
@@ -215,8 +210,9 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             }
 
             for (let i = 0; i < lines.length; i++) {
-                lines[i].lineStyle = 3;
-                newLinkLines.push(chart.series.createPriceLine(lines[i]));
+                const currentLine = lines[i];
+                currentLine.lineStyle = 3;
+                newLinkLines.push(chart.series.createPriceLine(currentLine));
             }
             setLinkLines(newLinkLines);
         }
@@ -289,8 +285,8 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             <div style={styles.toolTip} ref={toolTipRef} />
             <div
                 onClick={handleOnClickBtn}
-                onMouseOver={handleOnMouseOver}
-                onMouseOut={handleOnMouseOut}
+                onBlur={handleOnMouseOver}
+                onFocus={handleOnMouseOut}
                 style={styles.btn}
                 ref={buttonRef}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">
