@@ -30,7 +30,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                 {hasHomeButton && (
                     <div className={styles.btnWrapper} onClick={() => hahdleOnClick("/")}>
                         <Link href="/" replace>
-                            <span className={styles.btnTitle}>Cryptuoso</span>
+                            <a className={styles.btnTitle}>Cryptuoso</a>
                         </Link>
                     </div>
                 )}
@@ -39,7 +39,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                         {linksHeader.map((item, idx) => (
                             <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
                                 <Link href={item.href} replace>
-                                    <span className={styles.btnTitle}>{item.title}</span>
+                                    <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
                             </div>
                         ))}
@@ -58,7 +58,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                         {authHeader.map((item, idx) => (
                             <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
                                 <Link href={item.href} replace>
-                                    <span className={styles.btnTitle}>{item.title}</span>
+                                    <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
                             </div>
                         ))}
