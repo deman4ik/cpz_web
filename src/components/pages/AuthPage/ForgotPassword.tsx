@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { useApolloClient } from "@apollo/client";
@@ -27,24 +26,23 @@ export const ForgotPassword: React.FC = () => {
         handleSubmit();
     };
 
-    const recoverPassword = async () => {
-        const result = await reset(values.email, client);
-
-        if (result.success) {
-            Router.push("/auth/recover_password");
-        } else {
-            errors.email = result.error;
-            setValid(false);
-            setIsFetching(false);
-        }
-    };
-
     useEffect(() => {
+        const recoverPassword = async () => {
+            const result = await reset(values.email, client);
+
+            if (result.success) {
+                Router.push("/auth/recover_password");
+            } else {
+                errors.email = result.error;
+                setValid(false);
+                setIsFetching(false);
+            }
+        };
         if (isValid) {
             setIsFetching(true);
             recoverPassword();
         }
-    }, [isValid]);
+    }, [client, errors, isValid, setValid, values.email]);
 
     return (
         <div className={styles.container}>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
 
@@ -57,7 +56,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
 
     const quantyRecords = useMemo(
         () => (!loadingAggregate && dataCount ? dataCount[`${tableName}_aggregate`].aggregate.count : 0),
-        [dataCount, loadingAggregate]
+        [tableName, dataCount, loadingAggregate]
     );
 
     const handleLoadMore = () => {

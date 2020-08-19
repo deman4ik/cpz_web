@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/client";
 // graphql
@@ -37,7 +36,7 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
         if (!loading && data) {
             setFormatData(getFormatData(data.stats, type));
         }
-    }, [loading, data]);
+    }, [loading, data, type]);
 
     return (
         <div className={styles.container}>
