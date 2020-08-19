@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";

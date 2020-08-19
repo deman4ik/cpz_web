@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "graphql/robots/mutations";

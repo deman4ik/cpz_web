@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { SET_USER_NAME } from "graphql/user/mutations";
 import { GET_USER_INFO } from "graphql/user/queries";

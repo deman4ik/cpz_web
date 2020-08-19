@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { SET_MODAL_STATE } from "graphql/local/mutations";
 import { MODAL_VISIBLE } from "graphql/local/queries";

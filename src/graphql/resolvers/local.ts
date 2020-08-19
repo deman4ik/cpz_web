@@ -1,9 +1,19 @@
 import { GET_SEARCH_PROPS } from "../local/queries";
+import gql from "graphql-tag";
 
 export const setModalState = (_root: any, variables: any, context: any) => {
-    context.client.writeData({
-        data: { ModalVisible: { ...variables, __typename: "ModalVisible" } }
-    });
+    context.client.writeQuery(
+        gql`
+            query {
+                data @client {
+                    ModalVisible
+                }
+            }
+        `,
+        {
+            data: { ModalVisible: { ...variables, __typename: "ModalVisible" } }
+        }
+    );
 };
 
 export const setRobot = (_root: any, variables: any, context: any) => {
@@ -11,15 +21,33 @@ export const setRobot = (_root: any, variables: any, context: any) => {
     const cacheData = { ...cache, __typename: "CacheData" };
     const subsData = { ...subs, __typename: "SubsData" };
     const robotData = { ...robot, cache: cacheData, subs: subsData };
-    context.client.writeData({
-        data: { Robot: { ...robotData, __typename: "Robot" } }
+    context.client.writeQuery({
+        query: gql`
+            query {
+                data @client {
+                    Robot
+                }
+            }
+        `,
+        data: {
+            data: { Robot: { ...robotData, __typename: "Robot" } }
+        }
     });
     return type;
 };
 
 export const setChartData = (_root: any, variables: any, context: any) => {
-    context.client.writeData({
-        data: { ChartData: { ...variables, __typename: "ChartData" } }
+    context.client.writeQuery({
+        query: gql`
+            query {
+                data @client {
+                    ChartData
+                }
+            }
+        `,
+        data: {
+            data: { ChartData: { ...variables, __typename: "ChartData" } }
+        }
     });
 };
 
@@ -47,15 +75,33 @@ export const setSearchProps = (_root: any, variables: any, context: any) => {
 
 export const setSearchLimit = (_root: any, variables: any, context: any) => {
     const { limit, type } = variables;
-    context.client.writeData({
-        data: { Limit: { [type]: limit, __typename: "Limit" } }
+    context.client.writeQuery({
+        query: gql`
+            query {
+                data @client {
+                    Limit
+                }
+            }
+        `,
+        data: {
+            data: { Limit: { [type]: limit, __typename: "Limit" } }
+        }
     });
 };
 
 export const setNotificationsProps = (_root: any, variables: any, context: any) => {
     const { filters } = variables;
-    context.client.writeData({
-        data: { NotificationsProps: { filters, __typename: "NotificationsProps" } }
+    context.client.writeQuery({
+        query: gql`
+            query {
+                data @client {
+                    NotificationsProps
+                }
+            }
+        `,
+        data: {
+            data: { NotificationsProps: { filters, __typename: "NotificationsProps" } }
+        }
     });
     return filters;
 };

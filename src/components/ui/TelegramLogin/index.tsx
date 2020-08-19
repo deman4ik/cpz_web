@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import Router from "next/router";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { ADD_TELEGRAM_ACCOUNT } from "../../../graphql/user/mutations";
 import { GET_USER_INFO } from "../../../graphql/user/queries";

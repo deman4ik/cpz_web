@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";

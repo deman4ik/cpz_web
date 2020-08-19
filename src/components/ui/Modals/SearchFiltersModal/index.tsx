@@ -1,5 +1,5 @@
 import React, { useMemo, useState, memo, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_ROBOTS_FILTERS } from "graphql/common/queries";
 import { GET_SEARCH_PROPS } from "graphql/local/queries";

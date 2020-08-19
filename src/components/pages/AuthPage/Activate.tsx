@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 import { CartFooter } from "./common/CartFooter";
 import { USER } from "graphql/local/queries";
