@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 import { logout } from "../libs/auth";
 import { setAccessToken } from "../libs/accessToken";

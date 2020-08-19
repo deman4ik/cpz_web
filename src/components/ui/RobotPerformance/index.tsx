@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 // graphql
 import { GET_USER_AGGR_STATS_ALL } from "graphql/signals/queries";
 // constants

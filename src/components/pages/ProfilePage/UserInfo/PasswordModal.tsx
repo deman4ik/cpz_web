@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { SET_USER_PASSWORD } from "graphql/user/mutations";

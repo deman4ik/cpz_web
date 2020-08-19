@@ -1,5 +1,5 @@
 import React, { memo, useState, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import dynamic from "next/dynamic";
 
 import { GET_USER_INFO } from "graphql/user/queries";

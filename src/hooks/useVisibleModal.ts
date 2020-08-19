@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { MODAL_VISIBLE } from "../graphql/local/queries";
 import { SET_MODAL_VISIBLE } from "../graphql/local/mutations";

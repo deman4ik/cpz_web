@@ -1,13 +1,11 @@
 import React from "react";
 import withApollo from "next-with-apollo";
-import ApolloClient from "apollo-client";
-import { WebSocketLink } from "apollo-link-ws";
-import { createHttpLink } from "apollo-link-http";
-import { split } from "apollo-link";
-import { setContext } from "apollo-link-context";
-import { getMainDefinition } from "apollo-utilities";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloClient, createHttpLink, split, ApolloProvider } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import gql from "graphql-tag";
+import { setContext } from "@apollo/client/link/context";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { InMemoryCache } from "@apollo/client/cache";
 
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
@@ -18,6 +16,47 @@ interface Definintion {
     kind: string;
     operation?: string;
 }
+
+const cacheQuery = gql`
+    query default_state @client {
+        user_id
+        Limit {
+            signals
+            robots
+        }
+        NotificationsProps {
+            filters
+        }
+        SearchProps {
+            props
+        }
+        ModalVisible {
+            isVisible
+            type
+        }
+        ChartData {
+            limit
+            robotId
+            timeframe
+        }
+        Robot {
+            cache {
+                id
+                tableName
+            }
+            id
+            userRobotId
+            name
+            subs {
+                vloume
+                asset
+                exchange
+                currency
+            }
+        }
+    }
+`;
+
 const ssrMode = !process.browser;
 const httpLink = createHttpLink({
     uri: `https://${process.env.HASURA_URL}`
@@ -57,7 +96,10 @@ export default withApollo(
         }
 
         const cache = new InMemoryCache().restore(ctx.initialState || {});
-        cache.writeData({ data: defaultState });
+        cache.writeQuery({
+            query: cacheQuery,
+            data: defaultState
+        });
 
         const client = new ApolloClient({
             link,
@@ -68,7 +110,10 @@ export default withApollo(
             ssrMode
         });
         client.onClearStore(async () => {
-            client.writeData({ data: defaultState });
+            client.writeQuery({
+                query: cacheQuery,
+                data: defaultState
+            });
         });
         return client;
     },

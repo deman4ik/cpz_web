@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { GET_NOTIFICATIONS_AGGREGATE } from "../graphql/user/queries";
 import { UPDATE_NOTIFICATIONS } from "../graphql/user/mutations";

@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 // graphql
 import { USER_SIGNALS } from "graphql/signals/queries";

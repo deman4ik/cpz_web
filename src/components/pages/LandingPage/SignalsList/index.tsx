@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 import { GET_LANDING_ROBOTS } from "graphql/robots/queries";
 import { PrimaryButton } from "components/basic";
