@@ -9,7 +9,7 @@ import StatsContainer from "./StatsContainer";
 /**
  *  Компонент отоюражения пользователей за определенные периоды
  */
-const TimestampStats = () => {
+const TimestampStats: React.FC = () => {
     const timeStampsPeriods = useFetchTimestamp(); // хук фетчинга периодов
     return timeStampsPeriods && <StatsContainer title="New users" data={formatPeriodUsers(timeStampsPeriods)} />;
 };

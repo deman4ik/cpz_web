@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 const uniqueArrayByfield = (array, field) => {
     let hashValue;
     const uniequeArray = [];

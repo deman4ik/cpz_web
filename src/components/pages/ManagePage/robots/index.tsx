@@ -22,7 +22,7 @@ import { formatFilters } from "../common/OrderModalInner/utils";
 
 const LIMIT_STEP = 10;
 
-const ManageRobots = () => {
+const ManageRobots: React.FC = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);

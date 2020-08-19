@@ -83,7 +83,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
             }
         ]);
 
-        setFilters({ variables }).then((_result) => {
+        setFilters({ variables }).then(() => {
             onClose();
         });
     };

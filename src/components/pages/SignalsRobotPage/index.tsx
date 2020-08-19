@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useState, useMemo, useContext } from "react";
 import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";

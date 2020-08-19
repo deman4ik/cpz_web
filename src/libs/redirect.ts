@@ -1,5 +1,6 @@
 import Router from "next/router";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const redirect = (context: any, target: string) => {
     if (context.res) {
         // server

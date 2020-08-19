@@ -1,4 +1,4 @@
-//import fetch from 'cross-fetch';
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { setAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 

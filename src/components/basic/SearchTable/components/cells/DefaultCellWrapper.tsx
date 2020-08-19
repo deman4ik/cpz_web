@@ -4,7 +4,7 @@ import styles from "./Cells.module.css";
 /**
  *  Враппер для ячейки таблицы
  */
-const DefaultCellWrapper = (props) => {
+const DefaultCellWrapper: React.FC = (props) => {
     return (
         <div style={props?.style} className={styles.default_cells_wrapper}>
             {props.children}

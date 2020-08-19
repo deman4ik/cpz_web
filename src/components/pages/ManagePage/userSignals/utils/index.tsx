@@ -1,6 +1,7 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
 // components
-import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
+import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
 import { USER_SIGNALS_TITLES_SCHEME } from "../constants";

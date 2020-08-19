@@ -2,9 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/UserChats.module.css";
 // components
-import { Card } from "components/basic";
+import { Card, Button } from "components/basic";
 import LatestMessage from "./LastetMessage";
-import { Button } from "components/basic";
 
 export interface UserChatProps {
     message: string;

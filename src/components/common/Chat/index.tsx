@@ -1,14 +1,12 @@
 import React from "react";
 // components
 import { Card } from "components/basic";
-import MessagesContainer from "./components/MessagesContainer";
+import MessagesContainer, { MessagesContainerProps } from "./components/MessagesContainer";
 import ChatForm, { ChatFormProps } from "./components/ChatForm";
 // styles
 import styles from "./styles/Common.module.css";
 // icons
 import { ForumIcon } from "assets/icons/svg";
-// types
-import { MessagesContainerProps } from "./components/MessagesContainer";
 
 export interface ChatProps {
     title: string;

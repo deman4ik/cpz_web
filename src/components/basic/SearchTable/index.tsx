@@ -47,7 +47,7 @@ const SearchTable: React.FC<SearchTableProps> = ({
     tableRows,
     columnsWidth,
     NotDesktopWrapper,
-    moreButton: { handleFetchMore, maxCount, limitStep }
+    moreButton: { handleFetchMore, maxCount }
 }) => {
     /*Работа с форматом отображения*/
     const { width } = useWindowDimensions();

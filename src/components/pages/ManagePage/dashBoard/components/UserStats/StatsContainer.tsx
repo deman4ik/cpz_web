@@ -1,9 +1,8 @@
 import React from "react";
 // components
-import StatsItem from "./StatsItem";
+import StatsItem, { StatsInterface } from "./StatsItem";
 import styles from "components/pages/ManagePage/dashBoard/styles/UserStats.module.css";
 // types
-import { StatsInterface } from "./StatsItem";
 
 interface StatsProps {
     data: Array<StatsInterface>;

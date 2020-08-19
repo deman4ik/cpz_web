@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useMutation } from "@apollo/client";
 
 import { GET_NOTIFICATIONS_AGGREGATE } from "../graphql/user/queries";

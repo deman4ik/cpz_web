@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { DeviceContext } from "../libs/deviceContext";
 
-export const useShowDimension = (width: number, dimension: number) => {
+export const useShowDimension = (width: number, dimension: number): any => {
     const { isMobile } = useContext(DeviceContext);
     const [showDimension, setShowDimension] = useState(!isMobile);
 

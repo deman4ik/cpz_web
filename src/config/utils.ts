@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color } from "./constants";
 
