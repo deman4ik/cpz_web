@@ -4,7 +4,7 @@ import styles from "./Cells.module.css";
 
 export interface DefaultCellWrapperProps {
     style?: React.CSSProperties;
-    children: React.ReactChild;
+    children: React.ReactNode;
 }
 
 /**
