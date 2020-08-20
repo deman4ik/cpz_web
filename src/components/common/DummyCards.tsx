@@ -1,6 +1,6 @@
 import React from "react";
 
-export const DummyCards = (dummyCards: number, cardWidth: number) =>
+export const DummyCards = (dummyCards: number, cardWidth: number): any =>
     Array(dummyCards)
         .fill(null)
         .map(() => (

@@ -53,7 +53,6 @@ export const formatUsers = (data: Array<any>): Array<any> => {
 
             let notificationsSetting;
             let tradingSetting;
-            let signalsSetting;
             /*Форматинг по ключам*/
             switch (key) {
                 case "user":

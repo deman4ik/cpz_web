@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 

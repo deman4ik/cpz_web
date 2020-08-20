@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
 
 export const useDummyCarts = (width: number, cardWidth: number, dataLength: number) => {

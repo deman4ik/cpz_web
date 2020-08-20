@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
 // components
 import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";

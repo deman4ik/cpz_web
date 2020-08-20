@@ -16,7 +16,7 @@ export interface SupportChatProps {
 
 const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
     /*data fetching*/
-    const { messages, loading, error } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
+    const { messages, loading } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
     /*send support message*/
     const [sendSupportMessage, { loading: loadingSend, data: dataSend, error: errorSend }] = useMutation(
         SEND_SUPPOT_MESSAGE

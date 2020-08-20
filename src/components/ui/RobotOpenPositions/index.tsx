@@ -39,7 +39,8 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
         if (!loading && data) {
             setFormatData(funcCall[type]());
         }
-    }, [funcCall, type, data, loading]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, loading]);
 
     return <OpenPositionsComponent formatData={formatData} width={width} displayType={type} />;
 };

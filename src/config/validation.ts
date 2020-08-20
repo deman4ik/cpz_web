@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 export const validateAuth = (values) => {
     const errorFields: string[] = Object.keys(values);
     const errors: {

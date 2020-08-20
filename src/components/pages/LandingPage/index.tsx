@@ -11,7 +11,7 @@ import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
 import { Footer } from "components/layout";
 
-const _LandingPage = () => (
+const _LandingPage: React.FC = () => (
     <>
         <PageHead
             title="Cryptocurrency Trading Platform"

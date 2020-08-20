@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-// types
-import { displayType } from "components/ui/RobotPerformance/types";
+import { useEffect } from "react";
 // services
 import WindowScrollService from "services/WindowScrollService";
 import LocalStorageService from "services/localStorageService";
@@ -11,6 +9,7 @@ import handleSaveScrollPosition from "utils/handleSaveScrollPosition";
  * Hook  сохранения  позиции скролла и скроллинга к это  позиции
  * @param key - тип страницы и ключ для localstorage
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useSaveScroll = (key: string, loading?: any): void => {
     useEffect(() => {
         //обертка  подписки на события

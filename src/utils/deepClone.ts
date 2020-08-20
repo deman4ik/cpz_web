@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 const deepClone = (obj, hash = new WeakMap()) => {
     if (Object(obj) !== obj) return obj; // primitives
     if (hash.has(obj)) return hash.get(obj); // cyclic reference
