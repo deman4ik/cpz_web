@@ -131,13 +131,11 @@ export const register = async (data: { email: string; password: string }, client
             client.writeQuery({
                 query: gql`
                     query {
-                        data @client {
-                            userId
-                        }
+                        userId @client
                     }
                 `,
                 data: {
-                    data: { userId: json.userId }
+                    userId: json.userId
                 }
             });
         } else {
@@ -212,13 +210,11 @@ export const reset = async (email: string, client: any) => {
             client.writeQuery({
                 query: gql`
                     query {
-                        data @client {
-                            userId
-                        }
+                        userId @client
                     }
                 `,
                 data: {
-                    data: { userId: json.userId }
+                    userId: json.userId
                 }
             });
         } else {
