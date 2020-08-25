@@ -2,18 +2,14 @@ import { GET_SEARCH_PROPS } from "../local/queries";
 import gql from "graphql-tag";
 
 export const setModalState = (_root: any, variables: any, context: any) => {
-    context.client.writeQuery(
-        gql`
-            query {
-                data @client {
-                    ModalVisible
-                }
+    context.client.writeQuery({
+        query: gql`
+            query ModalVisible {
+                ModalVisible @client
             }
         `,
-        {
-            data: { ModalVisible: { ...variables, __typename: "ModalVisible" } }
-        }
-    );
+        data: { ModalVisible: { ...variables, __typename: "ModalVisible" } }
+    });
 };
 
 export const setRobot = (_root: any, variables: any, context: any) => {
@@ -24,13 +20,11 @@ export const setRobot = (_root: any, variables: any, context: any) => {
     context.client.writeQuery({
         query: gql`
             query {
-                data @client {
-                    Robot
-                }
+                Robot @client
             }
         `,
         data: {
-            data: { Robot: { ...robotData, __typename: "Robot" } }
+            Robot: { ...robotData, __typename: "Robot" }
         }
     });
     return type;
@@ -40,13 +34,11 @@ export const setChartData = (_root: any, variables: any, context: any) => {
     context.client.writeQuery({
         query: gql`
             query {
-                data @client {
-                    ChartData
-                }
+                ChartData @client
             }
         `,
         data: {
-            data: { ChartData: { ...variables, __typename: "ChartData" } }
+            ChartData: { ...variables, __typename: "ChartData" }
         }
     });
 };
@@ -78,14 +70,10 @@ export const setSearchLimit = (_root: any, variables: any, context: any) => {
     context.client.writeQuery({
         query: gql`
             query {
-                data @client {
-                    Limit
-                }
+                Limit @client
             }
         `,
-        data: {
-            data: { Limit: { [type]: limit, __typename: "Limit" } }
-        }
+        data: { Limit: { [type]: limit, __typename: "Limit" } }
     });
 };
 
@@ -94,14 +82,10 @@ export const setNotificationsProps = (_root: any, variables: any, context: any) 
     context.client.writeQuery({
         query: gql`
             query {
-                data @client {
-                    NotificationsProps
-                }
+                NotificationsProps @client
             }
         `,
-        data: {
-            data: { NotificationsProps: { filters, __typename: "NotificationsProps" } }
-        }
+        data: { NotificationsProps: { filters, __typename: "NotificationsProps" } }
     });
     return filters;
 };
