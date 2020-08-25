@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const USER = gql`
-    query userId @client {
-        userId
+    query {
+        userId @client
     }
 `;
 

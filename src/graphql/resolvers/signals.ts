@@ -79,9 +79,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
             context.cache.writeQuery({
                 query: gql`
                     query {
-                        data @client {
-                            userId
-                        }
+                        userId @client
                     }
                 `,
                 data: { id: idRobots, data }
