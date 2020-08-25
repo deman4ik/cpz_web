@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 // components
 import { Template } from "components/layout/Template";
-import SearchTable from "components/basic/SearchTable";
+import Table from "components/basic/Table";
 import { Modal } from "components/basic";
 import OrderModalInner from "../common/OrderModalInner";
 import SearchPanel from "../common/SearchPanel";
 // utils
-import { userSignalsFormat, getSearchWhere } from "./utils";
+import { rtUserSignalsFormat, getSearchWhere } from "./utils";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // constants
-import { HEADER_TABLE_DATA, COLUMNS_WIDTH } from "./constants";
+import { REACT_TABLE_COLUMNS, COLUMNS_WIDTH } from "./constants";
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
 import { PageType } from "config/types";
@@ -23,7 +23,7 @@ const LIMIT_STEP = 10;
 
 const ManageUserSignals = () => {
     /*States*/
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);
     const [orderState, setOrderState] = useState(INITIAL_ORDER);
     const { width } = useWindowDimensions(); // width hook
@@ -43,7 +43,7 @@ const ManageUserSignals = () => {
     });
 
     /*handlers*/
-    const setOpenModal = () => setIsOpenModal((prev) => !prev);
+    const toggleModal = () => setIsModalVisible((prev) => !prev);
     const callbackMore = () => {
         setLimit(data.user_signals.length + LIMIT_STEP);
     };
@@ -63,7 +63,7 @@ const ManageUserSignals = () => {
     };
     const clearOrder = () => {
         setOrderState(INITIAL_ORDER);
-        setOpenModal();
+        toggleModal();
     };
 
     return (
@@ -72,24 +72,24 @@ const ManageUserSignals = () => {
             width={width}
             page={PageType.userSignals}
             hideToolbar
-            toolbar={<SearchPanel callback={searchCallback} setOpenModal={setOpenModal} clear={clearAll} />}>
+            toolbar={<SearchPanel callback={searchCallback} setOpenModal={toggleModal} clear={clearAll} />}>
             {data?.user_signals?.length && aggrData?.user_signals_aggregate ? (
-                <SearchTable
+                <Table
                     columnsWidth={COLUMNS_WIDTH}
-                    headerData={HEADER_TABLE_DATA}
-                    tableRows={userSignalsFormat(data.user_signals)}
-                    moreButton={{
+                    columns={REACT_TABLE_COLUMNS}
+                    data={rtUserSignalsFormat(data.user_signals)}
+                    loadButton={{
                         limitStep: 10,
                         maxCount: aggrData.user_signals_aggregate.aggregate.count,
                         handleFetchMore: callbackMore
                     }}
                 />
             ) : null}
-            <Modal isOpen={isOpenModal} title="Filter User Signals" onClose={setOpenModal}>
+            <Modal isOpen={isModalVisible} title="Filter User Signals" onClose={toggleModal}>
                 <OrderModalInner
                     orderState={orderState}
                     setOrderState={setOrderState}
-                    closeModal={setOpenModal}
+                    closeModal={toggleModal}
                     clearOrder={clearOrder}
                     sortSettings={SORT_SETTINGS}
                 />

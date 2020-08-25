@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React from "react";
+import React, { Children } from "react";
 // components
 import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
@@ -84,6 +84,56 @@ export const userSignalsFormat = (data: Array<any>) => {
             signalItem.cells.push(cellsAggregated[key]);
         });
         return signalItem;
+    });
+};
+
+export const rtUserSignalsFormat = (data: Array<any>) => {
+    return data.map((signal) => {
+        const row = {};
+        Object.keys(USER_SIGNALS_TITLES_SCHEME).forEach((key) => {
+            switch (key) {
+                case "signal_robot":
+                    row.signal_robot = {
+                        style: { ...cellStyles },
+                        children: (
+                            <>
+                                <p>{signal.robot.code}</p>
+                                <p>
+                                    <span>{signal.id}</span>
+                                </p>
+                            </>
+                        )
+                    };
+                    break;
+                case "user":
+                    row.user = {
+                        style: { cellStyles },
+                        children: (
+                            <>
+                                {signal?.user?.name && <p>{signal.user.name}</p>}
+                                <p>
+                                    <span>{signal.user.id}</span>
+                                </p>
+                            </>
+                        )
+                    };
+                    break;
+                case "subscribe_at":
+                    row.subscribe_at = {
+                        style: { cellStyles },
+                        children: <>{formatDate(signal.subscribed_at)}</>
+                    };
+                    break;
+                case "volume":
+                    row.volume = { style: { cellStyles }, children: <>{signal.volume}</> };
+                    break;
+                default:
+                    if (Object.prototype.hasOwnProperty.call(signal, key)) {
+                        row[key] = { style: { cellStyles }, children: <>{signal[key]}</> };
+                    }
+            }
+        });
+        return row;
     });
 };
 
