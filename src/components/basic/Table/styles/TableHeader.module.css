@@ -2,4 +2,31 @@
     composes: table_cell from "./Common.module.css";
     font-size: var(--small1);
     color: var(--accent);
+    position: relative;
+}
+
+.resizer_wrapper {
+    background: transparent;
+    width: 20px;
+    height: 80%;
+    position: absolute;
+    right: 20px;
+    top: 10%;
+    transform: translateX(50%);
+    z-index: 1;
+    touch-action: none;
+    cursor: col-resize;
+}
+
+.resizer {
+    display: inline-block;
+    background: var(--accent);
+    width: .5px;
+    height: 100%;
+    position: absolute;
+    right: 50%;
+}
+
+.resizer .isResizing {
+    background: #ffffff;
 }
