@@ -33,7 +33,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         </DefaultCellWrapper>
                     );
                     cellsAggregated.signal_robot = {
-                        title: USER_SIGNALS_TITLES_SCHEME.signal_robot.title,
+                        title: USER_SIGNALS_TITLES_SCHEME.signal_robot.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -48,7 +48,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         </DefaultCellWrapper>
                     );
                     cellsAggregated.user = {
-                        title: USER_SIGNALS_TITLES_SCHEME.user.title,
+                        title: USER_SIGNALS_TITLES_SCHEME.user.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -58,7 +58,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         <DefaultCellWrapper style={cellStyles}>{formatDate(signal.subscribed_at)}</DefaultCellWrapper>
                     );
                     cellsAggregated.subscribe_at = {
-                        title: USER_SIGNALS_TITLES_SCHEME.subscribe_at.title,
+                        title: USER_SIGNALS_TITLES_SCHEME.subscribe_at.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -66,7 +66,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                 case "volume":
                     innerComponent = <DefaultCellWrapper style={cellStyles}>{signal.volume}</DefaultCellWrapper>;
                     cellsAggregated.volume = {
-                        title: USER_SIGNALS_TITLES_SCHEME.volume.title,
+                        title: USER_SIGNALS_TITLES_SCHEME.volume.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -75,7 +75,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                     if (Object.prototype.hasOwnProperty.call(signal, key)) {
                         innerComponent = <DefaultCellWrapper style={cellStyles}>{signal[key]}</DefaultCellWrapper>;
                         cellsAggregated[key] = {
-                            title: USER_SIGNALS_TITLES_SCHEME[key].title,
+                            title: USER_SIGNALS_TITLES_SCHEME[key].Header,
                             notDesktopVal: innerComponent,
                             component: innerComponent
                         };
