@@ -1,29 +1,30 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/button-has-type */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { useAsyncDebounce } from "react-table";
+import styles from "../styles/TableHeader.module.css";
+
+import { SearchInput } from "components/basic";
 
 export function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
     const count = preGlobalFilteredRows.length;
     const [value, setValue] = React.useState(globalFilter);
-    const onChange = useAsyncDebounce((val) => {
-        setGlobalFilter(val || undefined);
+    const onChange = useAsyncDebounce((value) => {
+        setGlobalFilter(value || undefined);
     }, 200);
 
     return (
-        <span>
-            Search:{" "}
-            <input
-                value={value || ""}
-                onChange={(e) => {
-                    setValue(e.target.value);
-                    onChange(e.target.value);
-                }}
+        <div>
+            <SearchInput
                 placeholder={`${count} records...`}
-                style={{
-                    fontSize: "1.1rem",
-                    border: "0"
+                value={value || ""}
+                onChange={(value) => {
+                    setValue(value);
+                    onChange(value);
                 }}
             />
-        </span>
+        </div>
     );
 }
 
@@ -45,11 +46,11 @@ export function SelectColumnFilter({ column: { filterValue, setFilter, preFilter
     // Calculate the options for filtering
     // using the preFilteredRows
     const options = React.useMemo(() => {
-        const opts = new Set();
+        const options = new Set();
         preFilteredRows.forEach((row) => {
-            opts.add(row.values[id]);
+            options.add(row.values[id]);
         });
-        return [...opts.values()];
+        return [...options.values()];
     }, [id, preFilteredRows]);
 
     // Render a multi-select box
@@ -69,48 +70,40 @@ export function SelectColumnFilter({ column: { filterValue, setFilter, preFilter
     );
 }
 
-export function NumberRangeColumnFilter({ column: { filterValue = [], preFilteredRows, setFilter, id } }) {
+export function NumberRangeColumnFilter({ column }) {
+    const { filterValue = [], preFilteredRows, setFilter, id } = column;
     const [min, max] = React.useMemo(() => {
-        let minval = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
-        let maxval = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+        let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+        let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
         preFilteredRows.forEach((row) => {
-            minval = Math.min(row.values[id], minval);
-            maxval = Math.max(row.values[id], maxval);
+            min = Math.min(row.values[id], min);
+            max = Math.max(row.values[id], max);
         });
-        return [minval, maxval];
+        return [min, max];
     }, [id, preFilteredRows]);
 
     return (
-        <div
-            style={{
-                display: "flex"
-            }}>
+        <div className={styles.filter_wrapper}>
             <input
+                className={`${styles.between_filter_input} ${styles.between_filter_input_left}`}
                 value={filterValue[0] || ""}
                 type="number"
                 onChange={(e) => {
-                    const val = e.target.value;
-                    setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]]);
+                    const { value } = e.target;
+                    setFilter((old = []) => [value ? parseInt(value, 10) : undefined, old[1]]);
                 }}
-                placeholder={`Min (${min})`}
-                style={{
-                    width: "70px",
-                    marginRight: "0.5rem"
-                }}
+                placeholder={`${min}`}
             />
             to
             <input
+                className={`${styles.between_filter_input} ${styles.between_filter_input_right}`}
                 value={filterValue[1] || ""}
                 type="number"
                 onChange={(e) => {
-                    const val = e.target.value;
-                    setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined]);
+                    const { value } = e.target;
+                    setFilter((old = []) => [old[0], value ? parseInt(value, 10) : undefined]);
                 }}
-                placeholder={`Max (${max})`}
-                style={{
-                    width: "70px",
-                    marginLeft: "0.5rem"
-                }}
+                placeholder={`${max}`}
             />
         </div>
     );

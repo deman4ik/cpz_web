@@ -7,10 +7,10 @@
 
 .resizer_wrapper {
     background: transparent;
-    width: 20px;
+    width: 10px;
     height: 80%;
     position: absolute;
-    right: 20px;
+    right: 2px;
     top: 10%;
     transform: translateX(50%);
     z-index: 1;
@@ -27,6 +27,22 @@
     right: 50%;
 }
 
-.resizer .isResizing {
+.resizer.isResizing {
     background: #ffffff;
+}
+
+.filter_wrapper {
+    margin-top:5px;
+}
+
+.between_filter_input {
+    width: 70px;
+}
+
+.between_filter_input_left {
+    margin-right: .5rem;
+}
+
+.between_filter_input_right {
+    margin-left: .5rem;
 }

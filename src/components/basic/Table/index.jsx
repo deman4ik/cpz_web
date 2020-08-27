@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/button-has-type */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import {
     useTable,
@@ -6,8 +9,7 @@ import {
     useResizeColumns,
     usePagination,
     useFilters,
-    useGlobalFilter,
-    useAsyncDebounce
+    useGlobalFilter
 } from "react-table";
 import matchSorter from "match-sorter";
 import { v4 as uuid } from "uuid";
@@ -20,12 +22,12 @@ import styles from "./styles/Common.module.css";
 import headerStyles from "./styles/TableHeader.module.css";
 import bodyStyles from "./styles/TableBody.module.css";
 import cellStyles from "./styles/TableCells.module.css";
-import paginationStyles from "./styles/TablePagination.module.css";
+import controlsStyles from "./styles/TableControls.module.css";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 
-import { GlobalFilter } from "./components/TableFilters";
+import { GlobalFilter, DefaultColumnFilter, NumberRangeColumnFilter } from "./components/TableFilters";
 
 /*
 export interface TableColumn {
@@ -45,13 +47,6 @@ const renderMobileWrapper = (CustomView, data) => {
     return CustomView ? <CustomView data={data} /> : <DefaultMobileWrapper tableRows={data} />;
 };
 
-function fuzzyTextFilterFn(rows, id, filterValue) {
-    return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
-}
-
-// Let the table remove the filter if the string is empty
-fuzzyTextFilterFn.autoRemove = (val) => !val;
-
 function filterGreaterThan(rows, id, filterValue) {
     return rows.filter((row) => {
         const rowValue = row.values[id];
@@ -65,16 +60,12 @@ function filterGreaterThan(rows, id, filterValue) {
 // check, but here, we want to remove the filter if it's not a number
 filterGreaterThan.autoRemove = (val) => typeof val !== "number";
 
-const Table = ({ columns, data, MobileWrapper }) => {
+const Table = ({ columns, data }) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
     const filterTypes = React.useMemo(
         () => ({
-            // Add a new fuzzyTextFilterFn filter type.
-            fuzzyText: fuzzyTextFilterFn,
-            // Or, override the default text filter to use
-            // "startWith"
             text: (rows, id, filterValue) => {
                 return rows.filter((row) => {
                     const rowValue = row.values[id];
@@ -82,16 +73,15 @@ const Table = ({ columns, data, MobileWrapper }) => {
                         ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase())
                         : true;
                 });
+            },
+            between: (rows, id, filterValue) => {
+                const min = filterValue[0] || 0;
+                const max = filterValue[1] || Infinity;
+                return rows.filter((row) => {
+                    const rowValue = row.values[id];
+                    return rowValue >= min && rowValue <= max;
+                });
             }
-        }),
-        []
-    );
-
-    const defaultColumn = React.useMemo(
-        () => ({
-            minWidth: 50,
-            width: 200,
-            maxWidth: 300
         }),
         []
     );
@@ -117,10 +107,18 @@ const Table = ({ columns, data, MobileWrapper }) => {
         setGlobalFilter
     } = useTable(
         {
-            columns,
-            data,
-            defaultColumn
-            // initialState: { pageIndex: 0 }
+            columns: React.useMemo(
+                () =>
+                    columns.map((col) => {
+                        return {
+                            ...col,
+                            Filter: col.filter === "between" ? NumberRangeColumnFilter : ""
+                        };
+                    }),
+                [columns]
+            ),
+            data: React.useMemo(() => data, [data]),
+            filterTypes
         },
         useFlexLayout,
         useResizeColumns,
@@ -133,20 +131,58 @@ const Table = ({ columns, data, MobileWrapper }) => {
     return (
         <div className={styles.wrapper}>
             <table {...getTableProps()} className={styles.table}>
-                <tr className={`${styles.table_row} ${styles.noselect}`}>
-                    <th
-                        className={headerStyles.table_header_cell}
-                        colSpan={visibleColumns.length}
-                        style={{
-                            textAlign: "right"
-                        }}>
+                <thead>
+                    <tr className={`${styles.table_row} ${styles.noselect}`}>
+                        <td className={`${controlsStyles.control_container} ${headerStyles.table_header_cell}`}>
+                            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                                {"<<"}
+                            </button>{" "}
+                            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                                {"<"}
+                            </button>{" "}
+                            <button onClick={() => nextPage()} disabled={!canNextPage}>
+                                {">"}
+                            </button>{" "}
+                            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                                {">>"}
+                            </button>{" "}
+                            <span>
+                                Page{" "}
+                                <strong>
+                                    {pageIndex + 1} of {pageOptions.length}
+                                </strong>{" "}
+                            </span>
+                            <span>
+                                | Go to page:{" "}
+                                <input
+                                    type="number"
+                                    defaultValue={pageIndex + 1}
+                                    onChange={(e) => {
+                                        const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                                        gotoPage(page);
+                                    }}
+                                    style={{ width: "100px" }}
+                                />
+                            </span>{" "}
+                            <select
+                                value={pageSize}
+                                onChange={(e) => {
+                                    setPageSize(Number(e.target.value));
+                                }}>
+                                {[10, 20, 30, 40, 50].map((pageSize) => (
+                                    <option key={pageSize} value={pageSize}>
+                                        Show {pageSize}
+                                    </option>
+                                ))}
+                            </select>
+                        </td>
                         <GlobalFilter
                             preGlobalFilteredRows={preGlobalFilteredRows}
                             globalFilter={state.globalFilter}
                             setGlobalFilter={setGlobalFilter}
                         />
-                    </th>
-                </tr>
+                    </tr>
+                </thead>
             </table>
             <table {...getTableProps()} className={styles.table}>
                 <thead>
@@ -163,13 +199,13 @@ const Table = ({ columns, data, MobileWrapper }) => {
                                     </div>
                                     <div {...column.getResizerProps()} className={headerStyles.resizer_wrapper}>
                                         <div
-                                            className={`${headerStyles.resizer} ${column.isResizing ? "isResizing" : ""}
+                                            className={`${headerStyles.resizer} ${
+                                                column.isResizing ? `${headerStyles.isResizing}` : ""
+                                            }
                                             `}
                                         />
                                     </div>
-                                    {
-                                        //<div>{column.canFilter ? column.render("Filter") : null}</div>
-                                    }
+                                    {column.canFilter ? column.render("Filter") : null}
                                 </td>
                             ))}
                         </tr>
@@ -182,7 +218,7 @@ const Table = ({ columns, data, MobileWrapper }) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()} className={bodyStyles.body_row} key={uuid()}>
-                                {row.cells.map((cell, i) => (
+                                {row.cells.map((cell) => (
                                     <td
                                         {...cell.getCellProps()}
                                         className={`${styles.table_cell} ${cellStyles.default_cells_wrapper}`}
@@ -195,49 +231,6 @@ const Table = ({ columns, data, MobileWrapper }) => {
                     })}
                 </tbody>
             </table>
-            <div className={`${paginationStyles.pagination_container} ${cellStyles.default_cells_wrapper}`}>
-                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {"<<"}
-                </button>{" "}
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                    {"<"}
-                </button>{" "}
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                    {">"}
-                </button>{" "}
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {">>"}
-                </button>{" "}
-                <span>
-                    Page{" "}
-                    <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                    </strong>{" "}
-                </span>
-                <span>
-                    | Go to page:{" "}
-                    <input
-                        type="number"
-                        defaultValue={pageIndex + 1}
-                        onChange={(e) => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                            gotoPage(page);
-                        }}
-                        style={{ width: "100px" }}
-                    />
-                </span>{" "}
-                <select
-                    value={pageSize}
-                    onChange={(e) => {
-                        setPageSize(Number(e.target.value));
-                    }}>
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
-            </div>
         </div>
     );
 };

@@ -4,9 +4,6 @@ import { useQuery } from "@apollo/client";
 // components
 import { Template } from "components/layout/Template";
 import Table from "components/basic/Table";
-import { Modal } from "components/basic";
-import OrderModalInner from "../common/OrderModalInner";
-import SearchPanel from "../common/SearchPanel";
 // utils
 import { rtUserSignalsFormat, getSearchWhere } from "./utils";
 // hooks
@@ -66,11 +63,7 @@ const ManageUserSignals = () => {
     return (
         <Template title="User signals" width={width} page={PageType.userSignals} hideToolbar>
             {data?.user_signals?.length && aggrData?.user_signals_aggregate ? (
-                <Table
-                    columnsWidth={COLUMNS_WIDTH}
-                    columns={REACT_TABLE_COLUMNS}
-                    data={rtUserSignalsFormat(data.user_signals)}
-                />
+                <Table columns={REACT_TABLE_COLUMNS} data={rtUserSignalsFormat(data.user_signals)} />
             ) : null}
         </Template>
     );

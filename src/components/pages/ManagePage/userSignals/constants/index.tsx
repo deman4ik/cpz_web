@@ -1,21 +1,47 @@
+const id_widths = {
+    minWidth: 125,
+    width: 175,
+    maxWidth: 220
+};
+const val_widths = {
+    minWidth: 100,
+    width: 120,
+    maxWidth: 150
+};
 export const USER_SIGNALS_TITLES_SCHEME = {
     signal_robot: {
-        title: "Signal Robot"
+        ...id_widths,
+        Header: "Signal Robot",
+        disableFilters: true
     },
     robot_id: {
-        title: "Robot ID"
+        ...id_widths,
+        Header: "Robot ID",
+        disableFilters: true
     },
     user: {
-        title: "User"
+        ...val_widths,
+        Header: "User",
+        disableFilters: true
     },
     user_id: {
-        title: "User ID"
+        ...id_widths,
+        Header: "User ID",
+        disableFilters: true
     },
     subscribe_at: {
-        title: "Subscribed"
+        ...val_widths,
+        Header: "Subscribed",
+        disableFilters: true,
+        sortType: (rowA, rowB, id) => {
+            return new Date(rowA.values[id]) > new Date(rowB.values[id]) ? -1 : 1;
+        }
     },
     volume: {
-        title: "Volume"
+        ...val_widths,
+        Header: "Volume",
+        filter: "between",
+        sortType: "basic"
     }
 };
 
@@ -23,10 +49,10 @@ export const COLUMNS_WIDTH = ["20%", "20%", "10%", "25%", "15%", "10%"];
 
 /*HEAD TITLES*/
 export const HEADER_TABLE_DATA = Object.keys(USER_SIGNALS_TITLES_SCHEME).map((key) => ({
-    text: USER_SIGNALS_TITLES_SCHEME[key].title
+    text: USER_SIGNALS_TITLES_SCHEME[key].Header
 }));
 
 export const REACT_TABLE_COLUMNS = Object.entries(USER_SIGNALS_TITLES_SCHEME).map(([key, val]) => ({
-    Header: val.title,
+    ...val,
     accessor: key
 }));
