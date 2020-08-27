@@ -24,7 +24,8 @@
           "assets/*": ["./src/assets/*"],
           "services/*": ["./src/services/*"],
           "utils/*": ["./src/utils/*"]
-        }
+        },
+        "checkJs": false
     },
     "exclude": ["node_modules"],
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

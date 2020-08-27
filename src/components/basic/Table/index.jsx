@@ -27,18 +27,19 @@ import { useShowDimension } from "hooks/useShowDimension";
 
 import { GlobalFilter } from "./components/TableFilters";
 
+/*
 export interface TableColumn {
     Header: any;
     accessor: any;
 }
 
-/*types*/
 export interface TableProps {
     columns: TableColumn[];
     data: Array<any>;
     columnsWidth?: Array<string>;
     MobileWrapper?: React.Component | React.FC;
 }
+*/
 
 const renderMobileWrapper = (CustomView, data) => {
     return CustomView ? <CustomView data={data} /> : <DefaultMobileWrapper tableRows={data} />;
@@ -64,7 +65,7 @@ function filterGreaterThan(rows, id, filterValue) {
 // check, but here, we want to remove the filter if it's not a number
 filterGreaterThan.autoRemove = (val) => typeof val !== "number";
 
-const Table: React.FC<TableProps> = ({ columns, data, MobileWrapper }) => {
+const Table = ({ columns, data, MobileWrapper }) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
@@ -118,8 +119,7 @@ const Table: React.FC<TableProps> = ({ columns, data, MobileWrapper }) => {
         {
             columns,
             data,
-            defaultColumn,
-            filterTypes
+            defaultColumn
             // initialState: { pageIndex: 0 }
         },
         useFlexLayout,
