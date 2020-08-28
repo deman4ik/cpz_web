@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";

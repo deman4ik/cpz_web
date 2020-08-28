@@ -1,3 +1,4 @@
+/*eslint-disable react/no-danger */
 import React from "react";
 // styles
 import styles from "../styles/UserChats.module.css";

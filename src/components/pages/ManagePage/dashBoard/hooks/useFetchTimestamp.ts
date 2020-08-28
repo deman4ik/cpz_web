@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 // graphql
 import { GET_USER_STATS_DURING_PERIOD } from "graphql/manage/queries";

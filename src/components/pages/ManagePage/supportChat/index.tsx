@@ -1,5 +1,6 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";

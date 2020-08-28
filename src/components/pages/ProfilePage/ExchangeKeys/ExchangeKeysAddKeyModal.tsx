@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
@@ -126,7 +125,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
             );
             if (!inputExchange && data.exchanges && data.exchanges.length > 0) setInputExchange(data.exchanges[0].code);
         }
-    }, [data]);
+    }, [inputExchange, loading, data]);
 
     useEffect(() => {
         if (!loadingCheck && options) {
@@ -135,7 +134,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
                 dataCheck.user_robots.some((el) => checkElements.includes(el.status)) && options.status !== "invalid"
             );
         }
-    }, [loadingCheck, dataCheck]);
+    }, [options, loadingCheck, dataCheck]);
 
     return (
         <>

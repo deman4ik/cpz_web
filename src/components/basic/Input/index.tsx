@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
 
 import { Button } from "../Button";

@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useState, useEffect } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { SECRET_CODE_LENGTH } from "config/constants";
 import { CHANGE_USER_EMAIL, CONFIRM_USER_EMAIL } from "graphql/user/mutations";
@@ -40,7 +39,7 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
 
     useEffect(() => {
         setTitle(steps[0]);
-    }, []);
+    }, [setTitle]);
 
     const onAcceptEmail = () => {
         sendChangeEmail().then((response) => {

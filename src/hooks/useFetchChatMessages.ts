@@ -1,5 +1,6 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useEffect, useState } from "react";
-import { useSubscription } from "@apollo/react-hooks";
+import { useSubscription } from "@apollo/client";
 
 /**
  * Hook фетчинга сообщений для чата

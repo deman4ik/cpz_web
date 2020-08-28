@@ -1,5 +1,6 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 // components
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";

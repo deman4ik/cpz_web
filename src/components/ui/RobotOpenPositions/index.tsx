@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 // components
 import { OpenPositionsComponent } from "./OpenPositionsComponent";
@@ -40,6 +39,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
         if (!loading && data) {
             setFormatData(funcCall[type]());
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading]);
 
     return <OpenPositionsComponent formatData={formatData} width={width} displayType={type} />;

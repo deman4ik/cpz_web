@@ -1,4 +1,5 @@
-import { useMutation } from "@apollo/react-hooks";
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
+import { useMutation } from "@apollo/client";
 
 import { GET_NOTIFICATIONS_AGGREGATE } from "../graphql/user/queries";
 import { UPDATE_NOTIFICATIONS } from "../graphql/user/mutations";

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import { DeviceContext } from "../libs/deviceContext";
 
@@ -13,7 +12,7 @@ function getWindowDimensions(isMobile: boolean) {
     return { width: !isMobile ? 1200 : 0, height: !isMobile ? 800 : 0 };
 }
 
-export default function useWindowDimensions() {
+export default function useWindowDimensions(): any {
     const { isMobile } = useContext(DeviceContext);
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions(isMobile));
 
@@ -24,7 +23,7 @@ export default function useWindowDimensions() {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [isMobile]);
 
     return windowDimensions;
 }

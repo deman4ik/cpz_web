@@ -1,5 +1,6 @@
-//import fetch from 'cross-fetch';
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { setAccessToken } from "./accessToken";
+import gql from "graphql-tag";
 
 interface Headers {
     Accept: string;
@@ -127,8 +128,15 @@ export const register = async (data: { email: string; password: string }, client
         const json = await res.json();
         if (json.success) {
             result.success = true;
-            client.writeData({
-                data: { userId: json.userId }
+            client.writeQuery({
+                query: gql`
+                    query {
+                        userId @client
+                    }
+                `,
+                data: {
+                    userId: json.userId
+                }
             });
         } else {
             result.error = json.error;
@@ -199,8 +207,15 @@ export const reset = async (email: string, client: any) => {
         const json = await res.json();
         if (json.success) {
             result.success = true;
-            client.writeData({
-                data: { userId: json.userId }
+            client.writeQuery({
+                query: gql`
+                    query {
+                        userId @client
+                    }
+                `,
+                data: {
+                    userId: json.userId
+                }
             });
         } else {
             result.error = json.error;

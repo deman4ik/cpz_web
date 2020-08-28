@@ -1,10 +1,8 @@
 import React from "react";
 // components
-import UserChat from "./UserChat";
+import UserChat, { UserChatProps } from "./UserChat";
 // styles
 import styles from "../styles/UserChats.module.css";
-// types
-import { UserChatProps } from "./UserChat";
 
 export interface UsersChatsProps {
     data: Array<UserChatProps>;

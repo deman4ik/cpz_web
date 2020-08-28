@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { useDebounce } from "hooks/useDebounce";
 import { SET_SEARCH_PROPS } from "graphql/local/mutations";
@@ -60,7 +59,7 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
         if (filters.name && filters.name._ilike) {
             setValue(filters.name._ilike.slice(1, -1));
         }
-    }, []);
+    }, [displayType, data]);
 
     useEffect(() => {
         const search = getSearchProps(data, displayType);
@@ -79,7 +78,7 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
             }
         ]);
         setFilter({ variables });
-    }, [debounceValue]);
+    }, [setFilter, data, displayType, debounceValue]);
 
     return (
         <div className={styles.container}>

@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
 
 export const useDummyCarts = (width: number, cardWidth: number, dataLength: number) => {
@@ -10,7 +10,7 @@ export const useDummyCarts = (width: number, cardWidth: number, dataLength: numb
             const module = dataLength % cardsInARow;
             setDummyCards(module ? cardsInARow - module : 0);
         }
-    }, [width]);
+    }, [dataLength, cardWidth, width]);
 
     return { dummyCards };
 };

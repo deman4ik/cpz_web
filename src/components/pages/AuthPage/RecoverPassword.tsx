@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
 import { USER } from "graphql/local/queries";
@@ -30,27 +29,26 @@ export const RecoverPassword: React.FC = () => {
         handleSubmit();
     };
 
-    const recoverPassword = async () => {
-        const result = await recover({
-            userId: data.userId,
-            secretCode: values.verificationCode,
-            password: values.password
-        });
-        if (result.success) {
-            Router.push("/auth/done");
-        } else {
-            errors.verificationCode = result.error;
-            setValid(false);
-            setIsFetching(false);
-        }
-    };
-
     useEffect(() => {
+        const recoverPassword = async () => {
+            const result = await recover({
+                userId: data.userId,
+                secretCode: values.verificationCode,
+                password: values.password
+            });
+            if (result.success) {
+                Router.push("/auth/done");
+            } else {
+                errors.verificationCode = result.error;
+                setValid(false);
+                setIsFetching(false);
+            }
+        };
         if (isValid) {
             setIsFetching(true);
             recoverPassword();
         }
-    }, [isValid]);
+    }, [data.userId, errors, isValid, setValid, values.password, values.verificationCode]);
 
     return (
         <div className={styles.container}>

@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 

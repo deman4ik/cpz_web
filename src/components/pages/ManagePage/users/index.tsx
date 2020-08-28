@@ -1,5 +1,6 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 // components
 import { Template } from "components/layout/Template";
 import SearchTable from "components/basic/SearchTable";
@@ -22,7 +22,7 @@ import { formatFilters } from "../common/OrderModalInner/utils";
 
 const LIMIT_STEP = 10;
 
-const ManageRobots = () => {
+const ManageRobots: React.FC = () => {
     /*States*/
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [limit, setLimit] = useState(LIMIT_STEP);

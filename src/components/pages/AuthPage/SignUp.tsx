@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
@@ -29,24 +28,23 @@ export const SignUp: React.FC = () => {
         handleSubmit();
     };
 
-    const registerUser = async () => {
-        const result = await register({ email: values.email, password: values.password }, client);
-
-        if (result.success) {
-            Router.push("/auth/verification");
-        } else {
-            errors.email = result.error;
-            setIsFetching(false);
-            setValid(false);
-        }
-    };
-
     useEffect(() => {
+        const registerUser = async () => {
+            const result = await register({ email: values.email, password: values.password }, client);
+
+            if (result.success) {
+                Router.push("/auth/verification");
+            } else {
+                errors.email = result.error;
+                setIsFetching(false);
+                setValid(false);
+            }
+        };
         if (isValid) {
             setIsFetching(true);
             registerUser();
         }
-    }, [isValid]);
+    }, [client, errors, isValid, setValid, values]);
 
     return (
         <div className={styles.container}>

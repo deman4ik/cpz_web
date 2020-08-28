@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 export const GA_TRACKING_ID = "G-37BGBQ6GCK";
 export const AW_CONVERSION_ID = "AW-971308941";
 

@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
 import { LOCALHOST } from "../config/constants";

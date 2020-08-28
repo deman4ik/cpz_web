@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
 import { confirm } from "libs/auth";
@@ -23,16 +22,6 @@ export const Verification: React.FC = () => {
         validateAuth
     );
 
-    const confirmCode = async () => {
-        const result = await confirm({ userId: data.userId, secretCode: values.verificationCode });
-        if (result.success) {
-            Router.push("/auth/activate");
-        } else {
-            errors.verificationCode = result.error;
-            setValid(false);
-        }
-    };
-
     const handleOnPress = async () => {
         handleSubmit();
     };
@@ -44,10 +33,19 @@ export const Verification: React.FC = () => {
     }, [data, loading]);
 
     useEffect(() => {
+        const confirmCode = async () => {
+            const result = await confirm({ userId: data.userId, secretCode: values.verificationCode });
+            if (result.success) {
+                Router.push("/auth/activate");
+            } else {
+                errors.verificationCode = result.error;
+                setValid(false);
+            }
+        };
         if (isValid) {
             confirmCode();
         }
-    }, [isValid]);
+    }, [data.userId, errors, isValid, setValid, values.verificationCode]);
 
     return (
         <div className={styles.container}>

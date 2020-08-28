@@ -1,10 +1,11 @@
-import React, { memo, useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import React, { memo, useContext, useState } from "react";
+import { useMutation } from "@apollo/client";
 
 import { SET_USER_NAME } from "graphql/user/mutations";
 import { GET_USER_INFO } from "graphql/user/queries";
 import { Button, Input } from "components/basic";
 import { MIN_NAME_LENGTH } from "config/constants";
+import { AuthContext } from "libs/hoc/authContext";
 import styles from "./PasswordModal.module.css";
 
 interface Props {
@@ -13,11 +14,15 @@ interface Props {
 }
 
 const _NameModal: React.FC<Props> = ({ name, onClose }) => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     const [formError, setFormError] = useState("");
     const [inputValue, setInputValue] = useState(name);
     const [sendData, { loading, error }] = useMutation(SET_USER_NAME, {
         variables: { name: inputValue },
-        refetchQueries: [{ query: GET_USER_INFO }]
+        refetchQueries: [{ query: GET_USER_INFO, variables: { user_id } }]
     });
 
     if (error) {

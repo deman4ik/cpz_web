@@ -1,3 +1,4 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useContext } from "react";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";

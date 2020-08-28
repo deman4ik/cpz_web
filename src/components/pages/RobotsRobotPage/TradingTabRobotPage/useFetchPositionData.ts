@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 import {
@@ -57,7 +56,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
 
     const quantyRecords = useMemo(
         () => (!loadingAggregate && dataCount ? dataCount[`${tableName}_aggregate`].aggregate.count : 0),
-        [dataCount, loadingAggregate]
+        [tableName, dataCount, loadingAggregate]
     );
 
     const handleLoadMore = () => {
