@@ -4,7 +4,7 @@ import React from "react";
 import { DefaultCellWrapper } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
 // constants
-import { USER_SIGNALS_TITLES_SCHEME } from "../constants";
+import { USER_SIGNALS_HEADERS_SCHEME } from "../constants";
 // utils
 import { formatDate } from "config/utils";
 
@@ -20,7 +20,7 @@ export const userSignalsFormat = (data: Array<any>) => {
     return data.map((signal) => {
         const signalItem = { cells: [], NotDesktopView: DefaultNotDesktopView };
         const cellsAggregated: any = {};
-        Object.keys(USER_SIGNALS_TITLES_SCHEME).forEach((key) => {
+        Object.keys(USER_SIGNALS_HEADERS_SCHEME).forEach((key) => {
             let innerComponent;
             switch (key) {
                 case "signal_robot":
@@ -33,7 +33,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         </DefaultCellWrapper>
                     );
                     cellsAggregated.signal_robot = {
-                        title: USER_SIGNALS_TITLES_SCHEME.signal_robot.Header,
+                        title: USER_SIGNALS_HEADERS_SCHEME.signal_robot.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -48,7 +48,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         </DefaultCellWrapper>
                     );
                     cellsAggregated.user = {
-                        title: USER_SIGNALS_TITLES_SCHEME.user.Header,
+                        title: USER_SIGNALS_HEADERS_SCHEME.user.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -58,7 +58,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                         <DefaultCellWrapper style={cellStyles}>{formatDate(signal.subscribed_at)}</DefaultCellWrapper>
                     );
                     cellsAggregated.subscribe_at = {
-                        title: USER_SIGNALS_TITLES_SCHEME.subscribe_at.Header,
+                        title: USER_SIGNALS_HEADERS_SCHEME.subscribe_at.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -66,7 +66,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                 case "volume":
                     innerComponent = <DefaultCellWrapper style={cellStyles}>{signal.volume}</DefaultCellWrapper>;
                     cellsAggregated.volume = {
-                        title: USER_SIGNALS_TITLES_SCHEME.volume.Header,
+                        title: USER_SIGNALS_HEADERS_SCHEME.volume.Header,
                         component: innerComponent,
                         notDesktopVal: innerComponent
                     };
@@ -75,7 +75,7 @@ export const userSignalsFormat = (data: Array<any>) => {
                     if (Object.prototype.hasOwnProperty.call(signal, key)) {
                         innerComponent = <DefaultCellWrapper style={cellStyles}>{signal[key]}</DefaultCellWrapper>;
                         cellsAggregated[key] = {
-                            title: USER_SIGNALS_TITLES_SCHEME[key].Header,
+                            title: USER_SIGNALS_HEADERS_SCHEME[key].Header,
                             notDesktopVal: innerComponent,
                             component: innerComponent
                         };
@@ -94,7 +94,7 @@ export const rtUserSignalsFormat = (data: Array<any>) => {
         Object.defineProperty(row, "robot_id", { value: signal.id, writable: false });
         Object.defineProperty(row, "user", { value: signal?.user?.name, writable: false });
         Object.defineProperty(row, "user_id", { value: signal.user.id, writable: false });
-        Object.defineProperty(row, "subscribe_at", { value: formatDate(signal.subscribed_at), writable: false });
+        Object.defineProperty(row, "subscribed_at", { value: formatDate(signal.subscribed_at), writable: false });
         Object.defineProperty(row, "volume", { value: parseFloat(signal.volume), writable: false });
         return row;
     });

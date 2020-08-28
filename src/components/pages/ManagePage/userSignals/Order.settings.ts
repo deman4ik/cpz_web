@@ -19,8 +19,5 @@ export const SORT_SETTINGS = {
 };
 
 export const INITIAL_ORDER: OrderInterface = {
-    sort: {
-        name: null,
-        order_by: null
-    }
+    sort: null
 };

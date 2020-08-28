@@ -2,29 +2,24 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
-import { useAsyncDebounce } from "react-table";
 import styles from "../styles/TableHeader.module.css";
 
 import { SearchInput } from "components/basic";
 
-export function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
-    const count = preGlobalFilteredRows.length;
-    const [value, setValue] = React.useState(globalFilter);
-    const onChange = useAsyncDebounce((value) => {
-        setGlobalFilter(value || undefined);
-    }, 200);
+export function GlobalFilter({ itemsCount, onChangeSearch }) {
+    const [value, setValue] = React.useState("");
 
     return (
-        <div>
+        <td>
             <SearchInput
-                placeholder={`${count} records...`}
+                placeholder={`Search through ${itemsCount} records...`}
                 value={value || ""}
                 onChange={(value) => {
                     setValue(value);
-                    onChange(value);
+                    onChangeSearch(value);
                 }}
             />
-        </div>
+        </td>
     );
 }
 

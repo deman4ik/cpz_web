@@ -1,17 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from "react";
-import {
-    useTable,
-    useSortBy,
-    useBlockLayout,
-    useResizeColumns,
-    usePagination,
-    useFilters,
-    useGlobalFilter
-} from "react-table";
-import matchSorter from "match-sorter";
+import React, { useEffect } from "react";
+import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
 import { v4 as uuid } from "uuid";
 // components
 import DefaultMobileWrapper from "./components/DefaultMobileWrapper";
@@ -27,46 +18,25 @@ import controlsStyles from "./styles/TableControls.module.css";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 
-import { GlobalFilter, DefaultColumnFilter, NumberRangeColumnFilter } from "./components/TableFilters";
-
-/*
-export interface TableColumn {
-    Header: any;
-    accessor: any;
-}
-
-export interface TableProps {
-    columns: TableColumn[];
-    data: Array<any>;
-    columnsWidth?: Array<string>;
-    MobileWrapper?: React.Component | React.FC;
-}
-*/
+import { GlobalFilter } from "./components/TableFilters";
 
 const renderMobileWrapper = (CustomView, data) => {
     return CustomView ? <CustomView data={data} /> : <DefaultMobileWrapper tableRows={data} />;
 };
 
-function filterGreaterThan(rows, id, filterValue) {
-    return rows.filter((row) => {
-        const rowValue = row.values[id];
-        return rowValue >= filterValue;
-    });
-}
-
-// This is an autoRemove method on the filter function that
-// when given the new filter value and returns true, the filter
-// will be automatically removed. Normally this is just an undefined
-// check, but here, we want to remove the filter if it's not a number
-filterGreaterThan.autoRemove = (val) => typeof val !== "number";
-
-const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: ControlledPageCount }) => {
+const Table = ({
+    columns,
+    data,
+    pageSizeOptions,
+    setLimit,
+    setPageIndex,
+    pageCount: ControlledPageCount,
+    itemsCount,
+    onChangeSearch,
+    onChangeSort
+}) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
-
-    const defaultColumn = {
-        disableFilters: true
-    };
 
     const {
         getTableProps,
@@ -74,8 +44,7 @@ const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: Contr
         headerGroups,
         page,
         prepareRow,
-        state: { pageIndex, pageSize },
-        state,
+        state: { pageIndex, pageSize, sortBy },
         canPreviousPage,
         canNextPage,
         pageOptions,
@@ -83,39 +52,36 @@ const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: Contr
         gotoPage,
         nextPage,
         previousPage,
-        setPageSize,
-        preGlobalFilteredRows,
-        setGlobalFilter
+        setPageSize
     } = useTable(
         {
             columns,
             data,
-            defaultColumn,
+            initialState: { pageIndex: 0 },
             manualPagination: true,
-            pageCount: ControlledPageCount
+            pageCount: ControlledPageCount,
+            autoResetPage: false,
+            manualSortBy: true,
+            disableSortRemove: true,
+            disableMultiSort: true,
+            autoResetSortBy: false
         },
         useBlockLayout,
         useResizeColumns,
-        useFilters,
-        useGlobalFilter,
         useSortBy,
         usePagination
     );
 
-    React.useEffect(() => {
-        fetchData({ pageIndex, pageSize });
-    }, [fetchData, pageIndex, pageSize]);
+    useEffect(() => {
+        onChangeSort(sortBy[0]);
+    }, [onChangeSort, sortBy]);
 
     return (
         <div className={styles.wrapper}>
             <table {...getTableProps()} className={styles.table}>
                 <thead>
                     <tr className={`${styles.table_row} ${styles.noselect}`}>
-                        <GlobalFilter
-                            preGlobalFilteredRows={preGlobalFilteredRows}
-                            globalFilter={state.globalFilter}
-                            setGlobalFilter={setGlobalFilter}
-                        />
+                        <GlobalFilter itemsCount={itemsCount} onChangeSearch={onChangeSearch} />
                     </tr>
                 </thead>
             </table>
@@ -167,16 +133,36 @@ const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: Contr
                 </tbody>
             </table>
             <div className={`${controlsStyles.control_container} ${headerStyles.table_header_cell}`}>
-                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                <button
+                    onClick={() => {
+                        setPageIndex(0);
+                        gotoPage(0);
+                    }}
+                    disabled={!canPreviousPage}>
                     {"<<"}
                 </button>{" "}
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                <button
+                    onClick={() => {
+                        setPageIndex(pageIndex - 1);
+                        previousPage();
+                    }}
+                    disabled={!canPreviousPage}>
                     {"<"}
                 </button>{" "}
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                <button
+                    onClick={() => {
+                        setPageIndex(pageIndex + 1);
+                        nextPage();
+                    }}
+                    disabled={!canNextPage}>
                     {">"}
                 </button>{" "}
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                <button
+                    onClick={() => {
+                        setPageIndex(pageCount - 1);
+                        gotoPage(pageCount - 1);
+                    }}
+                    disabled={!canNextPage}>
                     {">>"}
                 </button>{" "}
                 <span>
@@ -192,6 +178,7 @@ const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: Contr
                         defaultValue={pageIndex + 1}
                         onChange={(e) => {
                             const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                            setPageIndex(page);
                             gotoPage(page);
                         }}
                         style={{ width: "100px" }}
@@ -200,10 +187,10 @@ const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: Contr
                 <select
                     value={pageSize}
                     onChange={(e) => {
-                        setLimit(e.target.value);
+                        setLimit(Number(e.target.value));
                         setPageSize(Number(e.target.value));
                     }}>
-                    {[100, 500, 1000].map((pageSize) => (
+                    {pageSizeOptions.map((pageSize) => (
                         <option key={pageSize} value={pageSize}>
                             Show {pageSize}
                         </option>

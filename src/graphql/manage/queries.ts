@@ -151,8 +151,13 @@ export const ROBOTS_AGGREGATE = gql`
  * Использование: manage/user_signals
  */
 export const GET_USER_SIGNALS = gql`
-    query get_user_signals($limit: Int, $where: user_signals_bool_exp, $order_by: [user_signals_order_by!]) {
-        user_signals(limit: $limit, where: $where, order_by: $order_by) {
+    query get_user_signals(
+        $limit: Int
+        $offset: Int
+        $where: user_signals_bool_exp
+        $order_by: [user_signals_order_by!]
+    ) {
+        user_signals(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             id
             robot {
                 code
