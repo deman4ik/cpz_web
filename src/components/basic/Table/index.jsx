@@ -5,7 +5,7 @@ import React from "react";
 import {
     useTable,
     useSortBy,
-    useFlexLayout,
+    useBlockLayout,
     useResizeColumns,
     usePagination,
     useFilters,
@@ -60,31 +60,13 @@ function filterGreaterThan(rows, id, filterValue) {
 // check, but here, we want to remove the filter if it's not a number
 filterGreaterThan.autoRemove = (val) => typeof val !== "number";
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, setLimit, fetchData, isLoading, pageCount: ControlledPageCount }) => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
-    const filterTypes = React.useMemo(
-        () => ({
-            text: (rows, id, filterValue) => {
-                return rows.filter((row) => {
-                    const rowValue = row.values[id];
-                    return rowValue !== undefined
-                        ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase())
-                        : true;
-                });
-            },
-            between: (rows, id, filterValue) => {
-                const min = filterValue[0] || 0;
-                const max = filterValue[1] || Infinity;
-                return rows.filter((row) => {
-                    const rowValue = row.values[id];
-                    return rowValue >= min && rowValue <= max;
-                });
-            }
-        }),
-        []
-    );
+    const defaultColumn = {
+        disableFilters: true
+    };
 
     const {
         getTableProps,
@@ -102,25 +84,17 @@ const Table = ({ columns, data }) => {
         nextPage,
         previousPage,
         setPageSize,
-        visibleColumns,
         preGlobalFilteredRows,
         setGlobalFilter
     } = useTable(
         {
-            columns: React.useMemo(
-                () =>
-                    columns.map((col) => {
-                        return {
-                            ...col,
-                            Filter: col.filter === "between" ? NumberRangeColumnFilter : ""
-                        };
-                    }),
-                [columns]
-            ),
-            data: React.useMemo(() => data, [data]),
-            filterTypes
+            columns,
+            data,
+            defaultColumn,
+            manualPagination: true,
+            pageCount: ControlledPageCount
         },
-        useFlexLayout,
+        useBlockLayout,
         useResizeColumns,
         useFilters,
         useGlobalFilter,
@@ -128,54 +102,15 @@ const Table = ({ columns, data }) => {
         usePagination
     );
 
+    React.useEffect(() => {
+        fetchData({ pageIndex, pageSize });
+    }, [fetchData, pageIndex, pageSize]);
+
     return (
         <div className={styles.wrapper}>
             <table {...getTableProps()} className={styles.table}>
                 <thead>
                     <tr className={`${styles.table_row} ${styles.noselect}`}>
-                        <td className={`${controlsStyles.control_container} ${headerStyles.table_header_cell}`}>
-                            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                {"<<"}
-                            </button>{" "}
-                            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                {"<"}
-                            </button>{" "}
-                            <button onClick={() => nextPage()} disabled={!canNextPage}>
-                                {">"}
-                            </button>{" "}
-                            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                {">>"}
-                            </button>{" "}
-                            <span>
-                                Page{" "}
-                                <strong>
-                                    {pageIndex + 1} of {pageOptions.length}
-                                </strong>{" "}
-                            </span>
-                            <span>
-                                | Go to page:{" "}
-                                <input
-                                    type="number"
-                                    defaultValue={pageIndex + 1}
-                                    onChange={(e) => {
-                                        const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                                        gotoPage(page);
-                                    }}
-                                    style={{ width: "100px" }}
-                                />
-                            </span>{" "}
-                            <select
-                                value={pageSize}
-                                onChange={(e) => {
-                                    setPageSize(Number(e.target.value));
-                                }}>
-                                {[10, 20, 30, 40, 50].map((pageSize) => (
-                                    <option key={pageSize} value={pageSize}>
-                                        Show {pageSize}
-                                    </option>
-                                ))}
-                            </select>
-                        </td>
                         <GlobalFilter
                             preGlobalFilteredRows={preGlobalFilteredRows}
                             globalFilter={state.globalFilter}
@@ -231,6 +166,50 @@ const Table = ({ columns, data }) => {
                     })}
                 </tbody>
             </table>
+            <div className={`${controlsStyles.control_container} ${headerStyles.table_header_cell}`}>
+                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                    {"<<"}
+                </button>{" "}
+                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                    {"<"}
+                </button>{" "}
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                    {">"}
+                </button>{" "}
+                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                    {">>"}
+                </button>{" "}
+                <span>
+                    Page{" "}
+                    <strong>
+                        {pageIndex + 1} of {pageOptions.length}
+                    </strong>{" "}
+                </span>
+                <span>
+                    | Go to page:{" "}
+                    <input
+                        type="number"
+                        defaultValue={pageIndex + 1}
+                        onChange={(e) => {
+                            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                            gotoPage(page);
+                        }}
+                        style={{ width: "100px" }}
+                    />
+                </span>{" "}
+                <select
+                    value={pageSize}
+                    onChange={(e) => {
+                        setLimit(e.target.value);
+                        setPageSize(Number(e.target.value));
+                    }}>
+                    {[100, 500, 1000].map((pageSize) => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize}
+                        </option>
+                    ))}
+                </select>
+            </div>
         </div>
     );
 };

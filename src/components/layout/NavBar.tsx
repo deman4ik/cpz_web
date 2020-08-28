@@ -23,6 +23,7 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
         <style jsx>
             {`
                 .navBar {
+                    position: sticky;
                     margin-left: 200px;
                     background-color: var(--dark);
                     height: 56px;

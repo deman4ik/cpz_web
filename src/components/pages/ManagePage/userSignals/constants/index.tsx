@@ -1,46 +1,24 @@
-const id_widths = {
-    minWidth: 125,
-    width: 175,
-    maxWidth: 220
-};
-const val_widths = {
-    minWidth: 100,
-    width: 120,
-    maxWidth: 150
-};
 export const USER_SIGNALS_TITLES_SCHEME = {
     signal_robot: {
-        ...id_widths,
-        Header: "Signal Robot",
-        disableFilters: true
+        Header: "Signal Robot"
     },
     robot_id: {
-        ...id_widths,
-        Header: "Robot ID",
-        disableFilters: true
+        Header: "Robot ID"
     },
     user: {
-        ...val_widths,
-        Header: "User",
-        disableFilters: true
+        Header: "User"
     },
     user_id: {
-        ...id_widths,
-        Header: "User ID",
-        disableFilters: true
+        Header: "User ID"
     },
     subscribe_at: {
-        ...val_widths,
         Header: "Subscribed",
-        disableFilters: true,
         sortType: (rowA, rowB, id) => {
             return new Date(rowA.values[id]) > new Date(rowB.values[id]) ? -1 : 1;
         }
     },
     volume: {
-        ...val_widths,
         Header: "Volume",
-        filter: "between",
         sortType: "basic"
     }
 };
