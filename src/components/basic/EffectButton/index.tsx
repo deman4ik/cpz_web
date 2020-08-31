@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArrowLeftIcon, WindowCloseIcon } from "assets/icons/svg";
+import { ArrowLeftIcon, WindowCloseIcon, ArrowRightIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
 interface Props {
@@ -9,18 +9,19 @@ interface Props {
     color?: string;
 }
 
-const components = {
+const icons = {
     arrowleft: ArrowLeftIcon,
+    arrowright: ArrowRightIcon,
     windowclose: WindowCloseIcon
 };
 
 export const EffectButton: React.FC<Props> = ({ icon, onClick, color = "white" }) => {
-    const SpecificIcon = components[icon];
+    const Icon = icons[icon];
 
     return (
         <div className={[styles.btn, styles.ripple].join(" ")} onClick={onClick}>
             <i className={styles.icon}>
-                <SpecificIcon size={22} color={color} />
+                <Icon size={22} color={color} />
             </i>
         </div>
     );

@@ -1,38 +1,40 @@
-export const USER_SIGNALS_HEADERS_SCHEME = {
-    signal_robot: {
-        Header: "Signal Robot",
-        width: 262
+export const USER_SIGNALS_HEADERS_SCHEMA = {
+    robot_code: {
+        Header: "Robot Code",
+        width: 262,
+        orderSchema: { field: "robot", subfield: "code" },
+        visible: true
     },
-    robot_id: {
-        Header: "Robot ID",
-        width: 324
+    id: {
+        Header: "Signal ID",
+        width: 324,
+        visible: true
     },
-    user: {
+    user_name: {
         Header: "User",
-        width: 152
+        width: 152,
+        orderSchema: { field: "user", subfield: "name" },
+        visible: true
     },
     user_id: {
         Header: "User ID",
-        width: 324
+        width: 324,
+        orderSchema: { field: "user", subfield: "id" },
+        visible: true
     },
     subscribed_at: {
         Header: "Subscribed",
-        width: 190
+        width: 190,
+        visible: true
     },
     volume: {
         Header: "Volume",
-        width: 125
+        width: 125,
+        visible: true
     }
 };
 
-export const COLUMNS_WIDTH = ["20%", "20%", "10%", "25%", "15%", "10%"];
-
-/*HEAD TITLES*/
-export const HEADER_TABLE_DATA = Object.keys(USER_SIGNALS_HEADERS_SCHEME).map((key) => ({
-    text: USER_SIGNALS_HEADERS_SCHEME[key].Header
-}));
-
-export const REACT_TABLE_COLUMNS = Object.entries(USER_SIGNALS_HEADERS_SCHEME).map(([key, val]) => ({
+export const REACT_TABLE_COLUMNS = Object.entries(USER_SIGNALS_HEADERS_SCHEMA).map(([key, val]) => ({
     ...val,
     accessor: key
 }));

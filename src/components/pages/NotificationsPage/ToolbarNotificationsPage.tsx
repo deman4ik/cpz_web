@@ -18,7 +18,7 @@ const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelec
                 <Select
                     data={headerSelectData}
                     width={110}
-                    onValueChange={(value) => setInputSelect(value)}
+                    onChangeValue={(value) => setInputSelect(value)}
                     value={inputSelect}
                 />
             </div>

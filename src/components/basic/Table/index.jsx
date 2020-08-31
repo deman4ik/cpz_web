@@ -1,10 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
 import { v4 as uuid } from "uuid";
 // components
+import { Button } from "../Button";
+import { Select } from "../Select";
+import { ColumnControlModal } from "./components/ColumnControlModal";
 import DefaultMobileWrapper from "./components/DefaultMobileWrapper";
 // constants
 import { SCREEN_TYPE } from "config/constants";
@@ -13,7 +16,7 @@ import styles from "./styles/Common.module.css";
 import headerStyles from "./styles/TableHeader.module.css";
 import bodyStyles from "./styles/TableBody.module.css";
 import cellStyles from "./styles/TableCells.module.css";
-import controlsStyles from "./styles/TableControls.module.css";
+import paginationStyles from "./styles/TablePagination.module.css";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
@@ -35,6 +38,8 @@ const Table = ({
     onChangeSearch,
     onChangeSort
 }) => {
+    const [isModalVisible, setModalVisibility] = useState(false);
+
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
@@ -45,13 +50,9 @@ const Table = ({
         page,
         prepareRow,
         state: { pageIndex, pageSize, sortBy },
-        canPreviousPage,
-        canNextPage,
         pageOptions,
         pageCount,
         gotoPage,
-        nextPage,
-        previousPage,
         setPageSize
     } = useTable(
         {
@@ -73,15 +74,28 @@ const Table = ({
     );
 
     useEffect(() => {
-        onChangeSort(sortBy[0]);
-    }, [onChangeSort, sortBy]);
+        if (!sortBy[0]) return;
+        const { id, desc } = sortBy[0];
+        const { orderSchema } = columns.find((col) => col.accessor === id);
+        onChangeSort({ id, desc, orderSchema });
+    }, [onChangeSort, sortBy, columns]);
+
+    const toggleModal = () => {
+        console.log(isModalVisible);
+        setModalVisibility(!isModalVisible);
+    };
 
     return (
         <div className={styles.wrapper}>
             <table {...getTableProps()} className={styles.table}>
                 <thead>
                     <tr className={`${styles.table_row} ${styles.noselect}`}>
-                        <GlobalFilter itemsCount={itemsCount} onChangeSearch={onChangeSearch} />
+                        <td>
+                            <GlobalFilter itemsCount={itemsCount} onChangeSearch={onChangeSearch} />
+                        </td>
+                        <td>
+                            <Button title="Configure" icon="settings" onClick={toggleModal} />
+                        </td>
                     </tr>
                 </thead>
             </table>
@@ -132,71 +146,43 @@ const Table = ({
                     })}
                 </tbody>
             </table>
-            <div className={`${controlsStyles.control_container} ${headerStyles.table_header_cell}`}>
-                <button
-                    onClick={() => {
-                        setPageIndex(0);
-                        gotoPage(0);
-                    }}
-                    disabled={!canPreviousPage}>
-                    {"<<"}
-                </button>{" "}
-                <button
-                    onClick={() => {
-                        setPageIndex(pageIndex - 1);
-                        previousPage();
-                    }}
-                    disabled={!canPreviousPage}>
-                    {"<"}
-                </button>{" "}
-                <button
-                    onClick={() => {
-                        setPageIndex(pageIndex + 1);
-                        nextPage();
-                    }}
-                    disabled={!canNextPage}>
-                    {">"}
-                </button>{" "}
-                <button
-                    onClick={() => {
-                        setPageIndex(pageCount - 1);
-                        gotoPage(pageCount - 1);
-                    }}
-                    disabled={!canNextPage}>
-                    {">>"}
-                </button>{" "}
-                <span>
-                    Page{" "}
-                    <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                    </strong>{" "}
-                </span>
-                <span>
-                    | Go to page:{" "}
-                    <input
-                        type="number"
-                        defaultValue={pageIndex + 1}
-                        onChange={(e) => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                            setPageIndex(page);
-                            gotoPage(page);
-                        }}
-                        style={{ width: "100px" }}
-                    />
-                </span>{" "}
-                <select
-                    value={pageSize}
-                    onChange={(e) => {
-                        setLimit(Number(e.target.value));
-                        setPageSize(Number(e.target.value));
-                    }}>
-                    {pageSizeOptions.map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <table {...getTableProps()} className={styles.table}>
+                <tbody>
+                    <tr className={`${styles.table_row}`}>
+                        <td className={`${headerStyles.table_header_cell}`}>
+                            <div className={`${paginationStyles.pagination_container}`}>
+                                <div className={paginationStyles.pagination_button_group}>
+                                    {pageOptions.map((num, i) => (
+                                        <div
+                                            key={i}
+                                            className={pageIndex === num ? paginationStyles.page_selected : ""}>
+                                            <Button
+                                                title={num + 1}
+                                                onClick={() => {
+                                                    setPageIndex(num);
+                                                    gotoPage(num);
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                <Select
+                                    width={110}
+                                    value={pageSize}
+                                    data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
+                                    onChangeValue={(value) => {
+                                        setLimit(Number(value));
+                                        setPageSize(Number(value));
+                                    }}
+                                />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {
+                //<ColumnControlModal title="Configure columns" isModalVisible={isModalVisible} toggleModal={toggleModal} />
+            }
         </div>
     );
 };

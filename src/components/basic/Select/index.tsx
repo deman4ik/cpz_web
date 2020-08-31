@@ -5,12 +5,12 @@ interface Props {
     value: string;
     width?: number;
     enabled?: boolean;
-    onValueChange: (itemValue: string) => void;
+    onChangeValue: (itemValue: string) => void;
 }
 
-export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 200, enabled = true }) => {
+export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 200, enabled = true }) => {
     const onChange = (e) => {
-        onValueChange(e.target.value);
+        onChangeValue(e.target.value);
     };
 
     return (
@@ -51,7 +51,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 20
                     .select_container:after {
                         border-left: 5px solid transparent;
                         border-right: 5px solid transparent;
-                        top: 0.4em;
+                        top: 1em;
                         right: 0.75em;
                         border-top: 8px solid var(--accent);
                         opacity: 0.5;

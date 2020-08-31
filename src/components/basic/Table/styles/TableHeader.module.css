@@ -34,15 +34,3 @@
 .filter_wrapper {
     margin-top:5px;
 }
-
-.between_filter_input {
-    width: 70px;
-}
-
-.between_filter_input_left {
-    margin-right: .5rem;
-}
-
-.between_filter_input_right {
-    margin-left: .5rem;
-}
