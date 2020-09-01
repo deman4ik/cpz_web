@@ -1,6 +1,5 @@
 import React from "react";
 import { VictoryArea, VictoryContainer, VictoryChart, VictoryAxis } from "victory";
-import { POSITIVE_COLOR, NEGATIVE_COLOR, POSITIVE_GRADIENT_ID, NEGATIVE_GRADIENT_ID } from "./constants";
 
 import styles from "./index.module.css";
 
