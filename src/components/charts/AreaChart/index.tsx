@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryArea, VictoryContainer } from "victory";
+import { VictoryArea, VictoryContainer, VictoryChart, VictoryAxis } from "victory";
 
 import styles from "./index.module.css";
 
@@ -31,47 +31,67 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
         };
     }
 
+    const positiveColor = "#69DACD";
+    const negativeColor = "#CD3E60";
+
     return (
         <div className={styles.container}>
-            <svg style={{ height: 0, width: 0 }}>
-                <defs>
-                    <linearGradient id={`gradient-${randomId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor={positive ? "#69DACD" : "#CD3E60"} stopOpacity={0.6} />
-                        <stop offset="60%" stopColor={positive ? "#69DACD" : "#CD3E60"} stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="#141E46" stopOpacity={0} />
-                    </linearGradient>
-                </defs>
-            </svg>
-            <VictoryArea
-                domain={domain}
-                height={height}
-                padding={0}
-                data={data}
-                standalone
-                style={{
-                    data: {
-                        stroke: positive ? "#69DACD" : "#CD3E60",
-                        fill: "transparent",
-                        strokeWidth: 5
-                    }
-                }}
-            />
-            <VictoryArea
-                domain={domain}
-                containerComponent={<VictoryContainer style={{ position: "absolute" }} />}
-                height={height}
-                padding={0}
-                data={data}
-                style={{
-                    data: {
-                        stroke: "transparent",
-                        fill: `url(#gradient-${randomId})`,
-                        strokeWidth: 5
-                    }
-                }}
-            />
+            <VictoryChart>
+                <VictoryAxis
+                    style={{
+                        axis: { stroke: "transparent" },
+                        ticks: { stroke: "transparent" },
+                        tickLabels: { fill: "transparent" }
+                    }}
+                />
+                <VictoryArea
+                    domain={domain}
+                    containerComponent={<VictoryContainer style={{ position: "absolute" }} />}
+                    height={height}
+                    padding={0}
+                    style={{
+                        data: {
+                            stroke: positiveColor,
+                            fill: positiveColor,
+                            strokeWidth: 4,
+                            clipPath: `url(#clip-path-pos-${randomId})`
+                        }
+                    }}
+                    data={data}
+                />
+                <VictoryArea
+                    domain={domain}
+                    containerComponent={<VictoryContainer style={{ position: "absolute" }} />}
+                    height={height}
+                    padding={0}
+                    style={{
+                        data: {
+                            stroke: negativeColor,
+                            fill: negativeColor,
+                            strokeWidth: 4,
+                            clipPath: `url(#clip-path-neg-${randomId})`
+                        }
+                    }}
+                    data={data}
+                />
+                <CustomClip randomId={randomId} />
+            </VictoryChart>
         </div>
     );
 };
+
+function CustomClip({ ...props }) {
+    const { randomId } = props;
+    return (
+        <defs key="clips">
+            <clipPath id={`clip-path-pos-${randomId}`}>
+                <rect x="0" y="0" width="100%" height={props.scale.y(0)} />
+            </clipPath>
+            <clipPath id={`clip-path-neg-${randomId}`}>
+                <rect x="0" y={props.scale.y(0)} width="100%" height="100%" />
+            </clipPath>
+        </defs>
+    );
+}
 
 export default AreaChart;
