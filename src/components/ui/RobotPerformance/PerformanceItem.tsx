@@ -31,9 +31,7 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
                 </div>
             </div>
             <div className={styles.col} style={{ flex: 0.85 }}>
-                {item.changes && item.changes.length ? (
-                    <DinamicAreaChart height={120} positive={item.profit > 0} data={item.changes} />
-                ) : null}
+                {item.changes && item.changes.length ? <DinamicAreaChart height={120} data={item.changes} /> : null}
             </div>
             <div className={styles.col} style={{ flex: 0.05 }} />
             <div className={styles.col} style={{ flex: 0.9 }}>

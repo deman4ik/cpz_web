@@ -67,7 +67,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
                     {item.performance && item.performance.length ? (
-                        <DinamicAreaChart height={120} positive={item.profit > 0} data={item.performance} />
+                        <DinamicAreaChart height={120} data={item.performance} />
                     ) : (
                         <div className={styles.emptyChart} />
                     )}
