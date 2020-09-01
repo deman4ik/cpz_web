@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-key */
 import React, { useState, useMemo, useCallback } from "react";
@@ -7,8 +9,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
 
 import { Modal } from "../../Modal";
+import { CheckBox } from "../../CheckBox";
 
 import { Reorder } from "assets/icons/svg";
+
+// styles
+import headerStyles from "../styles/TableHeader.module.css";
 
 const DND_ITEM_TYPE = "row";
 
@@ -73,31 +79,43 @@ const Row = ({ row, index, moveRow }) => {
     );
 };
 
-export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal }) => {
-    const [records, setRecords] = useState(data);
-
+export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal, setColumns }) => {
     const getRowId = useCallback((row) => {
         return row.id;
     }, []);
-
     const columns = useMemo(
         () => [
-            { Header: "Visible", accessor: "visible" },
+            {
+                Header: "Visible",
+                accessor: "visible",
+                Cell: ({
+                    row: {
+                        original: { isVisible, toggleHidden }
+                    }
+                }) => (
+                    <CheckBox
+                        checked={isVisible}
+                        onClick={() => {
+                            toggleHidden();
+                        }}
+                    />
+                )
+            },
             { Header: "Column", accessor: "Header" }
         ],
         []
     );
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, state } = useTable({
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
         columns,
-        data: records,
+        data,
         getRowId
     });
 
     const moveRow = (dragIndex, hoverIndex) => {
-        const dragRecord = records[dragIndex];
-        setRecords(
-            update(records, {
+        const dragRecord = data[dragIndex];
+        setColumns(
+            update(data, {
                 $splice: [
                     [dragIndex, 1],
                     [hoverIndex, 0, dragRecord]
@@ -105,13 +123,15 @@ export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal })
             })
         );
     };
+
     return (
-        <Modal isOpen={isModalVisible} title={title} onClose={toggleModal}>
-            <DndProvider backend={HTML5Backend}>
-                <table {...getTableProps()}>
+        <DndProvider backend={HTML5Backend}>
+            <Modal isOpen={isModalVisible} title={title} onClose={toggleModal}>
+                <table {...getTableProps()} style={{ color: "white" }}>
                     <thead>
                         {headerGroups.map((headerGroup) => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
+                            <tr {...headerGroup.getHeaderGroupProps()} className={headerStyles.table_header_cell}>
+                                <th />
                                 {headerGroup.headers.map((column) => (
                                     <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                                 ))}
@@ -127,7 +147,7 @@ export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal })
                         )}
                     </tbody>
                 </table>
-            </DndProvider>
-        </Modal>
+            </Modal>
+        </DndProvider>
     );
 };

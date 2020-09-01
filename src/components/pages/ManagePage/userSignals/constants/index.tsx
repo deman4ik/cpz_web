@@ -3,34 +3,34 @@ export const USER_SIGNALS_HEADERS_SCHEMA = {
         Header: "Robot Code",
         width: 262,
         orderSchema: { field: "robot", subfield: "code" },
-        visible: true
+        isVisible: true
     },
     id: {
         Header: "Signal ID",
         width: 324,
-        visible: true
+        isVisible: true
     },
     user_name: {
         Header: "User",
         width: 152,
         orderSchema: { field: "user", subfield: "name" },
-        visible: true
+        isVisible: true
     },
     user_id: {
         Header: "User ID",
         width: 324,
         orderSchema: { field: "user", subfield: "id" },
-        visible: true
+        isVisible: true
     },
     subscribed_at: {
         Header: "Subscribed",
         width: 190,
-        visible: true
+        isVisible: true
     },
     volume: {
         Header: "Volume",
         width: 125,
-        visible: true
+        isVisible: true
     }
 };
 

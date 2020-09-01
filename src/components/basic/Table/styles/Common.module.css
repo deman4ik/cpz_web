@@ -37,6 +37,12 @@
     color: var(--accent);
 }
 
+.flex_spread {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /*mdedia queries*/
 @media (max-width: 480px) {
     .wrapper {
