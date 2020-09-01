@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryArea, VictoryContainer, VictoryChart, VictoryAxis } from "victory";
+import { VictoryArea, VictoryGroup } from "victory";
 
 import styles from "./index.module.css";
 
@@ -52,24 +52,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height }) => {
                     </linearGradient>
                 </defs>
             </svg>
-            <VictoryChart>
-                <VictoryAxis
-                    style={{
-                        axis: { stroke: "transparent" },
-                        ticks: { stroke: "transparent" },
-                        tickLabels: { fill: "transparent" }
-                    }}
-                />
+            <VictoryGroup height={height} padding={0}>
                 <VictoryArea
                     domain={domain}
-                    containerComponent={<VictoryContainer style={{ position: "absolute" }} />}
-                    height={height}
-                    padding={0}
                     style={{
                         data: {
                             stroke: positiveColor,
                             fill: `url(#${positiveGradientId})`,
-                            strokeWidth: 4,
+                            strokeWidth: 5,
                             clipPath: `url(#clip-path-pos-${randomId})`
                         }
                     }}
@@ -77,21 +67,18 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height }) => {
                 />
                 <VictoryArea
                     domain={domain}
-                    containerComponent={<VictoryContainer style={{ position: "absolute" }} />}
-                    height={height}
-                    padding={0}
                     style={{
                         data: {
                             stroke: negativeColor,
                             fill: `url(#${negativeGradientId})`,
-                            strokeWidth: 4,
+                            strokeWidth: 5,
                             clipPath: `url(#clip-path-neg-${randomId})`
                         }
                     }}
                     data={data}
                 />
                 <CustomClip randomId={randomId} />
-            </VictoryChart>
+            </VictoryGroup>
         </div>
     );
 };
