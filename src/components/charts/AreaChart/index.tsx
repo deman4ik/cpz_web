@@ -1,15 +1,15 @@
 import React from "react";
 import { VictoryArea, VictoryContainer, VictoryChart, VictoryAxis } from "victory";
+import { POSITIVE_COLOR, NEGATIVE_COLOR, POSITIVE_GRADIENT_ID, NEGATIVE_GRADIENT_ID } from "./constants";
 
 import styles from "./index.module.css";
 
 interface AreaChartProps {
     data: any; // Todo any
     height: number;
-    positive: boolean;
 }
 
-const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
+const AreaChart: React.FC<AreaChartProps> = ({ data, height }) => {
     const randomId = Math.random();
     const arrX = data.map((d) => d.x);
     const arrY = data.map((d) => d.y);
@@ -34,8 +34,25 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
     const positiveColor = "#69DACD";
     const negativeColor = "#CD3E60";
 
+    const positiveGradientId = "gradient_pos";
+    const negativeGradientId = "gradient_neg";
+
     return (
         <div className={styles.container}>
+            <svg style={{ height: 0, width: 0 }}>
+                <defs>
+                    <linearGradient id={positiveGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={positiveColor} stopOpacity={0.6} />
+                        <stop offset="60%" stopColor={positiveColor} stopOpacity={0.25} />
+                        <stop offset="100%" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id={negativeGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopOpacity={0} />
+                        <stop offset="60%" stopColor={negativeColor} stopOpacity={0.25} />
+                        <stop offset="100%" stopColor={negativeColor} stopOpacity={0.1} />
+                    </linearGradient>
+                </defs>
+            </svg>
             <VictoryChart>
                 <VictoryAxis
                     style={{
@@ -52,7 +69,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
                     style={{
                         data: {
                             stroke: positiveColor,
-                            fill: positiveColor,
+                            fill: `url(#${positiveGradientId})`,
                             strokeWidth: 4,
                             clipPath: `url(#clip-path-pos-${randomId})`
                         }
@@ -67,7 +84,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, positive }) => {
                     style={{
                         data: {
                             stroke: negativeColor,
-                            fill: negativeColor,
+                            fill: `url(#${negativeGradientId})`,
                             strokeWidth: 4,
                             clipPath: `url(#clip-path-neg-${randomId})`
                         }
