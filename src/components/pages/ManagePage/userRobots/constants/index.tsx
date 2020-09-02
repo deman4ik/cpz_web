@@ -29,9 +29,7 @@ export const TITLES_SCHEME = {
     }
 };
 
-export const COLUMNS_WIDTH = ["27.5%", "27.5%", "15%", "15%", "15%"];
-
 /*HEAD TITLES*/
-export const TABLE_HEADER_DATA = Object.keys(TITLES_SCHEME).map((key) => ({
+export const TABLE_DATA_COLUMNS = Object.keys(TITLES_SCHEME).map((key) => ({
     text: TITLES_SCHEME[key].title
 }));

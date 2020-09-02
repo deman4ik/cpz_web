@@ -1,9 +1,8 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { formatDate } from "config/utils";
 
-export const formatUsersSignals = (data) => {
-    console.log(data);
-    return data.user_signals.map((signal) => {
+export const formatData = ({ user_signals }) => {
+    return user_signals.map((signal) => {
         const row = {};
         Object.defineProperty(row, "id", { value: signal.id, writable: false });
         Object.defineProperty(row, "robot_code", { value: signal.robot.code, writable: false });

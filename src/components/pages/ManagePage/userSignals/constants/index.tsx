@@ -34,7 +34,7 @@ export const USER_SIGNALS_HEADERS_SCHEMA = {
     }
 };
 
-export const REACT_TABLE_COLUMNS = Object.entries(USER_SIGNALS_HEADERS_SCHEMA).map(([key, val]) => ({
+export const TABLE_DATA_COLUMNS = Object.entries(USER_SIGNALS_HEADERS_SCHEMA).map(([key, val]) => ({
     ...val,
     accessor: key
 }));

@@ -11,7 +11,7 @@ import { getItemsFromTitles } from "../../utils";
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
 
-const STATUSES = {
+const STATES = {
     stopped: "stopped_at",
     started: "started_at"
 };
@@ -26,7 +26,7 @@ export const formatRobotsRows = (data: Array<any>) => {
         const cellsAggregated: any = {};
         Object.keys(TITLES_SCHEME).forEach((key) => {
             let innerComponent;
-            /*vars data*/
+
             let profit;
             let performance;
             switch (key) {
@@ -101,7 +101,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                             <p>
                                 <span>{TITLES_SCHEME.activity.status}</span>
                                 {robot.status}
-                                {robot[STATUSES[robot.status]] && `: ${formatDate(robot[STATUSES[robot.status]])}`}
+                                {robot[STATES[robot.status]] && `: ${formatDate(robot[STATES[robot.status]])}`}
                             </p>
                             <p>{formatDate(robot.created_at)}</p>
                         </DefaultCellWrapper>
@@ -129,7 +129,20 @@ export const formatRobotsRows = (data: Array<any>) => {
     });
 };
 
-export const getSearchWhere = (value: string) => ({
+export const formatData = (data) => {
+    return data.map((signal) => {
+        const row = {};
+        Object.defineProperty(row, "id", { value: signal.id, writable: false });
+        Object.defineProperty(row, "robot_code", { value: signal.robot.code, writable: false });
+        Object.defineProperty(row, "user_name", { value: signal?.user?.name, writable: false });
+        Object.defineProperty(row, "user_id", { value: signal.user.id, writable: false });
+        Object.defineProperty(row, "subscribed_at", { value: formatDate(signal.subscribed_at), writable: false });
+        Object.defineProperty(row, "volume", { value: parseFloat(signal.volume), writable: false });
+        return row;
+    });
+};
+
+export const getSearchOptions = (value: string) => ({
     _or: [{ user: { name: { _ilike: `%${value}%` } } }, { robot: { name: { _ilike: `%${value}%` } } }]
 });
 
