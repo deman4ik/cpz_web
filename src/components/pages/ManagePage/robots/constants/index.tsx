@@ -1,59 +1,60 @@
-export const ROBOTS_TITLES_SCHEME = {
-    info: {
-        title: "Info",
-        name: "Name: ",
-        id: "ID: ",
-        status: "Status: "
+import React from "react";
+
+//utils
+import { ColumnsSchema, buildRobotChartCell } from "../../utils";
+
+export const ROBOT_TABLE_COLUMNS: ColumnsSchema = [
+    {
+        Header: "Robot",
+        columns: [
+            {
+                Header: "Code",
+                accessor: "robot_code",
+                width: 262,
+                orderSchema: { field: "robot", subfield: "code" }
+            }
+        ]
     },
-    settings: {
-        title: "Settings",
-        volume: "Volume: ",
-        strategyParameters: {
-            smaSize: "Sma Size: ",
-            distInit: "Dist Init: ",
-            lookback: "Look Back: ",
-            atrPeriod: "After Period: ",
-            adjustment: "Adjustment: ",
-            adxHigh: "Adx High: ",
-            adxPeriod: "Adx Period: ",
-            trailBars: "Trail Bars: ",
-            adx: "Adx: ",
-            tick: "Tick: ",
-            ratio: "Ratio: ",
-            seriesSize: "Series Size: ",
-            orderStopLoss: "Order Stop Loss: ",
-            orderTakeProfit: "OrderTakeProfit: "
-        },
-        requiredHistoryMaxBars: "Max bars: "
+    {
+        Header: "Signal",
+        columns: [
+            {
+                Header: "ID",
+                accessor: "id",
+                width: 324
+            }
+        ]
     },
-    performance: {
-        title: "Performance"
+    {
+        Header: "User",
+        columns: [
+            {
+                Header: "Name",
+                accessor: "user_name",
+                width: 152,
+                orderSchema: { field: "user", subfield: "name" }
+            },
+            {
+                Header: "ID",
+                accessor: "user_id",
+                width: 324,
+                orderSchema: { field: "user", subfield: "id" }
+            }
+        ]
     },
-    statistics: {
-        title: "Statistics",
-        stats: {
-            profit: "Profit: ",
-            winRate: "Win Rate: ",
-            maxDrawdown: "Max Drawdon: ",
-            tradesCount: "Trades count: "
-        }
-    },
-    available: {
-        title: "Available"
-    },
-    types: {
-        title: "Types"
-    },
-    entries: {
-        title: "Entries",
-        user_robots: "Robots: ",
-        user_signals: "Signals: "
+    {
+        Header: "Info",
+        columns: [
+            {
+                Header: "Subscribed",
+                accessor: "subscribed_at",
+                width: 190
+            },
+            {
+                Header: "Volume",
+                accessor: "volume",
+                width: 125
+            }
+        ]
     }
-};
-
-export const COLUMNS_WIDTH = ["28.6%", "14%", "14.2%", "14.2%", "10.2%", "10.2%", "8%"];
-
-/*HEAD TITLES*/
-export const ROBOTS_TABLE_HEADER_DATA = Object.keys(ROBOTS_TITLES_SCHEME).map((key) => ({
-    text: ROBOTS_TITLES_SCHEME[key].title
-}));
+];

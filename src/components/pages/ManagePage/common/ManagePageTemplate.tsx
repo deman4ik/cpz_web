@@ -59,8 +59,9 @@ const ManagePageTemplate = ({
             if (!orderSchema) newOrderBy = { [id]: sortDirection };
             else {
                 const { field, subfield } = orderSchema;
-                newOrderBy = { [field]: { [subfield]: sortDirection } };
+                newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
             }
+            console.log(newOrderBy);
             setOrderBy(newOrderBy);
         }
     }, []);
@@ -69,7 +70,7 @@ const ManagePageTemplate = ({
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
 
     return (
-        <Template title="User signals" width={width} page={pageType} hideToolbar>
+        <Template title={pageType} width={width} page={pageType} hideToolbar>
             <Table
                 columns={tableColumns}
                 data={tableData}

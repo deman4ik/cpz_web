@@ -195,8 +195,8 @@ export const USER_SIGNALS_AGGREGATE = gql`
  * Использование:  manage/user_robots
  */
 export const GET_USER_ROBOTS = gql`
-    query get_user_robots($limit: Int, $where: user_robots_bool_exp, $order_by: [user_robots_order_by!]) {
-        user_robots(limit: $limit, where: $where, order_by: $order_by) {
+    query get_user_robots($limit: Int, $offset: Int, $where: user_robots_bool_exp, $order_by: [user_robots_order_by!]) {
+        user_robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             user {
                 name
                 id

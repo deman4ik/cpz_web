@@ -88,18 +88,22 @@ export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal, s
             {
                 Header: "Visible",
                 accessor: "visible",
-                Cell: ({
-                    row: {
-                        original: { isVisible, toggleHidden }
-                    }
-                }) => (
-                    <CheckBox
-                        checked={isVisible}
-                        onClick={() => {
-                            toggleHidden();
-                        }}
-                    />
-                )
+                Cell: (
+                    data //{
+                    // row: {
+                    //     original: { isVisible, toggleHidden }
+                    // }
+                    //}
+                ) => {
+                    console.log(data);
+                    return <div></div>;
+                    // <CheckBox
+                    //     checked={isVisible}
+                    //     onClick={() => {
+                    //         toggleHidden();
+                    //     }}
+                    // />
+                }
             },
             { Header: "Column", accessor: "Header" }
         ],

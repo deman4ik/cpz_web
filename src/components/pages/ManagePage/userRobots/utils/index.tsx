@@ -1,143 +1,38 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
+
 // components
 import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
-// constants
-import { TITLES_SCHEME } from "components/pages/ManagePage/userRobots/constants";
+
 // utils
 import { formatDate } from "config/utils";
-import { getItemsFromTitles } from "../../utils";
+import { defineProperty } from "../../utils";
+
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
 
-const STATES = {
-    stopped: "stopped_at",
-    started: "started_at"
-};
-
-/**
- * Форматирвоание строк роботов
- * @param data - array robots
- */
-export const formatRobotsRows = (data: Array<any>) => {
-    return data.map((robot) => {
-        const robotItem = { cells: [], NotDesktopView: DefaultNotDesktopView };
-        const cellsAggregated: any = {};
-        Object.keys(TITLES_SCHEME).forEach((key) => {
-            let innerComponent;
-
-            let profit;
-            let performance;
-            switch (key) {
-                case "user":
-                    innerComponent = (
-                        <DefaultCellWrapper>
-                            {robot?.user?.name && <p>{robot.user.name}</p>}
-                            <p>
-                                <span>{robot.user.id}</span>
-                            </p>
-                        </DefaultCellWrapper>
-                    );
-                    cellsAggregated[key] = {
-                        title: TITLES_SCHEME.user.title,
-                        component: innerComponent,
-                        notDesktopVal: innerComponent
-                    };
-                    break;
-                case "robot":
-                    innerComponent = (
-                        <DefaultCellWrapper>
-                            {robot?.robot?.name && <p>{robot.robot.name}</p>}
-                            <p>
-                                <span>{robot.robot.id}</span>
-                            </p>
-                            {robot?.settings?.volume && <p>{robot?.settings?.volume}</p>}
-                        </DefaultCellWrapper>
-                    );
-                    cellsAggregated[key] = {
-                        title: TITLES_SCHEME.robot.title,
-                        component: innerComponent,
-                        notDesktopVal: innerComponent
-                    };
-                    break;
-                case "performance":
-                    profit = robot?.equity && robot?.equity?.profit ? robot?.equity?.profit : 0;
-                    performance = robot?.equity && robot?.equity?.changes ? robot?.equity?.changes : [];
-
-                    innerComponent = performance?.length ? (
-                        <DefaultCellWrapper>
-                            <RobotChartCell
-                                style={{ paddingRight: "25px" }}
-                                perfomance={performance}
-                                profit={profit}
-                                height={120}
-                            />
-                        </DefaultCellWrapper>
-                    ) : null;
-
-                    cellsAggregated[key] = {
-                        title: TITLES_SCHEME.performance.title,
-                        component: innerComponent,
-                        notDesktopVal: innerComponent
-                    };
-                    break;
-                case "statistics":
-                    innerComponent = robot?.equity ? (
-                        <DefaultCellWrapper>
-                            {getItemsFromTitles(robot.equity, TITLES_SCHEME.statistics.stats)}
-                        </DefaultCellWrapper>
-                    ) : null;
-
-                    cellsAggregated.statistics = {
-                        title: TITLES_SCHEME.statistics.title,
-                        notDesktopVal: innerComponent,
-                        component: innerComponent
-                    };
-                    break;
-                case "activity":
-                    innerComponent = (
-                        <DefaultCellWrapper>
-                            <p>
-                                <span>{TITLES_SCHEME.activity.status}</span>
-                                {robot.status}
-                                {robot[STATES[robot.status]] && `: ${formatDate(robot[STATES[robot.status]])}`}
-                            </p>
-                            <p>{formatDate(robot.created_at)}</p>
-                        </DefaultCellWrapper>
-                    );
-                    cellsAggregated[key] = {
-                        title: TITLES_SCHEME.robot.title,
-                        component: innerComponent,
-                        notDesktopVal: innerComponent
-                    };
-                    break;
-                default:
-                    if (Object.prototype.hasOwnProperty.call(robot, key)) {
-                        innerComponent = <DefaultCellWrapper>{robot[key]}</DefaultCellWrapper>;
-                        cellsAggregated[key] = {
-                            title: TITLES_SCHEME[key].title,
-                            notDesktopVal: innerComponent,
-                            component: innerComponent
-                        };
-                    }
-                    break;
-            }
-            robotItem.cells.push(cellsAggregated[key]);
-        });
-        return robotItem;
-    });
-};
-
-export const formatData = (data) => {
-    return data.map((signal) => {
+export const formatData = ({ user_robots }) => {
+    return user_robots.map((entry) => {
         const row = {};
-        Object.defineProperty(row, "id", { value: signal.id, writable: false });
-        Object.defineProperty(row, "robot_code", { value: signal.robot.code, writable: false });
-        Object.defineProperty(row, "user_name", { value: signal?.user?.name, writable: false });
-        Object.defineProperty(row, "user_id", { value: signal.user.id, writable: false });
-        Object.defineProperty(row, "subscribed_at", { value: formatDate(signal.subscribed_at), writable: false });
-        Object.defineProperty(row, "volume", { value: parseFloat(signal.volume), writable: false });
+        defineProperty(row, "created_at", entry?.created_at ? formatDate(entry?.created_at) : "");
+        defineProperty(row, "stopped_at", entry?.stopped_at ? formatDate(entry?.stopped_at) : "");
+        defineProperty(row, "performance", {
+            performance: entry?.equity?.changes || [],
+            profit: entry?.equity?.profit || 0
+        });
+        defineProperty(row, "lastProfit", entry?.equity?.lastProfit);
+        defineProperty(row, "maxDrawdown", entry?.equity?.maxDrawdown);
+        defineProperty(row, "profit", entry?.equity?.profit);
+        defineProperty(row, "tradesCount", entry?.equity?.tradesCount);
+        defineProperty(row, "winRate", entry?.equity?.winRate);
+        defineProperty(row, "robot_code", entry?.robot?.name);
+        defineProperty(row, "robot_id", entry?.robot?.id);
+        defineProperty(row, "volume", entry?.settings?.volume);
+        defineProperty(row, "user_name", entry?.user?.name);
+        defineProperty(row, "user_id", entry?.user?.id);
+        defineProperty(row, "status", entry?.status);
+
         return row;
     });
 };

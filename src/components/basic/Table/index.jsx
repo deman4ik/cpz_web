@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
 // components
 import { ColumnControlModal } from "./components/ColumnControlModal";
@@ -76,9 +76,11 @@ const Table = ({
     useEffect(() => {
         if (!sortBy[0]) return;
         const { id, desc } = sortBy[0];
-        const { orderSchema, accessor } = columns.find((col) => col.id === id || col.accessor === id);
-        onChangeSort({ id: accessor, desc, orderSchema });
-    }, [onChangeSort, sortBy, columns]);
+
+        // allColumns contains all the 'nested' columns
+        const { orderSchema } = allColumns.find((column) => column.id === id);
+        onChangeSort({ id, desc, orderSchema });
+    }, [onChangeSort, sortBy, allColumns]);
 
     const toggleModal = () => {
         setModalVisibility(!isModalVisible);
@@ -103,7 +105,7 @@ const Table = ({
                 setPageSize={setPageSize}
             />
             <ColumnControlModal
-                data={allColumns}
+                data={cols}
                 setColumns={setCols}
                 title="Configure columns"
                 isModalVisible={isModalVisible}

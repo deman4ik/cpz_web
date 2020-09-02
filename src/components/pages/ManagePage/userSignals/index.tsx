@@ -7,7 +7,7 @@ import ManagePageTemplate from "../common/ManagePageTemplate";
 import { formatData, getSearchOptions } from "./utils";
 
 // constants
-import { TABLE_DATA_COLUMNS } from "./constants";
+import { TABLE_COLUMNS } from "./constants";
 import { PageType } from "config/types";
 
 //graphql
@@ -19,7 +19,7 @@ const ManageUserSignals: React.FC = () => {
     return (
         <ManagePageTemplate
             pageType={PageType.userSignals}
-            columns={TABLE_DATA_COLUMNS}
+            columns={TABLE_COLUMNS}
             dataQuery={GET_USER_SIGNALS}
             aggregateQuery={USER_SIGNALS_AGGREGATE}
             formatData={formatData}

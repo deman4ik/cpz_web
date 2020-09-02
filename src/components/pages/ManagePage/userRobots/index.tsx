@@ -8,7 +8,7 @@ import ManagePageTemplate from "../common/ManagePageTemplate";
 import { formatData, getSearchOptions } from "./utils";
 
 // constants
-import { TABLE_DATA_COLUMNS } from "./constants";
+import { TABLE_COLUMNS } from "./constants";
 import { PageType } from "config/types";
 
 //graphql
@@ -23,10 +23,10 @@ const ManageUserRobots = () => {
     return (
         <ManagePageTemplate
             pageType={PageType.userRobots}
-            columns={REACT_TABLE_COLUMNS}
+            columns={TABLE_COLUMNS}
             dataQuery={GET_USER_ROBOTS}
             aggregateQuery={USER_ROBOTS_AGGREGATE}
-            formatData={formatUsersSignals}
+            formatData={formatData}
             getItemsCount={getItemsCount}
             getSearchOptions={getSearchOptions}
         />

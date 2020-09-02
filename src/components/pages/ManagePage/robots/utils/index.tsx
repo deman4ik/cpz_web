@@ -1,22 +1,24 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
+
 // components
 import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
 import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
-// constants
-import { ROBOTS_TITLES_SCHEME } from "components/pages/ManagePage/robots/constants";
+
 // types
 import { filtersProps } from "../../common/OrderModalInner/types";
+
 // utils
-import { getItemsFromTitles } from "../../utils";
+import { getItemsFromTitles, defineProperty } from "../../utils";
+
 // constants
 import { STATUSES_COLORS, ROBOTS_AVAILABLE_CODES } from "config/constants";
+
 /**
  * Форматирвоание строк роботов
  * @param data - array robots
  */
 export const formatRobotsRows = (data: Array<any>) => {
-    /*Форматирование  и обработка данных в таблице*/
     return data.map((robot) => {
         const robotItem = { cells: [], NotDesktopView: DefaultNotDesktopView };
         const cellsAggregated: any = {};
@@ -140,7 +142,7 @@ export const formatRobotsRows = (data: Array<any>) => {
                     innerComponent = performance?.length ? (
                         <RobotChartCell
                             style={{ paddingRight: "25px" }}
-                            perfomance={performance}
+                            performance={performance}
                             profit={profit}
                             height={120}
                         />
@@ -198,7 +200,52 @@ export const formatRobotsRows = (data: Array<any>) => {
     });
 };
 
-export const getWhereSearch = (value: string) => ({ name: { _ilike: `%${value}%` } });
+export const formatData = ({ robots }) => {
+    return robots.map((robot) => {
+        const row = {};
+        defineProperty(row, "asset", robot.asset);
+        defineProperty(row, "available", robot.available);
+        defineProperty(row, "currency", robot.currency);
+
+        defineProperty(row, "performance", robot.equity?.changes);
+        defineProperty(row, "lastProfit", robot.equity?.lastProfit);
+        defineProperty(row, "maxDrawdown", robot.equity?.maxDrawdown);
+        defineProperty(row, "profit", robot.equity?.profit);
+        defineProperty(row, "tradesCount", robot.equity?.tradesCount);
+        defineProperty(row, "winRate", robot.equity?.winRate);
+
+        defineProperty(row, "exchange", robot.exchange);
+        defineProperty(row, "id", robot.id);
+        defineProperty(row, "name", robot.name);
+
+        defineProperty(row, "requiredHistoryMaxBars", robot.strategyParameters?.requiredHistoryMaxBars);
+        defineProperty(row, "adxHigh", robot.strategyParameters?.adxHigh);
+        defineProperty(row, "lookback", robot.strategyParameters?.lookback);
+        defineProperty(row, "adxPeriod", robot.strategyParameters?.adxPeriod);
+        defineProperty(row, "orderStopLoss", robot.strategyParameters?.orderStopLoss);
+        defineProperty(row, "orderTakeProfit", robot.strategyParameters?.orderTakeProfit);
+        defineProperty(row, "volume", robot.volume);
+
+        defineProperty(row, "signals", robot.signals);
+        defineProperty(row, "status", robot.status);
+        defineProperty(row, "strategy", robot.strategy);
+        defineProperty(row, "timeframe", robot.timeframe);
+
+        defineProperty(row, "deviationExit", robot.trade_settings?.deviation?.exit);
+        defineProperty(row, "deviationEntry", robot.trade_settings?.deviation?.entry);
+        defineProperty(row, "multiPosition", robot.trade_settings?.multiPosition);
+        defineProperty(row, "orderTimeout", robot.trade_settings?.orderTimeout);
+        defineProperty(row, "slippageEntryCount", robot.trade_settings?.slippage?.entry?.count);
+        defineProperty(row, "slippageEntryStepPercent", robot.trade_settings?.slippage?.entry?.stepPercent);
+        defineProperty(row, "slippageExitCount", robot.trade_settings?.slippage?.exit?.count);
+        defineProperty(row, "slippageExitStepPercent", robot.trade_settings?.slippage?.exit?.stepPercent);
+
+        defineProperty(row, "trading", robot.trade_settings?.trading);
+        return row;
+    });
+};
+
+export const getSearchOptions = (value: string) => ({ name: { _ilike: `%${value}%` } });
 
 export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
     let where = null;
