@@ -3,6 +3,7 @@ import React from "react";
 
 // components
 import { RobotChartCell } from "components/basic/SearchTable/components/cells";
+import { CheckBox } from "components/basic";
 
 /**
  *  Утилита сборки тайтлов для раздела статистики
@@ -23,14 +24,15 @@ export const getItemsFromTitles = (item: any, titlesScheme: { [key: string]: str
     });
 };
 
-export interface ColumnsSchema {
+export interface ColumnsArraySchema {
     [index: number]: {
         Header: string;
+        disableSortBy?: boolean;
         columns: {
             Header: string;
             accessor: string;
+            isVisible: boolean;
             orderSchema?: { field: string; subfield?: string };
-            isVisible?: boolean;
             width?: number;
             Cell?: (props: any) => any;
         }[];
@@ -40,8 +42,13 @@ export interface ColumnsSchema {
 export const defineProperty = (object, property, value) =>
     Object.defineProperty(object, property, { value, writable: false });
 
-export const buildRobotChartCell = ({ value: { performance, profit } }) => {
-    return performance.length ? (
-        <RobotChartCell style={{ paddingRight: "25px" }} performance={performance} profit={profit} height={120} />
-    ) : null;
-};
+export const buildRobotChartCell = ({ value: { performance, profit } }) =>
+    performance.length ? <RobotChartCell performance={performance} profit={profit} height={120} /> : null;
+
+export const buildCheckBoxCell = ({ value }) => (
+    <CheckBox
+        style={{ display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}
+        checked={value}
+        disabled
+    />
+);

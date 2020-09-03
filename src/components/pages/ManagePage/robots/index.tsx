@@ -15,12 +15,12 @@ import { PageType } from "config/types";
 import { GET_ROBOTS, ROBOTS_AGGREGATE } from "graphql/manage/queries";
 
 const ManageRobots: React.FC = () => {
-    const getItemsCount = (data) => data.robots_aggregate.aggregate.count;
+    const getItemsCount = (data) => data.robots_aggregate?.aggregate?.count;
 
     return (
         <ManagePageTemplate
-            pageType={PageType.userRobots}
-            columns={TABLE_COLUMNS}
+            pageType={PageType.manageRobots}
+            columns={ROBOT_TABLE_COLUMNS}
             dataQuery={GET_ROBOTS}
             aggregateQuery={ROBOTS_AGGREGATE}
             formatData={formatData}

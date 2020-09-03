@@ -44,8 +44,8 @@ export const GET_USER_STATS_DURING_PERIOD = gql`
  * Использование:  manage/users
  */
 export const GET_USERS = gql`
-    query getUsers($where: users_bool_exp, $order_by: [users_order_by!], $limit: Int) {
-        users(limit: $limit, where: $where, order_by: $order_by) {
+    query getUsers($limit: Int, $offset: Int, $where: users_bool_exp, $order_by: [users_order_by!]) {
+        users(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             name
             id
             email
@@ -97,8 +97,8 @@ export const USERS_AGGREGATE = gql`
  * Использование:  manage/robots
  */
 export const GET_ROBOTS = gql`
-    query get_robots($limit: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
-        robots(limit: $limit, where: $where, order_by: $order_by) {
+    query get_robots($limit: Int, $offset: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
+        robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             id
             name
             status

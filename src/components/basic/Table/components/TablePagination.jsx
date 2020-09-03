@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Button } from "../../Button";
 import { Select } from "../../Select";
@@ -19,39 +19,42 @@ const Pagination = ({
     pageSizeOptions,
     pageSize,
     setPageSize
-}) => (
-    <table {...tableProps} className={styles.table}>
-        <tbody>
-            <tr className={`${styles.table_row}`}>
-                <td className={`${headerStyles.table_header_cell}`}>
-                    <div className={`${paginationStyles.pagination_container}`}>
-                        <div className={paginationStyles.pagination_button_group}>
-                            {pageOptions.map((num, i) => (
-                                <div key={i} className={pageIndex === num ? paginationStyles.page_selected : ""}>
-                                    <Button
-                                        title={num + 1}
-                                        onClick={() => {
-                                            setPageIndex(num);
-                                            gotoPage(num);
-                                        }}
-                                    />
-                                </div>
-                            ))}
+}) => {
+    useEffect(() => setLimit(pageSizeOptions[0]), [setLimit, pageSizeOptions]);
+    return (
+        <table {...tableProps} className={styles.table}>
+            <tbody>
+                <tr className={`${styles.table_row}`}>
+                    <td>
+                        <div className={`${paginationStyles.pagination_container}`}>
+                            <div className={paginationStyles.pagination_button_group}>
+                                {pageOptions.map((num, i) => (
+                                    <div key={i} className={pageIndex === num ? paginationStyles.page_selected : ""}>
+                                        <Button
+                                            title={num + 1}
+                                            onClick={() => {
+                                                setPageIndex(num);
+                                                gotoPage(num);
+                                            }}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <Select
+                                width={110}
+                                value={pageSize}
+                                data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
+                                onChangeValue={(value) => {
+                                    setLimit(Number(value));
+                                    setPageSize(Number(value));
+                                }}
+                            />
                         </div>
-                        <Select
-                            width={110}
-                            value={pageSize}
-                            data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
-                            onChangeValue={(value) => {
-                                setLimit(Number(value));
-                                setPageSize(Number(value));
-                            }}
-                        />
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-);
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    );
+};
 
 export default Pagination;

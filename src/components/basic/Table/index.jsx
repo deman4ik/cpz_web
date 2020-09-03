@@ -57,7 +57,9 @@ const Table = ({
         {
             columns: cols,
             data,
-            initialState: { pageIndex: 0 },
+            initialState: {
+                pageIndex: 0
+            },
             manualPagination: true,
             pageCount: ControlledPageCount,
             autoResetPage: false,
@@ -74,10 +76,18 @@ const Table = ({
     );
 
     useEffect(() => {
+        // creating allColumns-like array since isVisible is being set to true by default
+        const flatCols = [];
+        cols.forEach((col) => flatCols.push(...col.columns));
+
+        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.accessor));
+    }, [cols, setHiddenColumns]);
+
+    useEffect(() => {
         if (!sortBy[0]) return;
         const { id, desc } = sortBy[0];
 
-        // allColumns contains all the 'nested' columns
+        // allColumns contains all the nested columns
         const { orderSchema } = allColumns.find((column) => column.id === id);
         onChangeSort({ id, desc, orderSchema });
     }, [onChangeSort, sortBy, allColumns]);
@@ -90,9 +100,16 @@ const Table = ({
         <div className={styles.wrapper}>
             <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
 
-            <Header tableProps={getTableProps()} headerGroups={headerGroups} />
+            <div className={styles.horizontal_overflow_scroll}>
+                <Header tableProps={getTableProps()} headerGroups={headerGroups} />
 
-            <Body tableProps={getTableProps()} bodyProps={getTableBodyProps()} page={page} prepareRow={prepareRow} />
+                <Body
+                    tableProps={getTableProps()}
+                    bodyProps={getTableBodyProps()}
+                    page={page}
+                    prepareRow={prepareRow}
+                />
+            </div>
 
             <Pagination
                 tableProps={getTableProps()}
@@ -103,6 +120,7 @@ const Table = ({
                 pageSizeOptions={pageSizeOptions}
                 pageSize={pageSize}
                 setPageSize={setPageSize}
+                setPageIndex={setPageIndex}
             />
             <ColumnControlModal
                 data={cols}

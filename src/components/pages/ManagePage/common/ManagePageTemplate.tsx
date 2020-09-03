@@ -9,7 +9,7 @@ import { LoadingIndicator } from "components/common";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { POLL_INTERVAL } from "config/constants";
 
-const ITEMS_PER_PAGE_OPTIONS = [100, 500, 1000];
+const ITEMS_PER_PAGE_OPTIONS = [10, 100, 500, 1000];
 
 const ManagePageTemplate = ({
     pageType,
@@ -21,7 +21,7 @@ const ManagePageTemplate = ({
     getSearchOptions
 }) => {
     /*States*/
-    const [limit, setLimit] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
+    const [limit, setLimit] = useState(1);
     const [orderBy, setOrderBy] = useState(null);
     const { width } = useWindowDimensions(); // width hook
     const [where, setWhere] = useState(getSearchOptions(""));
@@ -68,7 +68,6 @@ const ManagePageTemplate = ({
 
     const tableColumns = useMemo(() => columns, [columns]);
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
-
     return (
         <Template title={pageType} width={width} page={pageType} hideToolbar>
             <Table
