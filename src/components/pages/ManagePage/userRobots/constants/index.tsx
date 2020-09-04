@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from "react";
 import { ColumnsArraySchema, buildRobotChartCell } from "../../utils";
 
 export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
