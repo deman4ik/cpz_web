@@ -18,7 +18,7 @@ import headerStyles from "../styles/TableHeader.module.css";
 
 const DND_ITEM_TYPE = "row";
 
-const Row = ({ row, index, moveRow }) => {
+const RowTemplate = ({ index, moveRow, children }) => {
     const dropRef = React.useRef(null);
     const dragRef = React.useRef(null);
 
@@ -62,7 +62,7 @@ const Row = ({ row, index, moveRow }) => {
         })
     });
 
-    const opacity = isDragging ? 0 : 1;
+    const opacity = isDragging ? 0.5 : 1;
 
     preview(drop(dropRef));
     drag(dragRef);
@@ -72,38 +72,59 @@ const Row = ({ row, index, moveRow }) => {
             <td ref={dragRef}>
                 <Reorder />
             </td>
-            {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-            })}
+            {children}
         </tr>
     );
 };
 
-export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal, setColumns }) => {
+const NestedRow = ({ index, moveRow }) => {
+    return <RowTemplate index={index} moveRow={moveRow}></RowTemplate>;
+};
+
+const GroupRow = ({ row, index, moveRow }) => {
+    console.log(row);
+    return (
+        <RowTemplate index={index} moveRow={moveRow}>
+            {row.cells.map((cell) => {
+                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+            })}
+        </RowTemplate>
+    );
+};
+
+const buildVisibilityToggleCell = ({ row: { original: column } }) => {
+    let isVisible = false;
+    let toggleHidden;
+
+    // the column references a group header
+    if (column.columns) {
+        column.columns.forEach((col) => {
+            if (col.isVisible) isVisible = true;
+        });
+        toggleHidden = () =>
+            column.columns.forEach((col) => {
+                if (col.isVisible === isVisible) col.toggleHidden();
+            });
+    }
+    // the column references data row
+    else {
+        isVisible = column.isVisible;
+        toggleHidden = column.toggleHidden;
+    }
+
+    return <CheckBox checked={isVisible} onClick={toggleHidden} />;
+};
+
+export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal, setColumns }) => {
     const getRowId = useCallback((row) => {
         return row.id;
     }, []);
-    const columns = useMemo(
+    const columnsSchema = useMemo(
         () => [
             {
                 Header: "Visible",
-                accessor: "visible",
-                Cell: (
-                    data //{
-                    // row: {
-                    //     original: { isVisible, toggleHidden }
-                    // }
-                    //}
-                ) => {
-                    console.log(data);
-                    return <div></div>;
-                    // <CheckBox
-                    //     checked={isVisible}
-                    //     onClick={() => {
-                    //         toggleHidden();
-                    //     }}
-                    // />
-                }
+                accessor: "isVisible",
+                Cell: buildVisibilityToggleCell
             },
             { Header: "Column", accessor: "Header" }
         ],
@@ -111,19 +132,32 @@ export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal, s
     );
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-        columns,
-        data,
+        columns: columnsSchema,
+        data: columns,
         getRowId
     });
 
-    const moveRow = (dragIndex, hoverIndex) => {
-        const dragRecord = data[dragIndex];
+    const moveGroupRow = (dragIndex, hoverIndex) => {
+        const dragRecord = columns[dragIndex];
         setColumns(
-            update(data, {
+            update(columns, {
                 $splice: [
                     [dragIndex, 1],
                     [hoverIndex, 0, dragRecord]
                 ]
+            })
+        );
+    };
+
+    const moveNestedRow = (groupColumn, dragIndex, hoverIndex) => {
+        const dragRecord = groupColumn.original.columns[dragIndex];
+        setColumns(
+            columns.map((col) => {
+                if (col === groupColumn)
+                    return update(col.original.columns, {
+                        $splice: [[dragIndex, 1], [(hoverIndex, 0, dragRecord)]]
+                    });
+                return col;
             })
         );
     };
@@ -146,7 +180,7 @@ export const ColumnControlModal = ({ title, data, isModalVisible, toggleModal, s
                         {rows.map(
                             (row, index) =>
                                 prepareRow(row) || (
-                                    <Row index={index} row={row} moveRow={moveRow} {...row.getRowProps()} />
+                                    <GroupRow index={index} row={row} moveRow={moveGroupRow} {...row.getRowProps()} />
                                 )
                         )}
                     </tbody>

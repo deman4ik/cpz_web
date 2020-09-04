@@ -4,6 +4,7 @@ import { ColumnsArraySchema, buildCheckBoxCell } from "../../utils";
 export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     {
         Header: "Account Info",
+        id: "account_info",
         disableSortBy: true,
         columns: [
             {
@@ -39,8 +40,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                         <div>{value.default}</div>
                         <div>[ {value.allowed.join(", ")} ]</div>
                     </div>
-                ),
-                orderSchema: { field: "roles", subfield: "defaultRole" }
+                )
             },
             {
                 Header: "Created",
@@ -52,6 +52,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Telegram account",
+        id: "telegram_account",
         disableSortBy: true,
         columns: [
             {
@@ -68,6 +69,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Entries",
+        id: "entries",
         disableSortBy: true,
         columns: [
             {
@@ -92,6 +94,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Signals settings",
+        id: "signals_settings",
         disableSortBy: true,
         columns: [
             {
@@ -112,6 +115,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Trading settings",
+        id: "trading_settings",
         disableSortBy: true,
         columns: [
             {

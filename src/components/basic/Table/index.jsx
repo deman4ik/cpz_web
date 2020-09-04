@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -35,20 +36,21 @@ const Table = ({
     onChangeSort
 }) => {
     const [cols, setCols] = useState(columns);
+    const [controlledHeaders, setHeaders] = useState([]);
     const [isModalVisible, setModalVisibility] = useState(false);
 
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
-    const {
+    let {
         getTableProps,
         getTableBodyProps,
+        columns: groupColumns,
         headerGroups,
         page,
         prepareRow,
         state: { pageIndex, pageSize, sortBy },
         pageOptions,
-        pageCount,
         gotoPage,
         setPageSize,
         allColumns,
@@ -80,7 +82,7 @@ const Table = ({
         const flatCols = [];
         cols.forEach((col) => flatCols.push(...col.columns));
 
-        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.accessor));
+        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.accessor || col.id));
     }, [cols, setHiddenColumns]);
 
     useEffect(() => {
@@ -123,7 +125,7 @@ const Table = ({
                 setPageIndex={setPageIndex}
             />
             <ColumnControlModal
-                data={cols}
+                columns={groupColumns}
                 setColumns={setCols}
                 title="Configure columns"
                 isModalVisible={isModalVisible}

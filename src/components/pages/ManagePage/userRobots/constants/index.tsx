@@ -5,6 +5,7 @@ import { ColumnsArraySchema, buildRobotChartCell } from "../../utils";
 export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
     {
         Header: "Activity",
+        id: "activity",
         disableSortBy: true,
         columns: [
             {
@@ -29,6 +30,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Robot Info",
+        id: "robot_info",
         disableSortBy: true,
         columns: [
             {
@@ -56,6 +58,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Statistics",
+        id: "statistics",
         disableSortBy: true,
         columns: [
             {
@@ -98,6 +101,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "User Info",
+        id: "user_info",
         disableSortBy: true,
         columns: [
             {

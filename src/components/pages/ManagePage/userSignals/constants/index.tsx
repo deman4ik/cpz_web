@@ -3,6 +3,7 @@ import { ColumnsArraySchema } from "../../utils";
 export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
     {
         Header: "Robot",
+        id: "robot",
         disableSortBy: true,
         columns: [
             {
@@ -16,6 +17,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Signal",
+        id: "signal",
         disableSortBy: true,
         columns: [
             {
@@ -28,6 +30,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "User",
+        id: "user",
         disableSortBy: true,
         columns: [
             {
@@ -48,6 +51,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Info",
+        id: "info",
         disableSortBy: true,
         columns: [
             {

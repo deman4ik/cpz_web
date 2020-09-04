@@ -6,6 +6,7 @@ import { STATUS_COLORS } from "config/constants";
 export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     {
         Header: "Robot Info",
+        id: "robot_info",
         disableSortBy: true,
         columns: [
             {
@@ -37,6 +38,7 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Statistics",
+        id: "statistics",
         disableSortBy: true,
         columns: [
             {
@@ -79,117 +81,118 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     },
     {
         Header: "Settings",
+        id: "settings",
         disableSortBy: true,
         columns: [
             {
                 Header: "Volume",
                 accessor: "volume",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Max Bars",
                 accessor: "requiredHistoryMaxBars",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Sma Size",
                 accessor: "smaSize",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Dist Init",
                 accessor: "distInit",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Lookback",
                 accessor: "lookback",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Atr. Period",
                 accessor: "atrPeriod",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Adjustment",
                 accessor: "adjustment",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Adx High",
                 accessor: "adxHigh",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Adx Period",
                 accessor: "adxPeriod",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Trail Bars",
                 accessor: "trailBars",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Adx",
                 accessor: "adx",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Tick",
                 accessor: "tick",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Ratio",
                 accessor: "ratio",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Series Size",
                 accessor: "seriesSize",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Order Stop Loss",
                 accessor: "orderStopLoss",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             },
             {
                 Header: "Order Take Profit",
                 accessor: "orderTakeProfit",
-                isVisible: true,
+                isVisible: false,
                 orderSchema: { field: "settings" },
                 width: 100
             }
@@ -198,6 +201,7 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
 
     {
         Header: "Types",
+        id: "types",
         disableSortBy: true,
         columns: [
             {
@@ -219,6 +223,7 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     {
         // TODO: update order schema for these fields
         Header: "Entries",
+        id: "entries",
         disableSortBy: true,
         columns: [
             {

@@ -61,7 +61,6 @@ const ManagePageTemplate = ({
                 const { field, subfield } = orderSchema;
                 newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
             }
-            console.log(newOrderBy);
             setOrderBy(newOrderBy);
         }
     }, []);

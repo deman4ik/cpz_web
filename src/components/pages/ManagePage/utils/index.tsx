@@ -27,6 +27,7 @@ export const getItemsFromTitles = (item: any, titlesScheme: { [key: string]: str
 export interface ColumnsArraySchema {
     [index: number]: {
         Header: string;
+        id: string;
         disableSortBy?: boolean;
         columns: {
             Header: string;
