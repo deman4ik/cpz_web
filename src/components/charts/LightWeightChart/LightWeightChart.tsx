@@ -185,7 +185,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
             const { current } = subscribeRef;
             const oldestCandleTime = current.data[current.data.length - 1].time;
-            const newCandles = data.filter((candle) => candle.time > oldestCandleTime);
+            const newCandles = data.filter((candle) => candle.time >= oldestCandleTime);
             newCandles.forEach((newCandle) => {
                 chart.series.update(newCandle);
             });
