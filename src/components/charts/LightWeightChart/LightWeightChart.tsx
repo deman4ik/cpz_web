@@ -31,8 +31,8 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const toolTipRef = useRef(null);
     const buttonRef = useRef(null);
     const legendRef = useRef(null);
-    const subscibeRef = useRef(null);
-    const [fetchData, setFetchData] = useState(false);
+    const subscribeRef = useRef(null);
+    const [snapshotLoaded, setSnapshotLoaded] = useState(false);
     const [chart, setChart] = useState({ field: null, series: null });
     const [mouseEvent, setMouseEvent] = useState({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
     const [linkLines, setLinkLines] = useState([]);
@@ -129,12 +129,12 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             param.point.x > size.width ||
             param.point.y < 0 ||
             param.point.y > size.height ||
-            !subscibeRef.current
+            !subscribeRef.current
         ) {
             toolTipRef.current.style.display = "none";
             return;
         }
-        const item = subscibeRef.current.data.find((el) => el.time === param.time);
+        const item = subscribeRef.current.data.find((el) => el.time === param.time);
         if (!item) return;
 
         const { y, x } = param.point;
@@ -142,7 +142,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
         if (type === ChartType.candle) {
             if (param.hoveredMarkerId) {
-                const arrow = subscibeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
+                const arrow = subscribeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
                 toolTipRef.current.innerHTML = toolTipArrowTemplate(arrow);
             } else {
                 toolTipRef.current.innerHTML = toolTipTemplate(item);
@@ -176,26 +176,38 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     };
 
     useEffect(() => {
-        if (!loading && data && data.length && chart.series) {
-            if (!fetchData) {
-                setFetchData(true);
-                chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
-                chart.field.subscribeCrosshairMove(handleCrosshairMoved);
-            } else {
-                chartRef.current.style.cursor = "crosshair";
-            }
+        if (loading || !data || !data.length || !chart.series) {
+            return;
+        }
+
+        if (snapshotLoaded) {
+            chartRef.current.style.cursor = "crosshair";
+
+            const { current } = subscribeRef;
+            const oldestCandleTime = current.data[current.data.length - 1].time;
+            const newCandles = data.filter((candle) => candle.time > oldestCandleTime);
+            newCandles.forEach((newCandle) => {
+                chart.series.update(newCandle);
+            });
+        } else {
+            setSnapshotLoaded(true);
+            chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+            chart.field.subscribeCrosshairMove(handleCrosshairMoved);
+
             chart.series.setData(data);
+
             if (data.length <= 120) {
                 chart.field.timeScale().setVisibleRange({
                     from: data[0].time,
                     to: data[data.length - 1].time
                 });
             }
-            subscibeRef.current = { data, markers };
-            setCurrentButtonLeft(data[data.length - 1]);
-            if (markers) {
-                chart.series.setMarkers(markers);
-            }
+        }
+
+        subscribeRef.current = { data, markers };
+        setCurrentButtonLeft(data[data.length - 1]);
+        if (markers) {
+            chart.series.setMarkers(markers);
         }
     }, [data, loading, chart.series]);
 
