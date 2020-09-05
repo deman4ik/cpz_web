@@ -38,7 +38,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const [linkLines, setLinkLines] = useState([]);
 
     useEffect(() => {
-        const currentCart = createChart(chartRef.current, {
+        const currentChart = createChart(chartRef.current, {
             width: size.width,
             height: size.height,
             layout: {
@@ -80,7 +80,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
         let series;
         if (type === ChartType.candle) {
-            series = currentCart.addCandlestickSeries({
+            series = currentChart.addCandlestickSeries({
                 upColor: color.positive,
                 downColor: color.negative,
                 borderDownColor: color.negative,
@@ -93,7 +93,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         }
 
         if (type === ChartType.area) {
-            series = currentCart.addAreaSeries({
+            series = currentChart.addAreaSeries({
                 topColor: "rgba(21, 146, 230, 0.4)",
                 bottomColor: "rgba(21, 146, 230, 0)",
                 lineColor: "rgba(21, 146, 230, 1)",
@@ -109,7 +109,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         buttonRef.current.style.top = `${size.height - heightButton - 30}px`;
         buttonRef.current.style.color = "#4c525e";
 
-        setChart({ field: currentCart, series });
+        setChart({ field: currentChart, series });
         if (setIsChartLoaded) setIsChartLoaded(true);
     }, []);
 
@@ -183,12 +183,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         if (snapshotLoaded) {
             chartRef.current.style.cursor = "crosshair";
 
-            const { current } = subscribeRef;
-            const oldestCandleTime = current.data[current.data.length - 1].time;
-            const newCandles = data.filter((candle) => candle.time >= oldestCandleTime);
-            newCandles.forEach((newCandle) => {
-                chart.series.update(newCandle);
-            });
+            chart.series.setData(data);
         } else {
             setSnapshotLoaded(true);
             chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
