@@ -36,18 +36,17 @@ const Table = ({
     onChangeSort
 }) => {
     const [cols, setCols] = useState(columns);
-    const [controlledHeaders, setHeaders] = useState([]);
     const [isModalVisible, setModalVisibility] = useState(false);
 
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
-    let {
+    const {
         getTableProps,
         getTableBodyProps,
-        columns: groupColumns,
         headerGroups,
         page,
+        columns: groupedCols,
         prepareRow,
         state: { pageIndex, pageSize, sortBy },
         pageOptions,
@@ -125,7 +124,7 @@ const Table = ({
                 setPageIndex={setPageIndex}
             />
             <ColumnControlModal
-                columns={groupColumns}
+                columns={groupedCols}
                 setColumns={setCols}
                 title="Configure columns"
                 isModalVisible={isModalVisible}

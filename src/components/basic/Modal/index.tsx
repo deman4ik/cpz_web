@@ -9,6 +9,7 @@ interface Props {
     children?: React.ReactNode;
     onClose: React.MouseEventHandler;
     title?: string;
+    style?: React.CSSProperties;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -28,7 +29,7 @@ export const Modal: React.FC<Props> = (props) => {
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={styles.modal}>
+                <div ref={modalRef} className={styles.modal} style={props.style}>
                     <ModalTemplate title={props.title} onClose={props.onClose}>
                         {props.children}
                     </ModalTemplate>
