@@ -9,7 +9,7 @@ import { LoadingIndicator } from "components/common";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { POLL_INTERVAL } from "config/constants";
 
-const ITEMS_PER_PAGE_OPTIONS = [10, 100, 500, 1000];
+const ITEMS_PER_PAGE_OPTIONS = [100, 500, 1000];
 
 const ManagePageTemplate = ({
     pageType,
