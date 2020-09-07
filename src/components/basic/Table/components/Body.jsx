@@ -4,8 +4,8 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 // styles
 import styles from "../styles/Common.module.css";
-import bodyStyles from "../styles/TableBody.module.css";
-import cellStyles from "../styles/TableCells.module.css";
+import bodyStyles from "../styles/Body.module.css";
+import cellStyles from "../styles/Cell.module.css";
 
 const Body = ({ tableProps, bodyProps, page, prepareRow }) => (
     <table {...tableProps} className={styles.table}>

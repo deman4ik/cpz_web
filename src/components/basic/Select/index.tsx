@@ -51,7 +51,7 @@ export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 20
                     .select_container:after {
                         border-left: 5px solid transparent;
                         border-right: 5px solid transparent;
-                        top: 1em;
+                        top: 0.4rem;
                         right: 0.75em;
                         border-top: 8px solid var(--accent);
                         opacity: 0.5;

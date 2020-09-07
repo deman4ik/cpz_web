@@ -4,10 +4,6 @@
     align-items: center;
 }
 
-.pagination_container * {
-    font-size: 1.1em;
-}
-
 .pagination_button_group {
     display: flex;
     margin-right: 10px;

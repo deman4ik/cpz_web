@@ -3,7 +3,7 @@ import React from "react";
 
 // styles
 import styles from "../styles/Common.module.css";
-import headerStyles from "../styles/TableHeader.module.css";
+import headerStyles from "../styles/Header.module.css";
 
 const Header = ({ tableProps, headerGroups }) => (
     <table {...tableProps} className={styles.table}>

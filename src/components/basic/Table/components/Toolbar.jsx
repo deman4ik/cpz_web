@@ -2,7 +2,7 @@
 import React from "react";
 
 import { Button } from "../../Button";
-import { GlobalFilter } from "./TableFilters";
+import { GlobalFilter } from "./Filters";
 // styles
 import styles from "../styles/Common.module.css";
 

@@ -68,3 +68,15 @@ a:visited {
 .positive {
   color: var(--positive);
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--lightBg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--whiteLight);
+}

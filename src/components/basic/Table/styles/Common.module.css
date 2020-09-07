@@ -5,8 +5,6 @@
 
 .table {
     width: 100%;
-    max-width: 100%;
-    overflow: scroll;
     margin: 2px 0;
     border-collapse: collapse;
 }
@@ -43,7 +41,7 @@
 
 .horizontal_overflow_scroll {
     max-width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 @media (max-width: 480px) {

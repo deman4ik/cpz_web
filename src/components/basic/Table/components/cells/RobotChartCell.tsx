@@ -2,7 +2,7 @@ import React from "react";
 // components
 import AreaChart from "components/charts/AreaChart";
 // styles
-import styles from "../../styles/TableCells.module.css";
+import styles from "../../styles/Cell.module.css";
 
 interface RobotChartCellProps {
     performance: Array<any>;

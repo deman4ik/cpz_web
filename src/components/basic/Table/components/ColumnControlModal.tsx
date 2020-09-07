@@ -1,57 +1,16 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useMemo, useCallback } from "react";
 
+// components
 import { Modal } from "../../Modal";
 import { CheckBox } from "../../CheckBox";
-
+import { Button } from "components/basic/Button";
+//icons
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
-
 // styles
-import headerStyles from "../styles/TableHeader.module.css";
-
-const VisibilityToggleCell = ({ column }) => {
-    let isVisible = false;
-    let toggleHidden;
-
-    // the column references a group header
-    if (column.columns) {
-        column.columns.forEach((col) => {
-            if (col.isVisible) isVisible = true;
-        });
-        toggleHidden = () =>
-            column.columns.forEach((col) => {
-                if (col.isVisible === isVisible) col.toggleHidden();
-            });
-    }
-    // the column references data row
-    else {
-        isVisible = column.isVisible;
-        toggleHidden = column.toggleHidden;
-    }
-
-    return <CheckBox checked={isVisible} onClick={toggleHidden} />;
-};
-
-const Row = ({ key, column, moveRowUp, moveRowDown }) => {
-    return (
-        <tr key={key}>
-            <td>
-                <div>
-                    <span onClick={moveRowUp}>
-                        <ArrowUpIcon />
-                    </span>
-                    <span onClick={moveRowDown}>
-                        <ArrowDownIcon />
-                    </span>
-                </div>
-            </td>
-            <td>
-                <VisibilityToggleCell column={column} />
-            </td>
-            <td>{column.Header}</td>
-        </tr>
-    );
-};
+import commonStyles from "../styles/Common.module.css";
+import modalStyles from "../styles/ControlModal.module.css";
 
 enum MoveDirection {
     up,
@@ -59,25 +18,28 @@ enum MoveDirection {
 }
 
 export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal, setColumns }) => {
+    const [colsState, setColsState] = useState(columns);
+    const saveChanges = () => setColumns(colsState);
+
     const moveGroup = (rowIdx: number, direction: MoveDirection) => {
-        const newCols = columns;
-        const row = newCols[rowIdx];
+        const newColsState = [...colsState];
+        const row = newColsState[rowIdx];
 
         if (direction === MoveDirection.up) {
             if (rowIdx === 0) return;
-            newCols[rowIdx] = newCols[rowIdx - 1];
-            newCols[rowIdx - 1] = row;
+            newColsState[rowIdx] = newColsState[rowIdx - 1];
+            newColsState[rowIdx - 1] = row;
         } else {
-            if (rowIdx === newCols.length - 1) return;
-            newCols[rowIdx] = newCols[rowIdx + 1];
-            newCols[rowIdx + 1] = row;
+            if (rowIdx === newColsState.length - 1) return;
+            newColsState[rowIdx] = newColsState[rowIdx + 1];
+            newColsState[rowIdx + 1] = row;
         }
-        setColumns(newCols);
+        setColsState(newColsState);
     };
 
     const moveRow = (groupIdx: number, rowIdx: number, direction: MoveDirection) => {
-        const newCols = columns;
-        const group = newCols[groupIdx].columns;
+        const newColsState = [...colsState];
+        const group = newColsState[groupIdx].columns;
         const row = group[rowIdx];
 
         if (direction === MoveDirection.up) {
@@ -89,7 +51,85 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             group[rowIdx] = group[rowIdx + 1];
             group[rowIdx + 1] = row;
         }
-        setColumns(newCols);
+        setColsState(newColsState);
+    };
+
+    const GroupVisibilityCell = ({ groupIdx, groupColumn }) => {
+        const isVisible = groupColumn.columns.map((col) => col.isVisible).includes(true);
+
+        const toggleVisibility = () => {
+            const groupCols = [...groupColumn.columns];
+            groupCols.forEach((col) => {
+                col.isVisible = !isVisible;
+            });
+            setColsState(
+                colsState.map((col, i) => {
+                    if (i === groupIdx) return { ...groupColumn, columns: groupCols };
+                    return col;
+                })
+            );
+        };
+        return <CheckBox checked={isVisible} onClick={toggleVisibility} />;
+    };
+
+    const ColumnVisibilityCell = ({ groupIdx, rowIdx, groupColumn, column }) => {
+        const { isVisible } = column;
+        const toggleVisibility = () => {
+            const groupCols = [...groupColumn.columns];
+            groupCols[rowIdx] = { ...column, isVisible: !isVisible };
+            setColsState(
+                colsState.map((group, i) => {
+                    if (i === groupIdx) return { ...group, columns: groupCols };
+                    return group;
+                })
+            );
+        };
+
+        return <CheckBox checked={isVisible} onClick={toggleVisibility} />;
+    };
+
+    const GroupRow = ({ groupIdx, groupColumn, moveRowUp, moveRowDown }) => {
+        return (
+            <div className={`${modalStyles.row_item} ${modalStyles.group_head}`}>
+                <div className={modalStyles.order_arrows_group}>
+                    {groupIdx !== 0 ? (
+                        <span onClick={moveRowUp} className={modalStyles.order_arrow} title="Move up">
+                            <ArrowUpIcon size={20} />
+                        </span>
+                    ) : null}
+                    {groupIdx !== columns.length - 1 ? (
+                        <span onClick={moveRowDown} className={modalStyles.order_arrow} title="Move down">
+                            <ArrowDownIcon size={20} />
+                        </span>
+                    ) : null}
+                </div>
+                <GroupVisibilityCell groupIdx={groupIdx} groupColumn={groupColumn} />
+                {groupColumn.Header}
+            </div>
+        );
+    };
+
+    const Row = ({ groupIdx, rowIdx, groupColumn, column, moveRowUp, moveRowDown }) => {
+        return (
+            <div className={modalStyles.row_item}>
+                <div className={modalStyles.order_arrows_group}>
+                    {rowIdx !== 0 ? (
+                        <span onClick={moveRowUp} className={modalStyles.order_arrow} title="Move up">
+                            <ArrowUpIcon size={20} />
+                        </span>
+                    ) : null}
+                    {rowIdx !== colsState[groupIdx].columns.length - 1 ? (
+                        <span onClick={moveRowDown} className={modalStyles.order_arrow} title="Move down">
+                            <ArrowDownIcon size={20} />
+                        </span>
+                    ) : null}
+                </div>
+
+                <ColumnVisibilityCell groupIdx={groupIdx} rowIdx={rowIdx} groupColumn={groupColumn} column={column} />
+
+                {column.Header}
+            </div>
+        );
     };
 
     return (
@@ -97,37 +137,46 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             isOpen={isModalVisible}
             title={title}
             onClose={toggleModal}
-            style={{ maxHeight: "80%", overflowY: "scroll" }}>
-            <table style={{ color: "white" }}>
-                <tbody>
-                    {columns.map((group, i) => (
-                        <>
-                            <Row
-                                key={i}
-                                column={group}
-                                moveRowUp={() => moveGroup(i, MoveDirection.up)}
-                                moveRowDown={() => moveGroup(i, MoveDirection.down)}
-                            />
-                            <tr key={`child_${i}`}>
-                                <td />
-                                <td>
-                                    <table style={{ margin: 0 }}>
-                                        <th />
-                                        {group.columns.map((column, j) => (
-                                            <Row
-                                                key={`${j}`}
-                                                column={column}
-                                                moveRowUp={() => moveRow(i, j, MoveDirection.up)}
-                                                moveRowDown={() => moveRow(i, j, MoveDirection.down)}
-                                            />
-                                        ))}
-                                    </table>
-                                </td>
-                            </tr>
-                        </>
-                    ))}
-                </tbody>
-            </table>
+            className={modalStyles.modal}
+            footer={
+                <div className={commonStyles.flex_spread}>
+                    <Button
+                        title="Apply"
+                        icon="check"
+                        onClick={() => {
+                            saveChanges();
+                            toggleModal();
+                        }}
+                        className="success"
+                    />
+                    <Button title="Discard" icon="close" onClick={toggleModal} className="dimmed" />
+                </div>
+            }>
+            <div style={{ color: "white" }}>
+                {colsState.map((groupColumn, i) => (
+                    <div key={`group_${i}`}>
+                        <GroupRow
+                            groupIdx={i}
+                            groupColumn={groupColumn}
+                            moveRowUp={() => moveGroup(i, MoveDirection.up)}
+                            moveRowDown={() => moveGroup(i, MoveDirection.down)}
+                        />
+                        <div style={{ paddingLeft: 20 }}>
+                            {groupColumn.columns.map((column, j) => (
+                                <Row
+                                    key={column.id}
+                                    groupIdx={i}
+                                    rowIdx={j}
+                                    groupColumn={groupColumn}
+                                    column={column}
+                                    moveRowUp={() => moveRow(i, j, MoveDirection.up)}
+                                    moveRowDown={() => moveRow(i, j, MoveDirection.down)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </Modal>
     );
 };

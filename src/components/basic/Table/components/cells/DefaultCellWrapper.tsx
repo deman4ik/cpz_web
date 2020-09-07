@@ -1,6 +1,6 @@
 import React from "react";
 // styles
-import styles from "./Cells.module.css";
+import styles from "../../styles/Cell.module.css";
 
 export interface DefaultCellWrapperProps {
     style?: React.CSSProperties;

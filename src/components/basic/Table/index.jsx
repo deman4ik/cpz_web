@@ -8,10 +8,10 @@ import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } 
 import { ColumnControlModal } from "./components/ColumnControlModal";
 import DefaultMobileWrapper from "./components/DefaultMobileWrapper";
 
-import Toolbar from "./components/TableToolbar";
-import Header from "./components/TableHeader";
-import Body from "./components/TableBody";
-import Pagination from "./components/TablePagination";
+import Toolbar from "./components/Toolbar";
+import Header from "./components/Header";
+import Body from "./components/Body";
+import Pagination from "./components/Pagination";
 // constants
 import { SCREEN_TYPE } from "config/constants";
 // styles
@@ -45,8 +45,8 @@ const Table = ({
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        page,
         columns: groupedCols,
+        page,
         prepareRow,
         state: { pageIndex, pageSize, sortBy },
         pageOptions,
@@ -81,7 +81,7 @@ const Table = ({
         const flatCols = [];
         cols.forEach((col) => flatCols.push(...col.columns));
 
-        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.accessor || col.id));
+        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor));
     }, [cols, setHiddenColumns]);
 
     useEffect(() => {
@@ -113,7 +113,6 @@ const Table = ({
             </div>
 
             <Pagination
-                tableProps={getTableProps()}
                 pageOptions={pageOptions}
                 pageIndex={pageIndex}
                 gotoPage={gotoPage}
@@ -123,6 +122,7 @@ const Table = ({
                 setPageSize={setPageSize}
                 setPageIndex={setPageIndex}
             />
+
             <ColumnControlModal
                 columns={groupedCols}
                 setColumns={setCols}

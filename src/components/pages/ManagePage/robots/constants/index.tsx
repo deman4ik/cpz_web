@@ -187,14 +187,14 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "orderStopLoss",
                 isVisible: false,
                 orderSchema: { field: "settings" },
-                width: 100
+                width: 130
             },
             {
                 Header: "Order Take Profit",
                 accessor: "orderTakeProfit",
                 isVisible: false,
                 orderSchema: { field: "settings" },
-                width: 100
+                width: 135
             }
         ]
     },

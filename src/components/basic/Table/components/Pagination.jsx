@@ -6,11 +6,10 @@ import { Select } from "../../Select";
 
 // styles
 import styles from "../styles/Common.module.css";
-import headerStyles from "../styles/TableHeader.module.css";
-import paginationStyles from "../styles/TablePagination.module.css";
+import headerStyles from "../styles/Header.module.css";
+import paginationStyles from "../styles/Pagination.module.css";
 
 const Pagination = ({
-    tableProps,
     pageOptions,
     pageIndex,
     setPageIndex,
@@ -22,7 +21,7 @@ const Pagination = ({
 }) => {
     useEffect(() => setLimit(pageSizeOptions[0]), [setLimit, pageSizeOptions]);
     return (
-        <table {...tableProps} className={styles.table}>
+        <table className={styles.table}>
             <tbody>
                 <tr className={`${styles.table_row}`}>
                     <td>
@@ -40,15 +39,17 @@ const Pagination = ({
                                     </div>
                                 ))}
                             </div>
-                            <Select
-                                width={110}
-                                value={pageSize}
-                                data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
-                                onChangeValue={(value) => {
-                                    setLimit(Number(value));
-                                    setPageSize(Number(value));
-                                }}
-                            />
+                            <div>
+                                <Select
+                                    width={110}
+                                    value={pageSize}
+                                    data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
+                                    onChangeValue={(value) => {
+                                        setLimit(Number(value));
+                                        setPageSize(Number(value));
+                                    }}
+                                />
+                            </div>
                         </div>
                     </td>
                 </tr>
