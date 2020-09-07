@@ -6,6 +6,7 @@ import { toolTipTemplate, toolTipArrowTemplate, toolTipTemplateArea } from "./te
 import { PropsLighweightChart, ChartType } from "./types";
 import { color } from "config/constants";
 import { getLeftOffsetButton } from "./helpers";
+import { debounce } from "lodash";
 
 const toolTipWidth = 140;
 const toolTipHeight = 80;
@@ -131,7 +132,9 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             param.point.y > size.height ||
             !subscribeRef.current
         ) {
-            toolTipRef.current.style.display = "none";
+            if (toolTipRef.current) {
+                toolTipRef.current.style.display = "none";
+            }
             return;
         }
         const item = subscribeRef.current.data.find((el) => el.time === param.time);
@@ -165,14 +168,22 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         toolTipRef.current.style.top = `${top}px`;
     }, []);
 
-    const loadDataFromSource = (offset: number) => {
-        if (!onFetchMore) return;
-        onFetchMore(Math.round(offset));
-    };
-
     const handleVisibleTimeRangeChange = () => {
         const buttonVisible = chart.field.timeScale().scrollPosition() < -5;
         buttonRef.current.style.display = buttonVisible ? "block" : "none";
+    };
+
+    const loadDataFromSource = (offset: number) => {
+        if (!onFetchMore) return;
+        onFetchMore(Math.floor(Math.abs(offset)));
+    };
+
+    const handleVisibleLogicalRangeChanged = (newVisibleLogicalRange) => {
+        const barsInfo = chart.series.barsInLogicalRange(newVisibleLogicalRange);
+        if (!loading && barsInfo !== null && barsInfo.barsBefore < 50) {
+            chartRef.current.style.cursor = "wait";
+            loadDataFromSource(barsInfo.barsAfter);
+        }
     };
 
     useEffect(() => {
@@ -187,6 +198,9 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         } else {
             setSnapshotLoaded(true);
             chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+
+            const debouncedHandleVisibleLogicalRangeChanged = debounce(handleVisibleLogicalRangeChanged, 500);
+            chart.field.timeScale().subscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
             chart.field.subscribeCrosshairMove(handleCrosshairMoved);
 
             chart.series.setData(data);
@@ -259,13 +273,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     };
 
     const handleOnMouseUpCanvas = () => {
-        if (mouseEvent.dragOffset !== 0 && !loading) {
-            const vr = chart.field.timeScale().getVisibleRange();
-            if (data[0].time === vr.from) {
-                chartRef.current.style.cursor = "wait";
-                loadDataFromSource(-1 * (chart.field.timeScale().scrollPosition() - mouseEvent.chartOffset));
-            }
-        }
         setMouseEvent({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
         if (chartRef.current.style.cursor !== "wait") {
             chartRef.current.style.cursor = "crosshair";

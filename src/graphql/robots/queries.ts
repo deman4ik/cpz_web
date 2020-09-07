@@ -292,15 +292,19 @@ export const GET_ROBOT_POSITIONS_USER = gql`
 
 export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   query candles(
-    $limit: Int
     $robotId: uuid!
-    $user_id: uuid  
+    $user_id: uuid
+    $limit: Int
+    $offset: Int
+    $orderBy: [v_candles${timeframe}_positions_order_by!]
   ) {
     candles: v_candles${timeframe}_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
       limit: $limit
+      offset: $offset
+      order_by: $orderBy
     ) {
       candle {
         id
@@ -327,14 +331,18 @@ export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
 
 export const ROBOT_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
   query candles(
-    $limit: Int
     $robotId: uuid!
+    $limit: Int
+    $offset: Int
+    $orderBy: [v_candles${timeframe}_positions_order_by!]
   ) {
     candles: v_candles${timeframe}_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
       limit: $limit
+      offset: $offset
+      order_by: $orderBy
     ) {
       candle {
         id
@@ -353,9 +361,11 @@ export const ROBOT_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
 
 export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   query candles(
-    $limit: Int
     $robotId: uuid!
-    $user_id: uuid  
+    $user_id: uuid
+    $limit: Int
+    $offset: Int
+    $orderBy: [v_candles${timeframe}_positions_order_by!]
   ) {
     candles: v_candles${timeframe}_user_positions(
       where: {
@@ -363,6 +373,8 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
         user_robot:{user_id:{_eq: $user_id}}    
       }
       limit: $limit
+      offset: $offset
+      order_by: $orderBy
     ) {
       candle {
         id

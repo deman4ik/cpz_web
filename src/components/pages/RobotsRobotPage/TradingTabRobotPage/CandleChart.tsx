@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useState, useEffect, useContext } from "react";
+import React, { useMemo, useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import dynamic from "next/dynamic";
 
@@ -44,7 +44,6 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
         candleQuery = userRobots ? USER_ROBOTS_POSITION_WITH_CANDLE : ROBOT_POSITION_WITH_CANDLE;
     }
 
-    const candleName = `candles${robot.timeframe}`;
     const legend = getLegend(robot);
     const { asset } = robot;
     const [limit, setLimit] = useState(LIMIT);
@@ -58,18 +57,39 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
         notifyOnNetworkStatusChange: true
     });
 
-    const [setChartData] = useMutation(SET_CHART_DATA);
-    const onFetchMore = () => {
+    const limitRef = useRef(limit);
+    useEffect(() => {
+        limitRef.current = limit;
+    }, [limit]);
+    // todo: split to two different queries: one for history load, another for real time data polling
+    const onFetchMore = (offset: number) => {
+        const variables = {
+            offset: limitRef.current,
+            limit: limitRef.current + LIMIT
+        };
         fetchMore({
-            variables: {
-                limit: limit + LIMIT
-            },
+            variables,
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                setLimit(limit + LIMIT);
+                setLimit((oldLimit) => oldLimit + LIMIT);
                 let result = null;
                 try {
-                    result = { ...{ [candleName]: [...fetchMoreResult[candleName]] } };
+                    const prevCandlesByTime = prev.candles.reduce((acc, curr) => {
+                        acc[curr.time] = curr;
+                        return acc;
+                    }, {});
+                    const uniqueCandles = [...prev.candles];
+                    for (let i = 0; i < fetchMoreResult.candles.length; i++) {
+                        const fetchedCandle = fetchMoreResult.candles[i];
+                        if (!Object.prototype.hasOwnProperty.call(prevCandlesByTime, fetchedCandle.time)) {
+                            uniqueCandles.push(fetchedCandle);
+                        }
+                    }
+
+                    result = {
+                        ...prev,
+                        candles: uniqueCandles
+                    };
                 } catch (err) {
                     result = prev;
                 }
@@ -83,6 +103,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobots, setIsCh
         [loading, data]
     );
 
+    const [setChartData] = useMutation(SET_CHART_DATA);
     useEffect(() => {
         setChartData({ variables: { limit, robotId: robot.id, timeframe: robot.timeframe } });
     }, [limit]);
