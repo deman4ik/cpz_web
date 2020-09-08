@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { DocumentNode } from "graphql";
 
 export const GET_LANDING_ROBOTS = gql`
     query robots_by_stats($limit: Int) {
@@ -388,6 +389,20 @@ export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
     }
   }
 `;
+
+export function buildRobotPositionCandlesQuery(
+    timeframe: number,
+    isAuth: boolean,
+    hasUserRobots = false
+): DocumentNode {
+    if (isAuth) {
+        if (hasUserRobots) {
+            return USER_ROBOTS_POSITION_WITH_CANDLE(timeframe);
+        }
+        return ROBOT_POSITION_WITH_CANDLE(timeframe);
+    }
+    return ROBOT_POSITION_WITH_CANDLE_NOT_AUTH(timeframe);
+}
 
 export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
     query user_robots($user_ex_acc_id: uuid!, $user_id: uuid) {
