@@ -12,6 +12,7 @@ import Toolbar from "./components/Toolbar";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Pagination from "./components/Pagination";
+import { LoadingIndicator } from "components/common";
 // constants
 import { SCREEN_TYPE } from "config/constants";
 // styles
@@ -33,7 +34,8 @@ const Table = ({
     pageCount: ControlledPageCount,
     itemsCount,
     onChangeSearch,
-    onChangeSort
+    onChangeSort,
+    isLoading
 }) => {
     const [cols, setCols] = useState(columns);
     const [isModalVisible, setModalVisibility] = useState(false);
@@ -104,16 +106,20 @@ const Table = ({
         <div className={styles.wrapper}>
             <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
 
-            <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
-                <Header tableProps={getTableProps()} headerGroups={headerGroups} />
+            {isLoading ? (
+                <LoadingIndicator />
+            ) : (
+                <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
+                    <Header tableProps={getTableProps()} headerGroups={headerGroups} />
 
-                <Body
-                    tableProps={getTableProps()}
-                    bodyProps={getTableBodyProps()}
-                    page={page}
-                    prepareRow={prepareRow}
-                />
-            </div>
+                    <Body
+                        tableProps={getTableProps()}
+                        bodyProps={getTableBodyProps()}
+                        page={page}
+                        prepareRow={prepareRow}
+                    />
+                </div>
+            )}
 
             <Pagination
                 tableInstance={{

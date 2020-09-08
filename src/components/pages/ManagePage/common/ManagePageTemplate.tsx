@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 // components
 import { Template } from "components/layout/Template";
 import Table from "components/basic/Table";
-import { LoadingIndicator } from "components/common";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { POLL_INTERVAL } from "config/constants";
@@ -80,8 +79,8 @@ const ManagePageTemplate = ({
                 itemsCount={itemsCount}
                 onChangeSearch={onChangeSearch}
                 onChangeSort={onChangeSort}
+                isLoading={isLoading}
             />
-            {isLoading ? <LoadingIndicator /> : null}
         </Template>
     );
 };

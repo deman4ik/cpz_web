@@ -25,8 +25,6 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
 
     const trimmedPageOptions = React.useMemo(trimPageOptions, [trimPageOptions]);
 
-    console.log(pageCount, pageIndex);
-
     useEffect(() => setLimit(pageSizeOptions[0]), [setLimit, pageSizeOptions]);
     return (
         <table className={`${styles.table} ${paginationStyles.pagination}`}>
@@ -66,9 +64,7 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
                                         />
                                     </div>
                                 ))}
-                                {(!(pageCount <= MAX_PAGES) &&
-                                    pageCount <= MAX_PAGES * 2 &&
-                                    pageCount >= Math.ceil((pageIndex + MAX_PAGES) / 2)) ||
+                                {(!(pageCount <= MAX_PAGES) && pageCount <= MAX_PAGES * 2 && pageIndex < MAX_PAGES) ||
                                 (pageCount > MAX_PAGES * 2 && pageIndex < pageCount - MAX_PAGES) ? (
                                     <>
                                         <Button title="..." />
