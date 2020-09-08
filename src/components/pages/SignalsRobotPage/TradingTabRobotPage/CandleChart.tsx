@@ -60,20 +60,21 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             variables,
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                setLimit((oldLimit) => oldLimit + LIMIT);
                 let result = null;
                 try {
                     const prevCandlesByTime = prev.candles.reduce((acc, curr) => {
-                        acc[curr.time] = curr;
+                        acc[curr.candle.time] = curr;
                         return acc;
                     }, {});
                     const uniqueCandles = [...prev.candles];
                     for (let i = 0; i < fetchMoreResult.candles.length; i++) {
-                        const fetchedCandle = fetchMoreResult.candles[i];
+                        const fetchedCandle = fetchMoreResult.candles[i].candle;
                         if (!Object.prototype.hasOwnProperty.call(prevCandlesByTime, fetchedCandle.time)) {
                             uniqueCandles.push(fetchedCandle);
                         }
                     }
+
+                    setLimit((oldLimit) => oldLimit + (uniqueCandles.length - prev.candles.length));
 
                     result = {
                         ...prev,
