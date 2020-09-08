@@ -1,11 +1,16 @@
 .modal {
     max-height: 85%;
+    width: 400px;
     overflow-y: auto;
 }
 
 .row_item {
     display: flex;
     align-items: center;
+}
+
+.row_group {
+    padding-left: 30px;
 }
 
 .group_head {
@@ -22,4 +27,8 @@
 
 .order_arrow svg:hover path {
     fill: var(--accent);
+}
+
+.checkbox {
+    margin: 0 5px;
 }

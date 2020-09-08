@@ -51,6 +51,9 @@ const Table = ({
         state: { pageIndex, pageSize, sortBy },
         pageOptions,
         gotoPage,
+        pageCount,
+        canNextPage,
+        canPreviousPage,
         setPageSize,
         allColumns,
         setHiddenColumns
@@ -101,7 +104,7 @@ const Table = ({
         <div className={styles.wrapper}>
             <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
 
-            <div className={styles.horizontal_overflow_scroll}>
+            <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 <Header tableProps={getTableProps()} headerGroups={headerGroups} />
 
                 <Body
@@ -113,9 +116,14 @@ const Table = ({
             </div>
 
             <Pagination
-                pageOptions={pageOptions}
-                pageIndex={pageIndex}
-                gotoPage={gotoPage}
+                tableInstance={{
+                    pageOptions,
+                    pageIndex,
+                    gotoPage,
+                    pageCount,
+                    canNextPage,
+                    canPreviousPage
+                }}
                 setLimit={setLimit}
                 pageSizeOptions={pageSizeOptions}
                 pageSize={pageSize}

@@ -8,7 +8,7 @@ import bodyStyles from "../styles/Body.module.css";
 import cellStyles from "../styles/Cell.module.css";
 
 const Body = ({ tableProps, bodyProps, page, prepareRow }) => (
-    <table {...tableProps} className={styles.table}>
+    <table {...tableProps} className={`${styles.table}`}>
         <tbody {...bodyProps}>
             {page.map((row) => {
                 prepareRow(row);

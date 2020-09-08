@@ -5,11 +5,12 @@ import { Button } from "../../Button";
 import { GlobalFilter } from "./Filters";
 // styles
 import styles from "../styles/Common.module.css";
+import toolbarStyles from "../styles/Toolbar.module.css";
 
 const Toolbar = ({ itemsCount, onChangeSearch, toggleModal }) => (
-    <table className={styles.table}>
+    <table className={`${styles.table} ${toolbarStyles.toolbar}`}>
         <thead>
-            <tr className={`${styles.table_row} ${styles.flex_spread}`}>
+            <tr className={`${styles.table_row} ${styles.flex_start}`}>
                 <td>
                     <GlobalFilter itemsCount={itemsCount} onChangeSearch={onChangeSearch} />
                 </td>

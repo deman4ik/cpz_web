@@ -59,19 +59,24 @@ export const Template: React.FC<Props> = ({
             <div id="modal" />
             <div className={styles.mainMenuContainer} style={container_manage}>
                 <MainMenu activeTab={page} showDesktop={showDimension} />
-                <div className={styles.wrapFixed}>
-                    <NavBar
-                        title={title}
-                        subTitle={subTitle}
-                        handlePressBack={handlePressBack}
-                        hideToolbar={hideToolbar}
-                        toolbar={toolbar}
-                        style={navbarStyles}
-                    />
+                {
+                    // Hide layout header if it's empty
+                }
+                {title || subTitle || handlePressBack || toolbar ? (
+                    <div className={styles.wrapFixed}>
+                        <NavBar
+                            title={title}
+                            subTitle={subTitle}
+                            handlePressBack={handlePressBack}
+                            hideToolbar={hideToolbar}
+                            toolbar={toolbar}
+                            style={navbarStyles}
+                        />
+                    </div>
+                ) : null}
+                <div className={styles.mainContainer} style={containerStyles}>
+                    {children}
                 </div>
-            </div>
-            <div className={styles.mainContainer} style={containerStyles}>
-                {children}
             </div>
         </div>
     );

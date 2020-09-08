@@ -6,7 +6,7 @@ import styles from "../styles/Common.module.css";
 import headerStyles from "../styles/Header.module.css";
 
 const Header = ({ tableProps, headerGroups }) => (
-    <table {...tableProps} className={styles.table}>
+    <table {...tableProps} className={`${styles.table} ${headerStyles.table_header}`}>
         <thead>
             {headerGroups.map((headerGroup, i) => (
                 <tr {...headerGroup.getHeaderGroupProps()} className={`${styles.table_row} ${styles.noselect}`} key={i}>

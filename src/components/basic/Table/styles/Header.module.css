@@ -1,3 +1,9 @@
+.table_header {
+    position: sticky;
+    top: 0;
+    z-index: 103;
+}
+
 .table_header_cell {
     font-size: var(--small1);
     color: var(--accent);
@@ -12,7 +18,7 @@
     width: 10px;
     height: 80%;
     position: absolute;
-    right: 0.1px;
+    right: 0.5px;
     top: 10%;
     transform: translateX(50%);
     z-index: 1;
@@ -31,8 +37,4 @@
 
 .resizer.isResizing {
     background: #ffffff;
-}
-
-.filter_wrapper {
-    margin-top: 5px;
 }

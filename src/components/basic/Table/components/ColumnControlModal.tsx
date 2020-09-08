@@ -69,7 +69,11 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
                 })
             );
         };
-        return <CheckBox checked={isVisible} onClick={toggleVisibility} />;
+        return (
+            <span className={modalStyles.checkbox}>
+                <CheckBox checked={isVisible} onClick={toggleVisibility} />
+            </span>
+        );
     };
 
     const ColumnVisibilityCell = ({ groupIdx, rowIdx, groupColumn, column }) => {
@@ -85,7 +89,11 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             );
         };
 
-        return <CheckBox checked={isVisible} onClick={toggleVisibility} />;
+        return (
+            <span className={modalStyles.checkbox}>
+                <CheckBox checked={isVisible} onClick={toggleVisibility} />
+            </span>
+        );
     };
 
     const GroupRow = ({ groupIdx, groupColumn, moveRowUp, moveRowDown }) => {
@@ -161,7 +169,7 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
                             moveRowUp={() => moveGroup(i, MoveDirection.up)}
                             moveRowDown={() => moveGroup(i, MoveDirection.down)}
                         />
-                        <div style={{ paddingLeft: 20 }}>
+                        <div className={modalStyles.row_group}>
                             {groupColumn.columns.map((column, j) => (
                                 <Row
                                     key={column.id}

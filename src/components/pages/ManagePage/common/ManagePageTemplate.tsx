@@ -9,7 +9,8 @@ import { LoadingIndicator } from "components/common";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { POLL_INTERVAL } from "config/constants";
 
-const ITEMS_PER_PAGE_OPTIONS = [100, 500, 1000];
+const ITEMS_PER_PAGE_OPTIONS =
+    process.env.NODE_ENV === "development" ? [2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 20, 25] : [100, 500, 1000];
 
 const ManagePageTemplate = ({
     pageType,
@@ -68,7 +69,7 @@ const ManagePageTemplate = ({
     const tableColumns = useMemo(() => columns, [columns]);
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
     return (
-        <Template title={pageType} width={width} page={pageType} hideToolbar>
+        <Template width={width} page={pageType} hideToolbar>
             <Table
                 columns={tableColumns}
                 data={tableData}
