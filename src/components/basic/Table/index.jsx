@@ -64,7 +64,8 @@ const Table = ({
             columns: cols,
             data,
             initialState: {
-                pageIndex: 0
+                pageIndex: 0,
+                pageSize: pageSizeOptions[0]
             },
             manualPagination: true,
             pageCount: ControlledPageCount,
@@ -106,20 +107,22 @@ const Table = ({
         <div className={styles.wrapper}>
             <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
 
-            {isLoading ? (
-                <LoadingIndicator />
-            ) : (
-                <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
-                    <Header tableProps={getTableProps()} headerGroups={headerGroups} />
+            <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
+                {isLoading ? (
+                    <LoadingIndicator />
+                ) : (
+                    <>
+                        <Header tableProps={getTableProps()} headerGroups={headerGroups} />
 
-                    <Body
-                        tableProps={getTableProps()}
-                        bodyProps={getTableBodyProps()}
-                        page={page}
-                        prepareRow={prepareRow}
-                    />
-                </div>
-            )}
+                        <Body
+                            tableProps={getTableProps()}
+                            bodyProps={getTableBodyProps()}
+                            page={page}
+                            prepareRow={prepareRow}
+                        />
+                    </>
+                )}
+            </div>
 
             <Pagination
                 tableInstance={{

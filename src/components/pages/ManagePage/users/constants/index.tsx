@@ -102,14 +102,16 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "signals_email_notifications",
                 isVisible: true,
                 Cell: buildCheckBoxCell,
-                width: 75
+                width: 75,
+                orderSchema: { field: "settings" }
             },
             {
                 Header: "Telegram",
                 accessor: "signals_telegram_notifications",
                 isVisible: true,
                 Cell: buildCheckBoxCell,
-                width: 95
+                width: 95,
+                orderSchema: { field: "settings" }
             }
         ]
     },
@@ -123,14 +125,16 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "trading_email_notifications",
                 isVisible: true,
                 Cell: buildCheckBoxCell,
-                width: 75
+                width: 75,
+                orderSchema: { field: "settings" }
             },
             {
                 Header: "Telegram",
                 accessor: "trading_telegram_notifications",
                 isVisible: true,
                 Cell: buildCheckBoxCell,
-                width: 95
+                width: 95,
+                orderSchema: { field: "settings" }
             }
         ]
     }

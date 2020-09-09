@@ -21,7 +21,7 @@ const ManagePageTemplate = ({
     getSearchOptions
 }) => {
     /*States*/
-    const [limit, setLimit] = useState(1);
+    const [limit, setLimit] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
     const [orderBy, setOrderBy] = useState(null);
     const { width } = useWindowDimensions(); // width hook
     const [where, setWhere] = useState(getSearchOptions(""));
