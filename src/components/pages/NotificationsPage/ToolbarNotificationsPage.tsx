@@ -22,7 +22,7 @@ const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelec
                     value={inputSelect}
                 />
             </div>
-            <CaptionButton title="Mark All as Readed" icon="check" onClick={updateNotifications} />
+            <CaptionButton title="Mark All as Read" icon="check" onClick={updateNotifications} />
         </div>
     );
 };
