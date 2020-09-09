@@ -40,9 +40,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
             </div>
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
-                    {robot.equity.changes && (
-                        <DinamicAreaChart height={120} positive={robot.equity.profit > 0} data={robot.equity.changes} />
-                    )}
+                    {robot.equity.changes && <DinamicAreaChart height={120} data={robot.equity.changes} />}
                 </div>
                 <div className={styles.statCol}>
                     <div className={styles.statRow}>

@@ -15,7 +15,7 @@ interface RobotChartCellProps {
 const RobotChartCell: React.FC<RobotChartCellProps> = ({ performance, height, profit, style }) => {
     return (
         <div style={style} className={styles.robot_chart_cell}>
-            <AreaChart height={height} positive={profit > 0} data={performance} />
+            <AreaChart height={height} data={performance} />
         </div>
     );
 };

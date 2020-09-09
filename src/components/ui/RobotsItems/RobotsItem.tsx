@@ -72,7 +72,7 @@ export const RobotsItem: React.FC<Props> = ({
             </div>
             <div className={styles.cellPerformance}>
                 {item.performance && item.performance.length ? (
-                    <AreaChart height={120} positive={item.profit > 0} data={item.performance} />
+                    <AreaChart height={120} data={item.performance} />
                 ) : null}
             </div>
             <div className={styles.cellStatistics}>
