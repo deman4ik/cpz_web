@@ -6,6 +6,7 @@ import { toolTipTemplate, toolTipArrowTemplate, toolTipTemplateArea } from "./te
 import { PropsLighweightChart, ChartType } from "./types";
 import { color } from "config/constants";
 import { getLeftOffsetButton } from "./helpers";
+import { debounce } from "lodash";
 
 const toolTipWidth = 140;
 const toolTipHeight = 80;
@@ -31,14 +32,31 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const toolTipRef = useRef(null);
     const buttonRef = useRef(null);
     const legendRef = useRef(null);
-    const subscibeRef = useRef(null);
-    const [fetchData, setFetchData] = useState(false);
+    const subscribeRef = useRef(null);
+    const [snapshotLoaded, setSnapshotLoaded] = useState(false);
     const [chart, setChart] = useState({ field: null, series: null });
     const [mouseEvent, setMouseEvent] = useState({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
     const [linkLines, setLinkLines] = useState([]);
+    const [sortedData, setSortedData] = useState([]);
 
     useEffect(() => {
-        const currentCart = createChart(chartRef.current, {
+        if (!data || !data.length) {
+            return;
+        }
+
+        // data has to be sorted from old to new
+        const sorted = [...data].sort((a, b) => {
+            if (a.time < b.time) {
+                return -1;
+            }
+
+            return 1;
+        });
+        setSortedData(sorted);
+    }, [data]);
+
+    useEffect(() => {
+        const currentChart = createChart(chartRef.current, {
             width: size.width,
             height: size.height,
             layout: {
@@ -80,7 +98,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
         let series;
         if (type === ChartType.candle) {
-            series = currentCart.addCandlestickSeries({
+            series = currentChart.addCandlestickSeries({
                 upColor: color.positive,
                 downColor: color.negative,
                 borderDownColor: color.negative,
@@ -93,7 +111,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         }
 
         if (type === ChartType.area) {
-            series = currentCart.addAreaSeries({
+            series = currentChart.addAreaSeries({
                 topColor: "rgba(21, 146, 230, 0.4)",
                 bottomColor: "rgba(21, 146, 230, 0)",
                 lineColor: "rgba(21, 146, 230, 1)",
@@ -109,7 +127,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         buttonRef.current.style.top = `${size.height - heightButton - 30}px`;
         buttonRef.current.style.color = "#4c525e";
 
-        setChart({ field: currentCart, series });
+        setChart({ field: currentChart, series });
         if (setIsChartLoaded) setIsChartLoaded(true);
     }, []);
 
@@ -129,12 +147,14 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             param.point.x > size.width ||
             param.point.y < 0 ||
             param.point.y > size.height ||
-            !subscibeRef.current
+            !subscribeRef.current
         ) {
-            toolTipRef.current.style.display = "none";
+            if (toolTipRef.current) {
+                toolTipRef.current.style.display = "none";
+            }
             return;
         }
-        const item = subscibeRef.current.data.find((el) => el.time === param.time);
+        const item = subscribeRef.current.sortedData.find((el) => el.time === param.time);
         if (!item) return;
 
         const { y, x } = param.point;
@@ -142,7 +162,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
         if (type === ChartType.candle) {
             if (param.hoveredMarkerId) {
-                const arrow = subscibeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
+                const arrow = subscribeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
                 toolTipRef.current.innerHTML = toolTipArrowTemplate(arrow);
             } else {
                 toolTipRef.current.innerHTML = toolTipTemplate(item);
@@ -165,39 +185,57 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         toolTipRef.current.style.top = `${top}px`;
     }, []);
 
-    const loadDataFromSource = (offset: number) => {
-        if (!onFetchMore) return;
-        onFetchMore(Math.round(offset));
-    };
-
     const handleVisibleTimeRangeChange = () => {
         const buttonVisible = chart.field.timeScale().scrollPosition() < -5;
         buttonRef.current.style.display = buttonVisible ? "block" : "none";
     };
 
+    const loadDataFromSource = (offset: number) => {
+        if (!onFetchMore) return;
+        onFetchMore(Math.floor(Math.abs(offset)));
+    };
+
+    const handleVisibleLogicalRangeChanged = (newVisibleLogicalRange) => {
+        const barsInfo = chart.series.barsInLogicalRange(newVisibleLogicalRange);
+        if (!loading && barsInfo !== null && barsInfo.barsBefore < 50) {
+            chartRef.current.style.cursor = "wait";
+            loadDataFromSource(barsInfo.barsAfter);
+        }
+    };
+
     useEffect(() => {
-        if (!loading && data && data.length && chart.series) {
-            if (!fetchData) {
-                setFetchData(true);
-                chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
-                chart.field.subscribeCrosshairMove(handleCrosshairMoved);
-            } else {
-                chartRef.current.style.cursor = "crosshair";
-            }
-            chart.series.setData(data);
-            if (data.length <= 120) {
+        if (loading || !sortedData.length || !chart.series) {
+            return;
+        }
+
+        if (snapshotLoaded) {
+            chartRef.current.style.cursor = "crosshair";
+
+            chart.series.setData(sortedData);
+        } else {
+            setSnapshotLoaded(true);
+            chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+
+            const debouncedHandleVisibleLogicalRangeChanged = debounce(handleVisibleLogicalRangeChanged, 500);
+            chart.field.timeScale().subscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
+            chart.field.subscribeCrosshairMove(handleCrosshairMoved);
+
+            chart.series.setData(sortedData);
+
+            if (sortedData.length <= 120) {
                 chart.field.timeScale().setVisibleRange({
-                    from: data[0].time,
-                    to: data[data.length - 1].time
+                    from: sortedData[0].time,
+                    to: sortedData[sortedData.length - 1].time
                 });
             }
-            subscibeRef.current = { data, markers };
-            setCurrentButtonLeft(data[data.length - 1]);
-            if (markers) {
-                chart.series.setMarkers(markers);
-            }
         }
-    }, [data, loading, chart.series]);
+
+        subscribeRef.current = { sortedData, markers };
+        setCurrentButtonLeft(sortedData[sortedData.length - 1]);
+        if (markers) {
+            chart.series.setMarkers(markers);
+        }
+    }, [sortedData, loading, chart.series]);
 
     useEffect(() => {
         if (lines && chart.series) {
@@ -235,7 +273,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const handleOnMouseDownCanvas = (e) => {
         e.preventDefault();
         chartRef.current.style.cursor = "grab";
-        if (!data) return;
+        if (!sortedData.length) return;
         setMouseEvent({
             isDown: true,
             screenPos: e.screenX,
@@ -252,13 +290,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     };
 
     const handleOnMouseUpCanvas = () => {
-        if (mouseEvent.dragOffset !== 0 && !loading) {
-            const vr = chart.field.timeScale().getVisibleRange();
-            if (data[0].time === vr.from) {
-                chartRef.current.style.cursor = "wait";
-                loadDataFromSource(-1 * (chart.field.timeScale().scrollPosition() - mouseEvent.chartOffset));
-            }
-        }
         setMouseEvent({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
         if (chartRef.current.style.cursor !== "wait") {
             chartRef.current.style.cursor = "crosshair";
@@ -268,8 +299,8 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     useEffect(() => {
         if (chart.field) {
             chart.field.resize(size.width, size.height);
-            if (data && data.length) {
-                setCurrentButtonLeft(data[data.length - 1]);
+            if (sortedData.length) {
+                setCurrentButtonLeft(sortedData[sortedData.length - 1]);
             }
         }
     }, [size.width, size.height]);

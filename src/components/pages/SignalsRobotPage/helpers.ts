@@ -179,7 +179,7 @@ export const getFormatData = (data, asset) => {
 };
 
 export const getFormatUpdateData = (data, asset) => {
-    let candles = {
+    let updateCandle = {
         time: null,
         open: null,
         high: null,
@@ -188,7 +188,7 @@ export const getFormatUpdateData = (data, asset) => {
         volume: null
     };
     const markers = [];
-    if (!data || !data.candles.length) return { candles, markers };
+    if (!data || !data.candles.length) return { updateCandle, markers };
     let canAddPosition = false;
     const { candle, position_entry, position_exit, robot: candleRobot } = data.candles[0];
     if (candle) {
@@ -213,9 +213,9 @@ export const getFormatUpdateData = (data, asset) => {
                 markers.push(markerItem);
             }
         }
-        candles = { open, high, low, close, volume, time: time / 1000 };
+        updateCandle = { open, high, low, close, volume, time: time / 1000 };
     }
-    return { candles, markers };
+    return { updateCandle, markers };
 };
 
 export const getAlerts = (signals) =>

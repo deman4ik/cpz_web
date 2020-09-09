@@ -33,3 +33,9 @@ yarn-error.log*
 
 # webstorm
 .idea
+
+# vscode
+.vscode
+
+# custom startup scripts
+run*.sh
