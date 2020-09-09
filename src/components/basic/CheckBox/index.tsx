@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, CSSProperties } from "react";
 
 import { CheckIcon } from "../../../assets/icons/svg";
 import { LoadingIndicator } from "../../common";
@@ -10,14 +10,15 @@ interface Props {
     label?: string;
     disabled?: boolean;
     isLoading?: boolean;
+    style?: CSSProperties;
     onClick?: () => void;
 }
 
-export const CheckBox: React.FC<Props> = ({ checked, label, disabled, onClick, isLoading }) => {
+export const CheckBox: React.FC<Props> = ({ style, checked, label, disabled, onClick, isLoading }) => {
     const [isChecked, setIsChecked] = useState(checked);
     const getCheckboxStyle = () => {
-        const style = [styles.checkbox, disabled ? styles.disabled : isChecked ? styles.checked : styles.unchecked];
-        return style;
+        const css = [styles.checkbox, disabled ? styles.disabled : isChecked ? styles.checked : styles.unchecked];
+        return css;
     };
 
     const handleOnClick = () => {
@@ -30,7 +31,7 @@ export const CheckBox: React.FC<Props> = ({ checked, label, disabled, onClick, i
     const getTextColor = () => [styles.checkBoxWrapper, disabled ? styles.textColorDisabled : styles.textColor];
 
     return (
-        <div className={getTextColor().join(" ")} onClick={handleOnClick}>
+        <div style={style} className={getTextColor().join(" ")} onClick={handleOnClick}>
             {isLoading && (
                 <div className={styles.loadingContainer}>
                     <LoadingIndicator size={10} />

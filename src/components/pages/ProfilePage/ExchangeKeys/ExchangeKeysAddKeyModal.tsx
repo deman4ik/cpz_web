@@ -164,7 +164,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
                             data={dataPicker}
                             width={260}
                             enabled={!isExchangeDisabled}
-                            onValueChange={(itemValue) => handleOnChangeExchange(itemValue)}
+                            onChangeValue={(itemValue) => handleOnChangeExchange(itemValue)}
                         />
                     </div>
                 </div>

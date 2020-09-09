@@ -9,6 +9,9 @@ interface Props {
     children?: React.ReactNode;
     onClose: React.MouseEventHandler;
     title?: string;
+    className?: string;
+    style?: React.CSSProperties;
+    footer?: JSX.Element;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -28,8 +31,8 @@ export const Modal: React.FC<Props> = (props) => {
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={styles.modal}>
-                    <ModalTemplate title={props.title} onClose={props.onClose}>
+                <div ref={modalRef} className={`${styles.modal} ${props.className}`} style={props.style}>
+                    <ModalTemplate title={props.title} onClose={props.onClose} footer={props.footer}>
                         {props.children}
                     </ModalTemplate>
                 </div>

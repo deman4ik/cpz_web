@@ -68,11 +68,12 @@ export const color = {
     }
 };
 
-export const STATUSES_COLORS = {
+export const STATUS_COLORS = {
     started: color.positive,
     stopped: color.negative,
     paused: color.yellow
 };
+
 /*Регулярки*/
 export const REGEXS = {
     telegram_id: /^\d{9}/g,

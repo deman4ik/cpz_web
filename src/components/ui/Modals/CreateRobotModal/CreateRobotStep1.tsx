@@ -66,7 +66,7 @@ const _CreateRobotStep1: React.FC<Props> = ({
                                 data={dataPicker}
                                 value={selectedKey}
                                 enabled={!isAddKeyVisible}
-                                onValueChange={(value) => handleOnChangeExchange(value)}
+                                onChangeValue={(value) => handleOnChangeExchange(value)}
                             />
                         </div>
                         <Button

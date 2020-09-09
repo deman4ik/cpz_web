@@ -59,7 +59,7 @@ const OrderModalInner: React.FC<OrderModalInnerProps> = ({
                     <div className={styles.labelText}>Sort by:</div>
                 </div>
                 <div className={styles.orderby}>
-                    <Select data={sort_types} value={sortState} onValueChange={(value) => setSortState(value)} />
+                    <Select data={sort_types} value={sortState} onChangeValue={(value) => setSortState(value)} />
                 </div>
             </div>
             {filtersState &&
