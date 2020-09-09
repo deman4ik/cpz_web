@@ -99,7 +99,7 @@ const _SearchFiltersModal: React.FC<Props> = ({ onClose, displayType }) => {
                     <div className={styles.labelText}>Sort by:</div>
                 </div>
                 <div className={styles.orderby}>
-                    <Select data={ordersSortList} value={inputKey} onValueChange={(value) => setInputKey(value)} />
+                    <Select data={ordersSortList} value={inputKey} onChangeValue={(value) => setInputKey(value)} />
                 </div>
             </div>
             {loading ? (

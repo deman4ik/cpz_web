@@ -1,0 +1,19 @@
+.pagination {
+    height: 40px;
+    width: 100%;
+}
+
+.pagination_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination_button_group {
+    display: flex;
+    margin-right: 10px;
+}
+
+.page_selected {
+    background-color: var(--lightBg);
+}

@@ -2,6 +2,6 @@
 import React from "react";
 /*CELLS*/
 import DefaultCellWrapper from "./DefaultCellWrapper";
-import RobotChartCell from "./RobotChartCell";
+import RobotChartCell from "../../../Table/components/cells/RobotChartCell";
 
 export { DefaultCellWrapper, RobotChartCell };

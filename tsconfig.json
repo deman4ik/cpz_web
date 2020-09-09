@@ -25,7 +25,8 @@
           "services/*": ["./src/services/*"],
           "utils/*": ["./src/utils/*"]
         },
-        "sourceMap": true
+        "sourceMap": true,
+        "checkJs": false
     },
     "exclude": ["node_modules"],
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

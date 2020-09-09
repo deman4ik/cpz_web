@@ -1,21 +1,71 @@
-export const USER_SIGNALS_TITLES_SCHEME = {
-    signal_robot: {
-        title: "Signal Robot"
+import { ColumnsArraySchema } from "../../utils";
+
+export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
+    {
+        Header: "Robot",
+        id: "robot",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Code",
+                accessor: "robot_code",
+                isVisible: true,
+                width: 262,
+                orderSchema: { field: "robot", subfield: "code" }
+            }
+        ]
     },
-    user: {
-        title: "User"
+    {
+        Header: "Signal",
+        id: "signal",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "ID",
+                accessor: "id",
+                isVisible: true,
+                width: 324
+            }
+        ]
     },
-    subscribe_at: {
-        title: "Subscribed"
+    {
+        Header: "User",
+        id: "user",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Name",
+                accessor: "user_name",
+                isVisible: true,
+                width: 152,
+                orderSchema: { field: "user", subfield: "name" }
+            },
+            {
+                Header: "ID",
+                accessor: "user_id",
+                isVisible: true,
+                width: 324,
+                orderSchema: { field: "user", subfield: "id" }
+            }
+        ]
     },
-    volume: {
-        title: "Volume"
+    {
+        Header: "Info",
+        id: "info",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Subscribed",
+                accessor: "subscribed_at",
+                isVisible: true,
+                width: 190
+            },
+            {
+                Header: "Volume",
+                accessor: "volume",
+                isVisible: true,
+                width: 125
+            }
+        ]
     }
-};
-
-export const COLUMNS_WIDTH = ["30%", "30%", "30%", "10%"];
-
-/*HEAD TITLES*/
-export const HEADER_TABLE_DATA = Object.keys(USER_SIGNALS_TITLES_SCHEME).map((key) => ({
-    text: USER_SIGNALS_TITLES_SCHEME[key].title
-}));
+];

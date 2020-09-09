@@ -1,21 +1,23 @@
 import React from "react";
+// components
+import AreaChart from "components/charts/AreaChart";
 // styles
 import styles from "./Cells.module.css";
 
-export interface DefaultCellWrapperProps {
-    style?: React.CSSProperties;
-    children: React.ReactNode;
+interface RobotChartCellProps {
+    perfomance: Array<any>;
+    height: number;
+    profit: number;
+    style: React.CSSProperties;
 }
 
-/**
- *  Враппер для ячейки таблицы
- */
-const DefaultCellWrapper: React.FC<DefaultCellWrapperProps> = (props) => {
+/*Ячейка с графиком*/
+const RobotChartCell: React.FC<RobotChartCellProps> = ({ perfomance, height, profit, style }) => {
     return (
-        <div style={props?.style} className={styles.default_cells_wrapper}>
-            {props.children}
+        <div style={style} className={styles.robot_chart_cell}>
+            <AreaChart height={height} data={perfomance} />
         </div>
     );
 };
 
-export default DefaultCellWrapper;
+export default RobotChartCell;
