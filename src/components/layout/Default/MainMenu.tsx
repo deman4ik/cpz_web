@@ -1,12 +1,12 @@
 import React, { memo, useContext } from "react";
 import { useRouter } from "next/router";
 
-import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS, MANAGE_MENU_ITEMS } from "./helpers";
+import { MAINMENU_ITEMS, MAINMENU_DESKTOP_ITEMS, MANAGE_MENU_ITEMS } from "../helpers";
 import { MainMenuItem } from "./MainMenuItem";
 import { MainMenuItemMobile } from "./MainMenuItemMobile";
 import logoAccent from "assets/img/logo-accent.png";
 import { PageType } from "config/types";
-import styles from "./MainMenu.module.css";
+import styles from "./styles/MainMenu.module.css";
 // auth context
 import { AuthContext } from "libs/hoc/authContext";
 

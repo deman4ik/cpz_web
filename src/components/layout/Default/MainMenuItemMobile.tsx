@@ -1,9 +1,9 @@
 import React from "react";
 
 import { RobotIcon, AssignmentIcon, MultiLineChartIcon, NotificationsIcon, HelpIcon } from "assets/icons/svg";
-import { NotificationCounter } from "../ui/NotificationCounter";
+import { NotificationCounter } from "../../ui/NotificationCounter";
 import { PageType } from "config/types";
-import styles from "./MainMenu.module.css";
+import styles from "./styles/MainMenu.module.css";
 
 interface Props {
     item: any;

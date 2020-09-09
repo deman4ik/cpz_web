@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { PageHead, MainMenu, NavBar } from ".";
+import { PageHead, NavBar } from "..";
+import { MainMenu } from "./MainMenu";
 import { useRouter } from "next/router";
 
-import { PageType } from "../../config/types";
-import { SCREEN_TYPE } from "../../config/constants";
-import { useShowDimension } from "../../hooks/useShowDimension";
-import styles from "./Template.module.css";
+import { PageType } from "../../../config/types";
+import { SCREEN_TYPE } from "../../../config/constants";
+import { useShowDimension } from "../../../hooks/useShowDimension";
+import styles from "./styles/Template.module.css";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
@@ -30,7 +31,7 @@ const navbar_default = {
     maxWidth: "1200px"
 };
 
-export const Template: React.FC<Props> = ({
+export const DefaultTemplate: React.FC<Props> = ({
     title,
     subTitle,
     children,

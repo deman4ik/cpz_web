@@ -16,7 +16,7 @@ import {
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
-import styles from "./MainMenu.module.css";
+import styles from "./styles/MainMenu.module.css";
 
 interface Props {
     item: any;
