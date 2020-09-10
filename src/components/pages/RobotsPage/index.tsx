@@ -1,7 +1,7 @@
 import React from "react";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { PageType } from "config/types";
 import { PageToolbar } from "components/common";
 import { RobotPerformance } from "components/ui/RobotPerformance";
@@ -14,7 +14,7 @@ export const RobotsPage: React.FC = () => {
     const { width } = useWindowDimensions();
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.robots}
             title="Robots"
             subTitle="Automated Trading"
@@ -30,6 +30,6 @@ export const RobotsPage: React.FC = () => {
             </div>
             <SignalRobots width={width} displayType="robots" />
             <Modals />
-        </Template>
+        </DefaultTemplate>
     );
 };

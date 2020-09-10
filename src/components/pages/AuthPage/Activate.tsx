@@ -48,8 +48,8 @@ export const Activate: React.FC = () => {
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
-                        <div className={styles.title}>Done!</div>
-                        <div className={styles.titleDescription}>You have successfully Activate your account</div>
+                        <div className={styles.title}>Done</div>
+                        <div className={styles.titleDescription}>You have successfully activated your account!</div>
                     </div>
                     <CartFooter />
                 </div>

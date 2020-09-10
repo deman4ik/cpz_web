@@ -2,7 +2,7 @@
 import React from "react";
 import Head from "next/head";
 
-import { GA_TRACKING_ID, AW_CONVERSION_ID } from "../../../libs/gtag";
+import { GA_TRACKING_ID, AW_CONVERSION_ID } from "libs/gtag";
 
 interface Props {
     title?: string;

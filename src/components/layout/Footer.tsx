@@ -1,13 +1,8 @@
 import React, { memo } from "react";
 
 import { event } from "libs/gtag";
-import { footerLinks, footerIcons, specificIcon } from "./helpers";
+import { footerLinks, footerIcons } from "./helpers";
 import styles from "./Footer.module.css";
-
-const getSpecificIcon = (icon: string) => {
-    const SpecificIcon = specificIcon[icon];
-    return <SpecificIcon color="white" />;
-};
 
 const _Footer: React.FC = () => {
     const hahdleOnClick = (href: string) => {
@@ -40,13 +35,13 @@ const _Footer: React.FC = () => {
                     <div className={styles.social}>
                         {footerIcons.map((item) => (
                             <a
-                                key={item.icon}
+                                key={item.icon.name}
                                 href={item.href}
                                 className={styles.linkWrapper}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => hahdleOnClick(item.href)}>
-                                {getSpecificIcon(item.icon)}
+                                {item.icon}
                             </a>
                         ))}
                     </div>

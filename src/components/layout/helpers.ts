@@ -6,34 +6,6 @@ import { TelegramIcon, InstagramIcon, TwitterIcon } from "assets/icons/svg";
 export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
 export const MAINMENU_MIN_HEIGHT = 56;
-export const MAINMENU_ITEMS: MainMenuItemProps[] = [
-    { label: PageType.robots, icon: "robot", route: "robots" },
-    { label: PageType.signals, icon: "signals", route: "signals" },
-    {
-        label: PageType.notifications,
-        icon: "notifications",
-        route: "notifications"
-    },
-    { label: PageType.profile, icon: "profile", route: "profile" },
-    { label: PageType.support, icon: "help", route: "support" }
-];
-
-export const MANAGE_MENU_ITEMS: MainMenuItemProps[] = [
-    { label: PageType.dasHboard, icon: "dashboard", route: "manage" },
-    { label: PageType.users, icon: "users", route: "manage/users" },
-    { label: PageType.manageRobots, icon: "manageRobots", route: "manage/robots" },
-    { label: PageType.userSignals, icon: "userSignals", route: "manage/user_signals" },
-    { label: PageType.userRobots, icon: "userRobots", route: "manage/user_robots" },
-    { label: PageType.supportRequests, icon: "supportRequests", route: "manage/support" }
-];
-
-export const MAINMENU_DESKTOP_ITEMS: MainMenuItemProps[] = [
-    {
-        label: PageType.community,
-        icon: "telegram",
-        href: TELEGRAM_COMMUNITY_URL
-    }
-];
 
 export const linksHeader = [
     {
@@ -68,19 +40,19 @@ export const authHeader = [
 export const footerIcons = [
     {
         href: "https://twitter.com/cryptuoso",
-        icon: "twitter"
+        icon: TwitterIcon
     },
     {
         href: "https://www.instagram.com/cryptuoso",
-        icon: "instagram"
+        icon: InstagramIcon
     },
     {
         href: TELEGRAM_COMMUNITY_URL,
-        icon: "telegram"
+        icon: TelegramIcon
     }
 ];
 
-export const specificIcon = {
+export const contactIcons = {
     telegram: TelegramIcon,
     instagram: InstagramIcon,
     twitter: TwitterIcon

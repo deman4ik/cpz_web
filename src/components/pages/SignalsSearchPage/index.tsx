@@ -3,7 +3,7 @@ import Router from "next/router";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 //import { useDebounce } from '../../../hooks/useDebounce';
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { SignalsSearchContainer } from "./SignalsSearchContainer";
 import { Modal } from "components/basic";
 import { SearchToolbar } from "components/ui/RobotsList/SearchToolbar";
@@ -26,7 +26,7 @@ export const SignalsSearchPage: React.FC = () => {
     };
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.signals}
             title="Signals Search"
             width={width}
@@ -39,6 +39,6 @@ export const SignalsSearchPage: React.FC = () => {
             <Modal isOpen={isVisibleFilters} onClose={setVisibleToolbarFilters} title="Filter Signals Search">
                 <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType="signals" />
             </Modal>
-        </Template>
+        </DefaultTemplate>
     );
 };

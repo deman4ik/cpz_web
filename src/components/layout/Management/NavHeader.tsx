@@ -1,20 +1,22 @@
 import React, { memo } from "react";
-import { EffectButton } from "../basic/EffectButton";
+import { EffectButton } from "components/basic/EffectButton";
 
 interface Props {
     title: string;
     subTitle?: string;
     toolbar: any;
     hideToolbar: boolean;
-    handlePressBack: () => void;
+    handleOpenMenu: any;
     style?: React.CSSProperties;
 }
 
-const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, hideToolbar, style }) => (
-    <div className="navBar" style={style}>
+const _NavHeader: React.FC<Props> = ({ title, subTitle, toolbar, handleOpenMenu, hideToolbar, style }) => (
+    <div className="header" style={style}>
         <div className="wrapper">
-            {handlePressBack ? <EffectButton onClick={handlePressBack} icon="arrowleft" /> : null}
-            <div className="titleGroup" style={{ marginLeft: handlePressBack ? 38 : 10 }}>
+            <div className="menu_button_wrapper">
+                <EffectButton onClick={handleOpenMenu} icon="menu" />
+            </div>
+            <div className="titleGroup">
                 <div className="title">{title}</div>
                 <div className="subTitle">{subTitle}</div>
             </div>
@@ -22,12 +24,13 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
         </div>
         <style jsx>
             {`
-                .navBar {
+                .header {
                     position: sticky;
-                    margin-left: 200px;
+                    top: 0;
+                    z-index: 103;
                     background-color: var(--dark);
                     height: 56px;
-                    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.24);
+                    width: 100%;
                 }
                 .wrapper {
                     position: relative;
@@ -36,12 +39,16 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
                     align-items: center;
                     flex-direction: row;
                 }
+                .menu_button_wrapper {
+                    width: 56px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
                 .titleGroup {
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    position: absolute;
-                    left: 0;
                 }
                 .title {
                     font-size: 18px;
@@ -53,18 +60,13 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
                     font-size: var(--small1);
                     color: var(--accent);
                 }
-                @media (max-width: 1200px) {
-                    .navBar {
-                        margin-left: 56px;
-                    }
-                }
                 @media (max-width: 780px) {
                     .titleGroup {
                         display: ${hideToolbar ? "none" : "flex"};
                     }
                 }
                 @media (max-width: 480px) {
-                    .navBar {
+                    .header {
                         margin-left: 0;
                     }
                 }
@@ -73,4 +75,4 @@ const _NavBar: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, h
     </div>
 );
 
-export const NavBar = memo(_NavBar);
+export const NavHeader = memo(_NavHeader);

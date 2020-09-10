@@ -6,7 +6,7 @@ import { useFetchData } from "./useFetchData";
 // components
 import { LoadingIndicator } from "components/common";
 import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { NotificationsContainer } from "./NotificationsContainer";
 import NothingComponent from "components/common/NothingComponent";
 // types
@@ -32,7 +32,7 @@ export const NotificationsPage: React.FC = () => {
     } = useFetchData();
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.notifications}
             title="Notifications"
             width={width}
@@ -61,6 +61,6 @@ export const NotificationsPage: React.FC = () => {
                     width={width}
                 />
             )}
-        </Template>
+        </DefaultTemplate>
     );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArrowLeftIcon, WindowCloseIcon, ArrowRightIcon } from "assets/icons/svg";
+import { ArrowLeftIcon, WindowCloseIcon, ArrowRightIcon, MenuIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
 interface Props {
@@ -12,7 +12,8 @@ interface Props {
 const icons = {
     arrowleft: ArrowLeftIcon,
     arrowright: ArrowRightIcon,
-    windowclose: WindowCloseIcon
+    windowclose: WindowCloseIcon,
+    menu: MenuIcon
 };
 
 export const EffectButton: React.FC<Props> = ({ icon, onClick, color = "white" }) => {

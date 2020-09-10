@@ -4,7 +4,7 @@ import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 
 // components
-import { Template } from "components/layout/Template";
+import { DefaultTemplate } from "components/layout";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
@@ -70,7 +70,7 @@ export const SignalsRobotPage = () => {
     };
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.signals}
             title="Signals"
             subTitle={robotData ? robotData.robot.name : ""}
@@ -95,6 +95,6 @@ export const SignalsRobotPage = () => {
                     <ModalsRobotPage visibleModal={visibleModal} setVisibleModal={setVisibleModal} />
                 </>
             )}
-        </Template>
+        </DefaultTemplate>
     );
 };

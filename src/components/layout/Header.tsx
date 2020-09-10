@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { getAccessToken } from "libs/accessToken";
 import { useLogoutProcess } from "hooks/useLogoutProcess";
-import { linksHeader, authHeader } from "../helpers";
+import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
 

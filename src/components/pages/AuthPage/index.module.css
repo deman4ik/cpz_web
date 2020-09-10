@@ -1,176 +1,180 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  background-color: #0A173E;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    background-color: #0a173e;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    min-width: 250px;
 }
 
 .header {
-  width: 100%;
-  max-width: 1280px;
+    width: 100%;
+    max-width: 1280px;
 }
 
 .title {
-  color: white;
-  font-size: 31px;
-  margin-bottom: 20px;
+    color: white;
+    font-size: 31px;
+    margin-bottom: 20px;
 }
 
 .titleDescription {
-  display: flex;
-  font-size: var(--normal1);
-  color: #ACB7D1;
-  padding-bottom: 20px;
-  justify-content: center;
-  align-items: center;
-  width: 290px;
+    display: flex;
+    font-size: var(--normal1);
+    color: #acb7d1;
+    padding-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 290px;
 }
 
 .loginDescription {
-  font-size: var(--small2);
-  color: white;
-  padding-top: 22px;
-  padding-bottom: 20px;
-  max-width: 260px;
+    font-size: var(--small2);
+    color: white;
+    padding-top: 22px;
+    padding-bottom: 20px;
+    max-width: 260px;
 }
 
 .telegramDesription {
-  font-size: var(--small1);
-  color: white;
-  padding-top: 20px;
-  padding-bottom: 20px;
+    font-size: var(--small1);
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .plate {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
 }
 
 .plateLogin {
-  max-width: 800px;
+    max-width: 800px;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  padding: 32px 55px;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 55px;
+    align-items: center;
 }
 
 .cardWrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--dark);
-  justify-content: center;
-  height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--dark);
+    justify-content: center;
+    height: fit-content;
 }
 
 .content {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .divider_container {
     width: 55px;
-   display: flex;
-   justify-content: center;
-   position: relative;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .divider {
-  min-width: 1px;
-  min-height: 1px;
-  background-color: var(--lightBg);
+    min-width: 1px;
+    min-height: 1px;
+    background-color: var(--lightBg);
 }
 
 .divider_text {
-   position: absolute;
-   margin: auto;
-   top: 50%;
-   transform: translateY(-50%);
-   background-color: var(--dark);
-   color:var(--whiteFaded);
-   left: 0;
-   right: 0;
-   padding: 2px;
-   width: 24px;
-   display: flex;
-   justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--dark);
+    color: var(--whiteFaded);
+    left: 0;
+    right: 0;
+    padding: 2px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
 }
 
 .telegramGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .footerLogin {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: var(--lightBg);
-  padding: 20px;
-  flex-shrink: 1;
-  color: white;
-  font-size: var(--small1);
-  width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: var(--lightBg);
+    padding: 20px;
+    flex-shrink: 1;
+    color: white;
+    font-size: var(--small1);
+    width: 100%;
 }
 
 .decoration {
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-color: white;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: white;
 }
 
 .forgotLine {
-  cursor: pointer;
+    cursor: pointer;
+}
+
+.forgotLine:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-  .plate {
-    flex-direction: column;
-  }
-  .plateLogin {
-    max-width: 500px;
-  }
-  .content {
-    flex-direction: column;
-  }
-  .divider_container{
-    flex-direction: column;
-    width: 100%;
-  }
-  .divider_text{
-    padding: 15px;
-  }
+    .plate {
+        flex-direction: column;
+    }
+    .plateLogin {
+        max-width: 500px;
+    }
+    .content {
+        flex-direction: column;
+    }
+    .divider_container {
+        flex-direction: column;
+        width: 100%;
+    }
+    .divider_text {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 510px) {
-  .plateLogin {
-    max-width: 320px;
-  }
+    .plateLogin {
+        max-width: 320px;
+    }
 }
 
 @media (max-width: 480px) {
-  .card {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  .container {
-    height: 100%;
-  }
+    .card {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    .container {
+        height: 100%;
+    }
 }
 
 @media screen and (max-width: 480px) and (min-height: 800px) {
-  .container {
-    height: 100vh;
-  }
+    .container {
+        height: 100vh;
+    }
 }

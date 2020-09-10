@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 // components
-import { Template } from "components/layout";
+import { ManagementTemplate } from "components/layout";
 import Table from "components/basic/Table";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -68,7 +68,7 @@ const ManagePageTemplate = ({
     const tableColumns = useMemo(() => columns, [columns]);
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
     return (
-        <Template title={pageType} width={width} page={pageType} hideToolbar hideHeader>
+        <ManagementTemplate title={pageType} width={width} page={pageType}>
             <Table
                 columns={tableColumns}
                 data={tableData}
@@ -81,7 +81,7 @@ const ManagePageTemplate = ({
                 onChangeSort={onChangeSort}
                 isLoading={isLoading}
             />
-        </Template>
+        </ManagementTemplate>
     );
 };
 

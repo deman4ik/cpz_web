@@ -1,10 +1,8 @@
-.logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+@import "./Common.module.css";
 
-.mainMenu {
+.menu {
     height: 100vh;
+    width: 56px;
     z-index: 103;
     background-color: var(--dark);
     display: flex;
@@ -12,6 +10,7 @@
     align-items: center;
     position: fixed;
     overflow: auto;
+    padding-top: 56px;
 }
 
 .menuContainer {
@@ -20,16 +19,16 @@
     align-items: flex-start;
 }
 
-.mainMenuItemWrapper {
+.menuItemWrapper {
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 4px;
     margin-bottom: 4px;
     align-items: stretch;
-    width: 190px;
+    width: 40px;
 }
 
-.mainMenuItem {
+.menuItem {
     cursor: pointer;
     font-weight: 500;
     padding: 8px;
@@ -38,16 +37,15 @@
     position: relative;
 }
 
-.mainMenuItemText {
+.menuItemText {
     margin-left: 32px;
     margin-right: 32px;
     font-size: 14px;
     text-align: left;
 }
 
-.bigLogo {
-    width: 72px;
-    height: 71px;
+.itemLabel {
+    display: none;
 }
 
 .menuInactive {
@@ -70,32 +68,12 @@
     width: 100%;
 }
 
-.mainMenuMobile {
+.menuMobile {
     display: none;
 }
 
-@media (max-width: 1200px) {
-    .mainMenuItemWrapper {
-        width: 40px;
-        margin-left: 5px;
-    }
-    .itemLabel {
-        display: none;
-    }
-    .bigLogo {
-        width: 30px;
-        height: 29px;
-    }
-    .mainMenu {
-        width: 56px;
-    }
-}
-
 @media (max-width: 480px) {
-    .mainMenu {
-        display: none;
-    }
-    .mainMenuMobile {
+    .menu {
         display: flex;
         position: fixed;
         z-index: 103;

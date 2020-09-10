@@ -16,6 +16,7 @@ import {
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
+
 import styles from "./styles/MainMenu.module.css";
 
 interface Props {
@@ -39,7 +40,7 @@ const components = {
     supportRequests: MessageAlert
 };
 
-const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
+const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
     const styleText = [styles.mainMenuItemText, active ? styles.menuActive : styles.menuInactive];
     const SpecificIcon = components[item.icon];
 
@@ -62,4 +63,4 @@ const _MainMenuItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
     );
 };
 
-export const MainMenuItem = memo(_MainMenuItem);
+export const NavItem = memo(_NavItem);

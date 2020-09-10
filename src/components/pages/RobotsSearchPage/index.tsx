@@ -4,7 +4,7 @@ import Router from "next/router";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { RobotsSearchContainer } from "./RobotsSearchContainer";
 import { SearchToolbar } from "components/ui/RobotsList/SearchToolbar";
 import { Modal } from "components/basic";
@@ -26,7 +26,7 @@ export const RobotsSearchPage: React.FC = () => {
     };
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.robots}
             title="Robots Search"
             width={width}
@@ -39,6 +39,6 @@ export const RobotsSearchPage: React.FC = () => {
             <Modal isOpen={isVisibleFilters} title="Filter Robots Search" onClose={setVisibleToolbarFilters}>
                 <SearchFiltersModal onClose={setVisibleToolbarFilters} displayType="robots" />
             </Modal>
-        </Template>
+        </DefaultTemplate>
     );
 };

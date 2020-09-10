@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
-import { Template } from "components/layout/Template";
+import { ManagementTemplate } from "components/layout";
 import UsersChats from "./components/UsersChats";
 import SearchPanel from "../common/SearchPanel";
 import OrderModalInner from "../common/OrderModalInner";
@@ -61,10 +61,9 @@ const ManageSupportRequests = () => {
     };
 
     return (
-        <Template
+        <ManagementTemplate
             title="Support Requests"
             width={width}
-            hideToolbar
             page={PageType.supportRequests}
             toolbar={
                 <SearchPanel
@@ -87,7 +86,7 @@ const ManageSupportRequests = () => {
                     sortSettings={SORT_SETTINGS}
                 />
             </Modal>
-        </Template>
+        </ManagementTemplate>
     );
 };
 

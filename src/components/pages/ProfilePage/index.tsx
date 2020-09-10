@@ -8,7 +8,7 @@ import { UserContainer } from "./UserContainer";
 import { NotifySettings } from "./NotifySettings";
 import { PageType } from "config/types";
 import { ToolbarProfilePage } from "./ToolbarProfilePage";
-import { Template } from "components/layout/Template";
+import { DefaultTemplate } from "components/layout";
 // context
 import { AuthContext } from "libs/hoc/authContext";
 
@@ -20,7 +20,7 @@ export const ProfilePage = () => {
 
     const { width } = useWindowDimensions();
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.profile}
             title="Profile"
             subTitle="Settings"
@@ -29,6 +29,6 @@ export const ProfilePage = () => {
             <UserContainer width={width} />
             <ExchangeKeys title="My Exchange API Keys" />
             {isAuth && <NotifySettings />}
-        </Template>
+        </DefaultTemplate>
     );
 };
