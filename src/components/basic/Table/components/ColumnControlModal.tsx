@@ -8,9 +8,15 @@ import { CheckBox } from "../../CheckBox";
 import { Button } from "components/basic/Button";
 //icons
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
+
 // styles
 import commonStyles from "../styles/Common.module.css";
 import modalStyles from "../styles/ControlModal.module.css";
+
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
+import { styles } from "components/charts/LightWeightChart/LightWeightChart.style";
 
 enum MoveDirection {
     up,
@@ -20,6 +26,9 @@ enum MoveDirection {
 export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal, setColumns }) => {
     const [colsState, setColsState] = useState(columns);
     const saveChanges = () => setColumns(colsState);
+
+    const { width } = useWindowDimensions();
+    const { showDimension: isDesktop } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
 
     const moveGroup = (rowIdx: number, direction: MoveDirection) => {
         const newColsState = [...colsState];
@@ -145,7 +154,7 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             isOpen={isModalVisible}
             title={title}
             onClose={toggleModal}
-            className={modalStyles.modal}
+            className={`${modalStyles.modal} ${!isDesktop ? modalStyles.mobile : ""}`}
             footer={
                 <div className={commonStyles.flex_spread}>
                     <Button

@@ -52,7 +52,7 @@ export const DefaultTemplate: React.FC<Props> = ({
             />
             <div id="modal" />
             <div className={styles.mainMenuContainer}>
-                <NavBar activeTab={page} showDesktop={showDimension} />
+                <NavBar activeTab={page} />
                 <div className={styles.wrapFixed}>
                     <NavHeader
                         title={title}

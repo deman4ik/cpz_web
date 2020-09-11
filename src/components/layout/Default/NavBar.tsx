@@ -2,20 +2,19 @@ import React, { memo, useContext } from "react";
 import { useRouter } from "next/router";
 
 import { NavItem } from "./NavItem";
-import { MainMenuItemMobile } from "./MainMenuItemMobile";
+
 import logoAccent from "assets/img/logo-accent.png";
 
 import { MainMenuItemProps } from "../types";
 import { PageType } from "config/types";
 import { TELEGRAM_COMMUNITY_URL } from "config/constants";
-import styles from "./styles/MainMenu.module.css";
+import styles from "./styles/NavBar.module.css";
 
 interface Props {
     activeTab: PageType;
-    showDesktop: boolean;
 }
 
-const _NavBar: React.FC<Props> = ({ activeTab, showDesktop }) => {
+const _NavBar: React.FC<Props> = ({ activeTab }) => {
     const router = useRouter();
     const handleOnClick = (path: string, external: boolean) => {
         if (external) {
@@ -46,9 +45,9 @@ const _NavBar: React.FC<Props> = ({ activeTab, showDesktop }) => {
     ];
 
     return (
-        <div className={styles.mainMenu}>
+        <div className={styles.navBar}>
             <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
-            <div className={styles.menuContainer}>
+            <div className={styles.container}>
                 {mainItems.map((item) => (
                     <NavItem
                         key={item.label}
@@ -58,13 +57,15 @@ const _NavBar: React.FC<Props> = ({ activeTab, showDesktop }) => {
                     />
                 ))}
             </div>
-            <div className={styles.menuGroupLine} />
-            <div className={styles.menuContainer}>
-                {secondaryItems.map((item) => (
-                    <NavItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
-                ))}
+            <div className={styles.secondaryItems}>
+                <div className={styles.groupLine} />
+                <div className={styles.container}>
+                    {secondaryItems.map((item) => (
+                        <NavItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
+                    ))}
+                </div>
+                <div className={styles.groupLine} />
             </div>
-            <div className={styles.menuGroupLine} />
         </div>
     );
 };

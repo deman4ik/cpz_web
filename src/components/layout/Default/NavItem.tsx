@@ -17,7 +17,7 @@ import {
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
 
-import styles from "./styles/MainMenu.module.css";
+import styles from "./styles/NavBar.module.css";
 
 interface Props {
     item: any;
@@ -41,7 +41,6 @@ const components = {
 };
 
 const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
-    const styleText = [styles.mainMenuItemText, active ? styles.menuActive : styles.menuInactive];
     const SpecificIcon = components[item.icon];
 
     const handleOnClickLink = () => {
@@ -49,14 +48,12 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
     };
 
     return (
-        <div className={styles.mainMenuItemWrapper}>
-            <div
-                className={`${styles.mainMenuItem}${active ? ` ${styles.menuItemActive}` : ""}`}
-                onClick={handleOnClickLink}>
+        <div className={styles.itemWrapper}>
+            <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`} onClick={handleOnClickLink}>
                 <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
                 {item.label === PageType.notifications && <NotificationCounter />}
                 <div className={styles.itemLabel}>
-                    <div className={styleText.join(" ")}>{item.label}</div>
+                    <div className={styles.itemText}>{item.label}</div>
                 </div>
             </div>
         </div>

@@ -8,11 +8,24 @@ import { Select } from "../../Select";
 import styles from "../styles/Common.module.css";
 import paginationStyles from "../styles/Pagination.module.css";
 
-const MAX_PAGES = 5;
-const MID_FRAGMENT_LENGTH = 3;
+// constants
+import { SCREEN_TYPE } from "config/constants";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useShowDimension } from "hooks/useShowDimension";
 
 const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pageSize, setPageSize }) => {
     const { pageOptions, pageIndex, gotoPage, pageCount, canNextPage, canPreviousPage } = tableInstance;
+
+    const { width } = useWindowDimensions();
+    const { showDimension: isDesktop } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
+
+    let MAX_PAGES = 5;
+    let MID_FRAGMENT_LENGTH = 3;
+
+    if (!isDesktop) {
+        MAX_PAGES = 2;
+        MID_FRAGMENT_LENGTH = 2;
+    }
 
     const trimPageOptions = () => {
         if (pageIndex < MAX_PAGES) return pageOptions.slice(0, MAX_PAGES);
@@ -86,19 +99,21 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
                                     disabled={!canNextPage}
                                 />
                             </div>
-                            <div>
-                                <Select
-                                    width={110}
-                                    value={pageSize}
-                                    data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
-                                    onChangeValue={(value) => {
-                                        setPageIndex(0);
-                                        gotoPage(0);
-                                        setLimit(Number(value));
-                                        setPageSize(Number(value));
-                                    }}
-                                />
-                            </div>
+                            {isDesktop ? (
+                                <div>
+                                    <Select
+                                        width={110}
+                                        value={pageSize}
+                                        data={pageSizeOptions.map((size) => ({ value: size, label: `Show ${size}` }))}
+                                        onChangeValue={(value) => {
+                                            setPageIndex(0);
+                                            gotoPage(0);
+                                            setLimit(Number(value));
+                                            setPageSize(Number(value));
+                                        }}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                     </td>
                 </tr>

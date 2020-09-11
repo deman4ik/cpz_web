@@ -30,6 +30,7 @@
   --big2: 28px;
   --big3: 32px;
   --shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+  --header-height: 56px;
 }
 
 * {

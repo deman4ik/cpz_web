@@ -1,4 +1,4 @@
-import React, { memo, CSSProperties } from "react";
+import React, { memo } from "react";
 
 import {
     RobotIcon,
@@ -42,7 +42,6 @@ const components = {
 };
 
 const _NavItem: React.FC<Props> = ({ item, active, handleOnClick, styles }) => {
-    const styleText = [styles.menuItemText, active ? styles.menuActive : styles.menuInactive];
     const SpecificIcon = components[item.icon];
 
     const handleOnClickLink = () => {
@@ -50,14 +49,12 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick, styles }) => {
     };
 
     return (
-        <div className={styles.menuItemWrapper}>
-            <div
-                className={`${styles.menuItem}${active ? ` ${styles.menuItemActive}` : ""}`}
-                onClick={handleOnClickLink}>
+        <div className={styles.itemWrapper}>
+            <div className={`${styles.item} ${active ? ` ${styles.activeItem}` : ""}`} onClick={handleOnClickLink}>
                 <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
                 {item.label === PageType.notifications && <NotificationCounter />}
                 <div className={styles.itemLabel}>
-                    <div className={styleText.join(" ")}>{item.label}</div>
+                    <div className={`${styles.itemText}`}>{item.label}</div>
                 </div>
             </div>
         </div>

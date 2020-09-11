@@ -1,8 +1,7 @@
 .wrapper {
-    position: relative;
     padding: 2px 10px 5px 10px;
     width: 100%;
-    height: calc(100vh - 56px);
+    height: 100%;
 }
 
 .table {
@@ -30,11 +29,6 @@
     user-select: none;
 }
 
-.table input {
-    background-color: var(--darkBg);
-    color: var(--accent);
-}
-
 .flex_spread {
     display: flex;
     justify-content: space-between;
@@ -48,7 +42,7 @@
 }
 
 .content_wrapper {
-    height: calc(100vh - 156px);
+    height: calc(100% - 40px);
 }
 
 .overflow_scroll {
@@ -57,7 +51,4 @@
 }
 
 @media (max-width: 480px) {
-    .wrapper {
-        margin-bottom: 60px;
-    }
 }

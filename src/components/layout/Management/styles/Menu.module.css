@@ -1,0 +1,88 @@
+.menu {
+    height: 100vh;
+    z-index: 999;
+    background-color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    box-shadow: var(--shadow);
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+}
+
+.open {
+    transform: translateX(0);
+    transition: 0.4s ease;
+}
+
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menuHeader {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    width: 100%;
+}
+
+.itemWrapper {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    align-items: stretch;
+    width: 190px;
+}
+
+.item {
+    cursor: pointer;
+    font-weight: 500;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--inactiveGray);
+    border-radius: 2px;
+}
+
+.item:hover {
+    background-color: var(--activeSelect);
+    opacity: 0.8;
+}
+
+.activeItem {
+    color: #fff;
+    background-color: var(--activeSelect);
+}
+
+.itemText {
+    margin-left: 32px;
+    margin-right: 32px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.groupLine {
+    margin-top: 4px;
+    background-color: rgba(0, 0, 0, 0.12);
+    height: 1px;
+    width: 100%;
+}
+
+.logoWrapper {
+    height: 100%;
+    width: var(--header-height);
+    padding: 5px;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.logo {
+    height: 100%;
+}

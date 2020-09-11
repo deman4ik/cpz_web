@@ -1,5 +1,3 @@
-import { MainMenuItemProps } from "./types";
-import { PageType } from "config/types";
 import { TERMS_URL, PRIVACY_URL, SUPPORT_URL, DOCS_URL, TELEGRAM_COMMUNITY_URL } from "config/constants";
 import { TelegramIcon, InstagramIcon, TwitterIcon } from "assets/icons/svg";
 

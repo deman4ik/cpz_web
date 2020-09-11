@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PageHead } from "..";
+import { Menu } from "./Menu";
 import { NavBar } from "./NavBar";
 import { NavHeader } from "./NavHeader";
 
@@ -12,12 +13,11 @@ interface Props {
     title?: string;
     subTitle?: string;
     page?: PageType;
-    width: number;
     toolbar?: any;
     hideHeader?: boolean;
 }
 
-export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children, page, width, toolbar }) => {
+export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children, page, toolbar }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
@@ -31,11 +31,12 @@ export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children,
             <PageHead title={`${title}${subTitle ? `: ${subTitle}` : ""}`} />
             <div id="modal" />
             <div className={styles.mainMenuContainer}>
-                <NavBar activeTab={page} isOpen={isMenuOpen} />
+                <Menu activeTab={page} toggleMenu={toggleMenu} isOpen={isMenuOpen} />
+                <NavBar activeTab={page} />
                 <NavHeader
                     title={title}
                     subTitle={subTitle}
-                    handleOpenMenu={toggleMenu}
+                    toggleMenu={toggleMenu}
                     hideToolbar={false}
                     toolbar={toolbar}
                 />

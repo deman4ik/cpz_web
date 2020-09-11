@@ -1,18 +1,21 @@
-import React, { memo, useContext } from "react";
+import React, { memo } from "react";
 import { useRouter } from "next/router";
 
+import logo from "assets/img/logo-accent.png";
 import { NavItem } from "./NavItem";
 
-import { menuItems } from "./constants";
+import { MenuButton, menuItems } from "./constants";
 import { PageType } from "config/types";
 
-import styles from "./styles/NavBar.module.css";
+import styles from "./styles/Menu.module.css";
 
 interface Props {
     activeTab: PageType;
+    toggleMenu: any;
+    isOpen: boolean;
 }
 
-const _NavBar: React.FC<Props> = ({ activeTab }) => {
+const _Menu: React.FC<Props> = ({ activeTab, toggleMenu, isOpen }) => {
     const router = useRouter();
     const handleOnClick = (path: string, external: boolean) => {
         if (external) {
@@ -23,8 +26,14 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
     };
 
     return (
-        <div className={styles.navBar}>
-            <div className={styles.navBarContaiter}>
+        <div className={`${styles.menu} ${isOpen ? styles.open : ""}`}>
+            <div className={styles.menuContainer}>
+                <div className={styles.menuHeader}>
+                    <MenuButton onClick={toggleMenu} />
+                    <div className={styles.logoWrapper}>
+                        <img className={`${styles.logo}`} src={logo} alt="" />
+                    </div>
+                </div>
                 {menuItems.map((item) => (
                     <NavItem
                         key={item.label}
@@ -39,4 +48,4 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
     );
 };
 
-export const NavBar = memo(_NavBar);
+export const Menu = memo(_Menu);

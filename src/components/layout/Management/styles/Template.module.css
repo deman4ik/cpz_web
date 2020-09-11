@@ -7,15 +7,9 @@
 .mainContainer {
     display: flex;
     flex-direction: column;
-    margin-left: 56px;
-    position: relative;
+    margin-left: var(--header-height);
     z-index: 0;
-}
-
-.mainMenuContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    height: calc(100vh - var(--header-height));
 }
 
 .wrapFixed {

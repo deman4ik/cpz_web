@@ -2,28 +2,18 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
 // components
 import { ColumnControlModal } from "./components/ColumnControlModal";
-import DefaultMobileWrapper from "./components/DefaultMobileWrapper";
 
 import Toolbar from "./components/Toolbar";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Pagination from "./components/Pagination";
 import { LoadingIndicator } from "components/common";
-// constants
-import { SCREEN_TYPE } from "config/constants";
 // styles
 import styles from "./styles/Common.module.css";
-
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { useShowDimension } from "hooks/useShowDimension";
-
-const renderMobileWrapper = (CustomView, data) => {
-    return CustomView ? <CustomView data={data} /> : <DefaultMobileWrapper tableRows={data} />;
-};
 
 const Table = ({
     columns,
@@ -39,9 +29,6 @@ const Table = ({
 }) => {
     const [cols, setCols] = useState(columns);
     const [isModalVisible, setModalVisibility] = useState(false);
-
-    const { width } = useWindowDimensions();
-    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
     const {
         getTableProps,
