@@ -45,11 +45,7 @@ const ManageSupportChat = () => {
     };
 
     return (
-        <ManagementTemplate
-            title="Support chat"
-            width={width}
-            handlePressBack={handlePressBack}
-            page={PageType.supportRequests}>
+        <ManagementTemplate title="Support chat" page={PageType.supportRequests}>
             <div className={styles.support_chat_wrapper}>
                 <Chat
                     title={`Chat with ${username} (${user_id})`}

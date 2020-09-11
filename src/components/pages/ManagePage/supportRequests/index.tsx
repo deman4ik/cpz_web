@@ -63,7 +63,6 @@ const ManageSupportRequests = () => {
     return (
         <ManagementTemplate
             title="Support Requests"
-            width={width}
             page={PageType.supportRequests}
             toolbar={
                 <SearchPanel
