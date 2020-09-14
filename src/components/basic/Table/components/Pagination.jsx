@@ -17,12 +17,13 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
     const { pageOptions, pageIndex, gotoPage, pageCount, canNextPage, canPreviousPage } = tableInstance;
 
     const { width } = useWindowDimensions();
-    const { showDimension: isDesktop } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
+    const { showDimension: isFullSize } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
+    const { showDimension: isMidSize } = useShowDimension(width, SCREEN_TYPE.PHONE);
 
     let MAX_PAGES = 5;
     let MID_FRAGMENT_LENGTH = 3;
 
-    if (!isDesktop) {
+    if (!isMidSize && !isFullSize) {
         MAX_PAGES = 2;
         MID_FRAGMENT_LENGTH = 2;
     }
@@ -99,7 +100,7 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
                                     disabled={!canNextPage}
                                 />
                             </div>
-                            {isDesktop ? (
+                            {isFullSize || isMidSize ? (
                                 <div>
                                     <Select
                                         width={110}

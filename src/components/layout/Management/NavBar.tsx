@@ -10,9 +10,10 @@ import styles from "./styles/NavBar.module.css";
 
 interface Props {
     activeTab: PageType;
+    fullSize?: boolean;
 }
 
-const _NavBar: React.FC<Props> = ({ activeTab }) => {
+const _NavBar: React.FC<Props> = ({ activeTab, fullSize = false }) => {
     const router = useRouter();
     const handleOnClick = (path: string, external: boolean) => {
         if (external) {
@@ -23,8 +24,8 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
     };
 
     return (
-        <div className={styles.navBar}>
-            <div className={styles.navBarContaiter}>
+        <div className={`${styles.navBar} ${fullSize ? styles.fullSize : ""}`}>
+            <div className={styles.navBarContainer}>
                 {menuItems.map((item) => (
                     <NavItem
                         key={item.label}

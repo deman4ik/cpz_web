@@ -7,9 +7,16 @@
 .mainContainer {
     display: flex;
     flex-direction: column;
-    margin-left: var(--header-height);
     z-index: 0;
     height: calc(100vh - var(--header-height));
+}
+
+.mainContainer.withNav {
+    margin-left: var(--header-height);
+}
+
+.mainContainer.withFullNav {
+    margin-left: var(--menu-width);
 }
 
 .wrapFixed {

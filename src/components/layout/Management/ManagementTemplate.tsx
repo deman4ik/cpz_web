@@ -6,6 +6,7 @@ import { NavHeader } from "./NavHeader";
 
 import { PageType } from "config/types";
 import { SCREEN_TYPE } from "config/constants";
+import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 import styles from "./styles/Template.module.css";
 
@@ -18,29 +19,43 @@ interface Props {
 }
 
 export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children, page, toolbar }) => {
+    const { width } = useWindowDimensions();
+
+    const { showDimension: menuHidden } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
+    const { showDimension: navBarOpen } = useShowDimension(width, SCREEN_TYPE.TABLET);
+
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const [isNavOpen, setNavOpen] = useState(navBarOpen);
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
+    const toggleNavBar = () => setNavOpen(!isNavOpen);
 
     return (
-        <div
-            className={styles.container}
-            style={{
-                maxWidth: "100%"
-            }}>
+        <div className={styles.container}>
             <PageHead title={`${title}${subTitle ? `: ${subTitle}` : ""}`} />
             <div id="modal" />
             <div className={styles.mainMenuContainer}>
-                <Menu activeTab={page} toggleMenu={toggleMenu} isOpen={isMenuOpen} />
-                <NavBar activeTab={page} />
+                {menuHidden ? (
+                    <NavBar activeTab={page} fullSize={isNavOpen} />
+                ) : (
+                    <div id="menu">
+                        <Menu activeTab={page} toggleMenu={toggleMenu} isOpen={isMenuOpen} />
+                    </div>
+                )}
+
                 <NavHeader
                     title={title}
                     subTitle={subTitle}
-                    toggleMenu={toggleMenu}
+                    toggleMenu={menuHidden ? toggleNavBar : toggleMenu}
                     hideToolbar={false}
                     toolbar={toolbar}
                 />
-                <div className={styles.mainContainer}>{children}</div>
+                <div
+                    className={`${styles.mainContainer} ${
+                        menuHidden && isNavOpen ? styles.withFullNav : menuHidden ? styles.withNav : ""
+                    }`}>
+                    {children}
+                </div>
             </div>
         </div>
     );

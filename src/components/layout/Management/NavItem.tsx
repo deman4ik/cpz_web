@@ -51,7 +51,13 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick, styles }) => {
     return (
         <div className={styles.itemWrapper}>
             <div className={`${styles.item} ${active ? ` ${styles.activeItem}` : ""}`} onClick={handleOnClickLink}>
-                <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
+                <div
+                    style={{
+                        height: 24,
+                        width: 24
+                    }}>
+                    <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
+                </div>
                 {item.label === PageType.notifications && <NotificationCounter />}
                 <div className={styles.itemLabel}>
                     <div className={`${styles.itemText}`}>{item.label}</div>

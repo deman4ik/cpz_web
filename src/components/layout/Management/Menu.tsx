@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import logo from "assets/img/logo-accent.png";
@@ -25,8 +25,20 @@ const _Menu: React.FC<Props> = ({ activeTab, toggleMenu, isOpen }) => {
         }
     };
 
+    const menu = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (isOpen && menu.current && !menu.current.contains(event.target)) toggleMenu();
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [menu, toggleMenu, isOpen]);
+
     return (
-        <div className={`${styles.menu} ${isOpen ? styles.open : ""}`}>
+        <div ref={menu} className={`${styles.menu} ${isOpen ? styles.open : ""}`}>
             <div className={styles.menuContainer}>
                 <div className={styles.menuHeader}>
                     <MenuButton onClick={toggleMenu} />

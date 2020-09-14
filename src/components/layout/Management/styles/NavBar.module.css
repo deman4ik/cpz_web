@@ -7,8 +7,11 @@
     flex-direction: column;
     align-items: center;
     position: fixed;
-    overflow: auto;
     padding-top: var(--header-height);
+}
+
+.navBar.fullSize {
+    width: var(--menu-width);
 }
 
 .navBarContainer {
@@ -23,7 +26,10 @@
     margin-top: 4px;
     margin-bottom: 4px;
     align-items: stretch;
-    width: 40px;
+}
+
+.fullSize .itemWrapper {
+    width: calc(var(--menu-width) - 10px);
 }
 
 .item {
@@ -49,7 +55,6 @@
 
 .itemText {
     margin-left: 32px;
-    margin-right: 32px;
     font-size: 14px;
     text-align: left;
 }
@@ -58,19 +63,13 @@
     display: none;
 }
 
+.fullSize .itemLabel {
+    display: block;
+}
+
 .groupLine {
     margin-top: 4px;
     background-color: rgba(0, 0, 0, 0.12);
     height: 1px;
     width: 100%;
-}
-
-.navBarMobile {
-    display: none;
-}
-
-@media (max-width: 480px) {
-    .navBar {
-        display: none;
-    }
 }
