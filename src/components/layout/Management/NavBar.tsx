@@ -8,6 +8,8 @@ import { PageType } from "config/types";
 
 import styles from "./styles/NavBar.module.css";
 
+import logo from "assets/img/logo-accent.png";
+
 interface Props {
     activeTab: PageType;
     fullSize?: boolean;
@@ -26,6 +28,9 @@ const _NavBar: React.FC<Props> = ({ activeTab, fullSize = false }) => {
     return (
         <div className={`${styles.navBar} ${fullSize ? styles.fullSize : ""}`}>
             <div className={styles.navBarContainer}>
+                <div className={styles.logoWrapper}>
+                    <img className={`${styles.logo}`} src={logo} alt="" />
+                </div>
                 {menuItems.map((item) => (
                     <NavItem
                         key={item.label}

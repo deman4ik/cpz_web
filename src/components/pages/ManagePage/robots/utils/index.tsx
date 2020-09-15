@@ -56,18 +56,3 @@ export const formatData = ({ robots }) => {
 };
 
 export const getSearchOptions = (value: string) => ({ name: { _ilike: `%${value}%` } });
-
-export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
-    let where = null;
-    if (filtersObject) {
-        Object.keys(filtersObject).forEach((key) => {
-            const filters = filtersObject[key].filters
-                .filter(({ active }) => Boolean(active))
-                .map(({ filterValue }) => filterValue);
-            if (filters.length) {
-                where = { ...where, [key]: { _in: filters } };
-            }
-        });
-    }
-    return where;
-};

@@ -15,10 +15,17 @@ interface Props {
     subTitle?: string;
     page?: PageType;
     toolbar?: any;
-    hideHeader?: boolean;
+    withToolbar?: boolean;
 }
 
-export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children, page, toolbar }) => {
+export const ManagementTemplate: React.FC<Props> = ({
+    title,
+    subTitle,
+    children,
+    page,
+    toolbar,
+    withToolbar = true
+}) => {
     const { width } = useWindowDimensions();
 
     const { showDimension: menuHidden } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
@@ -46,8 +53,10 @@ export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children,
                 title={title}
                 subTitle={subTitle}
                 toggleMenu={menuHidden ? toggleNavBar : toggleMenu}
-                hideToolbar={false}
+                withToolbar={withToolbar}
                 toolbar={toolbar}
+                fullLength={!menuHidden}
+                withNavOpen={isNavOpen}
             />
             <div
                 className={`${styles.mainContainer} ${

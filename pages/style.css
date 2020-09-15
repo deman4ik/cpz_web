@@ -32,6 +32,7 @@
     --shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
     --header-height: 56px;
     --menu-width: 200px;
+    --menu-icon-size: 40px;
 }
 
 * {

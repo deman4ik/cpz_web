@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     position: fixed;
-    padding-top: var(--header-height);
+    z-index: 101;
 }
 
 .navBar.fullSize {
@@ -40,6 +40,7 @@
     position: relative;
     color: var(--inactiveGray);
     border-radius: 2px;
+    height: var(--menu-icon-size);
 }
 
 .item:hover {
@@ -64,6 +65,17 @@
 
 .fullSize .itemLabel {
     display: block;
+}
+
+.logoWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.logo {
+    width: var(--menu-icon-size);
 }
 
 .groupLine {

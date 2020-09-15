@@ -12,7 +12,7 @@ import { PageType } from "config/types";
 const MangeDashboard: React.FC<any> = () => {
     const { width } = useWindowDimensions();
     return (
-        <ManagementTemplate title="Dashboard" subTitle="Users dashboard" page={PageType.dashboard}>
+        <ManagementTemplate title="Dashboard" subTitle="Users dashboard" page={PageType.dashboard} withToolbar={false}>
             <div className={styles.cards_wrapper}>
                 <UserStats />
             </div>

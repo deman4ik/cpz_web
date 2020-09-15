@@ -35,7 +35,7 @@
 
 @media (max-width: 550px) {
     .wrapper {
-        width: 300px;
+        width: 250px;
     }
     .searchInput {
         font-size: var(--small1);
@@ -44,18 +44,18 @@
 
 @media (max-width: 490px) {
     .wrapper {
-        width: 250px;
+        width: 230px;
     }
 }
 
 @media (max-width: 390px) {
     .wrapper {
-        width: 230px;
+        width: 210px;
     }
 }
 
 @media (max-width: 330px) {
     .wrapper {
-        width: 190px;
+        width: 185px;
     }
 }

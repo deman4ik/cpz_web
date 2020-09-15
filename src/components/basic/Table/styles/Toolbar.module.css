@@ -1,9 +1,10 @@
 .toolbar {
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 0;
     height: var(--header-height);
     display: flex;
     align-items: center;
     z-index: 500;
+    padding-right: 10px;
 }

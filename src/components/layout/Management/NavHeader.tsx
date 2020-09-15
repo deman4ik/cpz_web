@@ -7,16 +7,29 @@ interface Props {
     title: string;
     subTitle?: string;
     toolbar: any;
-    hideToolbar: boolean;
     toggleMenu: any;
     style?: React.CSSProperties;
+    withToolbar: boolean;
+    fullLength: boolean;
+    withNavOpen: boolean;
 }
 
-const _NavHeader: React.FC<Props> = ({ title, subTitle, toolbar, toggleMenu, style }) => (
-    <div className={styles.header} style={style}>
+const _NavHeader: React.FC<Props> = ({
+    title,
+    subTitle,
+    toolbar,
+    toggleMenu,
+    style,
+    withToolbar,
+    fullLength,
+    withNavOpen
+}) => (
+    <div
+        className={`${styles.header} ${fullLength ? styles.fullLength : withNavOpen ? styles.withNavOpen : ""}`}
+        style={style}>
         <div className={styles.wrapper}>
             <MenuButton onClick={toggleMenu} />
-            <div className={styles.titleGroup}>
+            <div className={`${styles.titleGroup} ${!withToolbar ? styles.visible : ""}`}>
                 <div className={styles.title}>{title}</div>
                 <div className={styles.subTitle}>{subTitle}</div>
             </div>

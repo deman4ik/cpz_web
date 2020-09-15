@@ -1,7 +1,4 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React from "react";
-
-// utils
 import { formatDate } from "config/utils";
 import { defineProperty } from "../../utils";
 
@@ -33,18 +30,3 @@ export const formatData = ({ user_robots }) => {
 export const getSearchOptions = (value: string) => ({
     _or: [{ user: { name: { _ilike: `%${value}%` } } }, { robot: { name: { _ilike: `%${value}%` } } }]
 });
-
-export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
-    let where = null;
-    if (filtersObject) {
-        Object.keys(filtersObject).forEach((key) => {
-            const filters = filtersObject[key].filters
-                .filter(({ active }) => Boolean(active))
-                .map(({ filterValue }) => filterValue);
-            if (filters.length) {
-                where = { ...where, [key]: { _in: filters } };
-            }
-        });
-    }
-    return where;
-};
