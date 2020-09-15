@@ -20,7 +20,7 @@ const _NavHeader: React.FC<Props> = ({ title, subTitle, toolbar, toggleMenu, sty
                 <div className={styles.title}>{title}</div>
                 <div className={styles.subTitle}>{subTitle}</div>
             </div>
-            {toolbar}
+            {toolbar && <div className={styles.toolbar}>{toolbar}</div>}
         </div>
     </div>
 );

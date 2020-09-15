@@ -1,6 +1,7 @@
-.container_search {
+.container {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
+    padding-right: 16px;
 }
