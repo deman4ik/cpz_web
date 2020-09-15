@@ -1,12 +1,6 @@
-.modal {
-    max-height: 85%;
-    max-width: 90%;
-    width: 400px;
-    overflow-y: auto;
-}
-
 .body {
     color: white;
+    height: 100%;
 }
 
 .row_item {

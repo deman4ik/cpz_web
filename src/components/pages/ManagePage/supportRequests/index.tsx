@@ -7,8 +7,7 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { ManagementTemplate } from "components/layout";
 import UsersChats from "./components/UsersChats";
 import SearchPanel from "../common/SearchPanel";
-import OrderModalInner from "../common/OrderModalInner";
-import { Modal } from "components/basic";
+import OrderModal from "../common/OrderModal";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
@@ -76,15 +75,15 @@ const ManageSupportRequests = () => {
             {data?.support_requests?.length && (
                 <UsersChats data={formatUsersSupportRequests(data.support_requests, orderState.sort.order_by)} />
             )}
-            <Modal isOpen={isOpenModal} title="Sort  Users Requests" onClose={setOpenModal}>
-                <OrderModalInner
-                    setOrderState={setOrderState}
-                    orderState={orderState}
-                    closeModal={setOpenModal}
-                    clearOrder={clearOrder}
-                    sortSettings={SORT_SETTINGS}
-                />
-            </Modal>
+            <OrderModal
+                isOpen={isOpenModal}
+                title="Sort  Users Requests"
+                setOrderState={setOrderState}
+                orderState={orderState}
+                closeModal={setOpenModal}
+                clearOrder={clearOrder}
+                sortSettings={SORT_SETTINGS}
+            />
         </ManagementTemplate>
     );
 };

@@ -4,6 +4,7 @@
     background-color: var(--dark);
     height: var(--header-height);
     width: 100%;
+    z-index: 100;
 }
 .wrapper {
     position: relative;

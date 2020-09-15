@@ -1,7 +1,6 @@
 .navBar {
     height: 100vh;
     width: var(--header-height);
-    z-index: 103;
     background-color: var(--dark);
     display: flex;
     flex-direction: column;

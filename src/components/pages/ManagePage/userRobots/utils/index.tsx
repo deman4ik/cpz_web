@@ -1,16 +1,9 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
 
-// components
-import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
-import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
-
 // utils
 import { formatDate } from "config/utils";
 import { defineProperty } from "../../utils";
-
-// types
-import { filtersProps } from "../../common/OrderModalInner/types";
 
 export const formatData = ({ user_robots }) => {
     return user_robots.map((entry) => {

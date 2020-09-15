@@ -148,7 +148,7 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             onClose={toggleModal}
             className={modalStyles.modal}
             footer={
-                <div className={commonStyles.flex_spread}>
+                <>
                     <Button
                         title="Apply"
                         icon="check"
@@ -159,7 +159,7 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
                         className="success"
                     />
                     <Button title="Discard" icon="close" onClick={toggleModal} className="dimmed" />
-                </div>
+                </>
             }>
             <div className={modalStyles.body}>
                 {colsState.map((groupColumn, i) => (

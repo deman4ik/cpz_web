@@ -7,8 +7,8 @@
 .mainContainer {
     display: flex;
     flex-direction: column;
-    z-index: 0;
     height: calc(100vh - var(--header-height));
+    overflow: auto;
 }
 
 .mainContainer.withNav {

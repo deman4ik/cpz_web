@@ -1,4 +1,4 @@
-import { SortType, SortMethodType, OrderInterface } from "../common/OrderModalInner/types";
+import { SortType, SortMethodType, OrderInterface } from "../common/OrderModal/types";
 
 export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "messages_up", label: "Date messages ↑" },

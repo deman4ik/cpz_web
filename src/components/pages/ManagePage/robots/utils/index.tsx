@@ -1,8 +1,4 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-
-// types
-import { filtersProps } from "../../common/OrderModalInner/types";
-
 // utils
 import { defineProperty } from "../../utils";
 
