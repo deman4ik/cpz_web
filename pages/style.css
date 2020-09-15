@@ -41,7 +41,7 @@
 
 body {
     background-color: var(--darkBg);
-    overflow-y: scroll;
+    overflow-y: auto;
     margin: 0;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;

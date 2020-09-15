@@ -42,13 +42,10 @@
 }
 
 .content_wrapper {
-    height: calc(100% - 40px);
+    height: calc(100% - 44px);
 }
 
 .overflow_scroll {
     max-width: 100%;
     overflow: auto;
-}
-
-@media (max-width: 480px) {
 }

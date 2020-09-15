@@ -34,28 +34,26 @@ export const ManagementTemplate: React.FC<Props> = ({ title, subTitle, children,
         <div className={styles.container}>
             <PageHead title={`${title}${subTitle ? `: ${subTitle}` : ""}`} />
             <div id="modal" />
-            <div className={styles.mainMenuContainer}>
-                {menuHidden ? (
-                    <NavBar activeTab={page} fullSize={isNavOpen} />
-                ) : (
-                    <div id="menu">
-                        <Menu activeTab={page} toggleMenu={toggleMenu} isOpen={isMenuOpen} />
-                    </div>
-                )}
-
-                <NavHeader
-                    title={title}
-                    subTitle={subTitle}
-                    toggleMenu={menuHidden ? toggleNavBar : toggleMenu}
-                    hideToolbar={false}
-                    toolbar={toolbar}
-                />
-                <div
-                    className={`${styles.mainContainer} ${
-                        menuHidden && isNavOpen ? styles.withFullNav : menuHidden ? styles.withNav : ""
-                    }`}>
-                    {children}
+            {menuHidden ? (
+                <NavBar activeTab={page} fullSize={isNavOpen} />
+            ) : (
+                <div id="menu">
+                    <Menu activeTab={page} toggleMenu={toggleMenu} isOpen={isMenuOpen} />
                 </div>
+            )}
+
+            <NavHeader
+                title={title}
+                subTitle={subTitle}
+                toggleMenu={menuHidden ? toggleNavBar : toggleMenu}
+                hideToolbar={false}
+                toolbar={toolbar}
+            />
+            <div
+                className={`${styles.mainContainer} ${
+                    menuHidden && isNavOpen ? styles.withFullNav : menuHidden ? styles.withNav : ""
+                }`}>
+                {children}
             </div>
         </div>
     );

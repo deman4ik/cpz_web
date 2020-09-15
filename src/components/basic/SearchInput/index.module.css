@@ -53,3 +53,9 @@
         width: 230px;
     }
 }
+
+@media (max-width: 330px) {
+    .wrapper {
+        width: 200px;
+    }
+}
