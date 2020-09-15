@@ -29,7 +29,7 @@ const SearchPanel: React.FC<SearchPanelInterface> = ({
     };
 
     return (
-        <div className={styles.container_search}>
+        <div className={styles.container}>
             <SearchInput placeholder={placeholder || "Search..."} value={value} onChange={onChangeValue} />
             {setOpenModal && (
                 <CaptionButton title={orderTitle} icon="filtervariant" responsive onClick={setOpenModal} />

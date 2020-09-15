@@ -50,6 +50,12 @@
 
 @media (max-width: 390px) {
     .wrapper {
-        width: 230px;
+        width: 220px;
+    }
+}
+
+@media (max-width: 330px) {
+    .wrapper {
+        width: 200px;
     }
 }
