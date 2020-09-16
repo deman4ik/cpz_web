@@ -1,33 +1,37 @@
-.btn {
-  display: flex;
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: var(--dark);
-  width: 35px;
-  height: 35px;
-  position: relative;
-  user-select: none;
+.dummy {
+    position: relative;
 }
 
-.icon {
-  position: absolute;
-  left: 6px;
-  top: 7px;
-  width: 22px;
-  height: 22px;
+.wrapper {
+    display: flex;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: var(--dark);
+    width: 35px;
+    height: 35px;
+    position: relative;
+    user-select: none;
 }
 
 .ripple {
-  background-position: center;
-  transition: background 0.8s;
+    background-position: center;
+    transition: background 0.8s;
+}
+
+.icon {
+    position: absolute;
+    left: 6px;
+    top: 7px;
+    width: 22px;
+    height: 22px;
 }
 
 .ripple:hover {
-  background: var(--lightBg) radial-gradient(circle, transparent 1%, var(--lightBg) 1%) center/15000%;
+    background: var(--lightBg) radial-gradient(circle, transparent 1%, var(--lightBg) 1%) center/15000%;
 }
 
 .ripple:active {
-  background-color: var(--primary);
-  background-size: 100%;
-  transition: background 0s;
+    background-color: var(--primary);
+    background-size: 100%;
+    transition: background 0s;
 }
