@@ -87,10 +87,12 @@
 
 .logo {
     width: var(--menu-icon-size);
+    max-height: var(--menu-icon-size);
 }
 
 .fullSize .logo {
     width: calc(var(--menu-icon-size)+ 30px);
+    max-height: unset;
 }
 
 .groupLine {

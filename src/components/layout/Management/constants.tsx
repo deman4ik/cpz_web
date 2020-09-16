@@ -16,6 +16,7 @@ export const menuItems: MainMenuItemProps[] = [
 export const MenuButton = ({ onClick }) => (
     <div
         style={{
+            height: "100%",
             width: 56,
             display: "flex",
             justifyContent: "center",
