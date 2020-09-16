@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 // components
-import { Template } from "components/layout/Template";
+import { ManagementTemplate } from "components/layout";
 import Table from "components/basic/Table";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -23,8 +23,8 @@ const ManagePageTemplate = ({
     /*States*/
     const [limit, setLimit] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
     const [orderBy, setOrderBy] = useState(null);
-    const { width } = useWindowDimensions(); // width hook
     const [where, setWhere] = useState(getSearchOptions(""));
+    const { width } = useWindowDimensions();
 
     const { data: aggrData } = useQuery(aggregateQuery, {
         variables: { where },
@@ -42,14 +42,17 @@ const ManagePageTemplate = ({
         variables: { limit, where, offset, order_by: orderBy }
     });
 
-    const onChangeSearch = (value) => {
-        const trimmedVal = value.trim();
-        if (trimmedVal) {
-            setWhere(getSearchOptions(trimmedVal));
-        } else {
-            setWhere(null);
-        }
-    };
+    const onChangeSearch = useCallback(
+        (value) => {
+            const trimmedVal = value.trim();
+            if (trimmedVal) {
+                setWhere(getSearchOptions(trimmedVal));
+            } else {
+                setWhere(null);
+            }
+        },
+        [getSearchOptions]
+    );
 
     const onChangeSort = useCallback((column) => {
         if (column) {
@@ -67,8 +70,9 @@ const ManagePageTemplate = ({
 
     const tableColumns = useMemo(() => columns, [columns]);
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
+
     return (
-        <Template width={width} page={pageType} hideToolbar>
+        <ManagementTemplate title={pageType} page={pageType}>
             <Table
                 columns={tableColumns}
                 data={tableData}
@@ -81,7 +85,7 @@ const ManagePageTemplate = ({
                 onChangeSort={onChangeSort}
                 isLoading={isLoading}
             />
-        </Template>
+        </ManagementTemplate>
     );
 };
 

@@ -11,7 +11,7 @@ import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signal
 // constants
 import { POLL_INTERVAL } from "config/constants";
 // components
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
 import { StatsPageComponent } from "./StatsPageComponent";
 import { StatsPageFilters } from "./StatsPageFilters";
@@ -26,7 +26,7 @@ import { CheckedFilters, LabelCombinations } from "./types";
 // styles
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const StatsPage: React.FC = () => {
     /*Контекст аутентификации*/
@@ -122,7 +122,7 @@ export const StatsPage: React.FC = () => {
     };
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType[displayType]}
             title={`My ${capitalize(displayType)} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
@@ -177,6 +177,6 @@ export const StatsPage: React.FC = () => {
                     <StatsPageComponent formatData={formatData} width={width} displayType={displayType} />
                 )}
             </>
-        </Template>
+        </DefaultTemplate>
     );
 };

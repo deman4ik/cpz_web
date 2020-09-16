@@ -130,13 +130,8 @@ export const Login: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.footerLogin}>
-                        <span>So you can&apos;t get into your account?&nbsp;</span>
-                        <span>
-                            Did you&nbsp;
-                            <span className={styles.forgotLine} onClick={() => handleSwitchToStep("forgotPassword")}>
-                                <span className={styles.decoration}>forgot your password</span>
-                            </span>
-                            ?
+                        <span className={styles.forgotLine} onClick={() => handleSwitchToStep("forgotPassword")}>
+                            <span className={styles.decoration}>Forgot your password?</span>
                         </span>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import useFetchChatMessages from "hooks/useFetchChatMessages";
 // components
-import { Template } from "components/layout/Template";
+import { ManagementTemplate } from "components/layout";
 import { Chat } from "components/common";
 // utils
 import { formatMessage } from "components/common/Chat/utils";
@@ -45,7 +45,7 @@ const ManageSupportChat = () => {
     };
 
     return (
-        <Template title="Support chat" width={width} handlePressBack={handlePressBack} page={PageType.supportRequests}>
+        <ManagementTemplate title="Support chat" page={PageType.supportRequests}>
             <div className={styles.support_chat_wrapper}>
                 <Chat
                     title={`Chat with ${username} (${user_id})`}
@@ -64,7 +64,7 @@ const ManageSupportChat = () => {
                     }}
                 />
             </div>
-        </Template>
+        </ManagementTemplate>
     );
 };
 

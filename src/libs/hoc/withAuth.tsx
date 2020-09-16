@@ -8,7 +8,7 @@ import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } f
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";

@@ -1,7 +1,7 @@
 /*settings types*/
-import { SortType, SortMethodType, OrderInterface, FiltersSchemeInterface } from "../common/OrderModalInner/types";
+import { SortType, SortMethodType, OrderInterface, FiltersSchemeInterface } from "../common/OrderModal/types";
 /*filters mappers*/
-import { underscoreMapper, timeframeMapper, tradingMapper } from "../common/OrderModalInner/dataMappers";
+import { underscoreMapper, timeframeMapper, tradingMapper } from "../common/OrderModal/dataMappers";
 
 export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "robots_statistics_up", label: "Robots statistic ↑" },

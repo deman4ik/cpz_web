@@ -9,7 +9,7 @@ import { color } from "config/constants";
 import { event } from "libs/gtag";
 import { AddKey } from "./types";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 import styles from "./ExchangeKeysAddKeyModal.module.css";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 import { ModalTemplate } from "./ModalTemplate";
-import ClientOnlyPortal from "../../../libs/ClientOnlyPortal";
+import ClientOnlyPortal from "libs/ClientOnlyPortal";
 import styles from "./index.module.css";
 
 interface Props {

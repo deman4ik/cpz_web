@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import React from "react";
 import { ColumnsArraySchema, buildRobotChartCell } from "../../utils";
+
+import { STATUS_COLORS } from "config/constants";
 
 export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
     {
@@ -23,6 +26,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Status",
                 accessor: "status",
                 isVisible: true,
+                Cell: ({ value }) => <div style={{ color: STATUS_COLORS[value] }}>{value}</div>,
                 width: 95
             }
         ]

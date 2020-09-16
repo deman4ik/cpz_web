@@ -1,16 +1,6 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React from "react";
-
-// components
-import { DefaultCellWrapper, RobotChartCell } from "components/basic/SearchTable/components/cells";
-import { DefaultNotDesktopView } from "components/basic/SearchTable/components/notDesktop";
-
-// utils
 import { formatDate } from "config/utils";
 import { defineProperty } from "../../utils";
-
-// types
-import { filtersProps } from "../../common/OrderModalInner/types";
 
 export const formatData = ({ user_robots }) => {
     return user_robots.map((entry) => {
@@ -40,18 +30,3 @@ export const formatData = ({ user_robots }) => {
 export const getSearchOptions = (value: string) => ({
     _or: [{ user: { name: { _ilike: `%${value}%` } } }, { robot: { name: { _ilike: `%${value}%` } } }]
 });
-
-export const aggregateRobotsFilters = (filtersObject: filtersProps | undefined) => {
-    let where = null;
-    if (filtersObject) {
-        Object.keys(filtersObject).forEach((key) => {
-            const filters = filtersObject[key].filters
-                .filter(({ active }) => Boolean(active))
-                .map(({ filterValue }) => filterValue);
-            if (filters.length) {
-                where = { ...where, [key]: { _in: filters } };
-            }
-        });
-    }
-    return where;
-};

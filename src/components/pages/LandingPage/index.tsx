@@ -1,5 +1,4 @@
 import React from "react";
-import { PageHead } from "components/layout/PageHead";
 
 import styles from "./index.module.css";
 import { Caption } from "./Caption";
@@ -9,7 +8,7 @@ import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
-import { Footer } from "components/layout";
+import { PageHead, Footer } from "components/layout";
 
 const _LandingPage: React.FC = () => (
     <>

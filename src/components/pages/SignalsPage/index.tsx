@@ -1,6 +1,6 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-import { Template } from "components/layout/Template";
+import { DefaultTemplate } from "components/layout";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { PageType } from "config/types";
@@ -15,7 +15,7 @@ export const SignalsPage = () => {
     const { width } = useWindowDimensions();
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.signals}
             title="Signals"
             subTitle="Manual Trading"
@@ -31,6 +31,6 @@ export const SignalsPage = () => {
             </div>
             <SignalRobots width={width} displayType="signals" />
             <Modals />
-        </Template>
+        </DefaultTemplate>
     );
 };

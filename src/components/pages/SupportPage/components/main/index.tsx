@@ -7,7 +7,7 @@ import stylesMain from "../../styles/Main.module.css";
 // constants
 import { SIGNALS_CARDS, ROBOTS_CARDS, NOT_AUTH_CARD, TG_CARD, NOT_AUTH_CARD_SECOND } from "./constants";
 // auth context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 /*Основные карточки ссылками на документацию*/
 const renderStepsCards = (cardsArray) => cardsArray.map((item, index) => <StepCard {...item} key={index} />);

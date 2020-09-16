@@ -4,11 +4,10 @@ import { useQuery } from "@apollo/client";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // components
-import { Template } from "components/layout/Template";
+import { ManagementTemplate } from "components/layout";
 import UsersChats from "./components/UsersChats";
 import SearchPanel from "../common/SearchPanel";
-import OrderModalInner from "../common/OrderModalInner";
-import { Modal } from "components/basic";
+import OrderModal from "../common/OrderModal";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
@@ -61,10 +60,8 @@ const ManageSupportRequests = () => {
     };
 
     return (
-        <Template
+        <ManagementTemplate
             title="Support Requests"
-            width={width}
-            hideToolbar
             page={PageType.supportRequests}
             toolbar={
                 <SearchPanel
@@ -78,16 +75,16 @@ const ManageSupportRequests = () => {
             {data?.support_requests?.length && (
                 <UsersChats data={formatUsersSupportRequests(data.support_requests, orderState.sort.order_by)} />
             )}
-            <Modal isOpen={isOpenModal} title="Sort  Users Requests" onClose={setOpenModal}>
-                <OrderModalInner
-                    setOrderState={setOrderState}
-                    orderState={orderState}
-                    closeModal={setOpenModal}
-                    clearOrder={clearOrder}
-                    sortSettings={SORT_SETTINGS}
-                />
-            </Modal>
-        </Template>
+            <OrderModal
+                isOpen={isOpenModal}
+                title="Sort  Users Requests"
+                setOrderState={setOrderState}
+                orderState={orderState}
+                closeModal={setOpenModal}
+                clearOrder={clearOrder}
+                sortSettings={SORT_SETTINGS}
+            />
+        </ManagementTemplate>
     );
 };
 

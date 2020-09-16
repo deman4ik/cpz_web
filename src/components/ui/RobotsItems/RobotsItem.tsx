@@ -12,7 +12,7 @@ import AreaChart from "components/charts/AreaChart";
 // styles
 import styles from "./RobotsItem.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     item: SignalItem;

@@ -1,7 +1,7 @@
-.modal {
-    max-height: 85%;
-    width: 400px;
-    overflow-y: auto;
+.body {
+    color: white;
+    height: 100%;
+    padding: 0 10px;
 }
 
 .row_item {
@@ -11,6 +11,9 @@
 
 .row_group {
     padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .group_head {
@@ -31,4 +34,12 @@
 
 .checkbox {
     margin: 0 5px;
+}
+
+@media (max-width: 480px) {
+    .modal {
+        max-height: 100%;
+        max-width: unset;
+        width: 100%;
+    }
 }

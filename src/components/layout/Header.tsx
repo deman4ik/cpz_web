@@ -15,7 +15,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
     const { token } = getAccessToken();
     const { logoutProcess } = useLogoutProcess();
 
-    const hahdleOnClick = (href: string) => {
+    const handleOnClick = (href: string) => {
         event({
             action: "click",
             category: "Landing",
@@ -28,7 +28,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
         <div className={styles.container}>
             <div className={styles.leftContainer}>
                 {hasHomeButton && (
-                    <div className={styles.btnWrapper} onClick={() => hahdleOnClick("/")}>
+                    <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
                         <Link href="/" replace>
                             <a className={styles.btnTitle}>Cryptuoso</a>
                         </Link>
@@ -37,7 +37,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                 {!!token && (
                     <>
                         {linksHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
+                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
                                 <Link href={item.href} replace>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
@@ -56,7 +56,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                 ) : (
                     <>
                         {authHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
+                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
                                 <Link href={item.href} replace>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>

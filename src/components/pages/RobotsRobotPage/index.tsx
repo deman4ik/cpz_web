@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 
 // components
 import { NoRecentData, LoadingIndicator } from "components/common";
-import { Template } from "components/layout";
+import { DefaultTemplate } from "components/layout";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
 import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
@@ -21,7 +21,7 @@ import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { PageType, TabType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const RobotsRobotPage: React.FC = () => {
     /*Определение контекста для страницы робота*/
@@ -61,7 +61,7 @@ export const RobotsRobotPage: React.FC = () => {
     };
 
     return (
-        <Template
+        <DefaultTemplate
             page={PageType.robots}
             title="Trading Robot"
             subTitle={robotData ? robotData.robot.name : ""}
@@ -91,6 +91,6 @@ export const RobotsRobotPage: React.FC = () => {
                     />
                 </>
             )}
-        </Template>
+        </DefaultTemplate>
     );
 };

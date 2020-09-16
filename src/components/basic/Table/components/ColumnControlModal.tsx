@@ -8,6 +8,7 @@ import { CheckBox } from "../../CheckBox";
 import { Button } from "components/basic/Button";
 //icons
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
+
 // styles
 import commonStyles from "../styles/Common.module.css";
 import modalStyles from "../styles/ControlModal.module.css";
@@ -147,7 +148,7 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
             onClose={toggleModal}
             className={modalStyles.modal}
             footer={
-                <div className={commonStyles.flex_spread}>
+                <>
                     <Button
                         title="Apply"
                         icon="check"
@@ -158,9 +159,9 @@ export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal
                         className="success"
                     />
                     <Button title="Discard" icon="close" onClick={toggleModal} className="dimmed" />
-                </div>
+                </>
             }>
-            <div style={{ color: "white" }}>
+            <div className={modalStyles.body}>
                 {colsState.map((groupColumn, i) => (
                     <div key={`group_${i}`}>
                         <GroupRow

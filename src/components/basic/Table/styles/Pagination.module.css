@@ -16,4 +16,5 @@
 
 .page_selected {
     background-color: var(--lightBg);
+    border-radius: 2px;
 }

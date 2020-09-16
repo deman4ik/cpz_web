@@ -12,7 +12,7 @@ import { getHash, getSearchProps } from "config/utils";
 // services
 import LocalStorageService from "services/localStorageService";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
