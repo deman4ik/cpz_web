@@ -10,7 +10,7 @@ import styles from "./styles/Common.module.css";
 // types
 import { PageType } from "config/types";
 // auth context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 const SupportPage: React.FC<any> = () => {
     const {

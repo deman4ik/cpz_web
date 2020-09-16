@@ -23,7 +23,7 @@ import { POLL_INTERVAL } from "config/constants";
 // helpers
 import { formatRobotData } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const SignalsRobotPage = () => {
     /*Определение контекста для страницы робота*/

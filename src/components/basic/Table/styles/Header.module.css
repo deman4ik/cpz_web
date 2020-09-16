@@ -24,6 +24,8 @@
     z-index: 1;
     touch-action: none;
     cursor: col-resize;
+    display: flex;
+    justify-content: center;
 }
 
 .resizer {
@@ -31,8 +33,6 @@
     background: var(--accent);
     width: 0.5px;
     height: 100%;
-    position: absolute;
-    right: 50%;
 }
 
 .resizer.isResizing {

@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+//components
 import { PageHead } from "..";
 import { Menu } from "./Menu";
 import { NavBar } from "./NavBar";
 import { NavHeader } from "./NavHeader";
 
+//utils
 import { PageType } from "config/types";
 import { SCREEN_TYPE } from "config/constants";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
+
+//context
+import { LayoutContext } from "libs/hoc/context";
+
+//styles
 import styles from "./styles/Template.module.css";
 
 interface Props {
@@ -31,11 +39,20 @@ export const ManagementTemplate: React.FC<Props> = ({
     const { showDimension: menuHidden } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
     const { showDimension: navBarOpen } = useShowDimension(width, SCREEN_TYPE.TABLET);
 
-    const [isMenuOpen, setMenuOpen] = useState(false);
-    const [isNavOpen, setNavOpen] = useState(navBarOpen);
+    const {
+        layoutState: { menuOpen },
+        setLayoutState
+    } = useContext(LayoutContext);
+
+    const isMenuOpen = menuOpen || false;
+    const isNavOpen = menuOpen && navBarOpen;
+
+    const setMenuOpen = (newVal) => {
+        setLayoutState({ menuOpen: newVal });
+    };
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
-    const toggleNavBar = () => setNavOpen(!isNavOpen);
+    const toggleNavBar = () => setMenuOpen(!isNavOpen);
 
     return (
         <div className={styles.container}>

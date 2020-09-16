@@ -8,7 +8,7 @@ import { UPDATE_NOTIFICATIONS } from "graphql/user/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { getFormatData, filters } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {

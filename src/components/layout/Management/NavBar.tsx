@@ -31,15 +31,17 @@ const _NavBar: React.FC<Props> = ({ activeTab, fullSize = false }) => {
                 <div className={styles.logoWrapper}>
                     <img className={`${styles.logo}`} src={logo} alt="" />
                 </div>
-                {menuItems.map((item) => (
-                    <NavItem
-                        key={item.label}
-                        item={item}
-                        active={activeTab === item.label}
-                        handleOnClick={handleOnClick}
-                        styles={styles}
-                    />
-                ))}
+                <div className={styles.itemGroup}>
+                    {menuItems.map((item) => (
+                        <NavItem
+                            key={item.label}
+                            item={item}
+                            active={activeTab === item.label}
+                            handleOnClick={handleOnClick}
+                            styles={styles}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

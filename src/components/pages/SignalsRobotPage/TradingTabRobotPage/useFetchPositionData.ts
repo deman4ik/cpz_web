@@ -8,7 +8,7 @@ import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 // helpers
 import { getFormatDataClosedPositions, getAlerts } from "../helpers";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     const {

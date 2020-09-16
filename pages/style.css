@@ -73,7 +73,8 @@ a:visited {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -82,4 +83,10 @@ a:visited {
 
 ::-webkit-scrollbar-thumb {
     background: var(--whiteLight);
+}
+
+div {
+    /*Firefox scrollbar options*/
+    scrollbar-color: var(--whiteLight) var(--lightBg);
+    scrollbar-width: thin;
 }

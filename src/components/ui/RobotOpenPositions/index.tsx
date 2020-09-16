@@ -11,7 +11,7 @@ import { POLL_INTERVAL } from "config/constants";
 // helpers
 import { getFormatDataSignals, getFormatDataRobots } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     type: string;

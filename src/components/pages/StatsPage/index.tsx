@@ -26,7 +26,7 @@ import { CheckedFilters, LabelCombinations } from "./types";
 // styles
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const StatsPage: React.FC = () => {
     /*Контекст аутентификации*/

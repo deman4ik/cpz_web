@@ -5,7 +5,7 @@ import { SET_USER_NAME } from "graphql/user/mutations";
 import { GET_USER_INFO } from "graphql/user/queries";
 import { Button, Input } from "components/basic";
 import { MIN_NAME_LENGTH } from "config/constants";
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 import styles from "./PasswordModal.module.css";
 
 interface Props {

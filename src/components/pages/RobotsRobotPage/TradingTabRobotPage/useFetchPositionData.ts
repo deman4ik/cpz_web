@@ -9,7 +9,7 @@ import {
 } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) => {
     const arrStatus = isUserRobot ? ["closed", "closedAuto"] : ["closed"];

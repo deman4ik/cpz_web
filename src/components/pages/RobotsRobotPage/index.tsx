@@ -21,7 +21,7 @@ import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { PageType, TabType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const RobotsRobotPage: React.FC = () => {
     /*Определение контекста для страницы робота*/

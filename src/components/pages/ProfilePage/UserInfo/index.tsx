@@ -15,7 +15,7 @@ import NothingComponent from "components/common/NothingComponent";
 import styles from "./index.module.css";
 import styles_ext from "../AccountBalance.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     width: number;

@@ -9,7 +9,7 @@ import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
 import { getFormatData } from "../helpers";
 import { getLegend } from "config/utils";
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 import { getFormatUpdateData } from "components/pages/SignalsRobotPage/helpers";
 
 interface Props {

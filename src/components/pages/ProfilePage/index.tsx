@@ -10,7 +10,7 @@ import { PageType } from "config/types";
 import { ToolbarProfilePage } from "./ToolbarProfilePage";
 import { DefaultTemplate } from "components/layout";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 export const ProfilePage = () => {
     /*Контекст аутентификации для отображения данных*/

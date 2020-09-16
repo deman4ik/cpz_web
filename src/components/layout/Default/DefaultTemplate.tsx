@@ -11,7 +11,7 @@ import { useShowDimension } from "hooks/useShowDimension";
 import styles from "./styles/Template.module.css";
 
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     title?: string;

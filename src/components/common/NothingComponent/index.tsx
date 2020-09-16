@@ -7,7 +7,7 @@ import { ICON_TYPES } from "./constants";
 // styles
 import styles from "./nothing.module.css";
 // auth context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 // types
 import { ButtonSize } from "components/basic/Button/types";
 
