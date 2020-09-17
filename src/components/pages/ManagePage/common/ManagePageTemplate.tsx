@@ -5,7 +5,6 @@ import { useQuery } from "@apollo/client";
 import { ManagementTemplate } from "components/layout";
 import Table from "components/basic/Table";
 // hooks
-import useWindowDimensions from "hooks/useWindowDimensions";
 import { POLL_INTERVAL } from "config/constants";
 
 const ITEMS_PER_PAGE_OPTIONS =
@@ -24,7 +23,6 @@ const ManagePageTemplate = ({
     const [limit, setLimit] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
     const [orderBy, setOrderBy] = useState(null);
     const [where, setWhere] = useState(getSearchOptions(""));
-    const { width } = useWindowDimensions();
 
     const { data: aggrData } = useQuery(aggregateQuery, {
         variables: { where },

@@ -21,7 +21,8 @@ export const getSearchOptions = (value: string): any => {
     return where;
 };
 
-export const formatData = ({ users }) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const formatData = ({ users }: { users: any }) => {
     return users.map((user) => {
         const row = {};
 

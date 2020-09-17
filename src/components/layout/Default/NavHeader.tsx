@@ -7,12 +7,11 @@ interface Props {
     title: string;
     subTitle?: string;
     toolbar: any;
-    hideToolbar: boolean;
     handlePressBack: () => void;
     style?: React.CSSProperties;
 }
 
-const _NavHeader: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, hideToolbar, style }) => (
+const _NavHeader: React.FC<Props> = ({ title, subTitle, toolbar, handlePressBack, style }) => (
     <div className={styles.header} style={style}>
         <div className={styles.wrapper}>
             {handlePressBack ? <EffectButton onClick={handlePressBack} icon="arrowleft" /> : null}

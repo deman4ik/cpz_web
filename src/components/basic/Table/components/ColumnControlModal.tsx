@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState } from "react";
 
 // components
 import { Modal } from "../../Modal";
@@ -10,15 +10,24 @@ import { Button } from "components/basic/Button";
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
 
 // styles
-import commonStyles from "../styles/Common.module.css";
 import modalStyles from "../styles/ControlModal.module.css";
+
+interface ModalProps {
+    title: string;
+    columns: any;
+    isModalVisible: boolean;
+    toggleModal: () => void;
+    setColumns: (columns) => void;
+}
 
 enum MoveDirection {
     up,
     down
 }
 
-export const ColumnControlModal = ({ title, columns, isModalVisible, toggleModal, setColumns }) => {
+export const ColumnControlModal = (props: ModalProps): JSX.Element => {
+    const { title, columns, isModalVisible, toggleModal, setColumns } = props;
+
     const [colsState, setColsState] = useState(columns);
     const saveChanges = () => setColumns(colsState);
 
