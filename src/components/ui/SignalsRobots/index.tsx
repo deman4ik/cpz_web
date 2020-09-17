@@ -32,10 +32,10 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
 
     const funcCall = useMemo(
         () => ({
-            signals: () => getFormatDataSignals(data.signals),
-            robots: () => getFormatDataRobots(data.robots)
+            signals: () => getFormatDataSignals(data?.signals),
+            robots: () => getFormatDataRobots(data?.robots)
         }),
-        [data.signals, data.robots]
+        [data?.signals, data?.robots]
     );
 
     const formatData = useMemo(() => (!loading && data ? funcCall[displayType]() : []), [
