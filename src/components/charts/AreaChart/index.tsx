@@ -12,21 +12,22 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height }) => {
     const randomId = Math.random();
     const arrX = data.map((d) => d.x);
     const arrY = data.map((d) => d.y);
-    const coordsX = [Math.min(...arrX), Math.max(...arrX)];
-    const coordsY = [Math.min(...arrY), Math.max(...arrY)];
+    const xRange = [Math.min(...arrX), Math.max(...arrX)];
+    const yRange = [Math.min(...arrY), Math.max(...arrY)];
     let domain;
 
     if (data.length <= 1) {
-        domain = null;
-    } else if (coordsY[0] === coordsY[1]) {
+        return null;
+    }
+    if (yRange[0] === yRange[1]) {
         domain = {
-            x: coordsX,
-            y: [coordsY[0] - 1, coordsY[1] + 1]
+            x: xRange,
+            y: [yRange[0] - 1, yRange[1] + 1]
         };
     } else {
         domain = {
-            x: coordsX,
-            y: coordsY
+            x: xRange,
+            y: yRange
         };
     }
 
@@ -85,13 +86,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height }) => {
 
 function CustomClip({ ...props }) {
     const { randomId } = props;
+    const height = props.scale.y(0) > 0 ? props.scale.y(0) : 0;
     return (
         <defs key="clips">
             <clipPath id={`clip-path-pos-${randomId}`}>
-                <rect x="0" y="0" width="100%" height={props.scale.y(0)} />
+                <rect x="0" y="0" width="100%" height={height} />
             </clipPath>
             <clipPath id={`clip-path-neg-${randomId}`}>
-                <rect x="0" y={props.scale.y(0)} width="100%" height="100%" />
+                <rect x="0" y={height} width="100%" height="100%" />
             </clipPath>
         </defs>
     );
