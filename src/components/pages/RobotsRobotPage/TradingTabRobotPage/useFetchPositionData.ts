@@ -30,6 +30,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
         pollInterval: POLL_INTERVAL
     });
+    console.log(data);
     const { data: dataCount, loading: loadingAggregate } = useQuery(
         userRobots ? ROBOT_POSITIONS_COUNT_USER : ROBOT_POSITIONS_COUNT,
         {

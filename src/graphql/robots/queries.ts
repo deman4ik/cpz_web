@@ -220,10 +220,10 @@ export const GET_ROBOT_POSITIONS_ROBOT = gql`
         $status: String_comparison_exp
         $limit: Int
         $offset: Int
-        $orderBy: [robot_positions_order_by!]
+        $orderBy: [v_robot_positions_order_by!]
     ) {
-        robot_positions(
-            where: { robot_id: { _eq: $robotId }, status: $status }
+        v_robot_positions(
+            where: { robot: { id: { _eq: $robotId } }, status: $status }
             limit: $limit
             offset: $offset
             order_by: $orderBy
@@ -242,7 +242,6 @@ export const GET_ROBOT_POSITIONS_ROBOT = gql`
             exit_action
             bars_held
             profit
-            fee
             alerts
             volume
         }
@@ -258,35 +257,32 @@ export const GET_ROBOT_POSITIONS_USER = gql`
         $orderBy: [user_positions_order_by!]
         $user_id: uuid
     ) {
-        user_positions(
-            where: {
-                user_robot_id: { _eq: $robotId }
-                status: $status
-                user_id: { _eq: $user_id }
-                user_robot: { user_id: { _eq: $user_id } }
-            }
-            limit: $limit
-            offset: $offset
-            order_by: $orderBy
-        ) {
-            id
-            code
-            direction
-            status
-            entry_date
-            entry_price
-            entry_action
-            exit_date
-            exit_price
-            exit_action
-            bars_held
-            profit
-            user_robot_id
-            user_robot {
+        user_robots(where: { robot_id: { _eq: $robotId } }) {
+            positions(
+                where: { status: $status, user_id: { _eq: $user_id } }
+                limit: $limit
+                offset: $offset
+                order_by: $orderBy
+            ) {
                 id
+                code
+                direction
+                status
+                entry_date
+                entry_price
+                entry_action
+                exit_date
+                exit_price
+                exit_action
+                bars_held
+                profit
+                user_robot_id
+                user_robot {
+                    id
+                }
+                entry_executed
+                volume: exit_executed
             }
-            entry_executed
-            volume: exit_executed
         }
     }
 `;
