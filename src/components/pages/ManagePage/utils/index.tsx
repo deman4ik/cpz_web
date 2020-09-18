@@ -2,7 +2,7 @@
 import React from "react";
 
 // components
-import { RobotChartCell } from "components/basic/SearchTable/components/cells";
+import { RobotChartCell } from "components/basic/Table/components/cells";
 import { CheckBox } from "components/basic";
 
 /**
@@ -43,8 +43,8 @@ export interface ColumnsArraySchema {
 export const defineProperty = (object, property, value) =>
     Object.defineProperty(object, property, { value, writable: false });
 
-export const buildRobotChartCell = ({ value: { performance, profit } }) =>
-    performance.length ? <RobotChartCell performance={performance} profit={profit} height={120} /> : null;
+export const buildRobotChartCell = ({ value: { performance } }) =>
+    performance.length ? <RobotChartCell performance={performance} height={120} /> : null;
 
 export const buildCheckBoxCell = ({ value }) => (
     <CheckBox

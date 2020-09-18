@@ -34,15 +34,14 @@
     color: var(--accent);
 }
 
+.toolbarContainer {
+    position: absolute;
+    right: 0;
+}
+
 @media (max-width: 1200px) {
     .header {
         margin-left: 56px;
-    }
-}
-
-@media (max-width: 780px) {
-    .titleGroup {
-        display: none;
     }
 }
 

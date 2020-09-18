@@ -31,7 +31,6 @@ export const SignalsSearchPage: React.FC = () => {
             title="Signals Search"
             width={width}
             toolbar={<SearchToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} displayType="signals" />}
-            hideToolbar
             handlePressBack={handlePressBack}>
             <div className={styles.container}>
                 <SignalsSearchContainer displayType="signals" width={width} />

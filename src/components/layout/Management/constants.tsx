@@ -13,7 +13,7 @@ export const menuItems: MainMenuItemProps[] = [
     { label: PageType.supportRequests, icon: "supportRequests", route: "manage/support" }
 ];
 
-export const MenuButton = ({ onClick }) => (
+export const MenuButton = ({ onClick }: { onClick: () => void }): JSX.Element => (
     <div
         style={{
             height: "100%",
