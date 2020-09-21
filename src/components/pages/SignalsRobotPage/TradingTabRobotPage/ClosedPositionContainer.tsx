@@ -14,7 +14,7 @@ interface Props {
     robot: any;
     handleLoadMore: () => void;
     data: any;
-    quantyRecords: number;
+    recordsCount: number;
     isLoadingMore: boolean;
     width: number;
 }
@@ -23,7 +23,7 @@ const _ClosedPositionContainer: React.FC<Props> = ({
     robot,
     handleLoadMore,
     isLoadingMore,
-    quantyRecords,
+    recordsCount,
     data,
     width
 }) => {
@@ -55,7 +55,7 @@ const _ClosedPositionContainer: React.FC<Props> = ({
                         )}
                     </div>
                     <RobotsLoadMore
-                        renderLoadMoreButton={data.length < quantyRecords}
+                        renderLoadMoreButton={data.length < recordsCount}
                         isLoadingMore={isLoadingMore}
                         onFetchMore={handleLoadMore}
                     />

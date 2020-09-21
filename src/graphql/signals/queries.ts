@@ -76,7 +76,7 @@ export const ROBOT_AGGREGATE_COUNT = gql`
 
 export const ROBOT_POSITIONS_COUNT = gql`
     query aggregate($robotId: uuid!, $status: String_comparison_exp, $dateFrom: timestamp) {
-        robot_positions_aggregate(
+        v_robot_positions_aggregate(
             where: {
                 robot_id: { _eq: $robotId }
                 status: $status
@@ -167,7 +167,7 @@ export const USER_SIGNALS = gql`
 
 export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
     query user_signals_robot_pos($user_id: uuid) {
-        positions: v_user_signals_positions(
+        positions: v_user_signal_positions(
             where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_signal: { user_id: { _eq: $user_id } } }
             order_by: { entry_date: desc, robot: { exchange: asc, asset: asc } }
         ) {

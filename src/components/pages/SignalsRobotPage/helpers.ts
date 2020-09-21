@@ -58,16 +58,6 @@ export const activeDays = (robotData: any) =>
 export const getVolume = (robotData: any) =>
     robotData.robot.isUserSignals ? robotData?.user_signals.volume : robotData.robot.volume;
 
-export const getFormatDataClosedPositions = (dataClosedPositions, isUserSignals, volume) =>
-    dataClosedPositions.robots[0].positions.map((item) => {
-        const { exit_price, entry_price, direction } = item;
-        if (isUserSignals) {
-            const profit = (exit_price - entry_price) * volume * (direction === "short" ? -1 : 1);
-            return { ...item, volume, profit };
-        }
-        return item;
-    });
-
 export const floatPositions = {
     signals: {
         title: "Signals",
@@ -218,24 +208,27 @@ export const getFormatUpdateData = (data, asset) => {
     return { updateCandle, markers };
 };
 
-export const getAlerts = (signals) =>
-    Object.keys(signals.alerts).length
-        ? Object.keys(signals.alerts).map((item) => {
-              const colorItem =
-                  signals.alerts[item].action === "short" || signals.alerts[item].action === "closeLong"
-                      ? color.negative
-                      : color.positive;
-              const axisLabelVisible = true;
-              const alertItem = {
-                  ...signals.alerts[item],
-                  volume: signals.volume,
-                  code: signals.code,
-                  axisLabelVisible,
-                  color: colorItem
-              };
-              return alertItem;
-          })
-        : [];
+export const getAlerts = (signals) => {
+    return signals.reduce((alerts, signal) => {
+        if (!Object.keys(signal.alerts).length) return alerts;
+        return [
+            ...alerts,
+            ...Object.entries(signal.alerts).map(([, item]: [any, any]) => {
+                const colorItem =
+                    item.action === "short" || item.action === "closeLong" ? color.negative : color.positive;
+                const axisLabelVisible = true;
+                const alertItem = {
+                    ...signal,
+                    volume: item.price,
+                    code: item.code,
+                    axisLabelVisible,
+                    color: colorItem
+                };
+                return alertItem;
+            })
+        ];
+    }, []);
+};
 
 export const createVariable = (robotData, type) => {
     const { robot } = robotData;

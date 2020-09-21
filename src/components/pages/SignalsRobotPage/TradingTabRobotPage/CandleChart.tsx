@@ -38,7 +38,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
     const legend = getLegend(robot);
     const [limit, setLimit] = useState(LIMIT);
-    const [formatData, setFormatData] = useState({ candles: [], markers: [] });
+    const [chartData, setChartData] = useState({ candles: [], markers: [] });
 
     // history candles load
     const historyQueryVars = isAuth ? { robotId, limit, user_id } : { robotId, limit };
@@ -90,7 +90,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     };
     useEffect(() => {
         if (!loading && data) {
-            setFormatData(getFormatData(data, asset));
+            setChartData(getFormatData(data, asset));
         }
     }, [loading, data, asset]);
 
@@ -105,20 +105,20 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         }
 
         const { updateCandle, markers } = getFormatUpdateData(dataUpdate, asset);
-        const { candles: oldCandles } = formatData;
+        const { candles: oldCandles } = chartData;
         if (!updateCandle.time) {
             return;
         }
 
         const existingCandleIndex = oldCandles.findIndex((el) => el.time === updateCandle.time);
         if (existingCandleIndex === -1) {
-            setFormatData((prev) => ({
+            setChartData((prev) => ({
                 candles: [...prev.candles, updateCandle],
                 markers: [...prev.markers, ...markers]
             }));
             setLimit((oldLimit) => oldLimit + 1);
         } else {
-            setFormatData((prev) => {
+            setChartData((prev) => {
                 const candleId = prev.candles.findIndex((el) => el.time === updateCandle.time);
                 if (candleId === -1) {
                     return {
@@ -137,17 +137,17 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         }
     }, [dataUpdate, asset]);
 
-    const [setChartData] = useMutation(SET_CHART_DATA);
+    const [mutateChartData] = useMutation(SET_CHART_DATA);
     useEffect(() => {
-        setChartData({ variables: { limit, robotId, timeframe } });
+        mutateChartData({ variables: { limit, robotId, timeframe } });
     }, [limit]);
 
     return (
         <LightWeightChartWithNoSSR
             loading={loading}
-            data={formatData.candles}
+            data={chartData.candles}
             onFetchMore={onFetchMore}
-            markers={formatData.markers}
+            markers={chartData.markers}
             lines={signals}
             legend={legend}
             setIsChartLoaded={setIsChartLoaded}

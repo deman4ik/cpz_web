@@ -98,7 +98,7 @@ export const GET_PUBLIC_STATISTICS = gql`
     }
 `;
 
-export const GET_ROBOT_POSITIONS = gql`
+export const GET_SIGNAL_ROBOT_POSITIONS_FOR_USER = gql`
     query robotPositions(
         $user_id: uuid
         $robotId: uuid!
@@ -107,53 +107,53 @@ export const GET_ROBOT_POSITIONS = gql`
         $dateTo: timestamp
         $limit: Int
         $offset: Int
-        $orderBy: [v_robot_positions_order_by!]
+        $orderBy: [v_user_signal_positions_order_by!]
     ) {
-        robots(where: { id: { _eq: $robotId } }) {
-            positions(
-                where: {
-                    status: $status
-                    _or: [
-                        {
-                            _and: [
-                                { entry_candle_timestamp: { _gte: $dateFrom } }
-                                { entry_candle_timestamp: { _lte: $dateTo } }
-                            ]
-                        }
-                        {
-                            _and: [
-                                { exit_candle_timestamp: { _gte: $dateFrom } }
-                                { exit_candle_timestamp: { _lte: $dateTo } }
-                            ]
-                        }
-                    ]
-                }
-                limit: $limit
-                offset: $offset
-                order_by: $orderBy
-            ) {
-                id
-                code
-                direction
-                status
-                entry_date
-                entry_candle_timestamp
-                entry_price
-                entry_action
-                exit_date
-                exit_candle_timestamp
-                exit_price
-                exit_action
-                bars_held
-                profit
-                alerts
-                volume
-                robot {
-                    id
-                    user_signals(where: { user_id: { _eq: $user_id } }) {
-                        id
-                        volume
+        v_user_signal_positions(
+            where: {
+                robot_id: { _eq: $robotId }
+                user_id: { _eq: $user_id }
+                status: $status
+                _or: [
+                    {
+                        _and: [
+                            { entry_candle_timestamp: { _gte: $dateFrom } }
+                            { entry_candle_timestamp: { _lte: $dateTo } }
+                        ]
                     }
+                    {
+                        _and: [
+                            { exit_candle_timestamp: { _gte: $dateFrom } }
+                            { exit_candle_timestamp: { _lte: $dateTo } }
+                        ]
+                    }
+                ]
+            }
+            limit: $limit
+            offset: $offset
+            order_by: $orderBy
+        ) {
+            id
+            code
+            direction
+            status
+            entry_date
+            entry_candle_timestamp
+            entry_price
+            entry_action
+            exit_date
+            exit_candle_timestamp
+            exit_price
+            exit_action
+            bars_held
+            profit
+            alerts
+            volume
+            robot {
+                id
+                user_signals(where: { user_id: { _eq: $user_id } }) {
+                    id
+                    volume
                 }
             }
         }
@@ -170,7 +170,7 @@ export const GET_ROBOT_POSITIONS_NOT_AUTH = gql`
         $offset: Int
         $orderBy: [robot_positions_order_by!]
     ) {
-        robot_positions(
+        v_robot_positions(
             where: {
                 robot_id: { _eq: $robotId }
                 status: $status
@@ -248,7 +248,7 @@ export const GET_ROBOT_POSITIONS_ROBOT = gql`
     }
 `;
 
-export const GET_ROBOT_POSITIONS_USER = gql`
+export const GET_ROBOT_POSITIONS_FOR_USER = gql`
     query userRobotPositions(
         $robotId: uuid!
         $status: String_comparison_exp
@@ -560,7 +560,7 @@ export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
     }
 `;
 
-export const GET_USER_POSITIONS_OPEN_POS = gql`
+export const GET_OPEN_USER_POSITIONS = gql`
     query user_positions_open($user_id: uuid) {
         positions: user_positions(
             where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_robot: { user_id: { _eq: $user_id } } }

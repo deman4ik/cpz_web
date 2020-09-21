@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
 import {
     GET_ROBOT_POSITIONS_ROBOT,
-    GET_ROBOT_POSITIONS_USER,
+    GET_ROBOT_POSITIONS_FOR_USER,
     ROBOT_POSITIONS_COUNT_USER
 } from "graphql/robots/queries";
 import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
@@ -26,10 +26,13 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         orderBy: { entry_date: "desc" }
     };
 
-    const { data, loading, fetchMore } = useQuery(isUserRobot ? GET_ROBOT_POSITIONS_USER : GET_ROBOT_POSITIONS_ROBOT, {
-        variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
-        pollInterval: POLL_INTERVAL
-    });
+    const { data, loading, fetchMore } = useQuery(
+        isUserRobot ? GET_ROBOT_POSITIONS_FOR_USER : GET_ROBOT_POSITIONS_ROBOT,
+        {
+            variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
+            pollInterval: POLL_INTERVAL
+        }
+    );
     console.log(data);
     const { data: dataCount, loading: loadingAggregate } = useQuery(
         userRobots ? ROBOT_POSITIONS_COUNT_USER : ROBOT_POSITIONS_COUNT,
@@ -48,7 +51,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         orderBy: { entry_date: "desc" }
     };
     const { data: dataOpenPos, loading: loadingOpenPos } = useQuery(
-        userRobots ? GET_ROBOT_POSITIONS_USER : GET_ROBOT_POSITIONS_ROBOT,
+        userRobots ? GET_ROBOT_POSITIONS_FOR_USER : GET_ROBOT_POSITIONS_ROBOT,
         {
             variables: userRobots ? { ...dataOpenPosVars, user_id } : { ...dataOpenPosVars },
             pollInterval: POLL_INTERVAL

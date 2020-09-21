@@ -21,15 +21,15 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
         loading,
         handleLoadMore,
         isLoadingMore,
-        dataOpenPositions,
-        formatDataClosedPositions,
-        formatSignals,
-        quantyRecords
+        openPositions,
+        closedPositions,
+        signals,
+        recordsCount
     } = useFetchPositionData(isUserSignals, userSignals, robot);
 
     return (
         <>
-            <CandleChart robot={robot} signals={formatSignals} width={width} setIsChartLoaded={setIsChartLoaded} />
+            <CandleChart robot={robot} signals={signals} width={width} setIsChartLoaded={setIsChartLoaded} />
             {loading ? (
                 <div className={styles.loading}>
                     <LoadingIndicator />
@@ -45,9 +45,9 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                                 robot={robot}
                                 data={
                                     key === "signals"
-                                        ? formatSignals
-                                        : dataOpenPositions && dataOpenPositions.robots[0].positions.length
-                                        ? dataOpenPositions.robots[0].positions
+                                        ? signals
+                                        : openPositions && openPositions.length
+                                        ? openPositions
                                         : []
                                 }
                                 positionInfo={floatPositions[key]}
@@ -57,8 +57,8 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                     <ClosedPositionContainer
                         robot={robot}
                         handleLoadMore={handleLoadMore}
-                        data={formatDataClosedPositions}
-                        quantyRecords={quantyRecords}
+                        data={closedPositions}
+                        recordsCount={recordsCount}
                         isLoadingMore={isLoadingMore}
                         width={width}
                     />
