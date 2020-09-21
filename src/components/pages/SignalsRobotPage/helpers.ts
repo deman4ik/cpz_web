@@ -59,7 +59,7 @@ export const getVolume = (robotData: any) =>
     robotData.robot.isUserSignals ? robotData?.user_signals.volume : robotData.robot.volume;
 
 export const getFormatDataClosedPositions = (dataClosedPositions, isUserSignals, volume) =>
-    dataClosedPositions.robot_positions.map((item) => {
+    dataClosedPositions.robots[0].positions.map((item) => {
         const { exit_price, entry_price, direction } = item;
         if (isUserSignals) {
             const profit = (exit_price - entry_price) * volume * (direction === "short" ? -1 : 1);

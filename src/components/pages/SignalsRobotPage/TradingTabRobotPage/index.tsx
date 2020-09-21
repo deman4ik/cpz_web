@@ -46,8 +46,8 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                                 data={
                                     key === "signals"
                                         ? formatSignals
-                                        : dataOpenPositions && dataOpenPositions.robot_positions.length
-                                        ? dataOpenPositions.robot_positions
+                                        : dataOpenPositions && dataOpenPositions.robots[0].positions.length
+                                        ? dataOpenPositions.robots[0].positions
                                         : []
                                 }
                                 positionInfo={floatPositions[key]}

@@ -107,53 +107,53 @@ export const GET_ROBOT_POSITIONS = gql`
         $dateTo: timestamp
         $limit: Int
         $offset: Int
-        $orderBy: [robot_positions_order_by!]
+        $orderBy: [v_robot_positions_order_by!]
     ) {
-        robot_positions(
-            where: {
-                robot_id: { _eq: $robotId }
-                status: $status
-                _or: [
-                    {
-                        _and: [
-                            { entry_candle_timestamp: { _gte: $dateFrom } }
-                            { entry_candle_timestamp: { _lte: $dateTo } }
-                        ]
-                    }
-                    {
-                        _and: [
-                            { exit_candle_timestamp: { _gte: $dateFrom } }
-                            { exit_candle_timestamp: { _lte: $dateTo } }
-                        ]
-                    }
-                ]
-            }
-            limit: $limit
-            offset: $offset
-            order_by: $orderBy
-        ) {
-            id
-            code
-            direction
-            status
-            entry_date
-            entry_candle_timestamp
-            entry_price
-            entry_action
-            exit_date
-            exit_candle_timestamp
-            exit_price
-            exit_action
-            bars_held
-            profit
-            fee
-            alerts
-            volume
-            robot {
+        robots(where: { id: { _eq: $robotId } }) {
+            positions(
+                where: {
+                    status: $status
+                    _or: [
+                        {
+                            _and: [
+                                { entry_candle_timestamp: { _gte: $dateFrom } }
+                                { entry_candle_timestamp: { _lte: $dateTo } }
+                            ]
+                        }
+                        {
+                            _and: [
+                                { exit_candle_timestamp: { _gte: $dateFrom } }
+                                { exit_candle_timestamp: { _lte: $dateTo } }
+                            ]
+                        }
+                    ]
+                }
+                limit: $limit
+                offset: $offset
+                order_by: $orderBy
+            ) {
                 id
-                user_signals(where: { user_id: { _eq: $user_id } }) {
+                code
+                direction
+                status
+                entry_date
+                entry_candle_timestamp
+                entry_price
+                entry_action
+                exit_date
+                exit_candle_timestamp
+                exit_price
+                exit_action
+                bars_held
+                profit
+                alerts
+                volume
+                robot {
                     id
-                    volume
+                    user_signals(where: { user_id: { _eq: $user_id } }) {
+                        id
+                        volume
+                    }
                 }
             }
         }
@@ -257,32 +257,35 @@ export const GET_ROBOT_POSITIONS_USER = gql`
         $orderBy: [user_positions_order_by!]
         $user_id: uuid
     ) {
-        user_robots(where: { robot_id: { _eq: $robotId } }) {
-            positions(
-                where: { status: $status, user_id: { _eq: $user_id } }
-                limit: $limit
-                offset: $offset
-                order_by: $orderBy
-            ) {
-                id
-                code
-                direction
-                status
-                entry_date
-                entry_price
-                entry_action
-                exit_date
-                exit_price
-                exit_action
-                bars_held
-                profit
-                user_robot_id
-                user_robot {
-                    id
-                }
-                entry_executed
-                volume: exit_executed
+        user_positions(
+            where: {
+                user_robot_id: { _eq: $robotId }
+                status: $status
+                user_id: { _eq: $user_id }
+                user_robot: { user_id: { _eq: $user_id } }
             }
+            limit: $limit
+            offset: $offset
+            order_by: $orderBy
+        ) {
+            id
+            code
+            direction
+            status
+            entry_date
+            entry_price
+            entry_action
+            exit_date
+            exit_price
+            exit_action
+            bars_held
+            profit
+            user_robot_id
+            user_robot {
+                id
+            }
+            entry_executed
+            volume: exit_executed
         }
     }
 `;

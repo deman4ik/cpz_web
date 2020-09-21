@@ -75,15 +75,15 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         setIsLoadingMore(true);
         fetchMore({
             variables: {
-                offset: dataClosedPositions.robot_positions.length,
+                offset: dataClosedPositions.robots.positions.length,
                 limit: DISPLAY_CLOSED_POSITIONS
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
-                setLimit(dataClosedPositions.robot_positions.length + DISPLAY_CLOSED_POSITIONS);
+                setLimit(dataClosedPositions.robots.positions.length + DISPLAY_CLOSED_POSITIONS);
                 return {
-                    robot_positions: [...prev.robot_positions, ...fetchMoreResult.robot_positions]
+                    robot_positions: [...prev.robots.positions, ...fetchMoreResult.robots.positions]
                 };
             }
         });
@@ -109,10 +109,10 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         () =>
             !loadingOpenSignals &&
             dataSignals &&
-            dataSignals.robot_positions.length &&
-            Object.keys(dataSignals.robot_positions[0].alerts).length
+            dataSignals.robots[0].positions.length &&
+            Object.keys(dataSignals.robots[0].positions[0].alerts).length
                 ? // Берется первый элемент так как робот работает с первой позицей за раз
-                  getAlerts(dataSignals.robot_positions[0])
+                  getAlerts(dataSignals.robots[0].positions[0])
                 : [],
         [loadingOpenSignals, dataSignals]
     );

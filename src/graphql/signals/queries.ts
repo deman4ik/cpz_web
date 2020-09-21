@@ -76,7 +76,7 @@ export const ROBOT_AGGREGATE_COUNT = gql`
 
 export const ROBOT_POSITIONS_COUNT = gql`
     query aggregate($robotId: uuid!, $status: String_comparison_exp, $dateFrom: timestamp) {
-        v_robot_positions_aggregate(
+        robot_positions_aggregate(
             where: {
                 robot_id: { _eq: $robotId }
                 status: $status
