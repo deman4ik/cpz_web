@@ -15,7 +15,7 @@ import { formatRobotData } from "./helpers";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // graphql
-import { GET_ROBOT_INFO_USER_ROBOTS, GET_ROBOT_INFO_NOT_AUTH_ROBOTS } from "graphql/robots/queries";
+import { ROBOT_INFO_FOR_USER_ROBOTS, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 // constants
 import { PageType, TabType } from "config/types";
@@ -28,7 +28,7 @@ export const RobotsRobotPage: React.FC = () => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
-    const robotInfoQuery = isAuth ? GET_ROBOT_INFO_USER_ROBOTS : GET_ROBOT_INFO_NOT_AUTH_ROBOTS;
+    const robotInfoQuery = isAuth ? ROBOT_INFO_FOR_USER_ROBOTS : ROBOT_INFO_FOR_ROBOTS;
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [visibleModal, setVisibleModal] = useState({ isVisible: false, type: "" });

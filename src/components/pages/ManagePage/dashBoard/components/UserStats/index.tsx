@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_USERS_COUNT } from "graphql/manage/queries";
+import { USERS_BY_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
 import { formatTotalUsers } from "../../utils";
 // components
@@ -11,7 +11,7 @@ import TimestampStats from "./TimestampStats";
 // TODO: работа с шириной в зависимости от других карточек
 const UserStats: React.FC<any> = () => {
     /*Fetch data*/
-    const { data } = useQuery(GET_USERS_COUNT);
+    const { data } = useQuery(USERS_BY_ROBOTS_AGGREGATE);
 
     return (
         <Card style={{ minHeight: "305px", margin: "15px", flexGrow: "0.2" }}>

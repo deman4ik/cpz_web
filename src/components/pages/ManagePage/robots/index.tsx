@@ -12,7 +12,7 @@ import { ROBOT_TABLE_COLUMNS } from "./constants";
 import { PageType } from "config/types";
 
 //graphql
-import { GET_ROBOTS, ROBOTS_AGGREGATE } from "graphql/manage/queries";
+import { ALL_ROBOTS, ALL_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 
 const ManageRobots: React.FC = () => {
     const getItemsCount = (data) => data.robots_aggregate?.aggregate?.count;
@@ -21,8 +21,8 @@ const ManageRobots: React.FC = () => {
         <ManagePageTemplate
             pageType={PageType.manageRobots}
             columns={ROBOT_TABLE_COLUMNS}
-            dataQuery={GET_ROBOTS}
-            aggregateQuery={ROBOTS_AGGREGATE}
+            dataQuery={ALL_ROBOTS}
+            aggregateQuery={ALL_ROBOTS_AGGREGATE}
             formatData={formatData}
             getItemsCount={getItemsCount}
             getSearchOptions={getSearchOptions}

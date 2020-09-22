@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import dayjs from "libs/dayjs";
-import { USER_ROBOTS, GET_ROBOTS_BY_STATS, GET_ROBOT_INFO_USER_ROBOTS } from "../robots/queries";
+import { USER_ROBOTS, USER_ROBOTS_BY_STATS, ROBOT_INFO_FOR_USER_ROBOTS } from "../robots/queries";
 
 export const deleteRobot = (_root: any, variables: any, context: any) => {
     const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
@@ -208,7 +208,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
     );
     if (robotsStatsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOTS_BY_STATS
+            query: USER_ROBOTS_BY_STATS
         });
         const v_robots_stats = dataRobots.v_robots_stats.map((el) => {
             if (el.robots.id === variables.robot.id) {
@@ -225,7 +225,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOTS_BY_STATS,
+            query: USER_ROBOTS_BY_STATS,
             data: { v_robots_stats }
         });
     }
@@ -234,7 +234,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
     );
     if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOTS,
             variables: { code: variables.code }
         });
         const robot = dataRobots.robot.map((el) => {
@@ -248,7 +248,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOTS,
             variables: { code: variables.code },
             data: { robot }
         });
@@ -262,7 +262,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     let robotInfo;
     if (robotsStatsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOTS_BY_STATS
+            query: USER_ROBOTS_BY_STATS
         });
         const v_robots_stats = dataRobots.v_robots_stats.map((el) => {
             if (el.robots.id === variables.robotInfo.robotId) {
@@ -281,7 +281,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOTS_BY_STATS,
+            query: USER_ROBOTS_BY_STATS,
             data: { v_robots_stats }
         });
     }
@@ -318,7 +318,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     );
     if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOTS,
             variables: { code: variables.robotInfo.code }
         });
         const item = {
@@ -338,7 +338,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOTS,
             variables: { code: variables.robotInfo.code },
             data: { robot }
         });

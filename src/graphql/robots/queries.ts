@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
 
-export const GET_LANDING_ROBOTS = gql`
-    query robots_by_stats($limit: Int) {
+export const TOP_PERFORMANCE_ROBOTS = gql`
+    query get_top_robots_by_stats($limit: Int) {
         v_robots_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last, id: asc }) {
             robots {
                 id
@@ -22,8 +22,8 @@ export const GET_LANDING_ROBOTS = gql`
     }
 `;
 
-export const GET_ROBOT_INFO = gql`
-    query robotInfo(
+export const ROBOT_INFO_FOR_USER = gql`
+    query get_robot_info_for_user(
         $code: String
         $status: String
         $dateFrom: timestamp
@@ -64,8 +64,8 @@ export const GET_ROBOT_INFO = gql`
     }
 `;
 
-export const GET_ROBOT_INFO_NOT_AUTH = gql`
-    query robotInfo($code: String) {
+export const ROBOT_INFO = gql`
+    query get_robot_info($code: String) {
         robot: robots(where: { code: { _eq: $code } }) {
             id
             name
@@ -90,16 +90,16 @@ export const GET_ROBOT_INFO_NOT_AUTH = gql`
     }
 `;
 
-export const GET_PUBLIC_STATISTICS = gql`
-    query public_statistics($robotId: uuid!) {
+export const PUBLIC_STATISTICS = gql`
+    query get_public_statistics($robotId: uuid!) {
         robots(where: { id: { _eq: $robotId } }) {
             statistics
         }
     }
 `;
 
-export const GET_SIGNAL_ROBOT_POSITIONS_FOR_USER = gql`
-    query robotPositions(
+export const SIGNAL_POSITIONS_FOR_USER = gql`
+    query get_signal_positions_for_user(
         $user_id: uuid
         $robotId: uuid!
         $status: String_comparison_exp
@@ -109,7 +109,7 @@ export const GET_SIGNAL_ROBOT_POSITIONS_FOR_USER = gql`
         $offset: Int
         $orderBy: [v_user_signal_positions_order_by!]
     ) {
-        v_user_signal_positions(
+        positions: v_user_signal_positions(
             where: {
                 robot_id: { _eq: $robotId }
                 user_id: { _eq: $user_id }
@@ -160,17 +160,17 @@ export const GET_SIGNAL_ROBOT_POSITIONS_FOR_USER = gql`
     }
 `;
 
-export const GET_ROBOT_POSITIONS_NOT_AUTH = gql`
-    query robotPositions(
+export const ROBOT_POSITIONS_IN_INTERVAL = gql`
+    query get_robot_positions_in_interval(
         $robotId: uuid!
         $status: String_comparison_exp
         $dateFrom: timestamp
         $dateTo: timestamp
         $limit: Int
         $offset: Int
-        $orderBy: [robot_positions_order_by!]
+        $orderBy: [v_robot_positions_order_by!]
     ) {
-        v_robot_positions(
+        positions: v_robot_positions(
             where: {
                 robot_id: { _eq: $robotId }
                 status: $status
@@ -207,22 +207,21 @@ export const GET_ROBOT_POSITIONS_NOT_AUTH = gql`
             exit_action
             bars_held
             profit
-            fee
             alerts
             volume
         }
     }
 `;
 
-export const GET_ROBOT_POSITIONS_ROBOT = gql`
-    query robotPositions(
+export const ROBOT_POSITIONS = gql`
+    query get_robot_positions(
         $robotId: uuid!
         $status: String_comparison_exp
         $limit: Int
         $offset: Int
         $orderBy: [v_robot_positions_order_by!]
     ) {
-        v_robot_positions(
+        positions: v_robot_positions(
             where: { robot: { id: { _eq: $robotId } }, status: $status }
             limit: $limit
             offset: $offset
@@ -248,8 +247,8 @@ export const GET_ROBOT_POSITIONS_ROBOT = gql`
     }
 `;
 
-export const GET_ROBOT_POSITIONS_FOR_USER = gql`
-    query userRobotPositions(
+export const ROBOT_POSITIONS_FOR_USER = gql`
+    query get_robot_positions_for_user(
         $robotId: uuid!
         $status: String_comparison_exp
         $limit: Int
@@ -257,7 +256,7 @@ export const GET_ROBOT_POSITIONS_FOR_USER = gql`
         $orderBy: [user_positions_order_by!]
         $user_id: uuid
     ) {
-        user_positions(
+        positions: user_positions(
             where: {
                 user_robot_id: { _eq: $robotId }
                 status: $status
@@ -290,8 +289,8 @@ export const GET_ROBOT_POSITIONS_FOR_USER = gql`
     }
 `;
 
-export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
-  query candles(
+export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
+  query get_candles_for_user_robot(
     $robotId: uuid!
     $user_id: uuid
     $limit: Int
@@ -327,8 +326,8 @@ export const ROBOT_POSITION_WITH_CANDLE = (timeframe: number) => gql`
   }
 `;
 
-export const ROBOT_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
-  query candles(
+export const CANDLES_FOR_ROBOT = (timeframe: number) => gql`
+  query get_candles_for_robot(
     $robotId: uuid!
     $limit: Int
     $offset: Int
@@ -355,8 +354,8 @@ export const ROBOT_POSITION_WITH_CANDLE_NOT_AUTH = (timeframe: number) => gql`
   }
 `;
 
-export const USER_ROBOTS_POSITION_WITH_CANDLE = (timeframe: number) => gql`
-  query candles(
+export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
+  query get_candles_for_user_robot(
     $robotId: uuid!
     $user_id: uuid
     $limit: Int
@@ -396,15 +395,15 @@ export function buildRobotPositionCandlesQuery(
 ): DocumentNode {
     if (isAuth) {
         if (hasUserRobots) {
-            return USER_ROBOTS_POSITION_WITH_CANDLE(timeframe);
+            return CANDLES_FOR_USER_ROBOT(timeframe);
         }
-        return ROBOT_POSITION_WITH_CANDLE(timeframe);
+        return ROBOT_CANDLES_FOR_USER_SIGNALS(timeframe);
     }
-    return ROBOT_POSITION_WITH_CANDLE_NOT_AUTH(timeframe);
+    return CANDLES_FOR_ROBOT(timeframe);
 }
 
-export const GET_USER_ROBOTS_BY_EXCHANGE_ID = gql`
-    query user_robots($user_ex_acc_id: uuid!, $user_id: uuid) {
+export const USER_ROBOTS_BY_EXCHANGE_ID = gql`
+    query get_user_robots_by_exchange_id($user_ex_acc_id: uuid!, $user_id: uuid) {
         user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id }, user_id: { _eq: $user_id } }) {
             id
             status
@@ -436,8 +435,8 @@ export const USER_ROBOTS = gql`
     }
 `;
 
-export const GET_ROBOTS_BY_STATS = gql`
-    query robots_by_stats(
+export const USER_ROBOTS_BY_STATS = gql`
+    query user_robots_by_stats(
         $where: v_robots_stats_bool_exp
         $hash: String!
         $limit: Int
@@ -473,7 +472,7 @@ export const GET_ROBOTS_BY_STATS = gql`
     }
 `;
 
-export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
+export const ROBOTS_BY_STATS = gql`
     query robots_by_stats(
         $where: v_robots_stats_bool_exp
         $hash: String!
@@ -501,7 +500,7 @@ export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
     }
 `;
 
-export const ROBOT_POSITIONS_COUNT_USER = gql`
+export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
     query aggregateUserPositions($robotId: uuid!, $status: String_comparison_exp) {
         user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
             aggregate {
@@ -511,8 +510,8 @@ export const ROBOT_POSITIONS_COUNT_USER = gql`
     }
 `;
 
-export const GET_ROBOT_INFO_USER_ROBOTS = gql`
-    query robotInfo($code: String, $user_id: uuid) {
+export const ROBOT_INFO_FOR_USER_ROBOTS = gql`
+    query get_robot_info_for_user_robots($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
@@ -540,8 +539,8 @@ export const GET_ROBOT_INFO_USER_ROBOTS = gql`
     }
 `;
 // TODO: Переименовать  константу на более логическое название
-export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
-    query robotInfo($code: String) {
+export const ROBOT_INFO_FOR_ROBOTS = gql`
+    query robot_info_for_robots($code: String) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
@@ -560,8 +559,8 @@ export const GET_ROBOT_INFO_NOT_AUTH_ROBOTS = gql`
     }
 `;
 
-export const GET_OPEN_USER_POSITIONS = gql`
-    query user_positions_open($user_id: uuid) {
+export const OPEN_USER_POSITIONS = gql`
+    query get_open_user_positions($user_id: uuid) {
         positions: user_positions(
             where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_robot: { user_id: { _eq: $user_id } } }
             order_by: { entry_date: desc, exchange: asc, asset: asc }

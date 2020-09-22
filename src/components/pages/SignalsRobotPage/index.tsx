@@ -16,7 +16,7 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 // types
 import { PageType, TabType } from "config/types";
 // graphql
-import { GET_ROBOT_INFO, GET_ROBOT_INFO_NOT_AUTH } from "graphql/robots/queries";
+import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 // constants
 import { POLL_INTERVAL } from "config/constants";
@@ -31,7 +31,7 @@ export const SignalsRobotPage = () => {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const robotsInfoQuery = isAuth ? GET_ROBOT_INFO : GET_ROBOT_INFO_NOT_AUTH;
+    const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);

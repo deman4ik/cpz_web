@@ -33,14 +33,13 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                 <div className={styles.empty} />
             ) : (
                 <>
-                    <OpenPositionContainer robot={robot} data={dataOpenPos} tableName={tableName} />
+                    <OpenPositionContainer robot={robot} data={dataOpenPos} />
                     <ClosedPositionContainer
                         robot={robot}
                         handleLoadMore={handleLoadMore}
                         data={data}
                         quantyRecords={quantyRecords}
                         width={width}
-                        tableName={tableName}
                         isLoadingMore={isLoadingMore}
                     />
                 </>

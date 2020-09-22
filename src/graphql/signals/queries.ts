@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-export const GET_ROBOTS_BY_STATS = gql`
-    query robots_by_stats(
+export const USER_SIGNAL_ROBOTS = gql`
+    query get_user_signal_robots(
         $limit: Int
         $offset: Int
         $where: v_robots_stats_bool_exp
@@ -36,8 +36,8 @@ export const GET_ROBOTS_BY_STATS = gql`
     }
 `;
 
-export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
-    query robots_by_stats(
+export const ALL_SIGNAL_ROBOTS = gql`
+    query get_all_signal_robots(
         $limit: Int
         $offset: Int
         $where: v_robots_stats_bool_exp
@@ -64,8 +64,8 @@ export const GET_ROBOTS_BY_STATS_NOT_AUTH = gql`
     }
 `;
 
-export const ROBOT_AGGREGATE_COUNT = gql`
-    query aggregate($hash: String!, $where: robots_bool_exp) {
+export const SIGNAL_ROBOTS_AGGREGATE = gql`
+    query get_signal_robots_aggr($hash: String!, $where: robots_bool_exp) {
         robots_aggregate(where: $where) @connection(key: "robots_aggregate", filter: ["hash"]) {
             aggregate {
                 count
@@ -74,8 +74,8 @@ export const ROBOT_AGGREGATE_COUNT = gql`
     }
 `;
 
-export const ROBOT_POSITIONS_COUNT = gql`
-    query aggregate($robotId: uuid!, $status: String_comparison_exp, $dateFrom: timestamp) {
+export const SIGNAL_ROBOT_POSITIONS_AGGREGATE = gql`
+    query get_robot_positions_aggr($robotId: uuid!, $status: String_comparison_exp, $dateFrom: timestamp) {
         v_robot_positions_aggregate(
             where: {
                 robot_id: { _eq: $robotId }
@@ -93,8 +93,8 @@ export const ROBOT_POSITIONS_COUNT = gql`
     }
 `;
 
-export const GET_AGGR_STATISTICS = gql`
-    query aggr_statistics(
+export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
+    query get_user_signal_robot_stats_aggr(
         $exchange: String_comparison_exp
         $asset: String_comparison_exp
         $type: String_comparison_exp
@@ -115,8 +115,8 @@ export const GET_AGGR_STATISTICS = gql`
     }
 `;
 
-export const GET_USER_AGGR_STATS_ALL = gql`
-    query user_aggr_stats_filters($type: String_comparison_exp, $user_id: uuid) {
+export const ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE = gql`
+    query get_all_user_signal_robots_stats_aggr($type: String_comparison_exp, $user_id: uuid) {
         stats: user_aggr_stats(
             order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
             where: { type: $type, equity: { _has_key: "profit" }, user_id: { _eq: $user_id } }
@@ -130,8 +130,8 @@ export const GET_USER_AGGR_STATS_ALL = gql`
     }
 `;
 
-export const GET_USER_AGGR_STATS_FILTERS = gql`
-    query user_aggr_stats_filters($type: String_comparison_exp, $user_id: uuid) {
+export const FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS = gql`
+    query get_aggr_stats_filters_for_user_robots($type: String_comparison_exp, $user_id: uuid) {
         filters: user_aggr_stats(where: { type: $type, equity: { _has_key: "profit" }, user_id: { _eq: $user_id } }) {
             asset
             exchange
@@ -140,7 +140,7 @@ export const GET_USER_AGGR_STATS_FILTERS = gql`
 `;
 
 export const USER_SIGNALS = gql`
-    query user_signals($user_id: uuid) {
+    query get_signals_for_user($user_id: uuid) {
         signals: user_signals(order_by: { subscribed_at: asc, id: asc }, where: { user_id: { _eq: $user_id } })
             @connection(key: "user_signals_robots") {
             user_id
@@ -165,8 +165,8 @@ export const USER_SIGNALS = gql`
     }
 `;
 
-export const USER_SIGNALS_ROBOT_OPEN_POS = gql`
-    query user_signals_robot_pos($user_id: uuid) {
+export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
+    query get_open_positions_for_user_signals($user_id: uuid) {
         positions: v_user_signal_positions(
             where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_signal: { user_id: { _eq: $user_id } } }
             order_by: { entry_date: desc, robot: { exchange: asc, asset: asc } }

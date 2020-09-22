@@ -1,14 +1,14 @@
 import React, { memo } from "react";
 import { useQuery } from "@apollo/client";
 
-import { GET_LANDING_ROBOTS } from "graphql/robots/queries";
+import { TOP_PERFORMANCE_ROBOTS } from "graphql/robots/queries";
 import { PrimaryButton } from "components/basic";
 import { SignalsListCard } from "./SignalsListCard";
 import { LoadingDummy } from "./LoadingDummy";
 import styles from "./index.module.css";
 
 const _SignalsList: React.FC = () => {
-    const { data, loading } = useQuery(GET_LANDING_ROBOTS, {
+    const { data, loading } = useQuery(TOP_PERFORMANCE_ROBOTS, {
         variables: { limit: 5 }
     });
 

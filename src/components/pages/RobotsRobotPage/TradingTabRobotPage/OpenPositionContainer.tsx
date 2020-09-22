@@ -8,16 +8,15 @@ import styles from "./OpenPositionContainer.module.css";
 interface Props {
     robot: Robot;
     data: any;
-    tableName: string;
 }
 
-const _OpenPositionContainer: React.FC<Props> = ({ data, robot, tableName }) => (
+const _OpenPositionContainer: React.FC<Props> = ({ data, robot }) => (
     <div className={styles.container}>
         <div className={styles.topCards}>
             <div className={styles.accordionTitle}>Open Positions</div>
             <div className={styles.topCardsContainer}>
-                {data && data[tableName].length ? (
-                    data[tableName].map((item) => (
+                {data && data.positions.length ? (
+                    data.positions.map((item) => (
                         <ClosedPositionsRobotPageItemCard
                             key={item.id}
                             item={item}

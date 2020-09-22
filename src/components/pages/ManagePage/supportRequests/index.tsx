@@ -12,7 +12,7 @@ import OrderModal from "../common/OrderModal";
 import { POLL_INTERVAL } from "config/constants";
 import { INITIAL_ORDER, SORT_SETTINGS } from "./Order.settings";
 // graphql
-import { GET_USERS_SUPPORT_REQUESTS } from "graphql/manage/queries";
+import { SUPPORT_REQUESTS } from "graphql/manage/queries";
 // utils
 import { formatUsersSupportRequests, getSearchParams } from "./utils";
 // types
@@ -34,7 +34,7 @@ const ManageSupportRequests = () => {
     if (search) _and = [..._and, { ...search }];
 
     // fetch data
-    const { data } = useQuery(GET_USERS_SUPPORT_REQUESTS, {
+    const { data } = useQuery(SUPPORT_REQUESTS, {
         variables: {
             where: { _and }
         },

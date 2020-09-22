@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
-import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
+import { USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
 import { UPDATE_EXCHANGE_KEY } from "graphql/profile/mutations";
 import { Button, Select, Input, Textarea } from "components/basic";
 import { color } from "config/constants";
@@ -53,7 +53,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
         errorPolicy: "all"
     });
 
-    const { data: dataCheck, loading: loadingCheck } = useQuery(GET_USER_ROBOTS_BY_EXCHANGE_ID, {
+    const { data: dataCheck, loading: loadingCheck } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
         variables: {
             user_ex_acc_id: options ? options.id : null,
             user_id

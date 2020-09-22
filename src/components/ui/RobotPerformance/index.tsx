@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/client";
 // graphql
-import { GET_USER_AGGR_STATS_ALL } from "graphql/signals/queries";
+import { ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE } from "graphql/signals/queries";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 // components
@@ -27,7 +27,7 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
     } = useContext(AuthContext);
 
     const [formatData, setFormatData] = useState([]);
-    const { data, loading } = useQuery(GET_USER_AGGR_STATS_ALL, {
+    const { data, loading } = useQuery(ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE, {
         variables: { type: { _eq: queryParam[type] }, user_id },
         pollInterval: POLL_INTERVAL
     });

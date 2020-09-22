@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFilters } from "hooks/useFilters";
 // graphql
-import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
+import { USER_SIGNAL_ROBOT_STATS_AGGREGATE, FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS } from "graphql/signals/queries";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 // components
@@ -50,7 +50,7 @@ export const StatsPage: React.FC = () => {
         router.push(`/${displayType}`);
     };
 
-    const { loading, data } = useQuery(GET_AGGR_STATISTICS, {
+    const { loading, data } = useQuery(USER_SIGNAL_ROBOT_STATS_AGGREGATE, {
         variables: {
             asset: selectedFilter.asset ? { _eq: selectedFilter.asset } : { _is_null: true },
             exchange: selectedFilter.exchange ? { _eq: selectedFilter.exchange } : { _is_null: true },
@@ -60,7 +60,7 @@ export const StatsPage: React.FC = () => {
         pollInterval: POLL_INTERVAL
     });
 
-    const { data: dataFilter, loading: loadingFilter } = useQuery(GET_USER_AGGR_STATS_FILTERS, {
+    const { data: dataFilter, loading: loadingFilter } = useQuery(FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS, {
         variables: {
             type: getQueueType(displayType),
             user_id

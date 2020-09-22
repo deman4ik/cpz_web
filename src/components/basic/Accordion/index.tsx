@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Accordion: React.FC<Props> = ({ title, children, left }) => {
-    const [isExpanded, setIsExpanded] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(false);
     const handleOnClick = () => {
         setIsExpanded(!isExpanded);
     };

@@ -2,12 +2,8 @@ import { useContext, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
-import {
-    GET_ROBOT_POSITIONS_ROBOT,
-    GET_ROBOT_POSITIONS_FOR_USER,
-    ROBOT_POSITIONS_COUNT_USER
-} from "graphql/robots/queries";
-import { ROBOT_POSITIONS_COUNT } from "graphql/signals/queries";
+import { ROBOT_POSITIONS, ROBOT_POSITIONS_FOR_USER, USER_ROBOT_POSITIONS_AGGREGATE } from "graphql/robots/queries";
+import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // context
 import { AuthContext } from "libs/hoc/context";
 
@@ -26,16 +22,13 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         orderBy: { entry_date: "desc" }
     };
 
-    const { data, loading, fetchMore } = useQuery(
-        isUserRobot ? GET_ROBOT_POSITIONS_FOR_USER : GET_ROBOT_POSITIONS_ROBOT,
-        {
-            variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
-            pollInterval: POLL_INTERVAL
-        }
-    );
-    console.log(data);
+    const { data, loading, fetchMore } = useQuery(isUserRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS, {
+        variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
+        pollInterval: POLL_INTERVAL
+    });
+
     const { data: dataCount, loading: loadingAggregate } = useQuery(
-        userRobots ? ROBOT_POSITIONS_COUNT_USER : ROBOT_POSITIONS_COUNT,
+        userRobots ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
         {
             variables: {
                 robotId: isUserRobot ? userRobots.id : robot.id,
@@ -51,7 +44,7 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot, tableName) 
         orderBy: { entry_date: "desc" }
     };
     const { data: dataOpenPos, loading: loadingOpenPos } = useQuery(
-        userRobots ? GET_ROBOT_POSITIONS_FOR_USER : GET_ROBOT_POSITIONS_ROBOT,
+        userRobots ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS,
         {
             variables: userRobots ? { ...dataOpenPosVars, user_id } : { ...dataOpenPosVars },
             pollInterval: POLL_INTERVAL

@@ -16,7 +16,6 @@ interface Props {
     data: any;
     quantyRecords: number;
     width: number;
-    tableName: string;
     isLoadingMore: boolean;
 }
 
@@ -26,26 +25,25 @@ const _ClosedPositionContainer: React.FC<Props> = ({
     isLoadingMore,
     quantyRecords,
     width,
-    data,
-    tableName
+    data
 }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
     return (
         <div className={styles.wrapper}>
             <div className={styles.accordionTitle}>Closed Positions</div>
-            {data && data[tableName].length ? (
+            {data && data.positions.length ? (
                 <>
                     <div className={styles.accordionSurface}>
                         {isDesktopView ? (
                             <>
                                 <HeaderTradingTabRobotPage />
-                                {data[tableName].map((item) => (
+                                {data.positions.map((item) => (
                                     <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
                                 ))}
                             </>
                         ) : (
                             <div className={styles.mobileCardContainer}>
-                                {data[tableName].map((item) => (
+                                {data.positions.map((item) => (
                                     <ClosedPositionsRobotPageItemCard
                                         key={item.id}
                                         item={item}
