@@ -12,7 +12,7 @@ const DinamicImageWithNoSSR = dynamic(() => import("./DinamicImage"), {
     ssr: false
 });
 
-const subTitle = "Just invest –\n robots make the rest";
+const subTitle = "Just invest –\n robots do the rest";
 export const _Caption: React.FC = () => (
     <>
         <DinamicImageWithNoSSR />
