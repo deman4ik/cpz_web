@@ -6,7 +6,7 @@ export const supportContent = () => [
         icon: "help",
         iconColor: color.secondary, //secondary
         title: "Documentation",
-        text: "Learn all about Cryptuoso Platform.\n How to configure and use signals, robots, and exchange accounts.",
+        text: "Learn all about Cryptuoso Platform.\n How to configure and use signals, robots and exchange accounts.",
         button: "DOCUMENTATION",
         buttonType: "outline-secondary",
         href: DOCS_URL
@@ -84,7 +84,7 @@ export const descriptionRobots: DescriptionRobotsType[] = [
         imgStyle: { width: 49, height: 52 },
         title: "Simple",
         text:
-            "Just add your exchange account and subscribe to robots for transactions. Just a few steps and you're all set."
+            "Just add your exchange account and subscribe to robots for transactions. Complete a few steps and you are done."
     }
 ];
 
