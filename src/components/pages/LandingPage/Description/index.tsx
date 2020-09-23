@@ -23,8 +23,8 @@ const _Description: React.FC = () => (
         <div className={styles.line}>
             <div className={styles.text}>
                 <span className={styles.textWhite}>Trading robots</span> make money on both{" "}
-                <span className={styles.textGreen}>rising</span> and <span className={styles.redText}>falling</span>{" "}
-                of cryptocurrency prices. The more volatile the market is – the more opportunities there are for the robots.
+                <span className={styles.textGreen}>rising</span> and <span className={styles.redText}>falling</span> of
+                cryptocurrency prices. The more volatile the market is – the more opportunities there are for the robots.
             </div>
         </div>
         <div className={styles.line}>
