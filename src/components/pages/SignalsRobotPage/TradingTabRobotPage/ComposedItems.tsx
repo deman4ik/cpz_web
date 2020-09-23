@@ -4,7 +4,7 @@ import React from "react";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { SectionType } from "../types";
 import { colorAction, getIconName, getColor, getIconNameAction } from "config/utils";
-import styles from "./ClosedPositionsRobotPageItemCard.module.css";
+import styles from "./RobotPositionCard.module.css";
 
 const components = {
     arrowup: ArrowUpIcon,

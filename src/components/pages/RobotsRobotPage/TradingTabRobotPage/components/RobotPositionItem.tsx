@@ -2,15 +2,15 @@ import React from "react";
 
 import { formatDate, capitalize, valueWithSign, colorDirection, moneyFormat } from "config/utils";
 import { color } from "config/constants";
-import { Robot } from "../types";
-import styles from "./ClosedPositionsRobotPageItem.module.css";
+import { Robot } from "../../types";
+import styles from "./styles/RobotPositionItem.module.css";
 
 interface Props {
     item: any;
     robot: Robot;
 }
 
-export const ClosedPositionsRobotPageItem: React.FC<Props> = ({ item, robot }) => {
+export const RobotPositionItem: React.FC<Props> = ({ item, robot }) => {
     const { asset } = robot;
     return (
         <div className={styles.tableRow}>

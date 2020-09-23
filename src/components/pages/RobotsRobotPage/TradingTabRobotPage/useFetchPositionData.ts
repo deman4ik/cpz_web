@@ -7,53 +7,67 @@ import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // context
 import { AuthContext } from "libs/hoc/context";
 
-export const useFetchPositionData = (isUserRobot, userRobots, robot) => {
-    const arrStatus = isUserRobot ? ["closed", "closedAuto"] : ["closed"];
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
+interface RobotData {
+    user_robots: any;
+    robot: any;
+}
+
+export const useFetchPositionData = (robotData: RobotData): any => {
     const {
         authState: { user_id }
     } = useContext(AuthContext);
-    const mainVariables = {
-        robotId: isUserRobot ? userRobots.id : robot.id,
-        status: { _in: arrStatus },
+
+    const { user_robots: userRobot, robot } = robotData;
+
+    const statusOptions = userRobot ? ["closed", "closedAuto"] : ["closed"];
+
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
+
+    const queryVars = {
+        robotId: userRobot ? userRobot.id : robot.id,
+        status: { _in: statusOptions },
         limit,
         offset: 0,
         orderBy: { entry_date: "desc" }
     };
 
-    const { data, loading, fetchMore } = useQuery(isUserRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS, {
-        variables: isUserRobot ? { ...mainVariables, user_id } : { ...mainVariables },
-        pollInterval: POLL_INTERVAL
-    });
+    const { data: closedPositionsData, loading, fetchMore } = useQuery(
+        userRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS,
+        {
+            variables: userRobot ? { ...queryVars, user_id } : queryVars,
+            pollInterval: POLL_INTERVAL
+        }
+    );
 
-    const { data: dataCount, loading: loadingAggregate } = useQuery(
-        userRobots ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
+    const { data: aggrData, loading: loadingAggregate } = useQuery(
+        userRobot ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
         {
             variables: {
-                robotId: isUserRobot ? userRobots.id : robot.id,
-                status: { _in: arrStatus }
+                robotId: userRobot ? userRobot.id : robot.id,
+                status: { _in: statusOptions }
             },
             pollInterval: POLL_INTERVAL
         }
     );
 
-    const dataOpenPosVars = {
-        robotId: isUserRobot ? userRobots.id : robot.id,
+    const openPositionsQueryVars = {
+        robotId: userRobot ? userRobot.id : robot.id,
         status: { _eq: "open" },
         orderBy: { entry_date: "desc" }
     };
-    const { data: dataOpenPos, loading: loadingOpenPos } = useQuery(
-        userRobots ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS,
+
+    const { data: openPositionsData, loading: loadingOpenPos } = useQuery(
+        userRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS,
         {
-            variables: userRobots ? { ...dataOpenPosVars, user_id } : { ...dataOpenPosVars },
+            variables: userRobot ? { ...openPositionsQueryVars, user_id } : openPositionsQueryVars,
             pollInterval: POLL_INTERVAL
         }
     );
 
-    const quantyRecords = useMemo(
-        () => (!loadingAggregate && dataCount ? dataCount.positions_aggregate.aggregate.count : 0),
-        [dataCount, loadingAggregate]
+    const recordsCount = useMemo(
+        () => (!loadingAggregate && aggrData ? aggrData.positions_aggregate.aggregate.count : 0),
+        [aggrData, loadingAggregate]
     );
 
     const handleLoadMore = () => {
@@ -61,13 +75,13 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot) => {
 
         fetchMore({
             variables: {
-                offset: data.positions.length,
+                offset: closedPositionsData.positions.length,
                 limit: DISPLAY_CLOSED_POSITIONS
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
-                setLimit(data.positions.length + DISPLAY_CLOSED_POSITIONS);
+                setLimit(closedPositionsData.positions.length + DISPLAY_CLOSED_POSITIONS);
                 return {
                     positions: [...prev.positions, ...fetchMoreResult.positions]
                 };
@@ -77,10 +91,10 @@ export const useFetchPositionData = (isUserRobot, userRobots, robot) => {
 
     return {
         isLoadingMore,
-        quantyRecords,
-        dataOpenPos,
+        recordsCount,
+        openPositions: openPositionsData?.positions,
+        closedPositions: closedPositionsData?.positions,
         handleLoadMore,
-        data,
         loading: loading || loadingAggregate || loadingOpenPos
     };
 };

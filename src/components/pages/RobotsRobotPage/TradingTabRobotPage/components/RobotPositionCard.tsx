@@ -1,9 +1,9 @@
 import React from "react";
 
+import { Robot, SectionType } from "../../types";
 import { formatDate, valueWithSign, colorAction, moneyFormat, splitCapitaize } from "config/utils";
-import { VolumePositionRobotPageItem } from "./VolumePositionRobotPageItem";
-import { Robot, SectionType } from "../types";
-import styles from "./ClosedPositionsRobotPageItemCard.module.css";
+import { VolumePositionRobotPageItem } from ".";
+import styles from "./styles/RobotPositionCard.module.css";
 
 interface Props {
     item: any;
@@ -11,7 +11,7 @@ interface Props {
     activeTab: SectionType;
 }
 
-export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot, activeTab }) => {
+export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) => {
     const { asset, isUserRobot } = robot;
     return (
         <div className={styles.posCard}>

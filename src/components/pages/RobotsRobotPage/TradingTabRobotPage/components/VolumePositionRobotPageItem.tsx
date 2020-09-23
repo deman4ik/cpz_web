@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 
+import { SectionType } from "../../types";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-//import { getColor, getIconName } from '../../../ui/RobotOpenPositions/helpers';
-import { SectionType } from "../types";
 import { getIconName, getColor } from "config/utils";
-import styles from "./ClosedPositionsRobotPageItemCard.module.css";
+
+import styles from "./styles/RobotPositionCard.module.css";
 
 interface Props {
     volume: number;

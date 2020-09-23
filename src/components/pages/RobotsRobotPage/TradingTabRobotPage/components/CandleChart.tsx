@@ -7,14 +7,14 @@ import { LoadingIndicator } from "components/common";
 import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
 import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
-import { getFormatData } from "../helpers";
+import { getFormatData } from "../../helpers";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
 import { getFormatUpdateData } from "components/pages/SignalsRobotPage/helpers";
 
 interface Props {
     robot: any;
-    userRobots: any;
+    userRobot: any;
     width: number;
     setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
@@ -25,8 +25,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightW
     ssr: false
 });
 
-// TODO: определить, userRobots должен быть массивом или одним объектом
-export const CandleChart: React.FC<Props> = ({ robot, width, userRobots: userRobot, setIsChartLoaded }) => {
+export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsChartLoaded }) => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);

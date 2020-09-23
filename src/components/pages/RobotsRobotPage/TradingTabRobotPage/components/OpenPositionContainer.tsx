@@ -1,23 +1,23 @@
 import React, { memo } from "react";
 
-import { Robot, SectionType } from "../types";
-import { ClosedPositionsRobotPageItemCard } from "./ClosedPositionsRobotPageItemCard";
+import { Robot, SectionType } from "../../types";
+import { RobotPositionCard } from ".";
 import { NoRecentData } from "components/common";
-import styles from "./OpenPositionContainer.module.css";
+import styles from "./styles/OpenPositionContainer.module.css";
 
 interface Props {
     robot: Robot;
-    data: any;
+    positions: any;
 }
 
-const _OpenPositionContainer: React.FC<Props> = ({ data, robot }) => (
+const _OpenPositionContainer: React.FC<Props> = ({ positions, robot }) => (
     <div className={styles.container}>
         <div className={styles.topCards}>
             <div className={styles.accordionTitle}>Open Positions</div>
             <div className={styles.topCardsContainer}>
-                {data && data.positions.length ? (
-                    data.positions.map((item) => (
-                        <ClosedPositionsRobotPageItemCard
+                {positions && positions.length ? (
+                    positions.map((item) => (
+                        <RobotPositionCard
                             key={item.id}
                             item={item}
                             robot={robot}

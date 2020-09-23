@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 import { SectionType } from "../types";
-import { ClosedPositionsRobotPageItemCard } from "./ClosedPositionsRobotPageItemCard";
+import { RobotPositionCard } from "./RobotPositionCard";
 import styles from "./OpenPositionContainer.module.css";
 
 interface Props {
@@ -16,7 +16,7 @@ const _OpenPositionContainer: React.FC<Props> = ({ data, robot, positionInfo }) 
         <div className={styles.topCardsContainer}>
             {data.length ? (
                 data.map((item, idx) => (
-                    <ClosedPositionsRobotPageItemCard
+                    <RobotPositionCard
                         key={idx}
                         item={item}
                         robot={robot}

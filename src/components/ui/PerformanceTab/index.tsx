@@ -66,4 +66,4 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
     );
 };
 
-export const PerformanceTabRobotPage = memo(_PerformanceTabRobotPage);
+export const PerformanceTab = memo(_PerformanceTabRobotPage);

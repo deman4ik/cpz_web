@@ -8,9 +8,9 @@ import { NoRecentData, LoadingIndicator } from "components/common";
 import { DefaultTemplate } from "components/layout";
 import { HeaderRobotsRobotPage } from "./HeaderRobotsRobotPage";
 import { TabsHeaderRobotPage } from "./HeaderRobotsRobotPage/TabsHeaderRobotPage";
-import { TabsPagesRobotPage } from "./TabsPagesRobotPage";
-import { ToolbarRobotPage } from "./ToolbarRobotPage";
-import { ModalsRobotPage } from "./ModalsRobotPage";
+import { Tabs } from "./Tabs";
+import { Toolbar } from "./Toolbar";
+import { Modals } from "./Modals";
 import { formatRobotData } from "./helpers";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -41,8 +41,10 @@ export const RobotsRobotPage: React.FC = () => {
         variables: vars,
         pollInterval: POLL_INTERVAL
     });
-    const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [
-        data,
+
+    const robotData = useMemo(() => (!loading && data?.robot.length ? formatRobotData(data?.robot[0]) : null), [
+        data?.robot,
+        data?.robot?.length,
         loading
     ]);
 
@@ -66,7 +68,7 @@ export const RobotsRobotPage: React.FC = () => {
             title="Trading Robot"
             subTitle={robotData ? robotData.robot.name : ""}
             width={width}
-            toolbar={robotData ? <ToolbarRobotPage robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
+            toolbar={robotData ? <Toolbar robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
             handlePressBack={handlePressBack}>
             {loading ? (
                 <div className="loading">
@@ -80,10 +82,10 @@ export const RobotsRobotPage: React.FC = () => {
                     <TabsHeaderRobotPage
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
-                        isUserRobots={robotData.robot.isUserRobot}
+                        isUserRobots={robotData.robot.belongsToUser}
                     />
-                    <TabsPagesRobotPage robotData={robotData} activeTab={activeTab} width={width} />
-                    <ModalsRobotPage
+                    <Tabs robotData={robotData} activeTab={activeTab} width={width} />
+                    <Modals
                         visibleModal={visibleModal}
                         setVisibleModal={setVisibleModal}
                         code={router.query.code as string}

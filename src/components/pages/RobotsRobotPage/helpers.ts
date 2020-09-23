@@ -2,7 +2,7 @@ import { capitalize } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
-export const formatRobotData = (data: any) => {
+export const formatRobotData = (robot: any) => {
     const {
         id,
         exchange,
@@ -15,7 +15,7 @@ export const formatRobotData = (data: any) => {
         statistics,
         equity,
         active
-    } = data.robot[0];
+    } = robot;
     return {
         robot: {
             id,
@@ -28,7 +28,7 @@ export const formatRobotData = (data: any) => {
             statistics,
             equity,
             active,
-            isUserRobot: user_robots?.length > 0
+            belongsToUser: user_robots?.length > 0
         },
         user_robots: user_robots?.length ? user_robots[0] : null
     };

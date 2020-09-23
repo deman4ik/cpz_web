@@ -1,11 +1,8 @@
 import React, { useState, memo } from "react";
 
-import { CandleChart } from "./CandleChart";
+import { CandleChart, ClosedPositionContainer, OpenPositionContainer } from "./components";
 import { useFetchPositionData } from "./useFetchPositionData";
-import { ClosedPositionContainer } from "./ClosedPositionContainer";
-import { OpenPositionContainer } from "./OpenPositionContainer";
 import { LoadingIndicator } from "components/common";
-import styles from "./index.module.css";
 
 interface Props {
     robotData: any;
@@ -14,29 +11,35 @@ interface Props {
 
 const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
-    const { user_robots: userRobots, robot } = robotData;
-    const { isUserRobot } = robot;
-    const { data, isLoadingMore, quantyRecords, dataOpenPos, handleLoadMore, loading } = useFetchPositionData(
-        isUserRobot,
-        userRobots,
-        robot
-    );
+    const { user_robots: userRobot, robot } = robotData;
+
+    const {
+        openPositions,
+        closedPositions,
+        isLoadingMore,
+        recordsCount,
+        handleLoadMore,
+        loading
+    } = useFetchPositionData(robotData);
 
     return (
         <>
-            <CandleChart robot={robot} userRobots={userRobots} width={width} setIsChartLoaded={setIsChartLoaded} />
             {loading ? (
-                <LoadingIndicator />
-            ) : !isChartLoaded ? (
-                <div className={styles.empty} />
+                <LoadingIndicator style={{ height: 400 }} />
             ) : (
                 <>
-                    <OpenPositionContainer robot={robot} data={dataOpenPos} />
+                    <CandleChart
+                        robot={robot}
+                        userRobot={userRobot}
+                        width={width}
+                        setIsChartLoaded={setIsChartLoaded}
+                    />
+                    <OpenPositionContainer robot={robot} positions={openPositions} />
                     <ClosedPositionContainer
                         robot={robot}
                         handleLoadMore={handleLoadMore}
-                        data={data}
-                        quantyRecords={quantyRecords}
+                        positions={closedPositions}
+                        recordsCount={recordsCount}
                         width={width}
                         isLoadingMore={isLoadingMore}
                     />

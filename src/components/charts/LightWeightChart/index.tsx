@@ -1,6 +1,6 @@
 import React from "react";
 
-import { _LightWeightChart as ChartLightWeight } from "./LightWeightChart";
+import { _LightWeightChart as Chart } from "./LightWeightChart";
 import styles from "./index.module.css";
 import { PropsWrapChart } from "./types";
 
@@ -22,7 +22,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
 
     return (
         <div className={styles.container}>
-            <ChartLightWeight
+            <Chart
                 data={data}
                 loading={loading}
                 type={type}

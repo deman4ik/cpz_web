@@ -8,7 +8,7 @@ interface Props {
     robotSubscribe: (variables: any) => void;
 }
 
-const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
+const _Toolbar: React.FC<Props> = ({ robotData, robotSubscribe }) => {
     const handleOnPressAction = (action: string) => {
         robotSubscribe(createVariable(robotData, action));
     };
@@ -48,4 +48,4 @@ const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
     );
 };
 
-export const ToolbarRobotPage = memo(_ToolbarRobotPage);
+export const Toolbar = memo(_Toolbar);

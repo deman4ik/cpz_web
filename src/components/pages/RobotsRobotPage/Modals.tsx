@@ -12,7 +12,7 @@ interface Props {
 }
 
 const actions = ["start", "stop", "delete"];
-const _ModalsRobotPage: React.FC<Props> = ({ visibleModal, width, setVisibleModal, code }) => {
+const _Modals: React.FC<Props> = ({ visibleModal, width, setVisibleModal, code }) => {
     const [titleModal, setTitleModal] = useState(null);
     const handleSetVisible = () => {
         setVisibleModal({ isVisible: false, type: "" });
@@ -41,4 +41,4 @@ const _ModalsRobotPage: React.FC<Props> = ({ visibleModal, width, setVisibleModa
     );
 };
 
-export const ModalsRobotPage = memo(_ModalsRobotPage);
+export const Modals = memo(_Modals);

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import styles from "./HeaderTradingTabRobotPage.module.css";
+import styles from "./styles/HeaderTradingTabRobotPage.module.css";
 
 const positionsTabHeaders = [
     { title: "Position", flex: 0.5 },

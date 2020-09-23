@@ -1,20 +1,18 @@
 import React, { memo } from "react";
 
-import { HeaderTradingTabRobotPage } from "./HeaderTradingTabRobotPage";
-import { ClosedPositionsRobotPageItem } from "./ClosedPositionsRobotPageItem";
-import { ClosedPositionsRobotPageItemCard } from "./ClosedPositionsRobotPageItemCard";
+import { HeaderTradingTabRobotPage, RobotPositionItem, RobotPositionCard } from ".";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import { Robot, SectionType } from "../types";
-import styles from "./ClosedPositionContainer.module.css";
+import { Robot, SectionType } from "../../types";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 import { NoRecentData } from "components/common";
+import styles from "./styles/ClosedPositionContainer.module.css";
 
 interface Props {
     robot: Robot;
     handleLoadMore: () => void;
-    data: any;
-    quantyRecords: number;
+    positions: any;
+    recordsCount: number;
     width: number;
     isLoadingMore: boolean;
 }
@@ -23,28 +21,28 @@ const _ClosedPositionContainer: React.FC<Props> = ({
     robot,
     handleLoadMore,
     isLoadingMore,
-    quantyRecords,
+    recordsCount,
     width,
-    data
+    positions
 }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
     return (
         <div className={styles.wrapper}>
             <div className={styles.accordionTitle}>Closed Positions</div>
-            {data && data.positions.length ? (
+            {positions && positions.length ? (
                 <>
                     <div className={styles.accordionSurface}>
                         {isDesktopView ? (
                             <>
                                 <HeaderTradingTabRobotPage />
-                                {data.positions.map((item) => (
-                                    <ClosedPositionsRobotPageItem key={item.id} item={item} robot={robot} />
+                                {positions.map((item) => (
+                                    <RobotPositionItem key={item.id} item={item} robot={robot} />
                                 ))}
                             </>
                         ) : (
                             <div className={styles.mobileCardContainer}>
-                                {data.positions.map((item) => (
-                                    <ClosedPositionsRobotPageItemCard
+                                {positions.map((item) => (
+                                    <RobotPositionCard
                                         key={item.id}
                                         item={item}
                                         robot={robot}
@@ -55,7 +53,7 @@ const _ClosedPositionContainer: React.FC<Props> = ({
                         )}
                     </div>
                     <RobotsLoadMore
-                        renderLoadMoreButton={data.length < quantyRecords}
+                        renderLoadMoreButton={positions.length < recordsCount}
                         isLoadingMore={isLoadingMore}
                         onFetchMore={handleLoadMore}
                     />

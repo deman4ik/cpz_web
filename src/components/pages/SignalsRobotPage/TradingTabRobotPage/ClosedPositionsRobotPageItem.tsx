@@ -1,7 +1,7 @@
 import React from "react";
 
 import { formatDate, capitalize, valueWithSign, moneyFormat, colorDirection } from "config/utils";
-import styles from "./ClosedPositionsRobotPageItem.module.css";
+import styles from "./RobotPositionItem.module.css";
 import { color } from "config/constants";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     robot: any;
 }
 
-export const ClosedPositionsRobotPageItem: React.FC<Props> = ({ item, robot }) => {
+export const RobotPositionItem: React.FC<Props> = ({ item, robot }) => {
     const { asset } = robot;
     return (
         <div className={styles.tableRow}>

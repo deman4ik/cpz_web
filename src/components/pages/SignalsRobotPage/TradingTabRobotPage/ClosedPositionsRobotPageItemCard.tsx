@@ -3,7 +3,7 @@ import React from "react";
 import { SectionType } from "../types";
 import { formatDate, valueWithSign, colorAction, capitalize, moneyFormat, splitCapitaize } from "config/utils";
 import { renderAction, renderVolume } from "./ComposedItems";
-import styles from "./ClosedPositionsRobotPageItemCard.module.css";
+import styles from "./RobotPositionCard.module.css";
 
 interface Props {
     item: any;
@@ -11,7 +11,7 @@ interface Props {
     activeTab: SectionType;
 }
 
-export const ClosedPositionsRobotPageItemCard: React.FC<Props> = ({ item, robot, activeTab }) => {
+export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) => {
     const { asset } = robot;
     return (
         <div className={styles.posCard}>
