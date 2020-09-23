@@ -502,7 +502,7 @@ export const ROBOTS_BY_STATS = gql`
 
 export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
     query aggregateUserPositions($robotId: uuid!, $status: String_comparison_exp) {
-        user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
+        positions_aggregate: user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
             aggregate {
                 count
             }

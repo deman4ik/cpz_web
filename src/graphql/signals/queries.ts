@@ -76,7 +76,7 @@ export const SIGNAL_ROBOTS_AGGREGATE = gql`
 
 export const SIGNAL_ROBOT_POSITIONS_AGGREGATE = gql`
     query get_robot_positions_aggr($robotId: uuid!, $status: String_comparison_exp, $dateFrom: timestamp) {
-        v_robot_positions_aggregate(
+        positions_aggregate: v_robot_positions_aggregate(
             where: {
                 robot_id: { _eq: $robotId }
                 status: $status

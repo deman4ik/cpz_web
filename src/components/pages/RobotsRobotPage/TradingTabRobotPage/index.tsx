@@ -16,12 +16,10 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const { user_robots: userRobots, robot } = robotData;
     const { isUserRobot } = robot;
-    const tableName = isUserRobot ? "user_positions" : "v_robot_positions";
     const { data, isLoadingMore, quantyRecords, dataOpenPos, handleLoadMore, loading } = useFetchPositionData(
         isUserRobot,
         userRobots,
-        robot,
-        tableName
+        robot
     );
 
     return (
