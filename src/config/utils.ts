@@ -2,12 +2,12 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color } from "./constants";
 
-export const moneyFormat = (value: number, toFixed = 2): string => {
+export const formatMoney = (value: number, toFixed = 2): string => {
     let val = "0";
 
     if (value) {
         if (value.toString().match(/^0|-0\./g) && toFixed === 2) {
-            val = value.toFixed(6).toString().replace(/0*$/, ""); // отображение до 6 символов после точки
+            val = value.toFixed(6).toString().replace(/0*$/, ""); // display up to 6 decimals
         } else {
             val = value
                 .toFixed(toFixed)

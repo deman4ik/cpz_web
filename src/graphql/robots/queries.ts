@@ -412,7 +412,7 @@ export const USER_ROBOTS_BY_EXCHANGE_ID = gql`
 `;
 
 export const USER_ROBOTS = gql`
-    query user_robots($user_id: uuid) {
+    query get_user_robots($user_id: uuid) {
         robots: user_robots(order_by: { started_at: asc, id: asc }, where: { user_id: { _eq: $user_id } })
             @connection(key: "user_robots_robots") {
             id
@@ -436,7 +436,7 @@ export const USER_ROBOTS = gql`
 `;
 
 export const USER_ROBOTS_BY_STATS = gql`
-    query user_robots_by_stats(
+    query get_user_robots_by_stats(
         $where: v_robots_stats_bool_exp
         $hash: String!
         $limit: Int
@@ -473,7 +473,7 @@ export const USER_ROBOTS_BY_STATS = gql`
 `;
 
 export const ROBOTS_BY_STATS = gql`
-    query robots_by_stats(
+    query get_robots_by_stats(
         $where: v_robots_stats_bool_exp
         $hash: String!
         $limit: Int
@@ -501,7 +501,7 @@ export const ROBOTS_BY_STATS = gql`
 `;
 
 export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
-    query user_robot_positions_aggr($robotId: uuid!, $status: String_comparison_exp) {
+    query get_user_robot_positions_aggr($robotId: uuid!, $status: String_comparison_exp) {
         positions_aggregate: user_positions_aggregate(where: { user_robot_id: { _eq: $robotId }, status: $status }) {
             aggregate {
                 count
@@ -510,8 +510,8 @@ export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
     }
 `;
 
-export const ROBOT_INFO_FOR_USER_ROBOTS = gql`
-    query get_robot_info_for_user_robots($code: String, $user_id: uuid) {
+export const ROBOT_INFO_FOR_USER_ROBOT = gql`
+    query get_robot_info_for_user_robot($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
@@ -526,7 +526,7 @@ export const ROBOT_INFO_FOR_USER_ROBOTS = gql`
                 volume
             }
             active: started_at
-            user_robots(where: { user_id: { _eq: $user_id } }) {
+            user_robot: user_robots(where: { user_id: { _eq: $user_id } }) {
                 id
                 status
                 settings
@@ -540,7 +540,7 @@ export const ROBOT_INFO_FOR_USER_ROBOTS = gql`
 `;
 // TODO: Переименовать  константу на более логическое название
 export const ROBOT_INFO_FOR_ROBOTS = gql`
-    query robot_info_for_robots($code: String) {
+    query get_robot_info_for_robots($code: String) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name

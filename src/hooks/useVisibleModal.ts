@@ -7,10 +7,10 @@ import { SET_MODAL_VISIBLE } from "../graphql/local/mutations";
 export const useVisibleModal = (): any => {
     const [titleModal, setTitleModal] = useState(null);
     const { data: dataModal } = useQuery(MODAL_VISIBLE);
-    const [setVisibleModal] = useMutation(SET_MODAL_VISIBLE);
+    const [setModalVisibility] = useMutation(SET_MODAL_VISIBLE);
 
     const handleSetVisible = () => {
-        setVisibleModal({ variables: { isVisible: false, type: "" } });
+        setModalVisibility({ variables: { isVisible: false, type: "" } });
     };
 
     return {

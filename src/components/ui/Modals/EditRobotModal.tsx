@@ -8,7 +8,7 @@ import { EDIT_ROBOT } from "graphql/local/mutations";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import { Button, Input } from "components/basic";
-import { moneyFormat } from "config/utils";
+import { formatMoney } from "config/utils";
 import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
 import { color } from "config/constants";
 import styles from "./index.module.css";
@@ -105,7 +105,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
                                 <div className={styles.value_group}>
                                     <div className={styles.label}>Minimum value is&nbsp;</div>
                                     <div className={styles.value_row}>
-                                        <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                                        <span>{formatMoney(limits.asset.min, 3)}</span>&nbsp;
                                         <span style={{ color: "white" }}>
                                             {dataRobot ? dataRobot.robot.subs.asset : ""}
                                         </span>

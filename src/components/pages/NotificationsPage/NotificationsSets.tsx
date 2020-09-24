@@ -3,7 +3,7 @@ import React from "react";
 
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from "config/utils";
+import { formatDate, capitalize, colorAction, formatMoney, valueWithSign, colorDirection } from "config/utils";
 import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
 import styles from "./NotificationsSets.module.css";
 
@@ -85,7 +85,7 @@ export const robotTradeSet = (item, onClick) => (
                     <div className={styles.textMessageDesktop}>{formatDate(item.data.exitDate)}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
                     <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
-                        {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+                        {`${valueWithSign(formatMoney(item.data.profit))} $`}
                     </div>
                 </div>
             </>
@@ -139,7 +139,7 @@ export const signalAlertSet = (item, onClick) => {
                 </div>
                 <div className={styles.textMessageDesktop}>{capitalize(item.data.orderType)}&nbsp;</div>
                 <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
-                <div className={styles.textMessageDesktop}>{`${moneyFormat(item.data.price)} $`}</div>
+                <div className={styles.textMessageDesktop}>{`${formatMoney(item.data.price)} $`}</div>
                 <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
                 <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
             </div>
@@ -208,7 +208,7 @@ export const signalTradeSet = (item, onClick) => (
                     <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
                     <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
-                        {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+                        {`${valueWithSign(formatMoney(item.data.profit))} $`}
                     </div>
                 </div>
             </>

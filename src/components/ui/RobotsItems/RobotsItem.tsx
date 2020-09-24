@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Router from "next/router";
 // helpers
-import { moneyFormat, colorAction } from "config/utils";
+import { formatMoney, colorAction } from "config/utils";
 import { formatVariables } from "./helpers";
 // types
 import { SignalItem } from "../RobotsList/types";
@@ -64,7 +64,7 @@ export const RobotsItem: React.FC<Props> = ({
                             {item.asset}
                         </div>
                         <div className={styles.profitText} style={colorAction(item.profit > 0)}>
-                            {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${moneyFormat(item.profit)} $`}
+                            {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ export const RobotsItem: React.FC<Props> = ({
                         <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
                             <div className={styles.secondaryText}>Max Drawdown&nbsp;</div>
                             <div className={styles.statisticsText} style={colorAction(item.maxDrawdown > 0)}>
-                                {`${moneyFormat(item.maxDrawdown)} $`}
+                                {`${formatMoney(item.maxDrawdown)} $`}
                             </div>
                         </div>
                         <div className={styles.statisticsElement} style={{ marginTop: 6 }}>

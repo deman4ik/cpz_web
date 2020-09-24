@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { Button, Input } from "components/basic";
 import styles from "../index.module.css";
-import { moneyFormat } from "config/utils";
+import { formatMoney } from "config/utils";
 import { calculateCurrency, calculateAsset } from "../helpers";
 
 interface Props {
@@ -52,7 +52,7 @@ const _CreateRobotStep2: React.FC<Props> = ({
                     <div className={styles.value_group}>
                         <div className={styles.label}>Minimum value is&nbsp;</div>
                         <div className={styles.value_row}>
-                            <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                            <span>{formatMoney(limits.asset.min, 3)}</span>&nbsp;
                             <span style={{ color: "white" }}>{asset}</span>
                             &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}&nbsp;$
                         </div>

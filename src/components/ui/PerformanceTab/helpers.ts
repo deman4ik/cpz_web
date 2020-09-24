@@ -1,4 +1,4 @@
-import { moneyFormat, formatDate, capitalize } from "../../../config/utils";
+import { formatMoney, formatDate, capitalize } from "config/utils";
 
 export const tableHeaders = ["", "All Trades", "Long Trades", "Short Trades"];
 
@@ -9,7 +9,7 @@ const formatAsDates = (row) => ({
 });
 
 const propsToMoneyFormat = (obj) =>
-    Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: `${moneyFormat(obj[k])} $` }), {});
+    Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: `${formatMoney(obj[k])} $` }), {});
 const propsToPercent = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: `${obj[k]} %` }), {});
 const propsSimple = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: obj[k] }), {});
 const propsToNull = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: obj[k] || "-" }), {});

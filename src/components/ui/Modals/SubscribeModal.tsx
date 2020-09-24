@@ -6,7 +6,7 @@ import { GET_MARKETS } from "graphql/common/queries";
 import { SUBSCRIBE_TO_SIGNALS } from "graphql/signals/mutations";
 import { SUBSCRIBE } from "graphql/local/mutations";
 import { Button, Input } from "components/basic";
-import { moneyFormat } from "config/utils";
+import { formatMoney } from "config/utils";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
 import { event } from "libs/gtag";
@@ -117,7 +117,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                 <div className={styles.value_group}>
                                     <div className={styles_subs.label}>Minimum value is&nbsp;</div>
                                     <div className={styles.value_row}>
-                                        <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
+                                        <span>{formatMoney(limits.asset.min, 3)}</span>&nbsp;
                                         <span style={{ color: "white" }}>
                                             {dataRobot ? dataRobot.robot.subs.asset : ""}
                                         </span>
