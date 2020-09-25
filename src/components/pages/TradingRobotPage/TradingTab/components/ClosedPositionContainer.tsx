@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { HeaderTradingTabRobotPage, RobotPositionItem, RobotPositionCard } from ".";
+import { ClosedPositionsListHeader, RobotPositionItem, RobotPositionCard } from ".";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
 import { Robot, SectionType } from "../../types";
@@ -34,7 +34,7 @@ const _ClosedPositionContainer: React.FC<Props> = ({
                     <div className={styles.accordionSurface}>
                         {isDesktopView ? (
                             <>
-                                <HeaderTradingTabRobotPage />
+                                <ClosedPositionsListHeader />
                                 {positions.map((item) => (
                                     <RobotPositionItem key={item.id} item={item} robot={robot} />
                                 ))}

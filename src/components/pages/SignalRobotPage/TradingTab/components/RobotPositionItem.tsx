@@ -1,7 +1,7 @@
 import React from "react";
 
 import { formatDate, capitalize, valueWithSign, formatMoney, colorDirection } from "config/utils";
-import styles from "./RobotPositionItem.module.css";
+import styles from "./styles/RobotPositionItem.module.css";
 import { color } from "config/constants";
 
 interface Props {

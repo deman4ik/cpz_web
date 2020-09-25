@@ -5,18 +5,18 @@ import { createVariable } from "./helpers";
 
 interface Props {
     robotData: any;
-    robotSubscribe: (variables: any) => void;
+    subscribe: (variables: any) => void;
 }
 
-const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
-    const { isUserSignals } = robotData.robot;
+const _Toolbar: React.FC<Props> = ({ robotData, subscribe }) => {
+    const { isUserSubscribed } = robotData.robot;
     const handleOnPressAction = (action: string) => {
-        robotSubscribe(createVariable(robotData, action));
+        subscribe(createVariable(robotData, action));
     };
 
     return (
         <div className="toolbar">
-            {isUserSignals ? (
+            {isUserSubscribed ? (
                 <CaptionButton title="Edit" icon="settings" responsive onClick={() => handleOnPressAction("edit")} />
             ) : (
                 <Button
@@ -32,4 +32,4 @@ const _ToolbarRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => {
     );
 };
 
-export const ToolbarRobotPage = memo(_ToolbarRobotPage);
+export const Toolbar = memo(_Toolbar);

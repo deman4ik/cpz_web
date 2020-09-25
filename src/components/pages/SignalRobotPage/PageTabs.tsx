@@ -18,7 +18,7 @@ export const PageTabs: React.FC<Props> = ({ robotData, activeTab, width }) => (
         )}
         {activeTab === TabType.myStatistic && (
             <PerformanceTab
-                stat={robotData.robot.isUserSignals ? robotData.user_signals : null}
+                stat={robotData.robot.isUserSubscribed ? robotData.user_signals : null}
                 activeTab={activeTab}
                 width={width}
             />

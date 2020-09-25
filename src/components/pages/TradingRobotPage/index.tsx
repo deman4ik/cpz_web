@@ -55,7 +55,7 @@ export const TradingRobotPage: React.FC = () => {
         }
     });
 
-    const robotSubscribe = (variables) => {
+    const subscribe = (variables) => {
         if (!isAuth) {
             Router.push("/auth/login");
         } else {
@@ -69,7 +69,7 @@ export const TradingRobotPage: React.FC = () => {
             title="Trading Robot"
             subTitle={robotData?.robot.name || ""}
             width={width}
-            toolbar={robotData ? <Toolbar robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
+            toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
             handlePressBack={handlePressBack}>
             {loading ? (
                 <div className="loading">
@@ -81,7 +81,7 @@ export const TradingRobotPage: React.FC = () => {
                 <>
                     <PageHeader
                         robotData={robotData}
-                        robotSubscribe={robotSubscribe}
+                        subscribe={subscribe}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />

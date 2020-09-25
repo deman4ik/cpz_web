@@ -1,16 +1,18 @@
 import React, { memo } from "react";
 
 import { formatMoney } from "config/utils";
-import { subscribeAt, activeDays, getProfit, getVolume } from "../helpers";
+import { getSubscriptionDuration, activeDays, getProfit, getVolume } from "../helpers";
 import { color } from "config/constants";
-import styles from "./HeaderStatsRobotPage.module.css";
+import styles from "./styles/HeaderStatsSection.module.css";
 
 interface Props {
     robotData: any;
 }
 
-const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
-    const { isUserSignals } = robotData.robot;
+const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
+    const { isUserSubscribed } = robotData.robot;
+    const profit = getProfit(robotData);
+
     return (
         <div className={styles.robotStats}>
             <div className={styles.robotStatsCol}>
@@ -18,8 +20,8 @@ const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
                     <div className={styles.robotStatsLabel}>Profit&nbsp;</div>
                     <div
                         className={styles.robotStatsValue}
-                        style={{ color: getProfit(robotData, isUserSignals) > 0 ? color.positive : color.negative }}>
-                        {`${formatMoney(getProfit(robotData, isUserSignals))} $`}
+                        style={{ color: profit > 0 ? color.positive : color.negative }}>
+                        {`${formatMoney(profit)} $`}
                     </div>
                 </div>
                 <div className={styles.robotStatsRow}>
@@ -34,10 +36,10 @@ const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
                     <div className={styles.robotStatsLabel}>Active&nbsp;</div>
                     <div className={styles.robotStatsValue}>{activeDays(robotData)}</div>
                 </div>
-                {isUserSignals && (
+                {isUserSubscribed && (
                     <div className={styles.robotStatsRow}>
                         <div className={styles.robotStatsLabel}>Subscribed&nbsp;</div>
-                        <div className={styles.robotStatsValue}>{subscribeAt(robotData)}</div>
+                        <div className={styles.robotStatsValue}>{getSubscriptionDuration(robotData)}</div>
                     </div>
                 )}
             </div>
@@ -45,4 +47,4 @@ const _HeaderStatsRobotPage: React.FC<Props> = ({ robotData }) => {
     );
 };
 
-export const HeaderStatsRobotPage = memo(_HeaderStatsRobotPage);
+export const HeaderStatsSection = memo(_HeaderStatsSection);

@@ -2,20 +2,20 @@ import React from "react";
 
 import { Button } from "components//basic";
 import { createVariable } from "../helpers";
-import styles from "./HeaderButtonRobotPage.module.css";
+import styles from "./styles/HeaderButton.module.css";
 
 interface Props {
-    robotSubscribe: (variables: any) => void;
+    subscribe: (variables: any) => void;
     robotData: any;
 }
 
-export const HeaderButtonRobotPage: React.FC<Props> = ({ robotSubscribe, robotData }) => {
-    const { isUserSignals } = robotData.robot;
+export const HeaderButton: React.FC<Props> = ({ subscribe, robotData }) => {
+    const { isUserSubscribed } = robotData.robot;
     const handleOnPress = () => {
-        robotSubscribe(createVariable(robotData, isUserSignals ? "unsubscribe" : "subscribe"));
+        subscribe(createVariable(robotData, isUserSubscribed ? "unsubscribe" : "subscribe"));
     };
 
-    return isUserSignals ? (
+    return isUserSubscribed ? (
         <Button
             title="Following"
             type="success"

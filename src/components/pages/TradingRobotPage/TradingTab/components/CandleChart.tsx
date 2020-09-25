@@ -7,7 +7,7 @@ import { LoadingIndicator } from "components/common";
 import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
 import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
-import { getFormatData } from "../../helpers";
+import { getCandleChartData } from "../../helpers";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
 import { getFormatUpdateData } from "components/pages/SignalRobotPage/helpers";
@@ -39,7 +39,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
 
     const legend = getLegend(robot);
     const [limit, setLimit] = useState(LIMIT);
-    const [formatData, setFormatData] = useState({ candles: [], markers: [] });
+    const [candleChartData, setCandleChartData] = useState({ candles: [], markers: [] });
 
     // history candles load
     const historyQueryVars = isAuth
@@ -93,7 +93,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     };
     useEffect(() => {
         if (!loading && data) {
-            setFormatData(getFormatData(data, asset, !!userRobot));
+            setCandleChartData(getCandleChartData(data, asset, !!userRobot));
         }
     }, [loading, data, asset]);
 
@@ -108,20 +108,20 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
         }
 
         const { updateCandle, markers } = getFormatUpdateData(dataUpdate, asset);
-        const { candles: oldCandles } = formatData;
+        const { candles: oldCandles } = candleChartData;
         if (!updateCandle.time) {
             return;
         }
 
         const existingCandleIndex = oldCandles.findIndex((el) => el.time === updateCandle.time);
         if (existingCandleIndex === -1) {
-            setFormatData((prev) => ({
+            setCandleChartData((prev) => ({
                 candles: [...prev.candles, updateCandle],
                 markers: [...prev.markers, ...markers]
             }));
             setLimit((oldLimit) => oldLimit + 1);
         } else {
-            setFormatData((prev) => {
+            setCandleChartData((prev) => {
                 const candleId = prev.candles.findIndex((el) => el.time === updateCandle.time);
                 if (candleId === -1) {
                     return {
@@ -148,9 +148,9 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     return (
         <LightWeightChartWithNoSSR
             loading={loading}
-            data={formatData.candles}
+            data={candleChartData.candles}
             onFetchMore={onFetchMore}
-            markers={formatData.markers}
+            markers={candleChartData.markers}
             legend={legend}
             setIsChartLoaded={setIsChartLoaded}
             size={{ width, height: 400 }}

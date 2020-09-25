@@ -1,11 +1,11 @@
 import React, { memo, useState } from "react";
 
-import { CandleChart } from "./CandleChart";
+import { CandleChart, OpenPositionsList, ClosedPositionsList } from "./components";
 import { LoadingIndicator } from "components/common";
+
 import { floatPositions } from "../helpers";
 import { useFetchPositionData } from "./useFetchPositionData";
-import { ClosedPositionContainer } from "./ClosedPositionContainer";
-import { OpenPositionContainer } from "./OpenPositionContainer";
+
 import styles from "./index.module.css";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const { user_signals: userSignals, robot } = robotData;
-    const { isUserSignals } = robot;
+    const { isUserSubscribed } = robot;
     const {
         loading,
         handleLoadMore,
@@ -25,7 +25,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
         closedPositions,
         signals,
         recordsCount
-    } = useFetchPositionData(isUserSignals, userSignals, robot);
+    } = useFetchPositionData(isUserSubscribed, userSignals, robot);
 
     return (
         <>
@@ -40,7 +40,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                 <>
                     <div className={styles.container}>
                         {Object.keys(floatPositions).map((key) => (
-                            <OpenPositionContainer
+                            <OpenPositionsList
                                 key={key}
                                 robot={robot}
                                 data={
@@ -54,7 +54,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
                             />
                         ))}
                     </div>
-                    <ClosedPositionContainer
+                    <ClosedPositionsList
                         robot={robot}
                         handleLoadMore={handleLoadMore}
                         data={closedPositions}

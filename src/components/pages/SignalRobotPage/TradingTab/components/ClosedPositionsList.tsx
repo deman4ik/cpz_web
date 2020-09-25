@@ -1,14 +1,14 @@
 import React, { memo } from "react";
 
-import { HeaderTradingTabRobotPage } from "./HeaderTradingTabRobotPage";
-import { RobotPositionItem } from "./RobotPositionItem";
+import { NoRecentData } from "components/common";
+import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
+import { RobotPositionItem, RobotPositionCard, ClosedPositionsListHeader } from ".";
+
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import { RobotPositionCard } from "./RobotPositionCard";
-import { SectionType } from "../types";
-import styles from "./ClosedPositionContainer.module.css";
-import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
-import { NoRecentData } from "components/common";
+import { SectionType } from "../../types";
+
+import styles from "./styles/ClosedPositionsList.module.css";
 
 interface Props {
     robot: any;
@@ -19,14 +19,7 @@ interface Props {
     width: number;
 }
 
-const _ClosedPositionContainer: React.FC<Props> = ({
-    robot,
-    handleLoadMore,
-    isLoadingMore,
-    recordsCount,
-    data,
-    width
-}) => {
+const _ClosedPositionsList: React.FC<Props> = ({ robot, handleLoadMore, isLoadingMore, recordsCount, data, width }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
     return (
         <div className={styles.wrapper}>
@@ -36,7 +29,7 @@ const _ClosedPositionContainer: React.FC<Props> = ({
                     <div className={styles.accordionSurface}>
                         {isDesktopView ? (
                             <>
-                                <HeaderTradingTabRobotPage />
+                                <ClosedPositionsListHeader />
                                 {data.map((item) => (
                                     <RobotPositionItem key={item.id} item={item} robot={robot} />
                                 ))}
@@ -69,4 +62,4 @@ const _ClosedPositionContainer: React.FC<Props> = ({
     );
 };
 
-export const ClosedPositionContainer = memo(_ClosedPositionContainer);
+export const ClosedPositionsList = memo(_ClosedPositionsList);

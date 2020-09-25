@@ -11,10 +11,10 @@ interface Props {
     robotData: any;
     activeTab: any;
     setActiveTab: (activeTab: TabType) => void;
-    robotSubscribe: (variables: any) => void;
+    subscribe: (variables: any) => void;
 }
 
-const _PageHeader: React.FC<Props> = ({ robotData, activeTab, setActiveTab, robotSubscribe }) => {
+const _PageHeader: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subscribe }) => {
     const { userRobot, robot } = robotData;
 
     return (
@@ -24,7 +24,7 @@ const _PageHeader: React.FC<Props> = ({ robotData, activeTab, setActiveTab, robo
                     <div className={styles.robotNameWrapper}>
                         <div className={styles.robotName}>{robot.name}</div>
                     </div>
-                    <HeaderButton robotSubscribe={robotSubscribe} robotData={robotData} />
+                    <HeaderButton subscribe={subscribe} robotData={robotData} />
                 </div>
                 <div className={styles.headerMessage}>{capitalize(userRobot || null)}</div>
             </div>

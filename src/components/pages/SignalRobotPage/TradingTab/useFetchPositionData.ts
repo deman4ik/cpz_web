@@ -10,21 +10,22 @@ import { getAlerts } from "../helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 
-export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
+export const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
-    const robotPositionsQuery = isAuth && isUserSignals ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
+    const robotPositionsQuery = isAuth && isUserSubscribed ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
 
     const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const queryVars = isAuth && isUserSignals ? { user_id } : null;
-    const { data: dataSignals, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
+    const queryVars = isAuth && isUserSubscribed ? { user_id } : null;
+
+    const { data: signalsData, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
         robotPositionsQuery,
         {
             variables: {
                 robotId: robot.id,
-                dateFrom: isUserSignals ? userSignals.subscribed_at : null,
+                dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
                 status: { _in: ["new", "open"] },
                 orderBy: { entry_date: "desc" },
                 ...queryVars
@@ -38,7 +39,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         {
             variables: {
                 robotId: robot.id,
-                dateFrom: isUserSignals ? userSignals.subscribed_at : null,
+                dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
                 status: { _eq: "open" },
                 orderBy: { entry_date: "desc" },
                 ...queryVars
@@ -52,7 +53,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         {
             variables: {
                 robotId: robot.id,
-                dateFrom: isUserSignals ? userSignals.subscribed_at : null,
+                dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
                 status: { _eq: "closed" },
                 limit,
                 orderBy: { entry_date: "desc" },
@@ -65,7 +66,7 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
     const { data: aggrData, loading: loadingAggregate } = useQuery(SIGNAL_ROBOT_POSITIONS_AGGREGATE, {
         variables: {
             robotId: robot.id,
-            dateFrom: isUserSignals ? userSignals.subscribed_at : null,
+            dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
             status: { _eq: "closed" }
         },
         pollInterval: POLL_INTERVAL
@@ -93,11 +94,11 @@ export const useFetchPositionData = (isUserSignals, userSignals, robot) => {
         refetch_open_signals();
         refetch_open();
         refetch_closed();
-    }, [refetch_closed, refetch_open, refetch_open_signals, isUserSignals]);
+    }, [refetch_closed, refetch_open, refetch_open_signals, isUserSubscribed]);
 
     const signals = useMemo(
-        () => (!loadingOpenSignals && dataSignals?.positions ? getAlerts(dataSignals?.positions) : []),
-        [loadingOpenSignals, dataSignals?.positions]
+        () => (!loadingOpenSignals && signalsData?.positions ? getAlerts(signalsData?.positions) : []),
+        [loadingOpenSignals, signalsData?.positions]
     );
 
     const recordsCount = useMemo(

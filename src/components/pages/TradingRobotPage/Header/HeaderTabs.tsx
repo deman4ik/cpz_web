@@ -8,14 +8,14 @@ import styles from "./styles/Tabs.module.css";
 interface Props {
     activeTab: TabType;
     setActiveTab: (activeTab: TabType) => void;
-    isOwnedByUser: boolean;
+    isUserSubscribed: boolean;
 }
 
-const _HeaderTabs: React.FC<Props> = ({ activeTab, setActiveTab, isOwnedByUser }) => (
+const _HeaderTabs: React.FC<Props> = ({ activeTab, setActiveTab, isUserSubscribed }) => (
     <div className={styles.tabsHeader}>
         <div className={`${styles.tabsBtns}`}>
             {Object.keys(tabNames).map((key) =>
-                (isOwnedByUser && key === "myStatistic") || key !== "myStatistic" ? (
+                (isUserSubscribed && key === "myStatistic") || key !== "myStatistic" ? (
                     <TabButton
                         key={key}
                         title={tabNames[key]}

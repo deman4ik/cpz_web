@@ -1,35 +1,42 @@
 import React, { memo } from "react";
 
-import { HeaderButtonRobotPage } from "./HeaderButtonRobotPage";
-import { HeaderStatsRobotPage } from "./HeaderStatsRobotPage";
+import { HeaderButton } from "./HeaderButton";
+import { HeaderStatsSection } from "./HeaderStatsSection";
 import { Tooltip } from "components/ui/Tooltip";
-// import { TooltipButton } from '../../ui/Tooltip/TooltipButton';
-// import { TooltipText } from '../../ui/Tooltip/TooltipText';
-// import { styles, responsive } from './HeaderRobotsRobotPage.style';
-import styles from "./index.module.css";
+
+import styles from "./styles/index.module.css";
+import { HeaderTabs } from "components/pages/TradingRobotPage/Header/HeaderTabs";
+import { TabType } from "config/types";
 
 interface Props {
     robotData: any;
-    robotSubscribe: (variables: any) => void;
+    activeTab: TabType;
+    setActiveTab: (tab: TabType) => void;
+    subscribe: (variables: any) => void;
+    isUserSubscribed: boolean;
 }
 
-const _HeaderRobotsRobotPage: React.FC<Props> = ({ robotData, robotSubscribe }) => (
-    <>
-        <div className={styles.header}>
-            <div className={styles.container}>
-                <div className={styles.headerName}>
-                    <div className={styles.robotNameWrapper}>
-                        <div className={styles.robotName}>{robotData.robot.name}</div>
-                        <div className={styles.toolTip}>
-                            <Tooltip message={robotData.robot.strategyByStrategy.description} direction="down" />
+const _Header: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subscribe, isUserSubscribed }) => {
+    const { robot } = robotData;
+    return (
+        <>
+            <div className={styles.header}>
+                <div className={styles.container}>
+                    <div className={styles.headerName}>
+                        <div className={styles.robotNameWrapper}>
+                            <div className={styles.robotName}>{robot.name}</div>
+                            <div className={styles.toolTip}>
+                                <Tooltip message={robot.strategyByStrategy.description} direction="down" />
+                            </div>
                         </div>
+                        <HeaderButton subscribe={subscribe} robotData={robotData} />
                     </div>
-                    <HeaderButtonRobotPage robotSubscribe={robotSubscribe} robotData={robotData} />
                 </div>
+                <HeaderStatsSection robotData={robotData} />
+                <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} isUserSubscribed={isUserSubscribed} />
             </div>
-            <HeaderStatsRobotPage robotData={robotData} />
-        </div>
-    </>
-);
+        </>
+    );
+};
 
-export const HeaderRobotsRobotPage = memo(_HeaderRobotsRobotPage);
+export const Header = memo(_Header);

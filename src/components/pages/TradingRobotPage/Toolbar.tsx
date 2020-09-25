@@ -5,13 +5,13 @@ import { createVariable } from "./helpers";
 
 interface Props {
     robotData: any;
-    robotSubscribe: (variables: any) => void;
+    subscribe: (variables: any) => void;
 }
 
-const _Toolbar: React.FC<Props> = ({ robotData, robotSubscribe }) => {
+const _Toolbar: React.FC<Props> = ({ robotData, subscribe }) => {
     const { userRobot } = robotData;
     const handleOnPressAction = (action: string) => {
-        robotSubscribe(createVariable(robotData, action));
+        subscribe(createVariable(robotData, action));
     };
 
     return (

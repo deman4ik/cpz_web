@@ -1,8 +1,10 @@
 import React, { memo } from "react";
 
-import { SectionType } from "../types";
-import { RobotPositionCard } from "./RobotPositionCard";
-import styles from "./OpenPositionContainer.module.css";
+import { RobotPositionCard } from ".";
+
+import { SectionType } from "../../types";
+
+import styles from "./styles/OpenPositionsList.module.css";
 
 interface Props {
     robot: any;
@@ -10,18 +12,13 @@ interface Props {
     positionInfo: { title: string; empty: string; activeTab: SectionType };
 }
 
-const _OpenPositionContainer: React.FC<Props> = ({ data, robot, positionInfo }) => (
+const _OpenPositionsList: React.FC<Props> = ({ data, robot, positionInfo }) => (
     <div className={styles.topCards}>
         <div className={styles.accordionTitle}>{positionInfo.title}</div>
         <div className={styles.topCardsContainer}>
             {data.length ? (
                 data.map((item, idx) => (
-                    <RobotPositionCard
-                        key={idx}
-                        item={item}
-                        robot={robot}
-                        activeTab={positionInfo.activeTab}
-                    />
+                    <RobotPositionCard key={idx} item={item} robot={robot} activeTab={positionInfo.activeTab} />
                 ))
             ) : (
                 <div className={styles.tableCellEmpty}>{positionInfo.empty}</div>
@@ -30,4 +27,4 @@ const _OpenPositionContainer: React.FC<Props> = ({ data, robot, positionInfo }) 
     </div>
 );
 
-export const OpenPositionContainer = memo(_OpenPositionContainer);
+export const OpenPositionsList = memo(_OpenPositionsList);

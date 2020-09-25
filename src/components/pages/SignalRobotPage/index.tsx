@@ -5,12 +5,11 @@ import { useMutation, useQuery } from "@apollo/client";
 
 // components
 import { DefaultTemplate } from "components/layout";
-import { HeaderRobotsRobotPage } from "./Header";
-import { TabsHeaderRobotPage } from "./Header/TabsHeaderRobotPage";
+import { Header } from "./Header";
 import { PageTabs } from "./PageTabs";
 import { NoRecentData, LoadingIndicator } from "components/common";
-import { ToolbarRobotPage } from "./ToolbarRobotPage";
-import { ModalsRobotPage } from "./ModalsRobotPage";
+import { Toolbar } from "./Toolbar";
+import { Modals } from "./Modals";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // types
@@ -61,7 +60,7 @@ export const SignalRobotPage = () => {
         loading
     ]);
 
-    const robotSubscribe = (variables) => {
+    const subscribe = (variables) => {
         if (!isAuth) {
             Router.push("/auth/login");
         } else {
@@ -75,7 +74,7 @@ export const SignalRobotPage = () => {
             title="Signals"
             subTitle={robotData ? robotData.robot.name : ""}
             width={width}
-            toolbar={robotData ? <ToolbarRobotPage robotSubscribe={robotSubscribe} robotData={robotData} /> : null}
+            toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
             handlePressBack={handlePressBack}>
             {loading ? (
                 <div className="loading">
@@ -85,14 +84,15 @@ export const SignalRobotPage = () => {
                 <NoRecentData message="No recent data available" />
             ) : (
                 <>
-                    <HeaderRobotsRobotPage robotSubscribe={robotSubscribe} robotData={robotData} />
-                    <TabsHeaderRobotPage
+                    <Header
+                        subscribe={subscribe}
+                        robotData={robotData}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
-                        isUserSignals={robotData.robot.isUserSignals}
+                        isUserSubscribed={robotData.robot.isUserSubscribed}
                     />
                     <PageTabs robotData={robotData} activeTab={activeTab} width={width} />
-                    <ModalsRobotPage isModalVisible={isModalVisible} setModalVisibility={setModalVisibility} />
+                    <Modals isModalVisible={isModalVisible} setModalVisibility={setModalVisibility} />
                 </>
             )}
         </DefaultTemplate>

@@ -1,9 +1,11 @@
 import React from "react";
 
-import { SectionType } from "../types";
+import { renderAction, renderVolume } from ".";
+
 import { formatDate, valueWithSign, colorAction, capitalize, formatMoney, splitCapitaize } from "config/utils";
-import { renderAction, renderVolume } from "./ComposedItems";
-import styles from "./RobotPositionCard.module.css";
+import { SectionType } from "../../types";
+
+import styles from "./styles/RobotPositionCard.module.css";
 
 interface Props {
     item: any;

@@ -7,14 +7,14 @@ import styles from "./styles/Button.module.css";
 
 interface Props {
     robotData: any;
-    robotSubscribe: (variables: any) => void;
+    subscribe: (variables: any) => void;
 }
 
-const _HeaderButton: React.FC<Props> = ({ robotData, robotSubscribe }) => {
+const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
     const robotStatus = robotData.userRobot ? robotData.userRobot.status : null;
     const { title, icon, type, hoverTitle, hoverType, hoverIcon } = displayData.robots;
     const handleOnPress = () => {
-        robotSubscribe(createVariable(robotData, statusTypes[robotStatus]));
+        subscribe(createVariable(robotData, statusTypes[robotStatus]));
     };
 
     return (

@@ -1,13 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, memo, useContext, useRef } from "react";
-import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import dynamic from "next/dynamic";
-import { ChartType } from "components/charts/LightWeightChart/types";
+
 import { LoadingIndicator } from "components/common";
+
+import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
 import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
-import { getFormatData, getFormatUpdateData } from "../helpers";
+
+import { getCandleChartData, getFormatUpdateData } from "../../helpers";
+import { ChartType } from "components/charts/LightWeightChart/types";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
 
@@ -88,9 +91,10 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             }
         });
     };
+
     useEffect(() => {
         if (!loading && data) {
-            setChartData(getFormatData(data, asset));
+            setChartData(getCandleChartData(data, asset));
         }
     }, [loading, data, asset]);
 
@@ -99,6 +103,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });
+
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {
             return;

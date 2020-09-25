@@ -3,20 +3,20 @@ import React, { memo } from "react";
 import { TabType } from "config/types";
 import { TabButton } from "components/basic";
 import { tabNames } from "../helpers";
-import styles from "./TabsHeaderRobotPage.module.css";
+import styles from "./styles/HeaderTabs.module.css";
 
 interface Props {
     activeTab: TabType;
     setActiveTab: (activeTab: TabType) => void;
-    isUserSignals: boolean;
+    isUserSubscribed: boolean;
 }
 
-const _TabsHeaderRobotPage: React.FC<Props> = ({ activeTab, setActiveTab, isUserSignals }) => (
+const _HeaderTabs: React.FC<Props> = ({ activeTab, setActiveTab, isUserSubscribed }) => (
     <div className={styles.tabsHeader}>
         <div className={styles.dummy} />
         <div className={styles.tabsBtns}>
             {Object.keys(tabNames).map((key) =>
-                (isUserSignals && key === "myStatistic") || key !== "myStatistic" ? (
+                (isUserSubscribed && key === "myStatistic") || key !== "myStatistic" ? (
                     <TabButton
                         key={key}
                         title={tabNames[key]}
@@ -31,4 +31,4 @@ const _TabsHeaderRobotPage: React.FC<Props> = ({ activeTab, setActiveTab, isUser
     </div>
 );
 
-export const TabsHeaderRobotPage = memo(_TabsHeaderRobotPage);
+export const HeaderTabs = memo(_HeaderTabs);

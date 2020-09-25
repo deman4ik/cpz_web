@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import styles from "./HeaderTradingTabRobotPage.module.css";
+import styles from "./styles/HeaderTradingTabRobotPage.module.css";
 
 const positionsTabHeaders = [
     { title: "Position", flex: 0.5 },
@@ -10,7 +10,7 @@ const positionsTabHeaders = [
     { title: "Profit", flex: 0.5 }
 ];
 const defaultFlex = 0.1;
-const _HeaderTradingTabRobotPage: React.FC = () => (
+const _ClosedPositionsListHeader: React.FC = () => (
     <div className={styles.tableHeader}>
         {positionsTabHeaders.map((header) => (
             <div key={header.title} style={{ flex: header.flex || defaultFlex }}>
@@ -20,4 +20,4 @@ const _HeaderTradingTabRobotPage: React.FC = () => (
     </div>
 );
 
-export const HeaderTradingTabRobotPage = memo(_HeaderTradingTabRobotPage);
+export const ClosedPositionsListHeader = memo(_ClosedPositionsListHeader);

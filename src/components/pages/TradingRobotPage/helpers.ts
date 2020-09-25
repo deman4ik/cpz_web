@@ -77,10 +77,10 @@ export const createVariable = (robotData, type) =>
               }
           };
 
-const getEntryMarker = (position_entry, candleRobot, asset, isUserRobots) => {
+const getEntryMarker = (position_entry, asset, isOwnedByUser) => {
     const { entry_action, entry_date, entry_candle_timestamp, entry_price, id, code } = position_entry;
     const entryAction = position_entry.entry_action === "short";
-    const volume = `${isUserRobots ? position_entry.entry_executed : position_entry.volume} ${asset}`;
+    const volume = `${isOwnedByUser ? position_entry.entry_executed : position_entry.volume} ${asset}`;
     return {
         time: dayjs.utc(entry_candle_timestamp).valueOf() / 1000,
         tooltipTime: dayjs.utc(entry_date).valueOf() / 1000,
@@ -97,10 +97,10 @@ const getEntryMarker = (position_entry, candleRobot, asset, isUserRobots) => {
     };
 };
 
-const getExitMarker = (position_exit, candleRobot, asset, isUserRobots) => {
+const getExitMarker = (position_exit, asset, isOwnedByUser) => {
     const { exit_action, exit_candle_timestamp, exit_date, exit_price, id, code, profit } = position_exit;
     const exitAction = exit_action === "closeShort";
-    const volume = `${isUserRobots ? position_exit.entry_executed : position_exit.volume} ${asset}`;
+    const volume = `${isOwnedByUser ? position_exit.entry_executed : position_exit.volume} ${asset}`;
     return {
         time: dayjs.utc(exit_candle_timestamp).valueOf() / 1000,
         tooltipTime: dayjs.utc(exit_date).valueOf() / 1000,
@@ -120,19 +120,19 @@ const getExitMarker = (position_exit, candleRobot, asset, isUserRobots) => {
     };
 };
 
-export const getFormatData = (data, asset, isUserRobots) => {
+export const getCandleChartData = (data: any, asset: any, isOwnedByUser: boolean) => {
     if (!data || !data.candles.length) return { candles: [], markers: [], overlay: [] };
     return data.candles.reduceRight(
         (acc, item) => {
-            const { candle, position_entry, position_exit, userRobot: candleRobot } = item;
+            const { candle, position_entry, position_exit } = item;
             if (candle) {
                 const { time, open, high, low, close, volume } = candle;
                 if (position_entry) {
-                    const markerItem = getEntryMarker(position_entry[0], candleRobot, asset, isUserRobots);
+                    const markerItem = getEntryMarker(position_entry[0], asset, isOwnedByUser);
                     acc.markers.push(markerItem);
                 }
                 if (position_exit) {
-                    const markerItem = getExitMarker(position_exit[0], candleRobot, asset, isUserRobots);
+                    const markerItem = getExitMarker(position_exit[0], asset, isOwnedByUser);
                     acc.markers.push(markerItem);
                 }
                 acc.candles.push({ open, high, low, close, volume, time: time / 1000 });
@@ -159,22 +159,12 @@ export const getFormatSignals = (signals) =>
         []
     );
 
-export const activeDays = (robotData: any) =>
-    robotData.robot.active ? dayjs.utc(robotData.robot.active).fromNow(true) : null;
+export const activeDays = ({ robot }: any) => (robot.active ? dayjs.utc(robot.active).fromNow(true) : null);
 
-export const startedAt = (robotData: any) =>
-    robotData.userRobot
-        ? robotData.userRobot.started_at
-            ? dayjs.utc(robotData.userRobot.started_at).fromNow(true)
-            : 0
-        : null;
+export const startedAt = ({ userRobot }: any) =>
+    userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0) : null;
 
-export const getProfit = ({ robot, userRobot }: any) =>
-    robot.isOwnedByUser
-        ? userRobot.equity && userRobot.equity.profit
-            ? userRobot.equity.profit
-            : 0
-        : robot.equity.profit;
+export const getProfit = ({ robot, userRobot }: any) => userRobot?.equity?.profit || robot?.equity?.profit || 0;
 
 export const tabNames = {
     trading: "Trading",
