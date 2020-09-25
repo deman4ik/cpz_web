@@ -5,7 +5,7 @@ import { HeaderStatsSection } from "./HeaderStatsSection";
 import { Tooltip } from "components/ui/Tooltip";
 
 import styles from "./styles/index.module.css";
-import { HeaderTabs } from "components/pages/TradingRobotPage/Header/HeaderTabs";
+import { HeaderTabs } from "./HeaderTabs";
 import { TabType } from "config/types";
 
 interface Props {
