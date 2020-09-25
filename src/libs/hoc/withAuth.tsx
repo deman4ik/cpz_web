@@ -28,17 +28,17 @@ const checkPath = (path: string) => {
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
-        /*Установка контекста аутентификации*/
         const { setAuthState } = useContext(AuthContext);
+        const token = props?.accessToken;
         useEffect(() => {
-            if (props?.accessToken) {
+            if (token) {
                 setAuthState({
-                    isAuth: Boolean(props.accessToken),
-                    user_id: getUserIdFromAccessToken(props.accessToken),
-                    isManager: getUserRoleFromAccesToken(props.accessToken) === "manager"
+                    isAuth: Boolean(token),
+                    user_id: getUserIdFromAccessToken(token),
+                    isManager: getUserRoleFromAccesToken(token) === "manager"
                 });
             }
-        }, [props.accessToken, props?.accessToken, setAuthState]);
+        }, [token, setAuthState]);
 
         return <Page {...props} />;
     };

@@ -1,5 +1,0 @@
-.table_header_cell {
-    composes: table_cell from "./Common.module.css";
-    font-size: var(--small1);
-    color: var(--accent);
-}

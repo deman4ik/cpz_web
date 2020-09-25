@@ -28,7 +28,6 @@ export const SignalRobotsSearchPage: React.FC = () => {
             title="Signals Search"
             width={width}
             toolbar={<SearchToolbar toggleFiltersVisibility={toggleFiltersVisibility} displayType="signals" />}
-            hideToolbar
             handlePressBack={handlePressBack}>
             <div className={styles.container}>
                 <SignalsSearchContainer displayType="signals" width={width} />

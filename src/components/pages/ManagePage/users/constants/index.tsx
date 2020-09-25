@@ -35,7 +35,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Roles",
                 accessor: "roles",
                 isVisible: true,
-                Cell: ({ value }) => (
+                Cell: ({ value }: { value: any }): JSX.Element => (
                     <div>
                         <div>{value.default}</div>
                         <div>[ {value.allowed.join(", ")} ]</div>

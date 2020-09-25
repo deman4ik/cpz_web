@@ -25,7 +25,9 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Status",
                 accessor: "status",
                 isVisible: true,
-                Cell: ({ value }) => <div style={{ color: STATUS_COLORS[value] }}>{value}</div>,
+                Cell: ({ value }: { value: number }): JSX.Element => (
+                    <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
+                ),
                 width: 100
             },
             {

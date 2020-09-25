@@ -5,7 +5,8 @@ import { roundFormat } from "config/utils";
 
 const { white, accent, positive, negative } = color;
 
-export const toolTipTemplate = (data: ToolTip) => `
+// TODO: refactor code below to use more concrete type notation
+export const toolTipTemplate = (data: ToolTip): string => `
   <div>    
     <span style="color: ${white}">${dayjs(data.time * 1000)
     .utc()
@@ -38,7 +39,7 @@ export const toolTipTemplate = (data: ToolTip) => `
     <span style="color: ${white}">: ${roundFormat(data.volume)}</span>
   </div>`;
 
-export const toolTipTemplateArea = (data: ToolTipArea) => `
+export const toolTipTemplateArea = (data: ToolTipArea): string => `
   <div>    
     <span style="color: ${white}">${dayjs(data.time * 1000)
     .utc()
@@ -48,7 +49,7 @@ export const toolTipTemplateArea = (data: ToolTipArea) => `
     <span style="color: ${white}">${roundFormat(data.value)} $</span>
   </div>`;
 
-export const toolTipArrowTemplate = (data: ToolTipArrow) => `
+export const toolTipArrowTemplate = (data: ToolTipArrow): string => `
   <div>    
     <span style="color: ${white}">${dayjs(data.tooltipTime * 1000)
     .utc()

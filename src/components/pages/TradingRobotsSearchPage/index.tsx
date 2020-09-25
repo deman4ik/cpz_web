@@ -31,7 +31,6 @@ export const RobotsSearchPage: React.FC = () => {
             title="Robots Search"
             width={width}
             toolbar={<SearchToolbar toggleFiltersVisibility={toggleFiltersVisibility} displayType="robots" />}
-            hideToolbar
             handlePressBack={handlePressBack}>
             <div className={styles.container}>
                 <RobotsSearchContainer displayType="robots" width={width} />
