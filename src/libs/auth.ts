@@ -1,6 +1,20 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { setAccessToken } from "./accessToken";
 import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
+
+import {
+    LOGIN,
+    LOGIN_TELEGRAM,
+    LOGOUT,
+    REGISTER,
+    REFRESH_TOKEN,
+    ACTIVATE_ACCOUNT,
+    PASSWORD_RESET,
+    CONFIRM_PASSWORD_RESET,
+    CHANGE_EMAIL,
+    CONFIRM_CHANGE_EMAIL
+} from "graphql/auth/mutations";
 
 interface Headers {
     Accept: string;
@@ -36,31 +50,24 @@ export const testindBool = async () => {
     return result;
 };
 
-export const loginTelegram = async (data) => {
+export const useTelegramLogin = ({ id, hash }) => {
+    const [login, { loading, error, data }] = useMutation(LOGIN_TELEGRAM);
+
+    login({ variables: { id, hash } });
+
     const result = {
         success: false,
         error: ""
     };
 
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/loginTg`, {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(data),
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
+    if (data) {
+        if (data.accessToken) {
+            setAccessToken(data.accessToken);
             result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
+        } else result.error = error.toString();
     }
-    return result;
+
+    return { loading, result };
 };
 
 export const login = async (data: { email: string; password: string }) => {
