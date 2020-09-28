@@ -24,7 +24,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const chartData = useMemo(
         () =>
-            !stat.statistics || !stat.statistics.performance
+            !stat.statistics?.performance
                 ? null
                 : stat.statistics.performance.map((pos) => ({
                       time: dayjs.utc(pos.x / 1000).valueOf(),
@@ -33,10 +33,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
         [stat]
     );
 
-    const robotStatistic = useMemo(
-        () => (!stat.statistics || !stat.statistics.performance ? null : getRobotStatistic(stat.statistics)),
-        [stat]
-    );
+    const robotStatistic = useMemo(() => getRobotStatistic(stat.statistics), [stat]);
 
     return (
         <>
@@ -66,4 +63,4 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) =
     );
 };
 
-export const PerformanceTabRobotPage = memo(_PerformanceTabRobotPage);
+export const PerformanceTab = memo(_PerformanceTabRobotPage);

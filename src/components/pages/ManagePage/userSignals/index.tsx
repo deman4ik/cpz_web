@@ -11,7 +11,7 @@ import { USER_SIGNALS_TABLE_COLUMNS } from "./constants";
 import { PageType } from "config/types";
 
 //graphql
-import { GET_USER_SIGNALS, USER_SIGNALS_AGGREGATE } from "graphql/manage/queries";
+import { ALL_USER_SIGNALS, USER_SIGNALS_AGGREGATE } from "graphql/manage/queries";
 
 const ManageUserSignals: React.FC = () => {
     const getItemsCount = (data) => data?.user_signals_aggregate?.aggregate?.count || 0;
@@ -20,7 +20,7 @@ const ManageUserSignals: React.FC = () => {
         <ManagePageTemplate
             pageType={PageType.userSignals}
             columns={USER_SIGNALS_TABLE_COLUMNS}
-            dataQuery={GET_USER_SIGNALS}
+            dataQuery={ALL_USER_SIGNALS}
             aggregateQuery={USER_SIGNALS_AGGREGATE}
             formatData={formatData}
             getItemsCount={getItemsCount}

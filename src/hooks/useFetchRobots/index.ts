@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 // graphql
-import { ROBOT_AGGREGATE_COUNT } from "graphql/signals/queries";
+import { SIGNAL_ROBOTS_AGGREGATE } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
 import { SET_SEARCH_LIMIT, SET_SEARCH_PROPS } from "graphql/local/mutations";
 // constants
@@ -38,7 +38,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     const [setSearchLimit] = useMutation(SET_SEARCH_LIMIT);
     const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
 
-    const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(ROBOT_AGGREGATE_COUNT, {
+    const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(SIGNAL_ROBOTS_AGGREGATE, {
         variables: {
             where: {
                 [QUERY_KEY[dispayType]]: { _eq: true },

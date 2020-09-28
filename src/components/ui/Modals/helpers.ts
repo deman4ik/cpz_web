@@ -1,4 +1,4 @@
-import { moneyFormat } from "config/utils";
+import { formatMoney } from "config/utils";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account and you use it at your own risk!",
@@ -20,7 +20,7 @@ export const getLimits = (data) => {
     return result;
 };
 
-export const calculateCurrency = (asset: string, price: number) => moneyFormat(Number(asset) * price);
+export const calculateCurrency = (asset: string, price: number) => formatMoney(Number(asset) * price);
 
 export const calculateAsset = (currency: string, price: number) =>
-    price === 0 ? "0" : moneyFormat(Number(currency) / price, 3);
+    price === 0 ? "0" : formatMoney(Number(currency) / price, 3);

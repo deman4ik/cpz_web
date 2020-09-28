@@ -7,7 +7,10 @@ import { useQuery } from "@apollo/client";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFilters } from "hooks/useFilters";
 // graphql
-import { GET_AGGR_STATISTICS, GET_USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
+import {
+    USER_SIGNAL_ROBOT_STATS_AGGREGATE,
+    FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS
+} from "graphql/signals/queries";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 // components
@@ -37,7 +40,7 @@ export const StatsPage: React.FC = () => {
     const { width } = useWindowDimensions();
     const router = useRouter();
     const displayType = router.route.split("/")[1];
-    const [isVisibleFilters, setIsVisibleFilters] = useState(false);
+    const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
     const [filtersCombinations, setFiltersCombinations] = useState<CheckedFilters[]>([]);
     const [labelCombinations, setLabelCombinations] = useState<LabelCombinations>({ exchange: [], asset: [] });
     const [skipFilterQuery, setSkipFilterQuery] = useState(false);
@@ -50,7 +53,7 @@ export const StatsPage: React.FC = () => {
         router.push(`/${displayType}`);
     };
 
-    const { loading, data } = useQuery(GET_AGGR_STATISTICS, {
+    const { loading, data } = useQuery(USER_SIGNAL_ROBOT_STATS_AGGREGATE, {
         variables: {
             asset: selectedFilter.asset ? { _eq: selectedFilter.asset } : { _is_null: true },
             exchange: selectedFilter.exchange ? { _eq: selectedFilter.exchange } : { _is_null: true },
@@ -60,7 +63,7 @@ export const StatsPage: React.FC = () => {
         pollInterval: POLL_INTERVAL
     });
 
-    const { data: dataFilter, loading: loadingFilter } = useQuery(GET_USER_AGGR_STATS_FILTERS, {
+    const { data: dataFilter, loading: loadingFilter } = useQuery(FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS, {
         variables: {
             type: getQueueType(displayType),
             user_id
@@ -112,12 +115,12 @@ export const StatsPage: React.FC = () => {
         [loading, data]
     );
 
-    const setVisibleToolbarFilters = () => {
-        setIsVisibleFilters((prev) => !prev);
+    const toggleFiltersVisibility = () => {
+        setFiltersModalVisibility((prev) => !prev);
     };
 
     const confirmSelectedFilter = () => {
-        setIsVisibleFilters(false);
+        setFiltersModalVisibility(false);
         confirmSelectedFilters();
     };
 
@@ -126,13 +129,13 @@ export const StatsPage: React.FC = () => {
             page={PageType[displayType]}
             title={`My ${capitalize(displayType)} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
-            toolbar={isAuth && <StatsPageButtonToolbar setVisibleToolbarFilters={setVisibleToolbarFilters} />}
+            toolbar={isAuth && <StatsPageButtonToolbar toggleFiltersVisibility={toggleFiltersVisibility} />}
             width={width}
             handlePressBack={handlePressBack}>
             <Modal
-                isOpen={isVisibleFilters}
+                isOpen={isFiltersModalVisible}
                 title={`Filter My Total ${capitalize(displayType)} Performance`}
-                onClose={setVisibleToolbarFilters}>
+                onClose={toggleFiltersVisibility}>
                 <div className={styles.filtersContainer}>
                     <div style={{ marginTop: 5 }}>
                         {Object.keys(labelCombinations).map((el: string) => (

@@ -41,7 +41,7 @@ const _Footer: React.FC = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => hahdleOnClick(item.href)}>
-                                {item.icon}
+                                <item.icon />
                             </a>
                         ))}
                     </div>
