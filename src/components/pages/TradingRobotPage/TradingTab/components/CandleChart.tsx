@@ -10,7 +10,7 @@ import { SET_CHART_DATA } from "graphql/local/mutations";
 import { getCandleChartData } from "../../helpers";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
-import { getFormatUpdateData } from "components/pages/SignalRobotPage/helpers";
+import { getUpdatedCandleChartData } from "components/pages/SignalRobotPage/helpers";
 
 interface Props {
     robot: any;
@@ -107,7 +107,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
             return;
         }
 
-        const { updateCandle, markers } = getFormatUpdateData(dataUpdate, asset);
+        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
         const { candles: oldCandles } = candleChartData;
         if (!updateCandle.time) {
             return;

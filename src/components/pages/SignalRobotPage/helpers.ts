@@ -71,7 +71,7 @@ export const floatPositions = {
     }
 };
 
-const dateDiffNotPositive = (checkDate, subscribedAt) => dayjs(subscribedAt).diff(dayjs(checkDate)) <= 0;
+const dateDiffNegative = (checkDate, subscribedAt) => dayjs(subscribedAt).diff(dayjs(checkDate)) <= 0;
 
 const getEntryMarker = (position_entry, candleRobot, asset) => {
     // console.log(position_entry);
@@ -137,7 +137,7 @@ export const getCandleChartData = ({ candles }, asset) => {
                 if (position_entry) {
                     canAddPosition = true;
                     if (robot?.user_signals?.length) {
-                        canAddPosition = dateDiffNotPositive(
+                        canAddPosition = dateDiffNegative(
                             position_entry[0].entry_date,
                             robot?.user_signals[0].subscribed_at
                         );
@@ -150,7 +150,7 @@ export const getCandleChartData = ({ candles }, asset) => {
                 if (position_exit) {
                     canAddPosition = true;
                     if (robot?.user_signals?.length) {
-                        canAddPosition = dateDiffNotPositive(
+                        canAddPosition = dateDiffNegative(
                             position_exit[0].exit_date,
                             robot?.user_signals[0].subscribed_at
                         );
@@ -168,7 +168,7 @@ export const getCandleChartData = ({ candles }, asset) => {
     );
 };
 
-export const getFormatUpdateData = (data, asset) => {
+export const getUpdatedCandleChartData = (data, asset) => {
     let updateCandle = {
         time: null,
         open: null,
@@ -186,7 +186,7 @@ export const getFormatUpdateData = (data, asset) => {
         if (position_entry) {
             canAddPosition = true;
             if (candleRobot?.user_signals.length) {
-                canAddPosition = dateDiffNotPositive(
+                canAddPosition = dateDiffNegative(
                     position_entry[0].entry_date,
                     candleRobot?.user_signals[0].subscribed_at
                 );
@@ -199,7 +199,7 @@ export const getFormatUpdateData = (data, asset) => {
         if (position_exit) {
             canAddPosition = true;
             if (candleRobot?.user_signals.length) {
-                canAddPosition = dateDiffNotPositive(
+                canAddPosition = dateDiffNegative(
                     position_exit[0].exit_date,
                     candleRobot?.user_signals[0].subscribed_at
                 );

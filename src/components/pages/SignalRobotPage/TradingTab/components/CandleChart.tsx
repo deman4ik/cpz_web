@@ -9,7 +9,7 @@ import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
 import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
 
-import { getCandleChartData, getFormatUpdateData } from "../../helpers";
+import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
@@ -109,7 +109,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             return;
         }
 
-        const { updateCandle, markers } = getFormatUpdateData(dataUpdate, asset);
+        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
         const { candles: oldCandles } = chartData;
         if (!updateCandle.time) {
             return;
