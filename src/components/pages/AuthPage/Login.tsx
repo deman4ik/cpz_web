@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { useLogin } from "libs/auth";
+import { useEmailLogin } from "libs/auth";
 import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
     );
     const [password, setPassword] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [login, token] = useLogin({ email: values.email, password });
+    const [login, token] = useEmailLogin({ email: values.email, password });
     const onChangePassword = (value: string) => {
         setPassword(value);
     };
@@ -77,6 +77,7 @@ export const Login: React.FC = () => {
                                 width={260}
                                 placeholder="Email"
                                 onChangeText={(text: string) => handleChange("email", text)}
+                                autocomplete="email"
                             />
                             <Input
                                 style={{ marginTop: 8 }}
@@ -87,6 +88,7 @@ export const Login: React.FC = () => {
                                 placeholder="Password"
                                 onChangeText={(text) => onChangePassword(text)}
                                 type="password"
+                                autocomplete="password"
                             />
                             <Button
                                 style={{ marginTop: 10 }}

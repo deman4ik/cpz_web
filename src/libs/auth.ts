@@ -15,7 +15,7 @@ import {
     CHANGE_EMAIL,
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Headers {
     Accept: string;
@@ -29,8 +29,6 @@ const config = {
         credentials: "same-origin"
     }
 };
-
-const errorMessage = "can't fulfill the request";
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,33 +49,39 @@ export const testindBool = async () => {
     return result;
 };
 
-export const useTelegramLogin = ({ id, hash }) => {
-    const [login, { loading, error, data }] = useMutation(LOGIN_TELEGRAM);
-
-    const result = {
-        success: false,
-        error: ""
-    };
-
-    if (data) {
-        if (data.accessToken) {
-            setAccessToken(data.accessToken);
-            result.success = true;
-        } else result.error = error.graphQLErrors[0].message;
+type AuthAction = [
+    () => void,
+    {
+        loading?: boolean;
+        success: boolean;
+        error: string;
     }
+];
 
-    return [() => login({ variables: { id, hash } }), { loading, result }];
-};
-
-export const useLogin = ({ email, password }) => {
-    const [login, { data }] = useMutation(LOGIN);
+const useLogin = (params, mutation): AuthAction => {
+    const [login, { loading, error, data }] = useMutation(mutation);
+    const [success, setSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        console.log(data);
-        if (data?.result.accessToken) setAccessToken(data?.result.accessToken);
-    }, [data, data?.result.accessToken]);
+        if (data?.result.accessToken) {
+            setAccessToken(data?.result.accessToken);
+            setSuccess(true);
+        }
+    }, [data?.result.accessToken]);
 
-    return [() => login({ variables: { email, password } }), data?.result.accessToken];
+    useEffect(() => {
+        setErrorMessage(error?.graphQLErrors[0].message || "");
+    }, [error?.graphQLErrors]);
+    return [() => login({ variables: params }), { loading, success, error: errorMessage }];
+};
+
+export const useTelegramLogin = (params: { id: any; hash: string }) => {
+    return useLogin(params, LOGIN_TELEGRAM);
+};
+
+export const useEmailLogin = (params: { email: string; password: string }) => {
+    return useLogin(params, LOGIN);
 };
 
 export const logout = async () => {
@@ -94,9 +98,7 @@ export const logout = async () => {
         if (!result) {
             console.error(json.error);
         }
-    } catch (err) {
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -130,10 +132,7 @@ export const register = async (data: { email: string; password: string }, client
         } else {
             result.error = json.error;
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -158,10 +157,7 @@ export const confirm = async (data: { userId: string; secretCode: string }) => {
         } else {
             result.error = json.error;
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -173,9 +169,7 @@ export const activate = async (encode: string) => {
         if (typeof data === "object") {
             result = (await confirm(data)).success;
         }
-    } catch (err) {
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -209,10 +203,7 @@ export const reset = async (email: string, client: any) => {
         } else {
             result.error = json.error;
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -237,10 +228,7 @@ export const recover = async (data: { userId: string; secretCode: string; passwo
         } else {
             result.error = json.error;
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 
@@ -258,10 +246,7 @@ export const recoverEncoded = async (encode: string, password: string) => {
                 password
             });
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
+    } catch (err) {}
     return result;
 };
 

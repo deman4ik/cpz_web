@@ -21,16 +21,16 @@ const userPic = true;
 const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium" }) => {
     let instance;
 
-    const [loginData, setLoginData] = useState(null);
+    const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [error, setError] = useState("");
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, info] = useTelegramLogin(loginData || {});
+    const [login, { loading, success, error: loginError }] = useTelegramLogin(loginData);
 
-    // if (result.success && result.error === "") {
-    //     Router.push("/robots");
-    // } else if (result.error !== "") {
-    //     setError(result.error);
-    // }
+    if (success) {
+        Router.push("/robots");
+    } else if (loginError !== "") {
+        setError(loginError);
+    }
 
     useEffect(() => {
         (window as any).TelegramLoginWidget = userId
@@ -66,7 +66,7 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
     return (
         <>
             <div className={styles.container}>
-                {(info.loading || addLoading) && <LoadingIndicator />}
+                {(loading || addLoading) && <LoadingIndicator />}
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
             {message && <div className={styles.telegramPlaceholder}>{message}</div>}
