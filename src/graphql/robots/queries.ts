@@ -299,6 +299,7 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
     candles: v_candles${timeframe}_user_signal_positions(
       where: {
         robot_id: { _eq: $robotId }
+        user_signal: { user_id: { _eq: $user_id } }
       }
       limit: $limit
       offset: $offset
@@ -317,7 +318,7 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
       user_signal {
        robot {
         id
-        user_signals(where:{user_id:{_eq:$user_id}}) {
+        user_signals {
           id
           volume
           subscribed_at

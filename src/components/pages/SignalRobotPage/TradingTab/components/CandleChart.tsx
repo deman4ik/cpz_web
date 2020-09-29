@@ -6,7 +6,7 @@ import { LoadingIndicator } from "components/common";
 
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
-import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
+import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
 
 import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
@@ -36,7 +36,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
     const candleQueries = {
         history: buildRobotPositionCandlesQuery(timeframe, isAuth),
-        realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
+        realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
     };
 
     const legend = getLegend(robot);
@@ -92,7 +92,6 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         });
     };
 
-    console.log(data);
     useEffect(() => {
         if (!loading && data) {
             setChartData(getCandleChartData(data, asset));
@@ -104,7 +103,6 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });
-    console.log("update", dataUpdate);
 
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {

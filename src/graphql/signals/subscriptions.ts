@@ -1,15 +1,16 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
 
-function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
+function SIGNAL_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
     return gql`
       subscription candles(
         $robotId: uuid!
         $user_id: uuid  
       ) {
-        candles: v_candles${timeframe}_positions(
+        candles: v_candles${timeframe}_user_signal_positions(
           where: {
             robot_id: { _eq: $robotId }
+            user_signal: { user_id: { _eq: $user_id } }
           }
           limit: 1
         ) {
@@ -24,18 +25,20 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
           }
           position_entry
           position_exit
-          robot {
-            user_signals(where:{user_id:{_eq:$user_id}}) {
-              volume
-              subscribed_at
-            }
+          user_signal {
+              robot {
+                user_signals {
+                  volume
+                  subscribed_at
+                }
+              }
           }
         }
       }
     `;
 }
 
-function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
+function SIGNAL_POSITION_CANDLE_SUB(timeframe: number) {
     return gql`
       subscription candles(
         $robotId: uuid!
@@ -62,6 +65,6 @@ function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
     `;
 }
 
-export function buildRobotPositionCandleSubQuery(isAuth: boolean, timeframe: number): DocumentNode {
-    return isAuth ? ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe) : ROBOT_POSITION_CANDLE_SUB(timeframe);
+export function buildSignalPositionCandleSubQuery(isAuth: boolean, timeframe: number): DocumentNode {
+    return isAuth ? SIGNAL_POSITION_CANDLE_SUB_FOR_USER(timeframe) : SIGNAL_POSITION_CANDLE_SUB(timeframe);
 }

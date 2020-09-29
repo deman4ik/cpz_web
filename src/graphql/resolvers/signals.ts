@@ -174,7 +174,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 query: ROBOT_CANDLES_FOR_USER_SIGNALS(timeframe),
                 variables: { limit, robotId }
             });
-            console.log(dataCandles)
+
             const dataChart = dataCandles.candles.map((item) => {
                 const user_signals = [...item.robot.user_signals, userSignalsItem];
                 return { ...item, robot: { ...item.robot, user_signals } };
