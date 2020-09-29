@@ -32,7 +32,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const { asset, timeframe, id: robotId } = robot;
+    const { asset, timeframe, id: robotId, user_signal_id: userSignalId } = robot;
 
     const candleQueries = {
         history: buildRobotPositionCandlesQuery(timeframe, isAuth),
@@ -44,7 +44,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const [chartData, setChartData] = useState({ candles: [], markers: [] });
 
     // history candles load
-    const historyQueryVars = isAuth ? { robotId, limit, user_id } : { robotId, limit };
+    const historyQueryVars = isAuth ? { limit, userSignalId } : { robotId, limit };
     const { loading, data, fetchMore } = useQuery(candleQueries.history, {
         variables: historyQueryVars,
         notifyOnNetworkStatusChange: true
@@ -94,12 +94,12 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
     useEffect(() => {
         if (!loading && data) {
-            setChartData(getCandleChartData(data, asset));
+            setChartData(getCandleChartData(data));
         }
     }, [loading, data, asset]);
 
     // realtime candles load
-    const varsSubscription = isAuth ? { robotId, user_id } : { robotId };
+    const varsSubscription = isAuth ? { userSignalId } : { robotId };
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });
@@ -109,7 +109,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             return;
         }
 
-        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
+        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate);
         const { candles: oldCandles } = chartData;
         if (!updateCandle.time) {
             return;

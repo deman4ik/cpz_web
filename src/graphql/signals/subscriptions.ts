@@ -4,13 +4,11 @@ import { DocumentNode } from "graphql";
 function SIGNAL_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
     return gql`
       subscription candles(
-        $robotId: uuid!
-        $user_id: uuid  
+        $userSignalId: uuid!
       ) {
         candles: v_candles${timeframe}_user_signal_positions(
           where: {
-            robot_id: { _eq: $robotId }
-            user_signal: { user_id: { _eq: $user_id } }
+            user_signal_id: { _eq: $userSignalId }
           }
           limit: 1
         ) {
@@ -25,14 +23,6 @@ function SIGNAL_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
           }
           position_entry
           position_exit
-          user_signal {
-              robot {
-                user_signals {
-                  volume
-                  subscribed_at
-                }
-              }
-          }
         }
       }
     `;

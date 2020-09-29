@@ -291,15 +291,13 @@ export const ROBOT_POSITIONS_FOR_USER = gql`
 
 export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
   query get_candles_for_user_signals(
-    $robotId: uuid!
-    $user_id: uuid
+    $userSignalId: uuid!
     $limit: Int
     $offset: Int
   ) {
     candles: v_candles${timeframe}_user_signal_positions(
       where: {
-        robot_id: { _eq: $robotId }
-        user_signal: { user_id: { _eq: $user_id } }
+        user_signal_id: { _eq: $userSignalId }
       }
       limit: $limit
       offset: $offset
