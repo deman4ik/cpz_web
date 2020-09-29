@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { moneyFormat, colorAction } from "config/utils";
+import { formatMoney, colorAction } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { RobotsButtonItemCard, RobotItemStatusBlock } from ".";
 import { formatVariables } from "./helpers";
@@ -48,7 +48,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                                 {item.asset}
                             </div>
                             <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
-                                {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${moneyFormat(item.profit)} $`}
+                                {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                             <div className={styles.statRow}>
                                 <div className={styles.label}>Max Drawdown</div>
                                 <div className={styles.primaryText} style={colorAction(item.maxDrawdown > 0)}>
-                                    {`${moneyFormat(item.maxDrawdown)} $`}
+                                    {`${formatMoney(item.maxDrawdown)} $`}
                                 </div>
                             </div>
                             <div className={styles.statRow}>

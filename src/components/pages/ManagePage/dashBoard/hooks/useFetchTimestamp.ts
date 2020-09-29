@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 // graphql
-import { GET_USER_STATS_DURING_PERIOD } from "graphql/manage/queries";
+import { GET_NEW_USERS_IN_PEROID } from "graphql/manage/queries";
 
 /*additional*/
 const format = "YYYY-MM-DD";
@@ -20,7 +20,7 @@ export interface dataInterface {
  */
 const fetchPeriods = (periodsArray: Array<periodInteface>) => {
     return periodsArray.map(({ period, name }) => {
-        const { data, error } = useQuery(GET_USER_STATS_DURING_PERIOD, {
+        const { data, error } = useQuery(GET_NEW_USERS_IN_PEROID, {
             variables: { period }
         });
         /*Усолвная обработка*/

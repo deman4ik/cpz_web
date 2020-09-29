@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Accordion: React.FC<Props> = ({ title, children, left }) => {
-    const [isExpanded, setIsExpanded] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(false);
     const handleOnClick = () => {
         setIsExpanded(!isExpanded);
     };
@@ -19,7 +19,7 @@ export const Accordion: React.FC<Props> = ({ title, children, left }) => {
             <div className={[styles.title, styles.ripple].join(" ")} onClick={handleOnClick}>
                 {left}
                 {title}
-                <div className={styles.icon}>{isExpanded ? <ChevronDownIcon /> : <ChevronUpIcon />}</div>
+                <div className={styles.icon}>{isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}</div>
             </div>
             {isExpanded ? <div>{children}</div> : null}
         </div>

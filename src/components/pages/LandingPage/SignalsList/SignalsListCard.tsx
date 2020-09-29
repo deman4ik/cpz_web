@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
 import { PrimaryButton } from "components/basic";
-import { moneyFormat, valueWithSign } from "config/utils";
+import { formatMoney, valueWithSign } from "config/utils";
 import styles from "./SignalsListCard.module.css";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
-    const money = <div className={styles.primaryText}>{moneyFormat(robot.equity.profit)} $</div>;
+    const money = <div className={styles.primaryText}>{formatMoney(robot.equity.profit)} $</div>;
 
     return (
         <div className={styles.container}>
@@ -33,7 +33,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                             className={`${styles.lastProfit} ${
                                 robot.equity.lastProfit < 0 ? styles.negative : styles.positive
                             }`}>
-                            {valueWithSign(moneyFormat(robot.equity.lastProfit))} $
+                            {valueWithSign(formatMoney(robot.equity.lastProfit))} $
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                     </div>
                     <div className={styles.statRow}>
                         <div className={styles.label}>Max Drawdown</div>
-                        <div className={styles.statValue}>{moneyFormat(robot.statistics.maxDrawdown.all)} $</div>
+                        <div className={styles.statValue}>{formatMoney(robot.statistics.maxDrawdown.all)} $</div>
                     </div>
                     <div className={styles.statRow}>
                         <div className={styles.label}>Trades Count</div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { withApollo, withAuth, withDevice } from '../../src/libs/hoc';
 
-import { SignalsPage } from '../../src/components/pages/SignalsPage';
+import { SignalRobotsInfoPage } from '../../src/components/pages/SignalRobotsInfoPage';
 
 const Page = () => (
-  <SignalsPage />
+  <SignalRobotsInfoPage />
 );
 
 export default withApollo(withAuth(withDevice(Page)));

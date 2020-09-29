@@ -1,27 +1,30 @@
 .btn {
-  border-bottom-width: 3px;
-  border-color: transparent;
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  flex-direction: column;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 15px;
-}
-
-.isActive {
-  border-color: var(--primary);
-  color: var(--primary);
+    border-bottom-width: 3px;
+    border-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 15px;
 }
 
 .btnText {
-  font-size: var(--normal3);
-  white-space: nowrap;
-  word-wrap: break-word;
-  display: inline;
+    font-size: var(--normal3);
+    white-space: nowrap;
+    word-wrap: break-word;
+    display: inline;
+    color: var(--accent);
 }
 
-.btnTextColor {
-  color: var(--accent);
+.isActive {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+@media (max-width: 480px) {
+    .btnText {
+        font-size: var(--small1);
+    }
 }

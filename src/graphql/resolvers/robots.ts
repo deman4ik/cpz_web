@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 import dayjs from "libs/dayjs";
-import { USER_ROBOTS, GET_ROBOTS_BY_STATS, GET_ROBOT_INFO_USER_ROBOTS } from "../robots/queries";
+import { USER_ROBOTS, USER_ROBOTS_BY_STATS, ROBOT_INFO_FOR_USER_ROBOT } from "../robots/queries";
 
 export const deleteRobot = (_root: any, variables: any, context: any) => {
-    const isExistRobotsStats = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("v_robots_stats_robots") === 0
     );
-    if (isExistRobotsStats) {
+    if (robotsStatsExist) {
         const idRobots = context.getCacheKey({
             __typename: "robots",
             id: variables.robot.id
@@ -32,10 +32,10 @@ export const deleteRobot = (_root: any, variables: any, context: any) => {
             data: { ...row, user_robots: [] }
         });
     }
-    const isExistUserRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const userRobotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("user_robots_robots") === 0
     );
-    if (isExistUserRobots) {
+    if (userRobotsExist) {
         const dataRobots = context.cache.readQuery({ query: USER_ROBOTS });
         context.cache.writeQuery({
             query: USER_ROBOTS,
@@ -44,10 +44,10 @@ export const deleteRobot = (_root: any, variables: any, context: any) => {
             }
         });
     }
-    const isExistRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("robots_info_user_robots") === 0
     );
-    if (isExistRobots) {
+    if (robotsExist) {
         const idUserRobots = context.getCacheKey({
             __typename: "robots",
             id: variables.robot.id
@@ -78,10 +78,10 @@ export const deleteRobot = (_root: any, variables: any, context: any) => {
 };
 
 export const actionRobot = (_root: any, variables: any, context: any) => {
-    const isExistRobotsStats = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("v_robots_stats_robots") === 0
     );
-    if (isExistRobotsStats) {
+    if (robotsStatsExist) {
         const idRobots = context.getCacheKey({
             __typename: "robots",
             id: variables.robot.id
@@ -113,10 +113,10 @@ export const actionRobot = (_root: any, variables: any, context: any) => {
             data
         });
     }
-    const isExistRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("robots_info_user_robots") === 0
     );
-    if (isExistRobots) {
+    if (robotsExist) {
         const idRobots = context.getCacheKey({
             __typename: "robots",
             id: variables.robot.id
@@ -150,10 +150,10 @@ export const actionRobot = (_root: any, variables: any, context: any) => {
             data
         });
     }
-    const isExistUserRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const userRobotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("user_robots_robots") === 0
     );
-    if (isExistUserRobots) {
+    if (userRobotsExist) {
         const idUserRobots = context.getCacheKey({
             __typename: "user_robots",
             id: variables.robot.userRobotId
@@ -184,10 +184,10 @@ export const actionRobot = (_root: any, variables: any, context: any) => {
 };
 
 export const editRobot = (_root: any, variables: any, context: any) => {
-    const isExistUserRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const userRobotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("user_robots_robots") === 0
     );
-    if (isExistUserRobots) {
+    if (userRobotsExist) {
         const dataRobots = context.cache.readQuery({ query: USER_ROBOTS });
         const robots = dataRobots.robots.map((el) => {
             if (el.id === variables.robot.userRobotId) {
@@ -203,12 +203,12 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             data: { robots }
         });
     }
-    const isExistRobotsStats = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("v_robots_stats_robots") === 0
     );
-    if (isExistRobotsStats) {
+    if (robotsStatsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOTS_BY_STATS
+            query: USER_ROBOTS_BY_STATS
         });
         const v_robots_stats = dataRobots.v_robots_stats.map((el) => {
             if (el.robots.id === variables.robot.id) {
@@ -225,16 +225,16 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOTS_BY_STATS,
+            query: USER_ROBOTS_BY_STATS,
             data: { v_robots_stats }
         });
     }
-    const isExistRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("robots_info_user_robots") === 0
     );
-    if (isExistRobots) {
+    if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOT,
             variables: { code: variables.code }
         });
         const robot = dataRobots.robot.map((el) => {
@@ -248,7 +248,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOT,
             variables: { code: variables.code },
             data: { robot }
         });
@@ -256,13 +256,13 @@ export const editRobot = (_root: any, variables: any, context: any) => {
 };
 
 export const createRobot = (_root: any, variables: any, context: any) => {
-    const isExistRobotsStats = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("v_robots_stats_robots") === 0
     );
     let robotInfo;
-    if (isExistRobotsStats) {
+    if (robotsStatsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOTS_BY_STATS
+            query: USER_ROBOTS_BY_STATS
         });
         const v_robots_stats = dataRobots.v_robots_stats.map((el) => {
             if (el.robots.id === variables.robotInfo.robotId) {
@@ -281,14 +281,14 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOTS_BY_STATS,
+            query: USER_ROBOTS_BY_STATS,
             data: { v_robots_stats }
         });
     }
-    const isExistUserRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const userRobotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("user_robots_robots") === 0
     );
-    if (isExistUserRobots) {
+    if (userRobotsExist) {
         const dataUserRobots = context.cache.readQuery({ query: USER_ROBOTS });
         const item = {
             id: variables.robotInfo.userRobotId,
@@ -313,12 +313,12 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             data: { robots: [...dataUserRobots.robots, item] }
         });
     }
-    const isExistRobots = Object.keys(context.cache.data.data.ROOT_QUERY).find(
+    const robotsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
         (el) => el.indexOf("robots_info_user_robots") === 0
     );
-    if (isExistRobots) {
+    if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOT,
             variables: { code: variables.robotInfo.code }
         });
         const item = {
@@ -338,7 +338,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: GET_ROBOT_INFO_USER_ROBOTS,
+            query: ROBOT_INFO_FOR_USER_ROBOT,
             variables: { code: variables.robotInfo.code },
             data: { robot }
         });

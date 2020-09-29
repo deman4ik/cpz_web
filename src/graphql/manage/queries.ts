@@ -3,7 +3,7 @@ import gql from "graphql-tag";
  * Общее количество активных пользователей/подписок на сигналы/ запущенных роботов
  * Использование:  manage/dashboard
  */
-export const GET_USERS_COUNT = gql`
+export const USERS_BY_ROBOTS_AGGREGATE = gql`
     query usersCount {
         usersTotal: users_aggregate(where: { status: { _eq: 1 } }) {
             aggregate {
@@ -28,8 +28,8 @@ export const GET_USERS_COUNT = gql`
  *  @period - дата за определенный период
  *  Использование:  manage/dashboard
  */
-export const GET_USER_STATS_DURING_PERIOD = gql`
-    query getUsersStatsDuringPeriod($period: timestamp) {
+export const GET_NEW_USERS_IN_PEROID = gql`
+    query get_new_users($period: timestamp) {
         users(where: { created_at: { _gte: $period }, status: { _eq: 1 } }) {
             created_at
         }
@@ -43,8 +43,8 @@ export const GET_USER_STATS_DURING_PERIOD = gql`
  * @limit - для пагинации
  * Использование:  manage/users
  */
-export const GET_USERS = gql`
-    query getUsers($limit: Int, $offset: Int, $where: users_bool_exp, $order_by: [users_order_by!]) {
+export const ALL_USERS = gql`
+    query get_all_users($limit: Int, $offset: Int, $where: users_bool_exp, $order_by: [users_order_by!]) {
         users(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             name
             id
@@ -79,7 +79,7 @@ export const GET_USERS = gql`
  *  Использование:  manage/users
  *  @where -  фильтрация
  */
-export const USERS_AGGREGATE = gql`
+export const ALL_USERS_AGGREGATE = gql`
     query users_aggr($where: users_bool_exp) {
         users_aggregate(where: $where) {
             aggregate {
@@ -96,8 +96,8 @@ export const USERS_AGGREGATE = gql`
  * @limit - для пагинации
  * Использование:  manage/robots
  */
-export const GET_ROBOTS = gql`
-    query get_robots($limit: Int, $offset: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
+export const ALL_ROBOTS = gql`
+    query get_all_robots($limit: Int, $offset: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
         robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             id
             name
@@ -133,8 +133,8 @@ export const GET_ROBOTS = gql`
  *  Использование:  manage/users
  *  @where -  фильтрация
  */
-export const ROBOTS_AGGREGATE = gql`
-    query robots_aggr($where: robots_bool_exp) {
+export const ALL_ROBOTS_AGGREGATE = gql`
+    query get_all_robots_aggr($where: robots_bool_exp) {
         robots_aggregate(where: $where) {
             aggregate {
                 count
@@ -150,8 +150,8 @@ export const ROBOTS_AGGREGATE = gql`
  * @limit - для пагинации
  * Использование: manage/user_signals
  */
-export const GET_USER_SIGNALS = gql`
-    query get_user_signals(
+export const ALL_USER_SIGNALS = gql`
+    query get_all_user_signals(
         $limit: Int
         $offset: Int
         $where: user_signals_bool_exp
@@ -178,7 +178,7 @@ export const GET_USER_SIGNALS = gql`
  *  @where -  фильтрация
  */
 export const USER_SIGNALS_AGGREGATE = gql`
-    query user_signals_aggr($where: user_signals_bool_exp) {
+    query get_user_signals_aggr($where: user_signals_bool_exp) {
         user_signals_aggregate(where: $where) {
             aggregate {
                 count
@@ -194,8 +194,13 @@ export const USER_SIGNALS_AGGREGATE = gql`
  * @limit - для пагинации
  * Использование:  manage/user_robots
  */
-export const GET_USER_ROBOTS = gql`
-    query get_user_robots($limit: Int, $offset: Int, $where: user_robots_bool_exp, $order_by: [user_robots_order_by!]) {
+export const ALL_USER_ROBOTS = gql`
+    query get_all_user_robots(
+        $limit: Int
+        $offset: Int
+        $where: user_robots_bool_exp
+        $order_by: [user_robots_order_by!]
+    ) {
         user_robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
             user {
                 name
@@ -233,8 +238,8 @@ export const USER_ROBOTS_AGGREGATE = gql`
  *  Фильтры роботов
  *  Использование:  manage/robots
  */
-export const GET_ROBOTS_STATS = gql`
-    query get_manage_robots_filters {
+export const ROBOTS_FILTERS = gql`
+    query get_robots_filters {
         stats: robots(distinct_on: [exchange, asset, currency, strategy, timeframe, trading, status]) {
             exchange
             asset
@@ -251,7 +256,7 @@ export const GET_ROBOTS_STATS = gql`
  *  Фильтры пользовательских роботов
  *  Использование:  manage/user_robots
  */
-export const GET_USER_ROBOTS_STATS = gql`
+export const USER_ROBOTS_FILTERS = gql`
     query get_user_robots_filters {
         stats: robots(distinct_on: [exchange, asset]) {
             exchange
@@ -264,7 +269,7 @@ export const GET_USER_ROBOTS_STATS = gql`
  *  Обращение пользователей в саппорт и их последние сообщение из чата
  *  использование: manage/support
  */
-export const GET_USERS_SUPPORT_REQUESTS = gql`
+export const SUPPORT_REQUESTS = gql`
     query get_users_support_requests($where: users_bool_exp) {
         support_requests: users(where: $where) {
             user_id: id

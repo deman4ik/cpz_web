@@ -13,7 +13,7 @@ import LocalStorageService from "services/localStorageService";
 import getSearchFromStorage from "./getSearchFromStorage";
 
 interface Props {
-    setVisibleToolbarFilters?: () => void;
+    toggleFiltersVisibility?: () => void;
     displayType: string;
 }
 
@@ -21,7 +21,7 @@ const defaultOrderBy = {
     recovery_factor: "desc_nulls_last"
 };
 
-export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarFilters }) => {
+export const SearchToolbar: React.FC<Props> = ({ displayType, toggleFiltersVisibility }) => {
     const initialState = getSearchFromStorage(displayType); // получаем значение поиска из localStorage
     const [value, setValue] = useState(initialState);
     const debounceValue = useDebounce(value, 500);
@@ -83,7 +83,7 @@ export const SearchToolbar: React.FC<Props> = ({ displayType, setVisibleToolbarF
     return (
         <div className={styles.container}>
             <SearchInput value={value} onChange={onSignalsSearch} placeholder={`Search ${displayType}...`} />
-            <CaptionButton title="filter" icon="filtervariant" responsive onClick={setVisibleToolbarFilters} />
+            <CaptionButton title="filter" icon="filtervariant" responsive onClick={toggleFiltersVisibility} />
             <CaptionButton title="clear" icon="filtervariantremove" responsive onClick={handleOnPressClearFilter} />
         </div>
     );

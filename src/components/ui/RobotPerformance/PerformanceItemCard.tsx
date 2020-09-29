@@ -1,8 +1,8 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { Button } from "../../basic";
-import { moneyFormat, colorAction } from "../../../config/utils";
+import { Button } from "components/basic";
+import { formatMoney, colorAction } from "config/utils";
 import styles from "./PerformanceItemCard.module.css";
 
 interface Props {
@@ -27,7 +27,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                         </div>
                         {item.profit ? (
                             <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
-                                {`${item.profit > 0 ? "+" : ""}${moneyFormat(item.profit)} $`}
+                                {`${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
                             </div>
                         ) : null}
                     </div>
@@ -60,7 +60,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             <div className={styles.statRow}>
                                 <div className={styles.label}>Max Drawdown</div>
                                 <div className={styles.primaryText} style={colorAction(item.maxDrawdown > 0)}>
-                                    {`${moneyFormat(item.maxDrawdown)} $`}
+                                    {`${formatMoney(item.maxDrawdown)} $`}
                                 </div>
                             </div>
                             <div className={styles.statRow}>

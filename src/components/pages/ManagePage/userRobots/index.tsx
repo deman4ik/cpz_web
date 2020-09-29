@@ -12,7 +12,7 @@ import { USER_ROBOTS_TABLE_COLUMNS } from "./constants";
 import { PageType } from "config/types";
 
 //graphql
-import { GET_USER_ROBOTS, USER_ROBOTS_AGGREGATE } from "graphql/manage/queries";
+import { ALL_USER_ROBOTS, USER_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 
 const ManageUserRobots = () => {
     // const robotFilters = aggregateRobotsFilters(filters);
@@ -24,7 +24,7 @@ const ManageUserRobots = () => {
         <ManagePageTemplate
             pageType={PageType.userRobots}
             columns={USER_ROBOTS_TABLE_COLUMNS}
-            dataQuery={GET_USER_ROBOTS}
+            dataQuery={ALL_USER_ROBOTS}
             aggregateQuery={USER_ROBOTS_AGGREGATE}
             formatData={formatData}
             getItemsCount={getItemsCount}

@@ -1,8 +1,8 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { ChevronRightIcon } from "../../../assets/icons/svg";
-import { moneyFormat, colorAction } from "../../../config/utils";
+import { ChevronRightIcon } from "assets/icons/svg";
+import { formatMoney, colorAction } from "config/utils";
 import styles from "./PerformanceItem.module.css";
 
 interface Props {
@@ -24,7 +24,7 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
                     <div className={styles.wraperName}>
                         <div className={[styles.tableCellText, styles.cellWidth].join(" ")}>{item.name}</div>
                         <div className={styles.cellProfit} style={colorAction(item.profit > 0)}>
-                            {item.profit ? `${item.profit > 0 ? "+" : ""}${moneyFormat(item.profit)} $` : null}
+                            {item.profit ? `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $` : null}
                         </div>
                     </div>
                     <ChevronRightIcon color="white" size={26} />
@@ -44,7 +44,7 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
                         <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
                             <div className={styles.secondaryText}>Max Drawdown&nbsp;</div>
                             <div className={styles.statisticsText} style={colorAction(item.maxDrawdown > 0)}>
-                                {`${moneyFormat(item.maxDrawdown)} $`}
+                                {`${formatMoney(item.maxDrawdown)} $`}
                             </div>
                         </div>
                         <div className={styles.statisticsElement} style={{ marginTop: 6 }}>

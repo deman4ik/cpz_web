@@ -1,5 +1,5 @@
 import { color } from "config/constants";
-import { formatDate, moneyFormat, round } from "config/utils";
+import { formatDate, formatMoney, round } from "config/utils";
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");
@@ -10,7 +10,7 @@ const getRobotDataSignals = (position) => {
         id,
         code,
         volume: user_signal.volume,
-        entry_price: moneyFormat(entry_price),
+        entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
         robot: {
@@ -54,7 +54,7 @@ const getRobotDataRobots = (position) => {
         id,
         code,
         volume,
-        entry_price: moneyFormat(entry_price),
+        entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
         robot: {

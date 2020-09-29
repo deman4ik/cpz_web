@@ -5,27 +5,13 @@ interface Props {
     title: string;
     isActive: boolean;
     handleOnClick: () => void;
-    textClassName?: string;
-    objectClassName?: string;
+    style?: React.CSSProperties;
 }
 
-export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, textClassName, objectClassName }) => {
-    const getBtnStyle = () => {
-        const btn = [styles.btn];
-        if (isActive) btn.push(styles.isActive);
-        if (objectClassName) btn.push(objectClassName);
-        return btn;
-    };
-
-    const getBtnTextStyle = () => {
-        const btnText = [styles.btnText, isActive ? styles.isActive : styles.btnTextColor];
-        if (textClassName) btnText.push(textClassName);
-        return btnText;
-    };
-
+export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, style }) => {
     return (
-        <div className={getBtnStyle().join(" ")} onClick={handleOnClick}>
-            <div className={getBtnTextStyle().join(" ")}>{title}</div>
+        <div className={`${styles.btn} ${isActive && styles.isActive}`} onClick={handleOnClick} style={style}>
+            <div className={`${styles.btnText} ${isActive && styles.isActive}`}>{title}</div>
         </div>
     );
 };

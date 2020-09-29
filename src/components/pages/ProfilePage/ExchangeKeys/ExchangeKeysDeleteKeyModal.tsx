@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { GET_USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
+import { USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
 import { GET_USER_EXCHANGES } from "graphql/profile/queries";
 import { DELETE_EXCHANGE_BY_ID } from "graphql/profile/mutations";
 import { DeleteKey } from "./types";
@@ -19,7 +19,7 @@ const _ExchangeKeysDeleteKeyModal: React.FC<Props> = ({ options, onClose }) => {
     const [formError, setFormError] = useState("");
     const [disabledYes, setDisableYes] = useState(false);
     const [isFetchReponse, setIsFetchReponse] = useState(false);
-    const { data, loading } = useQuery(GET_USER_ROBOTS_BY_EXCHANGE_ID, {
+    const { data, loading } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
         variables: {
             user_ex_acc_id: options.id
         }
