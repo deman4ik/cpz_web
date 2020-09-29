@@ -290,13 +290,13 @@ export const ROBOT_POSITIONS_FOR_USER = gql`
 `;
 
 export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
-  query get_candles_for_user_robot(
+  query get_candles_for_user_signals(
     $robotId: uuid!
     $user_id: uuid
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_positions(
+    candles: v_candles${timeframe}_user_signal_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
@@ -314,7 +314,8 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
       }
       position_entry
       position_exit
-      robot {
+      user_signal {
+       robot {
         id
         user_signals(where:{user_id:{_eq:$user_id}}) {
           id
@@ -322,6 +323,7 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
           subscribed_at
         }
       }
+     }
     }
   }
 `;
@@ -538,7 +540,7 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
         }
     }
 `;
-// TODO: Переименовать  константу на более логическое название
+
 export const ROBOT_INFO_FOR_ROBOTS = gql`
     query get_robot_info_for_robots($code: String) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {

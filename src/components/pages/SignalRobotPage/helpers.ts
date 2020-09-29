@@ -131,7 +131,8 @@ export const getCandleChartData = ({ candles }, asset) => {
     let canAddPosition = false;
     return candles.reduceRight(
         (acc, item) => {
-            const { candle, position_entry, position_exit, robot } = item;
+            const { candle, position_entry, position_exit } = item;
+            const robot = item.robot || item.user_signal.robot;
             if (candle) {
                 const { time, open, high, low, close, volume } = candle;
                 if (position_entry) {
@@ -168,7 +169,8 @@ export const getCandleChartData = ({ candles }, asset) => {
     );
 };
 
-export const getUpdatedCandleChartData = (data, asset) => {
+export const getUpdatedCandleChartData = ({ candles }, asset) => {
+    const newCandle = candles.length ? candles[0] : null;
     let updateCandle = {
         time: null,
         open: null,
@@ -178,34 +180,29 @@ export const getUpdatedCandleChartData = (data, asset) => {
         volume: null
     };
     const markers = [];
-    if (!data?.candles.length) return { updateCandle, markers };
+    if (!newCandle) return { updateCandle, markers };
     let canAddPosition = false;
-    const { candle, position_entry, position_exit, robot: candleRobot } = data.candles[0];
+    const { candle, position_entry, position_exit } = newCandle;
+    const robot = newCandle.robot || newCandle.user_signal.robot;
     if (candle) {
         const { time, open, high, low, close, volume } = candle;
         if (position_entry) {
             canAddPosition = true;
-            if (candleRobot?.user_signals.length) {
-                canAddPosition = dateDiffNegative(
-                    position_entry[0].entry_date,
-                    candleRobot?.user_signals[0].subscribed_at
-                );
+            if (robot?.user_signals.length) {
+                canAddPosition = dateDiffNegative(position_entry[0].entry_date, robot?.user_signals[0].subscribed_at);
             }
             if (canAddPosition) {
-                const markerItem = getEntryMarker(position_entry[0], candleRobot, asset);
+                const markerItem = getEntryMarker(position_entry[0], robot, asset);
                 markers.push(markerItem);
             }
         }
         if (position_exit) {
             canAddPosition = true;
-            if (candleRobot?.user_signals.length) {
-                canAddPosition = dateDiffNegative(
-                    position_exit[0].exit_date,
-                    candleRobot?.user_signals[0].subscribed_at
-                );
+            if (robot?.user_signals.length) {
+                canAddPosition = dateDiffNegative(position_exit[0].exit_date, robot?.user_signals[0].subscribed_at);
             }
             if (canAddPosition) {
-                const markerItem = getExitMarker(position_exit[0], candleRobot, asset);
+                const markerItem = getExitMarker(position_exit[0], robot, asset);
                 markers.push(markerItem);
             }
         }

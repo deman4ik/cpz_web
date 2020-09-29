@@ -15,6 +15,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
     legend,
     setIsChartLoaded
 }) => {
+    console.log(data)
     const isMobile = size.width <= 480;
     const leftToolBar = size.width >= 1200 ? 190 : 46;
     const widthWithToolBar = 1214 + leftToolBar;

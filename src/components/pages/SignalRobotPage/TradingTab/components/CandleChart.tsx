@@ -92,6 +92,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         });
     };
 
+    console.log(data);
     useEffect(() => {
         if (!loading && data) {
             setChartData(getCandleChartData(data, asset));
@@ -103,6 +104,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });
+    console.log("update", dataUpdate);
 
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {

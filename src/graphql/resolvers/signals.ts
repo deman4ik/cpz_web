@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import dayjs from "libs/dayjs";
-import { USER_SIGNALS, USER_SIGNAL_ROBOTS as GET_ROBOTS_BY_STATS_SIGNALS } from "../signals/queries";
-import { ROBOT_CANDLES_FOR_USER_SIGNALS } from "../robots/queries";
+import { USER_SIGNALS, USER_SIGNAL_ROBOTS as GET_ROBOTS_BY_STATS_SIGNALS } from "graphql/signals/queries";
+import { ROBOT_CANDLES_FOR_USER_SIGNALS } from "graphql/robots/queries";
 
 export const unsubscribe = (_root: any, variables: any, context: any) => {
     const signalsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
@@ -174,6 +174,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 query: ROBOT_CANDLES_FOR_USER_SIGNALS(timeframe),
                 variables: { limit, robotId }
             });
+            console.log(dataCandles)
             const dataChart = dataCandles.candles.map((item) => {
                 const user_signals = [...item.robot.user_signals, userSignalsItem];
                 return { ...item, robot: { ...item.robot, user_signals } };
