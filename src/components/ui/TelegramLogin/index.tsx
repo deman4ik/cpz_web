@@ -24,13 +24,13 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
     const [loginData, setLoginData] = useState(null);
     const [error, setError] = useState("");
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const { loading: loginLoading, result } = useTelegramLogin(loginData);
+    const [login, info] = useTelegramLogin(loginData || {});
 
-    if (result.success && result.error === "") {
-        Router.push("/robots");
-    } else if (result.error !== "") {
-        setError(result.error);
-    }
+    // if (result.success && result.error === "") {
+    //     Router.push("/robots");
+    // } else if (result.error !== "") {
+    //     setError(result.error);
+    // }
 
     useEffect(() => {
         (window as any).TelegramLoginWidget = userId
@@ -46,7 +46,10 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
                       })
               }
             : {
-                  dataOnauth: (data) => setLoginData(data)
+                  dataOnauth: (data) => {
+                      setLoginData(data);
+                      login();
+                  }
               };
         const script = document.createElement("script");
         script.src = "https://telegram.org/js/telegram-widget.js?7";
@@ -58,12 +61,12 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
         script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, buttonSize, instance, userId]);
+    }, [addTelegram, buttonSize, instance, login, userId]);
 
     return (
         <>
             <div className={styles.container}>
-                {(loginLoading || addLoading) && <LoadingIndicator />}
+                {(info.loading || addLoading) && <LoadingIndicator />}
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
             {message && <div className={styles.telegramPlaceholder}>{message}</div>}

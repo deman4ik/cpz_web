@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { login } from "libs/auth";
+import { useLogin } from "libs/auth";
 import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
     );
     const [password, setPassword] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-
+    const [login, token] = useLogin({ email: values.email, password });
     const onChangePassword = (value: string) => {
         setPassword(value);
     };
@@ -42,14 +42,12 @@ export const Login: React.FC = () => {
 
     useEffect(() => {
         const loginUser = async () => {
-            const result = await login({
-                email: values.email,
-                password
-            });
+            login();
 
-            if (result.success) {
+            if (token) {
                 Router.push("/robots");
             } else {
+                return;
                 errors.password = result.error;
                 setValid(false);
                 setIsFetching(false);
@@ -59,7 +57,7 @@ export const Login: React.FC = () => {
             setIsFetching(true);
             loginUser();
         }
-    }, [errors, isValid, password, setValid, values.email]);
+    }, [errors, isValid, login, password, setValid, token, values.email]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>

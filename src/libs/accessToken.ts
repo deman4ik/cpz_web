@@ -29,6 +29,7 @@ export const getExpiredAccessToken = async (ctx) => {
         ctx && ctx.headers ? ctx.headers.host === LOCALHOST : window.location.origin === `http://${LOCALHOST}`;
     if (Date.now() >= accessToken.exp * 1000) {
         token = await fetchAccessToken(isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined, isLocalhost);
+        console.log("token", token)
         if (!token) {
             redirect(ctx, "/auth/login");
         }

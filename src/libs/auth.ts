@@ -15,6 +15,7 @@ import {
     CHANGE_EMAIL,
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
+import { useEffect } from "react";
 
 interface Headers {
     Accept: string;
@@ -53,8 +54,6 @@ export const testindBool = async () => {
 export const useTelegramLogin = ({ id, hash }) => {
     const [login, { loading, error, data }] = useMutation(LOGIN_TELEGRAM);
 
-    login({ variables: { id, hash } });
-
     const result = {
         success: false,
         error: ""
@@ -64,38 +63,21 @@ export const useTelegramLogin = ({ id, hash }) => {
         if (data.accessToken) {
             setAccessToken(data.accessToken);
             result.success = true;
-        } else result.error = error.toString();
+        } else result.error = error.graphQLErrors[0].message;
     }
 
-    return { loading, result };
+    return [() => login({ variables: { id, hash } }), { loading, result }];
 };
 
-export const login = async (data: { email: string; password: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
+export const useLogin = ({ email, password }) => {
+    const [login, { data }] = useMutation(LOGIN);
 
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/login`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+    useEffect(() => {
+        console.log(data);
+        if (data?.result.accessToken) setAccessToken(data?.result.accessToken);
+    }, [data, data?.result.accessToken]);
+
+    return [() => login({ variables: { email, password } }), data?.result.accessToken];
 };
 
 export const logout = async () => {
