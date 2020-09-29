@@ -23,7 +23,8 @@ export const Login: React.FC = () => {
     );
     const [password, setPassword] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [login, token] = useEmailLogin({ email: values.email, password });
+    const [login, { success, error }] = useEmailLogin({ email: values.email, password });
+
     const onChangePassword = (value: string) => {
         setPassword(value);
     };
@@ -44,11 +45,10 @@ export const Login: React.FC = () => {
         const loginUser = async () => {
             login();
 
-            if (token) {
+            if (success) {
                 Router.push("/robots");
-            } else {
-                return;
-                errors.password = result.error;
+            } else if (error !== "") {
+                errors.password = error;
                 setValid(false);
                 setIsFetching(false);
             }
@@ -57,7 +57,7 @@ export const Login: React.FC = () => {
             setIsFetching(true);
             loginUser();
         }
-    }, [errors, isValid, login, password, setValid, token, values.email]);
+    }, [error, errors, isValid, login, password, setValid, success]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -77,7 +77,7 @@ export const Login: React.FC = () => {
                                 width={260}
                                 placeholder="Email"
                                 onChangeText={(text: string) => handleChange("email", text)}
-                                autocomplete="email"
+                                autoComplete="email"
                             />
                             <Input
                                 style={{ marginTop: 8 }}
@@ -88,7 +88,7 @@ export const Login: React.FC = () => {
                                 placeholder="Password"
                                 onChangeText={(text) => onChangePassword(text)}
                                 type="password"
-                                autocomplete="password"
+                                autoComplete="password"
                             />
                             <Button
                                 style={{ marginTop: 10 }}

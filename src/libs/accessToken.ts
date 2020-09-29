@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
-import { LOCALHOST } from "../config/constants";
+import { LOCALHOST } from "config/constants";
 import { fetchAccessToken } from "./auth";
 
 const accessToken = {
@@ -16,6 +16,7 @@ export const setAccessToken = (token: string) => {
         const { exp } = jwtDecode(accessToken.token);
         accessToken.exp = exp;
     }
+    console.log(accessToken);
 };
 
 export const getAccessToken = () => accessToken;
@@ -29,7 +30,6 @@ export const getExpiredAccessToken = async (ctx) => {
         ctx && ctx.headers ? ctx.headers.host === LOCALHOST : window.location.origin === `http://${LOCALHOST}`;
     if (Date.now() >= accessToken.exp * 1000) {
         token = await fetchAccessToken(isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined, isLocalhost);
-        console.log("token", token)
         if (!token) {
             redirect(ctx, "/auth/login");
         }
