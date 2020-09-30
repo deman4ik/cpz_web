@@ -22,15 +22,10 @@ export const Login: React.FC = () => {
         validateAuth
     );
     const [password, setPassword] = useState("");
-    const [isFetching, setIsFetching] = useState(false);
-    const [login, { success, error }] = useEmailLogin({ email: values.email, password });
+    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password });
 
     const onChangePassword = (value: string) => {
         setPassword(value);
-    };
-
-    const handleLogin = () => {
-        handleSubmit();
     };
 
     const handleSwitchToStep = (step: string) => {
@@ -42,22 +37,19 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        const loginUser = async () => {
-            login();
-
-            if (success) {
-                Router.push("/robots");
-            } else if (error !== "") {
-                errors.password = error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
         if (isValid) {
-            setIsFetching(true);
-            loginUser();
+            login();
         }
-    }, [error, errors, isValid, login, password, setValid, success]);
+    }, [isValid, login]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/robots");
+        } else if (error) {
+            errors.password = error;
+            setValid(false);
+        }
+    }, [error, errors, setValid, success]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -97,8 +89,8 @@ export const Login: React.FC = () => {
                                 title="log in"
                                 width={260}
                                 isUppercase
-                                isLoading={isFetching}
-                                onClick={handleLogin}
+                                isLoading={loading}
+                                onClick={handleSubmit}
                             />
                             <div className={styles.loginDescription}>
                                 If you don’t already have an account and have not used our

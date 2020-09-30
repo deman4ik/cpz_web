@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { setAccessToken } from "./accessToken";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
+import { DocumentNode, useMutation } from "@apollo/client";
 
 import {
     LOGIN,
@@ -55,70 +55,65 @@ type AuthAction = [
         loading?: boolean;
         success: boolean;
         error: string;
+        result?: any;
     }
 ];
 
-const useLogin = (params, mutation): AuthAction => {
-    const [login, { loading, error, data }] = useMutation(mutation);
+const useAuthMutation = ({ mutation, variables }: { mutation: DocumentNode; variables?: any }): AuthAction => {
+    const [action, { loading, error, data }] = useMutation(mutation);
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        if (data?.result.accessToken) {
-            setAccessToken(data?.result.accessToken);
+        if (data?.result) {
             setSuccess(true);
         }
-    }, [data?.result.accessToken]);
+    }, [data?.result]);
 
     useEffect(() => {
         setErrorMessage(error?.graphQLErrors[0].message || "");
     }, [error?.graphQLErrors]);
-    return [() => login({ variables: params }), { loading, success, error: errorMessage }];
+
+    return [() => action({ variables }), { loading, success, error: errorMessage, result: data?.result }];
 };
 
-export const useTelegramLogin = (params: { id: any; hash: string }) => {
-    return useLogin(params, LOGIN_TELEGRAM);
-};
+const useLogin = ({ mutation, variables }): AuthAction => {
+    const [login, { loading, success, error, result }] = useAuthMutation({ variables, mutation });
 
-export const useEmailLogin = (params: { email: string; password: string }) => {
-    return useLogin(params, LOGIN);
-};
-
-export const logout = async () => {
-    let result = false;
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-            headers: config.headers
-        });
-        const json = await res.json();
-        result = json.success;
-        if (!result) {
-            console.error(json.error);
+    useEffect(() => {
+        if (result?.accessToken) {
+            setAccessToken(result?.accessToken);
         }
-    } catch (err) {}
-    return result;
+    }, [result]);
+
+    return [login, { loading, success, error }];
 };
 
-export const register = async (data: { email: string; password: string }, client) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
+export const useTelegramLogin = (variables: { id: any; hash: string }) => {
+    return useLogin({ mutation: LOGIN_TELEGRAM, variables });
+};
 
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/register`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
+export const useEmailLogin = (variables: { email: string; password: string }) => {
+    return useLogin({ mutation: LOGIN, variables });
+};
+
+export const useLogout = (): AuthAction => {
+    const [logout, { success, error, result }] = useAuthMutation({ mutation: LOGIN });
+
+    useEffect(() => {
+        if (result?.accessToken) {
+            setAccessToken("");
+        }
+    }, [result]);
+
+    return [logout, { success, error }];
+};
+
+export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
+    const [register, { loading, success, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
+
+    useEffect(() => {
+        if (result?.userId) {
             client.writeQuery({
                 query: gql`
                     query {
@@ -126,39 +121,17 @@ export const register = async (data: { email: string; password: string }, client
                     }
                 `,
                 data: {
-                    userId: json.userId
+                    userId: result?.userId
                 }
             });
-        } else {
-            result.error = json.error;
         }
-    } catch (err) {}
-    return result;
+    }, [client, result?.userId]);
+
+    return [register, { loading, success, error }];
 };
 
-export const confirm = async (data: { userId: string; secretCode: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/activate-account`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            setAccessToken(json.accessToken);
-            result.success = true;
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {}
-    return result;
+export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
+    return useLogin({ mutation: ACTIVATE_ACCOUNT, variables });
 };
 
 export const activate = async (encode: string) => {
@@ -173,23 +146,11 @@ export const activate = async (encode: string) => {
     return result;
 };
 
-export const reset = async (email: string, client: any) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify({ email });
+export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
+    const [resetPassword, { success, error, result }] = useAuthMutation({ mutation: PASSWORD_RESET, variables });
 
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/password-reset`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
+    useEffect(() => {
+        if (result?.userId)
             client.writeQuery({
                 query: gql`
                     query {
@@ -197,39 +158,20 @@ export const reset = async (email: string, client: any) => {
                     }
                 `,
                 data: {
-                    userId: json.userId
+                    userId: result?.userId
                 }
             });
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {}
-    return result;
+    }, [client, result?.userId]);
+
+    return [resetPassword, { success, error }];
 };
 
-export const recover = async (data: { userId: string; secretCode: string; password: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/confirm-password-reset`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {}
-    return result;
+export const useResetConfirmation = (variables: {
+    userId: string;
+    secretCode: string;
+    password: string;
+}): AuthAction => {
+    return useLogin({ mutation: CONFIRM_PASSWORD_RESET, variables });
 };
 
 export const recoverEncoded = async (encode: string, password: string) => {
@@ -250,32 +192,11 @@ export const recoverEncoded = async (encode: string, password: string) => {
     return result;
 };
 
-export const fetchAccessToken = async (refresh_token?: string, isLocalhost = false) => {
-    let accessToken = "";
-    const headers: Headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-    };
-    if (isLocalhost) {
-        headers["x-refresh-token"] = refresh_token;
-    }
-    if (refresh_token) {
-        headers.cookie = `refresh_token=${refresh_token}`;
-    }
+export const useFetchAccessToken = (): AuthAction => {
+    const [fetchToken, { loading, error, data }] = useMutation(REFRESH_TOKEN);
+    const [success, setSuccess] = useState(false);
+    fetchToken();
+    console.log("fetched", data);
 
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/refresh-token`, {
-            method: "POST",
-            credentials: "include",
-            headers
-            //headers: refresh_token ? { ...headers, Cookie: `refresh_token=${refresh_token}` } : headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            accessToken = json.accessToken;
-        }
-    } catch (err) {
-        console.error(err);
-    }
-    return accessToken;
+    return [fetchToken, { loading, error: error.graphQLErrors[0].message, success }];
 };

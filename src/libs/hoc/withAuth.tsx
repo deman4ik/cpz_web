@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
 import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
-import { fetchAccessToken } from "../auth";
+import { useFetchAccessToken } from "../auth";
 import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
@@ -50,7 +50,7 @@ export const withAuth = (Page) => {
             const refresh_token =
                 ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
             if (refresh_token) {
-                accessToken = await fetchAccessToken(refresh_token);
+                accessToken = await useFetchAccessToken(refresh_token);
                 if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
                     redirect(ctx, pathToRedirect);
                 }
@@ -71,7 +71,7 @@ export const withAuth = (Page) => {
             accessToken = accessTokenFull.token;
             const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
             if (accessToken.length === 0) {
-                accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
+                accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
                 if (
                     (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
                     EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
@@ -79,7 +79,7 @@ export const withAuth = (Page) => {
                     redirect(ctx, pathToRedirect);
                 }
             } else if (Date.now() >= accessTokenFull.exp * 1000) {
-                accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
+                accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
                 if (
                     (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
                     EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)

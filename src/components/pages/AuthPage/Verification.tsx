@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
-import { confirm } from "libs/auth";
+import { useConfirmation } from "libs/auth";
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
 import { USER } from "graphql/local/queries";
@@ -21,10 +21,7 @@ export const Verification: React.FC = () => {
         INITIAL_STATE,
         validateAuth
     );
-
-    const handleOnPress = async () => {
-        handleSubmit();
-    };
+    const [confirm, { success, error }] = useConfirmation({ userId: data.userId, secretCode: values.verificationCode });
 
     useEffect(() => {
         if (!loading && data && !data.userId) {
@@ -33,19 +30,19 @@ export const Verification: React.FC = () => {
     }, [data, loading]);
 
     useEffect(() => {
-        const confirmCode = async () => {
-            const result = await confirm({ userId: data.userId, secretCode: values.verificationCode });
-            if (result.success) {
-                Router.push("/auth/activate");
-            } else {
-                errors.verificationCode = result.error;
-                setValid(false);
-            }
-        };
         if (isValid) {
-            confirmCode();
+            confirm();
         }
-    }, [data.userId, errors, isValid, setValid, values.verificationCode]);
+    }, [isValid, confirm]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/auth/activate");
+        } else if (error) {
+            errors.verificationCode = error;
+            setValid(false);
+        }
+    }, [error, errors, setValid, success]);
 
     return (
         <div className={styles.container}>
@@ -74,7 +71,7 @@ export const Verification: React.FC = () => {
                             title="Verify my email address"
                             type="success"
                             width={260}
-                            onClick={handleOnPress}
+                            onClick={handleSubmit}
                             isUppercase
                         />
                     </div>
