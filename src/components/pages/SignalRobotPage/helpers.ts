@@ -72,8 +72,7 @@ export const floatPositions = {
     }
 };
 
-const getEntryMarker = (position_entry) => {
-    // console.log(position_entry);
+const getEntryMarker = (position_entry, asset) => {
     const { entry_action, entry_date, entry_candle_timestamp, entry_price, id, code, status, volume } = position_entry;
     const entryAction = position_entry.entry_action === "short";
 
@@ -88,13 +87,13 @@ const getEntryMarker = (position_entry) => {
         id: `${id}_${0}`,
         code,
         action: capitalize(entry_action),
-        volume,
+        volume: `${volume} ${asset}`,
         status,
         exit: false
     };
 };
 
-const getExitMarker = (position_exit) => {
+const getExitMarker = (position_exit, asset) => {
     const {
         exit_action,
         exit_candle_timestamp,
@@ -121,13 +120,13 @@ const getExitMarker = (position_exit) => {
             .split(/(?=[A-Z])/)
             .join(" "),
         profit,
-        volume,
+        volume: `${volume} ${asset}`,
         status,
         exit: true
     };
 };
 
-export const getCandleChartData = ({ candles }) => {
+export const getCandleChartData = ({ candles }, asset) => {
     if (!candles?.length) return { candles: [], markers: [] };
     return candles.reduceRight(
         (acc, item) => {
@@ -135,11 +134,11 @@ export const getCandleChartData = ({ candles }) => {
             if (candle) {
                 const { time, open, high, low, close, volume } = candle;
                 if (position_entry) {
-                    const markerItem = getEntryMarker(position_entry[0]);
+                    const markerItem = getEntryMarker(position_entry[0], asset);
                     acc.markers.push(markerItem);
                 }
                 if (position_exit) {
-                    const markerItem = getExitMarker(position_exit[0]);
+                    const markerItem = getExitMarker(position_exit[0], asset);
                     acc.markers.push(markerItem);
                 }
                 acc.candles.push({ open, high, low, close, volume, time: time / 1000 });
@@ -150,7 +149,7 @@ export const getCandleChartData = ({ candles }) => {
     );
 };
 
-export const getUpdatedCandleChartData = ({ candles }) => {
+export const getUpdatedCandleChartData = ({ candles }, asset) => {
     const newCandle = candles.length ? candles[0] : null;
     let updateCandle = {
         time: null,
@@ -166,11 +165,11 @@ export const getUpdatedCandleChartData = ({ candles }) => {
     if (candle) {
         const { time, open, high, low, close, volume } = candle;
         if (position_entry) {
-            const markerItem = getEntryMarker(position_entry[0]);
+            const markerItem = getEntryMarker(position_entry[0], asset);
             markers.push(markerItem);
         }
         if (position_exit) {
-            const markerItem = getExitMarker(position_exit[0]);
+            const markerItem = getExitMarker(position_exit[0], asset);
             markers.push(markerItem);
         }
         updateCandle = { open, high, low, close, volume, time: time / 1000 };

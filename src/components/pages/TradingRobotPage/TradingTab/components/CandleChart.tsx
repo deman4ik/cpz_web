@@ -107,7 +107,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
             return;
         }
 
-        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate);
+        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
         const { candles: oldCandles } = candleChartData;
         if (!updateCandle.time) {
             return;
