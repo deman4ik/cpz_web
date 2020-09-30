@@ -94,7 +94,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
     useEffect(() => {
         if (!loading && data) {
-            setChartData(getCandleChartData(data));
+            setChartData(getCandleChartData(data, asset));
         }
     }, [loading, data, asset]);
 
@@ -109,7 +109,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             return;
         }
 
-        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate);
+        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
         const { candles: oldCandles } = chartData;
         if (!updateCandle.time) {
             return;
