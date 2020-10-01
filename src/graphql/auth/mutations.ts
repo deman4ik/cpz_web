@@ -49,7 +49,7 @@ export const REGISTER = gql`
 `;
 
 /**
- * @returns accessToken
+ * @returns accessToken, refreshToken, refreshTokenExpireAt
  */
 export const REFRESH_TOKEN = gql`
     mutation refresh_token {

@@ -2,6 +2,7 @@
 import { setAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 import { DocumentNode, useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
 
 import {
     LOGIN,
@@ -15,24 +16,23 @@ import {
     CHANGE_EMAIL,
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
-import { useEffect, useState } from "react";
-
-interface Headers {
-    Accept: string;
-    [key: string]: any;
-}
-
-const config = {
-    headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        credentials: "same-origin"
-    }
-};
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+const writeUserToCache = (client, userId) => {
+    client.writeQuery({
+        query: gql`
+            query {
+                userId @client
+            }
+        `,
+        data: {
+            userId
+        }
+    });
+};
 
 export const testind = async () => {
     const result = {
@@ -98,9 +98,10 @@ export const useEmailLogin = (variables: { email: string; password: string }) =>
 };
 
 export const useLogout = (): AuthAction => {
-    const [logout, { success, error, result }] = useAuthMutation({ mutation: LOGIN });
+    const [logout, { success, error, result }] = useAuthMutation({ mutation: LOGOUT });
 
     useEffect(() => {
+        console.log(result?.accessToken);
         if (result?.accessToken) {
             setAccessToken("");
         }
@@ -113,18 +114,7 @@ export const useRegistration = (variables: { email: string; password: string }, 
     const [register, { loading, success, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
 
     useEffect(() => {
-        if (result?.userId) {
-            client.writeQuery({
-                query: gql`
-                    query {
-                        userId @client
-                    }
-                `,
-                data: {
-                    userId: result?.userId
-                }
-            });
-        }
+        if (result?.userId) writeUserToCache(client, result?.userId);
     }, [client, result?.userId]);
 
     return [register, { loading, success, error }];
@@ -136,31 +126,14 @@ export const useConfirmation = (variables: { userId: string; secretCode: string 
 
 export const activate = async (encode: string) => {
     let result = false;
-
-    try {
-        const data = JSON.parse(Buffer.from(encode, "base64").toString());
-        if (typeof data === "object") {
-            result = (await confirm(data)).success;
-        }
-    } catch (err) {}
-    return result;
+    return true;
 };
 
 export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
     const [resetPassword, { success, error, result }] = useAuthMutation({ mutation: PASSWORD_RESET, variables });
 
     useEffect(() => {
-        if (result?.userId)
-            client.writeQuery({
-                query: gql`
-                    query {
-                        userId @client
-                    }
-                `,
-                data: {
-                    userId: result?.userId
-                }
-            });
+        if (result?.userId) writeUserToCache(client, result?.userId);
     }, [client, result?.userId]);
 
     return [resetPassword, { success, error }];
@@ -179,24 +152,16 @@ export const recoverEncoded = async (encode: string, password: string) => {
         success: false,
         error: ""
     };
-
-    try {
-        const data = JSON.parse(Buffer.from(encode, "base64").toString());
-        if (typeof data === "object") {
-            result = await recover({
-                ...(data as { userId: string; secretCode: string }),
-                password
-            });
-        }
-    } catch (err) {}
     return result;
 };
 
-export const useFetchAccessToken = (): AuthAction => {
-    const [fetchToken, { loading, error, data }] = useMutation(REFRESH_TOKEN);
-    const [success, setSuccess] = useState(false);
-    fetchToken();
-    console.log("fetched", data);
+export const useRefreshToken = (): AuthAction => {
+    const [refreshToken, { success, error, result }] = useAuthMutation({ mutation: REFRESH_TOKEN });
 
-    return [fetchToken, { loading, error: error.graphQLErrors[0].message, success }];
+    useEffect(() => {
+        console.log("fetched", result);
+        if (result?.refreshToken) setAccessToken(result?.refreshToken);
+    }, [result, result?.refreshToken]);
+
+    return [refreshToken, { success, error }];
 };

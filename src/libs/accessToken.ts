@@ -2,7 +2,9 @@
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
 import { LOCALHOST } from "config/constants";
-import { useFetchAccessToken } from "./auth";
+import { useRefreshToken } from "./auth";
+import { useEffect, useState } from "react";
+import { access } from "fs";
 
 const accessToken = {
     token: "",
@@ -16,33 +18,34 @@ export const setAccessToken = (token: string) => {
         const { exp } = jwtDecode(accessToken.token);
         accessToken.exp = exp;
     }
-    console.log(accessToken);
 };
 
-export const getAccessToken = () => accessToken;
+export const getAccessToken = (ctx) => accessToken;
 
-export const getExpiredAccessToken = (ctx) => {
-    const [fetchToken, info] = useFetchAccessToken();
-    if (accessToken.token.length === 0) {
-        return accessToken.token;
-    }
+export const useAccessToken = (ctx) => {
+    const [token, setToken] = useState(accessToken.token);
+    const [refreshToken, { success, error }] = useRefreshToken();
 
-    if (Date.now() >= accessToken.exp * 1000) {
-        fetchToken();
-        if (!token) {
+    useEffect(() => {
+        if (!token || error) {
             redirect(ctx, "/auth/login");
         }
-        setAccessToken(token);
-        console.log(info);
-    } else {
-        token = getAccessToken().token;
-    }
-    return token;
+    }, [ctx, error, token]);
+
+    useEffect(() => {
+        if (token !== accessToken.token) setToken(accessToken.token);
+    }, [token]);
+
+    return [
+        () => {
+            if (token !== "" && Date.now() >= accessToken.exp * 1000) {
+                refreshToken();
+            }
+            return token;
+        }
+    ];
 };
 
-/**
- *  Функция получения user_id из jwt токена
- */
 export const getUserIdFromAccessToken = (token): string | null => {
     if (token) {
         const { userId } = jwtDecode(token);
@@ -51,9 +54,6 @@ export const getUserIdFromAccessToken = (token): string | null => {
     return null;
 };
 
-/**
- *  Функция получения роли пользователея
- */
 export const getUserRoleFromAccesToken = (token): string | null => {
     if (token) {
         const { role } = jwtDecode(token);

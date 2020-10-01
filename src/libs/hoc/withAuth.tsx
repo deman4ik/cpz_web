@@ -3,8 +3,7 @@ import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
 import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
-import { useFetchAccessToken } from "../auth";
-import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
+import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
@@ -28,69 +27,70 @@ const checkPath = (path: string) => {
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
+        console.log(props);
         const { setAuthState } = useContext(AuthContext);
-        const token = props?.accessToken;
+        const [getToken] = useAccessToken({});
+        const accessToken = getToken();
+        console.log("auth token", accessToken);
         useEffect(() => {
-            if (token) {
+            if (accessToken) {
                 setAuthState({
-                    isAuth: Boolean(token),
-                    user_id: getUserIdFromAccessToken(token),
-                    isManager: getUserRoleFromAccesToken(token) === "manager"
+                    isAuth: Boolean(accessToken),
+                    user_id: getUserIdFromAccessToken(accessToken),
+                    isManager: getUserRoleFromAccesToken(accessToken) === "manager"
                 });
             }
-        }, [token, setAuthState]);
+        }, [accessToken, setAuthState]);
 
-        return <Page {...props} />;
+        return <Page {...{ ...props, accessToken }} />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         let accessToken = "";
-        if (ctx.res) {
-            const refresh_token =
-                ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
-            if (refresh_token) {
-                accessToken = await useFetchAccessToken(refresh_token);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
-            }
-            if (accessToken && !isLanding) {
-                if (
-                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
-                        getUserRoleFromAccesToken(accessToken) !== "manager") // редирект если роль не менеджера
-                ) {
-                    redirect(ctx, pathToRedirectIfLogin);
-                }
-            }
-        } else {
-            const accessTokenFull = getAccessToken();
-            accessToken = accessTokenFull.token;
-            const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
-            if (accessToken.length === 0) {
-                accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (
-                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
-                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
-                ) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if (Date.now() >= accessTokenFull.exp * 1000) {
-                accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (
-                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
-                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
-                ) {
-                    redirect(ctx, pathToRedirect);
-                }
-            }
-        }
+        // if (ctx.res) {
+        //     const { refresh_token } = nextCookie(ctx);
+        //     if (refresh_token) {
+        //         accessToken = await useFetchAccessToken(refresh_token);
+        //         if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
+        //             redirect(ctx, pathToRedirect);
+        //         }
+        //     } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+        //         redirect(ctx, pathToRedirect);
+        //     }
+        //     if (accessToken && !isLanding) {
+        //         if (
+        //             EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
+        //             (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
+        //                 getUserRoleFromAccesToken(accessToken) !== "manager") // редирект если роль не менеджера
+        //         ) {
+        //             redirect(ctx, pathToRedirectIfLogin);
+        //         }
+        //     }
+        // } else {
+        //     const accessTokenFull = getAccessToken();
+        //     accessToken = accessTokenFull.token;
+        //     const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
+        //     if (accessToken.length === 0) {
+        //         accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
+        //         if (
+        //             (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+        //             EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+        //         ) {
+        //             redirect(ctx, pathToRedirect);
+        //         }
+        //     } else if (Date.now() >= accessTokenFull.exp * 1000) {
+        //         accessToken = await useFetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
+        //         if (
+        //             (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
+        //             EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
+        //         ) {
+        //             redirect(ctx, pathToRedirect);
+        //         }
+        //     }
+        // }
         return {
-            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
-            accessToken
+            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {})
         };
     };
 
