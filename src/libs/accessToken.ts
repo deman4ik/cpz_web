@@ -8,9 +8,9 @@ import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
 let accessToken = "";
 
-export const useRefreshToken = (variables): [() => void, { result: any; error: any }] => {
-    const [refresh, { data, error }] = useMutation(REFRESH_TOKEN, variables);
-    return [() => refresh(variables), { result: data?.result, error: error?.graphQLErrors[0].message }];
+export const useRefreshToken = (): [() => void, { result: any; error: any }] => {
+    const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
+    return [() => refresh(), { result: data?.result, error: error?.graphQLErrors[0].message }];
 };
 
 const constructToken = (token) => {
@@ -26,7 +26,7 @@ const constructToken = (token) => {
  */
 export const useAccessToken = (): [string, (token: string) => void] => {
     const [jwtToken, setToken] = useState(constructToken(accessToken));
-    const [refreshToken, { result, error }] = useRefreshToken({ refreshToken: accessToken });
+    const [refreshToken, { result, error }] = useRefreshToken();
 
     useEffect(() => {
         if (error) {

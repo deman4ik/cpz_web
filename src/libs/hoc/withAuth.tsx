@@ -35,23 +35,6 @@ export const withAuth = (Page) => {
     const WithAuth = (props) => {
         const { setAuthState } = useContext(AuthContext);
         const [accessToken] = useAccessToken();
-        const [getRefreshToken, { result, error }] = useRefreshToken({ refreshToken: accessToken });
-        const { refreshToken } = props;
-
-        if (!refreshToken && accessToken) {
-            getRefreshToken();
-        }
-
-        useEffect(() => {
-            console.log("getting the token", result);
-            if (result) {
-                const newRefreshToken = result;
-                document.cookie = `refresh_token=${newRefreshToken.refreshToken}; path=/; expires=${newRefreshToken.refreshTokenExpireAt}`;
-            }
-            if (error) console.error(error);
-        }, [error, result]);
-
-        console.log("auth token", accessToken);
 
         useEffect(() => {
             if (accessToken) {
@@ -102,8 +85,7 @@ export const withAuth = (Page) => {
             }
         }
         return {
-            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
-            refreshToken
+            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {})
         };
     };
 

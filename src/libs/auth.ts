@@ -72,7 +72,7 @@ const useAuthMutation = ({ mutation, variables }: AuthActionParams): AuthAction 
     }, [data?.result]);
 
     useEffect(() => {
-        setErrorMessage(error?.graphQLErrors[0].message || "");
+        setErrorMessage(error?.graphQLErrors[0]?.message || "");
     }, [error?.graphQLErrors]);
 
     return [() => action({ variables }), { loading, success, error: errorMessage, result: data?.result }];

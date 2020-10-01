@@ -33,7 +33,7 @@ export const MIN_NAME_LENGTH = 3;
 export const MIN_PASSWORD_LENGTH = 6;
 export const SECRET_CODE_LENGTH = 6;
 
-export const LOCALHOST = "localhost:3000";
+export const LOCALHOST = "127.0.0.1";
 //export const LOCALHOST = '127.0.0.1';
 
 export const POLL_INTERVAL = +process.env.POLL_INTERVAL || 10000;

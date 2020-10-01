@@ -64,11 +64,11 @@ const httpLink = createHttpLink({
 
 const connectionParams = (ctx) => {
     const token = getAccessToken();
-    console.log("param token", token);
     const headers = {} as { authorization?: string };
     if (token) {
         headers.authorization = `Bearer ${token}`;
     }
+    console.log(headers);
     return { headers };
 };
 
