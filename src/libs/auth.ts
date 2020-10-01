@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { setAccessToken } from "./accessToken";
+import { useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 import { DocumentNode, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -9,7 +9,6 @@ import {
     LOGIN_TELEGRAM,
     LOGOUT,
     REGISTER,
-    REFRESH_TOKEN,
     ACTIVATE_ACCOUNT,
     PASSWORD_RESET,
     CONFIRM_PASSWORD_RESET,
@@ -59,7 +58,9 @@ type AuthAction = [
     }
 ];
 
-const useAuthMutation = ({ mutation, variables }: { mutation: DocumentNode; variables?: any }): AuthAction => {
+type AuthActionParams = { mutation: DocumentNode; variables?: any };
+
+const useAuthMutation = ({ mutation, variables }: AuthActionParams): AuthAction => {
     const [action, { loading, error, data }] = useMutation(mutation);
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -77,37 +78,28 @@ const useAuthMutation = ({ mutation, variables }: { mutation: DocumentNode; vari
     return [() => action({ variables }), { loading, success, error: errorMessage, result: data?.result }];
 };
 
-const useLogin = ({ mutation, variables }): AuthAction => {
-    const [login, { loading, success, error, result }] = useAuthMutation({ variables, mutation });
-
+const useUpdateAccessToken = ({ mutation, variables }: AuthActionParams): AuthAction => {
+    const [action, { loading, success, error, result }] = useAuthMutation({ variables, mutation });
+    const [, setAccessToken] = useAccessToken();
     useEffect(() => {
         if (result?.accessToken) {
             setAccessToken(result?.accessToken);
         }
-    }, [result]);
+    }, [result?.accessToken, setAccessToken]);
 
-    return [login, { loading, success, error }];
+    return [action, { loading, success, error }];
 };
 
 export const useTelegramLogin = (variables: { id: any; hash: string }) => {
-    return useLogin({ mutation: LOGIN_TELEGRAM, variables });
+    return useUpdateAccessToken({ mutation: LOGIN_TELEGRAM, variables });
 };
 
 export const useEmailLogin = (variables: { email: string; password: string }) => {
-    return useLogin({ mutation: LOGIN, variables });
+    return useUpdateAccessToken({ mutation: LOGIN, variables });
 };
 
 export const useLogout = (): AuthAction => {
-    const [logout, { success, error, result }] = useAuthMutation({ mutation: LOGOUT });
-
-    useEffect(() => {
-        console.log(result?.accessToken);
-        if (result?.accessToken) {
-            setAccessToken("");
-        }
-    }, [result]);
-
-    return [logout, { success, error }];
+    return useUpdateAccessToken({ mutation: LOGOUT });
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
@@ -121,7 +113,7 @@ export const useRegistration = (variables: { email: string; password: string }, 
 };
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
-    return useLogin({ mutation: ACTIVATE_ACCOUNT, variables });
+    return useUpdateAccessToken({ mutation: ACTIVATE_ACCOUNT, variables });
 };
 
 export const activate = async (encode: string) => {
@@ -144,7 +136,7 @@ export const useResetConfirmation = (variables: {
     secretCode: string;
     password: string;
 }): AuthAction => {
-    return useLogin({ mutation: CONFIRM_PASSWORD_RESET, variables });
+    return useUpdateAccessToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
 };
 
 export const recoverEncoded = async (encode: string, password: string) => {
@@ -153,15 +145,4 @@ export const recoverEncoded = async (encode: string, password: string) => {
         error: ""
     };
     return result;
-};
-
-export const useRefreshToken = (): AuthAction => {
-    const [refreshToken, { success, error, result }] = useAuthMutation({ mutation: REFRESH_TOKEN });
-
-    useEffect(() => {
-        console.log("fetched", result);
-        if (result?.refreshToken) setAccessToken(result?.refreshToken);
-    }, [result, result?.refreshToken]);
-
-    return [refreshToken, { success, error }];
 };

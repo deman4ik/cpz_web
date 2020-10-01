@@ -10,7 +10,7 @@ import { InMemoryCache } from "@apollo/client/cache";
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
-import { setAccessToken, getAccessToken } from "../accessToken";
+import { getAccessToken } from "../accessToken";
 
 interface Definintion {
     kind: string;
@@ -63,7 +63,8 @@ const httpLink = createHttpLink({
 });
 
 const connectionParams = (ctx) => {
-    const { token } = getAccessToken(ctx);
+    const token = getAccessToken();
+    console.log("param token", token);
     const headers = {} as { authorization?: string };
     if (token) {
         headers.authorization = `Bearer ${token}`;
@@ -73,7 +74,6 @@ const connectionParams = (ctx) => {
 
 export default withApollo(
     (ctx) => {
-        console.log("fun", ctx);
         const authLink = setContext(async () => connectionParams(ctx));
         const contextLink = authLink.concat(httpLink);
         let link = contextLink;
@@ -120,10 +120,9 @@ export default withApollo(
     },
     {
         render: ({ Page, props }) => {
-            console.log("props", props);
-            if (typeof props.accessToken !== "undefined") {
-                setAccessToken(props.accessToken);
-            }
+            // if (typeof props.accessToken !== "undefined") {
+            //     setAccessToken(props.accessToken);
+            // }
 
             return (
                 <ApolloProvider client={props.apollo}>

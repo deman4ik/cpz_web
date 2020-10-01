@@ -52,7 +52,7 @@ export const REGISTER = gql`
  * @returns accessToken, refreshToken, refreshTokenExpireAt
  */
 export const REFRESH_TOKEN = gql`
-    mutation refresh_token {
+    mutation refresh_token($refreshToken: String) {
         result: refreshToken {
             accessToken
             refreshToken

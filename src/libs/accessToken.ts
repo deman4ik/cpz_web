@@ -2,49 +2,59 @@
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
 import { LOCALHOST } from "config/constants";
-import { useRefreshToken } from "./auth";
 import { useEffect, useState } from "react";
-import { access } from "fs";
+import { useMutation } from "@apollo/client";
+import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
-const accessToken = {
-    token: "",
-    exp: 0
+let accessToken = "";
+
+export const useRefreshToken = (variables): [() => void, { result: any; error: any }] => {
+    const [refresh, { data, error }] = useMutation(REFRESH_TOKEN, variables);
+    return [() => refresh(variables), { result: data?.result, error: error?.graphQLErrors[0].message }];
 };
 
-export const setAccessToken = (token: string) => {
-    accessToken.token = token;
-    accessToken.exp = 0;
-    if (token.length > 0) {
-        const { exp } = jwtDecode(accessToken.token);
-        accessToken.exp = exp;
-    }
+const constructToken = (token) => {
+    const { exp = 0 } = token ? jwtDecode(token) : {};
+    return {
+        token,
+        exp
+    };
 };
 
-export const getAccessToken = (ctx) => accessToken;
-
-export const useAccessToken = (ctx) => {
-    const [token, setToken] = useState(accessToken.token);
-    const [refreshToken, { success, error }] = useRefreshToken();
+/**
+ * Returns access token and a function to update it
+ */
+export const useAccessToken = (): [string, (token: string) => void] => {
+    const [jwtToken, setToken] = useState(constructToken(accessToken));
+    const [refreshToken, { result, error }] = useRefreshToken({ refreshToken: accessToken });
 
     useEffect(() => {
-        if (!token || error) {
-            redirect(ctx, "/auth/login");
+        if (error) {
+            redirect({}, "/auth/login");
         }
-    }, [ctx, error, token]);
+    }, [error]);
 
     useEffect(() => {
-        if (token !== accessToken.token) setToken(accessToken.token);
-    }, [token]);
+        if (jwtToken.token !== "" && Date.now() >= jwtToken.exp * 1000) {
+            refreshToken();
+        }
+    }, [jwtToken, refreshToken]);
+
+    useEffect(() => {
+        console.log("refresh token", result?.jwtToken);
+        if (result?.jwtToken) setToken(result?.jwtToken);
+    }, [result?.jwtToken]);
 
     return [
-        () => {
-            if (token !== "" && Date.now() >= accessToken.exp * 1000) {
-                refreshToken();
-            }
-            return token;
+        jwtToken.token,
+        (token) => {
+            setToken(constructToken(token));
+            accessToken = token;
         }
     ];
 };
+
+export const getAccessToken = () => accessToken;
 
 export const getUserIdFromAccessToken = (token): string | null => {
     if (token) {
