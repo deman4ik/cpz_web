@@ -68,13 +68,12 @@ const connectionParams = (ctx) => {
     if (token) {
         headers.authorization = `Bearer ${token}`;
     }
-    console.log(headers);
     return { headers };
 };
 
 export default withApollo(
     (ctx) => {
-        const authLink = setContext(async () => connectionParams(ctx));
+        const authLink = setContext(() => connectionParams(ctx));
         const contextLink = authLink.concat(httpLink);
         let link = contextLink;
         if (!ssrMode) {
@@ -83,7 +82,7 @@ export default withApollo(
                 options: {
                     reconnect: true,
                     timeout: 30000,
-                    connectionParams: async () => connectionParams(ctx)
+                    connectionParams: () => connectionParams(ctx)
                 }
             });
             link = split(

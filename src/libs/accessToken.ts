@@ -8,24 +8,26 @@ import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
 let accessToken = "";
 
+export const getAccessToken = () => accessToken;
+
+const getTokenInfo = (jwt) => {
+    const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
+    return {
+        token: jwt,
+        exp
+    };
+};
+
 export const useRefreshToken = (): [() => void, { result: any; error: any }] => {
     const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
     return [() => refresh(), { result: data?.result, error: error?.graphQLErrors[0].message }];
-};
-
-const constructToken = (token) => {
-    const { exp = 0 } = token ? jwtDecode(token) : {};
-    return {
-        token,
-        exp
-    };
 };
 
 /**
  * Returns access token and a function to update it
  */
 export const useAccessToken = (): [string, (token: string) => void] => {
-    const [jwtToken, setToken] = useState(constructToken(accessToken));
+    const [jwtToken, setToken] = useState(getTokenInfo(accessToken));
     const [refreshToken, { result, error }] = useRefreshToken();
 
     useEffect(() => {
@@ -41,20 +43,18 @@ export const useAccessToken = (): [string, (token: string) => void] => {
     }, [jwtToken, refreshToken]);
 
     useEffect(() => {
-        console.log("refresh token", result?.jwtToken);
-        if (result?.jwtToken) setToken(result?.jwtToken);
-    }, [result?.jwtToken]);
+        console.log("refresh token", result?.accessToken);
+        if (result?.accessToken) setToken(getTokenInfo(result?.accessToken));
+    }, [result?.accessToken]);
 
     return [
         jwtToken.token,
         (token) => {
-            setToken(constructToken(token));
+            setToken(getTokenInfo(token));
             accessToken = token;
         }
     ];
 };
-
-export const getAccessToken = () => accessToken;
 
 export const getUserIdFromAccessToken = (token): string | null => {
     if (token) {

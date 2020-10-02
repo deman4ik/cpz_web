@@ -32,8 +32,8 @@ export const ForgotPassword: React.FC = () => {
     }, [error, errors, setValid, success]);
 
     useEffect(() => {
-        if (isValid) reset();
-    }, [isValid, reset]);
+        if (isValid && !loading && !error) reset();
+    }, [error, isValid, loading, reset]);
 
     return (
         <div className={styles.container}>

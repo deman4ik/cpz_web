@@ -37,10 +37,10 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        if (isValid) {
+        if (isValid && !loading && !error) {
             login();
         }
-    }, [isValid, login]);
+    }, [error, isValid, loading, login]);
 
     useEffect(() => {
         if (success) {
