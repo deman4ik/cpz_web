@@ -28,10 +28,10 @@ export const SignUp: React.FC = () => {
     );
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading) {
             register();
         }
-    }, [error, isValid, loading, register]);
+    }, [isValid, loading, register]);
 
     useEffect(() => {
         if (success) {

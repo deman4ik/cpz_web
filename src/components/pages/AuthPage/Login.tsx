@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
@@ -10,7 +11,8 @@ import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {
-    email: ""
+    email: "",
+    password: ""
 };
 
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
@@ -21,12 +23,8 @@ export const Login: React.FC = () => {
         INITIAL_STATE,
         validateAuth
     );
-    const [password, setPassword] = useState("");
-    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password });
 
-    const onChangePassword = (value: string) => {
-        setPassword(value);
-    };
+    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password: values.password });
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -37,19 +35,20 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading && !success) {
             login();
         }
-    }, [error, isValid, loading, login]);
+    }, [isValid, success]);
 
     useEffect(() => {
         if (success) {
             Router.push("/robots");
         } else if (error) {
-            errors.password = error;
+            //console.log("beb");
             setValid(false);
+            errors.password = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -73,12 +72,12 @@ export const Login: React.FC = () => {
                             />
                             <Input
                                 style={{ marginTop: 8 }}
-                                value={password}
+                                value={values.password}
                                 maxLength={100}
                                 width={260}
                                 error={errors.password}
                                 placeholder="Password"
-                                onChangeText={(text) => onChangePassword(text)}
+                                onChangeText={(text) => handleChange("password", text)}
                                 type="password"
                                 autoComplete="password"
                             />

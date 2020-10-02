@@ -30,10 +30,10 @@ export const RecoverPassword: React.FC = () => {
     });
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading) {
             confirm();
         }
-    }, [confirm, error, isValid, loading]);
+    }, [confirm, isValid, loading]);
 
     useEffect(() => {
         if (success) {

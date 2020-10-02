@@ -28,13 +28,11 @@ export const withAuth = (Page) => {
         const [accessToken] = useAccessToken();
 
         useEffect(() => {
-            if (accessToken) {
-                setAuthState({
-                    isAuth: Boolean(accessToken),
-                    user_id: getUserIdFromAccessToken(accessToken),
-                    isManager: getUserRoleFromAccesToken(accessToken) === "manager"
-                });
-            }
+            setAuthState({
+                isAuth: Boolean(accessToken),
+                user_id: getUserIdFromAccessToken(accessToken),
+                isManager: getUserRoleFromAccesToken(accessToken) === "manager"
+            });
         }, [accessToken, setAuthState]);
 
         return <Page {...{ ...props, accessToken }} />;

@@ -30,10 +30,10 @@ export const Verification: React.FC = () => {
     }, [data, loading]);
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading) {
             confirm();
         }
-    }, [isValid, confirm, loading, error]);
+    }, [isValid, confirm, loading]);
 
     useEffect(() => {
         if (success) {

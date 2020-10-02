@@ -99,7 +99,14 @@ export const useEmailLogin = (variables: { email: string; password: string }) =>
 };
 
 export const useLogout = (): AuthAction => {
-    return useUpdateAccessToken({ mutation: LOGOUT });
+    const [logout, { loading, success, error, result }] = useAuthMutation({ mutation: LOGOUT });
+    const [, setAccessToken] = useAccessToken();
+
+    useEffect(() => {
+        if (result?.result) setAccessToken("");
+    }, [result?.result, setAccessToken]);
+
+    return [logout, { loading, success, error }];
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {

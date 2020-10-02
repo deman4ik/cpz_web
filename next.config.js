@@ -10,5 +10,5 @@ module.exports = withPlugins([[withImages, { esModule: true }]], {
         DEV_REFRESH_TOKEN: process.env.DEV_REFRESH_TOKEN,
         POLL_INTERVAL: process.env.POLL_INTERVAL
     },
-    poweredByHeader: false
+    poweredByHeader: false //, trailingSlash: false
 });

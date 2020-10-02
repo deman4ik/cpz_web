@@ -5,7 +5,7 @@ export default Error;
 
 Error.getInitialProps = ({ res, err, asPath }) => {
     const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-
+    console.log(res, err, asPath);
     if (statusCode && statusCode === 404) {
         if (asPath.match(/\/$/)) {
             const withoutTrailingSlash = asPath.substr(0, asPath.length - 1);

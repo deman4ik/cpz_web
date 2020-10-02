@@ -1,3 +1,4 @@
+import { validateOperation } from "@apollo/client/link/utils";
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
 
@@ -17,9 +18,9 @@ export const useFormValidation = (initialState, validate) => {
 
     useEffect(() => {
         if (isSubmitting) {
-            const foundErrors = Object.keys(errors).length === 0;
-            setValid(foundErrors);
-            setSubmitting(foundErrors);
+            const noErrors = Object.keys(errors).length === 0;
+            setValid(noErrors);
+            setSubmitting(false);
         }
     }, [errors, isSubmitting]);
 
