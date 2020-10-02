@@ -7,7 +7,7 @@ import { validateAuth } from "config/validation";
 import { CartFooter } from "./common/CartFooter";
 import { Input, Button } from "components/basic";
 import { PageHead, Footer, Header } from "components/layout";
-import { reset } from "libs/auth";
+import { usePasswordReset } from "libs/auth";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {
@@ -15,34 +15,25 @@ const INITIAL_STATE = {
 };
 
 export const ForgotPassword: React.FC = () => {
-    const [isFetching, setIsFetching] = useState(false);
     const client = useApolloClient();
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-
-    const handleOnPress = () => {
-        handleSubmit();
-    };
+    const [reset, { loading, success, error }] = usePasswordReset({ email: values.email }, client);
 
     useEffect(() => {
-        const recoverPassword = async () => {
-            const result = await reset(values.email, client);
-
-            if (result.success) {
-                Router.push("/auth/recover_password");
-            } else {
-                errors.email = result.error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            recoverPassword();
+        if (success) {
+            Router.push("/auth/recover_password");
+        } else if (error) {
+            errors.email = error;
+            setValid(false);
         }
-    }, [client, errors, isValid, setValid, values.email]);
+    }, [error, errors, setValid, success]);
+
+    useEffect(() => {
+        if (isValid && !loading && !error) reset();
+    }, [error, isValid, loading, reset]);
 
     return (
         <div className={styles.container}>
@@ -72,8 +63,8 @@ export const ForgotPassword: React.FC = () => {
                             size="big"
                             width={260}
                             isUppercase
-                            isLoading={isFetching}
-                            onClick={handleOnPress}
+                            isLoading={loading}
+                            onClick={handleSubmit}
                         />
                     </div>
                     <CartFooter />

@@ -7,7 +7,7 @@ import { CartFooter } from "./common/CartFooter";
 import { Button, Input } from "components/basic";
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { recover } from "libs/auth";
+import { useResetConfirmation } from "libs/auth";
 import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
@@ -18,37 +18,31 @@ const INITIAL_STATE = {
 };
 
 export const RecoverPassword: React.FC = () => {
-    const [isFetching, setIsFetching] = useState(false);
     const { data } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-
-    const handleOnPress = () => {
-        handleSubmit();
-    };
+    const [confirm, { loading, success, error }] = useResetConfirmation({
+        userId: data.userId,
+        secretCode: values.verificationCode,
+        password: values.password
+    });
 
     useEffect(() => {
-        const recoverPassword = async () => {
-            const result = await recover({
-                userId: data.userId,
-                secretCode: values.verificationCode,
-                password: values.password
-            });
-            if (result.success) {
-                Router.push("/auth/done");
-            } else {
-                errors.verificationCode = result.error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            recoverPassword();
+        if (isValid && !loading && !error) {
+            confirm();
         }
-    }, [data.userId, errors, isValid, setValid, values.password, values.verificationCode]);
+    }, [confirm, error, isValid, loading]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/auth/done");
+        } else if (error) {
+            errors.verificationCode = error;
+            setValid(false);
+        }
+    }, [error, errors, setValid, success]);
 
     return (
         <div className={styles.container}>
@@ -95,8 +89,8 @@ export const RecoverPassword: React.FC = () => {
                             title="Reset"
                             width={260}
                             isUppercase
-                            isLoading={isFetching}
-                            onClick={handleOnPress}
+                            isLoading={loading}
+                            onClick={handleSubmit}
                         />
                     </div>
                     <CartFooter />

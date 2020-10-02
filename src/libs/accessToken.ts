@@ -1,47 +1,61 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
-import { LOCALHOST } from "../config/constants";
-import { fetchAccessToken } from "./auth";
+import { LOCALHOST } from "config/constants";
+import { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
-const accessToken = {
-    token: "",
-    exp: 0
-};
-
-export const setAccessToken = (token: string) => {
-    accessToken.token = token;
-    accessToken.exp = 0;
-    if (token.length > 0) {
-        const { exp } = jwtDecode(accessToken.token);
-        accessToken.exp = exp;
-    }
-};
+let accessToken = "";
 
 export const getAccessToken = () => accessToken;
 
-export const getExpiredAccessToken = async (ctx) => {
-    if (accessToken.token.length === 0) {
-        return accessToken.token;
-    }
-    let token = "";
-    const isLocalhost =
-        ctx && ctx.headers ? ctx.headers.host === LOCALHOST : window.location.origin === `http://${LOCALHOST}`;
-    if (Date.now() >= accessToken.exp * 1000) {
-        token = await fetchAccessToken(isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined, isLocalhost);
-        if (!token) {
-            redirect(ctx, "/auth/login");
-        }
-        setAccessToken(token);
-    } else {
-        token = getAccessToken().token;
-    }
-    return token;
+const getTokenInfo = (jwt) => {
+    const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
+    return {
+        token: jwt,
+        exp
+    };
+};
+
+export const useRefreshToken = (): [() => void, { result: any; error: any }] => {
+    const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
+    return [() => refresh(), { result: data?.result, error: error?.graphQLErrors[0].message }];
 };
 
 /**
- *  Функция получения user_id из jwt токена
+ * Returns access token and a function to update it
  */
+export const useAccessToken = (): [string, (token: string) => void] => {
+    const [jwtToken, setToken] = useState(getTokenInfo(accessToken));
+    const [refreshToken, { result, error }] = useRefreshToken();
+
+    useEffect(() => {
+        if (error) {
+            redirect({}, "/auth/login");
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (jwtToken.token !== "" && Date.now() >= jwtToken.exp * 1000) {
+            refreshToken();
+        }
+    }, [jwtToken, refreshToken]);
+
+    useEffect(() => {
+        console.log("refresh token", result?.accessToken);
+        if (result?.accessToken) setToken(getTokenInfo(result?.accessToken));
+    }, [result?.accessToken]);
+
+    return [
+        jwtToken.token,
+        (token) => {
+            setToken(getTokenInfo(token));
+            accessToken = token;
+        }
+    ];
+};
+
 export const getUserIdFromAccessToken = (token): string | null => {
     if (token) {
         const { userId } = jwtDecode(token);
@@ -50,9 +64,6 @@ export const getUserIdFromAccessToken = (token): string | null => {
     return null;
 };
 
-/**
- *  Функция получения роли пользователея
- */
 export const getUserRoleFromAccesToken = (token): string | null => {
     if (token) {
         const { role } = jwtDecode(token);

@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { login } from "libs/auth";
+import { useEmailLogin } from "libs/auth";
 import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
@@ -22,14 +22,10 @@ export const Login: React.FC = () => {
         validateAuth
     );
     const [password, setPassword] = useState("");
-    const [isFetching, setIsFetching] = useState(false);
+    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password });
 
     const onChangePassword = (value: string) => {
         setPassword(value);
-    };
-
-    const handleLogin = () => {
-        handleSubmit();
     };
 
     const handleSwitchToStep = (step: string) => {
@@ -41,25 +37,19 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        const loginUser = async () => {
-            const result = await login({
-                email: values.email,
-                password
-            });
-
-            if (result.success) {
-                Router.push("/robots");
-            } else {
-                errors.password = result.error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            loginUser();
+        if (isValid && !loading && !error) {
+            login();
         }
-    }, [errors, isValid, password, setValid, values.email]);
+    }, [error, isValid, loading, login]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/robots");
+        } else if (error) {
+            errors.password = error;
+            setValid(false);
+        }
+    }, [error, errors, setValid, success]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -79,6 +69,7 @@ export const Login: React.FC = () => {
                                 width={260}
                                 placeholder="Email"
                                 onChangeText={(text: string) => handleChange("email", text)}
+                                autoComplete="email"
                             />
                             <Input
                                 style={{ marginTop: 8 }}
@@ -89,6 +80,7 @@ export const Login: React.FC = () => {
                                 placeholder="Password"
                                 onChangeText={(text) => onChangePassword(text)}
                                 type="password"
+                                autoComplete="password"
                             />
                             <Button
                                 style={{ marginTop: 10 }}
@@ -97,8 +89,8 @@ export const Login: React.FC = () => {
                                 title="log in"
                                 width={260}
                                 isUppercase
-                                isLoading={isFetching}
-                                onClick={handleLogin}
+                                isLoading={loading}
+                                onClick={handleSubmit}
                             />
                             <div className={styles.loginDescription}>
                                 If you don’t already have an account and have not used our

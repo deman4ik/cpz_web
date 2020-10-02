@@ -15,6 +15,7 @@ export const Activate: React.FC = () => {
 
     const activateCode = async () => {
         const result = await activate(router.query.encoded as string);
+        console.log(result);
         if (!result) {
             console.error("activation failed");
         }

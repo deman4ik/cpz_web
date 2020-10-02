@@ -10,7 +10,7 @@ import { InMemoryCache } from "@apollo/client/cache";
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
-import { setAccessToken, getExpiredAccessToken } from "../accessToken";
+import { getAccessToken } from "../accessToken";
 
 interface Definintion {
     kind: string;
@@ -62,8 +62,8 @@ const httpLink = createHttpLink({
     uri: `https://${process.env.HASURA_URL}`
 });
 
-const connectionParams = async (ctx) => {
-    const token = await getExpiredAccessToken(ctx);
+const connectionParams = (ctx) => {
+    const token = getAccessToken();
     const headers = {} as { authorization?: string };
     if (token) {
         headers.authorization = `Bearer ${token}`;
@@ -73,7 +73,7 @@ const connectionParams = async (ctx) => {
 
 export default withApollo(
     (ctx) => {
-        const authLink = setContext(async () => await connectionParams(ctx));
+        const authLink = setContext(() => connectionParams(ctx));
         const contextLink = authLink.concat(httpLink);
         let link = contextLink;
         if (!ssrMode) {
@@ -82,7 +82,7 @@ export default withApollo(
                 options: {
                     reconnect: true,
                     timeout: 30000,
-                    connectionParams: async () => await connectionParams(ctx)
+                    connectionParams: () => connectionParams(ctx)
                 }
             });
             link = split(
@@ -119,9 +119,9 @@ export default withApollo(
     },
     {
         render: ({ Page, props }) => {
-            if (typeof props.accessToken !== "undefined") {
-                setAccessToken(props.accessToken);
-            }
+            // if (typeof props.accessToken !== "undefined") {
+            //     setAccessToken(props.accessToken);
+            // }
 
             return (
                 <ApolloProvider client={props.apollo}>

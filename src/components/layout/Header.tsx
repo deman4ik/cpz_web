@@ -1,18 +1,21 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import Link from "next/link";
 
-import { getAccessToken } from "libs/accessToken";
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     hasHomeButton?: boolean;
 }
 
 const _Header: React.FC<Props> = ({ hasHomeButton }) => {
-    const { token } = getAccessToken();
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const { logoutProcess } = useLogoutProcess();
 
     const handleOnClick = (href: string) => {
@@ -34,7 +37,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                         </Link>
                     </div>
                 )}
-                {!!token && (
+                {isAuth && (
                     <>
                         {linksHeader.map((item, idx) => (
                             <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
@@ -47,7 +50,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
                 )}
             </div>
             <div className={styles.rightContainer}>
-                {token ? (
+                {isAuth ? (
                     <div className={styles.btnWrapper}>
                         <div className={styles.btnTitle} onClick={logoutProcess}>
                             Log out

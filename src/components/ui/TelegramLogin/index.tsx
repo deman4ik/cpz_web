@@ -2,11 +2,11 @@ import React, { memo, useEffect, useState } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
-import { ADD_TELEGRAM_ACCOUNT } from "../../../graphql/user/mutations";
-import { GET_USER_INFO } from "../../../graphql/user/queries";
-import { loginTelegram } from "../../../libs/auth";
-import { Modal } from "../../basic";
-import { LoadingIndicator } from "../../common";
+import { ADD_TELEGRAM_ACCOUNT } from "graphql/user/mutations";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { useTelegramLogin } from "libs/auth";
+import { Modal } from "components/basic";
+import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {
@@ -21,21 +21,16 @@ const userPic = true;
 const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium" }) => {
     let instance;
 
+    const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [error, setError] = useState("");
-    const [loginLoading, setLoginLoading] = useState(false);
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
+    const [login, { loading, success, error: loginError }] = useTelegramLogin(loginData);
 
-    const login = async (data) => {
-        setLoginLoading(true);
-        const result = await loginTelegram(data);
-        setLoginLoading(false);
-
-        if (result.success) {
-            Router.push("/robots");
-        } else {
-            setError(result.error);
-        }
-    };
+    if (success) {
+        Router.push("/robots");
+    } else if (loginError !== "") {
+        setError(loginError);
+    }
 
     useEffect(() => {
         (window as any).TelegramLoginWidget = userId
@@ -51,7 +46,10 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
                       })
               }
             : {
-                  dataOnauth: (data) => login(data)
+                  dataOnauth: (data) => {
+                      setLoginData(data);
+                      login();
+                  }
               };
         const script = document.createElement("script");
         script.src = "https://telegram.org/js/telegram-widget.js?7";
@@ -63,12 +61,12 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
         script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, buttonSize, instance, userId]);
+    }, [addTelegram, buttonSize, instance, login, userId]);
 
     return (
         <>
             <div className={styles.container}>
-                {(loginLoading || addLoading) && <LoadingIndicator />}
+                {(loading || addLoading) && <LoadingIndicator />}
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
             {message && <div className={styles.telegramPlaceholder}>{message}</div>}

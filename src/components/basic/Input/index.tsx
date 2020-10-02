@@ -19,6 +19,7 @@ interface Props {
     readonly?: boolean;
     style?: CSSProperties;
     right?: boolean;
+    autoComplete?: string;
 }
 
 export const Input: React.FC<Props> = ({
@@ -37,7 +38,8 @@ export const Input: React.FC<Props> = ({
     selectTextOnFocus,
     responsive,
     readonly,
-    maxLength = 30
+    maxLength = 30,
+    autoComplete = "hidden"
 }) => {
     const [inputValue, setInputValue] = useState(value);
     const inputRef = useRef(null);
@@ -106,6 +108,7 @@ export const Input: React.FC<Props> = ({
                     onKeyDown={formatInput}
                     onFocus={handleOnFocus}
                     value={inputValue}
+                    autoComplete={autoComplete}
                 />
                 {error && typeof error === "string" && <div className="error_line">{error}</div>}
             </div>

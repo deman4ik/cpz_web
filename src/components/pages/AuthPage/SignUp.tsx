@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useApolloClient } from "@apollo/client";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { register } from "libs/auth";
+import { useRegistration } from "libs/auth";
 import { Button, Input } from "components/basic";
 import { PageHead, Footer, Header } from "components/layout";
 import styles from "./index.module.css";
@@ -22,29 +22,25 @@ export const SignUp: React.FC = () => {
         INITIAL_STATE,
         validateAuth
     );
-    const [isFetching, setIsFetching] = useState(false);
-
-    const handleOnPress = () => {
-        handleSubmit();
-    };
+    const [register, { loading, success, error }] = useRegistration(
+        { email: values.email, password: values.password },
+        client
+    );
 
     useEffect(() => {
-        const registerUser = async () => {
-            const result = await register({ email: values.email, password: values.password }, client);
-
-            if (result.success) {
-                Router.push("/auth/verification");
-            } else {
-                errors.email = result.error;
-                setIsFetching(false);
-                setValid(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            registerUser();
+        if (isValid && !loading && !error) {
+            register();
         }
-    }, [client, errors, isValid, setValid, values]);
+    }, [error, isValid, loading, register]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/auth/verification");
+        } else if (error) {
+            errors.email = error;
+            setValid(false);
+        }
+    }, [error, errors, setValid, success]);
 
     return (
         <div className={styles.container}>
@@ -91,8 +87,8 @@ export const SignUp: React.FC = () => {
                             width={260}
                             title="Sign Up"
                             isUppercase
-                            isLoading={isFetching}
-                            onClick={handleOnPress}
+                            isLoading={loading}
+                            onClick={handleSubmit}
                         />
                     </div>
                     <CartFooter />
