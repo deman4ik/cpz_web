@@ -117,7 +117,7 @@ export const useConfirmation = (variables: { userId: string; secretCode: string 
 };
 
 export const activate = async (encode: string) => {
-    let result = false;
+    const result = false;
     return true;
 };
 
@@ -140,7 +140,7 @@ export const useResetConfirmation = (variables: {
 };
 
 export const recoverEncoded = async (encode: string, password: string) => {
-    let result = {
+    const result = {
         success: false,
         error: ""
     };
