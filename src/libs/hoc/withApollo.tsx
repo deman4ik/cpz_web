@@ -102,6 +102,7 @@ export default withApollo(
         });
 
         const client = new ApolloClient({
+            credentials: "same-origin",
             link,
             cache,
             resolvers,
