@@ -60,7 +60,7 @@ const cacheQuery = gql`
 const ssrMode = !process.browser;
 const httpLink = createHttpLink({
     uri: `https://${process.env.HASURA_URL}`,
-    credentials: "same-origin"
+    credentials: "include"
 });
 
 const connectionParams = (ctx) => {
@@ -103,7 +103,7 @@ export default withApollo(
         });
 
         const client = new ApolloClient({
-            credentials: "same-origin",
+            credentials: "include",
             link,
             cache,
             resolvers,
