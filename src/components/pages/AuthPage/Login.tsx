@@ -44,11 +44,10 @@ export const Login: React.FC = () => {
         if (success) {
             Router.push("/robots");
         } else if (error) {
-            //console.log("beb");
             setValid(false);
             errors.password = error;
         }
-    }, [error, success]);
+    }, [success]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
