@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
 
@@ -18,13 +18,16 @@ const INITIAL_STATE = {
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 const message =
     "If you do not see the Telegram login widget here, it seems that the Telegram is blocked in your country. Please use a proxy or VPN to access the Telegram login widget.";
-export const Login: React.FC = () => {
+const _Login: React.FC = () => {
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
 
+    console.log("Login rendered");
+
     const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password: values.password });
+    const errorRef = useRef(error);
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -35,19 +38,24 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
+        console.log("isvalid update");
+        
         if (isValid && !loading && !success) {
             login();
         }
-    }, [isValid, success]);
+    }, [isValid]);
 
     useEffect(() => {
+        console.log("success-error update")
         if (success) {
+            if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
             Router.push("/robots");
-        } else if (error) {
+        } else if (errorRef.current !== error) {
             setValid(false);
             errors.password = error;
+            errorRef.current = error;
         }
-    }, [success]);
+    }, [success, error]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -131,3 +139,5 @@ export const Login: React.FC = () => {
         </div>
     );
 };
+
+export const Login = memo(_Login);

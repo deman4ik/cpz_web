@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef } from "react";
 import { useApolloClient } from "@apollo/client";
 import Router from "next/router";
 
@@ -26,21 +27,23 @@ export const SignUp: React.FC = () => {
         { email: values.email, password: values.password },
         client
     );
+    const errorRef = useRef(error);
 
     useEffect(() => {
         if (isValid && !loading) {
             register();
         }
-    }, [isValid, loading, register]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
             Router.push("/auth/verification");
-        } else if (error) {
-            errors.email = error;
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.email = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container}>

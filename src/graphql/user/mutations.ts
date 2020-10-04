@@ -23,9 +23,7 @@ export const SET_USER_PASSWORD = gql`
 export const CHANGE_USER_EMAIL = gql`
     mutation changeEmail($email: String!) {
         changeEmail(email: $email) {
-            success
             result
-            error
         }
     }
 `;
@@ -33,9 +31,7 @@ export const CHANGE_USER_EMAIL = gql`
 export const CONFIRM_USER_EMAIL = gql`
     mutation confirmChangeEmail($secretCode: String!) {
         confirmChangeEmail(secretCode: $secretCode) {
-            success
-            result
-            error
+            accessToken
         }
     }
 `;

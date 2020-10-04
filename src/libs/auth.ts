@@ -49,7 +49,7 @@ export const testindBool = async () => {
 };
 
 type AuthAction = [
-    () => void,
+    () => Promise<any>,
     {
         loading?: boolean;
         success: boolean;
@@ -121,11 +121,6 @@ export const useRegistration = (variables: { email: string; password: string }, 
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
     return useUpdateAccessToken({ mutation: ACTIVATE_ACCOUNT, variables });
-};
-
-export const activate = async (encode: string) => {
-    const result = false;
-    return true;
 };
 
 export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {

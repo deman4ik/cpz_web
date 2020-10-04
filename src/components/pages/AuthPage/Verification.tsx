@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
@@ -22,27 +23,29 @@ export const Verification: React.FC = () => {
         validateAuth
     );
     const [confirm, { success, error }] = useConfirmation({ userId: data.userId, secretCode: values.verificationCode });
+    const errorRef = useRef(error);
 
     useEffect(() => {
         if (!loading && data && !data.userId) {
             Router.push("/auth/signup");
         }
-    }, [data, loading]);
+    }, [data]);
 
     useEffect(() => {
         if (isValid && !loading) {
             confirm();
         }
-    }, [isValid, confirm, loading]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
             Router.push("/auth/activate");
-        } else if (error) {
-            errors.verificationCode = error;
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.verificationCode = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container}>

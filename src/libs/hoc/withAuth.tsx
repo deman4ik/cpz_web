@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useContext, useEffect } from "react";
-import nextCookie from "next-cookies";
+import React, { useContext, useEffect, useRef } from "react";
 
 import { EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "../accessToken";
@@ -18,14 +18,23 @@ const checkPath = (path: string) => {
     EXCLUDE_ROUTES.forEach((route: string) => {
         match = path.includes(route) || match;
     });
-
     return match;
 };
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
         const { setAuthState } = useContext(AuthContext);
-        const [accessToken] = useAccessToken();
+        const [accessToken, , refreshToken] = useAccessToken();
+        const haveRefreshed = useRef(false);
+        const refreshTokenSet =
+            typeof window !== "undefined" ? Boolean(localStorage.getItem("refreshTokenSet")) : false;
+
+        useEffect(() => {
+            if (!accessToken && refreshTokenSet && !haveRefreshed.current) {
+                refreshToken();
+                haveRefreshed.current = true;
+            }
+        });
 
         useEffect(() => {
             setAuthState({
@@ -33,7 +42,7 @@ export const withAuth = (Page) => {
                 user_id: getUserIdFromAccessToken(accessToken),
                 isManager: getUserRoleFromAccesToken(accessToken) === "manager"
             });
-        }, [accessToken, setAuthState]);
+        }, [setAuthState, accessToken]);
 
         return <Page {...{ ...props, accessToken }} />;
     };
@@ -41,32 +50,28 @@ export const withAuth = (Page) => {
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         const accessToken = getAccessToken();
-        let refreshToken = "";
-        if (ctx.res) {
-            refreshToken = nextCookie(ctx).refresh_token;
-            if (refreshToken) {
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
-            }
-            if (accessToken && !isLanding) {
-                if (
-                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
-                        getUserRoleFromAccesToken(accessToken) !== "manager")
-                ) {
-                    redirect(ctx, pathToRedirectIfLogin);
-                }
-            }
-        } else if (accessToken.length === 0) {
-            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
-            }
-        }
+
+        // if (ctx.res) {
+        //     if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+        //         redirect(ctx, pathToRedirect);
+        //     }
+        //     if (accessToken && !isLanding) {
+        //         if (
+        //             EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
+        //             (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
+        //                 getUserRoleFromAccesToken(accessToken) !== "manager")
+        //         ) {
+        //             redirect(ctx, pathToRedirectIfLogin);
+        //         }
+        //     }
+        // } else if (accessToken.length === 0) {
+        //     if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+        //         redirect(ctx, pathToRedirect);
+        //     }
+        // }
         return {
-            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {})
+            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
+            accessToken
         };
     };
 

@@ -43,21 +43,22 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
 
     const onAcceptEmail = () => {
         sendChangeEmail().then((response) => {
-            if (response.data.changeEmail.success) {
+            console.log(response);
+            if (response.data.changeEmail.result === "OK") {
                 setStep(2);
-                setTitle(steps[step - 1].toString());
+                setTitle(steps[step - 1]);
             } else {
-                setFormError(response.data.changeEmail.error);
+                setFormError(response.data.changeEmail.result);
             }
         });
     };
 
     const onConfirmEmail = () => {
         sendConfirmEmail().then((response) => {
-            if (response.data.confirmChangeEmail.success) {
+            if (response.data.confirmChangeEmail.accessToken) {
                 onClose();
             } else {
-                setFormError(response.data.confirmChangeEmail.error);
+                setFormError(confirmError.graphQLErrors[0].message);
             }
         });
     };

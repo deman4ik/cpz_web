@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useApolloClient } from "@apollo/client";
 
@@ -21,19 +22,21 @@ export const ForgotPassword: React.FC = () => {
         validateAuth
     );
     const [reset, { loading, success, error }] = usePasswordReset({ email: values.email }, client);
+    const errorRef = useRef(error);
 
     useEffect(() => {
         if (success) {
             Router.push("/auth/recover_password");
-        } else if (error) {
-            errors.email = error;
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.email = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     useEffect(() => {
         if (isValid && !loading) reset();
-    }, [isValid, loading, reset]);
+    }, [isValid]);
 
     return (
         <div className={styles.container}>

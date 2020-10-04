@@ -1,5 +1,3 @@
-import { validateOperation } from "@apollo/client/link/utils";
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
 
 type errors = {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
@@ -18,13 +19,15 @@ const INITIAL_STATE = {
 };
 
 export const RecoverPassword: React.FC = () => {
-    const { data } = useQuery(USER);
+    const {
+        data: { userId }
+    } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
     const [confirm, { loading, success, error }] = useResetConfirmation({
-        userId: data.userId,
+        userId,
         secretCode: values.verificationCode,
         password: values.password
     });
@@ -33,16 +36,16 @@ export const RecoverPassword: React.FC = () => {
         if (isValid && !loading) {
             confirm();
         }
-    }, [confirm, isValid, loading]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
             Router.push("/auth/done");
         } else if (error) {
-            errors.verificationCode = error;
             setValid(false);
+            errors.verificationCode = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container}>
