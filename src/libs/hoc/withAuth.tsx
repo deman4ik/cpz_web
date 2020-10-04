@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import nextCookie from "next-cookies";
 
-import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
+import { EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";

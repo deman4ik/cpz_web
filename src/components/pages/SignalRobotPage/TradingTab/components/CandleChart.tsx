@@ -6,7 +6,7 @@ import { LoadingIndicator } from "components/common";
 
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
-import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
+import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
 import { SET_CHART_DATA } from "graphql/local/mutations";
 
 import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
@@ -32,11 +32,11 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const { asset, timeframe, id: robotId } = robot;
+    const { asset, timeframe, id: robotId, user_signal_id: userSignalId } = robot;
 
     const candleQueries = {
         history: buildRobotPositionCandlesQuery(timeframe, isAuth),
-        realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
+        realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
     };
 
     const legend = getLegend(robot);
@@ -44,7 +44,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const [chartData, setChartData] = useState({ candles: [], markers: [] });
 
     // history candles load
-    const historyQueryVars = isAuth ? { robotId, limit, user_id } : { robotId, limit };
+    const historyQueryVars = isAuth ? { limit, userSignalId } : { robotId, limit };
     const { loading, data, fetchMore } = useQuery(candleQueries.history, {
         variables: historyQueryVars,
         notifyOnNetworkStatusChange: true
@@ -99,7 +99,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     }, [loading, data, asset]);
 
     // realtime candles load
-    const varsSubscription = isAuth ? { robotId, user_id } : { robotId };
+    const varsSubscription = isAuth ? { userSignalId } : { robotId };
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });

@@ -37,7 +37,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Average Bars Held",
                       key: "avgBarsHeld",
-                      ...propsToNull(robotStatistic.avgBarsHeldWinning)
+                      ...propsToNull(robotStatistic.avgBarsHeld)
                   },
                   {
                       title: "Profit Factor",
@@ -84,7 +84,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Average Bars Held",
                       key: "avgBarsHeld",
-                      ...propsToNull(robotStatistic.avgBarsHeld)
+                      ...propsToNull(robotStatistic.avgBarsHeldWinning)
                   },
                   {
                       title: "Max. Consecutive Winners",
