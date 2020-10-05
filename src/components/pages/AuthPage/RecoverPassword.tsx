@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
@@ -31,6 +31,7 @@ export const RecoverPassword: React.FC = () => {
         secretCode: values.verificationCode,
         password: values.password
     });
+    const errorRef = useRef(error);
 
     useEffect(() => {
         if (isValid && !loading) {
@@ -40,10 +41,12 @@ export const RecoverPassword: React.FC = () => {
 
     useEffect(() => {
         if (success) {
-            Router.push("/auth/done");
-        } else if (error) {
+            if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
+            Router.push("/auth/recovered");
+        } else if (error && errorRef.current !== error) {
             setValid(false);
             errors.verificationCode = error;
+            errorRef.current = error;
         }
     }, [error, success]);
 
@@ -56,7 +59,7 @@ export const RecoverPassword: React.FC = () => {
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
-                        <div className={styles.title}>Reset password</div>
+                        <div className={styles.title}>Reset</div>
                         <Input
                             value={values.verificationCode}
                             error={errors.verificationCode}

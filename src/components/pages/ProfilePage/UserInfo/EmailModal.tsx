@@ -43,7 +43,6 @@ const _EmailModal: React.FC<Props> = ({ email, onClose, setTitle, width }) => {
 
     const onAcceptEmail = () => {
         sendChangeEmail().then((response) => {
-            console.log(response);
             if (response.data.changeEmail.result === "OK") {
                 setStep(2);
                 setTitle(steps[step - 1]);

@@ -31,6 +31,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
 
     useEffect(() => {
         if (error && error !== "No refresh token") {
+            localStorage.removeItem("refreshTokenSet");
             redirect({}, "/auth/login");
         }
     }, [error]);

@@ -1,24 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import Router, { useRouter } from "next/router";
-import { useQuery } from "@apollo/client";
+import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
-import { USER } from "graphql/local/queries";
 import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
-export const Activate: React.FC = () => {
-    const { data, loading } = useQuery(USER);
-    const router = useRouter();
-
-    useEffect(() => {
-        console.log(router.query.encoded)
-        if (!loading && data && !data.userId && !router.query.encoded) {
-            Router.push("/auth/signup");
-        }
-    }, [data, loading]);
-
+export const AccountActivated: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             Router.push("/robots");

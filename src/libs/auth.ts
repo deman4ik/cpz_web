@@ -110,13 +110,13 @@ export const useLogout = (): AuthAction => {
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
-    const [register, { loading, success, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
+    const [register, { loading, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
 
     useEffect(() => {
         if (result?.userId) writeUserToCache(client, result?.userId);
     }, [client, result?.userId]);
 
-    return [register, { loading, success, error }];
+    return [register, { loading, success: !!result?.userId, error }];
 };
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
@@ -141,10 +141,19 @@ export const useResetConfirmation = (variables: {
     return useUpdateAccessToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
 };
 
+// redundant
 export const recoverEncoded = async (encode: string, password: string) => {
     const result = {
         success: false,
         error: ""
     };
     return result;
+};
+
+export const useChangeEmail = (variables: { email: string }): AuthAction => {
+    return useAuthMutation({ mutation: CHANGE_EMAIL, variables });
+};
+
+export const useConfirmChangeEmail = (variables: { email: string }): AuthAction => {
+    return useUpdateAccessToken({ mutation: CHANGE_EMAIL, variables });
 };

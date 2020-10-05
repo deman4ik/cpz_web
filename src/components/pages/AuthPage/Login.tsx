@@ -24,8 +24,6 @@ const _Login: React.FC = () => {
         validateAuth
     );
 
-    console.log("Login rendered");
-
     const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password: values.password });
     const errorRef = useRef(error);
 
@@ -38,19 +36,16 @@ const _Login: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log("isvalid update");
-        
         if (isValid && !loading && !success) {
             login();
         }
     }, [isValid]);
 
     useEffect(() => {
-        console.log("success-error update")
         if (success) {
             if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
             Router.push("/robots");
-        } else if (errorRef.current !== error) {
+        } else if (error && errorRef.current !== error) {
             setValid(false);
             errors.password = error;
             errorRef.current = error;
