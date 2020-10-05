@@ -23,14 +23,10 @@ export const RecoverPasswordWeb: React.FC = () => {
     );
     const router = useRouter();
 
-    const handleOnPress = () => {
-        handleSubmit();
-    };
-
     const registerUser = async () => {
         const result = await recoverEncoded(router.query.encoded as string, values.password);
-        if (result.success) {
-            Router.push("/auth/done");
+        if (result) {
+            Router.push("/auth/recovered");
         } else {
             errors.password = result.error;
             setValid(false);
@@ -83,7 +79,7 @@ export const RecoverPasswordWeb: React.FC = () => {
                             width={260}
                             isUppercase
                             isLoading={isFetching}
-                            onClick={handleOnPress}
+                            onClick={handleSubmit}
                         />
                     </div>
                     <CartFooter />

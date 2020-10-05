@@ -63,18 +63,18 @@ const httpLink = createHttpLink({
     credentials: "include"
 });
 
-const connectionParams = (ctx) => {
-    const token = getAccessToken();
+const connectionParams = () => {
+    const accessToken = getAccessToken();
     const headers = {} as { authorization?: string };
-    if (token) {
-        headers.authorization = `Bearer ${token}`;
+    if (accessToken) {
+        headers.authorization = `Bearer ${accessToken}`;
     }
     return { headers };
 };
 
 export default withApollo(
     (ctx) => {
-        const authLink = setContext(() => connectionParams(ctx));
+        const authLink = setContext(() => connectionParams());
         const contextLink = authLink.concat(httpLink);
         let link = contextLink;
         if (!ssrMode) {
@@ -83,7 +83,7 @@ export default withApollo(
                 options: {
                     reconnect: true,
                     timeout: 30000,
-                    connectionParams: () => connectionParams(ctx)
+                    connectionParams: () => connectionParams()
                 }
             });
             link = split(
@@ -103,7 +103,6 @@ export default withApollo(
         });
 
         const client = new ApolloClient({
-            credentials: "include",
             link,
             cache,
             resolvers,
@@ -121,10 +120,6 @@ export default withApollo(
     },
     {
         render: ({ Page, props }) => {
-            // if (typeof props.accessToken !== "undefined") {
-            //     setAccessToken(props.accessToken);
-            // }
-
             return (
                 <ApolloProvider client={props.apollo}>
                     <Page {...props} />

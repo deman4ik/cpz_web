@@ -55,8 +55,6 @@ export const REFRESH_TOKEN = gql`
     mutation refresh_token {
         result: refreshToken {
             accessToken
-            refreshToken
-            refreshTokenExpireAt
         }
     }
 `;

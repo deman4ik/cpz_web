@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
-import { LOCALHOST } from "config/constants";
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
@@ -24,27 +24,32 @@ export const useRefreshToken = (): [() => void, { result: any; error: any }] => 
 };
 
 /**
- * Returns access token and a function to update it
+ * Returns access token, a function to update it, and a function to fetch refresh call
  */
-export const useAccessToken = (): [string, (token: string) => void] => {
+export const useAccessToken = (): [string, (token: string) => void, () => void] => {
     const [jwtToken, setToken] = useState(getTokenInfo(accessToken));
     const [refreshToken, { result, error }] = useRefreshToken();
 
     useEffect(() => {
         if (error) {
+            console.error(error);
+            localStorage.removeItem("refreshTokenSet");
             redirect({}, "/auth/login");
         }
     }, [error]);
 
     useEffect(() => {
+        accessToken = jwtToken.token;
         if (jwtToken.token !== "" && Date.now() >= jwtToken.exp * 1000) {
             refreshToken();
         }
     }, [jwtToken, refreshToken]);
 
     useEffect(() => {
-        console.log("refresh token", result?.accessToken);
-        if (result?.accessToken) setToken(getTokenInfo(result?.accessToken));
+        if (result?.accessToken) {
+            setToken(getTokenInfo(result?.accessToken));
+            accessToken = jwtToken.token;
+        }
     }, [result?.accessToken]);
 
     return [
@@ -52,7 +57,8 @@ export const useAccessToken = (): [string, (token: string) => void] => {
         (token) => {
             setToken(getTokenInfo(token));
             accessToken = token;
-        }
+        },
+        refreshToken
     ];
 };
 

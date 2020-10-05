@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { memo, useEffect, useRef } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
 
@@ -10,23 +11,21 @@ import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
 
 const INITIAL_STATE = {
-    email: ""
+    email: "",
+    password: ""
 };
 
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 const message =
     "If you do not see the Telegram login widget here, it seems that the Telegram is blocked in your country. Please use a proxy or VPN to access the Telegram login widget.";
-export const Login: React.FC = () => {
+const _Login: React.FC = () => {
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-    const [password, setPassword] = useState("");
-    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password });
 
-    const onChangePassword = (value: string) => {
-        setPassword(value);
-    };
+    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password: values.password });
+    const errorRef = useRef(error);
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -37,19 +36,21 @@ export const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading && !success) {
             login();
         }
-    }, [error, isValid, loading, login]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
+            if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
             Router.push("/robots");
-        } else if (error) {
-            errors.password = error;
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.password = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [success, error]);
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
@@ -73,12 +74,12 @@ export const Login: React.FC = () => {
                             />
                             <Input
                                 style={{ marginTop: 8 }}
-                                value={password}
+                                value={values.password}
                                 maxLength={100}
                                 width={260}
                                 error={errors.password}
                                 placeholder="Password"
-                                onChangeText={(text) => onChangePassword(text)}
+                                onChangeText={(text) => handleChange("password", text)}
                                 type="password"
                                 autoComplete="password"
                             />
@@ -133,3 +134,5 @@ export const Login: React.FC = () => {
         </div>
     );
 };
+
+export const Login = memo(_Login);

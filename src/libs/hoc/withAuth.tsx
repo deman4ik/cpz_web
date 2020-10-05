@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useContext, useEffect } from "react";
-import nextCookie from "next-cookies";
+import React, { useContext, useEffect, useRef } from "react";
 
-import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
+import { EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
 import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "../accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
@@ -18,39 +18,41 @@ const checkPath = (path: string) => {
     EXCLUDE_ROUTES.forEach((route: string) => {
         match = path.includes(route) || match;
     });
-
     return match;
 };
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
         const { setAuthState } = useContext(AuthContext);
-        const [accessToken] = useAccessToken();
+        const [accessToken, , refreshToken] = useAccessToken();
+        const haveRefreshed = useRef(false);
+        const refreshTokenSet =
+            typeof window !== "undefined" ? Boolean(localStorage.getItem("refreshTokenSet")) : false;
 
         useEffect(() => {
-            if (accessToken) {
-                setAuthState({
-                    isAuth: Boolean(accessToken),
-                    user_id: getUserIdFromAccessToken(accessToken),
-                    isManager: getUserRoleFromAccesToken(accessToken) === "manager"
-                });
+            if (!accessToken && refreshTokenSet && !haveRefreshed.current) {
+                refreshToken();
+                haveRefreshed.current = true;
             }
-        }, [accessToken, setAuthState]);
+        });
+
+        useEffect(() => {
+            setAuthState({
+                isAuth: Boolean(accessToken),
+                user_id: getUserIdFromAccessToken(accessToken),
+                isManager: getUserRoleFromAccesToken(accessToken) === "manager"
+            });
+        }, [setAuthState, accessToken]);
 
         return <Page {...{ ...props, accessToken }} />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        const accessToken = getAccessToken();
-        let refreshToken = "";
+        const accessToken = getAccessToken(); // server-side, does not return the token
         if (ctx.res) {
-            refreshToken = nextCookie(ctx).refresh_token;
-            if (refreshToken) {
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+            console.log(ctx.req);
+            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
                 redirect(ctx, pathToRedirect);
             }
             if (accessToken && !isLanding) {
@@ -68,7 +70,8 @@ export const withAuth = (Page) => {
             }
         }
         return {
-            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {})
+            ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
+            accessToken
         };
     };
 

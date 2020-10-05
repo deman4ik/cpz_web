@@ -6,6 +6,7 @@ import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
 import { AuthContext } from "libs/hoc/context";
+import { LoadingIndicator } from "components/common";
 
 interface Props {
     hasHomeButton?: boolean;
@@ -16,7 +17,7 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
         authState: { isAuth }
     } = useContext(AuthContext);
 
-    const { logoutProcess } = useLogoutProcess();
+    const [logout, { loading }] = useLogoutProcess();
 
     const handleOnClick = (href: string) => {
         event({
@@ -52,9 +53,13 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
             <div className={styles.rightContainer}>
                 {isAuth ? (
                     <div className={styles.btnWrapper}>
-                        <div className={styles.btnTitle} onClick={logoutProcess}>
-                            Log out
-                        </div>
+                        {loading ? (
+                            <LoadingIndicator />
+                        ) : (
+                            <div className={styles.btnTitle} onClick={logout}>
+                                Log out
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <>

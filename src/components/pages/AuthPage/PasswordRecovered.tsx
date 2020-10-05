@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import Router from "next/router";
 
 import { CartFooter } from "./common/CartFooter";
-import { Footer, PageHead, Header } from "components//layout";
+import { Footer, PageHead, Header } from "components/layout";
 import { AW_CONVERSION_ID } from "libs/gtag";
 import styles from "./index.module.css";
 
-export const Done: React.FC = () => {
+export const PasswordRecovered: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             Router.push("/robots");
@@ -28,7 +28,7 @@ export const Done: React.FC = () => {
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
                         <div className={styles.title}>Done!</div>
-                        <div className={styles.titleDescription}>You have successfully updated your password</div>
+                        <div className={styles.titleDescription}>You have successfully reset your password</div>
                     </div>
                     <CartFooter />
                 </div>

@@ -1,9 +1,7 @@
-import React from 'react';
-import { SignUp } from '../../src/components/pages/AuthPage/SignUp';
-import { withAuth, withApollo } from '../../src/libs/hoc';
+import React from "react";
+import { SignUp } from "components/pages/AuthPage/SignUp";
+import { withAuth, withApollo } from "libs/hoc";
 
-const Page = () => (
-  <SignUp />
-);
+const Page = () => <SignUp />;
 
 export default withApollo(withAuth(Page));

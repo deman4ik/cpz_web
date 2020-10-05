@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
@@ -16,33 +17,38 @@ const INITIAL_STATE = {
 };
 
 export const Verification: React.FC = () => {
-    const { data, loading } = useQuery(USER);
+    const { data, loading: userInfoLoading } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-    const [confirm, { success, error }] = useConfirmation({ userId: data.userId, secretCode: values.verificationCode });
+    const [confirm, { loading, success, error }] = useConfirmation({
+        userId: data.userId,
+        secretCode: values.verificationCode
+    });
+    const errorRef = useRef(error);
 
     useEffect(() => {
-        if (!loading && data && !data.userId) {
+        if (!userInfoLoading && data && !data.userId) {
             Router.push("/auth/signup");
         }
-    }, [data, loading]);
+    }, [data]);
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading && !success) {
             confirm();
         }
-    }, [isValid, confirm, loading, error]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
-            Router.push("/auth/activate");
-        } else if (error) {
-            errors.verificationCode = error;
+            Router.push("/auth/activated");
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.verificationCode = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container}>
@@ -71,6 +77,7 @@ export const Verification: React.FC = () => {
                             title="Verify my email address"
                             type="success"
                             width={260}
+                            isLoading={loading}
                             onClick={handleSubmit}
                             isUppercase
                         />

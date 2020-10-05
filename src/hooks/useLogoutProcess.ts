@@ -7,19 +7,16 @@ import { useEffect } from "react";
 export const useLogoutProcess = (): any => {
     const client = useApolloClient();
 
-    const [logout, { success, error }] = useLogout();
-
-    const logoutProcess = () => {
-        logout();
-    };
+    const [logout, { loading, success, error }] = useLogout();
 
     useEffect(() => {
         if (success) {
             client.clearStore().then(() => Router.push("/auth/login"));
+            if (typeof window !== "undefined") localStorage.removeItem("refreshTokenSet");
         } else if (error) {
             console.error(error);
         }
     }, [client, success, error]);
 
-    return { logoutProcess };
+    return [logout, { loading }];
 };

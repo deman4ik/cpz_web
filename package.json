@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 80",
     "dev-debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",

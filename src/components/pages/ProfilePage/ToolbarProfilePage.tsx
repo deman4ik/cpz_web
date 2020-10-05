@@ -1,15 +1,24 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { CaptionButton } from "components/basic";
-//import styles from '../../../config/common.module.css';
+import { LoadingIndicator } from "components/common";
 
 const _ToolbarProfilePage: React.FC = () => {
-    const { logoutProcess } = useLogoutProcess();
+    const [isLoading, setLoading] = useState(false);
+    const [logout, { loading }] = useLogoutProcess();
+
+    useEffect(() => {
+        setLoading(loading);
+    }, [loading]);
 
     return (
         <div className="toolbar">
-            <CaptionButton title="Log out" icon="logout" responsive={false} onClick={logoutProcess} />
+            {isLoading ? (
+                <LoadingIndicator />
+            ) : (
+                <CaptionButton title="Log out" icon="logout" responsive={false} onClick={logout} />
+            )}
         </div>
     );
 };

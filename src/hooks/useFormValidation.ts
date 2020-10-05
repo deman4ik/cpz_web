@@ -1,4 +1,3 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
 
 type errors = {
@@ -17,9 +16,9 @@ export const useFormValidation = (initialState, validate) => {
 
     useEffect(() => {
         if (isSubmitting) {
-            const foundErrors = Object.keys(errors).length === 0;
-            setValid(foundErrors);
-            setSubmitting(foundErrors);
+            const noErrors = Object.keys(errors).length === 0;
+            setValid(noErrors);
+            setSubmitting(noErrors);
         }
     }, [errors, isSubmitting]);
 

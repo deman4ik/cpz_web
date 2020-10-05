@@ -49,7 +49,7 @@ export const testindBool = async () => {
 };
 
 type AuthAction = [
-    () => void,
+    () => Promise<any>,
     {
         loading?: boolean;
         success: boolean;
@@ -99,26 +99,28 @@ export const useEmailLogin = (variables: { email: string; password: string }) =>
 };
 
 export const useLogout = (): AuthAction => {
-    return useUpdateAccessToken({ mutation: LOGOUT });
+    const [logout, { loading, success, error, result }] = useAuthMutation({ mutation: LOGOUT });
+    const [, setAccessToken] = useAccessToken();
+
+    useEffect(() => {
+        if (result?.result) setAccessToken("");
+    }, [result?.result, setAccessToken]);
+
+    return [logout, { loading, success, error }];
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
-    const [register, { loading, success, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
+    const [register, { loading, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
 
     useEffect(() => {
         if (result?.userId) writeUserToCache(client, result?.userId);
     }, [client, result?.userId]);
 
-    return [register, { loading, success, error }];
+    return [register, { loading, success: !!result?.userId, error }];
 };
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
     return useUpdateAccessToken({ mutation: ACTIVATE_ACCOUNT, variables });
-};
-
-export const activate = async (encode: string) => {
-    let result = false;
-    return true;
 };
 
 export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
@@ -139,10 +141,19 @@ export const useResetConfirmation = (variables: {
     return useUpdateAccessToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
 };
 
+// redundant
 export const recoverEncoded = async (encode: string, password: string) => {
-    let result = {
+    const result = {
         success: false,
         error: ""
     };
     return result;
+};
+
+export const useChangeEmail = (variables: { email: string }): AuthAction => {
+    return useAuthMutation({ mutation: CHANGE_EMAIL, variables });
+};
+
+export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
+    return useUpdateAccessToken({ mutation: CONFIRM_CHANGE_EMAIL, variables });
 };

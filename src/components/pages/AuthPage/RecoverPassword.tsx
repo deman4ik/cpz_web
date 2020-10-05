@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import Router from "next/router";
 
@@ -18,31 +19,36 @@ const INITIAL_STATE = {
 };
 
 export const RecoverPassword: React.FC = () => {
-    const { data } = useQuery(USER);
+    const {
+        data: { userId }
+    } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
     const [confirm, { loading, success, error }] = useResetConfirmation({
-        userId: data.userId,
+        userId,
         secretCode: values.verificationCode,
         password: values.password
     });
+    const errorRef = useRef(error);
 
     useEffect(() => {
-        if (isValid && !loading && !error) {
+        if (isValid && !loading) {
             confirm();
         }
-    }, [confirm, error, isValid, loading]);
+    }, [isValid]);
 
     useEffect(() => {
         if (success) {
-            Router.push("/auth/done");
-        } else if (error) {
-            errors.verificationCode = error;
+            if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
+            Router.push("/auth/recovered");
+        } else if (error && errorRef.current !== error) {
             setValid(false);
+            errors.verificationCode = error;
+            errorRef.current = error;
         }
-    }, [error, errors, setValid, success]);
+    }, [error, success]);
 
     return (
         <div className={styles.container}>
@@ -53,7 +59,7 @@ export const RecoverPassword: React.FC = () => {
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
-                        <div className={styles.title}>Reset password</div>
+                        <div className={styles.title}>Reset</div>
                         <Input
                             value={values.verificationCode}
                             error={errors.verificationCode}
