@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
@@ -22,15 +22,17 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
     let instance;
 
     const [loginData, setLoginData] = useState({ id: null, hash: null });
-    const [error, setError] = useState("");
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, success, error: loginError }] = useTelegramLogin(loginData);
+    const [login, { loading, success, error }] = useTelegramLogin(loginData);
+    const errorRef = useRef(error);
 
-    if (success) {
-        Router.push("/robots");
-    } else if (loginError !== "") {
-        setError(loginError);
-    }
+    useEffect(() => {
+        if (success) {
+            Router.push("/robots");
+        } else if (error && errorRef.current !== error) {
+            errorRef.current = error;
+        }
+    }, [success, error]);
 
     useEffect(() => {
         (window as any).TelegramLoginWidget = userId
@@ -41,7 +43,7 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
                           refetchQueries: [{ query: GET_USER_INFO }]
                       }).then((response) => {
                           if (response.data.setTelegram.error) {
-                              setError(response.data.setTelegram.error);
+                              errorRef.current = response.data.setTelegram.error;
                           }
                       })
               }
@@ -70,8 +72,8 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
             {message && <div className={styles.telegramPlaceholder}>{message}</div>}
-            <Modal title="Error" isOpen={!!error} onClose={() => setError("")}>
-                <div className={styles.errorText}>{error}</div>
+            <Modal title="Error" isOpen={!!errorRef.current} onClose={() => (errorRef.current = "")}>
+                <div className={styles.errorText}>{errorRef.current}</div>
             </Modal>
         </>
     );
