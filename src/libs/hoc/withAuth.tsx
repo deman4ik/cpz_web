@@ -49,26 +49,26 @@ export const withAuth = (Page) => {
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        const accessToken = getAccessToken();
-
-        // if (ctx.res) {
-        //     if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-        //         redirect(ctx, pathToRedirect);
-        //     }
-        //     if (accessToken && !isLanding) {
-        //         if (
-        //             EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-        //             (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
-        //                 getUserRoleFromAccesToken(accessToken) !== "manager")
-        //         ) {
-        //             redirect(ctx, pathToRedirectIfLogin);
-        //         }
-        //     }
-        // } else if (accessToken.length === 0) {
-        //     if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-        //         redirect(ctx, pathToRedirect);
-        //     }
-        // }
+        const accessToken = getAccessToken(); // server-side, does not return the token
+        if (ctx.res) {
+            console.log(ctx.req);
+            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+                redirect(ctx, pathToRedirect);
+            }
+            if (accessToken && !isLanding) {
+                if (
+                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
+                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
+                        getUserRoleFromAccesToken(accessToken) !== "manager")
+                ) {
+                    redirect(ctx, pathToRedirectIfLogin);
+                }
+            }
+        } else if (accessToken.length === 0) {
+            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+                redirect(ctx, pathToRedirect);
+            }
+        }
         return {
             ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
             accessToken

@@ -154,6 +154,6 @@ export const useChangeEmail = (variables: { email: string }): AuthAction => {
     return useAuthMutation({ mutation: CHANGE_EMAIL, variables });
 };
 
-export const useConfirmChangeEmail = (variables: { email: string }): AuthAction => {
-    return useUpdateAccessToken({ mutation: CHANGE_EMAIL, variables });
+export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
+    return useUpdateAccessToken({ mutation: CONFIRM_CHANGE_EMAIL, variables });
 };

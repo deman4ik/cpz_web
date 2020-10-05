@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
@@ -30,7 +31,8 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     const [refreshToken, { result, error }] = useRefreshToken();
 
     useEffect(() => {
-        if (error && error !== "No refresh token") {
+        if (error) {
+            console.error(error);
             localStorage.removeItem("refreshTokenSet");
             redirect({}, "/auth/login");
         }
@@ -46,6 +48,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     useEffect(() => {
         if (result?.accessToken) {
             setToken(getTokenInfo(result?.accessToken));
+            accessToken = jwtToken.token;
         }
     }, [result?.accessToken]);
 
