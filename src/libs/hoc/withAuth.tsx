@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 
-import { EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
-import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "../accessToken";
+import { ROUTES, AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
+import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "libs/accessToken";
+import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
@@ -12,10 +13,9 @@ import { AuthContext } from "libs/hoc/context";
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
 
-/*Проверка доступности разрешаемых роутов*/
-const checkPath = (path: string) => {
+const validatePath = (path: string) => {
     let match = false;
-    EXCLUDE_ROUTES.forEach((route: string) => {
+    ROUTES.forEach((route: string) => {
         match = path.includes(route) || match;
     });
     return match;
@@ -25,14 +25,12 @@ export const withAuth = (Page) => {
     const WithAuth = (props) => {
         const { setAuthState } = useContext(AuthContext);
         const [accessToken, , refreshToken] = useAccessToken();
-        const haveRefreshed = useRef(false);
         const refreshTokenSet =
             typeof window !== "undefined" ? Boolean(localStorage.getItem("refreshTokenSet")) : false;
 
         useEffect(() => {
-            if (!accessToken && refreshTokenSet && !haveRefreshed.current) {
+            if (!accessToken && refreshTokenSet) {
                 refreshToken();
-                haveRefreshed.current = true;
             }
         });
 
@@ -49,23 +47,19 @@ export const withAuth = (Page) => {
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        const accessToken = getAccessToken(); // server-side, does not return the token
+        const { accessToken } = nextCookies(ctx);
+
         if (ctx.res) {
-            console.log(ctx.req);
-            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
-            }
             if (accessToken && !isLanding) {
                 if (
-                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
-                        getUserRoleFromAccesToken(accessToken) !== "manager")
+                    AUTH_ROUTES.includes(ctx.pathname) ||
+                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken(accessToken) !== "manager")
                 ) {
                     redirect(ctx, pathToRedirectIfLogin);
                 }
             }
         } else if (accessToken.length === 0) {
-            if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
+            if ((!isLanding && !validatePath(ctx.pathname)) || MANAGE_ROUTES.includes(ctx.pathname)) {
                 redirect(ctx, pathToRedirect);
             }
         }

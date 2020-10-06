@@ -6,9 +6,21 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
-let accessToken = "";
+const getTokenFromCookie = () => {
+    if (typeof window !== "undefined")
+        return document.cookie
+            .split(";")
+            .find((row) => row.startsWith("accessToken"))
+            .split("=")[1];
+    return "";
+};
 
-export const getAccessToken = () => accessToken;
+const putTokenInCookie = (token) => {
+    if (typeof window !== "undefined") document.cookie = `accessToken=${token}`;
+};
+
+export const getAccessToken = getTokenFromCookie;
+export const nullifyAccessToken = () => putTokenInCookie("");
 
 const getTokenInfo = (jwt) => {
     const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
@@ -27,7 +39,7 @@ export const useRefreshToken = (): [() => void, { result: any; error: any }] => 
  * Returns access token, a function to update it, and a function to fetch refresh call
  */
 export const useAccessToken = (): [string, (token: string) => void, () => void] => {
-    const [jwtToken, setToken] = useState(getTokenInfo(accessToken));
+    const [jwtToken, setToken] = useState(getTokenInfo(getTokenFromCookie()));
     const [refreshToken, { result, error }] = useRefreshToken();
 
     useEffect(() => {
@@ -39,7 +51,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     }, [error]);
 
     useEffect(() => {
-        accessToken = jwtToken.token;
+        putTokenInCookie(jwtToken.token);
         if (jwtToken.token !== "" && Date.now() >= jwtToken.exp * 1000) {
             refreshToken();
         }
@@ -48,7 +60,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     useEffect(() => {
         if (result?.accessToken) {
             setToken(getTokenInfo(result?.accessToken));
-            accessToken = jwtToken.token;
+            putTokenInCookie(jwtToken.token);
         }
     }, [result?.accessToken]);
 
@@ -56,7 +68,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
         jwtToken.token,
         (token) => {
             setToken(getTokenInfo(token));
-            accessToken = token;
+            putTokenInCookie(jwtToken.token);
         },
         refreshToken
     ];
