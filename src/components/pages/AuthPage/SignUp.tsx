@@ -53,7 +53,7 @@ export const SignUp: React.FC = () => {
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <div className={styles.card}>
+                    <form className={styles.card}>
                         <div className={styles.title}>Create account</div>
                         <Input
                             value={values.email}
@@ -93,7 +93,7 @@ export const SignUp: React.FC = () => {
                             isLoading={loading}
                             onClick={handleSubmit}
                         />
-                    </div>
+                    </form>
                     <CartFooter />
                 </div>
             </div>

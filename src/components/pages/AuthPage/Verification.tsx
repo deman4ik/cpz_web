@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { useQuery } from "@apollo/client";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 import { useConfirmation } from "libs/auth";
 import { useFormValidation } from "hooks/useFormValidation";
@@ -12,33 +12,39 @@ import { Button, Input } from "components/basic";
 import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
-const INITIAL_STATE = {
-    verificationCode: ""
-};
-
 export const Verification: React.FC = () => {
-    const { data, loading: userInfoLoading } = useQuery(USER);
+    const encodedData = useRouter().query.encoded as string;
+
+    const { userId = "", secretCode = "" } = encodedData
+        ? JSON.parse(Buffer.from(encodedData, "base64").toString())
+        : {};
+
+    const INITIAL_STATE = {
+        verificationCode: secretCode
+    };
+
+    const { data: userData, loading: userInfoLoading } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
     const [confirm, { loading, success, error }] = useConfirmation({
-        userId: data.userId,
-        secretCode: values.verificationCode
+        userId: userId || userData?.userId,
+        secretCode: secretCode || values.verificationCode
     });
     const errorRef = useRef(error);
 
     useEffect(() => {
-        if (!userInfoLoading && data && !data.userId) {
+        if (!userInfoLoading && userData && !userData.userId && !userId) {
             Router.push("/auth/signup");
         }
-    }, [data]);
+    }, [userData, encodedData]);
 
     useEffect(() => {
-        if (isValid && !loading && !success) {
+        if ((isValid && !loading && !success) || (userId && secretCode)) {
             confirm();
         }
-    }, [isValid]);
+    }, [isValid, encodedData]);
 
     useEffect(() => {
         if (success) {

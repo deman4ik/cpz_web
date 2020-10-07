@@ -33,6 +33,10 @@ const writeUserToCache = (client, userId) => {
     });
 };
 
+const setRefreshTokenReceived = () => {
+    if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
+};
+
 export const testind = async () => {
     const result = {
         success: false,
@@ -79,7 +83,7 @@ const useAuthMutation = ({ mutation, variables }: AuthActionParams): AuthAction 
 };
 
 const useUpdateAccessToken = ({ mutation, variables }: AuthActionParams): AuthAction => {
-    const [action, { loading, success, error, result }] = useAuthMutation({ variables, mutation });
+    const [action, { loading, error, result }] = useAuthMutation({ variables, mutation });
     const [, setAccessToken] = useAccessToken();
     useEffect(() => {
         if (result?.accessToken) {
@@ -87,15 +91,23 @@ const useUpdateAccessToken = ({ mutation, variables }: AuthActionParams): AuthAc
         }
     }, [result?.accessToken, setAccessToken]);
 
+    return [action, { loading, success: !!result?.accessToken, error }];
+};
+
+const useSetRefreshToken = (params: AuthActionParams): AuthAction => {
+    const [action, { loading, success, error }] = useUpdateAccessToken(params);
+    useEffect(() => {
+        if (success) setRefreshTokenReceived();
+    }, [success]);
     return [action, { loading, success, error }];
 };
 
 export const useTelegramLogin = (variables: { id: any; hash: string }) => {
-    return useUpdateAccessToken({ mutation: LOGIN_TELEGRAM, variables });
+    return useSetRefreshToken({ mutation: LOGIN_TELEGRAM, variables });
 };
 
 export const useEmailLogin = (variables: { email: string; password: string }) => {
-    return useUpdateAccessToken({ mutation: LOGIN, variables });
+    return useSetRefreshToken({ mutation: LOGIN, variables });
 };
 
 export const useLogout = (): AuthAction => {
@@ -120,7 +132,7 @@ export const useRegistration = (variables: { email: string; password: string }, 
 };
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
-    return useUpdateAccessToken({ mutation: ACTIVATE_ACCOUNT, variables });
+    return useSetRefreshToken({ mutation: ACTIVATE_ACCOUNT, variables });
 };
 
 export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
@@ -138,16 +150,7 @@ export const useResetConfirmation = (variables: {
     secretCode: string;
     password: string;
 }): AuthAction => {
-    return useUpdateAccessToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
-};
-
-// redundant
-export const recoverEncoded = async (encode: string, password: string) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    return result;
+    return useSetRefreshToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
 };
 
 export const useChangeEmail = (variables: { email: string }): AuthAction => {

@@ -43,7 +43,6 @@ const _Login: React.FC = () => {
 
     useEffect(() => {
         if (success) {
-            if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
             Router.push("/robots");
         } else if (error && errorRef.current !== error) {
             setValid(false);
@@ -61,7 +60,7 @@ const _Login: React.FC = () => {
             <div className={[styles.plate, styles.plateLogin].join(" ")}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.content}>
-                        <div className={styles.card} style={{ justifyContent: "center" }}>
+                        <form className={styles.card} style={{ justifyContent: "center" }}>
                             <div className={styles.title}>Login</div>
                             <Input
                                 error={errors.email}
@@ -106,7 +105,7 @@ const _Login: React.FC = () => {
                                 isUppercase
                                 onClick={() => handleSwitchToStep("signUp")}
                             />
-                        </div>
+                        </form>
                         <div className={styles.divider_container}>
                             <div className={styles.divider} />
                             <div className={styles.divider_text}>OR</div>
