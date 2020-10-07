@@ -61,7 +61,7 @@ export const RecoverPassword: React.FC = () => {
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <div className={styles.card}>
+                    <form className={styles.card}>
                         <div className={styles.title}>Reset</div>
                         <Input
                             value={values.verificationCode}
@@ -101,7 +101,7 @@ export const RecoverPassword: React.FC = () => {
                             isLoading={loading}
                             onClick={handleSubmit}
                         />
-                    </div>
+                    </form>
                     <CartFooter />
                 </div>
             </div>
