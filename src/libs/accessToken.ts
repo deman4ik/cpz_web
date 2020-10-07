@@ -8,10 +8,12 @@ import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined")
-        return document.cookie
-            .split(";")
-            .find((row) => row.startsWith("accessToken"))
-            .split("=")[1];
+        return (
+            document.cookie
+                .split(";")
+                ?.find((row) => row.startsWith("accessToken"))
+                ?.split("=")[1] || ""
+        );
     return "";
 };
 
