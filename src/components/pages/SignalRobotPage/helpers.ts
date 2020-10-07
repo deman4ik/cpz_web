@@ -22,6 +22,8 @@ export const formatRobotData = (data) => {
         started_at,
         user_signals
     } = data.robot[0];
+
+    console.log("settings", robot_settings);
     return {
         robot: {
             id,
@@ -31,7 +33,7 @@ export const formatRobotData = (data) => {
             code,
             currency,
             timeframe,
-            volume: robot_settings.volume,
+            volume: robot_settings.robot_settings.volume,
             statistics,
             equity,
             available,

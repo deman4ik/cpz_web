@@ -2,19 +2,10 @@ import dayjs from "libs/dayjs";
 
 export const formatRobotsData = (v_robots_stats: any) =>
     v_robots_stats.map((el: any) => {
+        const { id, code, name, exchange, asset, currency, started_at, user_signals, equity } = el.robots;
         const {
-            id,
-            code,
-            name,
-            exchange,
-            asset,
-            currency,
-            started_at,
-            user_signals,
-            equity,
-            robot_settings
+            robot_settings: { robot_settings }
         } = el.robots;
-
         const res = {
             cache: {
                 id,
@@ -30,7 +21,10 @@ export const formatRobotsData = (v_robots_stats: any) =>
                 status: null,
                 id: null
             },
-            volume: robot_settings.volume,
+            volume:
+                robot_settings.volumeType === "assetStatic"
+                    ? `${robot_settings.volume} ${asset}`
+                    : `${robot_settings.volumeInCurrency} ${currency}`,
             profit: equity && equity.profit ? equity.profit : 0,
             performance: equity && equity.changes ? equity.changes : [],
             active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,

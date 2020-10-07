@@ -1,9 +1,12 @@
 import dayjs from "libs/dayjs";
 
+// TODO: refactor
 export const formatRobotsData = (v_robots_stats: any) =>
     v_robots_stats.map((el: any) => {
-        const { id, code, name, exchange, asset, currency, active, robot_settings, user_robots, equity } = el.robots;
-
+        const { id, code, name, exchange, asset, currency, active, user_robots, equity } = el.robots;
+        const {
+            robot_settings: { robot_settings }
+        } = el.robots;
         const res = {
             cache: {
                 id,
@@ -20,7 +23,10 @@ export const formatRobotsData = (v_robots_stats: any) =>
                 id: null
             },
             started_at: null,
-            volume: robot_settings.volume,
+            volume:
+                robot_settings.volumeType === "assetStatic"
+                    ? `${robot_settings.volume} ${asset}`
+                    : `${robot_settings.volumeInCurrency} ${currency}`,
             profit: equity && equity.profit ? equity.profit : 0,
             performance: equity && equity.changes ? equity.changes : [],
             active: active ? dayjs.utc(active).fromNow(true) : active,

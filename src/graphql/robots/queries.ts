@@ -23,16 +23,7 @@ export const TOP_PERFORMANCE_ROBOTS = gql`
 `;
 
 export const ROBOT_INFO_FOR_USER = gql`
-    query get_robot_info_for_user(
-        $code: String
-        $status: String
-        $dateFrom: timestamp
-        $dateTo: timestamp
-        $limit: Int
-        $offset: Int
-        $orderBy: [robot_positions_order_by!]
-        $user_id: uuid
-    ) {
+    query get_robot_info_for_user($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) {
             id
             name
@@ -47,7 +38,7 @@ export const ROBOT_INFO_FOR_USER = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             started_at
             user_signals(where: { user_id: { _eq: $user_id } }) {
@@ -80,7 +71,7 @@ export const ROBOT_INFO = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             started_at
             strategyByStrategy {
@@ -494,7 +485,7 @@ export const ROBOTS_BY_STATS = gql`
                 active: started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
             }
         }
@@ -524,7 +515,7 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             active: started_at
             user_robot: user_robots(where: { user_id: { _eq: $user_id } }) {
@@ -553,7 +544,7 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             active: started_at
         }

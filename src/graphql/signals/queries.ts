@@ -57,7 +57,7 @@ export const ALL_SIGNAL_ROBOTS = gql`
                 started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
             }
         }

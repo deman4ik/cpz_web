@@ -1,21 +1,15 @@
-import {
-    USER_SIGNAL_ROBOTS as GET_ROBOTS_BY_STATS_SIGNALS,
-    ALL_SIGNAL_ROBOTS as GET_ROBOTS_BY_STATS_SIGNALS_NOT_AUTH
-} from "graphql/signals/queries";
-import {
-    USER_ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS,
-    ROBOTS_BY_STATS as GET_ROBOTS_BY_STATS_ROBOTS_NOT_AUTH
-} from "graphql/robots/queries";
+import { USER_SIGNAL_ROBOTS, ALL_SIGNAL_ROBOTS } from "graphql/signals/queries";
+import { USER_ROBOTS_BY_STATS, ROBOTS_BY_STATS } from "graphql/robots/queries";
 
 /*queries*/
 export const AUTH_QUERIES = [
     {
-        signals: GET_ROBOTS_BY_STATS_SIGNALS_NOT_AUTH,
-        robots: GET_ROBOTS_BY_STATS_ROBOTS_NOT_AUTH
+        signals: ALL_SIGNAL_ROBOTS,
+        robots: ROBOTS_BY_STATS
     },
     {
-        signals: GET_ROBOTS_BY_STATS_SIGNALS,
-        robots: GET_ROBOTS_BY_STATS_ROBOTS
+        signals: USER_SIGNAL_ROBOTS,
+        robots: USER_ROBOTS_BY_STATS
     }
 ];
 

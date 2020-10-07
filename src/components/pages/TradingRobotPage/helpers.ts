@@ -3,18 +3,9 @@ import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
 export const formatRobotData = (robot: any) => {
+    const { id, exchange, asset, name, currency, timeframe, user_robot, statistics, equity, active } = robot;
     const {
-        id,
-        exchange,
-        asset,
-        name,
-        currency,
-        timeframe,
-        user_robot,
-        robot_settings,
-        statistics,
-        equity,
-        active
+        robot_settings: { robot_settings }
     } = robot;
     return {
         robot: {
@@ -24,7 +15,10 @@ export const formatRobotData = (robot: any) => {
             name,
             currency,
             timeframe,
-            volume: robot_settings.volume,
+            volume:
+                robot_settings.volumeType === "currencyDynamic"
+                    ? `${robot_settings.volumeInCurrency} ${currency}`
+                    : `${robot_settings.volume} ${asset}`,
             statistics,
             equity,
             active,
@@ -162,7 +156,7 @@ export const getFormatSignals = (signals) =>
 export const activeDays = ({ robot }: any) => (robot.active ? dayjs.utc(robot.active).fromNow(true) : null);
 
 export const startedAt = ({ userRobot }: any) =>
-    userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0) : null;
+    userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : "recently") : null;
 
 export const getProfit = ({ robot, userRobot }: any) => userRobot?.equity?.profit || robot?.equity?.profit || 0;
 
