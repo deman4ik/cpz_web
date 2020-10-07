@@ -1,16 +1,17 @@
 import React from "react";
 import withApollo from "next-with-apollo";
-import { ApolloClient, createHttpLink, split, ApolloProvider } from "@apollo/client";
+import { ApolloClient, createHttpLink, split, ApolloProvider, from } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import gql from "graphql-tag";
 import { setContext } from "@apollo/client/link/context";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { InMemoryCache } from "@apollo/client/cache";
+import { onError } from "@apollo/client/link/error";
 
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
-import { getAccessToken } from "../accessToken";
+import { getAccessToken, nullifyAccessToken } from "../accessToken";
 
 interface Definintion {
     kind: string;
@@ -58,9 +59,22 @@ const cacheQuery = gql`
 `;
 
 const ssrMode = !process.browser;
+
 const httpLink = createHttpLink({
     uri: `https://${process.env.HASURA_URL}`,
     credentials: "include"
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+        graphQLErrors.forEach(({ message }) => {
+            if (process.env.NODE_ENV === "development") console.error(`[GraphQL error]: ${message}`);
+            if (message.includes("JWSError")) {
+                nullifyAccessToken();
+            }
+        });
+
+    if (networkError) console.error(`[Network error]: ${networkError}`);
 });
 
 const connectionParams = () => {
@@ -75,7 +89,7 @@ const connectionParams = () => {
 export default withApollo(
     (ctx) => {
         const authLink = setContext(() => connectionParams());
-        const contextLink = authLink.concat(httpLink);
+        const contextLink = from([errorLink, authLink.concat(httpLink)]);
         let link = contextLink;
         if (!ssrMode) {
             const wsLink = new WebSocketLink({
