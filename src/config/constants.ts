@@ -83,8 +83,8 @@ export const REGEXS = {
 export const globalAny: any = global;
 
 /*Роуты с аутентификацией*/
-export const EXCLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
-export const EXCLUDE_MANAGE_ROUTES = [
+export const AUTH_ROUTES = ["/auth/signup", "/auth/login"];
+export const MANAGE_ROUTES = [
     "/manage",
     "/manage/users",
     "/manage/robots",
@@ -94,8 +94,8 @@ export const EXCLUDE_MANAGE_ROUTES = [
 ];
 
 /*массив исключений для доступности роутов*/
-export const EXCLUDE_ROUTES: Array<string> = [
-    ...EXCLUDE_AUTH_ROUTES,
+export const ROUTES: Array<string> = [
+    ...AUTH_ROUTES,
     "/profile",
     "/notifications",
     "/signals",
