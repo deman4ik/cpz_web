@@ -26,9 +26,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                 </div>
                 <div className={styles.robotStatsRow}>
                     <div className={styles.robotStatsLabel}>Amount&nbsp;</div>
-                    <div className={styles.robotStatsValue}>
-                        {getVolume(robotData)} {robotData.robot.asset}
-                    </div>
+                    <div className={styles.robotStatsValue}>{getVolume(robotData)}</div>
                 </div>
             </div>
             <div className={styles.robotStatsCol}>

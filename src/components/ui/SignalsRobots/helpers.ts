@@ -1,8 +1,12 @@
 import dayjs from "../../../libs/dayjs";
 
-export const getFormatDataSignals = (signals: any) =>
-    signals.map((signal: any) => {
-        const { id, name, asset, currency, exchange, started_at, code, user_signals } = signal.robot;
+// TODO: use formatSignalData to form the array
+export const getFormatDataSignals = (signals: any) => {
+    return signals.map(({ robot }: any) => {
+        const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
+        const {
+            user_signal_settings: { signal_settings }
+        } = user_signals[0];
         const res = {
             cache: {
                 id,
@@ -12,7 +16,10 @@ export const getFormatDataSignals = (signals: any) =>
             asset,
             currency,
             exchange,
-            volume: user_signals[0]?.volume,
+            volume:
+                signal_settings.volumeType === "currencyDynamic"
+                    ? `${signal_settings.volumeInCurrency} ${currency}`
+                    : `${signal_settings.volume} ${asset}`,
             user_robots: {
                 status: null,
                 id: null
@@ -38,10 +45,20 @@ export const getFormatDataSignals = (signals: any) =>
         }
         return res;
     });
+};
 
 export const getFormatDataRobots = (robots: any) =>
     robots.map((userRobot: any) => {
-        const { id, status, started_at, settings, robot, robot_id, equity } = userRobot;
+        const {
+            id,
+            status,
+            started_at,
+            robot,
+            robot_id,
+            equity,
+            user_robot_settings: { user_robot_settings }
+        } = userRobot;
+
         const { name, asset, currency, exchange, active, code } = robot;
         return {
             cache: {
@@ -52,7 +69,7 @@ export const getFormatDataRobots = (robots: any) =>
             asset,
             currency,
             exchange,
-            volume: settings.volume,
+            volume: `${user_robot_settings.volume} ${asset}`,
             user_robots: {
                 status,
                 id

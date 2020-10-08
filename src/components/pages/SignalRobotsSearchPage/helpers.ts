@@ -2,6 +2,7 @@ import dayjs from "libs/dayjs";
 
 export const formatRobotsData = (v_robots_stats: any) =>
     v_robots_stats.map((el: any) => {
+        console.log(el);
         const { id, code, name, exchange, asset, currency, started_at, user_signals, equity } = el.robots;
         const {
             robot_settings: { robot_settings }
@@ -23,8 +24,8 @@ export const formatRobotsData = (v_robots_stats: any) =>
             },
             volume:
                 robot_settings.volumeType === "assetStatic"
-                    ? `${robot_settings.volume} ${asset}`
-                    : `${robot_settings.volumeInCurrency} ${currency}`,
+                    ? `${robot_settings.volume || 0} ${asset}`
+                    : `${robot_settings.volumeInCurrency || 0} ${currency}`,
             profit: equity && equity.profit ? equity.profit : 0,
             performance: equity && equity.changes ? equity.changes : [],
             active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
@@ -39,7 +40,7 @@ export const formatRobotsData = (v_robots_stats: any) =>
             const userSignals = user_signals[0];
             res.subscribed = dayjs.utc(userSignals.subscribed_at).fromNow(true);
             res.isSubscribed = true;
-            res.volume = userSignals.volume;
+            res.volume = `${userSignals.user_signal_settings.signal_settings.volume || 0} ${asset}`;
             res.profit = userSignals.equity && userSignals.equity.profit ? userSignals.equity.profit : 0;
             res.winRate = userSignals.equity ? userSignals.equity.winRate : 0;
             res.maxDrawdown = userSignals.equity ? userSignals.equity.maxDrawdown : 0;

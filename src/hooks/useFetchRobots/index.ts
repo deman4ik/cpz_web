@@ -30,7 +30,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
-    const [limit, setLimit] = useState(storageLimit || searchLimit.Limit[dispayType]);
+    const [limit, setLimit] = useState(storageLimit || searchLimit?.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
         robots: {},
         hash: "",

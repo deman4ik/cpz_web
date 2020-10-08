@@ -55,7 +55,7 @@ export const SignalRobotPage = () => {
         }
     });
 
-    const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data) : null), [
+    const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data.robot[0]) : null), [
         data,
         loading
     ]);

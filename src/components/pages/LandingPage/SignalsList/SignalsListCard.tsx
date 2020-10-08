@@ -11,6 +11,7 @@ interface Props {
 
 const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
+// TODO: extract robot deconstruction
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
     const money = <div className={styles.primaryText}>{formatMoney(robot.equity.profit)} $</div>;
 
@@ -25,7 +26,9 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                     <div className={`${styles.numberCol} ${styles.profitCol}`}>
                         <div className={styles.secondaryText}>
                             <div className={styles.label}>
-                                {robot.robot_settings.volume} {robot.asset}
+                                {robot.robot_settings.volumeType === "currencyDynamic"
+                                    ? `${robot.robot_settings.robot_settings.volumeInCurrency} ${robot.currency}`
+                                    : `${robot.robot_settings.robot_settings.volume} ${robot.asset}`}
                             </div>
                         </div>
                         <span className={styles.mobile}>{money}</span>

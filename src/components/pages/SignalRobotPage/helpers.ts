@@ -3,7 +3,7 @@ import { color } from "config/constants";
 import { capitalize } from "config/utils";
 import { SectionType } from "./types";
 
-export const formatRobotData = (data) => {
+export const formatRobotData = (robot) => {
     const {
         id,
         name,
@@ -18,12 +18,14 @@ export const formatRobotData = (data) => {
         status,
         equity,
         statistics,
-        robot_settings,
         started_at,
         user_signals
-    } = data.robot[0];
-
-    console.log("settings", robot_settings);
+    } = robot;
+    const {
+        robot_settings: { robot_settings }
+    } = robot;
+    const userSignals = user_signals?.length && user_signals[0];
+    const signalSettings = userSignals?.user_signal_settings.signal_settings;
     return {
         robot: {
             id,
@@ -33,7 +35,10 @@ export const formatRobotData = (data) => {
             code,
             currency,
             timeframe,
-            volume: robot_settings.robot_settings.volume,
+            volume:
+                robot_settings.volumeType === "currencyDynamic"
+                    ? `${robot_settings.volumeInCurrency} ${currency}`
+                    : `${robot_settings.volume} ${asset}`,
             statistics,
             equity,
             available,
@@ -42,9 +47,17 @@ export const formatRobotData = (data) => {
             started_at,
             isUserSubscribed: user_signals?.length > 0,
             strategyByStrategy,
-            user_signal_id: user_signals?.length && user_signals[0].id
+            user_signal_id: userSignals?.id
         },
-        user_signals: user_signals?.length ? user_signals[0] : null
+        user_signals: userSignals
+            ? {
+                  ...userSignals,
+                  volume:
+                      signalSettings?.volumeType === "currencyDynamic"
+                          ? `${signalSettings?.volumeInCurrency} ${currency}`
+                          : `${signalSettings?.volume} ${asset}`
+              }
+            : null
     };
 };
 

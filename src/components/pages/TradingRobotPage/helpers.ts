@@ -7,6 +7,9 @@ export const formatRobotData = (robot: any) => {
     const {
         robot_settings: { robot_settings }
     } = robot;
+    const userRobot = user_robot?.length && user_robot[0];
+    const volumeTypeIsCurrency = robot_settings.volumeType === "currencyDynamic";
+    const displayUnits = volumeTypeIsCurrency ? currency : asset;
     return {
         robot: {
             id,
@@ -15,16 +18,17 @@ export const formatRobotData = (robot: any) => {
             name,
             currency,
             timeframe,
-            volume:
-                robot_settings.volumeType === "currencyDynamic"
-                    ? `${robot_settings.volumeInCurrency} ${currency}`
-                    : `${robot_settings.volume} ${asset}`,
+            volume: `${volumeTypeIsCurrency ? robot_settings.volumeInCurrency : robot_settings.volume} ${
+                displayUnits || 0
+            }`,
             statistics,
             equity,
             active,
             isOwnedByUser: user_robot?.length > 0
         },
-        userRobot: user_robot?.length ? user_robot[0] : null
+        userRobot: user_robot?.length
+            ? { ...userRobot, volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}` }
+            : null
     };
 };
 
