@@ -22,13 +22,15 @@ export const USER_SIGNAL_ROBOTS = gql`
                 started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
                 user_signals(where: { user_id: { _eq: $user_id } }) {
                     id
                     user_id
                     subscribed_at
-                    volume
+                    user_signal_settings {
+                        signal_settings
+                    }
                     equity
                 }
             }
@@ -57,7 +59,7 @@ export const ALL_SIGNAL_ROBOTS = gql`
                 started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
             }
         }
@@ -154,8 +156,10 @@ export const USER_SIGNALS = gql`
                     id
                     user_id
                     subscribed_at
-                    volume
                     equity
+                    user_signal_settings {
+                        signal_settings
+                    }
                 }
                 code
                 status

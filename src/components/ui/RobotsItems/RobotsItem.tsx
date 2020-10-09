@@ -52,17 +52,13 @@ export const RobotsItem: React.FC<Props> = ({
     const handleOnPressDetails = () => {
         onRedirectToDetailView(item.code);
     };
-
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>
             <div className={styles.cellName} onClick={handleOnPressDetails}>
                 <div className={styles.cellNameWrap}>
                     <div className={styles.primaryText}>{item.name}</div>
                     <div className={styles.profitWrap}>
-                        <div className={styles.secondaryText}>
-                            {item.volume ? `${item.volume} ` : ""}
-                            {item.asset}
-                        </div>
+                        <div className={styles.secondaryText}>{item.volume ? `${item.volume} ` : ""}</div>
                         <div className={styles.profitText} style={colorAction(item.profit > 0)}>
                             {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
                         </div>

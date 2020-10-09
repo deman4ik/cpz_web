@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import dayjs from "libs/dayjs";
-import { USER_SIGNALS, USER_SIGNAL_ROBOTS as GET_ROBOTS_BY_STATS_SIGNALS } from "graphql/signals/queries";
+import { USER_SIGNALS, USER_SIGNAL_ROBOTS } from "graphql/signals/queries";
 import { ROBOT_CANDLES_FOR_USER_SIGNALS } from "graphql/robots/queries";
 
 export const unsubscribe = (_root: any, variables: any, context: any) => {
@@ -154,7 +154,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
         };
         if (vRobotsStatsExist) {
             const dataRobots = context.cache.readQuery({
-                query: GET_ROBOTS_BY_STATS_SIGNALS
+                query: USER_SIGNAL_ROBOTS
             });
             const v_robots_stats = dataRobots.v_robots_stats.map((el) => {
                 if (el.robots.id === variables.cache.id) {
@@ -164,7 +164,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 return el;
             });
             context.cache.writeQuery({
-                query: GET_ROBOTS_BY_STATS_SIGNALS,
+                query: USER_SIGNAL_ROBOTS,
                 data: { v_robots_stats }
             });
         }

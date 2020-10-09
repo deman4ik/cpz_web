@@ -1,9 +1,12 @@
 import dayjs from "libs/dayjs";
 
+// TODO: refactor
 export const formatRobotsData = (v_robots_stats: any) =>
     v_robots_stats.map((el: any) => {
-        const { id, code, name, exchange, asset, currency, active, robot_settings, user_robots, equity } = el.robots;
-
+        const { id, code, name, exchange, asset, currency, active, user_robots, equity } = el.robots;
+        const {
+            robot_settings: { robot_settings }
+        } = el.robots;
         const res = {
             cache: {
                 id,
@@ -20,7 +23,10 @@ export const formatRobotsData = (v_robots_stats: any) =>
                 id: null
             },
             started_at: null,
-            volume: robot_settings.volume,
+            volume:
+                robot_settings.volumeType === "assetStatic"
+                    ? `${robot_settings.volume || 0} ${asset}`
+                    : `${robot_settings.volumeInCurrency || 0} ${currency}`,
             profit: equity && equity.profit ? equity.profit : 0,
             performance: equity && equity.changes ? equity.changes : [],
             active: active ? dayjs.utc(active).fromNow(true) : active,
@@ -33,7 +39,7 @@ export const formatRobotsData = (v_robots_stats: any) =>
         if (user_robots?.length) {
             res.user_robots.status = user_robots[0].status;
             res.user_robots.id = user_robots[0].id;
-            res.volume = user_robots[0].settings.volume;
+            res.volume = `${user_robots[0].user_robot_settings.user_robot_settings.volume} ${asset}`;
             res.started_at = user_robots[0].started_at ? dayjs.utc(user_robots[0].started_at).fromNow(true) : 0;
             res.performance = user_robots[0].equity ? user_robots[0].equity.changes || [] : [];
             res.winRate = user_robots[0].equity ? user_robots[0].equity.winRate : null;

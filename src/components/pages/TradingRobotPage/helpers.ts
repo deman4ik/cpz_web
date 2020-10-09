@@ -3,19 +3,13 @@ import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
 export const formatRobotData = (robot: any) => {
+    const { id, exchange, asset, name, currency, timeframe, user_robot, statistics, equity, active } = robot;
     const {
-        id,
-        exchange,
-        asset,
-        name,
-        currency,
-        timeframe,
-        user_robot,
-        robot_settings,
-        statistics,
-        equity,
-        active
+        robot_settings: { robot_settings }
     } = robot;
+    const userRobot = user_robot?.length && user_robot[0];
+    const volumeTypeIsCurrency = robot_settings.volumeType === "currencyDynamic";
+    const displayUnits = volumeTypeIsCurrency ? currency : asset;
     return {
         robot: {
             id,
@@ -24,13 +18,17 @@ export const formatRobotData = (robot: any) => {
             name,
             currency,
             timeframe,
-            volume: robot_settings.volume,
+            volume: `${volumeTypeIsCurrency ? robot_settings.volumeInCurrency : robot_settings.volume} ${
+                displayUnits || 0
+            }`,
             statistics,
             equity,
             active,
             isOwnedByUser: user_robot?.length > 0
         },
-        userRobot: user_robot?.length ? user_robot[0] : null
+        userRobot: user_robot?.length
+            ? { ...userRobot, volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}` }
+            : null
     };
 };
 
@@ -162,7 +160,7 @@ export const getFormatSignals = (signals) =>
 export const activeDays = ({ robot }: any) => (robot.active ? dayjs.utc(robot.active).fromNow(true) : null);
 
 export const startedAt = ({ userRobot }: any) =>
-    userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0) : null;
+    userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : "recently") : null;
 
 export const getProfit = ({ robot, userRobot }: any) => userRobot?.equity?.profit || robot?.equity?.profit || 0;
 

@@ -18,7 +18,7 @@ const getTokenFromCookie = () => {
 };
 
 const putTokenInCookie = (token) => {
-    if (typeof window !== "undefined") document.cookie = `accessToken=${token}`;
+    if (typeof window !== "undefined") document.cookie = `accessToken=${token}; path=/`;
 };
 
 export const getAccessToken = getTokenFromCookie;

@@ -14,6 +14,7 @@ import LocalStorageService from "services/localStorageService";
 // context
 import { AuthContext } from "libs/hoc/context";
 
+//TODO: refactor
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
     const {
@@ -29,7 +30,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
-    const [limit, setLimit] = useState(storageLimit || searchLimit.Limit[dispayType]);
+    const [limit, setLimit] = useState(storageLimit || searchLimit?.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
         robots: {},
         hash: "",
@@ -52,17 +53,18 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     /*Обработка получения данных*/
     let robotsWhere = { ...filtersQuery.robots };
     if (isAuth) robotsWhere = { ...robotsWhere, ...QUERY_FILTER[dispayType]() };
+    let variables: any = {
+        offset: 0,
+        limit,
+        hash: filtersQuery.hash,
+        order_by: [filtersQuery.order_by, { id: "asc" }],
+        where: {
+            robots: { ...robotsWhere }
+        }
+    };
+    if (isAuth) variables = { ...variables, user_id };
     const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(QUERIES_TYPE[dispayType], {
-        variables: {
-            offset: 0,
-            limit,
-            hash: filtersQuery.hash,
-            order_by: [filtersQuery.order_by, { id: "asc" }],
-            where: {
-                robots: { ...robotsWhere }
-            },
-            user_id
-        },
+        variables,
         pollInterval: POLL_INTERVAL
     });
 

@@ -14,7 +14,7 @@ export const TOP_PERFORMANCE_ROBOTS = gql`
                 trading
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
                 statistics
             }
@@ -23,16 +23,7 @@ export const TOP_PERFORMANCE_ROBOTS = gql`
 `;
 
 export const ROBOT_INFO_FOR_USER = gql`
-    query get_robot_info_for_user(
-        $code: String
-        $status: String
-        $dateFrom: timestamp
-        $dateTo: timestamp
-        $limit: Int
-        $offset: Int
-        $orderBy: [robot_positions_order_by!]
-        $user_id: uuid
-    ) {
+    query get_robot_info_for_user($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) {
             id
             name
@@ -47,13 +38,15 @@ export const ROBOT_INFO_FOR_USER = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             started_at
             user_signals(where: { user_id: { _eq: $user_id } }) {
                 id
                 subscribed_at
-                volume
+                user_signal_settings {
+                    signal_settings
+                }
                 statistics
                 equity
             }
@@ -80,7 +73,7 @@ export const ROBOT_INFO = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             started_at
             strategyByStrategy {
@@ -418,7 +411,6 @@ export const USER_ROBOTS = gql`
             @connection(key: "user_robots_robots") {
             id
             status
-            settings
             robot_id
             started_at
             equity
@@ -431,6 +423,9 @@ export const USER_ROBOTS = gql`
                 exchange
                 code
                 active: started_at
+            }
+            user_robot_settings {
+                user_robot_settings
             }
         }
     }
@@ -458,13 +453,15 @@ export const USER_ROBOTS_BY_STATS = gql`
                 active: started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
                 user_robots(where: { user_id: { _eq: $user_id } }) {
                     id
                     user_id
                     status
-                    settings
+                    user_robot_settings {
+                        user_robot_settings
+                    }
                     started_at
                     equity
                 }
@@ -494,7 +491,7 @@ export const ROBOTS_BY_STATS = gql`
                 active: started_at
                 equity
                 robot_settings {
-                    volume
+                    robot_settings
                 }
             }
         }
@@ -511,6 +508,7 @@ export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
     }
 `;
 
+// TODO: use user_robots table
 export const ROBOT_INFO_FOR_USER_ROBOT = gql`
     query get_robot_info_for_user_robot($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
@@ -524,17 +522,19 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             active: started_at
             user_robot: user_robots(where: { user_id: { _eq: $user_id } }) {
                 id
                 status
-                settings
                 started_at
                 statistics
                 message
                 equity
+                user_robot_settings {
+                    user_robot_settings
+                }
             }
         }
     }
@@ -553,7 +553,7 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
             equity
             statistics
             robot_settings {
-                volume
+                robot_settings
             }
             active: started_at
         }

@@ -9,10 +9,11 @@ interface Props {
     robotData: any;
 }
 
+// TODO: check whether the robot is owned by user elsewhere
+// the data for public and user robots must be of equal structure
 const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
     const { robot, userRobot } = robotData;
     const { isOwnedByUser } = robot;
-
     return (
         <div className={styles.robotStats}>
             <div className={styles.robotStatsCol}>
@@ -26,9 +27,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                 </div>
                 <div className={styles.robotStatsRow}>
                     <div className={styles.robotStatsLabel}>Amount&nbsp;</div>
-                    <div className={styles.robotStatsValue}>
-                        {isOwnedByUser ? userRobot.settings.volume : robot.volume} {robot.asset}
-                    </div>
+                    <div className={styles.robotStatsValue}>{isOwnedByUser ? userRobot.volume : robot.volume}</div>
                 </div>
             </div>
             <div className={styles.robotStatsCol}>
