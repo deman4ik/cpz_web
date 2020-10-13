@@ -57,7 +57,13 @@ export const ALL_SIGNAL_ROBOTS = gql`
                 currency
                 status
                 started_at
-                equity
+                stats {
+                    tradesCount: trades_count
+                    maxDrawdown: max_drawdown
+                    winRate: win_rate
+                    profit: net_profit
+                    equity: equity_avg
+                }
                 robot_settings {
                     robot_settings
                 }
@@ -156,7 +162,13 @@ export const USER_SIGNALS = gql`
                     id
                     user_id
                     subscribed_at
-                    equity
+                    stats {
+                        tradesCount: trades_count
+                        maxDrawdown: max_drawdown
+                        winRate: win_rate
+                        profit: net_profit
+                        equity: equity_avg
+                    }
                     user_signal_settings {
                         signal_settings
                     }

@@ -36,14 +36,14 @@ export const formatData = ({ robots }) => {
         defineProperty(row, "available", ROBOTS_AVAILABLE_CODES[robot.available]);
 
         defineProperty(row, "performance", {
-            performance: robot.equity?.changes || [],
-            profit: robot.equity?.profit || 0
+            performance: robot.stats?.equity || [],
+            profit: robot.stats?.profit || 0
         });
-        defineProperty(row, "lastProfit", robot.equity?.lastProfit);
-        defineProperty(row, "maxDrawdown", robot.equity?.maxDrawdown);
-        defineProperty(row, "profit", robot.equity?.profit);
-        defineProperty(row, "tradesCount", robot.equity?.tradesCount);
-        defineProperty(row, "winRate", robot.equity?.winRate);
+        defineProperty(row, "lastProfit", robot.stats?.lastProfit);
+        defineProperty(row, "maxDrawdown", robot.stats?.maxDrawdown);
+        defineProperty(row, "profit", robot.stats?.profit);
+        defineProperty(row, "tradesCount", robot.stats?.tradesCount);
+        defineProperty(row, "winRate", robot.stats?.winRate);
 
         defineProperty(row, "signals", robot.signals);
         defineProperty(row, "trading", robot.trading);

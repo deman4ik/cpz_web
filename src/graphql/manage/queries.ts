@@ -102,7 +102,13 @@ export const ALL_ROBOTS = gql`
             id
             name
             status
-            equity
+            stats {
+                equity: equity_avg
+                winRate: win_rate
+                maxDrawdown: max_drawdown
+                profit: net_profit
+                tradesCount: trades_count
+            }
             settings
             trade_settings
             signals
@@ -206,7 +212,13 @@ export const ALL_USER_ROBOTS = gql`
                 name
                 id
             }
-            equity
+            stats {
+                equity: equity_avg
+                winRate: win_rate
+                maxDrawdown: max_drawdown
+                profit: net_profit
+                tradesCount: trades_count
+            }
             settings
             robot {
                 name
