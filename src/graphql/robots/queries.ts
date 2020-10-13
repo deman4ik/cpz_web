@@ -35,7 +35,9 @@ export const ROBOT_INFO_FOR_USER = gql`
             timeframe
             available
             status
-            equity
+            stats {
+                equity
+            }
             statistics
             robot_settings {
                 robot_settings
@@ -48,7 +50,9 @@ export const ROBOT_INFO_FOR_USER = gql`
                     signal_settings
                 }
                 statistics
-                equity
+                stats {
+                    equity
+                }
             }
             strategyByStrategy {
                 description
@@ -70,7 +74,9 @@ export const ROBOT_INFO = gql`
             timeframe
             available
             status
-            equity
+            stats {
+                equity
+            }
             statistics
             robot_settings {
                 robot_settings
@@ -413,7 +419,13 @@ export const USER_ROBOTS = gql`
             status
             robot_id
             started_at
-            equity
+            stats {
+                tradesCount: trades_count
+                maxDrawdown: max_drawdown
+                winRate: win_rate
+                profit: net_profit
+                equity: equity_avg
+            }
             user_id
             robot {
                 id
@@ -451,7 +463,14 @@ export const USER_ROBOTS_BY_STATS = gql`
                 currency
                 status
                 active: started_at
-                equity
+
+                stats {
+                    tradesCount: trades_count
+                    maxDrawdown: max_drawdown
+                    winRate: win_rate
+                    profit: net_profit
+                    equity: equity_avg
+                }
                 robot_settings {
                     robot_settings
                 }
@@ -463,7 +482,13 @@ export const USER_ROBOTS_BY_STATS = gql`
                         user_robot_settings
                     }
                     started_at
-                    equity
+                    stats {
+                        tradesCount: trades_count
+                        maxDrawdown: max_drawdown
+                        winRate: win_rate
+                        profit: net_profit
+                        equity: equity_avg
+                    }
                 }
             }
         }
@@ -489,7 +514,13 @@ export const ROBOTS_BY_STATS = gql`
                 currency
                 status
                 active: started_at
-                equity
+                stats {
+                    tradesCount: trades_count
+                    maxDrawdown: max_drawdown
+                    winRate: win_rate
+                    profit: net_profit
+                    equity: equity_avg
+                }
                 robot_settings {
                     robot_settings
                 }
@@ -519,7 +550,9 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
             asset
             currency
             timeframe
-            equity
+            stats {
+                equity
+            }
             statistics
             robot_settings {
                 robot_settings
@@ -550,7 +583,9 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
             asset
             currency
             timeframe
-            equity
+            stats {
+                equity
+            }
             statistics
             robot_settings {
                 robot_settings

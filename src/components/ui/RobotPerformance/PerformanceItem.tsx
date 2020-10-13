@@ -10,7 +10,7 @@ interface Props {
     onRedirectToDetailView: (path: string) => void;
 }
 
-const DinamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
 
 export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
     const handleOnClick = () => {
@@ -31,7 +31,7 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
                 </div>
             </div>
             <div className={styles.col} style={{ flex: 0.85 }}>
-                {item.changes && item.changes.length ? <DinamicAreaChart height={120} data={item.changes} /> : null}
+                {item.stats?.equity.length ? <DynamicAreaChart height={120} data={item.stats.equity} /> : null}
             </div>
             <div className={styles.col} style={{ flex: 0.05 }} />
             <div className={styles.col} style={{ flex: 0.9 }}>

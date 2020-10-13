@@ -35,9 +35,9 @@ export const getFormatDataSignals = (signals: any) => {
             isSubscribed: true,
             code
         };
-        if (user_signals.length && user_signals[0].equity) {
-            const { winRate, maxDrawdown, tradesCount, changes, profit } = user_signals[0].equity;
-            res.performance = changes || [];
+        if (user_signals.length && user_signals[0].stats) {
+            const { equity, profit, winRate, maxDrawdown, tradesCount } = user_signals[0].stats;
+            res.performance = equity || [];
             res.profit = profit || 0;
             res.winRate = winRate || 0;
             res.maxDrawdown = maxDrawdown || 0;
@@ -55,7 +55,7 @@ export const getFormatDataRobots = (robots: any) =>
             started_at,
             robot,
             robot_id,
-            equity,
+            stats,
             user_robot_settings: { user_robot_settings }
         } = userRobot;
 
@@ -76,12 +76,12 @@ export const getFormatDataRobots = (robots: any) =>
             },
             active: active ? dayjs.utc(active).fromNow(true) : active,
             started_at: started_at ? dayjs.utc(started_at).fromNow(true) : 0,
-            performance: equity ? equity.changes || [] : [],
-            profit: equity ? equity.profit : 0,
+            performance: stats?.equity || [],
+            profit: stats?.profit || 0,
             name,
-            winRate: equity ? equity.winRate : null,
-            maxDrawdown: equity ? equity.maxDrawdown : null,
-            tradesCount: equity ? equity.tradesCount : null,
+            winRate: stats?.winRate || null,
+            maxDrawdown: stats?.maxDrawdown || null,
+            tradesCount: stats?.tradesCount || null,
             isSubscribed: false,
             code
         };

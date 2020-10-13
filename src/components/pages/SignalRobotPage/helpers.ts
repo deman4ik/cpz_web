@@ -16,7 +16,7 @@ export const formatRobotData = (robot) => {
         timeframe,
         available,
         status,
-        equity,
+        stats: { equity },
         statistics,
         started_at,
         user_signals
@@ -52,6 +52,7 @@ export const formatRobotData = (robot) => {
         user_signals: userSignals
             ? {
                   ...userSignals,
+                  equity: userSignals.stats.equity,
                   volume:
                       signalSettings?.volumeType === "currencyDynamic"
                           ? `${signalSettings?.volumeInCurrency} ${currency}`

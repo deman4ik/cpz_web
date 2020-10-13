@@ -8,14 +8,14 @@ export const formatData = ({ user_robots }) => {
         defineProperty(row, "created_at", entry?.created_at ? formatDate(entry?.created_at) : "");
         defineProperty(row, "stopped_at", entry?.stopped_at ? formatDate(entry?.stopped_at) : "");
         defineProperty(row, "performance", {
-            performance: entry?.equity?.changes || [],
-            profit: entry?.equity?.profit || 0
+            performance: entry?.stats?.equity || [],
+            profit: entry?.stats?.profit || 0
         });
-        defineProperty(row, "lastProfit", entry?.equity?.lastProfit);
-        defineProperty(row, "maxDrawdown", entry?.equity?.maxDrawdown);
-        defineProperty(row, "profit", entry?.equity?.profit);
-        defineProperty(row, "tradesCount", entry?.equity?.tradesCount);
-        defineProperty(row, "winRate", entry?.equity?.winRate);
+        defineProperty(row, "lastProfit", entry?.stats?.lastProfit);
+        defineProperty(row, "maxDrawdown", entry?.stats?.maxDrawdown);
+        defineProperty(row, "profit", entry?.stats?.profit);
+        defineProperty(row, "tradesCount", entry?.stats?.tradesCount);
+        defineProperty(row, "winRate", entry?.stats?.winRate);
         defineProperty(row, "robot_code", entry?.robot?.name);
         defineProperty(row, "robot_id", entry?.robot?.id);
         defineProperty(row, "volume", entry?.settings?.volume);

@@ -9,7 +9,7 @@ interface Props {
     robot: any;
 }
 
-const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 // TODO: extract robot deconstruction
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
@@ -43,7 +43,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
             </div>
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
-                    {robot.equity.changes && <DinamicAreaChart height={120} data={robot.equity.changes} />}
+                    {robot.equity && <DynamicAreaChart height={120} data={robot.equity} />}
                 </div>
                 <div className={styles.statCol}>
                     <div className={styles.statRow}>

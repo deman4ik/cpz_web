@@ -10,7 +10,7 @@ interface Props {
     onRedirectToDetailView: (path: string) => void;
 }
 
-const DinamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
 
 export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
     const handleOnPress = () => {
@@ -44,8 +44,8 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
             </div>
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
-                    {item.changes && item.changes.length ? (
-                        <DinamicAreaChart height={120} data={item.changes} />
+                    {item.stats?.equity.length ? (
+                        <DynamicAreaChart height={120} data={item.stats.equity} />
                     ) : (
                         <div className={styles.emptyChart} />
                     )}

@@ -3,7 +3,18 @@ import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
 export const formatRobotData = (robot: any) => {
-    const { id, exchange, asset, name, currency, timeframe, user_robot, statistics, equity, active } = robot;
+    const {
+        id,
+        exchange,
+        asset,
+        name,
+        currency,
+        timeframe,
+        user_robot,
+        statistics,
+        stats: { equity },
+        active
+    } = robot;
     const {
         robot_settings: { robot_settings }
     } = robot;
@@ -27,7 +38,11 @@ export const formatRobotData = (robot: any) => {
             isOwnedByUser: user_robot?.length > 0
         },
         userRobot: user_robot?.length
-            ? { ...userRobot, volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}` }
+            ? {
+                  ...userRobot,
+                  equity: userRobot.stats.equity,
+                  volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}`
+              }
             : null
     };
 };
