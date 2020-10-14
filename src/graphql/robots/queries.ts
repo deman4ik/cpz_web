@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
+import { stats } from "graphql/queryFragments";
 
 export const TOP_PERFORMANCE_ROBOTS = gql`
     query get_top_robots_by_stats($limit: Int) {
@@ -12,11 +13,10 @@ export const TOP_PERFORMANCE_ROBOTS = gql`
                 currency
                 signals
                 trading
-                equity
+                ${stats}
                 robot_settings {
                     robot_settings
                 }
-                statistics
             }
         }
     }
@@ -35,9 +35,7 @@ export const ROBOT_INFO_FOR_USER = gql`
             timeframe
             available
             status
-            stats {
-                equity
-            }
+            ${stats}
             statistics
             robot_settings {
                 robot_settings
@@ -50,9 +48,7 @@ export const ROBOT_INFO_FOR_USER = gql`
                     signal_settings
                 }
                 statistics
-                stats {
-                    equity
-                }
+                ${stats}
             }
             strategyByStrategy {
                 description
@@ -74,9 +70,7 @@ export const ROBOT_INFO = gql`
             timeframe
             available
             status
-            stats {
-                equity
-            }
+            ${stats}
             statistics
             robot_settings {
                 robot_settings
@@ -419,13 +413,6 @@ export const USER_ROBOTS = gql`
             status
             robot_id
             started_at
-            stats {
-                tradesCount: trades_count
-                maxDrawdown: max_drawdown
-                winRate: win_rate
-                profit: net_profit
-                equity: equity_avg
-            }
             user_id
             robot {
                 id
@@ -435,6 +422,7 @@ export const USER_ROBOTS = gql`
                 exchange
                 code
                 active: started_at
+                ${stats}
             }
             user_robot_settings {
                 user_robot_settings
@@ -463,14 +451,7 @@ export const USER_ROBOTS_BY_STATS = gql`
                 currency
                 status
                 active: started_at
-
-                stats {
-                    tradesCount: trades_count
-                    maxDrawdown: max_drawdown
-                    winRate: win_rate
-                    profit: net_profit
-                    equity: equity_avg
-                }
+                ${stats}
                 robot_settings {
                     robot_settings
                 }
@@ -514,13 +495,7 @@ export const ROBOTS_BY_STATS = gql`
                 currency
                 status
                 active: started_at
-                stats {
-                    tradesCount: trades_count
-                    maxDrawdown: max_drawdown
-                    winRate: win_rate
-                    profit: net_profit
-                    equity: equity_avg
-                }
+                ${stats}
                 robot_settings {
                     robot_settings
                 }
@@ -550,9 +525,7 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
             asset
             currency
             timeframe
-            stats {
-                equity
-            }
+            ${stats}
             statistics
             robot_settings {
                 robot_settings
@@ -564,7 +537,7 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
                 started_at
                 statistics
                 message
-                equity
+                ${stats}
                 user_robot_settings {
                     user_robot_settings
                 }
@@ -583,9 +556,7 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
             asset
             currency
             timeframe
-            stats {
-                equity
-            }
+            ${stats}
             statistics
             robot_settings {
                 robot_settings

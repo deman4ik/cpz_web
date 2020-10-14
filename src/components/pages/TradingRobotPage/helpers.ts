@@ -1,26 +1,17 @@
-import { capitalize } from "config/utils";
+import { capitalize, getStats } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
+// TODO: use DB-like structure
 export const formatRobotData = (robot: any) => {
-    const {
-        id,
-        exchange,
-        asset,
-        name,
-        currency,
-        timeframe,
-        user_robot,
-        statistics,
-        stats: { equity },
-        active
-    } = robot;
+    const { id, exchange, asset, name, currency, timeframe, user_robot, statistics, active } = robot;
     const {
         robot_settings: { robot_settings }
     } = robot;
     const userRobot = user_robot?.length && user_robot[0];
     const volumeTypeIsCurrency = robot_settings.volumeType === "currencyDynamic";
     const displayUnits = volumeTypeIsCurrency ? currency : asset;
+    const { equity, profit } = getStats(robot);
     return {
         robot: {
             id,
@@ -34,13 +25,14 @@ export const formatRobotData = (robot: any) => {
             }`,
             statistics,
             equity,
+            profit,
             active,
             isOwnedByUser: user_robot?.length > 0
         },
         userRobot: user_robot?.length
             ? {
                   ...userRobot,
-                  equity: userRobot.stats.equity,
+                  equity: getStats(userRobot).equity,
                   volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}`
               }
             : null
@@ -177,7 +169,7 @@ export const activeDays = ({ robot }: any) => (robot.active ? dayjs.utc(robot.ac
 export const startedAt = ({ userRobot }: any) =>
     userRobot ? (userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : "recently") : null;
 
-export const getProfit = ({ robot, userRobot }: any) => userRobot?.equity?.profit || robot?.equity?.profit || 0;
+export const getProfit = ({ robot, userRobot }: any) => userRobot?.profit || robot?.profit || 0;
 
 export const tabNames = {
     trading: "Trading",

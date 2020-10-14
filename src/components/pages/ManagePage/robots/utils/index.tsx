@@ -4,6 +4,7 @@ import { defineProperty } from "../../utils";
 
 // constants
 import { ROBOTS_AVAILABLE_CODES } from "config/constants";
+import { getStats } from "config/utils";
 
 export const formatData = ({ robots }) => {
     return robots.map((robot) => {
@@ -35,15 +36,16 @@ export const formatData = ({ robots }) => {
 
         defineProperty(row, "available", ROBOTS_AVAILABLE_CODES[robot.available]);
 
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
+
         defineProperty(row, "performance", {
-            performance: robot.stats?.equity || [],
-            profit: robot.stats?.profit || 0
+            performance: equity,
+            profit
         });
-        defineProperty(row, "lastProfit", robot.stats?.lastProfit);
-        defineProperty(row, "maxDrawdown", robot.stats?.maxDrawdown);
-        defineProperty(row, "profit", robot.stats?.profit);
-        defineProperty(row, "tradesCount", robot.stats?.tradesCount);
-        defineProperty(row, "winRate", robot.stats?.winRate);
+        defineProperty(row, "maxDrawdown", maxDrawdown);
+        defineProperty(row, "profit", profit);
+        defineProperty(row, "tradesCount", tradesCount);
+        defineProperty(row, "winRate", winRate);
 
         defineProperty(row, "signals", robot.signals);
         defineProperty(row, "trading", robot.trading);

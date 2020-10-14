@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
 import { PrimaryButton } from "components/basic";
-import { formatMoney, valueWithSign } from "config/utils";
+import { getStats, formatMoney, valueWithSign } from "config/utils";
 import styles from "./SignalsListCard.module.css";
 
 interface Props {
@@ -13,8 +13,8 @@ const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 // TODO: extract robot deconstruction
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
-    const money = <div className={styles.primaryText}>{formatMoney(robot.equity.profit)} $</div>;
-
+    const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
+    const money = <div className={styles.primaryText}>{formatMoney(profit)} $</div>;
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -32,31 +32,23 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                             </div>
                         </div>
                         <span className={styles.mobile}>{money}</span>
-                        <div
-                            className={`${styles.lastProfit} ${
-                                robot.equity.lastProfit < 0 ? styles.negative : styles.positive
-                            }`}>
-                            {valueWithSign(formatMoney(robot.equity.lastProfit))} $
-                        </div>
                     </div>
                 </div>
             </div>
             <div className={styles.chartStat}>
-                <div className={styles.chartCol}>
-                    {robot.equity && <DynamicAreaChart height={120} data={robot.equity} />}
-                </div>
+                <div className={styles.chartCol}>{equity && <DynamicAreaChart height={120} data={equity} />}</div>
                 <div className={styles.statCol}>
                     <div className={styles.statRow}>
                         <div className={styles.label}>Win Rate</div>
-                        <div className={styles.statValue}>{Math.round(robot.statistics.winRate.all)} %</div>
+                        <div className={styles.statValue}>{Math.round(winRate)} %</div>
                     </div>
                     <div className={styles.statRow}>
                         <div className={styles.label}>Max Drawdown</div>
-                        <div className={styles.statValue}>{formatMoney(robot.statistics.maxDrawdown.all)} $</div>
+                        <div className={styles.statValue}>{formatMoney(maxDrawdown)} $</div>
                     </div>
                     <div className={styles.statRow}>
                         <div className={styles.label}>Trades Count</div>
-                        <div className={styles.statValue}>{robot.statistics.tradesCount.all}</div>
+                        <div className={styles.statValue}>{tradesCount}</div>
                     </div>
                 </div>
             </div>

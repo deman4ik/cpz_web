@@ -48,35 +48,35 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "performance",
                 isVisible: true,
                 Cell: buildRobotChartCell,
-                orderSchema: { field: "equity" },
+                orderSchema: { field: "stats" },
                 width: 200
             },
             {
                 Header: "Profit",
                 accessor: "profit",
                 isVisible: true,
-                orderSchema: { field: "equity" },
+                orderSchema: { field: "stats" },
                 width: 90
             },
             {
                 Header: "W/R",
                 accessor: "winRate",
                 isVisible: true,
-                orderSchema: { field: "equity" },
+                orderSchema: { field: "stats" },
                 width: 90
             },
             {
                 Header: "Max Drawdown",
                 accessor: "maxDrawdown",
                 isVisible: true,
-                orderSchema: { field: "equity" },
+                orderSchema: { field: "stats" },
                 width: 125
             },
             {
                 Header: "Trades",
                 accessor: "tradesCount",
                 isVisible: true,
-                orderSchema: { field: "equity" },
+                orderSchema: { field: "stats" },
                 width: 90
             }
         ]
