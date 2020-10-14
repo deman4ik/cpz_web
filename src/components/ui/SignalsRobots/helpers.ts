@@ -1,4 +1,5 @@
 import dayjs from "../../../libs/dayjs";
+import { getStats } from "config/utils";
 
 // TODO: use formatSignalData to form the array
 export const getFormatDataSignals = (signals: any) => {
@@ -55,11 +56,11 @@ export const getFormatDataRobots = (robots: any) =>
             started_at,
             robot,
             robot_id,
-            stats,
             user_robot_settings: { user_robot_settings }
         } = userRobot;
 
         const { name, asset, currency, exchange, active, code } = robot;
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
         return {
             cache: {
                 id,
@@ -76,12 +77,12 @@ export const getFormatDataRobots = (robots: any) =>
             },
             active: active ? dayjs.utc(active).fromNow(true) : active,
             started_at: started_at ? dayjs.utc(started_at).fromNow(true) : 0,
-            performance: stats?.equity || [],
-            profit: stats?.profit || 0,
+            performance: equity,
+            profit,
             name,
-            winRate: stats?.winRate || null,
-            maxDrawdown: stats?.maxDrawdown || null,
-            tradesCount: stats?.tradesCount || null,
+            winRate,
+            maxDrawdown,
+            tradesCount,
             isSubscribed: false,
             code
         };

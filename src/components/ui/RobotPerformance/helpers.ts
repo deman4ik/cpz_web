@@ -6,13 +6,13 @@ const getLineName = (exchange: string | null, asset: string | null, type: string
         : `${exchange ? exchangeName(exchange) : ""}${asset && exchange ? " " : ""}${asset ? capitalize(asset) : ""}`;
 
 const getAssetData = (stat, type) => {
-    const { id, asset, exchange, equity } = stat;
-    const { profit, changes, winRate, maxDrawdown, tradesCount } = equity;
+    const { id, asset, exchange, stats } = stat;
+    const { profit, equity, winRate, maxDrawdown, tradesCount } = stats;
     return {
         id,
         name: getLineName(exchange, asset, type),
         profit,
-        changes,
+        equity,
         winRate,
         maxDrawdown,
         tradesCount,

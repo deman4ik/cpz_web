@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color } from "./constants";
+import { RobotStats } from "./types";
 
 export const formatMoney = (value: number, toFixed = 2): string => {
     let val = "0";
@@ -16,6 +17,22 @@ export const formatMoney = (value: number, toFixed = 2): string => {
         }
     }
     return val;
+};
+
+export const getStats = (robot): RobotStats => {
+    const { equity, profit, winRate, maxDrawdown, tradesCount } = robot.stats || {};
+
+    return {
+        equity: equity || [],
+        profit: profit || 0,
+        winRate: winRate || null,
+        maxDrawdown: maxDrawdown || null,
+        tradesCount: tradesCount || null
+    };
+};
+
+export const getVolume = () => {
+    return [];
 };
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);

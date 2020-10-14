@@ -23,3 +23,11 @@ export enum TabType {
 export interface DeviceProps {
     isMobile: boolean;
 }
+
+export type RobotStats = {
+    equity: [{ x: number; y: number }];
+    profit: number;
+    winRate: number;
+    maxDrawdown: number;
+    tradesCount: number;
+};

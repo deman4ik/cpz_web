@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { stats } from "graphql/queryFragments";
 
 export const USER_SIGNAL_ROBOTS = gql`
     query get_user_signal_robots(
@@ -20,7 +21,7 @@ export const USER_SIGNAL_ROBOTS = gql`
                 currency
                 status
                 started_at
-                equity
+                ${stats}
                 robot_settings {
                     robot_settings
                 }
@@ -31,7 +32,7 @@ export const USER_SIGNAL_ROBOTS = gql`
                     user_signal_settings {
                         signal_settings
                     }
-                    equity
+                    ${stats}
                 }
             }
         }
@@ -57,13 +58,7 @@ export const ALL_SIGNAL_ROBOTS = gql`
                 currency
                 status
                 started_at
-                stats {
-                    tradesCount: trades_count
-                    maxDrawdown: max_drawdown
-                    winRate: win_rate
-                    profit: net_profit
-                    equity: equity_avg
-                }
+                ${stats}
                 robot_settings {
                     robot_settings
                 }
@@ -162,13 +157,7 @@ export const USER_SIGNALS = gql`
                     id
                     user_id
                     subscribed_at
-                    stats {
-                        tradesCount: trades_count
-                        maxDrawdown: max_drawdown
-                        winRate: win_rate
-                        profit: net_profit
-                        equity: equity_avg
-                    }
+                    ${stats}
                     user_signal_settings {
                         signal_settings
                     }
