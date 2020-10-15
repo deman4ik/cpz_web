@@ -5,8 +5,9 @@ import { styles } from "./LightWeightChart.style";
 import { toolTipTemplate, toolTipArrowTemplate, toolTipTemplateArea } from "./templates";
 import { PropsLighweightChart, ChartType } from "./types";
 import { color } from "config/constants";
-import { getLeftOffsetButton } from "./helpers";
+import { getCartOptionsConfig, getLeftOffsetButton } from "./helpers";
 import { debounce } from "lodash";
+import { setStylesToRef } from "components/pages/helpers";
 
 const toolTipWidth = 140;
 const toolTipHeight = 80;
@@ -38,6 +39,8 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const [mouseEvent, setMouseEvent] = useState({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
     const [linkLines, setLinkLines] = useState([]);
     const [sortedData, setSortedData] = useState([]);
+    let debouncedHandleVisibleLogicalRangeChanged;
+    const abortController = new window.AbortController();
 
     useEffect(() => {
         if (!data || !data.length) {
@@ -56,45 +59,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     }, [data]);
 
     useEffect(() => {
-        const currentChart = createChart(chartRef.current, {
-            width: size.width,
-            height: size.height,
-            layout: {
-                backgroundColor: color.dark,
-                textColor: color.accent
-            },
-            grid: {
-                vertLines: {
-                    color: "#38466a"
-                },
-                horzLines: {
-                    color: "#38466a"
-                }
-            },
-            crosshair: {
-                mode: 0,
-                vertLine: {
-                    labelBackgroundColor: color.accent,
-                    color: color.accent
-                },
-                horzLine: {
-                    labelBackgroundColor: color.accent,
-                    color: color.accent
-                }
-            },
-            rightPriceScale: {
-                borderColor: "#38466a",
-                borderVisible: true
-            },
-            timeScale: {
-                timeVisible: true,
-                secondsVisible: false,
-                borderColor: "#38466a"
-            },
-            localization: {
-                locale: "en-US"
-            }
-        });
+        const currentChart = createChart(chartRef.current, getCartOptionsConfig(size));
 
         let series;
         if (type === ChartType.candle) {
@@ -123,9 +88,11 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             });
         }
 
-        buttonRef.current.style.left = `${size.width - widthButton - baseButtonOffset}px`;
-        buttonRef.current.style.top = `${size.height - heightButton - 30}px`;
-        buttonRef.current.style.color = "#4c525e";
+        setStylesToRef(buttonRef, {
+            color: "#4c525e",
+            left: `${size.width - widthButton - baseButtonOffset}px`,
+            top: `${size.height - heightButton - 30}px`
+        });
 
         setChart({ field: currentChart, series });
         if (setIsChartLoaded) setIsChartLoaded(true);
@@ -133,9 +100,9 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
     const setCurrentButtonLeft = (lastLine: any) => {
         const numberCheck = type === ChartType.area ? lastLine.value : lastLine.high;
-        buttonRef.current.style.left = `${
-            size.width - widthButton - (baseButtonOffset + getLeftOffsetButton(numberCheck))
-        }px`;
+        setStylesToRef(buttonRef, {
+            left: `${size.width - widthButton - (baseButtonOffset + getLeftOffsetButton(numberCheck))}px`
+        });
     };
 
     const handleCrosshairMoved = useCallback((param) => {
@@ -149,16 +116,14 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             param.point.y > size.height ||
             !subscribeRef.current
         ) {
-            if (toolTipRef.current) {
-                toolTipRef.current.style.display = "none";
-            }
+            setStylesToRef(toolTipRef, { display: "none" });
             return;
         }
         const item = subscribeRef.current.sortedData.find((el) => el.time === param.time);
         if (!item) return;
 
         const { y, x } = param.point;
-        toolTipRef.current.style.display = "block";
+        setStylesToRef(toolTipRef, { display: "block" });
 
         if (type === ChartType.candle) {
             if (param.hoveredMarkerId) {
@@ -180,61 +145,71 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         if (top > size.height - toolTipHeight) {
             top = y - toolTipHeight - toolTipMargin;
         }
-
-        toolTipRef.current.style.left = `${left}px`;
-        toolTipRef.current.style.top = `${top}px`;
+        setStylesToRef(toolTipRef, { left: `${left}px`, top: `${top}px` });
     }, []);
 
     const handleVisibleTimeRangeChange = () => {
         const buttonVisible = chart.field.timeScale().scrollPosition() < -5;
-        buttonRef.current.style.display = buttonVisible ? "block" : "none";
+        setStylesToRef(buttonRef, { display: buttonVisible ? "block" : "none" });
     };
 
     const loadDataFromSource = (offset: number) => {
-        if (!onFetchMore) return;
-        onFetchMore(Math.floor(Math.abs(offset)));
+        if (onFetchMore) {
+            onFetchMore(Math.floor(Math.abs(offset)), abortController.signal);
+        }
     };
 
     const handleVisibleLogicalRangeChanged = (newVisibleLogicalRange) => {
         const barsInfo = chart.series.barsInLogicalRange(newVisibleLogicalRange);
         if (!loading && barsInfo !== null && barsInfo.barsBefore < 50) {
-            chartRef.current.style.cursor = "wait";
+            setStylesToRef(chartRef, { cursor: "wait" });
             loadDataFromSource(barsInfo.barsAfter);
         }
     };
 
     useEffect(() => {
-        if (loading || !sortedData.length || !chart.series) {
-            return;
-        }
+        if (!(loading || !sortedData.length || !chart.series)) {
+            if (snapshotLoaded) {
+                setStylesToRef(chartRef, { cursor: "crosshair" });
 
-        if (snapshotLoaded) {
-            chartRef.current.style.cursor = "crosshair";
+                chart.series.setData(sortedData);
+            } else {
+                setSnapshotLoaded(true);
+                chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+                debouncedHandleVisibleLogicalRangeChanged = debounce(handleVisibleLogicalRangeChanged, 500);
+                chart.field.timeScale().subscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
+                chart.field.subscribeCrosshairMove(handleCrosshairMoved);
 
-            chart.series.setData(sortedData);
-        } else {
-            setSnapshotLoaded(true);
-            chart.field.timeScale().subscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+                chart.series.setData(sortedData);
 
-            const debouncedHandleVisibleLogicalRangeChanged = debounce(handleVisibleLogicalRangeChanged, 500);
-            chart.field.timeScale().subscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
-            chart.field.subscribeCrosshairMove(handleCrosshairMoved);
+                if (sortedData.length <= 120) {
+                    chart.field.timeScale().setVisibleRange({
+                        from: sortedData[0].time,
+                        to: sortedData[sortedData.length - 1].time
+                    });
+                }
+            }
 
-            chart.series.setData(sortedData);
-
-            if (sortedData.length <= 120) {
-                chart.field.timeScale().setVisibleRange({
-                    from: sortedData[0].time,
-                    to: sortedData[sortedData.length - 1].time
-                });
+            subscribeRef.current = { sortedData, markers };
+            setCurrentButtonLeft(sortedData[sortedData.length - 1]);
+            if (markers) {
+                chart.series.setMarkers(markers);
             }
         }
-
-        subscribeRef.current = { sortedData, markers };
-        setCurrentButtonLeft(sortedData[sortedData.length - 1]);
-        if (markers) {
-            chart.series.setMarkers(markers);
-        }
+        return () => {
+            abortController.abort();
+            if (chart.field) {
+                chart.field.unsubscribeCrosshairMove(handleCrosshairMoved);
+                chart.field.timeScale().unsubscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
+                if (debouncedHandleVisibleLogicalRangeChanged) {
+                    chart.field
+                        .timeScale()
+                        .unsubscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
+                    debouncedHandleVisibleLogicalRangeChanged.cancel();
+                    debouncedHandleVisibleLogicalRangeChanged = null;
+                }
+            }
+        };
     }, [sortedData, loading, chart.series]);
 
     useEffect(() => {
@@ -261,18 +236,16 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     };
 
     const handleOnMouseOver = () => {
-        buttonRef.current.style.background = "rgba(250, 250, 250, 1)";
-        buttonRef.current.style.color = "#000";
+        setStylesToRef(buttonRef, { color: "#000", background: "rgba(250, 250, 250, 1)" });
     };
 
     const handleOnMouseOut = () => {
-        buttonRef.current.style.background = "rgba(250, 250, 250, 0.6)";
-        buttonRef.current.style.color = "#4c525e";
+        setStylesToRef(buttonRef, { color: "#4c525e", background: "rgba(250, 250, 250, 0.6)" });
     };
 
     const handleOnMouseDownCanvas = (e) => {
         e.preventDefault();
-        chartRef.current.style.cursor = "grab";
+        setStylesToRef(chartRef, { cursor: "grab" });
         if (!sortedData.length) return;
         setMouseEvent({
             isDown: true,
@@ -284,15 +257,15 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
 
     const handleOnMouseMoveCanvas = (e) => {
         if (!mouseEvent.isDown) return;
-        chartRef.current.style.cursor = "grabbing";
+        setStylesToRef(chartRef, { cursor: "grabbing" });
         const dragOffset = mouseEvent.screenPos - e.screenX;
         setMouseEvent((prev) => ({ ...prev, dragOffset }));
     };
 
     const handleOnMouseUpCanvas = () => {
         setMouseEvent({ isDown: false, screenPos: 0, dragOffset: 0, chartOffset: 0 });
-        if (chartRef.current.style.cursor !== "wait") {
-            chartRef.current.style.cursor = "crosshair";
+        if (chartRef.current && chartRef.current.style.cursor !== "wait") {
+            setStylesToRef(chartRef, { cursor: "crosshair" });
         }
     };
 
