@@ -5,14 +5,14 @@ export const USER_SIGNAL_ROBOTS = gql`
     query get_user_signal_robots(
         $limit: Int
         $offset: Int
-        $where: v_robots_stats_bool_exp
+        $where: v_robot_stats_bool_exp
         $hash: String!
-        $order_by: [v_robots_stats_order_by!]
+        $order_by: [v_robot_stats_order_by!]
         $user_id: uuid
     ) {
-        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
-            robots {
+            robot {
                 id
                 code
                 name
@@ -43,13 +43,13 @@ export const ALL_SIGNAL_ROBOTS = gql`
     query get_all_signal_robots(
         $limit: Int
         $offset: Int
-        $where: v_robots_stats_bool_exp
+        $where: v_robot_stats_bool_exp
         $hash: String!
-        $order_by: [v_robots_stats_order_by!]
+        $order_by: [v_robot_stats_order_by!]
     ) {
-        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
-            robots {
+            robot {
                 id
                 code
                 name
