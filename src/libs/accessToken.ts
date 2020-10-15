@@ -5,6 +5,7 @@ import redirect from "./redirect";
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
+import cookies from "next-cookies";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined")
