@@ -7,13 +7,14 @@ import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
 
 const getTokenFromCookie = () => {
-    if (typeof window !== "undefined")
+    if (typeof window !== "undefined") {
         return (
             document.cookie
                 .split(";")
-                ?.find((row) => row.startsWith("accessToken"))
+                ?.find((row) => row.trim().startsWith("accessToken"))
                 ?.split("=")[1] || ""
         );
+    }
     return "";
 };
 
