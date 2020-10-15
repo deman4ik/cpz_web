@@ -25,7 +25,7 @@ spec:
                   imagePullPolicy: IfNotPresent
                   name: <APP>
                   ports:
-                      - containerPort: 3000
+                      - containerPort: 80
                         protocol: TCP
                   resources:
                       requests:
@@ -45,8 +45,8 @@ metadata:
     namespace: default
 spec:
     ports:
-        - port: 3000
-          targetPort: 3000
+        - port: 80
+          targetPort: 80
     selector:
         app: <APP>
         env: <ENV>
