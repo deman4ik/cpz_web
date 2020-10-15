@@ -30,16 +30,18 @@ export enum ChartType {
     hybrid
 }
 
+export type ChartSize = {
+    width: number;
+    height: number;
+};
+
 export interface PropsLighweightChart {
     data: any;
     loading: boolean;
     markers?: any[];
     lines?: any[];
-    onFetchMore?: (offset: number) => void;
-    size: {
-        width: number;
-        height: number;
-    };
+    onFetchMore?: (offset: number, signal?: AbortSignal) => void;
+    size: ChartSize;
     type: ChartType;
     legend?: string;
     setIsChartLoaded: (isChartLoaded: boolean) => void;
@@ -50,7 +52,7 @@ export interface PropsWrapChart {
     loading?: boolean;
     markers?: any[];
     lines?: any[];
-    onFetchMore?: (offset: number) => void;
+    onFetchMore?: (offset: number, signal?: AbortSignal) => void;
     size: {
         width: number;
         height: number;
