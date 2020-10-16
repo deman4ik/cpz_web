@@ -10,7 +10,7 @@ import { tabName, getRobotStatistic } from "./helpers";
 import styles from "./index.module.css";
 
 interface Props {
-    stat: any;
+    robot: any;
     activeTab: TabType;
     width: number;
 }
@@ -20,24 +20,24 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
     ssr: false
 });
 
-const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) => {
+const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, activeTab, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const chartData = useMemo(
         () =>
-            !stat.statistics?.performance
+            !robot.statistics?.performance
                 ? null
-                : stat.statistics.performance.map((pos) => ({
+                : robot.statistics.performance.map((pos) => ({
                       time: dayjs.utc(pos.x / 1000).valueOf(),
                       value: pos.y
                   })),
-        [stat]
+        [robot]
     );
 
-    const robotStatistic = useMemo(() => getRobotStatistic(stat.statistics), [stat]);
+    const robotStatistic = useMemo(() => getRobotStatistic(robot.statistics), [robot]);
 
     return (
         <>
-            {!stat ? (
+            {!robot ? (
                 <LoadingIndicator />
             ) : (
                 <>

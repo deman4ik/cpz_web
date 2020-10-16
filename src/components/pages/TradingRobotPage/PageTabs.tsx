@@ -16,10 +16,10 @@ export const PageTabs: React.FC<Props> = ({ robotData, activeTab, width }) => {
         <>
             {activeTab === TabType.trading && <TradingTab robotData={robotData} width={width} />}
             {activeTab === TabType.publicStatistic && (
-                <PerformanceTab stat={robot} activeTab={activeTab} width={width} />
+                <PerformanceTab robot={robot} activeTab={activeTab} width={width} />
             )}
             {activeTab === TabType.myStatistic && (
-                <PerformanceTab stat={userRobot} activeTab={activeTab} width={width} />
+                <PerformanceTab robot={userRobot} activeTab={activeTab} width={width} />
             )}
         </>
     );
