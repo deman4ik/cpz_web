@@ -19,6 +19,7 @@ interface Props {
     setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
 const LIMIT = 120;
+const initialCandleChartData = { candles: [], markers: [] };
 
 const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
     loading: () => <LoadingIndicator style={{ height: 400 }} />,
@@ -39,7 +40,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
 
     const legend = getLegend(robot);
     const [limit, setLimit] = useState(LIMIT);
-    const [candleChartData, setCandleChartData] = useState({ candles: [], markers: [] });
+    const [candleChartData, setCandleChartData] = useState(initialCandleChartData);
 
     // history candles load
     const historyQueryVars = isAuth
@@ -54,13 +55,14 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     useEffect(() => {
         limitRef.current = limit;
     }, [limit]);
-    const onFetchMore = (offset: number) => {
+    const onFetchMore = (offset: number, signal?: AbortSignal) => {
         const variables = {
             offset: limitRef.current,
             limit: limitRef.current + LIMIT
         };
         fetchMore({
             variables,
+            context: { fetchOptions: { signal } },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
                 let result = null;

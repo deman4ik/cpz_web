@@ -1,4 +1,5 @@
 import { modalType } from "./types";
+import { RefObject } from "react";
 
 const actions = ["delete", "start", "stop"];
 
@@ -15,4 +16,10 @@ export const getIsVisibleStatus = (
     };
 
     return modalOpen[modalType[modal]]();
+};
+
+export const setStylesToRef = (ref: RefObject<HTMLInputElement>, styles: { [key: string]: string }) => {
+    if (ref.current) {
+        Object.assign(ref.current.style, styles);
+    }
 };
