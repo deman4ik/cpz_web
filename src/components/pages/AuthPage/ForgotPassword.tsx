@@ -10,6 +10,7 @@ import { Input, Button } from "components/basic";
 import { PageHead, Footer, Header } from "components/layout";
 import { usePasswordReset } from "libs/auth";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const INITIAL_STATE = {
     email: ""
@@ -46,7 +47,7 @@ export const ForgotPassword: React.FC = () => {
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <div className={styles.card}>
+                    <form className={styles.card} onSubmit={handleSubmit}>
                         <div className={styles.title}>Forgot password?</div>
                         <div className={styles.titleDescription}>
                             Enter the Email you have registered with. We will send you the instructions there.
@@ -57,9 +58,12 @@ export const ForgotPassword: React.FC = () => {
                             maxLength={255}
                             width={260}
                             placeholder="Email"
+                            label="Email"
+                            autoComplete="email"
                             onChangeText={(text: string) => handleChange("email", text)}
                         />
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             style={{ marginTop: 25 }}
                             title="Request password reset"
                             type="success"
@@ -67,9 +71,8 @@ export const ForgotPassword: React.FC = () => {
                             width={260}
                             isUppercase
                             isLoading={loading}
-                            onClick={handleSubmit}
                         />
-                    </div>
+                    </form>
                     <CartFooter />
                 </div>
             </div>

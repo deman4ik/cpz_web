@@ -10,6 +10,7 @@ import { useRegistration } from "libs/auth";
 import { Button, Input } from "components/basic";
 import { PageHead, Footer, Header } from "components/layout";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const INITIAL_STATE = {
     email: "",
@@ -53,17 +54,20 @@ export const SignUp: React.FC = () => {
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <form className={styles.card}>
+                    <form className={styles.card} onSubmit={handleSubmit}>
                         <div className={styles.title}>Create account</div>
                         <Input
+                            label="Email"
                             value={values.email}
                             error={errors.email}
                             maxLength={255}
                             placeholder="Email"
                             width={260}
+                            autoComplete="email"
                             onChangeText={(text: string) => handleChange("email", text)}
                         />
                         <Input
+                            label="Password"
                             value={values.password}
                             style={{ marginTop: 8 }}
                             error={errors.password}
@@ -71,9 +75,11 @@ export const SignUp: React.FC = () => {
                             placeholder="Password"
                             type="password"
                             width={260}
+                            autoComplete="current-password"
                             onChangeText={(text: string) => handleChange("password", text)}
                         />
                         <Input
+                            label="Repeat Password"
                             value={values.passwordRepeat}
                             style={{ marginTop: 8 }}
                             error={errors.passwordRepeat}
@@ -81,9 +87,11 @@ export const SignUp: React.FC = () => {
                             placeholder="Repeat password"
                             type="password"
                             width={260}
+                            autoComplete="new-password"
                             onChangeText={(text: string) => handleChange("passwordRepeat", text)}
                         />
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             type="success"
                             style={{ marginTop: 10 }}
                             size="big"
@@ -91,7 +99,6 @@ export const SignUp: React.FC = () => {
                             title="Sign Up"
                             isUppercase
                             isLoading={loading}
-                            onClick={handleSubmit}
                         />
                     </form>
                     <CartFooter />

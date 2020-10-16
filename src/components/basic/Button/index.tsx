@@ -1,12 +1,14 @@
 import React from "react";
-import { ButtonProps } from "./types";
+import { ButtonProps, HTMLButtonTypes } from "./types";
 import { props } from "./helpers";
 import { LoadingIndicator } from "components/common";
 // components parts
 import ButtonInnerComponent from "./ButtonInner";
 
+
 export const Button: React.FC<ButtonProps> = ({
     title,
+    buttonType = HTMLButtonTypes.button,
     type,
     style,
     icon,
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
     const rounded = type?.includes("roundend");
     const iconSize = 15;
+    const isSubmitButton = buttonType === HTMLButtonTypes.submit;
 
     const withHover = hoverChanges ? "with-hover" : "";
 
@@ -49,15 +52,18 @@ export const Button: React.FC<ButtonProps> = ({
     if (withHover) classNamesHover.push(hoverChangesParams.type);
 
     /*Обработчик клика*/
-    const handleOnClick = () => {
-        if (!isLoading && !disabled && onClick) {
-            onClick();
-        }
-    };
+    const handleOnClick = isSubmitButton
+        ? null
+        : () => {
+              if (!isLoading && !disabled && onClick) {
+                  onClick();
+              }
+          };
 
     return (
         <div className={withHover}>
-            <div className={classNamesMain.join(" ")} style={style} onClick={handleOnClick}>
+            {/* eslint-disable-next-line react/button-has-type */}
+            <button type={buttonType} className={classNamesMain.join(" ")} style={style} onClick={handleOnClick}>
                 {isLoading ? (
                     <LoadingIndicator color="white" size={props[size].indicator} style={{ margin: "auto" }} />
                 ) : (
@@ -71,9 +77,10 @@ export const Button: React.FC<ButtonProps> = ({
                         iconSize={iconSize}
                     />
                 )}
-            </div>
+            </button>
             {hoverChanges && (
-                <div className={classNamesHover.join(" ")} onClick={handleOnClick}>
+                // eslint-disable-next-line react/button-has-type
+                <button type={buttonType} className={classNamesHover.join(" ")} onClick={handleOnClick}>
                     <ButtonInnerComponent
                         size={size}
                         style={style}
@@ -81,7 +88,7 @@ export const Button: React.FC<ButtonProps> = ({
                         iconSize={iconSize}
                         {...hoverChangesParams}
                     />
-                </div>
+                </button>
             )}
             <style jsx>
                 {`   

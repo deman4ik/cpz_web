@@ -9,6 +9,7 @@ import { useEmailLogin } from "libs/auth";
 import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const INITIAL_STATE = {
     email: "",
@@ -51,6 +52,11 @@ const _Login: React.FC = () => {
         }
     }, [success, error]);
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        handleSubmit();
+    };
+
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
             <PageHead title="Login" />
@@ -60,9 +66,10 @@ const _Login: React.FC = () => {
             <div className={[styles.plate, styles.plateLogin].join(" ")}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.content}>
-                        <form className={styles.card} style={{ justifyContent: "center" }}>
+                        <form className={styles.card} style={{ justifyContent: "center" }} onSubmit={handleFormSubmit}>
                             <div className={styles.title}>Login</div>
                             <Input
+                                label="Email"
                                 error={errors.email}
                                 value={values.email}
                                 maxLength={255}
@@ -72,6 +79,7 @@ const _Login: React.FC = () => {
                                 autoComplete="email"
                             />
                             <Input
+                                label="Password"
                                 style={{ marginTop: 8 }}
                                 value={values.password}
                                 maxLength={100}
@@ -80,17 +88,17 @@ const _Login: React.FC = () => {
                                 placeholder="Password"
                                 onChangeText={(text) => handleChange("password", text)}
                                 type="password"
-                                autoComplete="password"
+                                autoComplete="current-password"
                             />
                             <Button
                                 style={{ marginTop: 10 }}
                                 type="success"
                                 size="big"
+                                buttonType={HTMLButtonTypes.submit}
                                 title="log in"
                                 width={260}
                                 isUppercase
                                 isLoading={loading}
-                                onClick={handleSubmit}
                             />
                             <div className={styles.loginDescription}>
                                 If you don’t already have an account and have not used our
