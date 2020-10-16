@@ -2,14 +2,14 @@ import { getStats } from "config/utils";
 import dayjs from "libs/dayjs";
 
 // TODO: refactor
-export const formatRobotsData = (v_robots_stats: any) =>
-    v_robots_stats.map((el: any) => {
-        const { id, code, name, exchange, asset, currency, active, user_robots } = el.robots;
+export const formatRobotsData = (stats: any) =>
+    stats.map((el: any) => {
+        const { id, code, name, exchange, asset, currency, active, user_robots } = el.robot;
         const {
             robot_settings: { robot_settings }
-        } = el.robots;
+        } = el.robot;
         const userRobot = user_robots && user_robots[0];
-        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(el.robots);
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(el.robot);
         const res = {
             cache: {
                 id,

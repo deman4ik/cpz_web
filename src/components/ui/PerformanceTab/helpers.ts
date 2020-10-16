@@ -32,7 +32,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Average Profit",
                       key: "avgProfit",
-                      ...propsToMoneyFormat(robotStatistic.avgProfit)
+                      ...propsToMoneyFormat(robotStatistic.avgNetProfit)
                   },
                   {
                       title: "Average Bars Held",
