@@ -4,8 +4,8 @@ import { stats } from "graphql/queryFragments";
 
 export const TOP_PERFORMANCE_ROBOTS = gql`
     query get_top_robots_by_stats($limit: Int) {
-        v_robots_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last, id: asc }) {
-            robots {
+        v_robot_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last, robot: { id: asc } }) {
+            robot {
                 id
                 name
                 code
@@ -433,16 +433,16 @@ export const USER_ROBOTS = gql`
 
 export const USER_ROBOTS_BY_STATS = gql`
     query get_user_robots_by_stats(
-        $where: v_robots_stats_bool_exp
+        $where: v_robot_stats_bool_exp
         $hash: String!
         $limit: Int
         $offset: Int
-        $order_by: [v_robots_stats_order_by!]
+        $order_by: [v_robot_stats_order_by!]
         $user_id: uuid
     ) {
-        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
-            robots {
+            robot {
                 id
                 code
                 name
@@ -478,15 +478,15 @@ export const USER_ROBOTS_BY_STATS = gql`
 
 export const ROBOTS_BY_STATS = gql`
     query get_robots_by_stats(
-        $where: v_robots_stats_bool_exp
+        $where: v_robot_stats_bool_exp
         $hash: String!
         $limit: Int
         $offset: Int
-        $order_by: [v_robots_stats_order_by!]
+        $order_by: [v_robot_stats_order_by!]
     ) {
-        v_robots_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
-            robots {
+            robot {
                 id
                 code
                 name

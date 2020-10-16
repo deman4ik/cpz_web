@@ -15,7 +15,7 @@ import LocalStorageService from "services/localStorageService";
 import { AuthContext } from "libs/hoc/context";
 
 //TODO: refactor
-export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_stats: any) => any) => {
+export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
     const {
         authState: { isAuth, user_id }
@@ -32,7 +32,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
     const [limit, setLimit] = useState(storageLimit || searchLimit?.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
-        robots: {},
+        robot: {},
         hash: "",
         order_by: {}
     });
@@ -43,7 +43,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         variables: {
             where: {
                 [QUERY_KEY[dispayType]]: { _eq: true },
-                ...filtersQuery.robots
+                ...filtersQuery.robot
             },
             hash: filtersQuery.hash
         },
@@ -51,15 +51,15 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
     });
 
     /*Обработка получения данных*/
-    let robotsWhere = { ...filtersQuery.robots };
+    let robotsWhere = { ...filtersQuery.robot };
     if (isAuth) robotsWhere = { ...robotsWhere, ...QUERY_FILTER[dispayType]() };
     let variables: any = {
         offset: 0,
         limit,
         hash: filtersQuery.hash,
-        order_by: [filtersQuery.order_by, { id: "asc" }],
+        order_by: [filtersQuery.order_by, { robot_id: "asc" }],
         where: {
-            robots: { ...robotsWhere }
+            robot: { ...robotsWhere }
         }
     };
     if (isAuth) variables = { ...variables, user_id };
@@ -68,7 +68,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         pollInterval: POLL_INTERVAL
     });
 
-    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robots_stats) : []), [
+    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robot_stats) : []), [
         formatRobotsData,
         loading,
         data
@@ -92,11 +92,11 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         const addFields = () => {
             const hash = getHash(30);
             const search = getSearchProps(searchProps, dispayType);
-            const result: { robots: any; hash: string; order_by: any } =
+            const result: { robot: any; hash: string; order_by: any } =
                 !search || !search.filters
-                    ? { robots: {}, hash, order_by: DEFAULT_ORDER_BY }
+                    ? { robot: {}, hash, order_by: DEFAULT_ORDER_BY }
                     : {
-                          robots: { ...JSON.parse(search.filters) },
+                          robot: { ...JSON.parse(search.filters) },
                           hash,
                           order_by: DEFAULT_ORDER_BY
                       };
@@ -118,30 +118,30 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robots_s
         setIsLoadingMore(true);
         fetchMore({
             variables: {
-                offset: data.v_robots_stats.length,
+                offset: data.v_robot_stats.length,
                 limit: SHOW_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
-                setLimit(data.v_robots_stats.length + SHOW_LIMIT);
+                setLimit(data.v_robot_stats.length + SHOW_LIMIT);
 
                 /*Запоминание лимита  данных на странице*/
                 LocalStorageService.writeItems([
                     {
                         key: `${dispayType}_limit`,
-                        value: data.v_robots_stats.length + SHOW_LIMIT
+                        value: data.v_robot_stats.length + SHOW_LIMIT
                     }
                 ]);
 
                 setSearchLimit({
                     variables: {
-                        limit: data.v_robots_stats.length + SHOW_LIMIT,
+                        limit: data.v_robot_stats.length + SHOW_LIMIT,
                         type: dispayType
                     }
                 });
                 return {
-                    v_robots_stats: [...prev.v_robots_stats, ...fetchMoreResult.v_robots_stats]
+                    v_robot_stats: [...prev.v_robot_stats, ...fetchMoreResult.v_robot_stats]
                 };
             }
         });

@@ -18,8 +18,8 @@ const _SignalsList: React.FC = () => {
                 <LoadingDummy />
             ) : (
                 <div className={styles.container}>
-                    {data.v_robots_stats.map((item) => (
-                        <SignalsListCard key={item.robots.id} robot={item.robots} />
+                    {data.v_robot_stats.map((item) => (
+                        <SignalsListCard key={item.robot.id} robot={item.robot} />
                     ))}
                     <div className={styles.moreBtn}>
                         <PrimaryButton title="More Robots" href="/robots" type="primary" />
