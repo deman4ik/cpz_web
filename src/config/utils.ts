@@ -31,9 +31,8 @@ export const getStats = (robot): RobotStats => {
     };
 };
 
-export const getVolume = () => {
-    return [];
-};
+export const getVolume = (settings) =>
+    settings ? (settings.volumeType === "assetStatic" ? settings.volume : settings.volumeInCurrency) : null;
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
@@ -50,6 +49,7 @@ export const splitCapitaize = (s: string): string =>
         .join(" ");
 
 export const formatDate = (date: string, addUTC = true): string => {
+    if (!date) return "";
     const res = dayjs.utc(date).format("DD MMM YY HH:mm");
     if (res === "Invalid date") return "";
     return addUTC ? `${res} UTC` : res;

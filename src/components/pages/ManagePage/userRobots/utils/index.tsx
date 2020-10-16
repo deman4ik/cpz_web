@@ -1,32 +1,26 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { formatDate, getStats } from "config/utils";
-import { defineProperty } from "../../utils";
 
-export const formatData = ({ user_robots }) => {
+export const formatUserRobots = ({ user_robots }: { user_robots: any }): any => {
     return user_robots.map((robot) => {
-        const row = {};
-        defineProperty(row, "created_at", robot?.created_at ? formatDate(robot?.created_at) : "");
-        defineProperty(row, "stopped_at", robot?.stopped_at ? formatDate(robot?.stopped_at) : "");
-
+        console.log(robot);
         const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
 
-        defineProperty(row, "performance", {
-            performance: equity,
-            profit
-        });
-        defineProperty(row, "lastProfit", robot?.stats?.lastProfit);
-        defineProperty(row, "maxDrawdown", maxDrawdown);
-        defineProperty(row, "profit", profit);
-        defineProperty(row, "tradesCount", tradesCount);
-        defineProperty(row, "winRate", winRate);
-        defineProperty(row, "robot_code", robot?.robot?.name);
-        defineProperty(row, "robot_id", robot?.robot?.id);
-        defineProperty(row, "volume", robot?.settings?.volume);
-        defineProperty(row, "user_name", robot?.user?.name);
-        defineProperty(row, "user_id", robot?.user?.id);
-        defineProperty(row, "status", robot?.status);
+        return {
+            created_at: formatDate(robot?.created_at),
+            stopped_at: formatDate(robot?.stopped_at),
 
-        return row;
+            performance: equity,
+            maxDrawdown,
+            profit,
+            tradesCount,
+            winRate,
+            robot_code: robot?.robot?.name,
+            robot_id: robot?.robot?.id,
+            volume: robot?.user_robot_settings?.user_robot_settings.volume,
+            user_name: robot?.user?.name,
+            user_id: robot?.user?.id,
+            status: robot?.status
+        };
     });
 };
 

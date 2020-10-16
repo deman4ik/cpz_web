@@ -43,8 +43,8 @@ export interface ColumnsArraySchema {
 export const defineProperty = (object, property, value) =>
     Object.defineProperty(object, property, { value, writable: false });
 
-export const buildRobotChartCell = ({ value: { performance } }) =>
-    performance.length ? <RobotChartCell performance={performance} height={120} /> : null;
+export const buildRobotChartCell = ({ value }) =>
+    value.length ? <RobotChartCell performance={value} height={120} /> : null;
 
 export const buildCheckBoxCell = ({ value }) => (
     <CheckBox

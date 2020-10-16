@@ -5,7 +5,7 @@ import React from "react";
 import ManagePageTemplate from "../common/ManagePageTemplate";
 
 // utils
-import { formatData, getSearchOptions } from "./utils";
+import { formatUserRobots, getSearchOptions } from "./utils";
 
 // constants
 import { USER_ROBOTS_TABLE_COLUMNS } from "./constants";
@@ -26,7 +26,7 @@ const ManageUserRobots = () => {
             columns={USER_ROBOTS_TABLE_COLUMNS}
             dataQuery={ALL_USER_ROBOTS}
             aggregateQuery={USER_ROBOTS_AGGREGATE}
-            formatData={formatData}
+            formatData={formatUserRobots}
             getItemsCount={getItemsCount}
             getSearchOptions={getSearchOptions}
         />
