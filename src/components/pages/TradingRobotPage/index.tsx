@@ -20,13 +20,15 @@ import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { PageType, TabType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext, HistoryContext } from "libs/hoc/context";
 
 export const TradingRobotPage: React.FC = () => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
+    const { historyState } = useContext(HistoryContext);
+    const { prevRoute } = historyState;
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
@@ -36,7 +38,7 @@ export const TradingRobotPage: React.FC = () => {
     const queryVars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
 
     const handlePressBack = () => {
-        router.back();
+        router.push(prevRoute);
     };
 
     const { data: robotInfoData, loading } = useQuery(robotInfoQuery, {
@@ -70,7 +72,7 @@ export const TradingRobotPage: React.FC = () => {
             subTitle={robotData?.robot.name || ""}
             width={width}
             toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
-            handlePressBack={handlePressBack}>
+            handlePressBack={prevRoute ? handlePressBack : null}>
             {loading ? (
                 <div className="loading">
                     <LoadingIndicator />
