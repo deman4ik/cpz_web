@@ -90,3 +90,7 @@ div {
     scrollbar-color: var(--whiteLight) var(--lightBg);
     scrollbar-width: thin;
 }
+
+button {
+    background: none;
+}
