@@ -16,7 +16,6 @@ interface Props {
 
 const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
-
     return (
         <>
             {!robotStatistic ? (

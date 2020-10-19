@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
 import { PrimaryButton } from "components/basic";
-import { getStats, formatMoney, valueWithSign } from "config/utils";
+import { getStats, formatMoney, valueWithSign, getVolumeWithUnit } from "config/utils";
 import styles from "./SignalsListCard.module.css";
 
 interface Props {
@@ -13,6 +13,7 @@ const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 // TODO: extract robot deconstruction
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
+    const { robot_settings, currency, asset } = robot;
     const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
     const money = <div className={styles.primaryText}>{formatMoney(profit)} $</div>;
     return (
@@ -25,11 +26,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                     </div>
                     <div className={`${styles.numberCol} ${styles.profitCol}`}>
                         <div className={styles.secondaryText}>
-                            <div className={styles.label}>
-                                {robot.robot_settings.volumeType === "currencyDynamic"
-                                    ? `${robot.robot_settings.robot_settings.volumeInCurrency} ${robot.currency}`
-                                    : `${robot.robot_settings.robot_settings.volume} ${robot.asset}`}
-                            </div>
+                            <div className={styles.label}>{getVolumeWithUnit(robot_settings, { currency, asset })}</div>
                         </div>
                         <span className={styles.mobile}>{money}</span>
                     </div>

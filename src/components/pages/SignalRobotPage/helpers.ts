@@ -1,6 +1,6 @@
 import dayjs from "libs/dayjs";
 import { color } from "config/constants";
-import { capitalize, getStats } from "config/utils";
+import { capitalize, getStats, getVolumeWithUnit } from "config/utils";
 import { SectionType } from "./types";
 
 // TODO: use DB-like structure
@@ -17,7 +17,7 @@ export const formatRobotData = (robot) => {
         timeframe,
         available,
         status,
-        statistics,
+        fullStats,
         started_at,
         user_signals
     } = robot;
@@ -27,7 +27,7 @@ export const formatRobotData = (robot) => {
     const userSignals = user_signals?.length && user_signals[0];
     const signalSettings = userSignals?.user_signal_settings?.signal_settings;
 
-    const { equity, profit } = getStats(robot);
+    const { equity, profit } = getStats(userSignals || robot);
     return {
         robot: {
             id,
@@ -37,11 +37,8 @@ export const formatRobotData = (robot) => {
             code,
             currency,
             timeframe,
-            volume:
-                robot_settings.volumeType === "currencyDynamic"
-                    ? `${robot_settings.volumeInCurrency} ${currency}`
-                    : `${robot_settings.volume} ${asset}`,
-            statistics,
+            volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+            fullStats,
             equity,
             profit,
             available,
@@ -56,10 +53,7 @@ export const formatRobotData = (robot) => {
             ? {
                   ...userSignals,
                   equity: getStats(userSignals).equity,
-                  volume:
-                      signalSettings?.volumeType === "currencyDynamic"
-                          ? `${signalSettings?.volumeInCurrency} ${currency}`
-                          : `${signalSettings?.volume} ${asset}`
+                  volume: getVolumeWithUnit(robot_settings, { currency, asset })
               }
             : null
     };

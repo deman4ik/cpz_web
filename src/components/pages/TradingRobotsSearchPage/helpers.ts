@@ -1,4 +1,4 @@
-import { getStats } from "config/utils";
+import { getStats, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
 // TODO: refactor
@@ -26,10 +26,7 @@ export const formatRobotsData = (stats: any) =>
                 id: null
             },
             started_at: null,
-            volume:
-                robot_settings.volumeType === "assetStatic"
-                    ? `${robot_settings.volume || 0} ${asset}`
-                    : `${robot_settings.volumeInCurrency || 0} ${currency}`,
+            volume: getVolumeWithUnit(robot_settings, { currency, asset }),
             profit,
             performance: equity,
             active: active ? dayjs.utc(active).fromNow(true) : active,

@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import dayjs from "libs/dayjs";
-import { USER_ROBOTS, USER_ROBOTS_BY_STATS, ROBOT_INFO_FOR_USER_ROBOT } from "../robots/queries";
+import { USER_ROBOTS, USER_ROBOTS_BY_STATS, USER_ROBOT_INFO_FOR_USER } from "../robots/queries";
 
 export const deleteRobot = (_root: any, variables: any, context: any) => {
     const robotsStatsExist = Object.keys(context.cache.data.data.ROOT_QUERY).find(
@@ -234,7 +234,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
     );
     if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: ROBOT_INFO_FOR_USER_ROBOT,
+            query: USER_ROBOT_INFO_FOR_USER,
             variables: { code: variables.code }
         });
         const robot = dataRobots.robot.map((el) => {
@@ -248,7 +248,7 @@ export const editRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: ROBOT_INFO_FOR_USER_ROBOT,
+            query: USER_ROBOT_INFO_FOR_USER,
             variables: { code: variables.code },
             data: { robot }
         });
@@ -318,7 +318,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
     );
     if (robotsExist) {
         const dataRobots = context.cache.readQuery({
-            query: ROBOT_INFO_FOR_USER_ROBOT,
+            query: USER_ROBOT_INFO_FOR_USER,
             variables: { code: variables.robotInfo.code }
         });
         const item = {
@@ -338,7 +338,7 @@ export const createRobot = (_root: any, variables: any, context: any) => {
             return el;
         });
         context.cache.writeQuery({
-            query: ROBOT_INFO_FOR_USER_ROBOT,
+            query: USER_ROBOT_INFO_FOR_USER,
             variables: { code: variables.robotInfo.code },
             data: { robot }
         });
