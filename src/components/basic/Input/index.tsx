@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
-
+import { v4 as uuid } from "uuid";
 import { Button } from "../Button";
 
 interface Props {
     value: string;
     icon?: string;
     placeholder?: string;
+    label?: string;
     buttonTitle?: string;
     maxLength?: number;
     type?: string;
@@ -26,6 +27,7 @@ export const Input: React.FC<Props> = ({
     value,
     icon,
     placeholder,
+    label,
     buttonTitle,
     type = "text",
     onChangeText,
@@ -82,6 +84,20 @@ export const Input: React.FC<Props> = ({
         setInputValue(value);
     }, [value]);
 
+    const inputProps = {
+        className: getInputClass().join(" "),
+        placeholder,
+        maxLength,
+        ref: inputRef,
+        type: type === "number" ? "text" : type,
+        readOnly: readonly,
+        onChange: handleOnInput,
+        onKeyDown: formatInput,
+        onFocus: handleOnFocus,
+        value: inputValue,
+        autoComplete
+    };
+    const labelId = uuid();
     return (
         <div className="wrapper" style={style}>
             <div className="container">
@@ -97,19 +113,14 @@ export const Input: React.FC<Props> = ({
                         />
                     </div>
                 ) : null}
-                <input
-                    className={getInputClass().join(" ")}
-                    placeholder={placeholder}
-                    maxLength={maxLength}
-                    ref={inputRef}
-                    type={type === "number" ? "text" : type}
-                    readOnly={readonly}
-                    onChange={handleOnInput}
-                    onKeyDown={formatInput}
-                    onFocus={handleOnFocus}
-                    value={inputValue}
-                    autoComplete={autoComplete}
-                />
+                {label ? (
+                    <label htmlFor={labelId} className="input-label">
+                        {label}
+                        <input id={labelId} {...inputProps} />
+                    </label>
+                ) : (
+                    <input {...inputProps} />
+                )}
                 {error && typeof error === "string" && <div className="error_line">{error}</div>}
             </div>
             <style jsx>
@@ -132,6 +143,7 @@ export const Input: React.FC<Props> = ({
                         width: 100%;
                     }
                     .input {
+                        margin-top: 5px;
                         background-color: var(--darkBg);
                         color: var(--accent);
                         border-radius: 2px;
@@ -144,6 +156,10 @@ export const Input: React.FC<Props> = ({
                     }
                     .input.error {
                         border: 2px solid var(--negative);
+                    }
+                    .input-label {
+                        display: inline-grid;
+                        color: white;
                     }
                     .icon {
                         position: absolute;
