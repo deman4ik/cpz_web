@@ -114,3 +114,8 @@ export enum ROBOTS_AVAILABLE_CODES {
     User = 15,
     Anonymous = 20
 }
+
+export type VolumeDisplayUnits = {
+    currency: string;
+    asset: string;
+};

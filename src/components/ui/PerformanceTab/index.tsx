@@ -24,17 +24,16 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, activeTab, width }) 
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const chartData = useMemo(
         () =>
-            !robot.statistics?.performance
+            !robot.fullStats?.equity
                 ? null
-                : robot.statistics.performance.map((pos) => ({
+                : robot.fullStats.equity.map((pos) => ({
                       time: dayjs.utc(pos.x / 1000).valueOf(),
                       value: pos.y
                   })),
         [robot]
     );
 
-    const robotStatistic = useMemo(() => getRobotStatistic(robot.statistics), [robot]);
-
+    const robotStatistic = useMemo(() => getRobotStatistic(robot.fullStats?.statistics), [robot]);
     return (
         <>
             {!robot ? (

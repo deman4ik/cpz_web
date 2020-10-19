@@ -6,3 +6,11 @@ stats {
     profit: net_profit
     equity: equity_avg
 }`;
+
+export const fullStats = `
+fullStats: stats {
+    profit: net_profit
+    equity: equity_avg
+    statistics: full_stats
+}
+`;

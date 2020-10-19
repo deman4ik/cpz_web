@@ -14,7 +14,7 @@ import { formatRobotData } from "./helpers";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // graphql
-import { ROBOT_INFO_FOR_USER_ROBOT, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/queries";
+import { USER_ROBOT_INFO_FOR_USER, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 // constants
 import { PageType, TabType } from "config/types";
@@ -34,7 +34,7 @@ export const TradingRobotPage: React.FC = () => {
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
     const router = useRouter();
 
-    const robotInfoQuery = isAuth ? ROBOT_INFO_FOR_USER_ROBOT : ROBOT_INFO_FOR_ROBOTS;
+    const robotInfoQuery = isAuth ? USER_ROBOT_INFO_FOR_USER : ROBOT_INFO_FOR_ROBOTS;
     const queryVars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
 
     const handlePressBack = () => {

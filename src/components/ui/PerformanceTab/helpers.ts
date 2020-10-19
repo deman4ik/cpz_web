@@ -89,7 +89,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Max. Consecutive Winners",
                       key: "maxConnsecWins",
-                      ...robotStatistic.maxConnsecWins
+                      ...robotStatistic.maxConsecWins
                   }
               ],
               losses: [

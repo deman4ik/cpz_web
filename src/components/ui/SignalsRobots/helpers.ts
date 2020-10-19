@@ -1,51 +1,51 @@
 import dayjs from "../../../libs/dayjs";
-import { getStats } from "config/utils";
+import { getStats, getVolumeWithUnit } from "config/utils";
 
 // TODO: use formatSignalData to form the array
 export const getFormatDataSignals = (signals: any) => {
-    return signals.map(({ robot }: any) => {
-        const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
-        const {
-            user_signal_settings: { signal_settings }
-        } = user_signals[0];
-        const res = {
-            cache: {
+    return signals
+        .filter((signal) => signal.robot)
+        .map(({ robot }: any) => {
+            const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
+            const userSignal = user_signals && user_signals[0];
+            const {
+                user_signal_settings: { signal_settings }
+            } = userSignal;
+            const res = {
+                cache: {
+                    id,
+                    tableName: "robots"
+                },
                 id,
-                tableName: "robots"
-            },
-            id,
-            asset,
-            currency,
-            exchange,
-            volume:
-                signal_settings.volumeType === "currencyDynamic"
-                    ? `${signal_settings.volumeInCurrency} ${currency}`
-                    : `${signal_settings.volume} ${asset}`,
-            user_robots: {
-                status: null,
-                id: null
-            },
-            subscribed: dayjs.utc(user_signals[0]?.subscribed_at)?.fromNow(true),
-            active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
-            performance: [],
-            profit: 0,
-            name,
-            winRate: 0,
-            maxDrawdown: 0,
-            tradesCount: 0,
-            isSubscribed: true,
-            code
-        };
-        if (user_signals.length && user_signals[0].stats) {
-            const { equity, profit, winRate, maxDrawdown, tradesCount } = user_signals[0].stats;
-            res.performance = equity || [];
-            res.profit = profit || 0;
-            res.winRate = winRate || 0;
-            res.maxDrawdown = maxDrawdown || 0;
-            res.tradesCount = tradesCount || 0;
-        }
-        return res;
-    });
+                asset,
+                currency,
+                exchange,
+                volume: getVolumeWithUnit(signal_settings, { currency, asset }),
+                user_robots: {
+                    status: null,
+                    id: null
+                },
+                subscribed: dayjs.utc(userSignal?.subscribed_at)?.fromNow(true),
+                active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
+                performance: [],
+                profit: 0,
+                name,
+                winRate: 0,
+                maxDrawdown: 0,
+                tradesCount: 0,
+                isSubscribed: true,
+                code
+            };
+            if (userSignal && userSignal.stats) {
+                const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userSignal);
+                res.performance = equity;
+                res.profit = profit;
+                res.winRate = winRate;
+                res.maxDrawdown = maxDrawdown;
+                res.tradesCount = tradesCount;
+            }
+            return res;
+        });
 };
 
 export const getFormatDataRobots = (robots: any) =>

@@ -1,32 +1,26 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { formatDate, getStats } from "config/utils";
-import { defineProperty } from "../../utils";
 
-export const formatData = ({ user_robots }) => {
-    return user_robots.map((robot) => {
-        const row = {};
-        defineProperty(row, "created_at", robot?.created_at ? formatDate(robot?.created_at) : "");
-        defineProperty(row, "stopped_at", robot?.stopped_at ? formatDate(robot?.stopped_at) : "");
+export const formatUserRobots = ({ user_robots }: { user_robots: any }): any => {
+    return user_robots.map((user_robot) => {
+        const { created_at, stopped_at, status, user_robot_settings, user, robot } = user_robot;
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(user_robot);
 
-        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
+        return {
+            created_at: formatDate(created_at),
+            stopped_at: formatDate(stopped_at),
 
-        defineProperty(row, "performance", {
             performance: equity,
-            profit
-        });
-        defineProperty(row, "lastProfit", robot?.stats?.lastProfit);
-        defineProperty(row, "maxDrawdown", maxDrawdown);
-        defineProperty(row, "profit", profit);
-        defineProperty(row, "tradesCount", tradesCount);
-        defineProperty(row, "winRate", winRate);
-        defineProperty(row, "robot_code", robot?.robot?.name);
-        defineProperty(row, "robot_id", robot?.robot?.id);
-        defineProperty(row, "volume", robot?.settings?.volume);
-        defineProperty(row, "user_name", robot?.user?.name);
-        defineProperty(row, "user_id", robot?.user?.id);
-        defineProperty(row, "status", robot?.status);
-
-        return row;
+            maxDrawdown,
+            profit,
+            tradesCount,
+            winRate,
+            volume: user_robot_settings?.user_robot_settings.volume,
+            robot_code: robot?.name,
+            robot_id: robot?.id,
+            user_name: user?.name,
+            user_id: user?.id,
+            status
+        };
     });
 };
 
