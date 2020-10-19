@@ -32,9 +32,11 @@ export const EmailStep2: React.FC<Props> = ({
             error={error}
             width={260}
             placeholder="Confirmation code"
+            label="Confirmation code"
             value={secretCode}
             maxLength={SECRET_CODE_LENGTH}
             onChangeText={(value) => setSecretCode(value)}
+            autoComplete="one-time-code"
             onKeyPress={onKeyPressConfirm}
         />
         <div className={styles.btns}>

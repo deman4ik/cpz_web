@@ -6,15 +6,15 @@ import { CheckedFilters } from "./types";
 import uniqueArrayByfield from "utils/uniqueArrayByfield";
 
 export const getFormatData = (stats) => {
-    if (!stats.length || !stats[0].statistics.performance) return { chartData: null, robotStatistic: null };
-    const chartData = stats[0].statistics.performance.map((pos) => ({
+    if (!stats.length || !stats.statistics.performance) return { chartData: null, robotStatistic: null };
+    const chartData = stats.statistics.performance.map((pos) => ({
         time: dayjs.utc(pos.x / 1000).valueOf(),
         value: pos.y
     }));
 
     return {
         chartData: uniqueArrayByfield(chartData, "time"),
-        robotStatistic: getRobotStatistic(stats[0].statistics)
+        robotStatistic: getRobotStatistic(stats.statistics)
     };
 };
 

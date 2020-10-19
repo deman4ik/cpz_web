@@ -1,8 +1,6 @@
 import gql from "graphql-tag";
-/**
- * Общее количество активных пользователей/подписок на сигналы/ запущенных роботов
- * Использование:  manage/dashboard
- */
+import { stats } from "graphql/queryFragments";
+
 export const USERS_BY_ROBOTS_AGGREGATE = gql`
     query usersCount {
         usersTotal: users_aggregate(where: { status: { _eq: 1 } }) {
@@ -102,14 +100,11 @@ export const ALL_ROBOTS = gql`
             id
             name
             status
-            stats {
-                equity: equity_avg
-                winRate: win_rate
-                maxDrawdown: max_drawdown
-                profit: net_profit
-                tradesCount: trades_count
+            ${stats}
+            robot_settings: all_robot_settings {
+                robot_settings
+                strategy_settings
             }
-            settings
             trade_settings
             signals
             trading
@@ -212,14 +207,10 @@ export const ALL_USER_ROBOTS = gql`
                 name
                 id
             }
-            stats {
-                equity: equity_avg
-                winRate: win_rate
-                maxDrawdown: max_drawdown
-                profit: net_profit
-                tradesCount: trades_count
+            ${stats}
+            user_robot_settings {
+                user_robot_settings
             }
-            settings
             robot {
                 name
                 id

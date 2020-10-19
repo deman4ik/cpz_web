@@ -96,7 +96,7 @@ export const RobotsItem: React.FC<Props> = ({
             </div>
             <RobotsButtonItem
                 isSubscribed={item.isSubscribed}
-                robotStatus={item.user_robots.status}
+                robotStatus={item.user_robots?.status}
                 displayType={displayType}
                 subscribeToggle={subscribeToggle}
                 handleOnPressDelete={handleOnPressDelete}

@@ -11,6 +11,7 @@ import { validateAuth } from "config/validation";
 import { useResetConfirmation } from "libs/auth";
 import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 export const RecoverPassword: React.FC = () => {
     const encodedData = useRouter().query.encoded as string;
@@ -61,13 +62,15 @@ export const RecoverPassword: React.FC = () => {
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <form className={styles.card}>
+                    <form className={styles.card} onSubmit={handleSubmit}>
                         <div className={styles.title}>Reset</div>
                         <Input
                             value={values.verificationCode}
                             error={errors.verificationCode}
                             placeholder="Verification code"
                             maxLength={6}
+                            label="Verification Code"
+                            autoComplete="one-time-code"
                             width={260}
                             onChangeText={(text: string) => handleChange("verificationCode", text)}
                         />
@@ -77,6 +80,8 @@ export const RecoverPassword: React.FC = () => {
                             maxLength={100}
                             error={errors.password}
                             placeholder="Password"
+                            label="Password"
+                            autoComplete="current-password"
                             width={260}
                             type="password"
                             onChangeText={(text: string) => handleChange("password", text)}
@@ -88,10 +93,13 @@ export const RecoverPassword: React.FC = () => {
                             width={260}
                             error={errors.passwordRepeat}
                             placeholder="Repeat password"
+                            label="Repeat Password"
+                            autoComplete="new-password"
                             type="password"
                             onChangeText={(text: string) => handleChange("passwordRepeat", text)}
                         />
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             type="success"
                             size="big"
                             style={{ marginTop: 10 }}
@@ -99,7 +107,6 @@ export const RecoverPassword: React.FC = () => {
                             width={260}
                             isUppercase
                             isLoading={loading}
-                            onClick={handleSubmit}
                         />
                     </form>
                     <CartFooter />

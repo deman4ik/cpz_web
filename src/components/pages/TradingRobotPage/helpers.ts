@@ -1,16 +1,14 @@
-import { capitalize, getStats } from "config/utils";
+import { capitalize, getStats, getVolumeWithUnit } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
 // TODO: use DB-like structure
 export const formatRobotData = (robot: any) => {
-    const { id, exchange, asset, name, currency, timeframe, user_robot, statistics, active } = robot;
+    const { id, exchange, asset, name, currency, timeframe, user_robot, fullStats, active } = robot;
     const {
         robot_settings: { robot_settings }
     } = robot;
     const userRobot = user_robot?.length && user_robot[0];
-    const volumeTypeIsCurrency = robot_settings.volumeType === "currencyDynamic";
-    const displayUnits = volumeTypeIsCurrency ? currency : asset;
     const { equity, profit } = getStats(robot);
     return {
         robot: {
@@ -20,10 +18,8 @@ export const formatRobotData = (robot: any) => {
             name,
             currency,
             timeframe,
-            volume: `${volumeTypeIsCurrency ? robot_settings.volumeInCurrency : robot_settings.volume} ${
-                displayUnits || 0
-            }`,
-            statistics,
+            volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+            fullStats,
             equity,
             profit,
             active,

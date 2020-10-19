@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
-import { stats } from "graphql/queryFragments";
+import { fullStats, stats } from "graphql/queryFragments";
 
 export const TOP_PERFORMANCE_ROBOTS = gql`
     query get_top_robots_by_stats($limit: Int) {
@@ -35,8 +35,7 @@ export const ROBOT_INFO_FOR_USER = gql`
             timeframe
             available
             status
-            ${stats}
-            statistics
+            ${fullStats}
             robot_settings {
                 robot_settings
             }
@@ -47,8 +46,7 @@ export const ROBOT_INFO_FOR_USER = gql`
                 user_signal_settings {
                     signal_settings
                 }
-                statistics
-                ${stats}
+                ${fullStats}
             }
             strategyByStrategy {
                 description
@@ -70,8 +68,7 @@ export const ROBOT_INFO = gql`
             timeframe
             available
             status
-            ${stats}
-            statistics
+            ${fullStats}
             robot_settings {
                 robot_settings
             }
@@ -86,7 +83,7 @@ export const ROBOT_INFO = gql`
 export const PUBLIC_STATISTICS = gql`
     query get_public_statistics($robotId: uuid!) {
         robots(where: { id: { _eq: $robotId } }) {
-            statistics
+            ${fullStats}
         }
     }
 `;
@@ -515,8 +512,8 @@ export const USER_ROBOT_POSITIONS_AGGREGATE = gql`
 `;
 
 // TODO: use user_robots table
-export const ROBOT_INFO_FOR_USER_ROBOT = gql`
-    query get_robot_info_for_user_robot($code: String, $user_id: uuid) {
+export const USER_ROBOT_INFO_FOR_USER = gql`
+    query get_user_robot_info($code: String, $user_id: uuid) {
         robot: robots(where: { code: { _eq: $code } }) @connection(key: "robots_info_user_robots") {
             id
             name
@@ -525,8 +522,7 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
             asset
             currency
             timeframe
-            ${stats}
-            statistics
+            ${fullStats}
             robot_settings {
                 robot_settings
             }
@@ -535,9 +531,8 @@ export const ROBOT_INFO_FOR_USER_ROBOT = gql`
                 id
                 status
                 started_at
-                statistics
+                ${fullStats}
                 message
-                ${stats}
                 user_robot_settings {
                     user_robot_settings
                 }
@@ -556,8 +551,7 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
             asset
             currency
             timeframe
-            ${stats}
-            statistics
+            ${fullStats}
             robot_settings {
                 robot_settings
             }

@@ -73,13 +73,6 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Cell: buildRobotChartCell
             },
             {
-                Header: "Last Profit",
-                accessor: "lastProfit",
-                isVisible: true,
-                orderSchema: { field: "stats" },
-                width: 115
-            },
-            {
                 Header: "Profit",
                 accessor: "profit",
                 isVisible: true,
