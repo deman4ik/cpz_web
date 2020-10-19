@@ -21,6 +21,11 @@ export const USERS_BY_ROBOTS_AGGREGATE = gql`
     }
 `;
 
+/**
+ *  Количество пользователей за определенный период
+ *  @period - дата за определенный период
+ *  Использование:  manage/dashboard
+ */
 export const GET_NEW_USERS_IN_PEROID = gql`
     query get_new_users($period: timestamp) {
         users(where: { created_at: { _gte: $period }, status: { _eq: 1 } }) {
@@ -29,6 +34,13 @@ export const GET_NEW_USERS_IN_PEROID = gql`
     }
 `;
 
+/**
+ * Список пользователей
+ * @where -  фильтрация
+ * @order_by - сортировка
+ * @limit - для пагинации
+ * Использование:  manage/users
+ */
 export const ALL_USERS = gql`
     query get_all_users($limit: Int, $offset: Int, $where: users_bool_exp, $order_by: [users_order_by!]) {
         users(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
@@ -60,6 +72,11 @@ export const ALL_USERS = gql`
     }
 `;
 
+/**
+ *  Общее количество пользователей
+ *  Использование:  manage/users
+ *  @where -  фильтрация
+ */
 export const ALL_USERS_AGGREGATE = gql`
     query users_aggr($where: users_bool_exp) {
         users_aggregate(where: $where) {
@@ -70,6 +87,13 @@ export const ALL_USERS_AGGREGATE = gql`
     }
 `;
 
+/**
+ * Список роботов
+ * @where -  фильтрация
+ * @order_by - сортировка
+ * @limit - для пагинации
+ * Использование:  manage/robots
+ */
 export const ALL_ROBOTS = gql`
     query get_all_robots($limit: Int, $offset: Int, $where: robots_bool_exp, $order_by: [robots_order_by!]) {
         robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
@@ -105,6 +129,11 @@ export const ALL_ROBOTS = gql`
     }
 `;
 
+/**
+ *  Общее количество роботов
+ *  Использование:  manage/users
+ *  @where -  фильтрация
+ */
 export const ALL_ROBOTS_AGGREGATE = gql`
     query get_all_robots_aggr($where: robots_bool_exp) {
         robots_aggregate(where: $where) {
@@ -115,6 +144,13 @@ export const ALL_ROBOTS_AGGREGATE = gql`
     }
 `;
 
+/**
+ * Список подписок на сигналы
+ * @where -  фильтрация
+ * @order_by - сортировка
+ * @limit - для пагинации
+ * Использование: manage/user_signals
+ */
 export const ALL_USER_SIGNALS = gql`
     query get_all_user_signals(
         $limit: Int
@@ -137,6 +173,11 @@ export const ALL_USER_SIGNALS = gql`
     }
 `;
 
+/**
+ *  Общее значение подписок на сигналы
+ *  Использование:  manage/user_signals
+ *  @where -  фильтрация
+ */
 export const USER_SIGNALS_AGGREGATE = gql`
     query get_user_signals_aggr($where: user_signals_bool_exp) {
         user_signals_aggregate(where: $where) {
@@ -147,6 +188,13 @@ export const USER_SIGNALS_AGGREGATE = gql`
     }
 `;
 
+/**
+ * Список пользовательских роботов
+ * @where -  фильтрация
+ * @order_by - сортировка
+ * @limit - для пагинации
+ * Использование:  manage/user_robots
+ */
 export const ALL_USER_ROBOTS = gql`
     query get_all_user_robots(
         $limit: Int
@@ -174,6 +222,11 @@ export const ALL_USER_ROBOTS = gql`
     }
 `;
 
+/**
+ *  Общее количество пользовательских роботов
+ *  Использование:  manage/user_signals
+ *  @where -  фильтрация
+ */
 export const USER_ROBOTS_AGGREGATE = gql`
     query user_robots_aggr($where: user_robots_bool_exp) {
         user_robots_aggregate(where: $where) {
@@ -184,6 +237,10 @@ export const USER_ROBOTS_AGGREGATE = gql`
     }
 `;
 
+/**
+ *  Фильтры роботов
+ *  Использование:  manage/robots
+ */
 export const ROBOTS_FILTERS = gql`
     query get_robots_filters {
         stats: robots(distinct_on: [exchange, asset, currency, strategy, timeframe, trading, status]) {
@@ -198,6 +255,10 @@ export const ROBOTS_FILTERS = gql`
     }
 `;
 
+/**
+ *  Фильтры пользовательских роботов
+ *  Использование:  manage/user_robots
+ */
 export const USER_ROBOTS_FILTERS = gql`
     query get_user_robots_filters {
         stats: robots(distinct_on: [exchange, asset]) {
@@ -207,6 +268,10 @@ export const USER_ROBOTS_FILTERS = gql`
     }
 `;
 
+/**
+ *  Обращение пользователей в саппорт и их последние сообщение из чата
+ *  использование: manage/support
+ */
 export const SUPPORT_REQUESTS = gql`
     query get_users_support_requests($where: users_bool_exp) {
         support_requests: users(where: $where) {
