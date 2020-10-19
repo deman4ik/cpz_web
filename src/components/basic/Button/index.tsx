@@ -5,7 +5,6 @@ import { LoadingIndicator } from "components/common";
 // components parts
 import ButtonInnerComponent from "./ButtonInner";
 
-
 export const Button: React.FC<ButtonProps> = ({
     title,
     buttonType = HTMLButtonTypes.button,

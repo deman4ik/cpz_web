@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
-
+import { v4 as uuid } from "uuid";
 import { Button } from "../Button";
 
 interface Props {
@@ -97,6 +97,7 @@ export const Input: React.FC<Props> = ({
         value: inputValue,
         autoComplete
     };
+    const labelId = uuid();
     return (
         <div className="wrapper" style={style}>
             <div className="container">
@@ -113,9 +114,9 @@ export const Input: React.FC<Props> = ({
                     </div>
                 ) : null}
                 {label ? (
-                    <label className="input-label">
+                    <label htmlFor={labelId} className="input-label">
                         {label}
-                        <input {...inputProps} />
+                        <input id={labelId} {...inputProps} />
                     </label>
                 ) : (
                     <input {...inputProps} />
