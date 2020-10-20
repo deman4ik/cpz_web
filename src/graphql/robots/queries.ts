@@ -279,7 +279,7 @@ export const ROBOT_POSITIONS_FOR_USER = gql`
     }
 `;
 
-export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
+export const CANDLES_FOR_USER_SIGNAL = (timeframe: number) => gql`
   query get_candles_for_user_signals(
     $userSignalId: uuid!
     $limit: Int
@@ -287,7 +287,7 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
   ) {
     candles: v_candles${timeframe}_user_signal_positions(
       where: {
-        user_signal_id: { _eq: $userSignalId }
+        user_signal: { id: { _eq: $userSignalId } }
       }
       limit: $limit
       offset: $offset
@@ -303,16 +303,6 @@ export const ROBOT_CANDLES_FOR_USER_SIGNALS = (timeframe: number) => gql`
       }
       position_entry
       position_exit
-      user_signal {
-       robot {
-        id
-        user_signals {
-          id
-          volume
-          subscribed_at
-        }
-      }
-     }
     }
   }
 `;
@@ -355,7 +345,7 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
     candles: v_candles${timeframe}_user_positions(
       where: {
         user_robot_id: { _eq: $robotId }
-        user_robot:{user_id:{_eq: $user_id}}    
+        user_robot: { user_id: { _eq: $user_id } }    
       }
       limit: $limit
       offset: $offset
@@ -371,10 +361,6 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
       }
       position_entry
       position_exit
-      user_robot {
-        id
-        settings
-      }
     }
   }
 `;
@@ -382,13 +368,13 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
 export function buildRobotPositionCandlesQuery(
     timeframe: number,
     isAuth: boolean,
-    hasUserRobots = false
+    belongsToUser = false
 ): DocumentNode {
     if (isAuth) {
-        if (hasUserRobots) {
+        if (belongsToUser) {
             return CANDLES_FOR_USER_ROBOT(timeframe);
         }
-        return ROBOT_CANDLES_FOR_USER_SIGNALS(timeframe);
+        return CANDLES_FOR_USER_SIGNAL(timeframe);
     }
     return CANDLES_FOR_ROBOT(timeframe);
 }
