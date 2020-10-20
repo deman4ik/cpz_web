@@ -198,17 +198,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         }
         return () => {
             abortController.abort();
-            if (chart.field) {
-                chart.field.unsubscribeCrosshairMove(handleCrosshairMoved);
-                chart.field.timeScale().unsubscribeVisibleTimeRangeChange(handleVisibleTimeRangeChange);
-                if (debouncedHandleVisibleLogicalRangeChanged) {
-                    chart.field
-                        .timeScale()
-                        .unsubscribeVisibleLogicalRangeChange(debouncedHandleVisibleLogicalRangeChanged);
-                    debouncedHandleVisibleLogicalRangeChanged.cancel();
-                    debouncedHandleVisibleLogicalRangeChanged = null;
-                }
-            }
         };
     }, [sortedData, loading, chart.series]);
 
