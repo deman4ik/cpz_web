@@ -40,7 +40,7 @@ export const SignalRobotPage = () => {
     const router = useRouter();
 
     const handlePressBack = () => {
-        router.push(prevRoute);
+        router.push(prevRoute || "/");
     };
 
     const { data, loading } = useQuery(robotsInfoQuery, {

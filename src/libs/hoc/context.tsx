@@ -17,25 +17,32 @@ export const LayoutContextProvider: React.FC = ({ children }) => {
     return <LayoutContext.Provider value={{ layoutState, setLayoutState }}>{children}</LayoutContext.Provider>;
 };
 
-export const HistoryContext = createContext({ historyState: null, setHistory: null });
+export const HistoryContext = createContext({ historyState: null, setHistory: null, setPrevRoute: null });
 
 export const HistoryContextProvider: React.FC = ({ children }) => {
-    const prevRoute = getPreviousRoute();
+    // const prevRoute = getPreviousRoute();
     const MAX_HISTORY_STACK = 2;
-    const [historyState, setHistory] = useState({ history: [prevRoute], prevRoute });
+    const [historyState, setHistory] = useState({ history: [], prevRoute: null });
+
+    const setPrevRoute = (url: string) => setHistory((_historyState) => ({ ..._historyState, prevRoute: url }));
 
     useMemo(() => {
         Router.events.on("routeChangeStart", (url) => {
             setHistory((_historyState) => {
                 const history = _historyState.history.slice();
+                if (history[history.length - 1] === url) {
+                    return _historyState;
+                }
                 history.push(url);
                 if (history.length > MAX_HISTORY_STACK) {
                     history.splice(0, 1);
                 }
-                setDataInCookie(PREV_ROUTE, history[1]);
-                return { ..._historyState, history, prevRoute: history[1] };
+                setDataInCookie(PREV_ROUTE, history[0]);
+                return { ..._historyState, history, prevRoute: history[0] };
             });
         });
     }, []);
-    return <HistoryContext.Provider value={{ historyState, setHistory }}>{children}</HistoryContext.Provider>;
+    return (
+        <HistoryContext.Provider value={{ historyState, setHistory, setPrevRoute }}>{children}</HistoryContext.Provider>
+    );
 };
