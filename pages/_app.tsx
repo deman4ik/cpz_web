@@ -6,7 +6,7 @@ import { pageview } from "../src/libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
 // context
-import { AuthContextProvider, LayoutContextProvider, HistoryContextProvider, HistoryContext } from "libs/hoc/context";
+import { AuthContextProvider, LayoutContextProvider, HistoryContextProvider } from "libs/hoc/context";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 

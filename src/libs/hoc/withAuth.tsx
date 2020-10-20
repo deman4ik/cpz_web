@@ -8,7 +8,7 @@ import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext, HistoryContext } from "libs/hoc/context";
 
 const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
@@ -24,6 +24,7 @@ const validatePath = (path: string) => {
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
         const { setAuthState } = useContext(AuthContext);
+        const { setPrevRoute } = useContext(HistoryContext);
         const [accessToken, , refreshToken] = useAccessToken();
         const refreshTokenSet =
             typeof window !== "undefined" ? Boolean(localStorage.getItem("refreshTokenSet")) : false;
@@ -33,6 +34,10 @@ export const withAuth = (Page) => {
                 refreshToken();
             }
         });
+
+        useEffect(() => {
+            setPrevRoute(props.prev_route);
+        }, []);
 
         useEffect(() => {
             setAuthState({
@@ -47,7 +52,7 @@ export const withAuth = (Page) => {
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        const { accessToken } = nextCookies(ctx);
+        const { accessToken, prev_route } = nextCookies(ctx);
 
         if (ctx.res) {
             if (accessToken && !isLanding) {
@@ -65,7 +70,8 @@ export const withAuth = (Page) => {
         }
         return {
             ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
-            accessToken
+            accessToken,
+            prev_route
         };
     };
 

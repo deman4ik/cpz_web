@@ -38,7 +38,7 @@ export const TradingRobotPage: React.FC = () => {
     const queryVars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
 
     const handlePressBack = () => {
-        router.push(prevRoute);
+        router.push(prevRoute || "/");
     };
 
     const { data: robotInfoData, loading } = useQuery(robotInfoQuery, {
