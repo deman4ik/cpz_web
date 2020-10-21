@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { stats } from "graphql/queryFragments";
+import { stats, fullStats } from "graphql/queryFragments";
 
 export const USER_SIGNAL_ROBOTS = gql`
     query get_user_signal_robots(
@@ -103,32 +103,31 @@ export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
         $type: String_comparison_exp
         $user_id: uuid
     ) {
-        stats: user_aggr_stats(
-            where: {
-                type: $type
-                exchange: $exchange
-                asset: $asset
-                equity: { _has_key: "profit" }
-                user_id: { _eq: $user_id }
-            }
+        stats: v_user_aggr_stats(
+            where: { type: $type, exchange: $exchange, asset: $asset, user_id: { _eq: $user_id } }
         ) {
             user_id
-            statistics
+            statistics: full_stats
+            equity
         }
     }
 `;
 
 export const ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE = gql`
     query get_all_user_signal_robots_stats_aggr($type: String_comparison_exp, $user_id: uuid) {
-        stats: user_aggr_stats(
+        stats: v_user_aggr_stats(
             order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
-            where: { type: $type, equity: { _has_key: "profit" }, user_id: { _eq: $user_id } }
+            where: { type: $type, user_id: { _eq: $user_id } }
         ) {
             user_id
             id
             asset
             exchange
             equity
+            profit: net_profit
+            tradesCount: trades_count
+            winRate: win_rate
+            maxDrawdown: max_drawdown
         }
     }
 `;
@@ -188,10 +187,15 @@ export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
                 name
                 asset
                 exchange
+                robot_settings {
+                    robot_settings
+                }
             }
             user_signal {
                 id
-                volume
+                user_signal_settings {
+                    signal_settings
+                }
             }
         }
     }

@@ -191,6 +191,7 @@ export const getUpdatedCandleChartData = ({ candles }, asset) => {
 };
 
 export const getAlerts = (signals) => {
+    if (!signals) return [];
     return signals.reduce((alerts, signal) => {
         if (!Object.keys(signal.alerts).length) return alerts;
         return [

@@ -4,7 +4,7 @@ import React from "react";
 import ManagePageTemplate from "../common/ManagePageTemplate";
 
 // utils
-import { formatData, getSearchOptions } from "./utils";
+import { formatSignals, getSearchOptions } from "./utils";
 
 // constants
 import { USER_SIGNALS_TABLE_COLUMNS } from "./constants";
@@ -22,7 +22,7 @@ const ManageUserSignals: React.FC = () => {
             columns={USER_SIGNALS_TABLE_COLUMNS}
             dataQuery={ALL_USER_SIGNALS}
             aggregateQuery={USER_SIGNALS_AGGREGATE}
-            formatData={formatData}
+            formatData={formatSignals}
             getItemsCount={getItemsCount}
             getSearchOptions={getSearchOptions}
         />

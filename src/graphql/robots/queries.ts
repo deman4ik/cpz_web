@@ -143,7 +143,9 @@ export const SIGNAL_POSITIONS_FOR_USER = gql`
                 id
                 user_signals(where: { user_id: { _eq: $user_id } }) {
                     id
-                    volume
+                    user_signal_settings {
+                        signal_settings
+                    }
                 }
             }
         }

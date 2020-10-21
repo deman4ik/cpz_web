@@ -34,7 +34,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     const { asset, timeframe, id: robotId } = robot;
 
     const candleQueries = {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth, !!userRobot),
+        history: buildRobotPositionCandlesQuery(timeframe, isAuth && userRobot, !!userRobot),
         realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
     };
 
@@ -43,9 +43,10 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     const [candleChartData, setCandleChartData] = useState(initialCandleChartData);
 
     // history candles load
-    const historyQueryVars = isAuth
-        ? { robotId: userRobot ? userRobot.id : robotId, limit, user_id }
-        : { robotId: userRobot ? userRobot.id : robotId, limit };
+    const historyQueryVars =
+        isAuth && userRobot
+            ? { robotId: userRobot ? userRobot.id : robotId, limit, user_id }
+            : { robotId: userRobot ? userRobot.id : robotId, limit };
     const { loading, data, fetchMore } = useQuery(candleQueries.history, {
         variables: historyQueryVars,
         notifyOnNetworkStatusChange: true

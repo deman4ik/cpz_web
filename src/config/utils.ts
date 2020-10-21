@@ -40,6 +40,16 @@ export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) 
     return `${volume} ${displayUnits || ""}`;
 };
 
+export const getUserSignalVolume = (signal) => {
+    if (!signal?.user_signal_settings?.signal_settings) return null;
+    return getVolume(signal.user_signal_settings.signal_settings);
+};
+
+export const getRobotVolume = (robot) => {
+    if (!robot?.robot_settings?.robot_settings) return null;
+    return getVolume(robot.robot_settings.robot_settings);
+};
+
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
 export const valueWithSign = (value: number | string): string => (Number(value) > 0 ? `+${value}` : `${value}`);
