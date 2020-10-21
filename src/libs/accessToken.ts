@@ -5,6 +5,7 @@ import redirect from "./redirect";
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
+import { onError } from "@apollo/client/link/error";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined") {
@@ -52,6 +53,17 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
             redirect({}, "/auth/login");
         }
     }, [error]);
+
+    useEffect(() => {
+        onError(({ graphQLErrors }) => {
+            if (graphQLErrors)
+                graphQLErrors.forEach(({ extensions, message }) => {
+                    if (extensions.code === "invalid-jwt") {
+                        setToken(null);
+                    }
+                });
+        });
+    }, []);
 
     useEffect(() => {
         putTokenInCookie(jwtToken.token);
