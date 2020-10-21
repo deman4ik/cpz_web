@@ -34,8 +34,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
         skip: !dataRobot
     });
 
-    const [subscribeSend, { loading: subscribeLoading }] = useMutation(SUBSCRIBE_TO_SIGNALS);
-    const [subscribe] = useMutation(SUBSCRIBE);
+    const [subscribe, { loading: subscribeLoading }] = useMutation(SUBSCRIBE_TO_SIGNALS);
+    const [cacheSubscription] = useMutation(SUBSCRIBE);
 
     const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
         loading,
@@ -58,21 +58,21 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
             setTitle(
                 dataRobot.robot.subs.volume
-                    ? `Following ${dataRobot.robot.name}`
-                    : `Subscribing to ${dataRobot.robot.name} signals`
+                    ? `Follow ${dataRobot.robot.name}`
+                    : `Subscribe to ${dataRobot.robot.name} signals`
             );
         }
     }, [setTitle, dataRobot, limits]);
 
     const handleOnSubmit = () => {
-        subscribeSend({
+        subscribe({
             variables: {
                 robotId: dataRobot.robot.id,
                 volume: Number(inputVolumeAsset)
             }
         }).then((response) => {
             if (response.data.userSignalSusbcribe.success) {
-                subscribe({
+                cacheSubscription({
                     variables: {
                         cache: dataRobot.robot.cache,
                         volume: Number(inputVolumeAsset),
@@ -160,7 +160,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                 <div className={styles_subs.btns}>
                                     <Button
                                         className={styles.btn}
-                                        title={type === "edit" ? "Change" : "Subscribe"}
+                                        title={type === "edit" ? "Apply" : "OK"}
                                         icon="check"
                                         type="success"
                                         disabled={!isValid()}
