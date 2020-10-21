@@ -105,7 +105,6 @@ export const ALL_ROBOTS = gql`
                 robot_settings
                 strategy_settings
             }
-            trade_settings
             signals
             trading
             exchange
@@ -168,7 +167,9 @@ export const ALL_USER_SIGNALS = gql`
                 id
             }
             subscribed_at
-            volume
+            user_signal_settings {
+                signal_settings
+            }
         }
     }
 `;

@@ -1,15 +1,15 @@
 import { color } from "config/constants";
-import { formatDate, formatMoney, round } from "config/utils";
+import { formatDate, formatMoney, getUserSignalVolume, getRobotVolume, round } from "config/utils";
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");
 
-const getRobotDataSignals = (position) => {
+const getPositionData = (position) => {
     const { id, code, direction, entry_date, entry_price, robot, user_signal } = position;
     return {
         id,
         code,
-        volume: user_signal.volume,
+        volume: getUserSignalVolume(user_signal),
         entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
@@ -21,17 +21,17 @@ const getRobotDataSignals = (position) => {
     };
 };
 
-export const getFormatDataSignals = (positions: any) =>
+export const formatPositionsForSignals = (positions: any) =>
     positions.reduce((acc, position) => {
         const item = acc.find((el) => el.exchange === position.robot.exchange);
         const obj = {
             exchange: position.robot.exchange,
             assets: []
         };
-        const robot = getRobotDataSignals(position);
+        const robot = getPositionData(position);
         const asset = {
             asset: position.robot.asset,
-            volume: (position.direction === "short" ? -1 : 1) * position.user_signal.volume,
+            volume: (position.direction === "short" ? -1 : 1) * getUserSignalVolume(position.user_signal),
             robots: [robot]
         };
         if (item) {
@@ -40,7 +40,10 @@ export const getFormatDataSignals = (positions: any) =>
                 item.assets.push(asset);
             } else {
                 findAsset.robots.push(robot);
-                findAsset.volume = round(findAsset.volume + (robot.direction === "short" ? -1 : 1) * robot.volume, 6);
+                findAsset.volume = round(
+                    findAsset.volume + (robot.direction === "short" ? -1 : 1) * getRobotVolume(robot),
+                    6
+                );
             }
         } else {
             obj.assets = [asset];

@@ -31,7 +31,7 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
                 </div>
             </div>
             <div className={styles.col} style={{ flex: 0.85 }}>
-                {item.stats?.equity.length ? <DynamicAreaChart height={120} data={item.stats.equity} /> : null}
+                {item?.equity?.length ? <DynamicAreaChart height={120} data={item.equity} /> : null}
             </div>
             <div className={styles.col} style={{ flex: 0.05 }} />
             <div className={styles.col} style={{ flex: 0.9 }}>

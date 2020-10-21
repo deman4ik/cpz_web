@@ -6,8 +6,7 @@ const getLineName = (exchange: string | null, asset: string | null, type: string
         : `${exchange ? exchangeName(exchange) : ""}${asset && exchange ? " " : ""}${asset ? capitalize(asset) : ""}`;
 
 const getAssetData = (stat, type) => {
-    const { id, asset, exchange, stats } = stat;
-    const { profit, equity, winRate, maxDrawdown, tradesCount } = stats;
+    const { id, asset, equity, exchange, profit, winRate, maxDrawdown, tradesCount } = stat;
     return {
         id,
         name: getLineName(exchange, asset, type),

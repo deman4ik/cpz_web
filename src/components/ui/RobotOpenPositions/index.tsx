@@ -9,7 +9,7 @@ import { OPEN_USER_POSITIONS } from "graphql/robots/queries";
 // constants
 import { POLL_INTERVAL } from "config/constants";
 // helpers
-import { getFormatDataSignals, getFormatDataRobots } from "./helpers";
+import { formatPositionsForSignals, getFormatDataRobots } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 
@@ -31,7 +31,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
     });
 
     const funcCall = {
-        signals: () => getFormatDataSignals(data.positions),
+        signals: () => formatPositionsForSignals(data.positions),
         robots: () => getFormatDataRobots(data.positions)
     };
 
