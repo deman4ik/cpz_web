@@ -21,9 +21,9 @@ export const LayoutContextProvider: React.FC = ({ children }) => {
 export const HistoryContext = createContext({ historyState: null, setHistory: null, setPrevRoute: null });
 const MAX_HISTORY_STACK = 2;
 const history = new HistoryStack(MAX_HISTORY_STACK);
+const prevRoute = getPreviousRoute() || "/";
 
 export const HistoryContextProvider: React.FC = ({ children }) => {
-    const prevRoute = getPreviousRoute() || "/";
     const [historyState, setHistory] = useState({ prevRoute });
 
     useEffect(() => {
