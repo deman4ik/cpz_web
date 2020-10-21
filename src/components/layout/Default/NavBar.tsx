@@ -24,6 +24,8 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
         }
     };
 
+    const toHomePage = () => router.push("/");
+
     const mainItems: MainMenuItemProps[] = [
         { label: PageType.robots, icon: "robot", route: "robots" },
         { label: PageType.signals, icon: "signals", route: "signals" },
@@ -46,7 +48,9 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
 
     return (
         <div className={styles.navBar}>
-            <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
+            <div onClick={toHomePage}>
+                <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
+            </div>
             <div className={styles.container}>
                 {mainItems.map((item) => (
                     <NavItem

@@ -1,6 +1,7 @@
 import React, { useState, createContext, useCallback, useMemo, useEffect } from "react";
 import Router from "next/router";
 import { PREV_ROUTE, setDataInCookie, getPreviousRoute } from "utils/common";
+import { HistoryStack } from "libs/HistoryStack";
 
 export const AuthContext = createContext({ authState: null, setAuthState: null });
 
@@ -18,27 +19,26 @@ export const LayoutContextProvider: React.FC = ({ children }) => {
 };
 
 export const HistoryContext = createContext({ historyState: null, setHistory: null, setPrevRoute: null });
+const MAX_HISTORY_STACK = 2;
+const history = new HistoryStack(MAX_HISTORY_STACK);
 
 export const HistoryContextProvider: React.FC = ({ children }) => {
-    // const prevRoute = getPreviousRoute();
-    const MAX_HISTORY_STACK = 2;
-    const [historyState, setHistory] = useState({ history: [], prevRoute: null });
+    const prevRoute = getPreviousRoute() || "/";
+    const [historyState, setHistory] = useState({ prevRoute });
+
+    useEffect(() => {
+        history.push(prevRoute);
+    }, []);
 
     const setPrevRoute = (url: string) => setHistory((_historyState) => ({ ..._historyState, prevRoute: url }));
 
     useMemo(() => {
         Router.events.on("routeChangeStart", (url) => {
+            const previousRoute = history.last;
+            history.push(url);
+            setDataInCookie(PREV_ROUTE, previousRoute);
             setHistory((_historyState) => {
-                const history = _historyState.history.slice();
-                if (history[history.length - 1] === url) {
-                    return _historyState;
-                }
-                history.push(url);
-                if (history.length > MAX_HISTORY_STACK) {
-                    history.splice(0, 1);
-                }
-                setDataInCookie(PREV_ROUTE, history[0]);
-                return { ..._historyState, history, prevRoute: history[0] };
+                return { ..._historyState, prevRoute: previousRoute };
             });
         });
     }, []);
