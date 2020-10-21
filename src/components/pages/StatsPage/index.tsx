@@ -111,7 +111,7 @@ export const StatsPage: React.FC = () => {
     }, [skipFilterQuery, selectedFilter]);
 
     const formatData = useMemo(
-        () => (!loading && data ? getFormatData(data.stats) : { chartData: null, robotStatistic: null }),
+        () => (!loading && data ? getFormatData(data.stats[0]) : { chartData: null, robotStatistic: null }),
         [loading, data]
     );
 
