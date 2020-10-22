@@ -50,6 +50,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
         pollInterval: POLL_INTERVAL
     });
 
+    console.log(limit, "searchLimit");
     /*Обработка получения данных*/
     let robotsWhere = { ...filtersQuery.robot };
     if (isAuth) robotsWhere = { ...robotsWhere, ...QUERY_FILTER[dispayType]() };

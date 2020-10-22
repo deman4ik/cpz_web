@@ -65,7 +65,7 @@ export const withAuth = (Page) => {
         }
         return {
             ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
-            accessToken,
+            accessToken
         };
     };
 
