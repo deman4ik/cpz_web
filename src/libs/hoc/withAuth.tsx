@@ -47,7 +47,7 @@ export const withAuth = (Page) => {
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        const { accessToken, prev_route } = nextCookies(ctx);
+        const { accessToken } = nextCookies(ctx);
 
         if (ctx.res) {
             if (accessToken && !isLanding) {
@@ -66,7 +66,6 @@ export const withAuth = (Page) => {
         return {
             ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
             accessToken,
-            prev_route
         };
     };
 
