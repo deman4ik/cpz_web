@@ -31,3 +31,14 @@ export type RobotStats = {
     maxDrawdown: number;
     tradesCount: number;
 };
+
+export enum VolumeType {
+    assetStatic,
+    currencyDynamic
+}
+
+export type RobotSettings = {
+    volumeType: VolumeType;
+    volume?: number;
+    volumeInCurrency?: number;
+};

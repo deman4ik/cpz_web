@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 import { formatMoney } from "config/utils";
-import { getSubscriptionDuration, activeDays, getProfit, getVolume } from "../helpers";
+import { getSubscriptionDuration, activeDays, getProfit, getDisplayedVolume } from "../helpers";
 import { color } from "config/constants";
 import styles from "./styles/HeaderStatsSection.module.css";
 
@@ -26,7 +26,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                 </div>
                 <div className={styles.robotStatsRow}>
                     <div className={styles.robotStatsLabel}>Amount&nbsp;</div>
-                    <div className={styles.robotStatsValue}>{getVolume(robotData)}</div>
+                    <div className={styles.robotStatsValue}>{getDisplayedVolume(robotData)}</div>
                 </div>
             </div>
             <div className={styles.robotStatsCol}>

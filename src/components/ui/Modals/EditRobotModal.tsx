@@ -9,7 +9,7 @@ import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import { Button, Input } from "components/basic";
 import { formatMoney } from "config/utils";
-import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
+import { getLimitsForRobot, calculateCurrency, calculateAsset } from "./helpers";
 import { color } from "config/constants";
 import styles from "./index.module.css";
 
@@ -34,10 +34,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
         skip: !dataRobot
     });
 
-    const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
-        loading,
-        data
-    ]);
+    const limits = useMemo(() => !loading && data && getLimitsForRobot(data), [loading, data]);
 
     useEffect(() => {
         if (dataRobot) {

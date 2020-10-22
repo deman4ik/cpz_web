@@ -1,4 +1,4 @@
-import { getStats, getVolumeWithUnit } from "config/utils";
+import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
 export const formatRobotsData = (data: any) =>
@@ -26,7 +26,8 @@ export const formatRobotsData = (data: any) =>
                     status: null,
                     id: null
                 },
-                volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+                volume: getVolume(robot_settings),
+                displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
                 profit,
                 performance: equity,
                 active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
@@ -48,7 +49,8 @@ export const formatRobotsData = (data: any) =>
                 } = getStats(userSignals);
                 res.subscribed = dayjs.utc(userSignals.subscribed_at).fromNow(true);
                 res.isSubscribed = true;
-                res.volume = `${userSignals.user_signal_settings.signal_settings.volume || 0} ${asset}`;
+                res.volume = userSignals.user_signal_settings.signal_settings.volume || 0;
+                res.displayedVolume = `${userSignals.user_signal_settings.signal_settings.volume || 0} ${asset}`;
                 res.profit = signalProfit;
                 res.winRate = signalWinRate;
                 res.maxDrawdown = signalMaxDrawdown;

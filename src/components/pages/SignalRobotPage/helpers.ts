@@ -1,6 +1,6 @@
 import dayjs from "libs/dayjs";
 import { color } from "config/constants";
-import { capitalize, getStats, getVolumeWithUnit } from "config/utils";
+import { capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import { SectionType } from "./types";
 
 // TODO: use DB-like structure
@@ -37,7 +37,8 @@ export const formatRobotData = (robot) => {
             code,
             currency,
             timeframe,
-            volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+            volume: getVolume(robot_settings),
+            displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
             fullStats,
             equity,
             profit,
@@ -53,7 +54,9 @@ export const formatRobotData = (robot) => {
             ? {
                   ...userSignals,
                   equity: getStats(userSignals).equity,
-                  volume: getVolumeWithUnit(robot_settings, { currency, asset })
+
+                  volume: getVolume(signalSettings),
+                  displayedVolume: getVolumeWithUnit(signalSettings, { currency, asset })
               }
             : null
     };
@@ -69,7 +72,10 @@ export const getSubscriptionDuration = (robotData: any) =>
 export const activeDays = (robotData: any) =>
     robotData.robot.started_at ? dayjs.utc(robotData.robot.started_at).fromNow(true) : 0;
 
-export const getVolume = ({ robot, user_signals }: any) =>
+export const getDisplayedVolume = ({ robot, user_signals }: any) =>
+    robot.isUserSubscribed ? user_signals.displayedVolume : robot.displayedVolume;
+
+export const getRobotVolume = ({ robot, user_signals }: any) =>
     robot.isUserSubscribed ? user_signals.volume : robot.volume;
 
 export const floatPositions = {
@@ -215,7 +221,7 @@ export const getAlerts = (signals) => {
 
 export const createVariable = (robotData, type) => {
     const { robot } = robotData;
-    const volume = getVolume(robotData);
+    const volume = getRobotVolume(robotData);
     return {
         variables: {
             cache: { id: robot.id, tableName: "charts" },

@@ -61,8 +61,8 @@ const getRobotDataRobots = (position) => {
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
         robot: {
-            name: user_robot.robot.name,
-            code: user_robot.robot.code,
+            name: user_robot?.robot?.name,
+            code: user_robot?.robot?.code,
             asset
         }
     };

@@ -25,12 +25,12 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
 
     const handleOnSubmit = () => {
         unsubscribeSend({ variables: { robotId: data.robot.id } }).then((response) => {
-            if (response.data.userSignalUnsusbcribe.success) {
+            if (response.data.userSignalUnsubscribe.result === "OK") {
                 unsubscribe({
                     variables: { cache: data.robot.cache, chartData: data.ChartData }
                 });
             } else {
-                setFormError(response.data.userSignalSusbcribe.error);
+                setFormError(response.data.userSignalUnsubscribe.result);
             }
             onClose();
         });
@@ -46,7 +46,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                     <div className={styles.bodyTitle}>
                         Are you sure you want to unsubscribe{"\n"}from {data ? data.robot.name : ""} signals?
                     </div>
-                    <div className={styles.bodyText}>You will lost all your signals statistics for this robot!</div>
+                    <div className={styles.bodyText}>You will lose all your signals statistics for this robot!</div>
                     <div className={styles.btns}>
                         <Button
                             className={styles.btn}

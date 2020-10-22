@@ -1,4 +1,4 @@
-import { getStats, getVolumeWithUnit } from "config/utils";
+import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
 // TODO: refactor
@@ -28,7 +28,8 @@ export const formatRobotsData = (data: any) =>
                     id: null
                 },
                 started_at: null,
-                volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+                volume: getVolume(robot_settings),
+                displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
                 profit,
                 performance: equity,
                 active: active ? dayjs.utc(active).fromNow(true) : active,
@@ -46,10 +47,12 @@ export const formatRobotsData = (data: any) =>
                     maxDrawdown: signalMaxDrawdown,
                     tradesCount: signalTradesCount
                 } = getStats(userRobot);
+                const userRobotVolume = userRobot.user_robot_settings?.user_robot_settings?.volume || 0;
 
                 res.user_robots.status = userRobot.status;
                 res.user_robots.id = userRobot.id;
-                res.volume = `${userRobot.user_robot_settings.user_robot_settings.volume} ${asset}`;
+                res.volume = userRobotVolume;
+                res.displayedVolume = `${userRobotVolume} ${asset}`;
                 res.started_at = userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0;
                 res.performance = signalEquity;
                 res.winRate = signalWinRate;

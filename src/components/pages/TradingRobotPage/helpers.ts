@@ -1,4 +1,4 @@
-import { capitalize, getStats, getVolumeWithUnit } from "config/utils";
+import { capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
@@ -10,6 +10,7 @@ export const formatRobotData = (robot: any) => {
     } = robot;
     const userRobot = user_robot?.length && user_robot[0];
     const { equity, profit } = getStats(robot);
+    const userRobotVolume = userRobot.user_robot_settings?.user_robot_settings?.volume || 0;
     return {
         robot: {
             id,
@@ -18,7 +19,8 @@ export const formatRobotData = (robot: any) => {
             name,
             currency,
             timeframe,
-            volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+            volume: getVolume(robot_settings),
+            displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
             fullStats,
             equity,
             profit,
@@ -29,7 +31,8 @@ export const formatRobotData = (robot: any) => {
             ? {
                   ...userRobot,
                   equity: getStats(userRobot).equity,
-                  volume: `${userRobot.user_robot_settings.user_robot_settings.volume || 0} ${asset}`
+                  volume: userRobotVolume,
+                  displayedVolume: `${userRobotVolume} ${asset}`
               }
             : null
     };

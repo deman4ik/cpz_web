@@ -1,16 +1,16 @@
 import gql from "graphql-tag";
 
 export const SUBSCRIBE_TO_SIGNALS = gql`
-    mutation subscribeToSignals($robotId: String!, $settings: UserSignalSettings!) {
-        userSignalSusbcribe(robotId: $robotId, settings: $settings) {
+    mutation subscribeToSignals($robotId: uuid!, $settings: UserSignalSettings!) {
+        userSignalSubscribe(robotId: $robotId, settings: $settings) {
             result
         }
     }
 `;
 
 export const UNSUBSCRIBE_FROM_SIGNALS = gql`
-    mutation unsubscribeFromSignals($robotId: String!) {
-        userSignalUnsusbcribe(robotId: $robotId) {
+    mutation unsubscribeFromSignals($robotId: uuid!) {
+        userSignalUnsubscribe(robotId: $robotId) {
             result
         }
     }

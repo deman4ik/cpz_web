@@ -14,7 +14,7 @@ import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
 import { ErrorLine, LoadingIndicator } from "components/common";
-import { getLimits, calculateCurrency } from "../helpers";
+import { getLimitsForRobot, calculateCurrency } from "../helpers";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
 
@@ -84,10 +84,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [actionOnRobot] = useMutation(ACTION_ROBOT);
     const [userRobotStart, { loading: startLoading }] = useMutation(USER_ROBOT_START);
 
-    const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
-        loading,
-        data
-    ]);
+    const limits = useMemo(
+        () => (!loading && data ? getLimitsForRobot(data) : { asset: { min: 0, max: 0 }, price: 0 }),
+        [loading, data]
+    );
 
     const handleOnCreate = () => {
         userRobotCreate({

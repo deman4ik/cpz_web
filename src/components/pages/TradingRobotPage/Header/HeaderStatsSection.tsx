@@ -27,7 +27,9 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                 </div>
                 <div className={styles.robotStatsRow}>
                     <div className={styles.robotStatsLabel}>Amount&nbsp;</div>
-                    <div className={styles.robotStatsValue}>{isOwnedByUser ? userRobot.volume : robot.volume}</div>
+                    <div className={styles.robotStatsValue}>
+                        {isOwnedByUser ? userRobot.displayedVolume : robot.displayedVolume}
+                    </div>
                 </div>
             </div>
             <div className={styles.robotStatsCol}>
