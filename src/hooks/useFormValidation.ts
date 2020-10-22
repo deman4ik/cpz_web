@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 
 type errors = {
     email?: string;
@@ -38,7 +38,11 @@ export const useFormValidation = (initialState, validate) => {
         setErrors(validationErrors);
     }
 
-    function handleSubmit() {
+    function handleSubmit(e?: SyntheticEvent) {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         const validationErrors = validate(values);
         setErrors(validationErrors);
         setSubmitting(true);

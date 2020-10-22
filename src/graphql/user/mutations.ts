@@ -3,9 +3,7 @@ import gql from "graphql-tag";
 export const SET_USER_NAME = gql`
     mutation changeName($name: String!) {
         changeName(name: $name) {
-            success
             result
-            error
         }
     }
 `;
@@ -13,9 +11,7 @@ export const SET_USER_NAME = gql`
 export const SET_USER_PASSWORD = gql`
     mutation changePassword($password: String!, $oldPassword: String) {
         changePassword(password: $password, oldPassword: $oldPassword) {
-            success
             result
-            error
         }
     }
 `;
@@ -49,9 +45,7 @@ export const SET_NOTIFICATION_SETTINGS = gql`
             tradingEmail: $tradingEmail
             tradingTelegram: $tradingTelegram
         ) {
-            success
             result
-            error
         }
     }
 `;
@@ -59,9 +53,7 @@ export const SET_NOTIFICATION_SETTINGS = gql`
 export const ADD_TELEGRAM_ACCOUNT = gql`
     mutation setTelegram($data: JSON!) {
         setTelegram(data: $data) {
-            success
             result
-            error
         }
     }
 `;

@@ -9,6 +9,7 @@ import { Input, Button } from "components/basic";
 import { ErrorLine } from "components/common";
 import styles from "./PasswordModal.module.css";
 import styles_main from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 interface Props {
     onClose: () => void;
@@ -27,24 +28,24 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
         validateAuth
     );
 
-    const [sendPassword, { loading, error }] = useMutation(SET_USER_PASSWORD, {
+    const [sendPassword, result] = useMutation(SET_USER_PASSWORD, {
         variables: { oldPassword: values.passwordOld, password: values.password }
     });
-    if (error) {
-        console.error(error);
-    }
+
+    const { loading, error } = result;
 
     const submit = () => {
-        sendPassword().then((response) => {
-            if (response.data.changePassword.success) {
+        sendPassword()
+            .then(() => {
                 resetValues();
                 setFormError("");
                 onClose();
-            } else {
-                setFormError(response.data.changePassword.error);
+            })
+            .catch((e) => {
+                setFormError(e.message);
                 setValid(false);
-            }
-        });
+                console.error(error);
+            });
     };
 
     useEffect(() => {
@@ -53,16 +54,10 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
         }
     }, [isValid]);
 
-    const onKeyPress = (e) => {
-        if (e.nativeEvent.key === "Enter" && isValid) {
-            handleSubmit();
-        }
-    };
-
     return (
         <>
             {formError && <ErrorLine formError={formError} />}
-            <div className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.fieldset}>
                     <div className={styles_main.formRow}>
                         <div className={styles.label}>Old Password</div>
@@ -72,7 +67,6 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
                                 type="password"
                                 width={210}
                                 onChangeText={(text: string) => handleChange("passwordOld", text)}
-                                onKeyPress={onKeyPress}
                             />
                         </div>
                     </div>
@@ -87,7 +81,6 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
                                 width={210}
                                 type="password"
                                 onChangeText={(text: string) => handleChange("password", text)}
-                                onKeyPress={onKeyPress}
                             />
                         </div>
                     </div>
@@ -102,12 +95,12 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
                                 width={210}
                                 type="password"
                                 onChangeText={(text: string) => handleChange("passwordRepeat", text)}
-                                onKeyPress={onKeyPress}
                             />
                         </div>
                     </div>
                     <div className={styles.btns}>
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             className={styles.btn}
                             width={120}
                             title="Change"
@@ -128,7 +121,7 @@ const _PasswordModal: React.FC<Props> = ({ onClose }) => {
                         />
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     );
 };

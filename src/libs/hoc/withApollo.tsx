@@ -68,7 +68,7 @@ const httpLink = createHttpLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
         graphQLErrors.forEach(({ extensions, message }) => {
-            if (process.env.NODE_ENV === "development") console.error(`[GraphQL error]: ${message}`);
+            console.error(`[GraphQL error]: ${message}`);
             if (extensions.code === "invalid-jwt") {
                 nullifyAccessToken();
             }
