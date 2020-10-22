@@ -56,6 +56,7 @@ export const SignalRobotPage = () => {
         if (authIsSet && !data) {
             getData();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authIsSet]);
 
     const [setRobotData] = useMutation(SET_ROBOT_DATA, {
