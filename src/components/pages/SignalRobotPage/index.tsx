@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo, useContext, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 // components
 import { DefaultTemplate } from "components/layout";
@@ -27,7 +27,7 @@ import { AuthContext, HistoryContext } from "libs/hoc/context";
 export const SignalRobotPage = () => {
     /*Определение контекста для страницы робота*/
     const {
-        authState: { isAuth, user_id }
+        authState: { isAuth, user_id, authIsSet }
     } = useContext(AuthContext);
 
     const { historyState } = useContext(HistoryContext);
@@ -43,13 +43,20 @@ export const SignalRobotPage = () => {
         router.push(prevRoute || "/");
     };
 
-    const { data, loading } = useQuery(robotsInfoQuery, {
+    const [getData, { loading, data }] = useLazyQuery(robotsInfoQuery, {
         variables: {
             code: router.query.code,
             ...userId
         },
-        pollInterval: POLL_INTERVAL
+        pollInterval: POLL_INTERVAL,
+        ssr: false
     });
+
+    useEffect(() => {
+        if (authIsSet && !data) {
+            getData();
+        }
+    }, [authIsSet]);
 
     const [setRobotData] = useMutation(SET_ROBOT_DATA, {
         onCompleted: (resolve) => {
