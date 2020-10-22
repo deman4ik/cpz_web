@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 
 // hooks
@@ -12,10 +12,12 @@ import { PageType } from "config/types";
 import { SearchFiltersModal } from "components/ui/Modals";
 // styles
 import styles from "./index.module.css";
+import { isNewPage } from "utils/common";
 
 export const RobotsSearchPage: React.FC = () => {
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
     const { width } = useWindowDimensions();
+    const [pageIsNew, setPageIsNew] = React.useState(true);
 
     const handlePressBack = () => {
         Router.back();
@@ -25,13 +27,16 @@ export const RobotsSearchPage: React.FC = () => {
         setFiltersModalVisibility((prev) => !prev);
     };
 
+    useEffect(() => {
+        setPageIsNew(isNewPage());
+    }, []);
     return (
         <DefaultTemplate
             page={PageType.robots}
             title="Robots Search"
             width={width}
             toolbar={<SearchToolbar toggleFiltersVisibility={toggleFiltersVisibility} displayType="robots" />}
-            handlePressBack={handlePressBack}>
+            handlePressBack={pageIsNew ? null : handlePressBack}>
             <div className={styles.container}>
                 <RobotsSearchContainer displayType="robots" width={width} />
             </div>

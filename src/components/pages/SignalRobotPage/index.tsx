@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo, useContext, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -22,7 +22,8 @@ import { POLL_INTERVAL } from "config/constants";
 // helpers
 import { formatRobotData } from "./helpers";
 // context
-import { AuthContext, HistoryContext } from "libs/hoc/context";
+import { AuthContext } from "libs/hoc/context";
+import { isNewPage } from "utils/common";
 
 export const SignalRobotPage = () => {
     /*Определение контекста для страницы робота*/
@@ -30,18 +31,21 @@ export const SignalRobotPage = () => {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const { historyState } = useContext(HistoryContext);
-    const { prevRoute } = historyState;
+    const { width } = useWindowDimensions();
+    const router = useRouter();
+    const [pageIsNew, setPageIsNew] = React.useState(true);
     const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
-    const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
-    const router = useRouter();
 
     const handlePressBack = () => {
-        router.push(prevRoute || "/");
+        router.back();
     };
+
+    useEffect(() => {
+        setPageIsNew(isNewPage());
+    }, []);
 
     const { data, loading } = useQuery(robotsInfoQuery, {
         variables: {
@@ -77,7 +81,7 @@ export const SignalRobotPage = () => {
             subTitle={robotData ? robotData.robot.name : ""}
             width={width}
             toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
-            handlePressBack={prevRoute ? handlePressBack : null}>
+            handlePressBack={pageIsNew ? null : handlePressBack}>
             {loading ? (
                 <div className="loading">
                     <LoadingIndicator />
