@@ -33,7 +33,7 @@ export const ROBOT = gql`
                 tableName
             }
             subs {
-                volume
+                settings
                 asset
                 exchange
                 currency

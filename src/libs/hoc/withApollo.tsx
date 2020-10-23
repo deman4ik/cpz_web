@@ -49,7 +49,7 @@ const cacheQuery = gql`
             userRobotId
             name
             subs {
-                vloume
+                settings
                 asset
                 exchange
                 currency

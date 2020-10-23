@@ -73,7 +73,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
             });
             const row_user_signals = row.user_signals.map((rowItem) => ({
                 ...rowItem,
-                volume: variables.volume
+                settings: variables.settings
             }));
             const data = { ...row, user_signals: row_user_signals };
             context.cache.writeQuery({
@@ -120,7 +120,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 fragment subscribeRow on robots {
                     user_signals {
                         subscribed_at
-                        volume
+                        settings
                         statistics
                         equity
                     }
@@ -131,7 +131,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 id: idRobots
             });
             const userItem = {
-                volume: variables.volume,
+                settings: variables.settings,
                 subscribed_at: dayjs(new Date()).toISOString(),
                 equity: [],
                 statistics: [],
@@ -147,7 +147,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
             (el) => el.indexOf("v_robots_stats_signals") === 0
         );
         const userSignalsItem = {
-            volume: variables.volume,
+            settings: variables.settings,
             subscribed_at: dayjs(new Date()).toISOString(),
             equity: [],
             __typename: "user_signals"

@@ -562,6 +562,7 @@ export const OPEN_USER_POSITIONS = gql`
             volume: entry_executed
             code
             asset
+            currency
             exchange
             user_id
             user_robot {

@@ -34,7 +34,11 @@ export const defaultState = {
         userRobotId: "",
         name: "",
         subs: {
-            volume: 0,
+            settings: {
+                volumeType: "",
+                volume: 0,
+                volumeInCurrency: 0
+            },
             asset: "",
             exchange: "",
             currency: "",

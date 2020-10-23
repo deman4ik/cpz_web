@@ -26,6 +26,7 @@ export const formatRobotsData = (data: any) =>
                     status: null,
                     id: null
                 },
+                settings: robot_settings,
                 volume: getVolume(robot_settings),
                 displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
                 profit,
@@ -39,18 +40,24 @@ export const formatRobotsData = (data: any) =>
             };
 
             if (user_signals?.length && user_signals[0]?.subscribed_at) {
-                const userSignals = user_signals[0];
+                const userSignal = user_signals[0];
                 const {
                     equity: signalEquity,
                     profit: signalProfit,
                     winRate: signalWinRate,
                     maxDrawdown: signalMaxDrawdown,
                     tradesCount: signalTradesCount
-                } = getStats(userSignals);
-                res.subscribed = dayjs.utc(userSignals.subscribed_at).fromNow(true);
+                } = getStats(userSignal);
+                res.subscribed = dayjs.utc(userSignal.subscribed_at).fromNow(true);
                 res.isSubscribed = true;
-                res.volume = userSignals.user_signal_settings.signal_settings.volume || 0;
-                res.displayedVolume = `${userSignals.user_signal_settings.signal_settings.volume || 0} ${asset}`;
+
+                const userSignalSettings = userSignal.user_signal_settings.signal_settings;
+                res.settings = userSignalSettings;
+                res.volume = getVolume(userSignalSettings);
+                res.displayedVolume = getVolumeWithUnit(userSignalSettings, {
+                    currency,
+                    asset
+                });
                 res.profit = signalProfit;
                 res.winRate = signalWinRate;
                 res.maxDrawdown = signalMaxDrawdown;

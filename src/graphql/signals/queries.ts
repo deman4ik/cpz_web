@@ -186,6 +186,7 @@ export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
                 code
                 name
                 asset
+                currency
                 exchange
                 robot_settings {
                     robot_settings

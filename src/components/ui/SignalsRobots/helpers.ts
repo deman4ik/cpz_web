@@ -20,6 +20,7 @@ export const getFormatDataSignals = (signals: any) => {
                 asset,
                 currency,
                 exchange,
+                settings: signal_settings,
                 volume: getVolume(signal_settings),
                 displayedVolume: getVolumeWithUnit(signal_settings, { currency, asset }),
                 user_robots: {
@@ -71,6 +72,7 @@ export const getFormatDataRobots = (robots: any) =>
             asset,
             currency,
             exchange,
+            settings: user_robot_settings,
             volume: getVolume(user_robot_settings),
             displayedVolume: getVolumeWithUnit(user_robot_settings, { currency, asset }),
             user_robots: {

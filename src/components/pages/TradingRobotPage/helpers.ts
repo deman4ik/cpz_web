@@ -10,7 +10,7 @@ export const formatRobotData = (robot: any) => {
     } = robot;
     const userRobot = user_robot?.length && user_robot[0];
     const { equity, profit } = getStats(robot);
-    const userRobotVolume = userRobot.user_robot_settings?.user_robot_settings?.volume || 0;
+    const userRobotSettings = userRobot.user_robot_settings?.user_robot_settings || {};
     return {
         robot: {
             id,
@@ -31,8 +31,8 @@ export const formatRobotData = (robot: any) => {
             ? {
                   ...userRobot,
                   equity: getStats(userRobot).equity,
-                  volume: userRobotVolume,
-                  displayedVolume: `${userRobotVolume} ${asset}`
+                  volume: getVolume(userRobotSettings),
+                  displayedVolume: getVolumeWithUnit(userRobotSettings, { currency, asset })
               }
             : null
     };

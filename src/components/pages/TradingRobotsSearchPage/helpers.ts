@@ -28,6 +28,7 @@ export const formatRobotsData = (data: any) =>
                     id: null
                 },
                 started_at: null,
+                settings: robot_settings,
                 volume: getVolume(robot_settings),
                 displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
                 profit,
@@ -47,12 +48,13 @@ export const formatRobotsData = (data: any) =>
                     maxDrawdown: signalMaxDrawdown,
                     tradesCount: signalTradesCount
                 } = getStats(userRobot);
-                const userRobotVolume = userRobot.user_robot_settings?.user_robot_settings?.volume || 0;
+                const userRobotSettings = userRobot.user_robot_settings?.user_robot_settings;
 
                 res.user_robots.status = userRobot.status;
                 res.user_robots.id = userRobot.id;
-                res.volume = userRobotVolume;
-                res.displayedVolume = `${userRobotVolume} ${asset}`;
+                res.settings = userRobotSettings;
+                res.volume = getVolume(userRobotSettings);
+                res.displayedVolume = getVolumeWithUnit(userRobotSettings, { currency, asset });
                 res.started_at = userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0;
                 res.performance = signalEquity;
                 res.winRate = signalWinRate;
