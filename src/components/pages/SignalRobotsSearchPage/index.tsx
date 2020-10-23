@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -9,10 +9,16 @@ import { SearchToolbar } from "components/ui/RobotsList/SearchToolbar";
 import { PageType } from "config/types";
 import { SearchFiltersModal } from "components/ui/Modals";
 import styles from "./index.module.css";
+import { isNewPage } from "utils/common";
 
 export const SignalRobotsSearchPage: React.FC = () => {
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
     const { width } = useWindowDimensions();
+    const [pageIsNew, setPageIsNew] = React.useState(true);
+
+    useEffect(() => {
+        setPageIsNew(isNewPage());
+    }, []);
 
     const handlePressBack = () => {
         Router.back();
@@ -28,7 +34,7 @@ export const SignalRobotsSearchPage: React.FC = () => {
             title="Signals Search"
             width={width}
             toolbar={<SearchToolbar toggleFiltersVisibility={toggleFiltersVisibility} displayType="signals" />}
-            handlePressBack={handlePressBack}>
+            handlePressBack={pageIsNew ? handlePressBack : null}>
             <div className={styles.container}>
                 <SignalsSearchContainer displayType="signals" width={width} />
             </div>
