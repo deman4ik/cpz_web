@@ -1,15 +1,16 @@
 import { USER_SIGNAL_ROBOTS, ALL_SIGNAL_ROBOTS } from "graphql/signals/queries";
-import { USER_ROBOTS_BY_STATS, ROBOTS_BY_STATS } from "graphql/robots/queries";
+import { USER_ROBOTS_BY_STATS } from "graphql/robots/queries";
+import { ALL_ROBOTS } from "graphql/manage/queries";
 
 /*queries*/
 export const AUTH_QUERIES = [
     {
         signals: ALL_SIGNAL_ROBOTS,
-        robots: ROBOTS_BY_STATS
+        robots: ALL_ROBOTS
     },
     {
         signals: USER_SIGNAL_ROBOTS,
-        robots: USER_ROBOTS_BY_STATS
+        robots: ALL_ROBOTS
     }
 ];
 
