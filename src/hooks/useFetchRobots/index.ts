@@ -6,7 +6,7 @@ import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
 import { SET_SEARCH_LIMIT, SET_SEARCH_PROPS } from "graphql/local/mutations";
 // constants
 import { POLL_INTERVAL } from "config/constants";
-import { SHOW_LIMIT, AUTH_QUERIES, QUERY_KEY, QUERY_FILTER, DEFAULT_ORDER_BY } from "./constants";
+import { SHOW_LIMIT, AUTH_QUERIES, QUERY_KEY, DEFAULT_ORDER_BY } from "./constants";
 // utils
 import { getHash, getSearchProps } from "config/utils";
 // services
@@ -27,7 +27,6 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     const storageLimit = Number(storageData[`${dispayType}_limit`]);
     const storageFilters = storageData[`${dispayType}_filters`] && JSON.parse(storageData[`${dispayType}_filters`]);
 
-    const [counts, setCounts] = useState(0);
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
     const [limit, setLimit] = useState(storageLimit || searchLimit?.Limit[dispayType]);
@@ -39,41 +38,36 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     const [setSearchLimit] = useMutation(SET_SEARCH_LIMIT);
     const [setFilters] = useMutation(SET_SEARCH_PROPS, { refetchQueries: [{ query: GET_SEARCH_PROPS }] });
 
+    const defaultVariables = {
+        where: {
+            ...filtersQuery.robot
+        },
+        hash: filtersQuery.hash
+    };
+
     const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(SIGNAL_ROBOTS_AGGREGATE, {
         variables: {
-            where: {
-                [QUERY_KEY[dispayType]]: { _eq: true },
-                ...filtersQuery.robot
-            },
-            hash: filtersQuery.hash
+            ...defaultVariables,
+            where: { ...defaultVariables.where, [QUERY_KEY[dispayType]]: { _eq: true } }
         },
         pollInterval: POLL_INTERVAL
     });
 
-    console.log(limit, "searchLimit");
-    /*Обработка получения данных*/
-    let robotsWhere = { ...filtersQuery.robot };
-    if (isAuth) robotsWhere = { ...robotsWhere, ...QUERY_FILTER[dispayType]() };
-    let variables: any = {
-        offset: 0,
+    const variables: any = {
+        ...defaultVariables,
         limit,
-        hash: filtersQuery.hash,
-        order_by: [filtersQuery.order_by, { robot_id: "asc" }],
-        where: {
-            robot: { ...robotsWhere }
-        }
+        offset: 0,
+        order_by: [{ id: "asc", stats: filtersQuery.order_by }]
     };
-    if (isAuth) variables = { ...variables, user_id };
+
+    if (isAuth) variables.user_id = user_id;
     const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(QUERIES_TYPE[dispayType], {
         variables,
         pollInterval: POLL_INTERVAL
     });
 
-    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.v_robot_stats) : []), [
-        formatRobotsData,
-        loading,
-        data
-    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.robots) : []), [data]);
 
     /* Установка начального значения фильтров */
     useEffect(() => {
@@ -82,12 +76,6 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setFilters]);
-
-    useEffect(() => {
-        if (!loading_aggregate && data_count && data_count.robots_aggregate && data_count.robots_aggregate.aggregate) {
-            setCounts(data_count.robots_aggregate.aggregate.count);
-        }
-    }, [loading_aggregate, data_count]);
 
     useEffect(() => {
         const addFields = () => {
@@ -119,30 +107,30 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
         setIsLoadingMore(true);
         fetchMore({
             variables: {
-                offset: data.v_robot_stats.length,
+                offset: data && data.robots.length,
                 limit: SHOW_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
-                setLimit(data.v_robot_stats.length + SHOW_LIMIT);
+                setLimit(data && data.robots.length + SHOW_LIMIT);
 
                 /*Запоминание лимита  данных на странице*/
                 LocalStorageService.writeItems([
                     {
                         key: `${dispayType}_limit`,
-                        value: data.v_robot_stats.length + SHOW_LIMIT
+                        value: data && data.robots.length + SHOW_LIMIT
                     }
                 ]);
 
                 setSearchLimit({
                     variables: {
-                        limit: data.v_robot_stats.length + SHOW_LIMIT,
+                        limit: data && data.robots.length + SHOW_LIMIT,
                         type: dispayType
                     }
                 });
                 return {
-                    v_robot_stats: [...prev.v_robot_stats, ...fetchMoreResult.v_robot_stats]
+                    robots: [...prev.robots, ...fetchMoreResult.robots]
                 };
             }
         });
@@ -151,7 +139,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     return {
         robotsData,
         error,
-        counts,
+        counts: data_count?.robots_aggregate?.aggregate.count || 0,
         loading: loading || loading_aggregate,
         isLoadingMore,
         onFetchMore

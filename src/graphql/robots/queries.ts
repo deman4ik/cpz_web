@@ -416,18 +416,17 @@ export const USER_ROBOTS = gql`
     }
 `;
 
-export const USER_ROBOTS_BY_STATS = gql`
-    query get_user_robots_by_stats(
-        $where: v_robot_stats_bool_exp
+export const ROBOTS_SEARCH = gql`
+    query trading_robots_search(
+        $where: robots_bool_exp
         $hash: String!
         $limit: Int
         $offset: Int
-        $order_by: [v_robot_stats_order_by!]
+        $order_by: [robots_order_by!]
         $user_id: uuid
     ) {
-        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        robots(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
-            robot {
                 id
                 code
                 name
@@ -448,30 +447,22 @@ export const USER_ROBOTS_BY_STATS = gql`
                         user_robot_settings
                     }
                     started_at
-                    stats {
-                        tradesCount: trades_count
-                        maxDrawdown: max_drawdown
-                        winRate: win_rate
-                        profit: net_profit
-                        equity: equity_avg
-                    }
+                    ${stats}
                 }
-            }
         }
     }
 `;
 
-export const ROBOTS_BY_STATS = gql`
-    query get_robots_by_stats(
-        $where: v_robot_stats_bool_exp
+export const ALL_TRADING_ROBOTS = gql`
+    query all_trading_robots(
+        $where: robots_bool_exp
         $hash: String!
         $limit: Int
         $offset: Int
-        $order_by: [v_robot_stats_order_by!]
+        $order_by: [robots_order_by!]
     ) {
-        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        robots(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_robots", filter: ["hash"]) {
-            robot {
                 id
                 code
                 name
@@ -484,7 +475,6 @@ export const ROBOTS_BY_STATS = gql`
                 robot_settings {
                     robot_settings
                 }
-            }
         }
     }
 `;
