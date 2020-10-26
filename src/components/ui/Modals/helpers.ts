@@ -1,10 +1,10 @@
 import { formatMoney } from "config/utils";
 
 export const actionText = {
-    start: "It is a realtime automated trading mode using your exchange account and you use it at your own risk!",
-    delete: "You will lost all trading history for this robot!",
+    start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
+    delete: "You will lose your trading history for this robot.",
     stop:
-        "If there is any open positions created by this robot they will be canceled (closed) with current market prices and potentially may cause profit losses!"
+        "If there are any open positions created by this robot, they will be cancelled (closed). This may potentially cause profit loss."
 };
 
 export const volumeTypeOptions = [
@@ -34,15 +34,23 @@ const getLimits = (data, type) => {
 
 export const buildSettings = ({ volumeType, volume, volumeInCurrency }) => ({
     volumeType,
-    volume: Number(volume),
-    volumeInCurrency: Number(volumeInCurrency)
+    ...(volumeType === "assetStatic" ? { volume: Number(volume) } : { volumeInCurrency: Number(volumeInCurrency) })
 });
 
 export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
 
 export const getLimitsForRobot = (data) => getLimits(data, "userRobot");
 
-export const calculateCurrency = (asset: string | number, price: number) => formatMoney(Number(asset) * price);
+export const calculateCurrency = (asset: string | number, price: number): number => Number(asset) * price;
 
-export const calculateAsset = (currency: string | number, price: number) =>
-    price === 0 ? "0" : formatMoney(Number(currency) / price, 3);
+export const calculateAsset = (currency: string | number, price: number): number =>
+    price === 0 ? 0 : Number(currency) / price;
+
+export const formatNumber = (n: number): string => formatMoney(n, 3);
+
+export const getAmtErrors = (val: string | number, minAmt: number, maxAmt: number): string | boolean => {
+    if (Number(val) < minAmt) return `Minimal amount is ${minAmt}`;
+    if (Number(val) > maxAmt) return `Max amount is ${maxAmt}`;
+
+    return false;
+};

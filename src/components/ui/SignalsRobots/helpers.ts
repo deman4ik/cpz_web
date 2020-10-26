@@ -10,7 +10,7 @@ export const getFormatDataSignals = (signals: any) => {
             const userSignal = user_signals && user_signals[0];
             const {
                 user_signal_settings: { signal_settings }
-            } = userSignal;
+            } = userSignal || {};
             const res = {
                 cache: {
                     id,
