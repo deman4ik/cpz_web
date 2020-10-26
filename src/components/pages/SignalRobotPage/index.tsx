@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useState, useMemo, useContext, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 
 // components
 import { DefaultTemplate } from "components/layout";
@@ -28,7 +28,7 @@ import { isNewPage } from "utils/common";
 export const SignalRobotPage = () => {
     /*Определение контекста для страницы робота*/
     const {
-        authState: { isAuth, user_id }
+        authState: { isAuth, user_id, authIsSet }
     } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
@@ -47,13 +47,21 @@ export const SignalRobotPage = () => {
         setPageIsNew(isNewPage());
     }, []);
 
-    const { data, loading } = useQuery(robotsInfoQuery, {
+    const [getData, { loading, data }] = useLazyQuery(robotsInfoQuery, {
         variables: {
             code: router.query.code,
             ...userId
         },
-        pollInterval: POLL_INTERVAL
+        pollInterval: POLL_INTERVAL,
+        ssr: false
     });
+
+    useEffect(() => {
+        if (authIsSet && !data) {
+            getData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authIsSet]);
 
     const [setRobotData] = useMutation(SET_ROBOT_DATA, {
         onCompleted: (resolve) => {
