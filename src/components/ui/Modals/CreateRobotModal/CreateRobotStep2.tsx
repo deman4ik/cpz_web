@@ -7,7 +7,7 @@ import { calculateCurrency, calculateAsset } from "../helpers";
 
 interface Props {
     asset: string;
-    limits: { asset: { min: number; max: number }; price: number };
+    limits: any;
     volumeAsset: string;
     volumeCurrency: string;
     handleOnCreate: () => void;
@@ -36,12 +36,12 @@ const _CreateRobotStep2: React.FC<Props> = ({
 
     const handleOnChangeAsset = (value: string) => {
         setInputVolumeAsset(value);
-        setInputVolumeCurrency(calculateCurrency(value, limits.price));
+        setInputVolumeCurrency(calculateCurrency(value, limits.price).toString());
     };
 
     const handleOnChangeCurrency = (value: string) => {
         setInputVolumeCurrency(value);
-        setInputVolumeAsset(calculateAsset(value, limits.price));
+        setInputVolumeAsset(calculateAsset(value, limits.price).toString());
     };
 
     return (

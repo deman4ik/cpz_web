@@ -84,10 +84,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [actionOnRobot] = useMutation(ACTION_ROBOT);
     const [userRobotStart, { loading: startLoading }] = useMutation(USER_ROBOT_START);
 
-    const limits = useMemo(
-        () => (!loading && data ? getLimitsForRobot(data) : { asset: { min: 0, max: 0 }, price: 0 }),
-        [loading, data]
-    );
+    const limits = useMemo(() => !loading && getLimitsForRobot(data), [loading, data]);
 
     const handleOnCreate = () => {
         userRobotCreate({
@@ -165,7 +162,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             setFormError("");
             handleOnChangeExchange(data.userExchange[0].id);
             setInputVolumeAsset(dataRobot.robot.subs.volume);
-            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
+            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price).toString());
         }
     }, [dataPicker]);
 

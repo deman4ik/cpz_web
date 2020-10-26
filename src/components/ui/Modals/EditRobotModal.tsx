@@ -39,19 +39,19 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
     useEffect(() => {
         if (dataRobot) {
             setInputVolumeAsset(dataRobot.robot.subs.volume);
-            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
+            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price).toString());
             setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ""}`);
         }
     }, [dataRobot, limits]);
 
     const handleOnChangeAsset = (value: string) => {
         setInputVolumeAsset(value);
-        setInputVolumeCurrency(calculateCurrency(value, limits.price));
+        setInputVolumeCurrency(calculateCurrency(value, limits.price).toString());
     };
 
     const handleOnChangeCurrency = (value: string) => {
         setInputVolumeCurrency(value);
-        setInputVolumeAsset(calculateAsset(value, limits.price));
+        setInputVolumeAsset(calculateAsset(value, limits.price).toString());
     };
 
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
@@ -78,7 +78,9 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
             onClose();
         });
     };
-    const isValid = () => Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max;
+    const isValid = () =>
+        Number(inputVolumeAsset) >= limits.asset.min.amount && Number(inputVolumeAsset) <= limits.asset.max.amount;
+
     const handleOnKeyPress = (e) => {
         if (e.nativeEvent.key === "Enter" && isValid()) {
             handleOnSubmit();
@@ -102,7 +104,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
                                 <div className={styles.value_group}>
                                     <div className={styles.label}>Minimum value is&nbsp;</div>
                                     <div className={styles.value_row}>
-                                        <span>{formatMoney(limits.asset.min, 3)}</span>&nbsp;
+                                        <span>{formatMoney(limits.asset.min.amount, 3)}</span>&nbsp;
                                         <span style={{ color: "white" }}>
                                             {dataRobot ? dataRobot.robot.subs.asset : ""}
                                         </span>
