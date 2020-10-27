@@ -6,7 +6,7 @@ export const supportContent = () => [
         icon: "help",
         iconColor: color.secondary, //secondary
         title: "Documentation",
-        text: "Learn all about Cryptuoso Platform.\n How to use and configure signals, robots and exchange accounts.",
+        text: "Learn all about Cryptuoso Platform.\n How to configure and use signals, robots and exchange accounts.",
         button: "DOCUMENTATION",
         buttonType: "outline-secondary",
         href: DOCS_URL
@@ -16,7 +16,7 @@ export const supportContent = () => [
         iconColor: color.primary, //primary
         title: "Telegram \n Community",
         text:
-            "Having common questions with signals or robots? \n Ask your question in our Community Group and we will help you.",
+            "Have questions about signals or robots? \n Ask your question in our Community Group and we will help you.",
         button: "Telegram Community",
         buttonType: "outline-primary",
         href: TELEGRAM_COMMUNITY_URL
@@ -35,25 +35,26 @@ export const supportContent = () => [
 
 export const steps: StepProps[] = [
     { date: "2017", title: "Public Trading\nSignals" },
-    { date: "2018", title: "Cryptuoso\nTrading Engine" },
+    { date: "2018", title: "Cryptuoso\nTrading Engine (Alpha)" },
     { date: "Q2 2019", title: "Cryptuoso\nLanding Page" },
     {
         date: "Q3 2019",
         title: "Premium individual trading\nfor private investors"
     },
     { date: "Q4 2019", title: "Cryptuoso Trading\nTelegram Bot (Beta)" },
-    { date: "Q1 2020", title: "Cryptuoso Trading\nWeb App (Beta)" },
-    { date: "Q2 2020", title: "Cryptuoso Trading\nMobile App (Beta)" }
+    { date: "Q2 2020", title: "Cryptuoso Trading\nWeb App (Beta)" },
+    { date: "Q4 2020", title: "Cryptuoso Trading\nRobots (Release)" },
+    { date: "Q1 2021", title: "Cryptuoso Trading\nMobile App (Beta)" }
 ];
 
 export const tradingSteps: TradingStepType[] = [
     {
         accent: "Inspect",
-        text: " robots public statistics we collected on over 2,5 years of trading in the cryptocurrency market."
+        text: " robots' public statistics we've collected in over 2,5 years of trading on the cryptocurrency market."
     },
     {
         accent: "Choose",
-        text: " your favorite robots for work on long term or medium-term intervals."
+        text: " your favorite robots to work in long-term or medium-term intervals."
     },
     {
         accent: "Combine",
@@ -64,27 +65,27 @@ export const tradingSteps: TradingStepType[] = [
 export const descriptionRobots: DescriptionRobotsType[] = [
     {
         imgStyle: { width: 52, height: 52 },
-        title: "Automatic",
+        title: "Reliable",
         text:
-            "All robots work in the cloud in 24/7 mode and do not require installation software on your computer. Thus, signals and transactions will not be missed and you can monitor trading with any device."
+            "Robots are cloud-based and do not require installation of software on your computer. Thus, signals and transactions will never be missed, and you can use any device to monitor your trading performance."
     },
     {
         imgStyle: { width: 72, height: 48 },
         title: "Instant",
         text:
-            "Cryptocurrency markets are very volatile and often require immediate decision making. The robot instantly reacts to market fluctuations and uses both stop loss and market orders according to algorithms to minimize drawdown."
+            "Cryptocurrency markets are very volatile and often require immediate decision making. Robots instantly react to market fluctuations and use both stop-loss and market orders according to algorithms to minimize potential drawdown."
     },
     {
         imgStyle: { width: 50, height: 52 },
         title: "Secure",
         text:
-            "The robots use customizable API exchange keys, which only allow make deals but not manage your account. We store your keys in secure encrypted storage."
+            "Our robots use customizable API exchange keys, which allow to make deals, but not to manage your account. We store your keys in a secure, encrypted storage."
     },
     {
         imgStyle: { width: 49, height: 52 },
         title: "Simple",
         text:
-            "Just add your exchange account and subscribe to robots for transactions. Complete a few steps and you&apos;re done."
+            "Just add your exchange account and subscribe to robots for transactions. Complete a few steps and you are done."
     }
 ];
 
@@ -94,13 +95,13 @@ export const descriptionFirstLine: DescriptionFirstLineType[] = [
         imgSrc: "signals",
         title: "Receive Signals",
         text:
-            "Use robot signals as indicators in your trading and make your trades manually. You will be able to view the approximate statistics of your trade with signals in your account."
+            "Use robot signals as indicators for trading and trade manually. You will be able to view the approximate statistics of your trade with signals in your account."
     },
     {
         imgStyle: { width: 250, height: 120 },
         imgSrc: "robots",
         title: "Automatic Trading",
         text:
-            "Attach you cryptocurrency exchange account (Binance, Bitfinex, Kraken) to our robots for automatic trading. Robots automatically execute all deals for you, so you only need to keep track of the current positions and your trading performance."
+            "Connect your cryptocurrency exchange account (Binance, Bitfinex, Kraken) to our robots for automatic trading. Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance."
     }
 ];
