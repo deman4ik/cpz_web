@@ -177,6 +177,7 @@ export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
             entry_date
             entry_price
             user_id
+            profit
             robot {
                 id
                 code

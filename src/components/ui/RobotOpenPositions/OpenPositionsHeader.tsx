@@ -2,9 +2,10 @@ import React, { memo } from "react";
 import styles from "./OpenPositionsHeader.module.css";
 
 const positionTabHeaders = [
-    { title: "Position", flex: 0.8 },
-    { title: "Amount", flex: 0.44 },
-    { title: "Entry", flex: 0.48 }
+    { title: "Position", flex: 0.4 },
+    { title: "Amount", flex: 0.17 },
+    { title: "Entry", flex: 0.23 },
+    { title: "Unrealized Profit", flex: 0.2 }
 ];
 const defaultFlex = 1;
 

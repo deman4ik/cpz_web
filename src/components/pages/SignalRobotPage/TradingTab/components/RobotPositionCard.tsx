@@ -6,6 +6,7 @@ import { formatDate, valueWithSign, colorAction, capitalize, formatMoney, splitC
 import { SectionType } from "../../types";
 
 import styles from "./styles/RobotPositionCard.module.css";
+import { color } from "config/constants";
 
 interface Props {
     item: any;
@@ -15,6 +16,7 @@ interface Props {
 
 export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) => {
     const { asset } = robot;
+    const { profit } = item;
     return (
         <div className={styles.posCard}>
             <div className={styles.rowCard}>
@@ -52,6 +54,17 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                     <div className={styles.mobileCardPrice}>{formatMoney(item.entry_price || item.price)} $</div>
                     <div className={styles.mobileCardDate}>{formatDate(item.entry_date || item?.timestamp)}</div>
                 </div>
+
+                {activeTab === SectionType.openPositions && (
+                    <div className={styles.posCardCol} style={{ flex: 0.6 }}>
+                        <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
+                        <div
+                            className={styles.mobileCardPrice}
+                            style={{ color: item.profit > 0 ? color.positive : color.negative }}>
+                            {formatMoney(profit)} $
+                        </div>
+                    </div>
+                )}
                 {activeTab === SectionType.signals && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
                         <div className={styles.mobileCardTextKey}>Order Type</div>

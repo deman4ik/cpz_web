@@ -1,55 +1,56 @@
 .tableRow {
-  display: flex;
-  flex-direction: row;
-  border-top-width: 2px;
-  border-color: var(--darkBg);
-  padding: 15px 20px;
-  align-items: center;
-  background-color: var(--dark);
+    display: flex;
+    flex-direction: row;
+    border-top-width: 2px;
+    border-color: var(--darkBg);
+    padding: 15px 20px;
+    align-items: center;
+    background-color: var(--dark);
 }
 
 .positionGroup {
-  display: flex;
-  flex-direction: row;
-  flex: 0.8;
-  cursor: pointer;
-  opacity: 1;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    flex: 0.35;
+    opacity: 1;
 }
 
 .tableCellText {
-  font-size: var(--normal0);
-  color: white;
+    font-size: var(--normal0);
+    color: white;
 }
 
 .secondaryText {
-  color: var(--accent);
-  font-size: var(--small1);
+    color: var(--accent);
+    font-size: var(--small1);
 }
 
 .volumeGroup {
-  display: flex;
-  flex-direction: row;
-  flex: 0.44;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex: 0.2;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .limitWrapper {
-  display: flex;
-  flex-direction: column;
-  min-width: 190px;
+    display: flex;
+    flex-direction: column;
+    min-width: 190px;
 }
 
 .codeGroup {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .col {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .positionGroup:active {
-  opacity: 0.2;
+    opacity: 0.2;
 }
