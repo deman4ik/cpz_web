@@ -4,7 +4,7 @@ import { fullStats, stats } from "graphql/queryFragments";
 
 export const TOP_PERFORMANCE_ROBOTS = gql`
     query get_top_robots_by_stats($limit: Int) {
-        v_robot_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last, robot: { id: asc } }) {
+        v_robot_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last }) {
             robot {
                 id
                 name
