@@ -1,55 +1,52 @@
 import gql from "graphql-tag";
 import { stats, fullStats } from "graphql/queryFragments";
 
-export const USER_SIGNAL_ROBOTS = gql`
-    query get_user_signal_robots(
+export const SIGNALS_SEARCH = gql`
+    query signal_robots_search(
         $limit: Int
         $offset: Int
-        $where: v_robot_stats_bool_exp
+        $where: robots_bool_exp
         $hash: String!
-        $order_by: [v_robot_stats_order_by!]
+        $order_by: [robots_order_by!]
         $user_id: uuid
     ) {
-        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
-            @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
-            robot {
+        robots(limit: $limit, offset: $offset, where: $where, order_by: $order_by)
+        @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
+            id
+            code
+            name
+            exchange
+            asset
+            currency
+            status
+            started_at
+            ${stats}
+            robot_settings {
+                robot_settings
+            }
+            user_signals(where: { user_id: { _eq: $user_id } }) {
                 id
-                code
-                name
-                exchange
-                asset
-                currency
-                status
-                started_at
+                user_id
+                subscribed_at
+                user_signal_settings {
+                    signal_settings
+                }
                 ${stats}
-                robot_settings {
-                    robot_settings
-                }
-                user_signals(where: { user_id: { _eq: $user_id } }) {
-                    id
-                    user_id
-                    subscribed_at
-                    user_signal_settings {
-                        signal_settings
-                    }
-                    ${stats}
-                }
             }
         }
     }
 `;
 
 export const ALL_SIGNAL_ROBOTS = gql`
-    query get_all_signal_robots(
+    query all_signal_robots(
         $limit: Int
         $offset: Int
-        $where: v_robot_stats_bool_exp
+        $where: robots_bool_exp
         $hash: String!
-        $order_by: [v_robot_stats_order_by!]
+        $order_by: [robots_order_by!]
     ) {
-        v_robot_stats(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
+        robots(where: $where, limit: $limit, offset: $offset, order_by: $order_by)
             @connection(key: "v_robots_stats_signals", filter: ["hash"]) {
-            robot {
                 id
                 code
                 name
@@ -62,7 +59,6 @@ export const ALL_SIGNAL_ROBOTS = gql`
                 robot_settings {
                     robot_settings
                 }
-            }
         }
     }
 `;
