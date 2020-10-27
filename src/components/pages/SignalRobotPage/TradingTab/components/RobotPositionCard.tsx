@@ -58,10 +58,8 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                 {activeTab === SectionType.openPositions && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
                         <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
-                        <div
-                            className={styles.mobileCardPrice}
-                            style={{ color: item.profit > 0 ? color.positive : color.negative }}>
-                            {formatMoney(profit)} $
+                        <div className={styles.mobileCardPrice} style={{ ...colorAction(item.profit > 0) }}>
+                            {valueWithSign(formatMoney(profit))} $
                         </div>
                     </div>
                 )}

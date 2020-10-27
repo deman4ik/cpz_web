@@ -1,7 +1,15 @@
 import React from "react";
 
 import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { capitalize, getColor, getIconName, colorDirection, formatMoney } from "config/utils";
+import {
+    capitalize,
+    getColor,
+    getIconName,
+    colorDirection,
+    formatMoney,
+    colorAction,
+    valueWithSign
+} from "config/utils";
 import { color } from "config/constants";
 import { PropsOpenPositionsItem } from "./types";
 import styles from "./OpenPositionsItem.module.css";
@@ -49,10 +57,8 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
                 </div>
             </div>
             <div className={styles.col} style={{ flex: 0.2 }}>
-                <div
-                    className={styles.tableCellText}
-                    style={{ color: item.profit > 0 ? color.positive : color.negative }}>{`${formatMoney(
-                    item.profit
+                <div className={styles.tableCellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
+                    formatMoney(item.profit)
                 )} $`}</div>
             </div>
         </div>
