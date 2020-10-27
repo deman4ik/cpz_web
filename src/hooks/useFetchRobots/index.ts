@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 // graphql
 import { SIGNAL_ROBOTS_AGGREGATE } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
@@ -18,7 +18,7 @@ import { AuthContext } from "libs/hoc/context";
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_stats: any) => any) => {
     /*Обработка контекста аутентификации*/
     const {
-        authState: { isAuth, user_id }
+        authState: { isAuth, user_id, authIsSet }
     } = useContext(AuthContext);
     const QUERIES_TYPE = AUTH_QUERIES[Number(isAuth)];
 
@@ -40,18 +40,19 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
 
     const defaultVariables = {
         where: {
+            [QUERY_KEY[dispayType]]: { _eq: true },
             ...filtersQuery.robot
         },
         hash: filtersQuery.hash
     };
 
-    const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQuery(SIGNAL_ROBOTS_AGGREGATE, {
-        variables: {
-            ...defaultVariables,
-            where: { ...defaultVariables.where, [QUERY_KEY[dispayType]]: { _eq: true } }
-        },
-        pollInterval: POLL_INTERVAL
-    });
+    const [getData, { data: data_count, loading: loading_aggregate, refetch: refetchCounts }] = useLazyQuery(
+        SIGNAL_ROBOTS_AGGREGATE,
+        {
+            variables: defaultVariables,
+            pollInterval: POLL_INTERVAL
+        }
+    );
 
     const variables: any = {
         ...defaultVariables,
@@ -61,10 +62,13 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     };
 
     if (isAuth) variables.user_id = user_id;
-    const { data, loading, error, fetchMore, refetch: refetchStats } = useQuery(QUERIES_TYPE[dispayType], {
-        variables,
-        pollInterval: POLL_INTERVAL
-    });
+    const [getRobotData, { data, loading, error, fetchMore, refetch: refetchStats }] = useLazyQuery(
+        QUERIES_TYPE[dispayType],
+        {
+            variables,
+            pollInterval: POLL_INTERVAL
+        }
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.robots) : []), [data]);
@@ -97,8 +101,18 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     }, [dispayType, searchProps]);
 
     useEffect(() => {
-        refetchStats();
-        refetchCounts();
+        if (authIsSet && !data) {
+            getData();
+            getRobotData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authIsSet]);
+
+    useEffect(() => {
+        if (refetchStats && refetchCounts) {
+            refetchStats();
+            refetchCounts();
+        }
     }, [refetchStats, refetchCounts, filtersQuery]);
 
     const [isLoadingMore, setIsLoadingMore] = useState(false);
