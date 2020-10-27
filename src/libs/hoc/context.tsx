@@ -4,7 +4,7 @@ export const AuthContext = createContext({ authState: null, setAuthState: null }
 
 /*Компонент провадйер контекста*/
 export const AuthContextProvider: React.FC = (props: any) => {
-    const [authState, setState] = useState({ isAuth: false });
+    const [authState, setState] = useState({ isAuth: false, authIsSet: false });
     const setAuthState = useCallback((params: any) => {
         setState({ ...params, authIsSet: true });
     }, []);

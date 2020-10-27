@@ -24,11 +24,12 @@ import { formatRobotData } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { isNewPage } from "utils/common";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 export const SignalRobotPage = () => {
     /*Определение контекста для страницы робота*/
     const {
-        authState: { isAuth, user_id, authIsSet }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
@@ -47,7 +48,7 @@ export const SignalRobotPage = () => {
         setPageIsNew(isNewPage());
     }, []);
 
-    const [getData, { loading, data }] = useLazyQuery(robotsInfoQuery, {
+    const { loading, data } = useQueryWithAuth(false, robotsInfoQuery, {
         variables: {
             code: router.query.code,
             ...userId
@@ -55,13 +56,6 @@ export const SignalRobotPage = () => {
         pollInterval: POLL_INTERVAL,
         ssr: false
     });
-
-    useEffect(() => {
-        if (authIsSet && !data) {
-            getData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authIsSet]);
 
     const [setRobotData] = useMutation(SET_ROBOT_DATA, {
         onCompleted: (resolve) => {

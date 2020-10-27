@@ -14,6 +14,7 @@ import { getFormatDataSignals, getFormatDataRobots, title } from "./helpers";
 import styles from "./index.module.css";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     width: number;
@@ -25,7 +26,7 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
         authState: { user_id }
     } = useContext(AuthContext);
 
-    const { data, loading } = useQuery(displayType === "signals" ? USER_SIGNALS : USER_ROBOTS, {
+    const { data, loading } = useQueryWithAuth(true, displayType === "signals" ? USER_SIGNALS : USER_ROBOTS, {
         pollInterval: POLL_INTERVAL,
         variables: { user_id }
     });

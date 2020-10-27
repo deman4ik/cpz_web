@@ -9,6 +9,7 @@ import { POLL_INTERVAL } from "config/constants";
 import { getFormatData, filters } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 const RECORDS_LIMIT = 10;
 export const useFetchData = () => {
@@ -28,7 +29,7 @@ export const useFetchData = () => {
         where = { ...where, ...{ type: { _in: filters[inputSelect] } } };
     }
 
-    const { data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS, {
+    const { data, loading, fetchMore, refetch } = useQueryWithAuth(true, GET_NOTIFICATIONS, {
         variables: {
             offset: 0,
             limit,
@@ -51,7 +52,8 @@ export const useFetchData = () => {
 
     const [setNotificationsFilters] = useMutation(SET_NOTIFICATIONS_PROPS);
 
-    const { data: dataCount, loading: loadingCount, refetch: refetch_aggregate } = useQuery(
+    const { data: dataCount, loading: loadingCount, refetch: refetch_aggregate } = useQueryWithAuth(
+        true,
         GET_NOTIFICATIONS_AGGREGATE,
         {
             variables: {
@@ -99,8 +101,10 @@ export const useFetchData = () => {
     }, [updateReaded, formatData]);
 
     useEffect(() => {
-        refetch();
-        refetch_aggregate();
+        if (refetch && refetch_aggregate) {
+            refetch();
+            refetch_aggregate();
+        }
     }, [refetch_aggregate, refetch, inputSelect]);
 
     const setFilters = (value: string) => {

@@ -10,8 +10,8 @@ interface Props {
 }
 
 const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility }) => {
-    const [titleModal, setTitleModal] = useState(null);
-    const handleSetVisible = () => {
+    const [modalTitle, setModalTitle] = useState(null);
+    const resetModal = () => {
         setModalVisibility({ isVisible: false, type: "" });
     };
 
@@ -19,15 +19,15 @@ const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility }) => {
         <>
             <Modal
                 isOpen={isModalVisible.isVisible && isModalVisible.type !== "unsubscribe"}
-                onClose={handleSetVisible}
-                title={titleModal}>
-                <SubscribeModal onClose={handleSetVisible} setTitle={setTitleModal} type={isModalVisible.type} />
+                onClose={resetModal}
+                title={modalTitle}>
+                <SubscribeModal onClose={resetModal} setTitle={setModalTitle} type={isModalVisible.type} />
             </Modal>
             <Modal
                 isOpen={isModalVisible.isVisible && isModalVisible.type === "unsubscribe"}
-                onClose={handleSetVisible}
-                title={titleModal}>
-                <UnsubscribeModal setTitle={setTitleModal} onClose={handleSetVisible} />
+                onClose={resetModal}
+                title={modalTitle}>
+                <UnsubscribeModal setTitle={setModalTitle} onClose={resetModal} />
             </Modal>
         </>
     );

@@ -1,7 +1,7 @@
-import { getStats, getVolumeWithUnit } from "config/utils";
+import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
-export function parseRobotInfo(stats: any, robot: any) {
+export function parseRobotInfo(robot: any) {
     const {
         id,
         code,
@@ -11,7 +11,7 @@ export function parseRobotInfo(stats: any, robot: any) {
         currency,
         robot_settings: { robot_settings }
     } = robot;
-    const { equity, profit, winRate, maxDrawdown, tradesCount } = stats;
+    const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
     return {
         cache: {
             id,
@@ -28,7 +28,8 @@ export function parseRobotInfo(stats: any, robot: any) {
             id: null
         },
         started_at: null,
-        volume: getVolumeWithUnit(robot_settings, { currency, asset }),
+        volume: getVolume(robot_settings),
+        displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
         profit,
         performance: equity,
         subscribed: null,
@@ -52,9 +53,8 @@ export function attachUserStats(res: any, userSignals: any) {
 export const formatRobotsData = (data: any) =>
     data.map((robot: any) => {
         const { asset, user_signals, started_at } = robot;
-        const stats = getStats(robot);
 
-        const res = parseRobotInfo(stats, robot);
+        const res = parseRobotInfo(robot);
 
         res.active = started_at ? dayjs.utc(started_at).fromNow(true) : started_at;
 

@@ -6,9 +6,10 @@ import styles from "./index.module.css";
 const _Description: React.FC = () => (
     <div className={styles.container}>
         <div className={styles.title}>
-            Still trading manually and constantly watching news
+            Still trading manually and constantly watching news,
             <br />
-            trying to catch the trend? Follow the courses
+            trying to catch the trend? Following the exchange rates
+            <br />
             <span className={styles.textWhite}>&nbsp;day&nbsp;</span>and
             <span className={styles.textAccent}>&nbsp;night</span>?
         </div>
@@ -22,15 +23,15 @@ const _Description: React.FC = () => (
         <div className={styles.line}>
             <div className={styles.text}>
                 <span className={styles.textWhite}>Trading robots</span> make money on both{" "}
-                <span className={styles.textGreen}>rising</span> and <span className={styles.redText}>falling</span>{" "}
-                cryptocurrency price movements. The more volatile market – the more opportunities for robots.
+                <span className={styles.textGreen}>rising</span> and <span className={styles.redText}>falling</span> of
+                cryptocurrency prices. The more volatile the market – the more opportunities for the robots.
             </div>
         </div>
         <div className={styles.line}>
             <div className={styles.text}>
                 <span className={styles.textWhite}>Robots instantly respond</span> to cryptocurrency market fluctuations{" "}
                 <span className={styles.textWhite}>and generate trading signals</span> that are safely transmitted to
-                the сryptocurrency exchange on your behalf.
+                chosen сryptocurrency exchange on your behalf.
             </div>
         </div>
         <DescriptionView />

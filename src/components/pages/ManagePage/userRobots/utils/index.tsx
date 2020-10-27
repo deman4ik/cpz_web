@@ -1,4 +1,4 @@
-import { formatDate, getStats } from "config/utils";
+import { formatDate, getStats, getVolume } from "config/utils";
 
 export const formatUserRobots = ({ user_robots }: { user_robots: any }): any => {
     return user_robots.map((user_robot) => {
@@ -14,7 +14,7 @@ export const formatUserRobots = ({ user_robots }: { user_robots: any }): any => 
             profit,
             tradesCount,
             winRate,
-            volume: user_robot_settings?.user_robot_settings.volume,
+            volume: getVolume(user_robot_settings?.user_robot_settings),
             robot_code: robot?.name,
             robot_id: robot?.id,
             user_name: user?.name,

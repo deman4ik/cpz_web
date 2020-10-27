@@ -6,6 +6,10 @@ export const getIconName = (direction: string) => (direction === "short" ? "arro
 
 const getPositionData = (position) => {
     const { id, code, direction, entry_date, entry_price, profit, robot, user_signal } = position;
+    const asset =
+        user_signal?.user_signal_settings?.signal_settings.volumeType === "currencyDynamic"
+            ? robot.currency
+            : robot.asset;
     return {
         id,
         code,
@@ -14,6 +18,7 @@ const getPositionData = (position) => {
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
         profit,
+        asset,
         robot: {
             name: robot.name,
             code: robot.code,
@@ -63,8 +68,8 @@ const getRobotDataRobots = (position) => {
         direction,
         profit,
         robot: {
-            name: user_robot.robot.name,
-            code: user_robot.robot.code,
+            name: user_robot?.robot?.name,
+            code: user_robot?.robot?.code,
             asset
         }
     };

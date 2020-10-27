@@ -9,7 +9,7 @@ import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import { Button, Input } from "components/basic";
 import { formatMoney } from "config/utils";
-import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
+import { getLimitsForRobot, calculateCurrency, calculateAsset } from "./helpers";
 import { color } from "config/constants";
 import styles from "./index.module.css";
 
@@ -34,27 +34,24 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
         skip: !dataRobot
     });
 
-    const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
-        loading,
-        data
-    ]);
+    const limits = useMemo(() => !loading && data && getLimitsForRobot(data), [loading, data]);
 
     useEffect(() => {
         if (dataRobot) {
             setInputVolumeAsset(dataRobot.robot.subs.volume);
-            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
+            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price).toString());
             setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ""}`);
         }
     }, [dataRobot, limits]);
 
     const handleOnChangeAsset = (value: string) => {
         setInputVolumeAsset(value);
-        setInputVolumeCurrency(calculateCurrency(value, limits.price));
+        setInputVolumeCurrency(calculateCurrency(value, limits.price).toString());
     };
 
     const handleOnChangeCurrency = (value: string) => {
         setInputVolumeCurrency(value);
-        setInputVolumeAsset(calculateAsset(value, limits.price));
+        setInputVolumeAsset(calculateAsset(value, limits.price).toString());
     };
 
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
@@ -81,7 +78,9 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
             onClose();
         });
     };
-    const isValid = () => Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max;
+    const isValid = () =>
+        Number(inputVolumeAsset) >= limits.asset.min.amount && Number(inputVolumeAsset) <= limits.asset.max.amount;
+
     const handleOnKeyPress = (e) => {
         if (e.nativeEvent.key === "Enter" && isValid()) {
             handleOnSubmit();
@@ -105,7 +104,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
                                 <div className={styles.value_group}>
                                     <div className={styles.label}>Minimum value is&nbsp;</div>
                                     <div className={styles.value_row}>
-                                        <span>{formatMoney(limits.asset.min, 3)}</span>&nbsp;
+                                        <span>{formatMoney(limits.asset.min.amount, 3)}</span>&nbsp;
                                         <span style={{ color: "white" }}>
                                             {dataRobot ? dataRobot.robot.subs.asset : ""}
                                         </span>
