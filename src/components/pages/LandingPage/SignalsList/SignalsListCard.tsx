@@ -14,22 +14,24 @@ const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 // TODO: extract robot deconstruction
 const _SignalsListCard: React.FC<Props> = ({ robot }) => {
     const { robot_settings, currency, asset } = robot;
+    const settings = robot_settings?.robot_settings || {};
+
     const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
-    const money = <div className={styles.primaryText}>{formatMoney(profit)} $</div>;
+    const money = (
+        <div className={`${styles.primaryText} ${profit >= 0 ? styles.positive : styles.negative}`}>
+            {`${formatMoney(profit)}`} $
+        </div>
+    );
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.row}>
-                    <div className={styles.nameCol}>
-                        <div className={styles.primaryText}>{robot.name}</div>
-                        <span className={styles.wide}>{money}</span>
+                <div className={styles.primaryText}>{robot.name}</div>
+                <div className={`${styles.headerStats}`}>
+                    <span className={styles.wide}>{money}</span>
+                    <div className={styles.secondaryText}>
+                        <div className={styles.label}>{getVolumeWithUnit(settings, { currency, asset })}</div>
                     </div>
-                    <div className={`${styles.numberCol} ${styles.profitCol}`}>
-                        <div className={styles.secondaryText}>
-                            <div className={styles.label}>{getVolumeWithUnit(robot_settings, { currency, asset })}</div>
-                        </div>
-                        <span className={styles.mobile}>{money}</span>
-                    </div>
+                    <span className={styles.mobile}>{money}</span>
                 </div>
             </div>
             <div className={styles.chartStat}>
