@@ -6,7 +6,7 @@ import { pageview } from "../src/libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
 // context
-import { AuthContextProvider, LayoutContextProvider, HistoryContextProvider } from "libs/hoc/context";
+import { AuthContextProvider, LayoutContextProvider } from "libs/hoc/context";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 
@@ -15,9 +15,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <AuthContextProvider>
             <LayoutContextProvider>
-                <HistoryContextProvider>
-                    <Component {...pageProps} />
-                </HistoryContextProvider>
+                <Component {...pageProps} />
             </LayoutContextProvider>
         </AuthContextProvider>
     );

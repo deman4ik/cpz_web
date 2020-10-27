@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { GET_USER_INFO } from "graphql/user/queries";
@@ -61,10 +61,10 @@ const _NotifySettings: React.FC = () => {
             variables: {
                 [`${key}${capitalize(name)}`]: isActive
             }
-        }).then((response) => {
-            if (response.data.setNotificationSettings.success) {
-                setNotifications((prev) =>
-                    prev.map((item) => {
+        })
+            .then((response) => {
+                setNotifications((prev) => {
+                    return prev.map((item) => {
                         if (item.key === key) {
                             const checkboxes = item.checkboxes.map((checkbox) => {
                                 if (checkbox.name === name) {
@@ -75,12 +75,10 @@ const _NotifySettings: React.FC = () => {
                             return { ...item, checkboxes };
                         }
                         return item;
-                    })
-                );
-            } else {
-                console.error(response.data);
-            }
-        });
+                    });
+                });
+            })
+            .catch((e) => console.error(e));
     };
 
     return (

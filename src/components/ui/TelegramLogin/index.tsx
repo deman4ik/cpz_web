@@ -23,34 +23,27 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
 
     const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, success, error }] = useTelegramLogin(loginData);
+    const [login, { loading, error }] = useTelegramLogin(loginData);
     const errorRef = useRef(error);
-
-    useEffect(() => {
-        if (success) {
-            Router.push("/robots");
-        } else if (error && errorRef.current !== error) {
-            errorRef.current = error;
-        }
-    }, [success, error]);
 
     useEffect(() => {
         (window as any).TelegramLoginWidget = userId
             ? {
-                  dataOnauth: (data) =>
+                  dataOnauth: (data) => {
                       addTelegram({
                           variables: { data },
                           refetchQueries: [{ query: GET_USER_INFO }]
-                      }).then((response) => {
-                          if (response.data.setTelegram.error) {
-                              errorRef.current = response.data.setTelegram.error;
-                          }
-                      })
+                      }).catch((e) => (errorRef.current = e.message));
+                  }
               }
             : {
                   dataOnauth: (data) => {
                       setLoginData(data);
-                      login();
+                      login()
+                          .then(() => {
+                              Router.push("/robots");
+                          })
+                          .catch((err) => (errorRef.current = err));
                   }
               };
         const script = document.createElement("script");
