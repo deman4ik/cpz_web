@@ -13,6 +13,7 @@ import { getHash, getSearchProps } from "config/utils";
 import LocalStorageService from "services/localStorageService";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 //TODO: refactor
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_stats: any) => any) => {
@@ -46,7 +47,8 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
         hash: filtersQuery.hash
     };
 
-    const [getData, { data: data_count, loading: loading_aggregate, refetch: refetchCounts }] = useLazyQuery(
+    const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQueryWithAuth(
+        false,
         SIGNAL_ROBOTS_AGGREGATE,
         {
             variables: defaultVariables,
@@ -62,7 +64,8 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     };
 
     if (isAuth) variables.user_id = user_id;
-    const [getRobotData, { data, loading, error, fetchMore, refetch: refetchStats }] = useLazyQuery(
+    const { data, loading, error, fetchMore, refetch: refetchStats } = useQueryWithAuth(
+        false,
         QUERIES_TYPE[dispayType],
         {
             variables,
@@ -99,14 +102,6 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
 
         setFiltersQuery(addFields());
     }, [dispayType, searchProps]);
-
-    useEffect(() => {
-        if (authIsSet && !data) {
-            getData();
-            getRobotData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authIsSet]);
 
     useEffect(() => {
         if (refetchStats && refetchCounts) {

@@ -12,6 +12,7 @@ import { POLL_INTERVAL } from "config/constants";
 import { formatPositionsForSignals, getFormatDataRobots } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     type: string;
@@ -25,10 +26,14 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
     } = useContext(AuthContext);
 
     const [formatData, setFormatData] = useState([]);
-    const { data, loading } = useQuery(type === "signals" ? OPEN_POSITIONS_FOR_USER_SIGNALS : OPEN_USER_POSITIONS, {
-        pollInterval: POLL_INTERVAL,
-        variables: { user_id }
-    });
+    const { data, loading } = useQueryWithAuth(
+        true,
+        type === "signals" ? OPEN_POSITIONS_FOR_USER_SIGNALS : OPEN_USER_POSITIONS,
+        {
+            pollInterval: POLL_INTERVAL,
+            variables: { user_id }
+        }
+    );
 
     const funcCall = {
         signals: () => formatPositionsForSignals(data.positions),
