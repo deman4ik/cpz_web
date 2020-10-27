@@ -15,6 +15,7 @@ import { displayType } from "./types";
 import styles from "./index.module.css";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     width: number;
@@ -27,7 +28,7 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
     } = useContext(AuthContext);
 
     const [formatData, setFormatData] = useState([]);
-    const { data, loading } = useQuery(ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE, {
+    const { data, loading } = useQueryWithAuth(true, ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE, {
         variables: { type: { _eq: queryParam[type] }, user_id },
         pollInterval: POLL_INTERVAL
     });
