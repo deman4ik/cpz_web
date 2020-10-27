@@ -58,7 +58,7 @@ export const RobotsItem: React.FC<Props> = ({
                 <div className={styles.cellNameWrap}>
                     <div className={styles.primaryText}>{item.name}</div>
                     <div className={styles.profitWrap}>
-                        <div className={styles.secondaryText}>{item.volume ? `${item.volume} ` : ""}</div>
+                        <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
                         <div className={styles.profitText} style={colorAction(item.profit > 0)}>
                             {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
                         </div>

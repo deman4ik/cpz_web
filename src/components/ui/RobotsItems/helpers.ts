@@ -42,7 +42,7 @@ export const formatVariables = (item, buttonType: string, displayType?: string) 
             cache: item.cache,
             robot: { id: item.id, name: item.name, userRobotId: item.user_robots.id },
             subs: {
-                volume: item.volume,
+                settings: item.settings,
                 exchange: item.exchange,
                 asset: item.asset,
                 currency: item.currency

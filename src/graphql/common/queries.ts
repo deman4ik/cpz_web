@@ -1,21 +1,13 @@
 import gql from "graphql-tag";
 
 export const GET_MARKETS = gql`
-    query markets($asset: String!, $exchange: String!, $currency: String!) {
-        markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
-            exchange
+    query get_user_markets($asset: String!, $exchange: String!, $currency: String!) {
+        v_user_markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
             asset
-            limits
             currency
-            precision
-        }
-        candles1440(
-            where: { exchange: { _eq: $exchange }, asset: { _eq: $asset } }
-            limit: 1
-            order_by: { time: desc }
-        ) {
-            high
-            low
+            current_price
+            exchange
+            limits
         }
     }
 `;

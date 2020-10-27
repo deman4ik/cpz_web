@@ -17,8 +17,14 @@ export const typeDefs = gql`
         tableName: String!
     }
 
-    extend type SubsData {
+    extend type RobotSettings {
+        volumeType: String!
         volume: Float
+        volumeInCurrency: Float
+    }
+
+    extend type SubsData {
+        settings: RobotSettings
         asset: String
         exchange: String
         currency: String

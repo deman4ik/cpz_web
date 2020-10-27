@@ -1,4 +1,3 @@
-import { getStats } from "config/utils";
 import dayjs from "libs/dayjs";
 import { attachUserStats, parseRobotInfo } from "components/pages/SignalRobotsSearchPage/helpers";
 
@@ -6,9 +5,8 @@ export const formatRobotsData = (data: any) =>
     data.map((robot: any) => {
         const { asset, active, user_robots } = robot;
         const userRobot = user_robots && user_robots[0];
-        const stats = getStats(robot);
 
-        const res = parseRobotInfo(stats, robot);
+        const res = parseRobotInfo(robot);
 
         res.active = active ? dayjs.utc(active).fromNow(true) : active;
 

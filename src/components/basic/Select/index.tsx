@@ -5,14 +5,13 @@ interface Props {
     value: string;
     width?: number;
     enabled?: boolean;
-    onChangeValue: (itemValue: string) => void;
+    onChangeValue: (itemValue: any) => void;
 }
 
 export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 200, enabled = true }) => {
     const onChange = (e) => {
         onChangeValue(e.target.value);
     };
-
     return (
         <div className="select_container">
             <select value={value} onChange={onChange} className="select" disabled={!enabled}>

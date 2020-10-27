@@ -120,3 +120,8 @@ export const getSearchProps = (data, displayType) => {
     }
     return result;
 };
+
+export const buildRobotSettings = ({ volumeType, volume, currency }) => ({
+    volumeType,
+    ...(volumeType === "assetStatic" ? { volume: Number(volume) } : { volumeInCurrency: Number(currency) })
+});

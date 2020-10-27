@@ -13,6 +13,7 @@ export interface SignalItem {
     name: string;
     performance: Coord[];
     volume: number;
+    displayedVolume: string;
     exchange: string;
     asset: string;
     currency: string;
