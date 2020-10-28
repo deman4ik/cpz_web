@@ -26,10 +26,7 @@ export const useQueryWithAuth = (
 
     useEffect(() => {
         if (result.data && isAuth) {
-            result
-                .refetch()
-                .then((res) => console.log(res, "RENEWED"))
-                .catch((e) => console.log(e, "ERROR"));
+            result.refetch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuth]);
