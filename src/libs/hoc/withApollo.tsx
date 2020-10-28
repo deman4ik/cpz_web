@@ -13,6 +13,7 @@ import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
 import { getAccessToken, nullifyAccessToken } from "../accessToken";
 import { httpErrors } from "config/constants";
+import { RetryLink } from "@apollo/client/link/retry";
 
 interface Definintion {
     kind: string;
@@ -66,13 +67,22 @@ const httpLink = createHttpLink({
     credentials: "include"
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors)
+        // eslint-disable-next-line consistent-return
         graphQLErrors.forEach(async ({ extensions, message }) => {
             if (extensions.code === httpErrors.JWTError) {
                 nullifyAccessToken();
             } else {
+                const oldHeaders = operation.getContext().headers;
+                operation.setContext({
+                    headers: {
+                        ...oldHeaders,
+                        authorization: `Bearer ${getAccessToken()}`
+                    }
+                });
                 console.error(`[GraphQL error]: ${message}`);
+                return forward(operation);
             }
         });
     if (networkError) {
@@ -88,11 +98,10 @@ const connectionParams = () => {
     }
     return { headers };
 };
-
 export default withApollo(
     (ctx) => {
         const authLink = setContext(() => connectionParams());
-        const contextLink = from([errorLink, authLink.concat(httpLink)]);
+        const contextLink = from([new RetryLink(), errorLink, authLink.concat(httpLink)]);
         let link = contextLink;
         if (!ssrMode) {
             const wsLink = new WebSocketLink({
