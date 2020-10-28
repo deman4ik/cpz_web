@@ -119,3 +119,7 @@ export type VolumeDisplayUnits = {
     currency: string;
     asset: string;
 };
+
+export const httpErrors = {
+    JWTError: "invalid-jwt"
+};

@@ -10,7 +10,7 @@ export const formatRobotData = (robot: any) => {
     } = robot;
     const userRobot = user_robot?.length && user_robot[0];
     const { equity, profit } = getStats(robot);
-    console.log(robot);
+
     const userRobotSettings = userRobot?.user_robot_settings?.user_robot_settings || {};
     return {
         robot: {

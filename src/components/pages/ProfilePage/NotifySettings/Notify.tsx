@@ -18,8 +18,7 @@ const components = {
 };
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
-    const SpecificIcon = components[item.icon];
-
+    const SpecificIcon = components[item.icon] || components.robot;
     return (
         <>
             <div className={styles.container}>
