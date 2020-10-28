@@ -52,7 +52,7 @@ export const useRefreshToken = (): [() => void, { result: any; error: any }] => 
                 .catch((e) => {
                     localStorage.removeItem("refreshTokenSet");
                     console.error(`REFRESH TOKEN ERROR: ${e.message}`);
-                    redirect({}, "auth/login");
+                    redirect({}, "/auth/login");
                 });
         }
     };
