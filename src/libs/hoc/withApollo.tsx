@@ -72,7 +72,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
         // eslint-disable-next-line consistent-return
         graphQLErrors.forEach(async ({ extensions, message }) => {
             if (extensions.code === httpErrors.JWTError) {
-                nullifyAccessToken();
+                // nullifyAccessToken();
             } else {
                 const oldHeaders = operation.getContext().headers;
                 operation.setContext({
@@ -97,7 +97,7 @@ const retryLink = new RetryLink({
         max: 500
     },
     attempts: {
-        max: 2,
+        max: 5,
         retryIf: (error, _operation) => !!error
     }
 });
