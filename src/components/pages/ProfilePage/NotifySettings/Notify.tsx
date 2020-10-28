@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RobotIcon, ChartLineIcon,  } from "assets/icons/svg";
+import { RobotIcon, ChartLineIcon } from "assets/icons/svg";
 import { Tooltip } from "components/ui/Tooltip";
 import { CheckBox } from "components/basic";
 import { color } from "config/constants";
