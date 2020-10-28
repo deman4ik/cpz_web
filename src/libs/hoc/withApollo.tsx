@@ -90,6 +90,17 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
     }
 });
 
+const retryLink = new RetryLink({
+    delay: {
+        initial: 200,
+        max: 500
+    },
+    attempts: {
+        max: 2,
+        retryIf: (error, _operation) => !!error
+    }
+});
+
 const connectionParams = () => {
     const accessToken = getAccessToken();
     const headers = {} as { authorization?: string };
@@ -101,7 +112,7 @@ const connectionParams = () => {
 export default withApollo(
     (ctx) => {
         const authLink = setContext(() => connectionParams());
-        const contextLink = from([new RetryLink(), errorLink, authLink.concat(httpLink)]);
+        const contextLink = from([retryLink, errorLink, authLink.concat(httpLink)]);
         let link = contextLink;
         if (!ssrMode) {
             const wsLink = new WebSocketLink({
