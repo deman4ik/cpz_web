@@ -7,6 +7,7 @@ export interface PropsOpenPositionsItem {
         entry_price: string;
         entry_date: string;
         direction: string;
+        profit: number;
         robot: {
             name: string;
             code: string;

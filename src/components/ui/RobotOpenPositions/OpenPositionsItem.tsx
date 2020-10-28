@@ -1,7 +1,15 @@
 import React from "react";
 
 import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { capitalize, getColor, getIconName, colorDirection } from "config/utils";
+import {
+    capitalize,
+    getColor,
+    getIconName,
+    colorDirection,
+    formatMoney,
+    colorAction,
+    valueWithSign
+} from "config/utils";
 import { color } from "config/constants";
 import { PropsOpenPositionsItem } from "./types";
 import styles from "./OpenPositionsItem.module.css";
@@ -13,6 +21,7 @@ const components = {
 
 export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRedirectToDetailView }) => {
     const SpecificIcon = components[getIconName(item.direction)];
+
     const handleOnPress = () => {
         onRedirectToDetailView(item.robot.code);
     };
@@ -41,11 +50,16 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
                 </div>
                 <div className={styles.tableCellText}>{`${item.volume} ${item.asset}`}</div>
             </div>
-            <div className={styles.col} style={{ flex: 0.48 }}>
+            <div className={styles.col} style={{ flex: 0.3 }}>
                 <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
                 <div className={styles.secondaryText} style={{ marginTop: 2 }}>
                     {item.entry_date}
                 </div>
+            </div>
+            <div className={styles.col} style={{ flex: 0.2 }}>
+                <div className={styles.tableCellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
+                    formatMoney(item.profit)
+                )} $`}</div>
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ export const formatMoney = (value: number, toFixed = 2): string => {
 
     if (value) {
         if (value.toString().match(/^0|-0\./g) && toFixed === 2) {
-            val = value.toFixed(6).toString().replace(/0*$/, ""); // display up to 6 decimals
+            val = value.toFixed(4).toString().replace(/0*$/, ""); // display up to 6 decimals
         } else {
             val = value
                 .toFixed(toFixed)

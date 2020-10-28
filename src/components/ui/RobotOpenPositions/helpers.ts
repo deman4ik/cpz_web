@@ -5,7 +5,7 @@ export const getColor = (condition: boolean) => (condition ? color.negative : co
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");
 
 const getPositionData = (position) => {
-    const { id, code, direction, entry_date, entry_price, robot, user_signal } = position;
+    const { id, code, direction, entry_date, entry_price, profit, robot, user_signal } = position;
     const asset =
         user_signal?.user_signal_settings?.signal_settings.volumeType === "currencyDynamic"
             ? robot.currency
@@ -17,6 +17,7 @@ const getPositionData = (position) => {
         entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
+        profit,
         asset,
         robot: {
             name: robot.name,
@@ -57,7 +58,7 @@ export const formatPositionsForSignals = (positions: any) =>
     }, []);
 
 const getRobotDataRobots = (position) => {
-    const { id, code, direction, entry_date, entry_price, volume, asset, user_robot } = position;
+    const { id, code, direction, entry_date, entry_price, volume, asset, profit, user_robot } = position;
     return {
         id,
         code,
@@ -65,6 +66,7 @@ const getRobotDataRobots = (position) => {
         entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
+        profit,
         robot: {
             name: user_robot?.robot?.name,
             code: user_robot?.robot?.code,
