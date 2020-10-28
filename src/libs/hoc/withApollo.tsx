@@ -12,6 +12,7 @@ import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
 import { getAccessToken, nullifyAccessToken } from "../accessToken";
+import { httpErrors } from "config/constants";
 
 interface Definintion {
     kind: string;
@@ -67,14 +68,16 @@ const httpLink = createHttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
-        graphQLErrors.forEach(({ extensions, message }) => {
-            console.error(`[GraphQL error]: ${message}`);
-            if (extensions.code === "invalid-jwt") {
+        graphQLErrors.forEach(async ({ extensions, message }) => {
+            if (extensions.code === httpErrors.JWTError) {
                 nullifyAccessToken();
+            } else {
+                console.error(`[GraphQL error]: ${message}`);
             }
         });
-
-    if (networkError) console.error(`[Network error]: ${networkError}`);
+    if (networkError) {
+        console.error(`[Network error]: ${networkError}`);
+    }
 });
 
 const connectionParams = () => {

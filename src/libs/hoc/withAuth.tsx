@@ -2,37 +2,21 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useContext, useEffect } from "react";
 
-import { ROUTES, AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
-import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken, getAccessToken } from "libs/accessToken";
+import { AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
+import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "libs/accessToken";
 import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 
-const pathToRedirect = "/auth/login";
 const pathToRedirectIfLogin = "/robots";
-
-const validatePath = (path: string) => {
-    let match = false;
-    ROUTES.forEach((route: string) => {
-        match = path.includes(route) || match;
-    });
-    return match;
-};
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
-        const { setAuthState } = useContext(AuthContext);
-        const [accessToken, , refreshToken] = useAccessToken();
-        const refreshTokenSet =
-            typeof window !== "undefined" ? Boolean(localStorage.getItem("refreshTokenSet")) : false;
-
-        useEffect(() => {
-            if (!accessToken && refreshTokenSet) {
-                refreshToken();
-            }
-        });
+        const { authState, setAuthState } = useContext(AuthContext);
+        const [accessToken] = useAccessToken();
 
         useEffect(() => {
             setAuthState({
@@ -42,7 +26,7 @@ export const withAuth = (Page) => {
             });
         }, [setAuthState, accessToken]);
 
-        return <Page {...{ ...props, accessToken }} />;
+        return authState.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {
@@ -57,10 +41,6 @@ export const withAuth = (Page) => {
                 ) {
                     redirect(ctx, pathToRedirectIfLogin);
                 }
-            }
-        } else if (accessToken.length === 0) {
-            if ((!isLanding && !validatePath(ctx.pathname)) || MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
             }
         }
         return {

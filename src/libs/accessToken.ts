@@ -2,10 +2,10 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
-import { onError } from "@apollo/client/link/error";
+import { AuthContext } from "libs/hoc/context";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined") {
@@ -33,10 +33,30 @@ const getTokenInfo = (jwt) => {
         exp
     };
 };
+const tokenExpired = () => {
+    const token = getTokenInfo(getTokenFromCookie());
+    return Date.now() >= token.exp * 1000;
+};
 
 export const useRefreshToken = (): [() => void, { result: any; error: any }] => {
     const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
-    return [() => refresh(), { result: data?.result, error: error?.graphQLErrors[0].message }];
+
+    const refreshToken = () => {
+        // if we dont do that, we have multiple concurrent requests refreshing the token
+        if (tokenExpired()) {
+            nullifyAccessToken();
+            refresh()
+                .then((res) => {
+                    putTokenInCookie(res && res.data.result.accessToken);
+                })
+                .catch((e) => {
+                    localStorage.removeItem("refreshTokenSet");
+                    console.error(e, "ERROR WHILE REFRESHING TOKEN");
+                    redirect({}, "auth/login");
+                });
+        }
+    };
+    return [refreshToken, { result: data?.result, error: error?.graphQLErrors[0].message }];
 };
 
 /**
@@ -44,38 +64,26 @@ export const useRefreshToken = (): [() => void, { result: any; error: any }] => 
  */
 export const useAccessToken = (): [string, (token: string) => void, () => void] => {
     const [jwtToken, setToken] = useState(getTokenInfo(getTokenFromCookie()));
-    const [refreshToken, { result, error }] = useRefreshToken();
+    const [refreshToken, { result }] = useRefreshToken();
+    const { authState, setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
-        if (error) {
-            console.error(error);
-            localStorage.removeItem("refreshTokenSet");
-            redirect({}, "/auth/login");
+        if (!authState.isAuth) {
+            setTimeout(() => refreshToken());
         }
-    }, [error]);
-
-    useEffect(() => {
-        onError(({ graphQLErrors }) => {
-            if (graphQLErrors)
-                graphQLErrors.forEach(({ extensions, message }) => {
-                    if (extensions.code === "invalid-jwt") {
-                        setToken(null);
-                    }
-                });
-        });
-    }, []);
-
-    useEffect(() => {
-        putTokenInCookie(jwtToken.token);
-        if (jwtToken.token !== "" && Date.now() >= jwtToken.exp * 1000) {
-            refreshToken();
-        }
-    }, [jwtToken, refreshToken]);
+    }, [authState.isAuth]);
 
     useEffect(() => {
         if (result?.accessToken) {
-            setToken(getTokenInfo(result?.accessToken));
-            putTokenInCookie(jwtToken.token);
+            const { accessToken } = result;
+            const { userId, role } = jwtDecode(accessToken);
+
+            setAuthState({
+                isAuth: Boolean(accessToken),
+                userId,
+                isManager: role === "manager"
+            });
+            setToken(getTokenInfo(accessToken));
         }
     }, [result?.accessToken]);
 

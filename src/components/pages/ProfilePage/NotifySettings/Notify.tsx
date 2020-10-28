@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RobotIcon, ChartLineIcon } from "assets/icons/svg";
+import { RobotIcon, ChartLineIcon,  } from "assets/icons/svg";
 import { Tooltip } from "components/ui/Tooltip";
 import { CheckBox } from "components/basic";
 import { color } from "config/constants";
@@ -18,8 +18,7 @@ const components = {
 };
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
-    const SpecificIcon = components[item.icon];
-
+    const SpecificIcon = components[item.icon] || components.robot;
     return (
         <>
             <div className={styles.container}>
