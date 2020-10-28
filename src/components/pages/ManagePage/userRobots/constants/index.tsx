@@ -54,7 +54,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Volume",
                 accessor: "volume",
                 isVisible: true,
-                orderSchema: { field: "settings" },
+                orderSchema: { field: "user_robot_settings", subfield: "user_robot_settings" },
                 width: 95
             }
         ]
@@ -68,7 +68,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Performance",
                 accessor: "performance",
                 isVisible: true,
-                orderSchema: { field: "stats" },
+                orderSchema: { field: "stats", subfield: "equity_avg" },
                 width: 155,
                 Cell: buildRobotChartCell
             },
@@ -76,21 +76,21 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Profit",
                 accessor: "profit",
                 isVisible: true,
-                orderSchema: { field: "stats" },
+                orderSchema: { field: "stats", subfield: "net_profit" },
                 width: 90
             },
             {
                 Header: "Trades",
                 accessor: "tradesCount",
                 isVisible: true,
-                orderSchema: { field: "stats" },
+                orderSchema: { field: "stats", subfield: "trades_count" },
                 width: 95
             },
             {
                 Header: "W/R",
                 accessor: "winRate",
                 isVisible: true,
-                orderSchema: { field: "stats" },
+                orderSchema: { field: "stats", subfield: "win_rate" },
                 width: 80
             }
         ]

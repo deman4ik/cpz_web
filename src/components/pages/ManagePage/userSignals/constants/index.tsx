@@ -64,7 +64,8 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Volume",
                 accessor: "volume",
                 isVisible: true,
-                width: 125
+                width: 125,
+                orderSchema: { field: "user_signal_settings", subfield: "signal_settings" }
             }
         ]
     }
