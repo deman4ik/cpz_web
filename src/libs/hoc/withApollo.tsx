@@ -81,6 +81,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
                         authorization: `Bearer ${getAccessToken()}`
                     }
                 });
+                console.info(`Retrying ~ ${operation.operationName}`);
                 console.error(`[GraphQL error]: ${message}`);
                 return forward(operation);
             }
