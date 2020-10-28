@@ -76,19 +76,22 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Robots",
                 accessor: "user_robots",
                 isVisible: true,
-                width: 85
+                width: 85,
+                orderSchema: { field: "user_robots_aggregate", subfield: "count" }
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
                 isVisible: true,
-                width: 85
+                width: 85,
+                orderSchema: { field: "user_signals_aggregate", subfield: "count" }
             },
             {
                 Header: "API Keys",
                 accessor: "user_api_keys",
                 isVisible: true,
-                width: 85
+                width: 85,
+                orderSchema: { field: "user_exchange_accs_aggregate", subfield: "count" }
             }
         ]
     },
