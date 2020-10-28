@@ -28,6 +28,7 @@ export function parseRobotInfo(robot: any) {
             id: null
         },
         started_at: null,
+        settings: robot_settings,
         volume: getVolume(robot_settings),
         displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
         profit,
