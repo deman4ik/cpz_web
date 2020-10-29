@@ -18,8 +18,7 @@ const INITIAL_STATE = {
 };
 
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
-const message =
-    "If you do not see the Telegram login widget here, it seems that the Telegram is blocked in your country. Please use a proxy or VPN to access the Telegram login widget.";
+const message = `If you do not see the Telegram login widget here, Telegram may be blocked in your country. Please use a proxy or VPN to access the Telegram login widget.`;
 const _Login: React.FC = () => {
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,

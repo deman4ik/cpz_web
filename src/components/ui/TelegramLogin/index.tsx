@@ -9,6 +9,8 @@ import { Modal } from "components/basic";
 import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
+const DOC_LINK = "https://support.cryptuoso.com";
+
 interface Props {
     userId?: number;
     message?: string;
@@ -64,7 +66,20 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
                 {(loading || addLoading) && <LoadingIndicator />}
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
-            {message && <div className={styles.telegramPlaceholder}>{message}</div>}
+            {message && (
+                <div className={styles.telegramPlaceholder}>
+                    <div>{message}</div>
+                    <br />
+                    <span>
+                        If you&apos;re unable to log in using the widget, your browser may be blocking third-party
+                        cookies. Learn how to fix this in{" "}
+                        <a href={`${DOC_LINK}/help#logginginviatelegram`} target="_blank" rel="noreferrer">
+                            cryptuoso docs
+                        </a>
+                        .
+                    </span>
+                </div>
+            )}
             <Modal title="Error" isOpen={!!errorRef.current} onClose={() => (errorRef.current = "")}>
                 <div className={styles.errorText}>{errorRef.current}</div>
             </Modal>
