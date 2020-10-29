@@ -178,6 +178,7 @@ export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
             entry_price
             user_id
             profit
+            volume
             robot {
                 id
                 code
