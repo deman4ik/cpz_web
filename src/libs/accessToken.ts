@@ -7,7 +7,7 @@ import { REFRESH_TOKEN } from "graphql/auth/mutations";
 import { AuthContext } from "libs/hoc/context";
 import { logout } from "libs/auth";
 
-const getTokenFromCookie = () => {
+export const getTokenFromCookie = () => {
     if (typeof window !== "undefined") {
         return (
             document.cookie
@@ -26,16 +26,19 @@ export const putTokenInCookie = (token) => {
 export const getAccessToken = getTokenFromCookie;
 export const nullifyAccessToken = () => putTokenInCookie("");
 
-const getTokenInfo = (jwt) => {
+export const getTokenInfo = (jwt) => {
     const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
     return {
         token: jwt,
         exp
     };
 };
+function jwtTokenExpired(jwtToken: { token: string; exp: number }) {
+    return !jwtToken || Date.now() >= jwtToken.exp * 1000;
+}
 export const tokenExpired = (token?: { token: string; exp: number }) => {
     const jwtToken = token || getTokenInfo(getTokenFromCookie());
-    return !jwtToken || Date.now() >= jwtToken.exp * 1000;
+    return jwtTokenExpired(jwtToken);
 };
 
 export const useRefreshToken = (): [
@@ -68,13 +71,7 @@ export const useRefreshToken = (): [
 export const useAccessToken = (): [string, (token: string) => void, () => void] => {
     const [jwtToken, setToken] = useState(getTokenInfo(getTokenFromCookie()));
     const [refreshToken, { result }] = useRefreshToken();
-    const { authState, setAuthState } = useContext(AuthContext);
-
-    useEffect(() => {
-        if (!authState.isAuth) {
-            setTimeout(() => refreshToken());
-        }
-    }, [authState.isAuth]);
+    const { setAuthState } = useContext(AuthContext);
 
     useEffect(() => {
         if (result?.accessToken) {

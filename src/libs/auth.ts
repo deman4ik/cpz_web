@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { nullifyAccessToken, useAccessToken } from "./accessToken";
+import { nullifyAccessToken, putTokenInCookie, useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 import { DocumentNode, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -16,6 +16,12 @@ import {
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
 import redirect from "libs/redirect";
+
+export const logout = () => {
+    nullifyAccessToken();
+    localStorage.removeItem("refreshTokenSet");
+    redirect({}, "/auth/login");
+};
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -85,11 +91,16 @@ const useAuthMutation = ({ mutation, variables }: AuthActionParams): AuthAction 
 
 const useUpdateAccessToken = ({ mutation, variables }: AuthActionParams): AuthAction => {
     const [action, { loading, error, result }] = useAuthMutation({ variables, mutation });
-    const [, setAccessToken] = useAccessToken();
+    const [token, setAccessToken] = useAccessToken();
     useEffect(() => {
         if (result?.accessToken) {
-            setAccessToken(result?.accessToken);
+            const { accessToken } = result;
+            if (token !== accessToken) {
+                setAccessToken(accessToken);
+                putTokenInCookie(accessToken);
+            }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result?.accessToken, setAccessToken]);
 
     return [action, { loading, success: !!result?.accessToken, error }];
@@ -112,14 +123,18 @@ export const useEmailLogin = (variables: { email: string; password: string }) =>
 };
 
 export const useLogout = (): AuthAction => {
-    const [logout, { loading, success, error, result }] = useAuthMutation({ mutation: LOGOUT });
+    const [logoutAction, { loading, success, error }] = useAuthMutation({ mutation: LOGOUT });
     const [, setAccessToken] = useAccessToken();
 
     useEffect(() => {
-        if (result?.result) setAccessToken("");
-    }, [result?.result, setAccessToken]);
+        if (success && setAccessToken) {
+            setAccessToken("");
+            logout();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [success]);
 
-    return [logout, { loading, success, error }];
+    return [logoutAction, { loading, success, error }];
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
@@ -177,9 +192,3 @@ export function fetchAccessToken() {
         })
     }).then((res) => res.json());
 }
-
-export const logout = () => {
-    nullifyAccessToken();
-    localStorage.removeItem("refreshTokenSet");
-    redirect({}, "/auth/login");
-};
