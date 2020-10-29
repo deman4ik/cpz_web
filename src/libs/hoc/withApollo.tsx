@@ -13,7 +13,6 @@ import { defaultState } from "graphql/defaultState";
 import { getAccessToken, putTokenInCookie } from "../accessToken";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { fetchAccessToken, logout } from "libs/auth";
-import redirect from "libs/redirect";
 import { httpErrors } from "config/constants";
 
 interface Definintion {
@@ -78,6 +77,7 @@ const updateToken = async () => {
         logout();
     }
 };
+// eslint-disable-next-line consistent-return
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors)
         // eslint-disable-next-line no-restricted-syntax
