@@ -75,7 +75,7 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
                         <div style={{ marginTop: 2 }}>
                             <SpecificIcon color={getColor(item.direction === "short")} size={16} />
                         </div>
-                        <div className={styles.tableCellText}>{`${item.volume} ${item.asset}`}</div>
+                        <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
                     </div>
                 </div>
             </div>
