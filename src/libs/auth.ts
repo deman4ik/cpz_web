@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { useAccessToken } from "./accessToken";
+import { nullifyAccessToken, useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 import { DocumentNode, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import {
     CHANGE_EMAIL,
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
+import redirect from "libs/redirect";
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -159,4 +160,26 @@ export const useChangeEmail = (variables: { email: string }): AuthAction => {
 
 export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
     return useUpdateAccessToken({ mutation: CONFIRM_CHANGE_EMAIL, variables });
+};
+
+export function fetchAccessToken() {
+    return fetch(`https://${process.env.HASURA_URL}`, {
+        credentials: "include",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            operationName: "refresh_token",
+            query: `mutation refresh_token {
+        result: refreshToken {
+            accessToken
+        }
+    }`
+        })
+    }).then((res) => res.json());
+}
+
+export const logout = () => {
+    nullifyAccessToken();
+    localStorage.removeItem("refreshTokenSet");
+    redirect({}, "/auth/login");
 };

@@ -1,19 +1,19 @@
 import React from "react";
 import withApollo from "next-with-apollo";
-import { ApolloClient, createHttpLink, split, ApolloProvider, from } from "@apollo/client";
+import { ApolloClient, createHttpLink, ApolloProvider, ApolloLink, split, fromPromise } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import gql from "graphql-tag";
 import { setContext } from "@apollo/client/link/context";
-import { getMainDefinition } from "@apollo/client/utilities";
 import { InMemoryCache } from "@apollo/client/cache";
 import { onError } from "@apollo/client/link/error";
 
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
-import { getAccessToken, nullifyAccessToken } from "../accessToken";
+import { getAccessToken, putTokenInCookie } from "../accessToken";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { fetchAccessToken, logout } from "libs/auth";
 import { httpErrors } from "config/constants";
-import { RetryLink } from "@apollo/client/link/retry";
 
 interface Definintion {
     kind: string;
@@ -67,38 +67,31 @@ const httpLink = createHttpLink({
     credentials: "include"
 });
 
+const updateToken = async () => {
+    try {
+        const { data } = await fetchAccessToken();
+        const { accessToken } = data && data.result;
+        putTokenInCookie(accessToken);
+    } catch (e) {
+        console.error("REFRESH TOKEN ERROR: Failed to renew accessToken");
+        logout();
+    }
+};
+// eslint-disable-next-line consistent-return
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors)
-        // eslint-disable-next-line consistent-return
-        graphQLErrors.forEach(async ({ extensions, message }) => {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const error of graphQLErrors) {
+            const { extensions, message } = error;
             if (extensions.code === httpErrors.JWTError) {
-                // nullifyAccessToken();
-            } else {
-                const oldHeaders = operation.getContext().headers;
-                operation.setContext({
-                    headers: {
-                        ...oldHeaders,
-                        authorization: `Bearer ${getAccessToken()}`
-                    }
-                });
                 console.info(`Retrying ~ ${operation.operationName}`);
-                console.error(`[GraphQL error]: ${message}`);
-                return forward(operation);
+                return fromPromise(updateToken()).flatMap(() => forward(operation));
             }
-        });
+            console.error(`[GraphQL error]: ${message}`);
+            return fromPromise(new Promise((res) => res())).flatMap(() => forward(operation));
+        }
     if (networkError) {
         console.error(`[Network error]: ${networkError}`);
-    }
-});
-
-const retryLink = new RetryLink({
-    delay: {
-        initial: 200,
-        max: 500
-    },
-    attempts: {
-        max: 5,
-        retryIf: (error, _operation) => !!error
     }
 });
 
@@ -110,10 +103,11 @@ const connectionParams = () => {
     }
     return { headers };
 };
+
 export default withApollo(
     (ctx) => {
         const authLink = setContext(() => connectionParams());
-        const contextLink = from([retryLink, errorLink, authLink.concat(httpLink)]);
+        const contextLink = ApolloLink.from([errorLink, authLink.concat(httpLink)]);
         let link = contextLink;
         if (!ssrMode) {
             const wsLink = new WebSocketLink({

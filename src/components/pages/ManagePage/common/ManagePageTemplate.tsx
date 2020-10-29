@@ -6,6 +6,7 @@ import { ManagementTemplate } from "components/layout";
 import Table from "components/basic/Table";
 // hooks
 import { POLL_INTERVAL } from "config/constants";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 const ITEMS_PER_PAGE_OPTIONS =
     process.env.NODE_ENV === "development" ? [2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 20, 25] : [100, 500, 1000];
@@ -24,7 +25,7 @@ const ManagePageTemplate = ({
     const [orderBy, setOrderBy] = useState(null);
     const [where, setWhere] = useState(getSearchOptions(""));
 
-    const { data: aggrData } = useQuery(aggregateQuery, {
+    const { data: aggrData } = useQueryWithAuth(true, aggregateQuery, {
         variables: { where },
         pollInterval: POLL_INTERVAL
     });
@@ -36,7 +37,7 @@ const ManagePageTemplate = ({
 
     const offset = useMemo(() => limit * pageIndex, [limit, pageIndex]);
 
-    const { data, loading: isLoading } = useQuery(dataQuery, {
+    const { data, loading: isLoading } = useQueryWithAuth(true, dataQuery, {
         variables: { limit, where, offset, order_by: orderBy }
     });
 
