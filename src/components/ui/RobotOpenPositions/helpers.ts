@@ -5,20 +5,15 @@ export const getColor = (condition: boolean) => (condition ? color.negative : co
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");
 
 const getPositionData = (position) => {
-    const { id, code, direction, entry_date, entry_price, profit, robot, user_signal } = position;
-    const asset =
-        user_signal?.user_signal_settings?.signal_settings.volumeType === "currencyDynamic"
-            ? robot.currency
-            : robot.asset;
+    const { id, code, direction, entry_date, entry_price, profit, robot } = position;
     return {
         id,
         code,
-        volume: getUserSignalVolume(user_signal),
+        volume: position.volume,
         entry_price: formatMoney(entry_price),
         entry_date: entry_date ? formatDate(entry_date) : "",
         direction,
         profit,
-        asset,
         robot: {
             name: robot.name,
             code: robot.code,
@@ -37,7 +32,7 @@ export const formatPositionsForSignals = (positions: any) =>
         const robot = getPositionData(position);
         const asset = {
             asset: position.robot.asset,
-            volume: (position.direction === "short" ? -1 : 1) * getUserSignalVolume(position.user_signal),
+            volume: (position.direction === "short" ? -1 : 1) * position.volume,
             robots: [robot]
         };
         if (item) {
@@ -47,7 +42,7 @@ export const formatPositionsForSignals = (positions: any) =>
             } else {
                 findAsset.robots.push(robot);
                 findAsset.volume = round(
-                    findAsset.volume + (robot.direction === "short" ? -1 : 1) * getRobotVolume(robot),
+                    findAsset.volume + (robot.direction === "short" ? -1 : 1) * position.volume,
                     6
                 );
             }

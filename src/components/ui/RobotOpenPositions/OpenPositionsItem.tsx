@@ -48,7 +48,7 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
                 <div style={{ marginTop: 2 }}>
                     <SpecificIcon color={getColor(item.direction === "short")} size={16} />
                 </div>
-                <div className={styles.tableCellText}>{`${item.volume} ${item.asset}`}</div>
+                <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
             </div>
             <div className={styles.col} style={{ flex: 0.3 }}>
                 <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>

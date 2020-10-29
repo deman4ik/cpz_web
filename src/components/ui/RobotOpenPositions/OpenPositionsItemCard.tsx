@@ -2,7 +2,15 @@ import React from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { Button } from "components/basic";
-import { colorDirection, capitalize, getIconName, getColor } from "config/utils";
+import {
+    colorDirection,
+    capitalize,
+    getIconName,
+    getColor,
+    colorAction,
+    formatMoney,
+    valueWithSign
+} from "config/utils";
 import styles from "./OpenPositionsItemCard.module.css";
 import { PropsOpenPositionsItem } from "./types";
 
@@ -52,6 +60,14 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
                     <div className={styles.secondaryText} style={{ marginTop: 1 }}>
                         {item.entry_date}
                     </div>
+                </div>
+                <div className={styles.sectionGroup} style={{ flex: 0.8 }}>
+                    <div className={styles.headerText} style={{ marginBottom: 2 }}>
+                        Unrealized Profit
+                    </div>
+                    <div className={styles.cellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
+                        formatMoney(item.profit)
+                    )} $`}</div>
                 </div>
                 <div className={styles.sectionGroup} style={{ flex: 0.5, alignItems: "flex-end" }}>
                     <div className={styles.headerText}>Amount</div>
