@@ -1,24 +1,32 @@
 .container {
-  display: flex;
-  flex-Direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .errorText {
-  text-align: center;
-  font-size: var(--normal1);
-  color: white;
+    text-align: center;
+    font-size: var(--normal1);
+    color: white;
 }
 
 .telegramPlaceholder {
-  margin-top: 10px;
-  font-size: var(--small2);
-  color: var(--accent);
-  max-width: 260px;
-  padding: 5px;
+    margin-top: 10px;
+    font-size: var(--small2);
+    color: var(--accent);
+    max-width: 260px;
+    padding: 5px;
+}
+
+.telegramPlaceholder a {
+    text-decoration: underline;
+}
+
+.telegramPlaceholder a:hover {
+    text-decoration: none;
 }
 
 .widget {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
