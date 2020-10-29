@@ -10,6 +10,7 @@ import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
 import { HTMLButtonTypes } from "components/basic/Button/types";
+import { nullifyAccessToken } from "libs/accessToken";
 
 const INITIAL_STATE = {
     email: "",
@@ -38,6 +39,7 @@ const _Login: React.FC = () => {
 
     useEffect(() => {
         if (isValid && !loading && !success) {
+            nullifyAccessToken();
             login();
         }
     }, [isValid]);

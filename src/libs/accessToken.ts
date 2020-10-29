@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
-import redirect from "./redirect";
 import { useContext, useEffect, useState } from "react";
 import { FetchResult, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
 import { AuthContext } from "libs/hoc/context";
-import { fetchAccessToken } from "libs/auth";
+import { logout } from "libs/auth";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined") {
@@ -55,9 +54,8 @@ export const useRefreshToken = (): [
                     putTokenInCookie(res && res.data.result.accessToken);
                 })
                 .catch((e) => {
-                    localStorage.removeItem("refreshTokenSet");
                     console.error(`REFRESH TOKEN ERROR: ${e?.message || e}`);
-                    redirect({}, "/auth/login");
+                    logout();
                 });
         }
     };

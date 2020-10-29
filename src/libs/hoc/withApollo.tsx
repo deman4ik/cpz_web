@@ -12,7 +12,7 @@ import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
 import { getAccessToken, putTokenInCookie } from "../accessToken";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { fetchAccessToken } from "libs/auth";
+import { fetchAccessToken, logout } from "libs/auth";
 import redirect from "libs/redirect";
 import { httpErrors } from "config/constants";
 
@@ -74,9 +74,8 @@ const updateToken = async () => {
         const { accessToken } = data && data.result;
         putTokenInCookie(accessToken);
     } catch (e) {
-        console.error("Failed to renew accessToken");
-        localStorage.removeItem("refreshTokenSet");
-        redirect({}, "/auth/login");
+        console.error("REFRESH TOKEN ERROR: Failed to renew accessToken");
+        logout();
     }
 };
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {

@@ -1,5 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { useAccessToken } from "./accessToken";
+import { nullifyAccessToken, useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
 import { DocumentNode, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import {
     CHANGE_EMAIL,
     CONFIRM_CHANGE_EMAIL
 } from "graphql/auth/mutations";
+import redirect from "libs/redirect";
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -176,3 +177,9 @@ export function fetchAccessToken() {
         })
     }).then((res) => res.json());
 }
+
+export const logout = () => {
+    nullifyAccessToken();
+    localStorage.removeItem("refreshTokenSet");
+    redirect({}, "/auth/login");
+};
