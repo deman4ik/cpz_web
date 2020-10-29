@@ -160,3 +160,19 @@ export const useChangeEmail = (variables: { email: string }): AuthAction => {
 export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
     return useUpdateAccessToken({ mutation: CONFIRM_CHANGE_EMAIL, variables });
 };
+
+export function fetchAccessToken() {
+    return fetch(`https://${process.env.HASURA_URL}`, {
+        credentials: "include",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            operationName: "refresh_token",
+            query: `mutation refresh_token {
+        result: refreshToken {
+            accessToken
+        }
+    }`
+        })
+    }).then((res) => res.json());
+}

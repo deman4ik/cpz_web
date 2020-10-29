@@ -3,9 +3,10 @@
 import jwtDecode from "jwt-decode";
 import redirect from "./redirect";
 import { useContext, useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { FetchResult, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
 import { AuthContext } from "libs/hoc/context";
+import { fetchAccessToken } from "libs/auth";
 
 const getTokenFromCookie = () => {
     if (typeof window !== "undefined") {
@@ -19,7 +20,7 @@ const getTokenFromCookie = () => {
     return "";
 };
 
-const putTokenInCookie = (token) => {
+export const putTokenInCookie = (token) => {
     if (typeof window !== "undefined") document.cookie = `accessToken=${token}; path=/`;
 };
 
@@ -33,12 +34,16 @@ const getTokenInfo = (jwt) => {
         exp
     };
 };
-const tokenExpired = () => {
-    const token = getTokenInfo(getTokenFromCookie());
-    return Date.now() >= token.exp * 1000;
+export const tokenExpired = (token?: { token: string; exp: number }) => {
+    const jwtToken = token || getTokenInfo(getTokenFromCookie());
+    return !jwtToken || Date.now() >= jwtToken.exp * 1000;
 };
 
-export const useRefreshToken = (): [() => void, { result: any; error: any }] => {
+export const useRefreshToken = (): [
+    () => void,
+    { result: any; error: string },
+    (options?: MutationFunctionOptions<any, OperationVariables>) => Promise<FetchResult<any>>
+] => {
     const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
 
     const refreshToken = () => {
@@ -51,12 +56,12 @@ export const useRefreshToken = (): [() => void, { result: any; error: any }] => 
                 })
                 .catch((e) => {
                     localStorage.removeItem("refreshTokenSet");
-                    console.error(`REFRESH TOKEN ERROR: ${e.message}`);
-                    redirect({}, "auth/login");
+                    console.error(`REFRESH TOKEN ERROR: ${e?.message || e}`);
+                    redirect({}, "/auth/login");
                 });
         }
     };
-    return [refreshToken, { result: data?.result, error: error?.graphQLErrors[0].message }];
+    return [refreshToken, { result: data?.result, error: error?.graphQLErrors[0]?.message }, refresh];
 };
 
 /**
@@ -85,7 +90,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
             });
             setToken(getTokenInfo(accessToken));
         }
-    }, [result?.accessToken]);
+    }, []);
 
     return [
         jwtToken.token,
