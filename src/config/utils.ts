@@ -3,19 +3,15 @@ import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
 
-export const formatMoney = (value: number, toFixed = 2): string => {
+export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
 
     if (value) {
-        if (value.toString().match(/^0|-0\./g) && toFixed === 2) {
-            val = value.toFixed(4).toString().replace(/0*$/, ""); // display up to 6 decimals
-        } else {
-            val = value
-                .toFixed(toFixed)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+        val = new Intl.NumberFormat("en-US", {
+            maximumFractionDigits: fractionDigits
+        }).format(value);
     }
+
     return val;
 };
 

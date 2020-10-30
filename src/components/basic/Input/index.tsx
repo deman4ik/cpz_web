@@ -16,6 +16,7 @@ interface Props {
     width?: number;
     responsive?: boolean;
     error?: string | boolean;
+    onSelect?: (e: any) => void;
     selectTextOnFocus?: boolean;
     readonly?: boolean;
     style?: CSSProperties;
@@ -37,6 +38,7 @@ export const Input: React.FC<Props> = ({
     onKeyPress,
     width = 350,
     error,
+    onSelect,
     selectTextOnFocus,
     responsive,
     readonly,
@@ -116,7 +118,7 @@ export const Input: React.FC<Props> = ({
                 {label ? (
                     <label htmlFor={labelId} className="input-label">
                         {label}
-                        <input id={labelId} {...inputProps} />
+                        <input id={labelId} {...inputProps} onSelect={onSelect} />
                     </label>
                 ) : (
                     <input {...inputProps} />
