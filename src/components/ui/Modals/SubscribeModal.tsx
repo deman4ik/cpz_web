@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/client";
+import { event } from "libs/gtag";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_MARKETS } from "graphql/common/queries";
 import { EDIT_SIGNAL, SUBSCRIBE_TO_SIGNALS } from "graphql/signals/mutations";
 import { SUBSCRIBE } from "graphql/local/mutations";
+
 import { Button, Input, Select } from "components/basic";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import {
@@ -14,9 +16,9 @@ import {
     calculateAsset,
     formatNumber,
     buildSettings,
-    getAmtErrors
+    getAmtErrors,
+    trimNumber
 } from "./helpers";
-import { event } from "libs/gtag";
 import styles from "./index.module.css";
 import styles_subs from "./SubscribeModal.module.css";
 
@@ -26,7 +28,7 @@ interface Props {
     onClose: () => void;
 }
 
-const ValueInput = ({ validate, volume, onKeyPress, onChangeText, unit }) => (
+const ValueInput = ({ validate, volume, onKeyPress, onChangeText, onFocus, onBlur, unit }) => (
     <div className={styles.volume}>
         <Input
             type="number"
@@ -36,6 +38,8 @@ const ValueInput = ({ validate, volume, onKeyPress, onChangeText, unit }) => (
             right
             onKeyPress={onKeyPress}
             onChangeText={onChangeText}
+            onFocus={onFocus}
+            onBlur={onBlur}
         />
         <span className={styles.volume_text}>{unit || ""}</span>
     </div>
@@ -72,6 +76,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
     const [displayedCurrency, setDisplayedCurrency] = useState("0");
 
     const [volumeType, setVolumeType] = useState(volumeTypeOptions[0].value);
+    const volumeTypeIsAssetStatic = volumeType === "assetStatic";
 
     const [subscribe, { loading: subscribeLoading, error: subscribeError }] = useMutation(SUBSCRIBE_TO_SIGNALS);
     const [edit, { loading: editLoading, error: editError }] = useMutation(EDIT_SIGNAL);
@@ -88,7 +93,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             }
         });
 
-    const handleOnChangeAsset = (value: string) => {
+    const onChangeAsset = (value: string) => {
         setVolume(Number(value));
 
         const newCurrency = calculateCurrency(value, limits?.price);
@@ -96,12 +101,22 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
         setDisplayedCurrency(formatNumber(newCurrency));
     };
 
-    const handleOnChangeCurrency = (value: string) => {
+    const onChangeCurrency = (value: string) => {
         setVolumeInCurrency(Number(value));
 
         const newVolume = calculateAsset(value, limits?.price);
         setVolume(newVolume);
         setDisplayedVolume(formatNumber(newVolume));
+    };
+
+    const onChangeVolumeType = (value: string) => {
+        setVolumeType(value);
+
+        if (volumeTypeIsAssetStatic) {
+            setDisplayedVolume(formatNumber(volume));
+        } else {
+            setDisplayedCurrency(formatNumber(volumeInCurrency));
+        }
     };
 
     useEffect(() => {
@@ -112,6 +127,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             const initialCurrency =
                 robotData.robot.subs.settings.volumeInCurrency ||
                 calculateCurrency(robotData.robot.subs.settings.volume, limits.price);
+            const initialVolumeType = robotData.robot.subs.settings.volumeType;
 
             setVolume(initialVolume);
             setDisplayedVolume(formatNumber(initialVolume));
@@ -119,7 +135,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             setVolumeInCurrency(initialCurrency);
             setDisplayedCurrency(formatNumber(initialCurrency));
 
-            setVolumeType(robotData.robot.subs.settings.volumeType);
+            setVolumeType(initialVolumeType);
 
             setTitle(`${type === "edit" ? "Edit" : "Follow"} ${robotData.robot.name}`);
         }
@@ -129,12 +145,12 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
         let ref = null;
         if (!subscribeLoading && !editLoading && (subscribeError || editError)) {
             setFormError(subscribeError?.graphQLErrors[0].message || editError?.graphQLErrors[0].message);
-            ref = setTimeout(() => setFormError(""), 2000);
+            ref = setTimeout(() => setFormError(""), 5000);
         }
         return () => clearTimeout(ref);
     }, [editError, editLoading, subscribeError, subscribeLoading]);
 
-    const handleOnSubmit = () => {
+    const onSubmit = () => {
         const settings = buildSettings({ volumeType, volume, volumeInCurrency });
         const variables = {
             robotId: robotData?.robot.id,
@@ -164,17 +180,18 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             });
     };
 
-    const getVolumeErrors = () => {
-        return getAmtErrors(volume, limits?.asset?.min.amount, limits?.asset?.max.amount);
-    };
+    const getVolumeErrors = () =>
+        volumeTypeIsAssetStatic && getAmtErrors(volume, limits?.asset?.min.amount, limits?.asset?.max.amount);
 
-    const getCurrencyErrors = () => {
-        return getAmtErrors(volumeInCurrency, limits?.asset?.min.amountUSD, limits?.asset?.max.amountUSD);
-    };
+    const getCurrencyErrors = () =>
+        !volumeTypeIsAssetStatic &&
+        getAmtErrors(volumeInCurrency, limits?.asset?.min.amountUSD, limits?.asset?.max.amountUSD);
 
-    const handleOnKeyPress = (e) => {
-        if (e.key === "Enter" && !getVolumeErrors() && !getCurrencyErrors()) {
-            handleOnSubmit();
+    const getErrors = () => getVolumeErrors() && getCurrencyErrors();
+
+    const onKeyPress = (e) => {
+        if (e.key === "Enter" && !getErrors()) {
+            onSubmit();
         }
     };
 
@@ -207,7 +224,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                     <Select
                                         data={volumeTypeOptions}
                                         value={volumeType}
-                                        onChangeValue={setVolumeType}
+                                        onChangeValue={onChangeVolumeType}
                                         enabled={!editLoading && !subscribeLoading}
                                     />
                                 </div>
@@ -217,40 +234,48 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                             </div>
                             <div className={styles_subs.fieldset}>
                                 <div className={styles.input_group}>
-                                    {(volumeType === "assetStatic" && (
+                                    {(volumeTypeIsAssetStatic && (
                                         <ValueInput
                                             validate={getVolumeErrors}
                                             volume={displayedVolume}
-                                            onKeyPress={handleOnKeyPress}
-                                            onChangeText={handleOnChangeAsset}
+                                            onKeyPress={onKeyPress}
+                                            onChangeText={onChangeAsset}
+                                            onFocus={() => setDisplayedVolume(trimNumber(volume))}
+                                            onBlur={() => setDisplayedVolume(formatNumber(volume))}
                                             unit={robotData.robot.subs.asset}
                                         />
                                     )) || (
                                         <ValueInput
                                             validate={getCurrencyErrors}
                                             volume={displayedCurrency}
-                                            onKeyPress={handleOnKeyPress}
-                                            onChangeText={handleOnChangeCurrency}
+                                            onKeyPress={onKeyPress}
+                                            onChangeText={onChangeCurrency}
+                                            onFocus={() => setDisplayedCurrency(trimNumber(volumeInCurrency))}
+                                            onBlur={() => setDisplayedCurrency(formatNumber(volumeInCurrency))}
                                             unit={robotData.robot.subs.currency}
                                         />
                                     )}
                                     <span className={styles.delimiter} style={{ marginTop: 3 }}>
                                         ≈
                                     </span>
-                                    {(volumeType === "assetStatic" && (
+                                    {(volumeTypeIsAssetStatic && (
                                         <ValueInput
                                             validate={getCurrencyErrors}
                                             volume={displayedCurrency}
-                                            onKeyPress={handleOnKeyPress}
-                                            onChangeText={handleOnChangeCurrency}
+                                            onKeyPress={onKeyPress}
+                                            onChangeText={onChangeCurrency}
+                                            onFocus={() => setDisplayedCurrency(trimNumber(volumeInCurrency))}
+                                            onBlur={() => setDisplayedCurrency(formatNumber(volumeInCurrency))}
                                             unit={robotData.robot.subs.currency}
                                         />
                                     )) || (
                                         <ValueInput
                                             validate={getVolumeErrors}
                                             volume={displayedVolume}
-                                            onKeyPress={handleOnKeyPress}
-                                            onChangeText={handleOnChangeAsset}
+                                            onKeyPress={onKeyPress}
+                                            onChangeText={onChangeAsset}
+                                            onFocus={() => setDisplayedVolume(trimNumber(volume))}
+                                            onBlur={() => setDisplayedVolume(formatNumber(volume))}
                                             unit={robotData.robot.subs.asset}
                                         />
                                     )}
@@ -263,7 +288,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                         type="success"
                                         disabled={!!getVolumeErrors() && !!getCurrencyErrors()}
                                         isUppercase
-                                        onClick={handleOnSubmit}
+                                        onClick={onSubmit}
                                         isLoading={subscribeLoading || editLoading}
                                     />
                                     <Button
