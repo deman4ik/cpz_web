@@ -16,7 +16,8 @@ import {
     calculateAsset,
     formatNumber,
     buildSettings,
-    getAmtErrors
+    getAmtErrors,
+    trimNumber
 } from "./helpers";
 import styles from "./index.module.css";
 import styles_subs from "./SubscribeModal.module.css";
@@ -27,7 +28,7 @@ interface Props {
     onClose: () => void;
 }
 
-const ValueInput = ({ validate, volume, onKeyPress, onChangeText, onSelect, unit }) => (
+const ValueInput = ({ validate, volume, onKeyPress, onChangeText, onFocus, onBlur, unit }) => (
     <div className={styles.volume}>
         <Input
             type="number"
@@ -37,8 +38,8 @@ const ValueInput = ({ validate, volume, onKeyPress, onChangeText, onSelect, unit
             right
             onKeyPress={onKeyPress}
             onChangeText={onChangeText}
-            onSelect={onSelect}
-            selectTextOnFocus
+            onFocus={onFocus}
+            onBlur={onBlur}
         />
         <span className={styles.volume_text}>{unit || ""}</span>
     </div>
@@ -113,9 +114,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
 
         if (volumeTypeIsAssetStatic) {
             setDisplayedVolume(formatNumber(volume));
-            setDisplayedCurrency(volumeInCurrency.toString());
         } else {
-            setDisplayedVolume(volume.toString());
             setDisplayedCurrency(formatNumber(volumeInCurrency));
         }
     };
@@ -241,7 +240,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                             volume={displayedVolume}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChangeAsset}
-                                            onSelect={() => setDisplayedVolume(volume.toString())}
+                                            onFocus={() => setDisplayedVolume(trimNumber(volume))}
+                                            onBlur={() => setDisplayedVolume(formatNumber(volume))}
                                             unit={robotData.robot.subs.asset}
                                         />
                                     )) || (
@@ -250,7 +250,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                             volume={displayedCurrency}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChangeCurrency}
-                                            onSelect={() => setDisplayedCurrency(volumeInCurrency.toString())}
+                                            onFocus={() => setDisplayedCurrency(trimNumber(volumeInCurrency))}
+                                            onBlur={() => setDisplayedCurrency(formatNumber(volumeInCurrency))}
                                             unit={robotData.robot.subs.currency}
                                         />
                                     )}
@@ -263,7 +264,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                             volume={displayedCurrency}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChangeCurrency}
-                                            onSelect={() => setDisplayedCurrency(volumeInCurrency.toString())}
+                                            onFocus={() => setDisplayedCurrency(trimNumber(volumeInCurrency))}
+                                            onBlur={() => setDisplayedCurrency(formatNumber(volumeInCurrency))}
                                             unit={robotData.robot.subs.currency}
                                         />
                                     )) || (
@@ -272,7 +274,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                                             volume={displayedVolume}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChangeAsset}
-                                            onSelect={() => setDisplayedVolume(volume.toString())}
+                                            onFocus={() => setDisplayedVolume(trimNumber(volume))}
+                                            onBlur={() => setDisplayedVolume(formatNumber(volume))}
                                             unit={robotData.robot.subs.asset}
                                         />
                                     )}

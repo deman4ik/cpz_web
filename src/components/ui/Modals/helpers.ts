@@ -46,7 +46,9 @@ export const calculateCurrency = (asset: string | number, price: number): number
 export const calculateAsset = (currency: string | number, price: number): number =>
     price === 0 ? 0 : Number(currency) / price;
 
-export const formatNumber = (n: number): string => (n < 1 ? formatMoney(n, 6) : formatMoney(n, 2));
+export const formatNumber = (n: number): string => formatMoney(n, 6);
+
+export const trimNumber = (n: number): string => Number(n.toFixed(6)).toString();
 
 export const getAmtErrors = (val: string | number, minAmt: number, maxAmt: number): string | boolean => {
     if (Number(val) < minAmt) return `Minimal amount is ${minAmt}`;
