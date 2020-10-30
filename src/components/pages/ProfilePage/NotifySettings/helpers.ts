@@ -9,6 +9,11 @@ export const extraSettings = {
         title: "Robots",
         icon: "robot",
         message: "If you turn robots notifications OFF you will not receive any messages about trades from ALL ROBOTS"
+    },
+    news: {
+        title: "News",
+        icon: "news",
+        message: "If you turn news OFF you will not receive any messages about trades from ALL ROBOTS"
     }
 };
 

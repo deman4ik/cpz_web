@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useContext } from "react";
+import React, { memo, useState, useEffect, useContext, Props } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -7,21 +7,19 @@ import { UPDATE_EXCHANGE_KEY } from "graphql/profile/mutations";
 import { Button, Select, Input, Textarea } from "components/basic";
 import { color } from "config/constants";
 import { event } from "libs/gtag";
-import { AddKey } from "./types";
+import { AddKey, ExchangeKeysAddKeyModalProps, UpdateExchangeKeyVars } from "./types";
 // context
 import { AuthContext } from "libs/hoc/context";
 import styles from "./ExchangeKeysAddKeyModal.module.css";
+import { fetchWithStatus } from "components/pages/helpers";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
-interface Props {
-    options?: AddKey;
-    exchange?: string;
-    refetchQueries?: any; // Todo any
-    isExchangeDisabled?: boolean;
-    onClose?: () => void;
-    handleOnSubmit?: (key: string) => void;
-}
+const errorMessages = {
+    KEYS_ARE_REQUIRED: "Public and Private API Keys are required",
+    LONG_NAME: "Too long name. Max 50"
+};
 
-const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
+const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     options,
     exchange,
     refetchQueries,
@@ -31,8 +29,8 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
     const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
-    const [responseError, setResponseError] = useState({ error: false, msg: "" });
-    const [isFetchResponse, setIsFetchResponse] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isFetching, setIsFetching] = useState(false);
     const [disabledEdit, setDisabledEdit] = useState(false);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
     const [dataPicker, setDataPicker] = useState([]);
@@ -42,13 +40,16 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
         authState: { user_id }
     } = useContext(AuthContext);
 
+    const variables: UpdateExchangeKeyVars = {
+        name: inputName || null,
+        exchange: inputExchange,
+        keys: { key: inputKeys.public, secret: inputKeys.secret }
+    };
+    if (options && options.id) {
+        variables.id = options.id;
+    }
     const [addKey] = useMutation(UPDATE_EXCHANGE_KEY, {
-        variables: {
-            name: inputName || null,
-            exchange: inputExchange,
-            keys: { key: inputKeys.public, secret: inputKeys.secret },
-            id: options ? options.id : ""
-        },
+        variables,
         refetchQueries: [...(refetchQueries || []), { query: GET_USER_EXCHANGES }],
         errorPolicy: "all"
     });
@@ -71,48 +72,38 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
         setInputKeys((prev) => ({ ...prev, [key]: text }));
     };
 
-    const handleOnPress = () => {
+    const handleOnPress = async (e) => {
+        e.preventDefault();
         if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length) {
-            setResponseError({
-                error: true,
-                msg: "Public and Private API Keys are required"
-            });
+            setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
             return;
         }
         if (inputName.length > 50) {
-            setResponseError({ error: true, msg: "Too long name. Max 50" });
+            setErrorMessage(errorMessages.LONG_NAME);
             return;
         }
-        setIsFetchResponse(true);
-        addKey().then((response) => {
-            setIsFetchResponse(false);
-            if (response.errors) {
-                setResponseError({
-                    error: true,
-                    msg: response.errors.map((e) => e.message).join(" ")
-                });
-            } else if (response.data.userExchangeAccUpsert.success) {
-                setResponseError({ error: false, msg: "" });
-                if (!options) {
-                    event({
-                        action: "add_api_key",
-                        category: "Profile",
-                        label: "add_api_key",
-                        value: "add_api_key"
-                    });
-                }
-                if (handleOnSubmit) {
-                    handleOnSubmit(response.data.userExchangeAccUpsert.result);
-                } else {
-                    onClose();
-                }
-            } else {
-                setResponseError({
-                    error: true,
-                    msg: response.data.userExchangeAccUpsert.error
+
+        const { data: fetchData, errors } = await fetchWithStatus(addKey, setIsFetching);
+
+        if (errors) {
+            setErrorMessage(errors.map((err) => err.message).join("\n"));
+        } else if (fetchData.userExchangeAccUpsert.result?.error) {
+            setErrorMessage(fetchData.userExchangeAccUpsert.result.error);
+        } else {
+            if (!options) {
+                event({
+                    action: "add_api_key",
+                    category: "Profile",
+                    label: "add_api_key",
+                    value: "add_api_key"
                 });
             }
-        });
+            if (handleOnSubmit) {
+                handleOnSubmit(fetchData.userExchangeAccUpsert.result);
+            } else {
+                onClose();
+            }
+        }
     };
 
     useEffect(() => {
@@ -138,12 +129,12 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
 
     return (
         <>
-            {responseError.error && (
+            {errorMessage && (
                 <div className={styles.errorContainer} style={{ marginTop: 0 }}>
-                    <div className={styles.errorText}>{responseError.msg}</div>
+                    <div className={styles.errorText}>{errorMessage}</div>
                 </div>
             )}
-            <div className={styles.container}>
+            <form className={styles.container} onSubmit={handleOnPress}>
                 <div style={{ marginBottom: 20 }}>
                     <div className={styles.tableCellText}>My Exchange API Key Name</div>
                     <div style={{ marginTop: 6 }}>
@@ -202,11 +193,11 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
                 </div>
                 <div className={styles.apikeyGroup}>
                     <Button
+                        buttonType={HTMLButtonTypes.submit}
                         type="success"
                         width={125}
                         title={options ? "edit key" : "add key"}
-                        onClick={handleOnPress}
-                        isLoading={isFetchResponse}
+                        isLoading={isFetching}
                         disabled={disabledEdit}
                         icon="check"
                         isUppercase
@@ -221,7 +212,7 @@ const _ExchangeKeysAddKeyModal: React.FC<Props> = ({
                         isUppercase
                     />
                 </div>
-            </div>
+            </form>
         </>
     );
 };

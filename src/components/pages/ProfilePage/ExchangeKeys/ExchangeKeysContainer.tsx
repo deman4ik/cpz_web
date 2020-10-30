@@ -11,9 +11,10 @@ import { Modal } from "components/basic";
 
 interface Props {
     formatData: any;
+    refetch: () => void;
 }
 
-export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
+export const ExchangeKeysContainer: React.FC<Props> = ({ formatData, refetch }) => {
     const [isVisibleModal, setIsVisibleModal] = useState({
         addKey: {
             isVisible: false,
@@ -34,6 +35,7 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
             ...prev,
             [ModalKey[key]]: { isVisible: !prev[ModalKey[key]].isVisible, options: formOptions || null }
         }));
+        refetch();
     };
 
     const handleSetVisibleModalDeleteKey = () => {

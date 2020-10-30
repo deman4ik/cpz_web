@@ -9,6 +9,7 @@ import { Button } from "components/basic";
 import { ErrorLine } from "components/common";
 import { AlertIcon } from "assets/icons/svg";
 import styles from "./ExchangeKeysDeleteKeyModal.module.css";
+import { fetchWithStatus } from "components/pages/helpers";
 
 interface Props {
     onClose: () => void;
@@ -31,15 +32,14 @@ const _ExchangeKeysDeleteKeyModal: React.FC<Props> = ({ options, onClose }) => {
         refetchQueries: [{ query: GET_USER_EXCHANGES }]
     });
 
-    const handleOnPressSubmit = () => {
-        setIsFetchReponse(true);
-        deleteKey().then((response) => {
-            setIsFetchReponse(false);
-            if (response.data.userExchangeAccDelete.error) {
-                setFormError(response.data.userExchangeAccDelete.error);
-            }
+    const handleOnPressSubmit = async () => {
+        const fetchResult = await fetchWithStatus(deleteKey, setIsFetchReponse);
+        const { data: fetchdData } = fetchResult;
+        if (fetchdData.userExchangeAccDelete.error) {
+            setFormError(fetchdData.userExchangeAccDelete.error);
+        } else {
             onClose();
-        });
+        }
     };
 
     useEffect(() => {

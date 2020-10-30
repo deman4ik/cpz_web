@@ -18,21 +18,18 @@ const _NotifySettings: React.FC = () => {
     } = useContext(AuthContext);
 
     const [notifications, setNotifications] = useState<NotificationProps[]>([]);
-
     const { loading } = useQuery(GET_USER_INFO, {
         onCompleted: (data) => {
             const { notifications: _notifications } = data.users[0].settings;
             setNotifications(
                 Object.keys(_notifications).map((key) => ({
                     key,
-                    checkboxes: Object.keys(_notifications[key])
-                        .filter((name) => name !== "email")
-                        .map((name) => ({
-                            name,
-                            isActive: _notifications[key][name],
-                            disabled: !data.users[0][serviceName[name]],
-                            isLoading: false
-                        })),
+                    checkboxes: Object.keys(_notifications[key]).map((name) => ({
+                        name,
+                        isActive: _notifications[key][name],
+                        disabled: !data.users[0][serviceName[name]],
+                        isLoading: false
+                    })),
                     ...extraSettings[key]
                 }))
             );
@@ -41,6 +38,7 @@ const _NotifySettings: React.FC = () => {
     });
     const [saveNotifications] = useMutation(SET_NOTIFICATION_SETTINGS);
 
+    const combinePropName = (key, name) => `${key}${capitalize(name)}`; // e.g signalsTelegram
     const toggleNotification = (key: string, name: string) => {
         const isActive = !notifications.find((el) => el.key === key).checkboxes.find((el) => el.name === name).isActive;
         setNotifications((prev) =>
@@ -59,7 +57,7 @@ const _NotifySettings: React.FC = () => {
         );
         saveNotifications({
             variables: {
-                [`${key}${capitalize(name)}`]: isActive
+                [combinePropName(key, name)]: isActive
             }
         })
             .then((response) => {

@@ -26,7 +26,7 @@ export const withAuth = (Page) => {
             });
         }, [setAuthState, accessToken]);
 
-        return authState.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
+        return authState?.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {

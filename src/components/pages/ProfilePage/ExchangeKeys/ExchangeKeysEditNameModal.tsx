@@ -7,6 +7,8 @@ import { Button, Input } from "components/basic";
 import { ErrorLine } from "components/common";
 import styles from "./ExchangeKeysEditNameModal.module.css";
 import { EditName } from "./types";
+import { fetchWithStatus } from "components/pages/helpers";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 interface Props {
     onClose: () => void;
@@ -16,7 +18,7 @@ interface Props {
 const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
     const [formError, setFormError] = useState("");
     const [inputName, setInputName] = useState(options.name);
-    const [isFetchReponse, setIsFetchReponse] = useState(false);
+    const [isFetchReponse, setIsFetching] = useState(false);
     const [editName] = useMutation(UPDATE_EXCHANGE_NAME, {
         variables: {
             name: inputName,
@@ -29,22 +31,26 @@ const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
         setInputName(value);
     };
 
-    const handleOnPress = () => {
-        setIsFetchReponse(true);
-        editName().then((response) => {
-            setIsFetchReponse(false);
-            if (response.data.userExchangeAccChangeName.success) {
-                onClose();
-            } else {
-                setFormError(response.data.userExchangeAccChangeName.error);
-            }
-        });
+    const handleOnPress = async (e) => {
+        e.preventDefault();
+        if (!inputName.trim()) {
+            setFormError("Name cannot be empty");
+            return;
+        }
+        const { userExchangeAccChangeName, error } = await fetchWithStatus(editName, setIsFetching);
+
+        const errorString = userExchangeAccChangeName?.error || error;
+        if (errorString) {
+            setFormError(errorString);
+        } else {
+            onClose();
+        }
     };
 
     return (
         <>
             {formError && <ErrorLine formError={formError} />}
-            <div className={styles.container}>
+            <form className={styles.container} onSubmit={handleOnPress}>
                 <div>
                     <div className={styles.tableCellText}>Name</div>
                     <div className={styles.inputWrapper}>
@@ -58,10 +64,10 @@ const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
                 </div>
                 <div className={styles.groupBtn}>
                     <Button
+                        buttonType={HTMLButtonTypes.submit}
                         type="success"
                         width={120}
                         title="save"
-                        onClick={handleOnPress}
                         isLoading={isFetchReponse}
                         icon="check"
                         isUppercase
@@ -76,7 +82,7 @@ const _ExchangeKeysEditNameModal: React.FC<Props> = ({ onClose, options }) => {
                         isUppercase
                     />
                 </div>
-            </div>
+            </form>
         </>
     );
 };
