@@ -13,7 +13,8 @@ export const extraSettings = {
     news: {
         title: "News",
         icon: "news",
-        message: "If you turn news notifications OFF you will not receive any messages about new features, updates and offerings."
+        message:
+            "If you turn news notifications OFF you will not receive any messages about new features, updates and offerings."
     }
 };
 
