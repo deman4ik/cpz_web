@@ -23,3 +23,14 @@ export const setStylesToRef = (ref: RefObject<HTMLInputElement>, styles: { [key:
         Object.assign(ref.current.style, styles);
     }
 };
+
+export async function fetchWithStatus(asyncOperation: any, setLoadingFunction: (status: boolean) => void) {
+    try {
+        setLoadingFunction(true);
+        return await asyncOperation();
+    } catch (e) {
+        return { error: e.message };
+    } finally {
+        setLoadingFunction(false);
+    }
+}
