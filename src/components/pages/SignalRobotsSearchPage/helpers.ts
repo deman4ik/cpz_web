@@ -1,6 +1,12 @@
 import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
+export const parseUserSettings = (robot) => {
+    return robot.user_signals[0].user_signal_settings.signal_settings;
+};
+
+const areThereUserSignals = (robot) => robot.user_signals && robot.user_signals.length;
+
 export function parseRobotInfo(robot: any) {
     const {
         id,
@@ -12,6 +18,7 @@ export function parseRobotInfo(robot: any) {
         robot_settings: { robot_settings }
     } = robot;
     const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
+    const robotSettings = areThereUserSignals(robot) ? parseUserSettings(robot) : robot_settings;
     return {
         cache: {
             id,
@@ -28,9 +35,9 @@ export function parseRobotInfo(robot: any) {
             id: null
         },
         started_at: null,
-        settings: robot_settings,
-        volume: getVolume(robot_settings),
-        displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
+        settings: robotSettings,
+        volume: getVolume(robotSettings),
+        displayedVolume: getVolumeWithUnit(robotSettings, { currency, asset }),
         profit,
         performance: equity,
         subscribed: null,

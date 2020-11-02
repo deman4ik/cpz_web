@@ -29,7 +29,6 @@ export const RobotsPage: React.FC = () => {
                 </div>
             </div>
             <SignalRobots width={width} displayType="robots" />
-            <Modals />
-        </DefaultTemplate>
+        </DefaultTemplate> /*Modals moved to SignalRobots*/
     );
 };

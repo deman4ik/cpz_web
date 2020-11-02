@@ -15,6 +15,7 @@ import styles from "./index.module.css";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { Modals } from "components/pages/SignalRobotsInfoPage/Modals";
 
 interface Props {
     width: number;
@@ -26,7 +27,7 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
         authState: { user_id }
     } = useContext(AuthContext);
 
-    const { data, loading } = useQueryWithAuth(true, displayType === "signals" ? USER_SIGNALS : USER_ROBOTS, {
+    const { data, loading, refetch } = useQueryWithAuth(true, displayType === "signals" ? USER_SIGNALS : USER_ROBOTS, {
         pollInterval: POLL_INTERVAL,
         variables: { user_id }
     });
@@ -50,6 +51,7 @@ const _SignalRobots: React.FC<Props> = ({ width, displayType }) => {
         <div style={{ marginTop: 10 }}>
             <div className={styles.regionTitle}>{title[displayType]}</div>
             <RobotsPageContainer data={formatData} displayType={displayType} width={width} />
+            <Modals afterClose={refetch} />
         </div>
     );
 };

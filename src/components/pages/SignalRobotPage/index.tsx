@@ -48,7 +48,7 @@ export const SignalRobotPage = () => {
         setPageIsNew(isNewPage());
     }, []);
 
-    const { loading, data } = useQueryWithAuth(false, robotsInfoQuery, {
+    const { loading, data, refetch } = useQueryWithAuth(false, robotsInfoQuery, {
         variables: {
             code: router.query.code,
             ...userId
@@ -100,7 +100,11 @@ export const SignalRobotPage = () => {
                         isUserSubscribed={robotData.robot.isUserSubscribed}
                     />
                     <PageTabs robotData={robotData} activeTab={activeTab} width={width} />
-                    <Modals isModalVisible={isModalVisible} setModalVisibility={setModalVisibility} />
+                    <Modals
+                        isModalVisible={isModalVisible}
+                        setModalVisibility={setModalVisibility}
+                        afterClose={refetch}
+                    />
                 </>
             )}
         </DefaultTemplate>

@@ -13,7 +13,10 @@ interface Props {
 }
 
 export const SignalsSearchContainer: React.FC<Props> = ({ width, displayType }) => {
-    const { robotsData, counts, loading, isLoadingMore, onFetchMore } = useFetchRobots(displayType, formatRobotsData);
+    const { robotsData, counts, loading, isLoadingMore, onFetchMore, refetch } = useFetchRobots(
+        displayType,
+        formatRobotsData
+    );
     /*Hook сохранения позиции скролла*/
     useSaveScroll(displayType, loading);
     return (
@@ -32,7 +35,7 @@ export const SignalsSearchContainer: React.FC<Props> = ({ width, displayType }) 
                     displayType={displayType}
                 />
             )}
-            <Modals />
+            <Modals afterClose={refetch} />
         </>
     );
 };

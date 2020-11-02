@@ -9,7 +9,7 @@ import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
 
 interface Props {
-    onClose: () => void;
+    onClose: (needsRefreshing?: boolean) => void;
     setTitle: (title: string) => void;
 }
 
@@ -24,16 +24,18 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     });
 
     const handleOnSubmit = () => {
-        unsubscribeSend({ variables: { robotId: data.robot.id } }).then((response) => {
-            if (response.data.userSignalUnsubscribe.result === "OK") {
-                unsubscribe({
-                    variables: { cache: data.robot.cache, chartData: data.ChartData }
-                });
-            } else {
-                setFormError(response.data.userSignalUnsubscribe.result);
-            }
-            onClose();
-        });
+        unsubscribeSend({ variables: { robotId: data.robot.id } })
+            .then((response) => {
+                if (response.data.userSignalUnsubscribe.result === "OK") {
+                    unsubscribe({
+                        variables: { cache: data.robot.cache, chartData: data.ChartData }
+                    });
+                } else {
+                    setFormError(response.data.userSignalUnsubscribe.result);
+                }
+                onClose(true);
+            })
+            .catch((e) => console.error(e));
     };
 
     return (
