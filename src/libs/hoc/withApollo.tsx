@@ -67,6 +67,7 @@ const httpLink = createHttpLink({
     credentials: "include"
 });
 
+let isRefreshing = false;
 const updateToken = async () => {
     try {
         const { data } = await fetchAccessToken();
@@ -84,8 +85,17 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
         for (const error of graphQLErrors) {
             const { extensions, message } = error;
             if (extensions.code === httpErrors.JWTError) {
-                console.info(`Retrying ~ ${operation.operationName}`);
-                return fromPromise(updateToken()).flatMap(() => forward(operation));
+                if (!isRefreshing) {
+                    isRefreshing = true;
+                    console.info(`Retrying ~ ${operation.operationName}`);
+                    return fromPromise(
+                        // eslint-disable-next-line no-loop-func
+                        updateToken().finally(() => {
+                            isRefreshing = false;
+                        })
+                    ).flatMap(() => forward(operation));
+                }
+                return fromPromise(new Promise((res) => res())).flatMap(() => forward(operation));
             }
             console.error(`[GraphQL error]: ${message}`);
             return fromPromise(new Promise((res) => res())).flatMap(() => forward(operation));

@@ -25,7 +25,7 @@ import styles_subs from "./SubscribeModal.module.css";
 interface Props {
     type?: string;
     setTitle: (title: string) => void;
-    onClose: () => void;
+    onClose: (needsRefreshing?: boolean) => void;
 }
 
 const ValueInput = ({ validate, volume, onKeyPress, onChangeText, onFocus, onBlur, unit }) => (
@@ -83,7 +83,7 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
 
     const [cacheSubscription] = useMutation(SUBSCRIBE);
 
-    const writeToCache = (settings) =>
+    const writeToCache = (settings) => {
         cacheSubscription({
             variables: {
                 cache: robotData?.robot.cache,
@@ -91,7 +91,8 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
                 type,
                 chartData: robotData?.ChartData
             }
-        });
+        }).catch((e) => console.error(e));
+    };
 
     const onChangeAsset = (value: string) => {
         setVolume(Number(value));
@@ -157,27 +158,29 @@ const _SubscribeModal: React.FC<Props> = ({ type, setTitle, onClose }) => {
             settings
         };
         if (type === "edit") {
-            edit({ variables }).then((res) => {
-                if (res.data.userSignalEdit.result === "OK") {
-                    writeToCache(settings);
-                    onClose();
-                }
-            });
+            edit({ variables })
+                .then((res) => {
+                    if (res.data.userSignalEdit.result === "OK") {
+                        writeToCache(settings);
+                        onClose(true);
+                    }
+                })
+                .catch((e) => console.error(e));
         } else
-            subscribe({ variables }).then((res) => {
-                if (res.data.userSignalSubscribe.result === "OK") {
-                    writeToCache(settings);
-                    if (type !== "edit") {
+            subscribe({ variables })
+                .then((res) => {
+                    if (res.data.userSignalSubscribe.result === "OK") {
+                        writeToCache(settings);
                         event({
                             action: "subscribe",
                             category: "Signals",
                             label: "subscribe",
                             value: robotData?.robot.id
                         });
+                        onClose(true);
                     }
-                    onClose();
-                }
-            });
+                })
+                .catch((e) => console.error(e));
     };
 
     const getVolumeErrors = () =>

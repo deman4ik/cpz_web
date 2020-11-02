@@ -8,7 +8,6 @@ import { RobotPerformance } from "components/ui/RobotPerformance";
 import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
 import { SignalRobots } from "components/ui/SignalsRobots";
 import { PageToolbar } from "components/common/PageToolbar";
-import { Modals } from "./Modals";
 import styles from "./index.module.css";
 
 export const SignalRobotsInfoPage = () => {
@@ -30,7 +29,6 @@ export const SignalRobotsInfoPage = () => {
                 </div>
             </div>
             <SignalRobots width={width} displayType="signals" />
-            <Modals />
-        </DefaultTemplate>
+        </DefaultTemplate> /*Modals moved to SignalRobots*/
     );
 };

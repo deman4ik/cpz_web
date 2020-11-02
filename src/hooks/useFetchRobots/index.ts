@@ -147,6 +147,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
 
     return {
         robotsData,
+        refetch: refetchStats,
         error,
         counts: data_count?.robots_aggregate?.aggregate.count || 0,
         loading: loading || loading_aggregate,

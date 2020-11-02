@@ -31,11 +31,20 @@ const getLimits = (data, type) => {
 
     return result;
 };
-
-export const buildSettings = ({ volumeType, volume, volumeInCurrency }) => ({
-    volumeType,
-    ...(volumeType === "assetStatic" ? { volume: Number(volume) } : { volumeInCurrency: Number(volumeInCurrency) })
-});
+type SettingsType = {
+    volumeType: string;
+    volume?: number;
+    volumeInCurrency?: number;
+};
+export const buildSettings = ({ volumeType, volume, volumeInCurrency }) => {
+    const result: SettingsType = { volumeType };
+    if (volumeType === "assetStatic") {
+        result.volume = Number(volume);
+    } else {
+        result.volumeInCurrency = Number(volumeInCurrency);
+    }
+    return result;
+};
 
 export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
 
