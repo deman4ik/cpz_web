@@ -13,6 +13,8 @@ interface Props {
     onChangeText?: (value) => void;
     onKeyPress?: (e: any) => void;
     onClickButton?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
     width?: number;
     responsive?: boolean;
     error?: string | boolean;
@@ -43,7 +45,9 @@ export const Input: React.FC<Props> = ({
     responsive,
     readonly,
     maxLength = 30,
-    autoComplete = "hidden"
+    autoComplete = "hidden",
+    onFocus,
+    onBlur
 }) => {
     const [inputValue, setInputValue] = useState(value);
     const inputRef = useRef(null);
@@ -69,6 +73,7 @@ export const Input: React.FC<Props> = ({
     };
 
     const handleOnFocus = () => {
+        onFocus();
         if (selectTextOnFocus) {
             inputRef?.current?.setSelectionRange(0, inputValue.length);
         }
@@ -88,6 +93,7 @@ export const Input: React.FC<Props> = ({
         onChange: handleOnInput,
         onKeyDown: formatInput,
         onFocus: handleOnFocus,
+        onBlur,
         value: inputValue,
         autoComplete
     };
@@ -110,7 +116,7 @@ export const Input: React.FC<Props> = ({
                 {label ? (
                     <label htmlFor={labelId} className="input-label">
                         {label}
-                        <input id={labelId} {...inputProps} onSelect={onSelect} />
+                        <input id={labelId} {...inputProps} onFocus={onFocus} onBlur={onBlur} />
                     </label>
                 ) : (
                     <input {...inputProps} />

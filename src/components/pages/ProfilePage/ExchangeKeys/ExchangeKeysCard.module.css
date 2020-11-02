@@ -13,6 +13,10 @@
 .tableCellText {
   font-size: var(--normal1);
   color: white;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .secondaryText {
@@ -40,6 +44,7 @@
 }
 
 .name {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   flex: 1;

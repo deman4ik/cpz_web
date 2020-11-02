@@ -34,6 +34,8 @@ export const CONFIRM_USER_EMAIL = gql`
 
 export const SET_NOTIFICATION_SETTINGS = gql`
     mutation setNotificationSettings(
+        $newsEmail: Boolean
+        $newsTelegram: Boolean
         $signalsEmail: Boolean
         $signalsTelegram: Boolean
         $tradingEmail: Boolean
