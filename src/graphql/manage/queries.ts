@@ -274,8 +274,8 @@ export const USER_ROBOTS_FILTERS = gql`
  *  использование: manage/support
  */
 export const SUPPORT_REQUESTS = gql`
-    query get_users_support_requests($where: users_bool_exp) {
-        support_requests: users(where: $where) {
+    query get_users_support_requests($where: users_bool_exp, $limit: Int, $offset: Int, $order_by: [users_order_by!]) {
+        support_requests: users(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
             user_id: id
             user_name: name
             messages(limit: 1, order_by: { timestamp: desc }, where: { to: { _is_null: true } }) {
@@ -286,13 +286,6 @@ export const SUPPORT_REQUESTS = gql`
                 data
                 timestamp
             }
-        }
-    }
-`;
-
-export const SUPPORT_REQUESTS_AGGREGATE = gql`
-    query get_users_support_requests($where: users_bool_exp) {
-        support_requests: users(where: $where) {
             messages_aggregate(where: { to: { _is_null: true } }) {
                 aggregate {
                     count
@@ -302,6 +295,16 @@ export const SUPPORT_REQUESTS_AGGREGATE = gql`
                 aggregate {
                     count
                 }
+            }
+        }
+    }
+`;
+
+export const SUPPORT_REQUESTS_AGGREGATE = gql`
+    query get_users_support_requests_aggregate($where: users_bool_exp) {
+        users_aggregate(where: $where) {
+            aggregate {
+                count
             }
         }
     }

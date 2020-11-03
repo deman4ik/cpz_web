@@ -50,8 +50,12 @@ const getLastMessageByDate = (messages: Array<message>): message => {
 /**
  * Утилита форматирования сообщений
  */
-export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>): Array<UserChatProps> => {
-    return usersRequests.map(
+export const formatUsersSupportRequests = ({
+    support_requests
+}: {
+    support_requests: Array<userRequestItem>;
+}): Array<UserChatProps> => {
+    return support_requests.map(
         ({
             user_id,
             user_name,
@@ -65,10 +69,11 @@ export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>
             }
         }) => {
             const allMessages = [...messages, ...messagesByTo];
+            const latestMessages = getLastMessageByDate(allMessages);
             const {
                 data: { message },
                 timestamp
-            } = getLastMessageByDate(allMessages);
+            } = latestMessages;
             const messages_count = messageCount + countByTo;
 
             return {
@@ -87,14 +92,12 @@ export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>
  * @param searchString - строка с данными
  */
 export const getSearchParams = (searchString: string) => {
-    const where: any = {
-        _or: [{ name: { _ilike: `%${searchString}%` } }]
-    };
+    const where: any = { _and: { _or: [{ messages: { to: { _is_null: true } } }, { messagesByTo: {} }] } };
+    if (searchString) where._or.push({ name: { _ilike: `%${searchString}%` } });
     if (searchString?.match(REGEXS.uuid)) {
         where._or.push({ id: { _eq: searchString } });
     }
     return where;
 };
 
-export const getItemsCount = (data) =>
-    (data.messages_aggregate?.aggregate?.count || 0) + (data.messagesByTo_aggregate?.aggregate?.count || 0);
+export const getItemsCount = (data) => data.users_aggregate?.aggregate?.count;

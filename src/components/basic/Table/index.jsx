@@ -27,6 +27,7 @@ const Table = ({
     onChangeSort,
     isLoading
 }) => {
+    console.log(data)
     const [cols, setCols] = useState(columns);
     const [isModalVisible, setModalVisibility] = useState(false);
 
