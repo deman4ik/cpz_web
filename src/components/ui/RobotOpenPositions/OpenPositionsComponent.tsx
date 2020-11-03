@@ -58,7 +58,13 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
                             {titleItem.assets.map((asset) => (
                                 <Accordion
                                     key={asset.asset}
-                                    title={<OpenPositionsTitle volume={asset.volume} title={asset.asset} />}
+                                    title={
+                                        <OpenPositionsTitle
+                                            volume={asset.volume}
+                                            profit={asset.profit}
+                                            asset={asset.asset}
+                                        />
+                                    }
                                     left={<OpenPositionsLeft title={exchangeName(titleItem.exchange)} />}>
                                     {isDesktopView ? (
                                         <Fragment key={asset.asset}>

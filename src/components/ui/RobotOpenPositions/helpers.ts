@@ -33,6 +33,7 @@ export const formatPositionsForSignals = (positions: any) =>
         const asset = {
             asset: position.robot.asset,
             volume: (position.direction === "short" ? -1 : 1) * position.volume,
+            profit: position.profit,
             robots: [robot]
         };
         if (item) {
@@ -45,6 +46,7 @@ export const formatPositionsForSignals = (positions: any) =>
                     findAsset.volume + (robot.direction === "short" ? -1 : 1) * position.volume,
                     6
                 );
+                findAsset.profit = (findAsset.profit || 0) + (robot.profit || 0);
             }
         } else {
             obj.assets = [asset];
@@ -81,6 +83,7 @@ export const getFormatDataRobots = (positions: any) =>
         const asset = {
             asset: position.asset,
             volume: (position.direction === "short" ? -1 : 1) * position.volume,
+            profit: position.profit,
             robots: [robot]
         };
         if (item) {
@@ -90,6 +93,7 @@ export const getFormatDataRobots = (positions: any) =>
             } else {
                 findAsset.robots.push(robot);
                 findAsset.volume = round(findAsset.volume + (robot.direction === "short" ? -1 : 1) * robot.volume, 6);
+                findAsset.profit = (findAsset.profit || 0) + (robot.profit || 0);
             }
         } else {
             obj.assets = [asset];
