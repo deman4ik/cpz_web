@@ -39,7 +39,7 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
     };
 
     return (
-        <a className={getClassName().join(" ")} style={style} href={href} onClick={handleOnClick}>
+        <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
             {title}
         </a>
     );

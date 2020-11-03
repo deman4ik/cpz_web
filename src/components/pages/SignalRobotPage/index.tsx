@@ -34,7 +34,7 @@ export const SignalRobotPage = () => {
 
     const { width } = useWindowDimensions();
     const router = useRouter();
-    const [pageIsNew, setPageIsNew] = React.useState(true);
+    const [pageIsNew] = useState(isNewPage());
     const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
@@ -43,10 +43,6 @@ export const SignalRobotPage = () => {
     const handlePressBack = () => {
         router.back();
     };
-
-    useEffect(() => {
-        setPageIsNew(isNewPage());
-    }, []);
 
     const { loading, data, refetch } = useQueryWithAuth(false, robotsInfoQuery, {
         variables: {
