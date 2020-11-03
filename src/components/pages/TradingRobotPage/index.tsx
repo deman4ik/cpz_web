@@ -27,7 +27,7 @@ export const TradingRobotPage: React.FC = () => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
-    const [pageIsNew, setPageIsNew] = React.useState(true);
+    const [pageIsNew] = useState(isNewPage());
 
     const { width } = useWindowDimensions();
     const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
@@ -64,10 +64,6 @@ export const TradingRobotPage: React.FC = () => {
             setRobotData(variables);
         }
     };
-
-    useEffect(() => {
-        setPageIsNew(isNewPage());
-    }, []);
 
     return (
         <DefaultTemplate

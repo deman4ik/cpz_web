@@ -17,7 +17,7 @@ import { isNewPage } from "utils/common";
 export const RobotsSearchPage: React.FC = () => {
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
     const { width } = useWindowDimensions();
-    const [pageIsNew, setPageIsNew] = React.useState(true);
+    const [pageIsNew] = useState(isNewPage());
 
     const handlePressBack = () => {
         Router.back();
@@ -27,9 +27,6 @@ export const RobotsSearchPage: React.FC = () => {
         setFiltersModalVisibility((prev) => !prev);
     };
 
-    useEffect(() => {
-        setPageIsNew(isNewPage());
-    }, []);
     return (
         <DefaultTemplate
             page={PageType.robots}
