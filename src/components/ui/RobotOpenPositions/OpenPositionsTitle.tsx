@@ -1,17 +1,22 @@
 import React, { memo } from "react";
 
-import { colorAction } from "config/utils";
+import { colorAction, formatMoney } from "config/utils";
 import styles from "./OpenPositionsTitle.module.css";
 
 interface Props {
     volume: number;
-    title: string;
+    profit: number;
+    asset: string;
 }
 
-const _OpenPositionsTitle: React.FC<Props> = ({ volume, title }) => (
+const _OpenPositionsTitle: React.FC<Props> = ({ volume, profit, asset }) => (
     <div className={styles.title}>
         <div className={styles.titleText} style={colorAction(volume > 0)}>
-            {`${volume > 0 ? "+" : ""}${volume} ${title}`}
+            {`${volume > 0 ? "+" : ""}${volume} ${asset}`}
+        </div>
+        <div className={styles.divider} />
+        <div className={styles.titleText} style={colorAction(profit > 0)}>
+            {`${profit > 0 ? "+" : ""}${formatMoney(profit)} $`}
         </div>
     </div>
 );
