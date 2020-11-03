@@ -1,12 +1,23 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useState, useMemo, useCallback } from "react";
-import { useQuery } from "@apollo/client";
+import { DocumentNode, useQuery } from "@apollo/client";
 // components
 import { ManagementTemplate } from "components/layout";
 import Table from "components/basic/Table";
 // hooks
 import { POLL_INTERVAL } from "config/constants";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { ColumnsArraySchema } from "../utils";
+import { PageType, OrderBy } from "config/types";
+
+type ManagePageProps = {
+    pageType: PageType;
+    columns: ColumnsArraySchema;
+    dataQuery: DocumentNode;
+    aggregateQuery: DocumentNode;
+    formatData: (data: any) => any;
+    getItemsCount: (data: any) => number;
+    getSearchOptions: (data: any) => any;
+};
 
 const ITEMS_PER_PAGE_OPTIONS =
     process.env.NODE_ENV === "development" ? [2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 20, 25] : [100, 500, 1000];
@@ -19,7 +30,7 @@ const ManagePageTemplate = ({
     formatData,
     getItemsCount,
     getSearchOptions
-}) => {
+}: ManagePageProps): JSX.Element => {
     /*States*/
     const [limit, setLimit] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
     const [orderBy, setOrderBy] = useState(null);
@@ -53,19 +64,23 @@ const ManagePageTemplate = ({
         [getSearchOptions]
     );
 
-    const onChangeSort = useCallback((column) => {
-        if (column) {
-            const { id, desc, orderSchema } = column;
-            const sortDirection = desc ? "desc" : "asc";
-            let newOrderBy;
-            if (!orderSchema) newOrderBy = { [id]: sortDirection };
-            else {
-                const { field, subfield } = orderSchema;
-                newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
+    const onChangeSort = useCallback(
+        (column: { id: string; desc: boolean; orderSchema: { field: string; subfield: string } }) => {
+            if (column) {
+                const { id, desc, orderSchema } = column;
+                const sortDirection = desc ? "desc" : "asc";
+                let newOrderBy: OrderBy = {
+                    [id]: sortDirection
+                };
+                if (orderSchema) {
+                    const { field, subfield } = orderSchema;
+                    newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
+                }
+                setOrderBy(newOrderBy);
             }
-            setOrderBy(newOrderBy);
-        }
-    }, []);
+        },
+        []
+    );
 
     const tableColumns = useMemo(() => columns, [columns]);
     const tableData = useMemo(() => (data ? formatData(data) : []), [formatData, data]);
