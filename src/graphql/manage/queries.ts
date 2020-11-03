@@ -286,6 +286,13 @@ export const SUPPORT_REQUESTS = gql`
                 data
                 timestamp
             }
+        }
+    }
+`;
+
+export const SUPPORT_REQUESTS_AGGREGATE = gql`
+    query get_users_support_requests($where: users_bool_exp) {
+        support_requests: users(where: $where) {
             messages_aggregate(where: { to: { _is_null: true } }) {
                 aggregate {
                     count

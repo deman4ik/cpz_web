@@ -45,32 +45,13 @@ const getLastMessageByDate = (messages: Array<message>): message => {
     return messages[0];
 };
 
-/**
- * Функция сортировки юзеров по дате
- * @param data - массив юзеров и их сообщений
- * @param orderType - порядок сортировки
- */
-const sortRequestsByDate = (data: Array<UserChatProps>, orderType?: null | orderType) => {
-    if (orderType) {
-        return data.sort((a, b) => {
-            const dateA = new Date(a.timestamp).getTime();
-            const dateB = new Date(b.timestamp).getTime();
-            if (orderType === "desc") {
-                return dateB - dateA;
-            }
-            return dateA - dateB;
-        });
-    }
-    return data;
-};
-
 /*=== DATA UTILS ====*/
 
 /**
  * Утилита форматирования сообщений
  */
-export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>, orderType): Array<UserChatProps> => {
-    const requests = usersRequests.map(
+export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>): Array<UserChatProps> => {
+    return usersRequests.map(
         ({
             user_id,
             user_name,
@@ -83,7 +64,7 @@ export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>
                 aggregate: { count: countByTo }
             }
         }) => {
-            const allMessages = [...messages, ...messagesByTo]; // мердж входящих и исходящих сообщений
+            const allMessages = [...messages, ...messagesByTo];
             const {
                 data: { message },
                 timestamp
@@ -99,7 +80,6 @@ export const formatUsersSupportRequests = (usersRequests: Array<userRequestItem>
             };
         }
     );
-    return sortRequestsByDate(requests, orderType);
 };
 
 /**
@@ -115,3 +95,6 @@ export const getSearchParams = (searchString: string) => {
     }
     return where;
 };
+
+export const getItemsCount = (data) =>
+    (data.messages_aggregate?.aggregate?.count || 0) + (data.messagesByTo_aggregate?.aggregate?.count || 0);

@@ -32,7 +32,7 @@ export interface ColumnsArraySchema {
         columns: {
             Header: string;
             accessor: string;
-            isVisible: boolean;
+            isVisible?: boolean;
             orderSchema?: { field: string; subfield?: string };
             width?: number;
             Cell?: (props: any) => any;
