@@ -18,8 +18,8 @@ export interface messages_aggregate {
 }
 
 export interface userRequestItem {
-    user_id: string;
-    user_name: string;
+    id: string;
+    name: string;
     messages: Array<message>;
     messagesByTo: Array<message>;
     messages_aggregate: messages_aggregate;
@@ -57,8 +57,8 @@ export const formatUsersSupportRequests = ({
 }): Array<UserChatProps> => {
     return support_requests.map(
         ({
-            user_id,
-            user_name,
+            id,
+            name,
             messages,
             messagesByTo,
             messages_aggregate: {
@@ -77,8 +77,8 @@ export const formatUsersSupportRequests = ({
             const messages_count = messageCount + countByTo;
 
             return {
-                user_id,
-                user_name,
+                id,
+                name,
                 message,
                 timestamp: formatDate(timestamp),
                 messages_count
