@@ -42,3 +42,6 @@ export type RobotSettings = {
     volume?: number;
     volumeInCurrency?: number;
 };
+
+type OrderByOption = "desc" | "asc";
+export type OrderBy = { [x: string]: { [y: string]: OrderByOption } | OrderByOption };

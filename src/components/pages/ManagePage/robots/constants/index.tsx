@@ -48,35 +48,35 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "performance",
                 isVisible: true,
                 Cell: buildRobotChartCell,
-                orderSchema: { field: "stats", subfield: "equity_avg" },
+                sortSchema: { field: "stats", subfield: "equity_avg" },
                 width: 200
             },
             {
                 Header: "Profit",
                 accessor: "profit",
                 isVisible: true,
-                orderSchema: { field: "stats", subfield: "net_profit" },
+                sortSchema: { field: "stats", subfield: "net_profit" },
                 width: 90
             },
             {
                 Header: "W/R",
                 accessor: "winRate",
                 isVisible: true,
-                orderSchema: { field: "stats", subfield: "win_rate" },
+                sortSchema: { field: "stats", subfield: "win_rate" },
                 width: 90
             },
             {
                 Header: "Max Drawdown",
                 accessor: "maxDrawdown",
                 isVisible: true,
-                orderSchema: { field: "stats", subfield: "max_drawdown" },
+                sortSchema: { field: "stats", subfield: "max_drawdown" },
                 width: 125
             },
             {
                 Header: "Trades",
                 accessor: "tradesCount",
                 isVisible: true,
-                orderSchema: { field: "stats", subfield: "trades_count" },
+                sortSchema: { field: "stats", subfield: "trades_count" },
                 width: 90
             }
         ]
@@ -90,112 +90,112 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Volume",
                 accessor: "volume",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Max Bars",
                 accessor: "requiredHistoryMaxBars",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Sma Size",
                 accessor: "smaSize",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Dist Init",
                 accessor: "distInit",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Lookback",
                 accessor: "lookback",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Atr. Period",
                 accessor: "atrPeriod",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Adjustment",
                 accessor: "adjustment",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Adx High",
                 accessor: "adxHigh",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Adx Period",
                 accessor: "adxPeriod",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Trail Bars",
                 accessor: "trailBars",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Adx",
                 accessor: "adx",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Tick",
                 accessor: "tick",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Ratio",
                 accessor: "ratio",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Series Size",
                 accessor: "seriesSize",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
                 Header: "Order Stop Loss",
                 accessor: "orderStopLoss",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 130
             },
             {
                 Header: "Order Take Profit",
                 accessor: "orderTakeProfit",
                 isVisible: false,
-                orderSchema: { field: "robot_settings", subfield: "robot_settings" },
+                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 135
             }
         ]
@@ -231,14 +231,14 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Robots",
                 accessor: "user_robots",
                 isVisible: true,
-                orderSchema: { field: "user_robots_aggregate", subfield: "count" },
+                sortSchema: { field: "user_robots_aggregate", subfield: "count" },
                 width: 90
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
                 isVisible: true,
-                orderSchema: { field: "user_signals_aggregate", subfield: "count" },
+                sortSchema: { field: "user_signals_aggregate", subfield: "count" },
                 width: 90
             }
         ]

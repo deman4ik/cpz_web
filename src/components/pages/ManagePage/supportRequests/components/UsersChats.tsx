@@ -13,7 +13,7 @@ export interface UsersChatsProps {
 const UsersChats: React.FC<UsersChatsProps> = ({ data }) => (
     <div className={styles.users_chats_container}>
         {data.map((item) => (
-            <UserChat {...item} key={item.user_id} />
+            <UserChat {...item} key={item.id} />
         ))}
     </div>
 );

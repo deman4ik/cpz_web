@@ -6,7 +6,7 @@ import gql from "graphql-tag";
  *  Использование: manage/support/(user_id)  |  /support
  */
 export const GET_SUPPORT_MESSAGES = gql`
-    subscription get_support_messages($user_id: uuid) {
+    query get_support_messages($user_id: uuid) {
         messages(
             where: {
                 _or: [{ to: { _eq: $user_id } }, { _and: [{ from: { _eq: $user_id } }, { to: { _is_null: true } }] }]

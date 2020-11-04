@@ -77,21 +77,21 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "user_robots",
                 isVisible: true,
                 width: 85,
-                orderSchema: { field: "user_robots_aggregate", subfield: "count" }
+                sortSchema: { field: "user_robots_aggregate", subfield: "count" }
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
                 isVisible: true,
                 width: 85,
-                orderSchema: { field: "user_signals_aggregate", subfield: "count" }
+                sortSchema: { field: "user_signals_aggregate", subfield: "count" }
             },
             {
                 Header: "API Keys",
                 accessor: "user_api_keys",
                 isVisible: true,
                 width: 85,
-                orderSchema: { field: "user_exchange_accs_aggregate", subfield: "count" }
+                sortSchema: { field: "user_exchange_accs_aggregate", subfield: "count" }
             }
         ]
     },
@@ -106,7 +106,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 isVisible: true,
                 Cell: buildCheckBoxCell,
                 width: 75,
-                orderSchema: { field: "settings" }
+                sortSchema: { field: "settings" }
             },
             {
                 Header: "Telegram",
@@ -114,7 +114,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 isVisible: true,
                 Cell: buildCheckBoxCell,
                 width: 95,
-                orderSchema: { field: "settings" }
+                sortSchema: { field: "settings" }
             }
         ]
     },
@@ -129,7 +129,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 isVisible: true,
                 Cell: buildCheckBoxCell,
                 width: 75,
-                orderSchema: { field: "settings" }
+                sortSchema: { field: "settings" }
             },
             {
                 Header: "Telegram",
@@ -137,7 +137,7 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 isVisible: true,
                 Cell: buildCheckBoxCell,
                 width: 95,
-                orderSchema: { field: "settings" }
+                sortSchema: { field: "settings" }
             }
         ]
     }
