@@ -21,6 +21,7 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
         <meta name='viewport" content="initial-scale=1.0, width=device-width' key="viewport" />
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" />
         {/*  Global site tag (gtag.js) - Google Analytics */}
