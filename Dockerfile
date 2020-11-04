@@ -14,4 +14,4 @@ RUN npm install && npm run build && npm prune --production
 ENV NODE_ENV='production'
 
 EXPOSE 80
-CMD ["next", "start -p 80"]
+CMD npm run start
