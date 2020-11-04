@@ -18,32 +18,18 @@ export interface messages_aggregate {
 }
 
 export interface userRequestItem {
-    id: string;
-    name: string;
-    messages: Array<message>;
-    messagesByTo: Array<message>;
-    messages_aggregate: messages_aggregate;
-    messagesByTo_aggregate: messages_aggregate;
+    user: { id: string; name: string };
+    messages_count: number;
+    lastMessage: {
+        id: string;
+        timestamp: string;
+        data: {
+            message: string;
+        };
+    };
 }
 
 export type orderType = "asc" | "desc";
-
-/*=== LOCAL UTILS ====*/
-
-/**
- * Утилита для получения последнего сообщения (с учетом последней даты) в функции форматирования
- * @param messages - массив сообщений (messages и messagesByTo)
- */
-const getLastMessageByDate = (messages: Array<message>): message => {
-    if (messages.length) {
-        return messages.sort((a, b) => {
-            const dateA = new Date(a.timestamp).getTime();
-            const dateB = new Date(b.timestamp).getTime();
-            return dateB - dateA;
-        })[0];
-    }
-    return messages[0];
-};
 
 /*=== DATA UTILS ====*/
 
@@ -57,25 +43,13 @@ export const formatUsersSupportRequests = ({
 }): Array<UserChatProps> => {
     return support_requests.map(
         ({
-            id,
-            name,
-            messages,
-            messagesByTo,
-            messages_aggregate: {
-                aggregate: { count: messageCount }
-            },
-            messagesByTo_aggregate: {
-                aggregate: { count: countByTo }
+            user: { id, name },
+            messages_count,
+            lastMessage: {
+                timestamp,
+                data: { message }
             }
         }) => {
-            const allMessages = [...messages, ...messagesByTo];
-            const latestMessages = getLastMessageByDate(allMessages);
-            const {
-                data: { message },
-                timestamp
-            } = latestMessages;
-            const messages_count = messageCount + countByTo;
-
             return {
                 id,
                 name,
@@ -92,7 +66,8 @@ export const formatUsersSupportRequests = ({
  * @param searchString - строка с данными
  */
 export const getSearchParams = (searchString: string) => {
-    const where: any = { _and: { _or: [{ messages: { to: { _is_null: true } } }, { messagesByTo: {} }] } };
+    if (!searchString) return null;
+    const where: any = { _and: { _or: [] } };
     if (searchString) where._or.push({ name: { _ilike: `%${searchString}%` } });
     if (searchString?.match(REGEXS.uuid)) {
         where._or.push({ id: { _eq: searchString } });
@@ -100,4 +75,4 @@ export const getSearchParams = (searchString: string) => {
     return where;
 };
 
-export const getItemsCount = (data) => data.users_aggregate?.aggregate?.count;
+export const getItemsCount = (data) => data.v_support_messages_aggregate?.aggregate?.count;

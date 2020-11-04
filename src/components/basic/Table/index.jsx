@@ -82,8 +82,8 @@ const Table = ({
         const { id, desc } = sortBy[0];
 
         // allColumns contains all the nested columns
-        const { orderSchema } = allColumns.find((column) => column.id === id);
-        onChangeSort({ id, desc, orderSchema });
+        const { sortSchema } = allColumns.find((column) => column.id === id);
+        onChangeSort({ id, desc, sortSchema });
     }, [onChangeSort, sortBy, allColumns]);
 
     const toggleModal = () => {

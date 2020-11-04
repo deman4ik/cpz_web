@@ -10,11 +10,18 @@ export const USER_REQUESTS_TABLE_COLUMNS: ColumnsArraySchema = [
         Header: "User info",
         id: "user_info",
         columns: [
-            { Header: "ID", accessor: "id", isVisible: true, width: 310 },
+            {
+                Header: "ID",
+                accessor: "id",
+                isVisible: true,
+                width: 310,
+                sortSchema: { field: "user", subfield: "id" }
+            },
             {
                 Header: "Name",
                 accessor: "name",
-                isVisible: true
+                isVisible: true,
+                sortSchema: { field: "user", subfield: "name" }
             }
         ]
     },
@@ -33,14 +40,14 @@ export const USER_REQUESTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "timestamp",
                 isVisible: true,
                 width: 175,
-                orderSchema: { field: "messages", subfield: "timestamp" }
+                sortSchema: { field: "lastMessage", subfield: "timestamp" }
             },
             {
                 Header: "Last message",
                 accessor: "message",
                 isVisible: true,
                 width: 450,
-                orderSchema: { field: "messages", subfield: "data" },
+                sortSchema: { field: "lastMessage", subfield: "data" },
                 Cell: ({
                     cell: {
                         row: {

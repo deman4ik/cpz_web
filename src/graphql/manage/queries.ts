@@ -274,35 +274,29 @@ export const USER_ROBOTS_FILTERS = gql`
  *  использование: manage/support
  */
 export const SUPPORT_REQUESTS = gql`
-    query get_users_support_requests($where: users_bool_exp, $limit: Int, $offset: Int, $order_by: [users_order_by!]) {
-        support_requests: users(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
-            id
-            name
-            messages(limit: 1, order_by: { timestamp: desc }, where: { to: { _is_null: true } }) {
-                data
+    query get_support_requests(
+        $where: v_support_messages_bool_exp
+        $limit: Int
+        $offset: Int
+        $order_by: [v_support_messages_order_by!]
+    ) {
+        support_requests: v_support_messages(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
+            user {
+                id
+                name
+            }
+            messages_count
+            lastMessage {
                 timestamp
-            }
-            messagesByTo(limit: 1, order_by: { timestamp: desc }, where: { data: {} }) {
                 data
-                timestamp
-            }
-            messages_aggregate(where: { to: { _is_null: true } }) {
-                aggregate {
-                    count
-                }
-            }
-            messagesByTo_aggregate {
-                aggregate {
-                    count
-                }
             }
         }
     }
 `;
 
 export const SUPPORT_REQUESTS_AGGREGATE = gql`
-    query get_users_support_requests_aggregate($where: users_bool_exp) {
-        users_aggregate(where: $where) {
+    query get_users_support_requests_aggregate($where: v_support_messages_bool_exp) {
+        v_support_messages_aggregate(where: $where) {
             aggregate {
                 count
             }
