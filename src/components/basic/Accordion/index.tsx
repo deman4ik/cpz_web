@@ -5,23 +5,23 @@ import styles from "./index.module.css";
 
 interface Props {
     title?: ReactNode;
-    left?: ReactNode;
+    subtitle?: ReactNode;
 }
 
-export const Accordion: React.FC<Props> = ({ title, children, left }) => {
+export const Accordion: React.FC<Props> = ({ title, subtitle, children }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const handleOnClick = () => {
         setIsExpanded(!isExpanded);
     };
 
     return (
-        <div className={styles.container}>
-            <div className={[styles.title, styles.ripple].join(" ")} onClick={handleOnClick}>
-                {left}
-                {title}
+        <div>
+            <div className={`${styles.container} ${styles.ripple}`} onClick={handleOnClick}>
+                <div className={styles.title}>{title}</div>
+                <div className={styles.subtitle}>{subtitle}</div>
                 <div className={styles.icon}>{isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}</div>
             </div>
-            {isExpanded ? <div>{children}</div> : null}
+            {isExpanded ? <div>{children}</div> : null}{" "}
         </div>
     );
 };

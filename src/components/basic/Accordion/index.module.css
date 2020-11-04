@@ -1,44 +1,54 @@
 .container {
-  margin-top: 10px;
-  margin-bottom: 0;
-  box-shadow: var(--shadow);
+    margin-top: 10px;
+    height: 58px;
+    width: 100%;
+    box-shadow: var(--shadow);
+    background-color: var(--dark);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.title,
+.subtitle {
+    height: 100%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  flex-direction: row;
-  cursor: pointer;
-  background-color: var(--dark);
-  position: relative;
-  height: 58px;
-  user-select: none;
+    width: 30%;
 }
 
 .icon {
-  margin: 5px;
-  position: absolute;
-  right: 10px;
-  padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    position: absolute;
+    right: 10px;
+    padding-bottom: 5px;
 }
 
 .ripple {
-  background-position: center;
-  transition: background 0.8s;
+    background-position: center;
+    transition: background 0.8s;
 }
 
 .ripple:active {
-  background-color: var(--lightBg);
-  background-size: 100%;
-  transition: background 0s;
+    background-color: var(--lightBg);
+    background-size: 100%;
+    transition: background 0s;
 }
 
-@media (max-width: 1200px) {
-  .container {
-    box-shadow: none;
-  }
-  .title {
-    box-shadow: var(--shadow);
-  }
+@media (max-width: 720px) {
+    .title,
+    .subtitle {
+        padding: 8px 0;
+    }
+    .title {
+        width: 35%;
+    }
 }
