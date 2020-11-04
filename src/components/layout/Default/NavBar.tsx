@@ -48,7 +48,7 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
 
     return (
         <div className={styles.navBar}>
-            <div onClick={toHomePage}>
+            <div onClick={toHomePage} title="Go to home page">
                 <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
             </div>
             <div className={styles.container}>
