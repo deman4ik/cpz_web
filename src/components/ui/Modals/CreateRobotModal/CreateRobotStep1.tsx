@@ -5,12 +5,12 @@ import { exchangeName } from "config/utils";
 import { Button, Select } from "components/basic";
 import { ExchangeKeysAddKeyModal } from "components/pages/ProfilePage/ExchangeKeys/ExchangeKeysAddKeyModal";
 import styles from "../index.module.css";
+import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
 
 interface Props {
     dataPicker: any; // Todo any
-    exchange?: string;
     selectedKey: string;
-    refetchQueries: any; // Todo any
+    variables: any; // Todo any
     hasError?: boolean;
     handleOnNext: () => void;
     handleOnChangeExchange: (value: string) => void;
@@ -19,11 +19,10 @@ interface Props {
 }
 
 const _CreateRobotStep1: React.FC<Props> = ({
-    exchange,
     selectedKey,
     hasError,
     dataPicker,
-    refetchQueries,
+    variables,
     handleOnNext,
     handleOnChangeExchange,
     setFormError,
@@ -31,6 +30,13 @@ const _CreateRobotStep1: React.FC<Props> = ({
 }) => {
     const [newName, setNewName] = useState("");
     const [isAddKeyVisible, setIsAddKeyVisible] = useState(!dataPicker.length);
+    const { exchange } = variables.exchange;
+    const refetchQueries = [
+        {
+            query: GET_USER_EXCHANGES_WITH_MARKETS,
+            variables
+        }
+    ];
 
     const handleOnAddKey = () => {
         if (isAddKeyVisible) {
@@ -51,8 +57,6 @@ const _CreateRobotStep1: React.FC<Props> = ({
         if (newName) {
             handleOnChangeExchange(dataPicker.find((item) => item.label === newName).id);
             setNewName("");
-        } else if (dataPicker[0]) {
-            handleOnChangeExchange(dataPicker[0].id);
         }
     }, []);
 

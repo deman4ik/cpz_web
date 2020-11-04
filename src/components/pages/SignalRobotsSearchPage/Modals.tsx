@@ -27,12 +27,13 @@ export const Modals: React.FC<ModalsProps> = ({ afterClose }) => {
                 onClose={handleSetVisible}>
                 <UnsubscribeModal setTitle={setTitleModal} onClose={onClose} />
             </Modal>
-            <Modal
+            <SubscribeModal
                 isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
-                onClose={handleSetVisible}
-                title={titleModal}>
-                <SubscribeModal onClose={onClose} type={dataModal.ModalVisible.type} setTitle={setTitleModal} />
-            </Modal>
+                title={titleModal}
+                onClose={onClose}
+                type={dataModal.ModalVisible.type}
+                setTitle={setTitleModal}
+            />
         </>
     );
 };
