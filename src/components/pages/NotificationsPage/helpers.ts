@@ -43,8 +43,8 @@ const messageMap = {
     "user-robot.paused": "robot",
     "user-robot.resumed": "robot",
     "user-robot.trade": "robotTrade",
-    "signal.trade": "signalTrade",
-    "signal.alert": "signalAlert",
+    signal_trade: "signalTrade",
+    signal_alert: "signalAlert",
     "order.error": "error",
     "message.support-reply": "message",
     "message.broadcast": "message",
@@ -71,7 +71,7 @@ export const filters = {
         "user-robot.resumed",
         "message.support-reply"
     ],
-    signals: ["signal.trade", "signal.alert"],
+    signals: ["signal_trade", "signal_alert"],
     trading: ["user-robot.trade"],
     error: ["order.error", "user_ex_acc.error"]
 };
