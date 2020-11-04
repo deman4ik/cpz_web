@@ -129,7 +129,7 @@ export const signalAlertSet = (item, onClick) => {
                 <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                     {item.robot.name}&nbsp;
                 </div>
-                <div className={styles.textMessageDesktop}>{item.robot_position.code}</div>
+                <div className={styles.textMessageDesktop}>{item.positionCode}</div>
             </div>
             <div className={styles.row} style={{ marginTop: 3 }}>
                 <div className={styles.textAccent}>Action&nbsp;</div>

@@ -3,6 +3,10 @@
     margin-bottom: 20px;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 .navBar {
     height: 100vh;
     z-index: 103;
