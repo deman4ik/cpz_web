@@ -23,6 +23,7 @@ interface Props {
     subTitle?: string;
     page?: PageType;
     toolbar?: any;
+    navigateBack?: () => void;
     withToolbar?: boolean;
 }
 
@@ -32,6 +33,7 @@ export const ManagementTemplate: React.FC<Props> = ({
     children,
     page,
     toolbar,
+    navigateBack,
     withToolbar = true
 }) => {
     const { width } = useWindowDimensions();
@@ -70,6 +72,7 @@ export const ManagementTemplate: React.FC<Props> = ({
                 title={title}
                 subTitle={subTitle}
                 toggleMenu={menuHidden ? toggleNavBar : toggleMenu}
+                navigateBack={navigateBack}
                 withToolbar={withToolbar}
                 toolbar={toolbar}
                 fullLength={!menuHidden}

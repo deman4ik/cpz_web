@@ -1,3 +1,4 @@
+import { EffectButton } from "components/basic";
 import React, { memo } from "react";
 import { MenuButton } from "./constants";
 
@@ -12,6 +13,7 @@ interface Props {
     withToolbar: boolean;
     fullLength: boolean;
     withNavOpen: boolean;
+    navigateBack?: () => void;
 }
 
 const _NavHeader: React.FC<Props> = ({
@@ -22,13 +24,15 @@ const _NavHeader: React.FC<Props> = ({
     style,
     withToolbar,
     fullLength,
-    withNavOpen
+    withNavOpen,
+    navigateBack
 }) => (
     <div
         className={`${styles.header} ${fullLength ? styles.fullLength : withNavOpen ? styles.withNavOpen : ""}`}
         style={style}>
         <div className={styles.wrapper}>
             <MenuButton onClick={toggleMenu} />
+            {navigateBack && <EffectButton icon="arrowleft" onClick={navigateBack} />}
             <div className={`${styles.titleGroup} ${!withToolbar ? styles.visible : ""}`}>
                 <div className={styles.title}>{title}</div>
                 <div className={styles.subTitle}>{subTitle}</div>

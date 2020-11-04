@@ -7,6 +7,7 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import useFetchChatMessages from "hooks/useFetchChatMessages";
 // components
 import { ManagementTemplate } from "components/layout";
+import { EffectButton } from "components/basic";
 import { Chat } from "components/common";
 // utils
 import { formatMessage } from "components/common/Chat/utils";
@@ -45,7 +46,7 @@ const ManageSupportChat = () => {
     };
 
     return (
-        <ManagementTemplate title="Support chat" page={PageType.supportRequests}>
+        <ManagementTemplate title="Support chat" page={PageType.supportRequests} navigateBack={handlePressBack}>
             <div className={styles.support_chat_wrapper}>
                 <Chat
                     title={`Chat with ${username} (${user_id})`}
