@@ -1,5 +1,7 @@
 ## Cryptuoso Web App
 
+Dev https://web.dev.cryptuoso.com
+
 ### Scripts
 
 -   npm run dev
