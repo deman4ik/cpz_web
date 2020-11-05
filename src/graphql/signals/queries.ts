@@ -130,7 +130,7 @@ export const ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE = gql`
 
 export const FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS = gql`
     query get_aggr_stats_filters_for_user_robots($type: String_comparison_exp, $user_id: uuid) {
-        filters: user_aggr_stats(where: { type: $type, equity: { _has_key: "profit" }, user_id: { _eq: $user_id } }) {
+        filters: user_aggr_stats(where: { type: $type, user_id: { _eq: $user_id } }) {
             asset
             exchange
         }
