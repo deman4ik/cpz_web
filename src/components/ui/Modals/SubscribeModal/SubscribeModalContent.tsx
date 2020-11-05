@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useMemo } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
-import { calculateCurrency, formatNumber, translateValue, trimNumber } from "components/ui/Modals/helpers";
+import { formatNumber, translateValue } from "components/ui/Modals/helpers";
 import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
@@ -51,7 +51,6 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
 
     const areValuesEmpty = () => Object.values(inputValues).filter((i) => i === 0 || !!i).length === 0;
 
-    console.log(robotData, parsedLimits, areValuesEmpty(), '11111111');
     useEffect(() => {
         if (robotData && parsedLimits.length && areValuesEmpty()) {
             const { settings: robotSettings } = robotData.robot.subs;

@@ -35,6 +35,6 @@ export interface ExchangeKeysAddKeyModalProps {
     exchange?: string;
     refetchQueries?: any; // Todo any
     isExchangeDisabled?: boolean;
-    onClose?: () => void;
+    onClose?: (changesMade?: boolean) => void;
     handleOnSubmit?: (key: string) => void;
 }

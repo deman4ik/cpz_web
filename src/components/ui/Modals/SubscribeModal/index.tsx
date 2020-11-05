@@ -18,7 +18,7 @@ interface Props {
     onClose: (needsRefreshing?: boolean) => void;
     isOpen: boolean;
     title: string;
-    inputs: Input[];
+    inputs?: Input[];
 }
 
 const inputs = [{ type: InputTypes.assetStatic }, { type: InputTypes.currencyDynamic }];

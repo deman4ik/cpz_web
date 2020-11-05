@@ -14,15 +14,16 @@ import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
 import { ErrorLine, LoadingIndicator } from "components/common";
-import { getLimitsForRobot } from "../helpers";
+import { buildSettings, getLimitsForRobot } from "../helpers";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
 import { InputTypes } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { GET_MARKETS } from "graphql/common/queries";
+import { SOMETHING_WENT_WRONG } from "config/constants";
 
 interface Props {
-    onClose: () => void;
+    onClose: (changesMade: boolean) => void;
     code?: string;
     width: number;
 }
@@ -84,9 +85,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [actionOnRobot] = useMutation(ACTION_ROBOT);
     const [userRobotStart, { loading: startLoading }] = useMutation(USER_ROBOT_START);
 
-    const limits = useMemo(() => !loading && getLimitsForRobot(limitsData), [limitsLoading, limitsData]);
+    const limits = useMemo(() => !limitsLoading && getLimitsForRobot(limitsData), [limitsLoading, limitsData]);
 
-    console.log(limits, "12312312");
     const {
         inputValues,
         setInputValues,
@@ -101,26 +101,27 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     });
 
     const handleOnCreate = () => {
-        const inputVolumeAsset = inputValues[InputTypes.assetStatic];
+        const settings = buildSettings({ volumeType, inputValues });
+
         userRobotCreate({
             variables: {
                 robotId: robotData.robot.id,
-                volume: Number(inputVolumeAsset),
+                settings,
                 userExAccId: inputKey
             }
         }).then((response) => {
-            if (response.data.userRobotCreate.success) {
+            if (response.data.userRobotCreate.result) {
                 setNewRobotId(response.data.userRobotCreate.result);
                 createRobot({
                     variables: {
-                        volume: Number(inputVolumeAsset),
+                        settings,
                         robotInfo: {
                             robotId: robotData.robot.id,
                             userRobotId: response.data.userRobotCreate.result,
                             code
                         }
                     }
-                }).then(() => {
+                }).then((res) => {
                     event({
                         action: "create",
                         category: "Robots",
@@ -128,10 +129,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         value: robotData.robot.id
                     });
                 });
-                handleOnNext();
             } else {
                 setFormError(response.data.userRobotCreate.error);
             }
+            handleOnNext();
         });
     };
 
@@ -144,26 +145,30 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const handleOnStart = () => {
         userRobotStart({
             variables: { id: newRobotId }
-        }).then((response) => {
-            if (response.data.userRobotStart.success) {
-                actionOnRobot({
-                    variables: {
-                        robot: robotData.robot,
-                        message: "started"
-                    }
-                }).then(() => {
-                    event({
-                        action: "start",
-                        category: "Robots",
-                        label: "start",
-                        value: robotData.robot.id
+        })
+            .then((response) => {
+                if (response.data.userRobotStart.result) {
+                    actionOnRobot({
+                        variables: {
+                            robot: robotData.robot,
+                            message: "started"
+                        }
+                    }).then(() => {
+                        event({
+                            action: "start",
+                            category: "Robots",
+                            label: "start",
+                            value: robotData.robot.id
+                        });
                     });
-                });
-                onClose();
-            } else {
-                setFormError(response.data.userRobotStart.error);
-            }
-        });
+                    onClose(true);
+                } else {
+                    setFormError(response.data.userRobotStart.error);
+                }
+            })
+            .catch((e) => {
+                setFormError(e.message || SOMETHING_WENT_WRONG)
+            });
     };
 
     const dataPicker = useMemo(

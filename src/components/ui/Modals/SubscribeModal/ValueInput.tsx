@@ -24,7 +24,7 @@ export const ValueInput: FC<ValueInputProps> = ({
     <div className={styles.volume}>
         <Input
             type="number"
-            value={`${volume}`}
+            value={volume.toString()}
             width={150}
             error={validate()}
             right

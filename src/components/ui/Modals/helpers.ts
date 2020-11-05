@@ -1,5 +1,5 @@
 import { formatMoney } from "config/utils";
-import { InputTypes } from "components/ui/Modals/types";
+import { InputTypes, InputValues } from "components/ui/Modals/types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -37,7 +37,11 @@ type SettingsType = {
     volume?: number;
     volumeInCurrency?: number;
 };
-export const buildSettings = ({ volumeType, inputValues }) => {
+interface BuildSettingsProps {
+    volumeType: string;
+    inputValues: InputValues;
+};
+export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
     if (volumeType === InputTypes.assetStatic) {
         result.volume = Number(inputValues[InputTypes.assetStatic]);

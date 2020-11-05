@@ -31,7 +31,7 @@ export const Modals: React.FC<ModalsProps> = ({ afterClose }) => {
                 isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
                 title={titleModal}
                 onClose={onClose}
-                type={dataModal.ModalVisible.type}
+                actionType={dataModal.ModalVisible.type}
                 setTitle={setTitleModal}
             />
         </>

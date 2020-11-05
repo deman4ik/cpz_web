@@ -15,7 +15,7 @@ interface Props {
     handleOnNext: () => void;
     handleOnChangeExchange: (value: string) => void;
     setFormError: (error: string) => void;
-    onClose: () => void;
+    onClose: (changesMade?: boolean) => void;
 }
 
 const _CreateRobotStep1: React.FC<Props> = ({

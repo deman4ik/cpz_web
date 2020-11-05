@@ -6,8 +6,6 @@ import {
 } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Button } from "components/basic";
 
-const PLEASE_ENTER_DESIRED_TRADING_AMOUNT = "Please enter desired trading amount";
-
 interface CreateRobotStep2Props extends SubscribeModalContentProps {
     handleOnBack: () => void;
     handleOnCreate: () => void;
