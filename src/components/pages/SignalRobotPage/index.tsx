@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useState, useMemo, useContext, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 // components
 import { DefaultTemplate } from "components/layout";
@@ -13,7 +13,7 @@ import { Modals } from "./Modals";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // types
-import { PageType, TabType } from "config/types";
+import { PageType } from "config/types";
 // graphql
 import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
@@ -37,7 +37,6 @@ export const SignalRobotPage = () => {
     const [pageIsNew] = useState(isNewPage());
     const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
-    const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
 
     const handlePressBack = () => {
@@ -88,14 +87,8 @@ export const SignalRobotPage = () => {
                 <NoRecentData message="No recent data available" />
             ) : (
                 <>
-                    <Header
-                        subscribe={subscribe}
-                        robotData={robotData}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        isUserSubscribed={robotData.robot.isUserSubscribed}
-                    />
-                    <PageTabs robotData={robotData} activeTab={activeTab} width={width} />
+                    <Header subscribe={subscribe} robotData={robotData} />
+                    <PageTabs robotData={robotData} width={width} isUserSubscribed={robotData.robot.isUserSubscribed} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}

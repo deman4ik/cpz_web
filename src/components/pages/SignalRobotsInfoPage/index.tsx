@@ -4,31 +4,42 @@ import { DefaultTemplate } from "components/layout";
 
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { PageType } from "config/types";
+import { PageToolbar } from "components/common/PageToolbar";
+
+// components
+import TabNavigation from "components/basic/TabNavigation";
 import { RobotPerformance } from "components/ui/RobotPerformance";
 import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
 import { SignalRobots } from "components/ui/SignalsRobots";
-import { PageToolbar } from "components/common/PageToolbar";
-import styles from "./index.module.css";
 
 export const SignalRobotsInfoPage = () => {
     const { width } = useWindowDimensions();
+
+    const pageType = "signals";
+
+    const tabSchema = [
+        {
+            title: "Open Positions",
+            tabPage: <RobotOpenPositions width={width} type={pageType} />
+        },
+        {
+            title: "Total Performance",
+            tabPage: <RobotPerformance width={width} type={pageType} />
+        },
+        {
+            title: "Signal Robots",
+            tabPage: <SignalRobots width={width} type={pageType} />
+        }
+    ];
 
     return (
         <DefaultTemplate
             page={PageType.signals}
             title="Signals"
             subTitle="Manual Trading"
-            toolbar={<PageToolbar displayType="signals" />}
-            width={width}>
-            <div className={styles.container}>
-                <div className={styles.wrapper}>
-                    <RobotPerformance width={width} type="signals" />
-                </div>
-                <div className={styles.wrapper}>
-                    <RobotOpenPositions width={width} type="signals" />
-                </div>
-            </div>
-            <SignalRobots width={width} displayType="signals" />
-        </DefaultTemplate> /*Modals moved to SignalRobots*/
+            width={width}
+            toolbar={<PageToolbar displayType="signals" />}>
+            <TabNavigation tabSchema={tabSchema} />
+        </DefaultTemplate>
     );
 };

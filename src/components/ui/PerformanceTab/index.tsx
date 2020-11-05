@@ -3,15 +3,12 @@ import dynamic from "next/dynamic";
 
 import dayjs from "../../../libs/dayjs";
 import { NoRecentData, LoadingIndicator } from "../../common";
-import { TabType } from "../../../config/types";
 import { ChartType } from "../../charts/LightWeightChart/types";
 import { PerformanceTabComponent } from "./PerformanceTabComponent";
-import { tabName, getRobotStatistic } from "./helpers";
-import styles from "./index.module.css";
+import { getRobotStatistic } from "./helpers";
 
 interface Props {
     robot: any;
-    activeTab: TabType;
     width: number;
 }
 
@@ -20,7 +17,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
     ssr: false
 });
 
-const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, activeTab, width }) => {
+const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const chartData = useMemo(
         () =>
@@ -52,7 +49,6 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, activeTab, width }) 
                     )}
                     {isChartLoaded ? (
                         <>
-                            <div className={styles.performanceTitle}>{tabName[TabType[activeTab]]}</div>
                             <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
                         </>
                     ) : null}

@@ -121,10 +121,5 @@ export const getRobotStatistic = (robotStatistic) =>
               ]
           };
 
-export const tabName = {
-    myStatistic: "My Statistic",
-    publicStatistic: "Public Statistic"
-};
-
 export const getCardTitle = (item, subtitle) =>
     `${item.title}${item.key === "avgBarsHeld" && subtitle !== "profit" ? ` ${capitalize(subtitle)}` : ""}`;

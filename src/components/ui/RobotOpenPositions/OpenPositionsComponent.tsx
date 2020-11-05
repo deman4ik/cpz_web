@@ -16,7 +16,6 @@ import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
 // helpers
 import { exchangeName } from "config/utils";
-import { title } from "./helpers";
 // styles
 import styles from "./OpenPositionsComponent.module.css";
 
@@ -40,8 +39,7 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.regionTitle}>{title[displayType]}</div>
+        <div>
             {!formatData.length ? (
                 <div style={{ marginTop: "20px" }}>
                     <NothingComponent
@@ -52,8 +50,8 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
                     />
                 </div>
             ) : (
-                formatData.map((titleItem) => (
-                    <div key={titleItem.exchange} style={{ marginTop: 5 }}>
+                formatData.map((titleItem, index) => (
+                    <div key={titleItem.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
                         <div>
                             {titleItem.assets.map((asset) => (
                                 <Accordion
@@ -65,7 +63,8 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
                                             profit={asset.profit}
                                             asset={asset.asset}
                                         />
-                                    }>
+                                    }
+                                    isOpen>
                                     {isDesktopView ? (
                                         <Fragment key={asset.asset}>
                                             <OpenPositionsHeader />
