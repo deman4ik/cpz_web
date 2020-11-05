@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useMemo } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
 import { formatNumber, translateValue } from "components/ui/Modals/helpers";
@@ -6,7 +6,9 @@ import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
 import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolumeType";
-import { Input, InputTypes, InputValues, UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { Input, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOption } from "components/ui/Modals/types";
+import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
+import { Delimiter } from "components/common/Delimiter";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
@@ -20,6 +22,7 @@ export interface SubscribeModalContentProps {
     inputs: Input[];
     inputValues: InputValues;
     validate: (type: InputTypes) => void;
+    volumeTypeOptions: VolumeTypeOption[];
 }
 
 export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
@@ -33,20 +36,37 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     enabled,
     inputs,
     inputValues,
-    setInputValues
+    setInputValues,
+    volumeTypeOptions
 }) => {
     const [price, minAmount, , minAmountUSD] = parsedLimits;
+    const [displayedValues, setDisplayedValues] = useState(inputValues);
     const asset = robotData?.robot.subs.asset;
+
+    const minVals = {
+        [InputTypes.assetStatic]: minAmount,
+        [InputTypes.assetDynamicDelta]: minAmount,
+        [InputTypes.currencyDynamic]: minAmountUSD
+    };
     const onChange = (type: string) => (value: string) => {
         const newValues = { ...inputValues };
-        newValues[type] = Number(value);
+        const newDisplayedValues = { ...displayedValues };
 
+        newValues[type] = Number(value);
+        newDisplayedValues[type] = value;
+
+        // if (type !== InputTypes.balancePercent) {
+        // temporary removal of percentage logic TODO remove restriction when implemented
         Object.keys(newValues).forEach((el) => {
-            if (el !== type) {
-                newValues[el] = translateValue({ value, price }, type, el);
+            if (el !== type && el !== InputTypes.balancePercent) {
+                const newValue = translateValue({ value, price }, type, el) || minVals[el];
+                newValues[el] = newValue;
+                newDisplayedValues[el] = formatNumber(newValue);
             }
         });
+        // }
         setInputValues(newValues);
+        setDisplayedValues(newDisplayedValues);
     };
 
     const areValuesEmpty = () => Object.values(inputValues).filter((i) => i === 0 || !!i).length === 0;
@@ -63,13 +83,15 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
 
     const volumeTypeDescriptions = useMemo(
         () => ({
-            assetStatic: `All positions trading amount will be fixed in ${asset}`,
-            currencyDynamic: `All positions trading amount will be fixed in ${robotData?.robot.subs.currency}`
+            [InputTypes.balancePercent]: `All positions trading amount will be fixed in percents of user's balance`,
+            [InputTypes.assetStatic]: `All positions trading amount will be fixed in ${asset}`,
+            [InputTypes.assetDynamicDelta]: `All positions trading amount will be fixed in ${asset}`,
+            [InputTypes.currencyDynamic]: `All positions trading amount will be fixed in ${robotData?.robot.subs.currency}`
         }),
         [asset, robotData]
     );
 
-    const getFormattedValue = (type) => formatNumber(Number(inputValues[type]));
+    const notSelectedAndNotPercentage = (i) => ![volumeType, InputTypes.balancePercent].includes(i.type);
     return (
         <>
             <ErrorLine formError={formError} />
@@ -78,6 +100,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                 <div className={styles_subs.form}>
                     <MinimumAmount asset={robotData ? asset : ""} minAmount={minAmount} minAmountUSD={minAmountUSD} />
                     <SelectVolumeType
+                        volumeTypeOptions={volumeTypeOptions}
                         volumeTypeDescription={volumeTypeDescriptions[volumeType]}
                         enabled={enabled}
                         onChangeVolumeType={setVolumeType}
@@ -85,31 +108,30 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                     />
                     <div className={styles_subs.fieldset}>
                         <div className={styles.input_group}>
-                            <ValueInput /*main input*/
+                            <MainInput
+                                showDelimiter={volumeType !== InputTypes.balancePercent}
                                 validate={() => validate(volumeType)}
-                                volume={getFormattedValue(volumeType)}
+                                volume={displayedValues[volumeType]}
                                 onKeyPress={onKeyPress}
                                 onChangeText={onChange(volumeType)}
                                 unit={UnitsToTypes[volumeType]}
                             />
-                            <span className={styles.delimiter} style={{ marginTop: 3 }}>
-                                ≈
-                            </span>
-                            {inputs
-                                .filter((i) => i.type !== volumeType)
-                                .map((input) => {
-                                    const { type } = input;
-                                    return (
+                            {inputs.filter(notSelectedAndNotPercentage).map((input, i) => {
+                                const { type } = input;
+                                return (
+                                    <div key={`subscribe-${type}`} className={styles.input_container}>
+                                        {i > 0 && <Delimiter />}
                                         <ValueInput
                                             key={`subscribe-${type}`}
                                             validate={() => validate(type)}
-                                            volume={getFormattedValue(type)}
+                                            volume={displayedValues[type]}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChange(type)}
                                             unit={UnitsToTypes[type]}
                                         />
-                                    );
-                                })}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

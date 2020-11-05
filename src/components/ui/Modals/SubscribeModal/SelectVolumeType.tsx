@@ -1,20 +1,21 @@
 import React, { Dispatch, FC, SetStateAction } from "react";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
 import { Select } from "components/basic";
-import { volumeTypeOptions } from "components/ui/Modals/helpers";
-import { InputTypes, InputValues } from "components/ui/Modals/types";
+import { InputTypes, VolumeTypeOption } from "components/ui/Modals/types";
 
 interface SelectVolumeTypeProps {
     volumeType: string;
     onChangeVolumeType: Dispatch<SetStateAction<InputTypes>>;
     enabled: boolean;
     volumeTypeDescription: string;
+    volumeTypeOptions: VolumeTypeOption[];
 }
 export const SelectVolumeType: FC<SelectVolumeTypeProps> = ({
     volumeType,
     volumeTypeDescription,
     onChangeVolumeType,
-    enabled
+    enabled,
+    volumeTypeOptions
 }) => {
     return (
         <div className={styles_subs.fieldset}>

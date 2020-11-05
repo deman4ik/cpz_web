@@ -17,10 +17,10 @@ import { ErrorLine, LoadingIndicator } from "components/common";
 import { buildSettings, getLimitsForRobot } from "../helpers";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
-import { InputTypes } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
+import { RobotInputs } from "components/ui/Modals/constants";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -29,7 +29,8 @@ interface Props {
 }
 const steps = ["Choose Exchange API Keys", "Enter trading amount", "Start Trading Robot"];
 
-const inputs = [{ type: InputTypes.assetStatic }, { type: InputTypes.currencyDynamic }];
+const inputs = RobotInputs;
+
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     /*User context*/
     const {
@@ -167,7 +168,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 }
             })
             .catch((e) => {
-                setFormError(e.message || SOMETHING_WENT_WRONG)
+                setFormError(e.message || SOMETHING_WENT_WRONG);
             });
     };
 

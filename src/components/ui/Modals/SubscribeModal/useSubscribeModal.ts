@@ -12,8 +12,15 @@ interface UseSubscribeModalProps {
     limits: any;
     inputs: Input[];
 }
+const getInitialValues = (inputs: Input[]) =>
+    inputs.reduce((a, v) => {
+        // eslint-disable-next-line no-param-reassign
+        a[v.type] = "";
+        return a;
+    }, {});
+
 export function useSubscribeModal({ limits, inputs }: UseSubscribeModalProps) {
-    const [inputValues, setInputValues] = useState<InputValues>({ assetStatic: "", currencyDynamic: "" });
+    const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(inputs));
     const [volumeType, setVolumeType] = useState<InputTypes>(volumeTypeOptions[0].value);
 
     const parsedLimits = parseLimits(limits);

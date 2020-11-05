@@ -2,6 +2,7 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
+import { InputTypes } from "components/ui/Modals/types";
 
 export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";

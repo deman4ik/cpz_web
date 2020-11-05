@@ -1,20 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useMemo, memo } from "react";
+import React, { useState, useMemo, memo } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_MARKETS } from "graphql/common/queries";
-import { EDIT_ROBOT } from "graphql/local/mutations";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
-import { ErrorLine, LoadingIndicator } from "components/common";
-import { Button, Input, Modal } from "components/basic";
-import { formatMoney } from "config/utils";
-import { getLimitsForRobot, calculateCurrency, calculateAsset, buildSettings } from "./helpers";
-import { color } from "config/constants";
+import { LoadingIndicator } from "components/common";
+import { Button, Modal } from "components/basic";
+import { getLimitsForRobot, buildSettings, robotVolumeTypeOptions } from "./helpers";
 import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
-import { InputTypes } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
+import { RobotInputs } from "components/ui/Modals/constants";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -23,9 +20,9 @@ interface Props {
     setTitle: (title: string) => void;
     code?: string;
 }
-const inputs = [{ type: InputTypes.assetStatic }, { type: InputTypes.currencyDynamic }];
+const inputs = RobotInputs;
 
-const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle, isOpen, title }) => {
+const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title }) => {
     const [formError, setFormError] = useState("");
     const { data: robotData } = useQuery(ROBOT);
 
@@ -83,6 +80,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle, isOpen, tit
             ) : (
                 <>
                     <SubscribeModalContent
+                        volumeTypeOptions={robotVolumeTypeOptions}
                         robotData={robotData}
                         formError={formError}
                         inputValues={inputValues}

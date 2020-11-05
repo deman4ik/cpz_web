@@ -19,6 +19,18 @@ export const volumeTypeOptions = [
     }
 ];
 
+export const robotVolumeTypeOptions = [
+    ...volumeTypeOptions,
+    {
+        label: "Dynamic to asset",
+        value: InputTypes.assetDynamicDelta
+    },
+    {
+        label: "Balance percentage",
+        value: InputTypes.balancePercent
+    }
+];
+
 const getLimits = (data, type) => {
     const result = { asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } }, price: 0 };
     if (!(data.v_user_markets && data.v_user_markets.length)) return result;
@@ -36,17 +48,32 @@ type SettingsType = {
     volumeType: string;
     volume?: number;
     volumeInCurrency?: number;
+    initialVolume?: number;
+    balancePercent?: number;
 };
 interface BuildSettingsProps {
     volumeType: string;
     inputValues: InputValues;
-};
+}
 export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    if (volumeType === InputTypes.assetStatic) {
-        result.volume = Number(inputValues[InputTypes.assetStatic]);
-    } else {
-        result.volumeInCurrency = Number(inputValues[InputTypes.currencyDynamic]);
+    const { assetStatic, currencyDynamic, assetDynamicDelta, balancePercent } = InputTypes;
+    switch (volumeType) {
+        case assetStatic:
+            result.volume = Number(inputValues[assetStatic]);
+            break;
+        case currencyDynamic:
+            result.volumeInCurrency = Number(inputValues[currencyDynamic]);
+            break;
+        case assetDynamicDelta:
+            result.initialVolume = Number(inputValues[currencyDynamic]);
+            break;
+        case balancePercent:
+            result.balancePercent = Number(inputValues[balancePercent]);
+            // result.volumeType = assetStatic;
+            break;
+        default:
+            break;
     }
     return result;
 };
@@ -71,7 +98,7 @@ export const getAmtErrors = (val: string | number, minAmt: number, maxAmt: numbe
     return false;
 };
 
-export function parseLimits(limits: any) {
+export function parseLimits(limits: any): number[] {
     if (!(limits && limits.asset)) {
         return [];
     }
@@ -84,12 +111,27 @@ const translateFunctions = {
     //from Type
     assetStatic: {
         //to Types
-        currencyDynamic: ({ value, price }) => calculateCurrency(value, price) //translation function
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetDynamicDelta: ({ value }) => value, // same type
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price) //translation to currencyDynamic function
+    },
+    assetDynamicDelta: {
+        //to Types
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetStatic: ({ value }) => value, // same type
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price) //translation to currencyDynamic function
     },
     //from Type
     currencyDynamic: {
         //to Types
-        assetStatic: ({ value, price }) => calculateAsset(value, price) //translation function
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetStatic: ({ value, price }) => calculateAsset(value, price), //translation to assetStatic function
+        assetDynamicDelta: ({ value, price }) => calculateAsset(value, price) //translation assetDynamicDelta function
+    },
+    balancePercent: {
+        // assetStatic: ({ value }) => value, // IN PROGRESS
+        // assetDynamicDelta: ({ value }) => value, // IN PROGRESS
+        // currencyDynamic: ({ value }) => value // IN PROGRESS
     }
 };
 
@@ -109,21 +151,27 @@ interface ValidateVolumeProps {
 }
 
 const validateCurrencies = ({ value, minAmount, maxAmount }) => getAmtErrors(value, minAmount, maxAmount);
+const validateBalancePercent = ({ value }) => !(value >= 1 && value < 100);
 
 const validationFunctions = {
     assetStatic: validateCurrencies,
-    currencyDynamic: validateCurrencies
+    assetDynamicDelta: validateCurrencies,
+    currencyDynamic: validateCurrencies,
+    balancePercent: validateBalancePercent
 };
 export function validateVolume({ type, ...rest }: ValidateVolumeProps) {
     const validateFunction = validationFunctions[type];
     return validateFunction(rest);
 }
-
-export function getMinAmounts(parsedLimits) {
+type AmountType = {
+    [InputTypes.assetStatic]: number;
+    [InputTypes.currencyDynamic]: number;
+};
+export function getMinAmounts(parsedLimits): AmountType {
     const [, minAmount, , minAmountUSD] = parsedLimits;
     return { [InputTypes.assetStatic]: minAmount, [InputTypes.currencyDynamic]: minAmountUSD };
 }
-export function getMaxAmounts(parsedLimits) {
+export function getMaxAmounts(parsedLimits): AmountType {
     const [, , maxAmount, , maxAmountUSD] = parsedLimits;
     return { [InputTypes.assetStatic]: maxAmount, [InputTypes.currencyDynamic]: maxAmountUSD };
 }

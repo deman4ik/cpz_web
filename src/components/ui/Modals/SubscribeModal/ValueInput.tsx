@@ -3,7 +3,7 @@ import { Input, InputProps } from "components/basic";
 import React, { FC, ReactText } from "react";
 import { UnitsToTypes } from "components/ui/Modals/types";
 
-interface ValueInputProps {
+export interface ValueInputProps {
     validate?: (value?: any) => any;
     volume?: ReactText | string | number;
     unit: UnitsToTypes;
@@ -14,7 +14,7 @@ interface ValueInputProps {
 }
 export const ValueInput: FC<ValueInputProps> = ({
     validate,
-    volume,
+    volume = "",
     onKeyPress,
     onChangeText,
     onFocus,

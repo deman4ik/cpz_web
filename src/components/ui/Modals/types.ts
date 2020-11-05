@@ -1,14 +1,19 @@
 export enum InputTypes {
     assetStatic = "assetStatic",
-    currencyDynamic = "currencyDynamic"
+    assetDynamicDelta = "assetDynamicDelta",
+    currencyDynamic = "currencyDynamic",
+    balancePercent = "balancePercent"
 }
 export enum Units {
     USD = "USD",
-    BTC = "BTC"
+    BTC = "BTC",
+    percent = "%"
 }
 export enum UnitsToTypes {
     assetStatic = Units.BTC,
-    currencyDynamic = Units.USD
+    assetDynamicDelta = Units.BTC,
+    currencyDynamic = Units.USD,
+    balancePercent = Units.percent
 }
 export type Input = {
     type: InputTypes;
@@ -16,9 +21,17 @@ export type Input = {
 
 export enum volumes {
     assetStatic = "volume",
-    currencyDynamic = "volumeInCurrency"
+    assetDynamicDelta = "initialVolume",
+    currencyDynamic = "volumeInCurrency",
+    balancePercent = "balancePercent"
 }
 export type InputValues = {
     [InputTypes.assetStatic]?: string | number;
+    [InputTypes.assetDynamicDelta]?: string | number;
     [InputTypes.currencyDynamic]?: string | number;
+    [InputTypes.balancePercent]?: string | number;
+};
+export type VolumeTypeOption = {
+    label: string;
+    value: InputTypes;
 };

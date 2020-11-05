@@ -5,6 +5,7 @@ import {
     SubscribeModalContentProps
 } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Button } from "components/basic";
+import { robotVolumeTypeOptions } from "components/ui/Modals/helpers";
 
 interface CreateRobotStep2Props extends SubscribeModalContentProps {
     handleOnBack: () => void;
@@ -31,6 +32,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
         <div className={styles.container}>
             <div className={styles.form}>
                 <SubscribeModalContent
+                    volumeTypeOptions={robotVolumeTypeOptions}
                     robotData={robotData}
                     formError={formError}
                     inputValues={inputValues}

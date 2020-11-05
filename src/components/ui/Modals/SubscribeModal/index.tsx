@@ -6,7 +6,7 @@ import { GET_MARKETS } from "graphql/common/queries";
 import { EDIT_SIGNAL, SUBSCRIBE_TO_SIGNALS } from "graphql/signals/mutations";
 import { SUBSCRIBE } from "graphql/local/mutations";
 import { Modal } from "components/basic";
-import { buildSettings, getLimitsForSignal } from "../helpers";
+import { buildSettings, getLimitsForSignal, robotVolumeTypeOptions, volumeTypeOptions } from "../helpers";
 import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButtons";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Input, InputTypes, InputValues } from "components/ui/Modals/types";
@@ -142,6 +142,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                 />
             }>
             <SubscribeModalContent
+                volumeTypeOptions={volumeTypeOptions}
                 inputValues={inputValues}
                 setInputValues={setInputValues}
                 validate={validate}
