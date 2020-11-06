@@ -8,25 +8,7 @@
   background-color: var(--dark);
 }
 
-.titleFont {
+.title {
   color: var(--accent);
   font-size: var(--small1);
-}
-
-.titleName {
-  display: flex;
-  flex-direction: column;
-  flex: 0.8;
-}
-
-.titlePerformance {
-  display: flex;
-  flex-direction: column;
-  flex: 0.9;
-}
-
-.titleStatistics {
-  display: flex;
-  flex-direction: column;
-  flex: 0.9
 }

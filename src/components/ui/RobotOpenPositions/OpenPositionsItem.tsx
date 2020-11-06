@@ -28,7 +28,12 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
 
     return (
         <div className={styles.tableRow}>
-            <div className={styles.positionGroup} onClick={handleOnPress}>
+            <div
+                className={styles.positionGroup}
+                onClick={handleOnPress}
+                style={{
+                    flex: 0.3
+                }}>
                 <div className={styles.limitWrapper}>
                     <div className={styles.codeGroup}>
                         <div className={styles.tableCellText} style={colorDirection(item.direction)}>
@@ -44,19 +49,19 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
                 </div>
                 <ChevronRightIcon color={color.white} size={26} />
             </div>
-            <div className={styles.volumeGroup}>
+            <div className={styles.col} style={{ flex: 0.2 }}>
+                <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
+                <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                    {item.entry_date}
+                </div>
+            </div>
+            <div className={styles.volumeGroup} style={{ flex: 0.2 }}>
                 <div style={{ marginTop: 2 }}>
                     <SpecificIcon color={getColor(item.direction === "short")} size={16} />
                 </div>
                 <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
             </div>
             <div className={styles.col} style={{ flex: 0.3 }}>
-                <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
-                <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                    {item.entry_date}
-                </div>
-            </div>
-            <div className={styles.col} style={{ flex: 0.2 }}>
                 <div className={styles.tableCellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
                     formatMoney(item.profit)
                 )} $`}</div>
