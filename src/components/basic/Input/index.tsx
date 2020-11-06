@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, CSSProperties } from "react";
 import { v4 as uuid } from "uuid";
 import { Button } from "../Button";
 
-interface Props {
+export interface InputProps {
     value: string;
     icon?: string;
     placeholder?: string;
@@ -26,7 +26,7 @@ interface Props {
     autoComplete?: string;
 }
 
-export const Input: React.FC<Props> = ({
+export const Input: React.FC<InputProps> = ({
     value,
     icon,
     placeholder,
@@ -53,7 +53,7 @@ export const Input: React.FC<Props> = ({
     const inputRef = useRef(null);
     const handleOnInput = (e) => {
         if (type === "number") {
-            e.target.value = e.target.value.toString().slice(0, 8);
+            e.target.value = e.target.value.toString().replace(/,/g, "").slice(0, 8);
         }
         if (onChangeText) {
             onChangeText(e.target.value);
@@ -73,8 +73,10 @@ export const Input: React.FC<Props> = ({
     };
 
     const handleOnFocus = () => {
-        onFocus();
-        if (selectTextOnFocus) {
+        if (onFocus) {
+            onFocus();
+        }
+        if (selectTextOnFocus && inputValue) {
             inputRef?.current?.setSelectionRange(0, inputValue.length);
         }
     };

@@ -19,12 +19,13 @@ const _Modals: React.FC<Props> = ({ isModalVisible, width, setModalVisibility, c
     };
     return (
         <>
-            <Modal
+            <EditRobotModal
                 isOpen={isModalVisible.isVisible && isModalVisible.type === "edit"}
                 onClose={handleSetVisible}
-                title={titleModal}>
-                <EditRobotModal onClose={handleSetVisible} setTitle={setTitleModal} code={code} />
-            </Modal>
+                title={titleModal}
+                setTitle={setTitleModal}
+                code={code}
+            />
             <Modal
                 isOpen={isModalVisible.isVisible && isModalVisible.type === "create"}
                 onClose={handleSetVisible}

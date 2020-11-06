@@ -8,7 +8,7 @@ import styles from "../index.module.css";
 interface Props {
     robotName: string;
     handleOnStart?: () => void;
-    onClose?: () => void;
+    onClose?: (changesMade?: boolean) => void;
 }
 
 const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose }) => (
@@ -31,7 +31,14 @@ const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose 
                 isUppercase
                 onClick={handleOnStart}
             />
-            <Button className={styles.btn} title="No" icon="close" type="primary" isUppercase onClick={onClose} />
+            <Button
+                className={styles.btn}
+                title="No"
+                icon="close"
+                type="primary"
+                isUppercase
+                onClick={() => onClose(true)}
+            />
         </div>
     </>
 );

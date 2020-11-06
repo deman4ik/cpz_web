@@ -1,43 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect, useMemo, memo } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import React, { memo, useContext, useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "libs/hoc/context";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
 import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
-import { CREATE_ROBOT, ACTION_ROBOT } from "graphql/local/mutations";
+import { ACTION_ROBOT, CREATE_ROBOT } from "graphql/local/mutations";
 import { exchangeName } from "config/utils";
 import { StepWizard } from "components/basic";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
 import { ErrorLine, LoadingIndicator } from "components/common";
-import { getLimitsForRobot, calculateCurrency } from "../helpers";
+import { buildSettings, getLimitsForRobot } from "../helpers";
+import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
+import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
+import { GET_MARKETS } from "graphql/common/queries";
+import { SOMETHING_WENT_WRONG } from "config/constants";
+import { AddRobotInputsMap } from "components/ui/Modals/constants";
 
 interface Props {
-    onClose: () => void;
+    onClose: (changesMade: boolean) => void;
     code?: string;
     width: number;
 }
 const steps = ["Choose Exchange API Keys", "Enter trading amount", "Start Trading Robot"];
+
+const inputs = AddRobotInputsMap;
+
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     /*User context*/
     const {
         authState: { user_id }
     } = useContext(AuthContext);
-
     const [inputKey, setInputKey] = useState("");
-    const [inputVolumeAsset, setInputVolumeAsset] = useState("0");
-    const [inputVolumeCurrency, setInputVolumeCurrency] = useState("0");
     const [formError, setFormError] = useState("");
     const [newRobotId, setNewRobotId] = useState("");
-
     const [step, setStep] = useState(1);
-    const { data: dataRobot } = useQuery(ROBOT);
 
     const handleOnNext = () => {
         setStep(step + 1);
@@ -47,23 +50,24 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         setStep(step - 1);
     };
 
+    const { data: robotData } = useQuery(ROBOT);
     const variables = {
-        exchange: !dataRobot ? null : dataRobot.robot.subs.exchange,
-        asset: !dataRobot ? null : dataRobot.robot.subs.asset,
-        currency: !dataRobot ? null : dataRobot.robot.subs.currency,
-        user_id
+        exchange: !robotData ? null : robotData.robot.subs.exchange,
+        asset: !robotData ? null : robotData.robot.subs.asset,
+        currency: !robotData ? null : robotData.robot.subs.currency
     };
-
-    const _refetchQueries = [
-        {
-            query: GET_USER_EXCHANGES_WITH_MARKETS,
-            variables
-        }
-    ];
-
     const { data, loading } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
-        variables,
-        skip: !dataRobot
+        variables: { ...variables, user_id },
+        skip: !robotData
+    });
+
+    const { data: limitsData, loading: limitsLoading } = useQuery(GET_MARKETS, {
+        variables: {
+            exchange: !robotData ? null : robotData?.robot.subs.exchange,
+            asset: !robotData ? null : robotData.robot.subs.asset,
+            currency: !robotData ? null : robotData?.robot.subs.currency
+        },
+        skip: !robotData
     });
 
     const handleOnChangeExchange = (value?: string) => {
@@ -75,7 +79,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         } else {
             setFormError("");
         }
-
         setInputKey(value);
     };
 
@@ -84,65 +87,90 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [actionOnRobot] = useMutation(ACTION_ROBOT);
     const [userRobotStart, { loading: startLoading }] = useMutation(USER_ROBOT_START);
 
-    const limits = useMemo(() => !loading && getLimitsForRobot(data), [loading, data]);
+    const limits = useMemo(() => !limitsLoading && getLimitsForRobot(limitsData), [limitsLoading, limitsData]);
+
+    const {
+        inputValues,
+        setInputValues,
+        parsedLimits,
+        validate,
+        volumeType,
+        setVolumeType,
+        errors
+    } = useSubscribeModal({
+        limits,
+        inputs
+    });
 
     const handleOnCreate = () => {
+        const settings = buildSettings({ volumeType, inputValues });
+
         userRobotCreate({
             variables: {
-                robotId: dataRobot.robot.id,
-                volume: Number(inputVolumeAsset),
+                robotId: robotData.robot.id,
+                settings,
                 userExAccId: inputKey
             }
         }).then((response) => {
-            if (response.data.userRobotCreate.success) {
+            if (response.data.userRobotCreate.result) {
                 setNewRobotId(response.data.userRobotCreate.result);
                 createRobot({
                     variables: {
-                        volume: Number(inputVolumeAsset),
+                        settings,
                         robotInfo: {
-                            robotId: dataRobot.robot.id,
+                            robotId: robotData.robot.id,
                             userRobotId: response.data.userRobotCreate.result,
                             code
                         }
                     }
-                }).then(() => {
+                }).then((res) => {
                     event({
                         action: "create",
                         category: "Robots",
                         label: "create",
-                        value: dataRobot.robot.id
+                        value: robotData.robot.id
                     });
                 });
-                handleOnNext();
             } else {
                 setFormError(response.data.userRobotCreate.error);
             }
+            handleOnNext();
         });
+    };
+
+    const onKeyPress = (e) => {
+        if (e.key === "Enter" && !errors) {
+            handleOnCreate();
+        }
     };
 
     const handleOnStart = () => {
         userRobotStart({
             variables: { id: newRobotId }
-        }).then((response) => {
-            if (response.data.userRobotStart.success) {
-                actionOnRobot({
-                    variables: {
-                        robot: dataRobot.robot,
-                        message: "started"
-                    }
-                }).then(() => {
-                    event({
-                        action: "start",
-                        category: "Robots",
-                        label: "start",
-                        value: dataRobot.robot.id
+        })
+            .then((response) => {
+                if (response.data.userRobotStart.result) {
+                    actionOnRobot({
+                        variables: {
+                            robot: robotData.robot,
+                            message: "started"
+                        }
+                    }).then(() => {
+                        event({
+                            action: "start",
+                            category: "Robots",
+                            label: "start",
+                            value: robotData.robot.id
+                        });
                     });
-                });
-                onClose();
-            } else {
-                setFormError(response.data.userRobotStart.error);
-            }
-        });
+                    onClose(true);
+                } else {
+                    setFormError(response.data.userRobotStart.error);
+                }
+            })
+            .catch((e) => {
+                setFormError(e.message || SOMETHING_WENT_WRONG);
+            });
     };
 
     const dataPicker = useMemo(
@@ -161,14 +189,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             setInputKey(data.userExchange[0].id);
             setFormError("");
             handleOnChangeExchange(data.userExchange[0].id);
-            setInputVolumeAsset(dataRobot.robot.subs.volume);
-            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price).toString());
         }
     }, [dataPicker]);
 
+    const isValid = () => !errors.length;
+
+    const enabled = !(loading || createRobotLoading || startLoading);
     return (
         <>
-            {loading || createRobotLoading || startLoading ? (
+            {!enabled ? (
                 <LoadingIndicator />
             ) : (
                 <>
@@ -179,9 +208,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                     {step === 1 && dataPicker && (
                         <CreateRobotStep1
                             dataPicker={dataPicker}
-                            exchange={variables.exchange}
                             selectedKey={inputKey}
-                            refetchQueries={_refetchQueries}
+                            variables={{ ...variables, user_id }}
                             hasError={!!formError}
                             onClose={onClose}
                             setFormError={setFormError}
@@ -191,19 +219,26 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                     )}
                     {step === 2 && (
                         <CreateRobotStep2
-                            handleOnCreate={handleOnCreate}
+                            volumeTypeOptions={robotVolumeTypeOptions}
+                            inputs={inputs}
+                            robotData={robotData}
+                            formError={formError}
+                            inputValues={inputValues}
+                            setInputValues={setInputValues}
+                            validate={validate}
+                            setVolumeType={setVolumeType}
+                            volumeType={volumeType}
+                            parsedLimits={parsedLimits}
+                            onKeyPress={onKeyPress}
+                            enabled={enabled}
                             handleOnBack={handleOnBack}
-                            asset={dataRobot ? dataRobot.robot.subs.asset : ""}
-                            limits={limits}
-                            volumeAsset={inputVolumeAsset}
-                            volumeCurrency={inputVolumeCurrency}
-                            setInputVolumeAsset={setInputVolumeAsset}
-                            setInputVolumeCurrency={setInputVolumeCurrency}
+                            handleOnCreate={handleOnCreate}
+                            isValid={isValid()}
                         />
                     )}
                     {step === 3 && (
                         <CreateRobotStep3
-                            robotName={dataRobot ? dataRobot.robot.name : null}
+                            robotName={robotData ? robotData.robot.name : null}
                             handleOnStart={handleOnStart}
                             onClose={onClose}
                         />

@@ -1,4 +1,6 @@
 import { formatMoney } from "config/utils";
+import { InputTypes, InputValues, volumes } from "components/ui/Modals/types";
+import { number } from "prop-types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -7,20 +9,9 @@ export const actionText = {
         "If there are any open positions created by this robot, they will be cancelled (closed). This may potentially cause profit loss."
 };
 
-export const volumeTypeOptions = [
-    {
-        label: "Fixed to asset",
-        value: "assetStatic"
-    },
-    {
-        label: "Fixed to currency",
-        value: "currencyDynamic"
-    }
-];
-
 const getLimits = (data, type) => {
     const result = { asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } }, price: 0 };
-    if (!data.v_user_markets) return result;
+    if (!(data.v_user_markets && data.v_user_markets.length)) return result;
 
     const { current_price, limits } = data.v_user_markets[0];
 
@@ -35,14 +26,16 @@ type SettingsType = {
     volumeType: string;
     volume?: number;
     volumeInCurrency?: number;
+    initialVolume?: number;
+    balancePercent?: number;
 };
-export const buildSettings = ({ volumeType, volume, volumeInCurrency }) => {
+interface BuildSettingsProps {
+    volumeType: InputTypes;
+    inputValues: InputValues;
+}
+export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    if (volumeType === "assetStatic") {
-        result.volume = Number(volume);
-    } else {
-        result.volumeInCurrency = Number(volumeInCurrency);
-    }
+    result[volumes[volumeType]] = Number(inputValues[volumeType]);
     return result;
 };
 
@@ -65,3 +58,81 @@ export const getAmtErrors = (val: string | number, minAmt: number, maxAmt: numbe
 
     return false;
 };
+
+export function parseLimits(limits: any): number[] {
+    if (!(limits && limits.asset)) {
+        return [];
+    }
+    const { price, asset } = limits;
+    const { min, max } = asset;
+    return [price, min.amount || 0, max.amount || 0, min.amountUSD || 0, max.amountUSD || 0];
+}
+
+const translateFunctions = {
+    //from Type
+    assetStatic: {
+        //to Types
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetDynamicDelta: ({ value }) => value, // same type
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price) //translation to currencyDynamic function
+    },
+    assetDynamicDelta: {
+        //to Types
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetStatic: ({ value }) => value, // same type
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price) //translation to currencyDynamic function
+    },
+    //from Type
+    currencyDynamic: {
+        //to Types
+        balancePercent: ({ value }) => value, // IN PROGRESS
+        assetStatic: ({ value, price }) => calculateAsset(value, price), //translation to assetStatic function
+        assetDynamicDelta: ({ value, price }) => calculateAsset(value, price) //translation assetDynamicDelta function
+    },
+    balancePercent: {
+        // assetStatic: ({ value }) => value, // IN PROGRESS
+        // assetDynamicDelta: ({ value }) => value, // IN PROGRESS
+        // currencyDynamic: ({ value }) => value // IN PROGRESS
+    }
+};
+
+export function translateValue(args: any, fromType: string, toType: string): number {
+    const computeFunction = translateFunctions[fromType][toType];
+    if (computeFunction) {
+        return computeFunction(args);
+    }
+    return 0;
+}
+
+interface ValidateVolumeProps {
+    type: string;
+    value: string | number;
+    minAmount: string | number;
+    maxAmount: string | number;
+}
+
+const validateCurrencies = ({ value, minAmount, maxAmount }) => getAmtErrors(value, minAmount, maxAmount);
+const validateBalancePercent = ({ value }) => !(value >= 1 && value < 100);
+
+const validationFunctions = {
+    assetStatic: validateCurrencies,
+    assetDynamicDelta: validateCurrencies,
+    currencyDynamic: validateCurrencies,
+    balancePercent: validateBalancePercent
+};
+export function validateVolume({ type, ...rest }: ValidateVolumeProps) {
+    const validateFunction = validationFunctions[type];
+    return validateFunction(rest);
+}
+type AmountType = {
+    [InputTypes.assetStatic]: number;
+    [InputTypes.currencyDynamic]: number;
+};
+export function getMinAmounts(parsedLimits): AmountType {
+    const [, minAmount, , minAmountUSD] = parsedLimits;
+    return { [InputTypes.assetStatic]: minAmount, [InputTypes.currencyDynamic]: minAmountUSD };
+}
+export function getMaxAmounts(parsedLimits): AmountType {
+    const [, , maxAmount, , maxAmountUSD] = parsedLimits;
+    return { [InputTypes.assetStatic]: maxAmount, [InputTypes.currencyDynamic]: maxAmountUSD };
+}

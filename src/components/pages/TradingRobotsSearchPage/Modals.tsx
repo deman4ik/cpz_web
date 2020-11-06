@@ -8,32 +8,39 @@ import { modalType } from "../types";
 
 interface Props {
     width: number;
+    afterClose: () => void;
 }
+// robots/search/ page
 
-export const Modals: React.FC<Props> = ({ width }) => {
+export const Modals: React.FC<Props> = ({ width, afterClose }) => {
     const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
+    const handleClose = (needsRefreshing: boolean) => {
+        if (needsRefreshing) {
+            afterClose();
+        }
+        handleSetVisible();
+    };
     return (
         <>
             <Modal
                 isOpen={getIsVisibleStatus(modalType.create, dataModal)}
-                onClose={handleSetVisible}
+                onClose={() => handleClose(true)}
                 title="Add Trading Robot">
-                <CreateRobotModal onClose={handleSetVisible} width={width} />
+                <CreateRobotModal onClose={handleClose} width={width} />
             </Modal>
             <Modal
                 isOpen={getIsVisibleStatus(modalType.action, dataModal)}
                 onClose={handleSetVisible}
                 title={titleModal}>
-                <ActionRobotModal
-                    setTitle={setTitleModal}
-                    onClose={handleSetVisible}
-                    type={dataModal.ModalVisible.type}
-                />
+                <ActionRobotModal setTitle={setTitleModal} onClose={handleClose} type={dataModal.ModalVisible.type} />
             </Modal>
-            <Modal isOpen={getIsVisibleStatus(modalType.edit, dataModal)} onClose={handleSetVisible} title={titleModal}>
-                <EditRobotModal onClose={handleSetVisible} setTitle={setTitleModal} />
-            </Modal>
+            <EditRobotModal
+                isOpen={getIsVisibleStatus(modalType.edit, dataModal)}
+                onClose={handleClose}
+                title={titleModal}
+                setTitle={setTitleModal}
+            />
         </>
     );
 };

@@ -7,7 +7,6 @@ import { PageToolbar } from "components/common";
 import { RobotPerformance } from "components/ui/RobotPerformance";
 import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
 import { SignalRobots } from "components/ui/SignalsRobots";
-import { Modals } from "./Modals";
 import styles from "./index.module.css";
 
 export const RobotsPage: React.FC = () => {

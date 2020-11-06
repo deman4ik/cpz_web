@@ -101,7 +101,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             if (handleOnSubmit) {
                 handleOnSubmit(fetchData.userExchangeAccUpsert.result);
             } else {
-                onClose();
+                onClose(true);
             }
         }
     };

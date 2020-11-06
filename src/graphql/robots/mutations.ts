@@ -1,53 +1,41 @@
 import gql from "graphql-tag";
 
 export const USER_ROBOT_CREATE = gql`
-    mutation userRobotCreate($robotId: String!, $volume: Float!, $userExAccId: String!) {
-        userRobotCreate(robotId: $robotId, settings: { volume: $volume }, userExAccId: $userExAccId) {
-            error
+    mutation userRobotCreate($robotId: uuid!, $settings: UserRobotSettings!, $userExAccId: uuid!) {
+        userRobotCreate(robotId: $robotId, settings: $settings, userExAccId: $userExAccId) {
             result
-            success
         }
     }
 `;
 
 export const USER_ROBOT_EDIT = gql`
-    mutation userRobotEdit($id: String!, $volume: Float!) {
-        userRobotEdit(id: $id, settings: { volume: $volume }) {
-            error
+    mutation userRobotEdit($id: uuid!, $settings: UserRobotSettings!) {
+        userRobotEdit(id: $id, settings: $settings) {
             result
-            success
         }
     }
 `;
 
 export const USER_ROBOT_DELETE = gql`
-    mutation userRobotDelete($id: String!) {
+    mutation userRobotDelete($id: uuid!) {
         userRobotDelete(id: $id) {
-            error
             result
-            success
         }
     }
 `;
 
 export const USER_ROBOT_START = gql`
-    mutation userRobotStart($id: ID!) {
+    mutation userRobotStart($id: uuid!) {
         userRobotStart(id: $id) {
-            error
-            status
-            id
-            success
+            result
         }
     }
 `;
 
 export const USER_ROBOT_STOP = gql`
-    mutation userRobotStop($id: ID!) {
+    mutation userRobotStop($id: uuid!) {
         userRobotStop(id: $id) {
-            error
-            status
-            id
-            success
+            result
         }
     }
 `;
