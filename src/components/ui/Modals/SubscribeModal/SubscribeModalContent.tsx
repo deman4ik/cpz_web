@@ -6,9 +6,10 @@ import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
 import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolumeType";
-import { Input, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOption } from "components/ui/Modals/types";
+import { InputMap, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOption } from "components/ui/Modals/types";
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
+import { createPrivateKey } from "crypto";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
@@ -19,7 +20,7 @@ export interface SubscribeModalContentProps {
     onKeyPress: (e: any) => void;
     enabled: boolean;
     formError: string;
-    inputs: Input[];
+    inputs: InputMap;
     inputValues: InputValues;
     validate: (type: InputTypes) => void;
     volumeTypeOptions: VolumeTypeOption[];
@@ -42,12 +43,14 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     const [price, minAmount, , minAmountUSD] = parsedLimits;
     const [displayedValues, setDisplayedValues] = useState(inputValues);
     const asset = robotData?.robot.subs.asset;
+    const selectedInputs = inputs[volumeType];
 
     const minVals = {
         [InputTypes.assetStatic]: minAmount,
         [InputTypes.assetDynamicDelta]: minAmount,
         [InputTypes.currencyDynamic]: minAmountUSD
     };
+
     const onChange = (type: string) => (value: string) => {
         const newValues = { ...inputValues };
         const newDisplayedValues = { ...displayedValues };
@@ -109,18 +112,18 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                     <div className={styles_subs.fieldset}>
                         <div className={styles.input_group}>
                             <MainInput
-                                showDelimiter={volumeType !== InputTypes.balancePercent}
+                                showDelimiter={false}
                                 validate={() => validate(volumeType)}
                                 volume={displayedValues[volumeType]}
                                 onKeyPress={onKeyPress}
                                 onChangeText={onChange(volumeType)}
                                 unit={UnitsToTypes[volumeType]}
                             />
-                            {inputs.filter(notSelectedAndNotPercentage).map((input, i) => {
+                            {selectedInputs.filter(notSelectedAndNotPercentage).map((input, i) => {
                                 const { type } = input;
                                 return (
                                     <div key={`subscribe-${type}`} className={styles.input_container}>
-                                        {i > 0 && <Delimiter />}
+                                        <Delimiter />
                                         <ValueInput
                                             key={`subscribe-${type}`}
                                             validate={() => validate(type)}

@@ -6,7 +6,8 @@ import { GET_MARKETS } from "graphql/common/queries";
 import { EDIT_SIGNAL, SUBSCRIBE_TO_SIGNALS } from "graphql/signals/mutations";
 import { SUBSCRIBE } from "graphql/local/mutations";
 import { Modal } from "components/basic";
-import { buildSettings, getLimitsForSignal, robotVolumeTypeOptions, volumeTypeOptions } from "../helpers";
+import { buildSettings, getLimitsForSignal } from "../helpers";
+import { AddRobotInputsMap, volumeTypeOptions } from "../constants";
 import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButtons";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Input, InputTypes, InputValues } from "components/ui/Modals/types";
@@ -21,7 +22,7 @@ interface Props {
     inputs?: Input[];
 }
 
-const inputs = [{ type: InputTypes.assetStatic }, { type: InputTypes.currencyDynamic }];
+const inputs = AddRobotInputsMap;
 
 const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpen, title }) => {
     //local states

@@ -22,7 +22,7 @@ export const Modals: React.FC<{ afterClose: () => void }> = ({ afterClose }) => 
                 title={titleModal}
                 onClose={handleClose}
                 setTitle={setTitleModal}
-                type={dataModal.ModalVisible.type}
+                actionType={dataModal.ModalVisible.type}
             />
             <Modal
                 isOpen={getIsVisibleStatus(modalType.unsubscribe, dataModal)}

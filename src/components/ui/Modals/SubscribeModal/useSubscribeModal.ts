@@ -1,16 +1,11 @@
-import { useState } from "react";
-import { Input, InputTypes, InputValues } from "components/ui/Modals/types";
-import {
-    getMaxAmounts,
-    getMinAmounts,
-    parseLimits,
-    validateVolume,
-    volumeTypeOptions
-} from "components/ui/Modals/helpers";
+import { useEffect, useState } from "react";
+import { Input, InputMap, InputTypes, InputValues } from "components/ui/Modals/types";
+import { getMaxAmounts, getMinAmounts, parseLimits, validateVolume } from "components/ui/Modals/helpers";
+import { volumeTypeOptions } from "../constants";
 
 interface UseSubscribeModalProps {
     limits: any;
-    inputs: Input[];
+    inputs: InputMap;
 }
 const getInitialValues = (inputs: Input[]) =>
     inputs.reduce((a, v) => {
@@ -20,8 +15,14 @@ const getInitialValues = (inputs: Input[]) =>
     }, {});
 
 export function useSubscribeModal({ limits, inputs }: UseSubscribeModalProps) {
-    const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(inputs));
     const [volumeType, setVolumeType] = useState<InputTypes>(volumeTypeOptions[0].value);
+    const selectedInputs = inputs[volumeType];
+    const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(selectedInputs));
+
+    useEffect(() => {
+        setInputValues(getInitialValues(selectedInputs));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [volumeType]);
 
     const parsedLimits = parseLimits(limits);
     const minAmounts = getMinAmounts(parsedLimits);
@@ -37,7 +38,7 @@ export function useSubscribeModal({ limits, inputs }: UseSubscribeModalProps) {
     };
 
     const getErrors = () => {
-        return inputs.map((input) => validate(input.type));
+        return selectedInputs.map((input) => validate(input.type));
     };
     const errors = getErrors().filter((i) => i);
 

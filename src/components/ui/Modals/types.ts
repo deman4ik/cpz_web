@@ -35,3 +35,7 @@ export type VolumeTypeOption = {
     label: string;
     value: InputTypes;
 };
+
+export type InputMap = {
+    [key in InputTypes]?: Input[];
+};

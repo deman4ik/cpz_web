@@ -7,11 +7,12 @@ import { GET_MARKETS } from "graphql/common/queries";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { LoadingIndicator } from "components/common";
 import { Button, Modal } from "components/basic";
-import { getLimitsForRobot, buildSettings, robotVolumeTypeOptions } from "./helpers";
+import { getLimitsForRobot, buildSettings } from "./helpers";
+import { robotVolumeTypeOptions } from "./constants";
 import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
-import { RobotInputs } from "components/ui/Modals/constants";
+import { AddRobotInputsMap } from "components/ui/Modals/constants";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -20,7 +21,7 @@ interface Props {
     setTitle: (title: string) => void;
     code?: string;
 }
-const inputs = RobotInputs;
+const inputs = AddRobotInputsMap;
 
 const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title }) => {
     const [formError, setFormError] = useState("");

@@ -15,12 +15,13 @@ import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
 import { ErrorLine, LoadingIndicator } from "components/common";
 import { buildSettings, getLimitsForRobot } from "../helpers";
+import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
-import { RobotInputs } from "components/ui/Modals/constants";
+import { AddRobotInputsMap } from "components/ui/Modals/constants";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -29,7 +30,7 @@ interface Props {
 }
 const steps = ["Choose Exchange API Keys", "Enter trading amount", "Start Trading Robot"];
 
-const inputs = RobotInputs;
+const inputs = AddRobotInputsMap;
 
 const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     /*User context*/
@@ -218,6 +219,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                     )}
                     {step === 2 && (
                         <CreateRobotStep2
+                            volumeTypeOptions={robotVolumeTypeOptions}
                             inputs={inputs}
                             robotData={robotData}
                             formError={formError}

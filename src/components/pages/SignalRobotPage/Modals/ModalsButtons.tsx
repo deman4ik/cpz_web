@@ -5,7 +5,7 @@ import React from "react";
 
 export const ModalButtons = ({ okTitle, cancelTitle, disabled, onOk, onCancel, isLoading }) => {
     return (
-        <div className={styles_subs.btns} style={{ marginBottom: 20}}>
+        <div className={styles_subs.btns} style={{ marginBottom: 20 }}>
             <Button
                 className={styles.btn}
                 title={okTitle}

@@ -1,5 +1,6 @@
 import { formatMoney } from "config/utils";
-import { InputTypes, InputValues } from "components/ui/Modals/types";
+import { InputTypes, InputValues, volumes } from "components/ui/Modals/types";
+import { number } from "prop-types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -7,29 +8,6 @@ export const actionText = {
     stop:
         "If there are any open positions created by this robot, they will be cancelled (closed). This may potentially cause profit loss."
 };
-
-export const volumeTypeOptions = [
-    {
-        label: "Fixed to asset",
-        value: InputTypes.assetStatic
-    },
-    {
-        label: "Fixed to currency",
-        value: InputTypes.currencyDynamic
-    }
-];
-
-export const robotVolumeTypeOptions = [
-    ...volumeTypeOptions,
-    {
-        label: "Dynamic to asset",
-        value: InputTypes.assetDynamicDelta
-    },
-    {
-        label: "Balance percentage",
-        value: InputTypes.balancePercent
-    }
-];
 
 const getLimits = (data, type) => {
     const result = { asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } }, price: 0 };
@@ -52,29 +30,12 @@ type SettingsType = {
     balancePercent?: number;
 };
 interface BuildSettingsProps {
-    volumeType: string;
+    volumeType: InputTypes;
     inputValues: InputValues;
 }
 export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    const { assetStatic, currencyDynamic, assetDynamicDelta, balancePercent } = InputTypes;
-    switch (volumeType) {
-        case assetStatic:
-            result.volume = Number(inputValues[assetStatic]);
-            break;
-        case currencyDynamic:
-            result.volumeInCurrency = Number(inputValues[currencyDynamic]);
-            break;
-        case assetDynamicDelta:
-            result.initialVolume = Number(inputValues[currencyDynamic]);
-            break;
-        case balancePercent:
-            result.balancePercent = Number(inputValues[balancePercent]);
-            // result.volumeType = assetStatic;
-            break;
-        default:
-            break;
-    }
+    result[volumes[volumeType]] = Number(inputValues[volumeType]);
     return result;
 };
 

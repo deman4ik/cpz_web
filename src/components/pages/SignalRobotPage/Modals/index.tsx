@@ -32,7 +32,7 @@ const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClo
                 title={modalTitle}
                 onClose={handleClose}
                 setTitle={setModalTitle}
-                type={isModalVisible.type}
+                actionType={isModalVisible.type}
             />
             <Modal isOpen={!isSubscribeModal} onClose={resetModal} title={modalTitle}>
                 <UnsubscribeModal setTitle={setModalTitle} onClose={handleClose} />
