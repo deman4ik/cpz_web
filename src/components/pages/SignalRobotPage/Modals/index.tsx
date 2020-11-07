@@ -13,6 +13,7 @@ interface Props {
 const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClose }) => {
     const [modalTitle, setModalTitle] = useState(null);
     const isSubscribeModal = isModalVisible.isVisible && isModalVisible.type !== "unsubscribe";
+    const isUnsubscribeModal = isModalVisible.isVisible && isModalVisible.type !== "subscribe";
 
     const resetModal = () => {
         setModalVisibility({ isVisible: false, type: "" });
@@ -34,7 +35,7 @@ const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClo
                 setTitle={setModalTitle}
                 actionType={isModalVisible.type}
             />
-            <Modal isOpen={!isSubscribeModal} onClose={resetModal} title={modalTitle}>
+            <Modal isOpen={isUnsubscribeModal} onClose={resetModal} title={modalTitle}>
                 <UnsubscribeModal setTitle={setModalTitle} onClose={handleClose} />
             </Modal>
         </>
