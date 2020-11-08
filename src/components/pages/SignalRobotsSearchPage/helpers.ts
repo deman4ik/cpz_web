@@ -5,20 +5,9 @@ export const parseUserSettings = (robot) => {
     return robot.user_signals[0].user_signal_settings.signal_settings;
 };
 
-const areThereUserSignals = (robot) => robot.user_signals && robot.user_signals.length;
-
-export function parseRobotInfo(robot: any) {
-    const {
-        id,
-        code,
-        name,
-        exchange,
-        asset,
-        currency,
-        robot_settings: { robot_settings }
-    } = robot;
+export function parseRobotInfo(robot: any, robotSettings: any) {
+    const { id, code, name, exchange, asset, currency } = robot;
     const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
-    const robotSettings = areThereUserSignals(robot) ? parseUserSettings(robot) : robot_settings;
     return {
         cache: {
             id,
@@ -57,12 +46,16 @@ export function attachUserStats(res: any, userSignals: any) {
     res.tradesCount = userStats.tradesCount;
     res.performance = userStats.equity;
 }
+const areThereUserSignals = (robot) => robot.user_signals && robot.user_signals.length;
 
 export const formatRobotsData = (data: any) =>
     data.map((robot: any) => {
         const { asset, user_signals, started_at } = robot;
-
-        const res = parseRobotInfo(robot);
+        const {
+            robot_settings: { robot_settings }
+        } = robot;
+        const robotSettings = areThereUserSignals(robot) ? parseUserSettings(robot) : robot_settings;
+        const res = parseRobotInfo(robot, robotSettings);
 
         res.active = started_at ? dayjs.utc(started_at).fromNow(true) : started_at;
 

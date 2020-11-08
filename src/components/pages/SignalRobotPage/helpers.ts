@@ -1,6 +1,6 @@
 import dayjs from "libs/dayjs";
 import { color } from "config/constants";
-import { buildRobotSettings, capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
+import { capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
 import { SectionType } from "./types";
 
 // TODO: use DB-like structure

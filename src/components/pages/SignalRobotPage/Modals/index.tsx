@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 
 import { SubscribeModal, UnsubscribeModal } from "components/ui/Modals";
 import { Modal } from "components/basic";
-import { VisibleModal } from "./types";
+import { VisibleModal } from "../types";
 
 interface Props {
     isModalVisible: VisibleModal;
@@ -12,6 +12,8 @@ interface Props {
 
 const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClose }) => {
     const [modalTitle, setModalTitle] = useState(null);
+    const isSubscribeModal = isModalVisible.isVisible && isModalVisible.type !== "unsubscribe";
+
     const resetModal = () => {
         setModalVisibility({ isVisible: false, type: "" });
     };
@@ -25,16 +27,14 @@ const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClo
 
     return (
         <>
-            <Modal
-                isOpen={isModalVisible.isVisible && isModalVisible.type !== "unsubscribe"}
-                onClose={resetModal}
-                title={modalTitle}>
-                <SubscribeModal onClose={handleClose} setTitle={setModalTitle} type={isModalVisible.type} />
-            </Modal>
-            <Modal
-                isOpen={isModalVisible.isVisible && isModalVisible.type === "unsubscribe"}
-                onClose={resetModal}
-                title={modalTitle}>
+            <SubscribeModal
+                isOpen={isSubscribeModal}
+                title={modalTitle}
+                onClose={handleClose}
+                setTitle={setModalTitle}
+                actionType={isModalVisible.type}
+            />
+            <Modal isOpen={!isSubscribeModal} onClose={resetModal} title={modalTitle}>
                 <UnsubscribeModal setTitle={setModalTitle} onClose={handleClose} />
             </Modal>
         </>

@@ -9,7 +9,7 @@ import { Header } from "./Header";
 import { PageTabs } from "./PageTabs";
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { Toolbar } from "./Toolbar";
-import { Modals } from "./Modals";
+import { Modals } from "./Modals/index";
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
 // types
