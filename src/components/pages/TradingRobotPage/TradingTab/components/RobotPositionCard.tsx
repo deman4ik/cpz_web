@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Robot, SectionType } from "../../types";
-import { formatDate, valueWithSign, colorAction, formatMoney, splitCapitaize } from "config/utils";
+import { formatDate, valueWithSign, colorAction, formatMoney, splitCapitaize, getTimeFromNow } from "config/utils";
 import { VolumePositionRobotPageItem } from ".";
 import styles from "./styles/RobotPositionCard.module.css";
 
@@ -44,13 +44,17 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                         {activeTab === SectionType.signals ? "Price" : "Entry"}
                     </div>
                     <div className={styles.mobileCardPrice}>{formatMoney(item.entry_price || item.price)} $</div>
-                    <div className={styles.mobileCardDate}>{item.entry_date ? formatDate(item.entry_date) : ""}</div>
+                    <div className={styles.mobileCardDate} title={formatDate(item.entry_date)}>
+                        {getTimeFromNow(item.entry_date)}
+                    </div>
                 </div>
                 {activeTab === SectionType.closedPositions && (
                     <div className={styles.mobileCardRow}>
                         <div className={styles.mobileCardTextKey}>Exit</div>
                         <div className={styles.mobileCardPrice}>{formatMoney(item.exit_price)} $</div>
-                        <div className={styles.mobileCardDate}>{item.exit_date ? formatDate(item.exit_date) : ""}</div>
+                        <div className={styles.mobileCardDate} title={formatDate(item.exit_date)}>
+                            {getTimeFromNow(item.exit_date)}
+                        </div>
                     </div>
                 )}
             </div>

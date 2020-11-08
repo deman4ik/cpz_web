@@ -91,8 +91,3 @@ export const getFormatDataRobots = (robots: any) =>
             code
         };
     });
-
-export const title = {
-    signals: "My Signals Robots",
-    robots: "My Robots"
-};

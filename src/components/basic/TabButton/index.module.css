@@ -8,14 +8,10 @@
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 15px;
-}
-
-.btnText {
+    text-align: center;
     font-size: var(--normal3);
-    white-space: nowrap;
-    word-wrap: break-word;
-    display: inline;
     color: var(--accent);
+    word-break: normal;
 }
 
 .isActive {
@@ -24,7 +20,7 @@
 }
 
 @media (max-width: 480px) {
-    .btnText {
+    .btn {
         font-size: var(--small1);
     }
 }

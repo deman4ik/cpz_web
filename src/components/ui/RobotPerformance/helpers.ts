@@ -41,8 +41,3 @@ export const queryParam = {
     signals: "signal",
     robots: "userRobot"
 };
-
-export const title = {
-    signals: "My Signals Total Performance",
-    robots: "My Robots Total Performance"
-};

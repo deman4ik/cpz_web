@@ -100,8 +100,3 @@ export const getFormatDataRobots = (positions: any) =>
         }
         return item ? acc : [...acc, obj];
     }, []);
-
-export const title = {
-    signals: "My Signals Open Positions",
-    robots: "My Robots Open Positions"
-};

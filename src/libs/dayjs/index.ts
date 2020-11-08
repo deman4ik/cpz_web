@@ -2,10 +2,12 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
+import toObject from "dayjs/plugin/toObject";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
+dayjs.extend(toObject);
 
 dayjs.updateLocale("en", {
     relativeTime: {

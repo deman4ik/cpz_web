@@ -2,19 +2,15 @@ import React, { memo } from "react";
 
 import { HeaderButton } from "./HeaderButton";
 import { HeaderStatsSection } from "./HeaderStatsSection";
-import { HeaderTabs } from "./HeaderTabs";
 import { capitalize } from "config/utils";
 import styles from "./styles/index.module.css";
-import { TabType } from "config/types";
 
 interface Props {
     robotData: any;
-    activeTab: any;
-    setActiveTab: (activeTab: TabType) => void;
     subscribe: (variables: any) => void;
 }
 
-const _PageHeader: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subscribe }) => {
+const _PageHeader: React.FC<Props> = ({ robotData, subscribe }) => {
     const { userRobot, robot } = robotData;
 
     return (
@@ -29,11 +25,6 @@ const _PageHeader: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subs
                 <div className={styles.headerMessage}>{capitalize(userRobot || null)}</div>
             </div>
             <HeaderStatsSection robotData={robotData} />
-            <HeaderTabs
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                isOwnedByUser={robotData.robot.isOwnedByUser}
-            />
         </div>
     );
 };

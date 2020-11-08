@@ -19,22 +19,22 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
 
     return (
         <div className={styles.tableRow}>
-            <div className={styles.col} style={{ flex: 0.8 }}>
+            <div className={styles.col} style={{ flex: 0.2 }}>
                 <div className={styles.wraperBlock} onClick={handleOnClick}>
                     <div className={styles.wraperName}>
                         <div className={[styles.tableCellText, styles.cellWidth].join(" ")}>{item.name}</div>
-                        <div className={styles.cellProfit} style={colorAction(item.profit > 0)}>
-                            {item.profit ? `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $` : null}
-                        </div>
                     </div>
                     <ChevronRightIcon color="white" size={26} />
                 </div>
             </div>
-            <div className={styles.col} style={{ flex: 0.85 }}>
-                {item?.equity?.length ? <DynamicAreaChart height={120} data={item.equity} /> : null}
+            <div className={styles.col} style={{ flex: 0.4 }}>
+                {item?.equity?.length ? <DynamicAreaChart height={100} data={item.equity} /> : null}
             </div>
             <div className={styles.col} style={{ flex: 0.05 }} />
-            <div className={styles.col} style={{ flex: 0.9 }}>
+            <div className={styles.col} style={{ ...colorAction(item.profit > 0), flex: 0.15 }}>
+                {item.profit ? `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $` : null}
+            </div>
+            <div className={styles.col} style={{ flex: 0.2 }}>
                 {item.winRate || item.winRate === 0 ? (
                     <>
                         <div className={styles.statisticsElement}>
