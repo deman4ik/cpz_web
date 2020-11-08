@@ -8,6 +8,7 @@ import { TabSchema } from "./types";
 
 //styles
 import styles from "./styles/Tabs.module.css";
+import useWindowDimensions from "hooks/useWindowDimensions";
 
 type Props = {
     activeTab: number;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 const Tabs = ({ activeTab, setActiveTab, tabSchema }: Props): JSX.Element => {
+    const { width } = useWindowDimensions();
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
@@ -25,6 +27,7 @@ const Tabs = ({ activeTab, setActiveTab, tabSchema }: Props): JSX.Element => {
                             title={title}
                             isActive={activeTab === index}
                             handleOnClick={() => setActiveTab(index)}
+                            maxTextWidth={(width * 0.8) / tabSchema.length}
                         />
                     </div>
                 ))}

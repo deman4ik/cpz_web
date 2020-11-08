@@ -8,7 +8,9 @@ import {
     colorDirection,
     formatMoney,
     colorAction,
-    valueWithSign
+    valueWithSign,
+    getTimeFromNow,
+    formatDate
 } from "config/utils";
 import { color } from "config/constants";
 import { PropsOpenPositionsItem } from "./types";
@@ -51,8 +53,8 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
             </div>
             <div className={styles.col} style={{ flex: 0.2 }}>
                 <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
-                <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                    {item.entry_date}
+                <div className={styles.secondaryText} style={{ marginTop: 2 }} title={formatDate(item.entry_date)}>
+                    {getTimeFromNow(item.entry_date)}
                 </div>
             </div>
             <div className={styles.volumeGroup} style={{ flex: 0.2 }}>

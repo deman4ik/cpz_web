@@ -18,7 +18,7 @@ export const RobotsPage: React.FC = () => {
     const tabSchema = [
         {
             title: "Open Positions",
-            tabPage: <RobotOpenPositions width={width} type="robots" />
+            tabPage: <RobotOpenPositions type="robots" />
         },
         {
             title: "Total Performance",

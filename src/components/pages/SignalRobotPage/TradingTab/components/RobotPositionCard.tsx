@@ -2,7 +2,15 @@ import React from "react";
 
 import { renderAction, renderVolume } from ".";
 
-import { formatDate, valueWithSign, colorAction, capitalize, formatMoney, splitCapitaize } from "config/utils";
+import {
+    formatDate,
+    valueWithSign,
+    colorAction,
+    capitalize,
+    formatMoney,
+    splitCapitaize,
+    getTimeFromNow
+} from "config/utils";
 import { SectionType } from "../../types";
 
 import styles from "./styles/RobotPositionCard.module.css";
@@ -52,7 +60,9 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                         {activeTab === SectionType.signals ? "Price" : "Entry"}
                     </div>
                     <div className={styles.mobileCardPrice}>{formatMoney(item.entry_price || item.price)} $</div>
-                    <div className={styles.mobileCardDate}>{formatDate(item.entry_date || item?.timestamp)}</div>
+                    <div className={styles.mobileCardDate} title={formatDate(item.entry_date || item?.timestamp)}>
+                        {getTimeFromNow(item.entry_date || item?.timestamp)}
+                    </div>
                 </div>
 
                 {activeTab === SectionType.openPositions && (
@@ -73,7 +83,9 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                     <div className={styles.mobileCardRow}>
                         <div className={styles.mobileCardTextKey}>Exit</div>
                         <div className={styles.mobileCardPrice}>{formatMoney(item.exit_price)} $</div>
-                        <div className={styles.mobileCardDate}>{formatDate(item.exit_date || item?.timestamp)}</div>
+                        <div className={styles.mobileCardDate} title={formatDate(item.exit_date || item?.timestamp)}>
+                            {getTimeFromNow(item.exit_date || item?.timestamp)}
+                        </div>
                     </div>
                 )}
             </div>

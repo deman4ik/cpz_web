@@ -1,16 +1,42 @@
-.cardItemsContainer {
+.exchangeHeader {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-left: 0;
-    padding-bottom: 8px;
+    align-items: center;
+    background-color: var(--dark);
+    padding: 10px 20px;
 }
 
-@media (max-width: 1200px) {
-    .container {
-        margin-left: 10px;
+.exchange {
+    font-size: var(--big1);
+    color: white;
+}
+
+.aggregatedStats {
+    font-size: var(--normal0);
+    color: var(--accent);
+    padding-left: 20px;
+}
+
+@media (max-width: 1080px) {
+    .exchange {
+        font-size: var(--normal3);
+    }
+    .aggregatedStats {
+        padding-left: 15px;
+    }
+}
+
+@media (max-width: 720px) {
+    .exchangeHeader {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .exchange {
+        font-size: var(--normal1);
+    }
+    .aggregatedStats {
+        font-size: var(--small2);
+        padding-left: 8px;
     }
 }

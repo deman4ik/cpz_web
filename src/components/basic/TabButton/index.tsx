@@ -6,12 +6,16 @@ interface Props {
     isActive: boolean;
     handleOnClick: () => void;
     style?: React.CSSProperties;
+    maxTextWidth?: number;
 }
 
-export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, style }) => {
+export const TabButton: React.FC<Props> = ({ title, isActive, handleOnClick, style, maxTextWidth }) => {
     return (
-        <div className={`${styles.btn} ${isActive && styles.isActive}`} onClick={handleOnClick} style={style}>
-            <div className={`${styles.btnText} ${isActive && styles.isActive}`}>{title}</div>
+        <div
+            className={`${styles.btn} ${isActive && styles.isActive}`}
+            onClick={handleOnClick}
+            style={{ maxWidth: maxTextWidth || "unset", ...style }}>
+            {title}
         </div>
     );
 };
