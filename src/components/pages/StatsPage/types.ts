@@ -13,4 +13,3 @@ export enum QueueTypes {
     signals = "signal",
     robots = "userRobot"
 }
-;
