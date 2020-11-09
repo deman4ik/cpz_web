@@ -14,6 +14,11 @@ export enum PageType {
     supportRequests = "Support Requests"
 }
 
+export enum RobotsType {
+    signals = "signals",
+    robots = "robots"
+}
+
 export interface DeviceProps {
     isMobile: boolean;
 }

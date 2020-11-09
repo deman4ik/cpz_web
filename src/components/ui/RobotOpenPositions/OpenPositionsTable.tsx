@@ -19,16 +19,16 @@ import { formatMoney, getColor, valueWithSign } from "config/utils";
 const cardWidth = 310;
 
 type Props = {
-    displayType: string;
+    type: string;
     asset: any;
 };
 
-const OpenPositionsTable = ({ displayType, asset }: Props): JSX.Element => {
+const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
     const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${displayType}/robot/${code}`);
+        Router.push(`/${type}/robot/${code}`);
     };
 
     const countDummyCards = (dataLength) => {

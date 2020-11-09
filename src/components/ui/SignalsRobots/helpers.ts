@@ -2,56 +2,58 @@ import dayjs from "../../../libs/dayjs";
 import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
 
 // TODO: use formatSignalData to form the array
-export const getFormatDataSignals = (signals: any) => {
-    return signals
-        .filter((signal) => signal.robot)
-        .map(({ robot }: any) => {
-            const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
-            const userSignal = user_signals && user_signals[0];
-            const {
-                user_signal_settings: { signal_settings }
-            } = userSignal || {};
-            const res = {
-                cache: {
+export const formatSignalRobots = (signals: any) => {
+    return (
+        signals
+            ?.filter((signal) => signal.robot)
+            .map(({ robot }: any) => {
+                const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
+                const userSignal = user_signals && user_signals[0];
+                const {
+                    user_signal_settings: { signal_settings }
+                } = userSignal || {};
+                const res = {
+                    cache: {
+                        id,
+                        tableName: "robots"
+                    },
                     id,
-                    tableName: "robots"
-                },
-                id,
-                asset,
-                currency,
-                exchange,
-                settings: signal_settings,
-                volume: getVolume(signal_settings),
-                displayedVolume: getVolumeWithUnit(signal_settings, { currency, asset }),
-                user_robots: {
-                    status: null,
-                    id: null
-                },
-                subscribed: dayjs.utc(userSignal?.subscribed_at)?.fromNow(true),
-                active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
-                performance: [],
-                profit: 0,
-                name,
-                winRate: 0,
-                maxDrawdown: 0,
-                tradesCount: 0,
-                isSubscribed: true,
-                code
-            };
-            if (userSignal && userSignal.stats) {
-                const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userSignal);
-                res.performance = equity;
-                res.profit = profit;
-                res.winRate = winRate;
-                res.maxDrawdown = maxDrawdown;
-                res.tradesCount = tradesCount;
-            }
-            return res;
-        });
+                    asset,
+                    currency,
+                    exchange,
+                    settings: signal_settings,
+                    volume: getVolume(signal_settings),
+                    displayedVolume: getVolumeWithUnit(signal_settings, { currency, asset }),
+                    user_robots: {
+                        status: null,
+                        id: null
+                    },
+                    subscribed: dayjs.utc(userSignal?.subscribed_at)?.fromNow(true),
+                    active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
+                    performance: [],
+                    profit: 0,
+                    name,
+                    winRate: 0,
+                    maxDrawdown: 0,
+                    tradesCount: 0,
+                    isSubscribed: true,
+                    code
+                };
+                if (userSignal && userSignal.stats) {
+                    const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userSignal);
+                    res.performance = equity;
+                    res.profit = profit;
+                    res.winRate = winRate;
+                    res.maxDrawdown = maxDrawdown;
+                    res.tradesCount = tradesCount;
+                }
+                return res;
+            }) || []
+    );
 };
 
-export const getFormatDataRobots = (robots: any) =>
-    robots.map((userRobot: any) => {
+export const formatTradingRobots = (robots: any) =>
+    robots?.map((userRobot: any) => {
         const {
             id,
             status,
@@ -90,4 +92,4 @@ export const getFormatDataRobots = (robots: any) =>
             isSubscribed: false,
             code
         };
-    });
+    }) || [];

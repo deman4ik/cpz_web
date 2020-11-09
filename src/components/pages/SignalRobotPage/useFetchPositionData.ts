@@ -4,19 +4,19 @@ import { useQuery } from "@apollo/client";
 import { SIGNAL_POSITIONS_FOR_USER, ROBOT_POSITIONS_IN_INTERVAL } from "graphql/robots/queries";
 import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // constants
-import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
+import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 // helpers
-import { getAlerts } from "../helpers";
+import { getAlerts } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 
-export const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
+const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const robotPositionsQuery = isAuth && isUserSubscribed ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
 
-    const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
+    const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const queryVars = isAuth && isUserSubscribed ? { user_id } : null;
 
@@ -77,17 +77,10 @@ export const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
         fetchMore({
             variables: {
                 offset: closedPositionsData.positions.length,
-                limit: DISPLAY_CLOSED_POSITIONS
-            },
-            updateQuery: (prev: any, { fetchMoreResult }) => {
-                setIsLoadingMore(false);
-                if (!fetchMoreResult) return prev;
-                setLimit(closedPositionsData.positions.length + DISPLAY_CLOSED_POSITIONS);
-                return {
-                    robot_positions: [...prev.positions, ...fetchMoreResult.positions]
-                };
+                limit: CLOSED_POSITIONS_LIMIT
             }
         });
+        setLimit(closedPositionsData.positions.length + CLOSED_POSITIONS_LIMIT);
     };
 
     useEffect(() => {
@@ -116,3 +109,5 @@ export const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
         isLoadingMore
     };
 };
+
+export default useFetchPositionData;

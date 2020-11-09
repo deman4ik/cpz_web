@@ -1,20 +1,27 @@
 import React from "react";
 
-import { TradingTabRobotPage } from "./TradingTab";
+import { TradingTab } from "./TradingTab";
 import { PerformanceTab } from "components/ui/PerformanceTab";
 import TabNavigation from "components/basic/TabNavigation";
+import useFetchPositionData from "./useFetchPositionData";
 
 interface Props {
     robotData: any;
     width: number;
-    isUserSubscribed: boolean;
 }
 
-export const PageTabs: React.FC<Props> = ({ robotData, width, isUserSubscribed }) => {
+const PageContent: React.FC<Props> = ({ robotData, width }) => {
+    const { user_signals: userSignals, robot } = robotData;
+    const { isUserSubscribed } = robot;
+
+    console.log("render");
+
+    const tradingPageData = useFetchPositionData(isUserSubscribed, userSignals, robot);
+
     const tabSchema = [
         {
             title: "Trading",
-            tabPage: <TradingTabRobotPage robotData={robotData} width={width} />
+            tabPage: <TradingTab data={tradingPageData} robot={robot} width={width} />
         },
         ...(isUserSubscribed
             ? [
@@ -37,3 +44,5 @@ export const PageTabs: React.FC<Props> = ({ robotData, width, isUserSubscribed }
 
     return <TabNavigation tabSchema={tabSchema} />;
 };
+
+export default PageContent;

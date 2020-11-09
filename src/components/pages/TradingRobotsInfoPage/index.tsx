@@ -1,43 +1,10 @@
+/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-import useWindowDimensions from "hooks/useWindowDimensions";
+import RobotsPage from "components/pages/common/RobotsInfoPage";
+import { RobotsType } from "config/types";
 
-// types
-import { PageType } from "config/types";
-
-// components
-import { DefaultTemplate } from "components/layout";
-import { PageToolbar } from "components/common";
-import { RobotPerformance } from "components/ui/RobotPerformance";
-import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
-import { SignalRobots } from "components/ui/SignalsRobots";
-import TabNavigation from "components/basic/TabNavigation";
-
-export const RobotsPage: React.FC = () => {
-    const { width } = useWindowDimensions();
-
-    const tabSchema = [
-        {
-            title: "Total Performance",
-            tabPage: <RobotPerformance width={width} type="robots" />
-        },
-        {
-            title: "Open Positions",
-            tabPage: <RobotOpenPositions type="robots" />
-        },
-        {
-            title: "Trading robots",
-            tabPage: <SignalRobots width={width} type="robots" />
-        }
-    ];
-
-    return (
-        <DefaultTemplate
-            page={PageType.robots}
-            title="Robots"
-            subTitle="Automated Trading"
-            width={width}
-            toolbar={<PageToolbar displayType="robots" />}>
-            <TabNavigation tabSchema={tabSchema} />
-        </DefaultTemplate>
-    );
+const TradingRobotsInfoPage = () => {
+    return <RobotsPage type={RobotsType.robots} />;
 };
+
+export default TradingRobotsInfoPage;

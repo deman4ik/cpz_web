@@ -4,7 +4,7 @@ import { formatDate, formatMoney, getUserSignalVolume, getRobotVolume, round } f
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
 export const getIconName = (direction: string) => (direction === "short" ? "arrow-down" : "arrow-up");
 
-const getPositionData = (position) => {
+const getSignalPositionData = (position) => {
     const { id, code, direction, entry_date, entry_price, profit, robot } = position;
     return {
         id,
@@ -22,14 +22,14 @@ const getPositionData = (position) => {
     };
 };
 
-export const formatPositionsForSignals = (positions: any) =>
-    positions.reduce((acc, position) => {
+export const formatSignalsPositions = (positions: any) =>
+    positions?.reduce((acc, position) => {
         const item = acc.find((el) => el.exchange === position.robot.exchange);
         const obj = {
             exchange: position.robot.exchange,
             assets: []
         };
-        const robot = getPositionData(position);
+        const robot = getSignalPositionData(position);
         const asset = {
             asset: position.robot.asset,
             volume: (position.direction === "short" ? -1 : 1) * position.volume,
@@ -52,9 +52,9 @@ export const formatPositionsForSignals = (positions: any) =>
             obj.assets = [asset];
         }
         return item ? acc : [...acc, obj];
-    }, []);
+    }, []) || [];
 
-const getRobotDataRobots = (position) => {
+const getTradingPositionData = (position) => {
     const { id, code, direction, entry_date, entry_price, volume, asset, profit, user_robot } = position;
     return {
         id,
@@ -72,14 +72,14 @@ const getRobotDataRobots = (position) => {
     };
 };
 
-export const getFormatDataRobots = (positions: any) =>
-    positions.reduce((acc, position) => {
+export const formatTradingRobotPositions = (positions: any) =>
+    positions?.reduce((acc, position) => {
         const item = acc.find((el) => el.exchange === position.exchange);
         const obj = {
             exchange: position.exchange,
             assets: []
         };
-        const robot = getRobotDataRobots(position);
+        const robot = getTradingPositionData(position);
         const asset = {
             asset: position.asset,
             volume: (position.direction === "short" ? -1 : 1) * position.volume,
@@ -99,4 +99,4 @@ export const getFormatDataRobots = (positions: any) =>
             obj.assets = [asset];
         }
         return item ? acc : [...acc, obj];
-    }, []);
+    }, []) || [];

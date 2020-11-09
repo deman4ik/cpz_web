@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo, useContext, useRef } from "react";
+import React, { useState, useEffect, memo, useContext, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 
 import { LoadingIndicator } from "components/common";
@@ -51,46 +51,24 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     });
 
     const limitRef = useRef(limit);
+
     useEffect(() => {
         limitRef.current = limit;
     }, [limit]);
-    const onFetchMore = (offset: number) => {
-        const variables = {
-            offset: limitRef.current,
-            limit: limitRef.current + LIMIT
-        };
-        fetchMore({
-            variables,
-            updateQuery: (prev: any, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                let result = null;
-                try {
-                    const prevCandlesByTime = prev.candles.reduce((acc, curr) => {
-                        acc[curr.candle.time] = curr;
-                        return acc;
-                    }, {});
-                    const uniqueCandles = [...prev.candles];
-                    for (let i = 0; i < fetchMoreResult.candles.length; i++) {
-                        const fetchedCandle = fetchMoreResult.candles[i].candle;
-                        if (!Object.prototype.hasOwnProperty.call(prevCandlesByTime, fetchedCandle.time)) {
-                            uniqueCandles.push(fetchedCandle);
-                        }
-                    }
 
-                    setLimit((oldLimit) => oldLimit + (uniqueCandles.length - prev.candles.length));
-
-                    result = {
-                        ...prev,
-                        candles: uniqueCandles
-                    };
-                } catch (err) {
-                    result = prev;
-                }
-
-                return result;
-            }
-        });
-    };
+    const onFetchMore = useCallback(
+        () => (offset: number) => {
+            const variables = {
+                offset: limitRef.current,
+                limit: limitRef.current + LIMIT
+            };
+            fetchMore({
+                variables
+            });
+            setLimit((oldLimit) => oldLimit + LIMIT);
+        },
+        []
+    );
 
     useEffect(() => {
         if (!loading && data) {

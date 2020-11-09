@@ -1,32 +1,23 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React, { useState, useMemo, useContext, useEffect } from "react";
+import React, { useState, useMemo, useContext, memo } from "react";
 import Router, { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-
-// components
 import { DefaultTemplate } from "components/layout";
 import { Header } from "./Header";
-import { PageTabs } from "./PageTabs";
+import PageContent from "./PageContent";
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { Toolbar } from "./Toolbar";
 import { Modals } from "./Modals/index";
-// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
-// types
 import { PageType } from "config/types";
-// graphql
 import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
-// constants
 import { POLL_INTERVAL } from "config/constants";
-// helpers
 import { formatRobotData } from "./helpers";
-// context
 import { AuthContext } from "libs/hoc/context";
 import { isNewPage } from "utils/common";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
-export const SignalRobotPage = () => {
+const SignalRobotPage = (): JSX.Element => {
     /*Определение контекста для страницы робота*/
     const {
         authState: { isAuth, user_id }
@@ -88,7 +79,7 @@ export const SignalRobotPage = () => {
             ) : (
                 <>
                     <Header subscribe={subscribe} robotData={robotData} />
-                    <PageTabs robotData={robotData} width={width} isUserSubscribed={robotData.robot.isUserSubscribed} />
+                    <PageContent robotData={robotData} width={width} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}
@@ -99,3 +90,5 @@ export const SignalRobotPage = () => {
         </DefaultTemplate>
     );
 };
+
+export default memo(SignalRobotPage);

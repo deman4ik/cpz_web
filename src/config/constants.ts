@@ -18,7 +18,7 @@ export const nearestTrades = [
     { y: 1455, type: "short" }
 ];
 
-export const DISPLAY_CLOSED_POSITIONS = 50;
+export const CLOSED_POSITIONS_LIMIT = 50;
 
 export const SCREEN_TYPE = {
     BIGGEST: 1320,

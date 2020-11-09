@@ -1,22 +1,20 @@
-import React, { memo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 
 import { CandleChart, OpenPositionsList, ClosedPositionsList } from "./components";
 import { LoadingIndicator } from "components/common";
 
 import { floatPositions } from "../helpers";
-import { useFetchPositionData } from "./useFetchPositionData";
 
 import styles from "./index.module.css";
 
 interface Props {
-    robotData: any;
+    data: any;
+    robot: any;
     width: number;
 }
 
-const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
+const _TradingTab: React.FC<Props> = ({ data, robot, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
-    const { user_signals: userSignals, robot } = robotData;
-    const { isUserSubscribed } = robot;
     const {
         loading,
         handleLoadMore,
@@ -25,7 +23,7 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
         closedPositions,
         signals,
         recordsCount
-    } = useFetchPositionData(isUserSubscribed, userSignals, robot);
+    } = useMemo(() => data, [data]);
 
     return (
         <>
@@ -68,4 +66,4 @@ const _TradingTabRobotPage: React.FC<Props> = ({ robotData, width }) => {
     );
 };
 
-export const TradingTabRobotPage = memo(_TradingTabRobotPage);
+export const TradingTab = memo(_TradingTab);

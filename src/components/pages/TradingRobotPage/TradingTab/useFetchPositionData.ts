@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
 
-import { DISPLAY_CLOSED_POSITIONS, POLL_INTERVAL } from "config/constants";
+import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 import { ROBOT_POSITIONS, ROBOT_POSITIONS_FOR_USER, USER_ROBOT_POSITIONS_AGGREGATE } from "graphql/robots/queries";
 import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // context
@@ -22,7 +22,7 @@ export const useFetchPositionData = (robotData: RobotData): any => {
     const statusOptions = userRobot ? ["closed", "closedAuto"] : ["closed"];
 
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const [limit, setLimit] = useState(DISPLAY_CLOSED_POSITIONS);
+    const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
 
     const queryVars = {
         robotId: userRobot ? userRobot.id : robot.id,
@@ -76,17 +76,10 @@ export const useFetchPositionData = (robotData: RobotData): any => {
         fetchMore({
             variables: {
                 offset: closedPositionsData.positions.length,
-                limit: DISPLAY_CLOSED_POSITIONS
-            },
-            updateQuery: (prev: any, { fetchMoreResult }) => {
-                setIsLoadingMore(false);
-                if (!fetchMoreResult) return prev;
-                setLimit(closedPositionsData.positions.length + DISPLAY_CLOSED_POSITIONS);
-                return {
-                    positions: [...prev.positions, ...fetchMoreResult.positions]
-                };
+                limit: CLOSED_POSITIONS_LIMIT
             }
         });
+        setLimit(closedPositionsData.positions.length + CLOSED_POSITIONS_LIMIT);
     };
 
     return {

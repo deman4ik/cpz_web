@@ -29,7 +29,7 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
 
     return (
         <div className={styles.container} key={item.id}>
-            <div className={[styles.row, styles.rowCaption].join(" ")} onClick={handleOnPress}>
+            <div className={[styles.row, styles.cardCaption].join(" ")} onClick={handleOnPress}>
                 <div className={styles.sectionGroup} style={{ flex: 0.9 }}>
                     <div className={styles.actionGroup}>
                         <div className={styles.tableCellText} style={colorDirection(item.direction)}>
@@ -53,7 +53,7 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
                     />
                 </div>
             </div>
-            <div className={[styles.row, styles.rowBody, styles.colFlexEnd].join(" ")}>
+            <div className={[styles.row, styles.cardBody].join(" ")}>
                 <div className={styles.sectionGroup}>
                     <div className={styles.headerText} style={{ marginBottom: 2 }}>
                         Entry
@@ -73,7 +73,7 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
                             <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
                         </span>
                     </div>
-                    <div className={styles.rowFlexEnd}>
+                    <div className={styles.rowFlexEnd} style={{ marginTop: 5 }}>
                         <span className={styles.headerText} style={{ marginBottom: 2 }}>
                             Unrealized Profit
                         </span>

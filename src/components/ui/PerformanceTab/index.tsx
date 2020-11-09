@@ -30,7 +30,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
         [robot]
     );
 
-    const robotStatistic = useMemo(() => getRobotStatistic(robot.fullStats?.statistics), [robot]);
+    const robotStatistics = useMemo(() => getRobotStatistic(robot.fullStats?.statistics), [robot]);
     return (
         <>
             {!robot ? (
@@ -49,7 +49,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
                     )}
                     {isChartLoaded ? (
                         <>
-                            <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
+                            <PerformanceTabComponent width={width} robotStatistic={robotStatistics} />
                         </>
                     ) : null}
                 </>

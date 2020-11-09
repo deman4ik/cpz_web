@@ -109,7 +109,7 @@ export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
     }
 `;
 
-export const ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE = gql`
+export const ALL_USER_ROBOTS_AGGR_STATS = gql`
     query get_all_user_signal_robots_stats_aggr($type: String_comparison_exp, $user_id: uuid) {
         stats: v_user_aggr_stats(
             order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]

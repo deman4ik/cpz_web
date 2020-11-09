@@ -19,12 +19,12 @@ const getAssetData = (stat, type) => {
     };
 };
 
-export const getFormatData = (stats, type) =>
-    stats.reduce(
+export const formatStats = (stats, type) =>
+    stats?.reduce(
         (acc, stat) =>
             (!stat.asset && !stat.exchange) || (stat.asset && stat.exchange) ? [...acc, getAssetData(stat, type)] : acc,
         []
-    );
+    ) || [];
 
 export const getItem = (displayType: string) => ({
     id: "",
