@@ -29,7 +29,7 @@ export const StatsFiltersModal: FC<StatsFiltersModalProps> = ({
     checkedFilters,
     confirmSelectedFilters,
     checkFilterButton,
-    clearFilters,
+    clearFilters
 }) => {
     const [skipFilterQuery, setSkipFilterQuery] = useState(false);
 

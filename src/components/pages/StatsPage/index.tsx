@@ -18,7 +18,6 @@ import { AuthContext } from "libs/hoc/context";
 import { StatsFiltersModal } from "components/ui/Modals/StatsFiltersModal";
 import { QueueTypes } from "components/pages/StatsPage/types";
 
-
 export const StatsPage: React.FC = () => {
     const {
         authState: { isAuth, user_id }
@@ -71,7 +70,6 @@ export const StatsPage: React.FC = () => {
                 user_id={user_id}
                 displayType={displayType}
                 selectedFilter={selectedFilter}
-                setFiltersModalVisibility={setFiltersModalVisibility}
                 {...restFilterProps}
             />
             <>
