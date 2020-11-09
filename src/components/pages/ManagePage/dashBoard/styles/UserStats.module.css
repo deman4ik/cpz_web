@@ -10,7 +10,7 @@
   color: var(--accent);
 }
 
-/*stats*/
+/*robotStats*/
 .stats_container{
   display: flex;
   padding: 15px 0;
@@ -18,7 +18,7 @@
   flex-wrap: wrap;
   align-items: center;
 }
-/*stats item*/
+/*robotStats item*/
 .stats_item{
   padding: 10px 0;
   min-width: 100px;

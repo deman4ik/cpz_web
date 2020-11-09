@@ -1,4 +1,4 @@
-import { capitalize, exchangeName } from "../../../config/utils";
+import { capitalize, exchangeName } from "config/utils";
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) =>
     !exchange && !asset
@@ -19,12 +19,13 @@ const getAssetData = (stat, type) => {
     };
 };
 
-export const getFormatData = (stats, type) =>
-    stats.reduce(
+export const getFormatData = (stats, type) => {
+    return stats.reduce(
         (acc, stat) =>
             (!stat.asset && !stat.exchange) || (stat.asset && stat.exchange) ? [...acc, getAssetData(stat, type)] : acc,
         []
     );
+};
 
 export const getItem = (displayType: string) => ({
     id: "",

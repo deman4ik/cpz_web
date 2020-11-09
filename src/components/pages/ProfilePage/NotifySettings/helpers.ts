@@ -3,7 +3,7 @@ export const extraSettings = {
         title: "Signals",
         icon: "chartline",
         message:
-            "If you turn signals notifications OFF you will not receive any messages about signals from ALL SIGNAL ROBOTS"
+            "If you turn user_robots notifications OFF you will not receive any messages about user_robots from ALL SIGNAL ROBOTS"
     },
     trading: {
         title: "Robots",

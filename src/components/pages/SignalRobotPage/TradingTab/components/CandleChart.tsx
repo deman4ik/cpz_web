@@ -89,7 +89,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
 
                 return result;
             }
-        });
+        }).catch((e) => console.error(e));
     };
 
     useEffect(() => {

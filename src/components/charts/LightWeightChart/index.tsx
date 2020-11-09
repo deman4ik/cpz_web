@@ -13,13 +13,18 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
     lines,
     onFetchMore,
     legend,
-    setIsChartLoaded
+    setIsChartLoaded,
+    fullWidth
 }) => {
     const isMobile = size.width <= 480;
     const leftToolBar = size.width >= 1200 ? 190 : 46;
     const widthWithToolBar = 1214 + leftToolBar;
     const widthSubtractor = size.width >= widthWithToolBar ? 0 : widthWithToolBar - size.width;
-
+    const max_width = fullWidth ? size.width : 1180;
+    const countWidth = () => {
+        if (fullWidth) return max_width;
+        return isMobile ? size.width - 22 : 1180 - widthSubtractor;
+    };
     return (
         <div className={styles.container}>
             <Chart
@@ -31,7 +36,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
                 onFetchMore={onFetchMore}
                 legend={legend}
                 setIsChartLoaded={setIsChartLoaded}
-                size={{ width: isMobile ? size.width - 22 : 1180 - widthSubtractor, height: size.height }}
+                size={{ width: countWidth(), height: size.height }}
             />
         </div>
     );

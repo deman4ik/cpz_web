@@ -87,7 +87,7 @@ export const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
                     robot_positions: [...prev.positions, ...fetchMoreResult.positions]
                 };
             }
-        });
+        }).catch((e) => console.error(e));
     };
 
     useEffect(() => {

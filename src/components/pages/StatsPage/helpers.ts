@@ -38,3 +38,19 @@ export const getLabelCombinations = (filters) =>
 export const getQueueType = (displayType: string) => ({
     _eq: displayType === "signals" ? "signal" : "userRobot"
 });
+
+export const extractRoute = (route: string): string => {
+    return route
+        .split("/")
+        .filter((i) => i)
+        .slice(0, 2)
+        .join("/");
+};
+
+export const getVariablesFrom = (params) =>
+    Object.entries(params).reduce((acc, v) => {
+        const [key, value] = v;
+        if (!value) return acc;
+        acc[key] = value;
+        return acc;
+    }, {});

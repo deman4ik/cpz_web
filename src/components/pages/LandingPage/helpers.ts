@@ -6,7 +6,7 @@ export const supportContent = () => [
         icon: "help",
         iconColor: color.secondary, //secondary
         title: "Documentation",
-        text: "Learn all about Cryptuoso Platform.\n How to configure and use signals, robots and exchange accounts.",
+        text: "Learn all about Cryptuoso Platform.\n How to configure and use user_robots, robots and exchange accounts.",
         button: "DOCUMENTATION",
         buttonType: "outline-secondary",
         href: DOCS_URL
@@ -16,7 +16,7 @@ export const supportContent = () => [
         iconColor: color.primary, //primary
         title: "Telegram \n Community",
         text:
-            "Have questions about signals or robots? \n Ask your question in our Community Group and we will help you.",
+            "Have questions about user_robots or robots? \n Ask your question in our Community Group and we will help you.",
         button: "Telegram Community",
         buttonType: "outline-primary",
         href: TELEGRAM_COMMUNITY_URL
@@ -67,7 +67,7 @@ export const descriptionRobots: DescriptionRobotsType[] = [
         imgStyle: { width: 52, height: 52 },
         title: "Reliable",
         text:
-            "Robots are cloud-based and do not require installation of software on your computer. Thus, signals and transactions will never be missed, and you can use any device to monitor your trading performance."
+            "Robots are cloud-based and do not require installation of software on your computer. Thus, user_robots and transactions will never be missed, and you can use any device to monitor your trading performance."
     },
     {
         imgStyle: { width: 72, height: 48 },
@@ -95,7 +95,7 @@ export const descriptionFirstLine: DescriptionFirstLineType[] = [
         imgSrc: "signals",
         title: "Receive Signals",
         text:
-            "Use robot signals as indicators for trading and trade manually. You will be able to view the approximate statistics of your trade with signals in your account."
+            "Use robot user_robots as indicators for trading and trade manually. You will be able to view the approximate statistics of your trade with user_robots in your account."
     },
     {
         imgStyle: { width: 250, height: 120 },
