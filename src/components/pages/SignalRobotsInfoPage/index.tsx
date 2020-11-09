@@ -19,12 +19,12 @@ export const SignalRobotsInfoPage = () => {
 
     const tabSchema = [
         {
-            title: "Open Positions",
-            tabPage: <RobotOpenPositions type={pageType} />
-        },
-        {
             title: "Total Performance",
             tabPage: <RobotPerformance width={width} type={pageType} />
+        },
+        {
+            title: "Open Positions",
+            tabPage: <RobotOpenPositions type={pageType} />
         },
         {
             title: "Signal Robots",

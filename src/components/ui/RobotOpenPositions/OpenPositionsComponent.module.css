@@ -1,33 +1,18 @@
-.exchangeHeader {
-    display: flex;
-    align-items: center;
-    background-color: var(--dark);
-    padding: 10px 20px;
-}
-
 .exchange {
     font-size: var(--big1);
     color: white;
 }
 
-.aggregatedStats {
-    font-size: var(--normal0);
-    color: var(--accent);
-    padding-left: 20px;
+.assetHeader {
+    font-size: var(--normal1);
+    background-color: var(--dark);
+    color: white;
+    padding: 10px 20px;
 }
 
 @media (max-width: 1080px) {
     .exchange {
         font-size: var(--normal3);
-    }
-    .aggregatedStats {
-        padding-left: 15px;
-    }
-}
-
-@media (max-width: 720px) {
-    .exchangeHeader {
-        justify-content: space-between;
     }
 }
 
@@ -35,8 +20,7 @@
     .exchange {
         font-size: var(--normal1);
     }
-    .aggregatedStats {
-        font-size: var(--small2);
-        padding-left: 8px;
+    .assetHeader {
+        font-size: var(--normal0);
     }
 }

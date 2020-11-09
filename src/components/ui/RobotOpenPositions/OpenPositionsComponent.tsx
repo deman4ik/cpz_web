@@ -28,34 +28,11 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType }) =
             ) : (
                 formatData.map((exchangeGroup, index) => (
                     <div key={exchangeGroup.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
+                        <h1 className={styles.exchange}>{exchangeName(exchangeGroup.exchange)}</h1>
                         <div>
                             {exchangeGroup.assets.map((asset) => (
                                 <>
-                                    <div className={styles.exchangeHeader}>
-                                        <span className={styles.exchange}>{`${exchangeName(exchangeGroup.exchange)} ${
-                                            asset.asset
-                                        }`}</span>
-                                        <div className={styles.aggregatedStats}>
-                                            <div>
-                                                Amount:&nbsp;
-                                                <span
-                                                    style={{
-                                                        color: getColor(asset.volume < 0)
-                                                    }}>
-                                                    {`${valueWithSign(asset.volume)} ${asset.asset}`}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                Unrealized Profit:&nbsp;
-                                                <span
-                                                    style={{
-                                                        color: getColor(asset.profit < 0)
-                                                    }}>
-                                                    {`${valueWithSign(formatMoney(asset.profit))} $`}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div className={styles.assetHeader}>{asset.asset}</div>
                                     <OpenPositionsTable key={asset.asset} displayType={displayType} asset={asset} />
                                 </>
                             ))}
