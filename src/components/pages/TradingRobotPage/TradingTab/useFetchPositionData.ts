@@ -86,7 +86,7 @@ export const useFetchPositionData = (robotData: RobotData): any => {
                     positions: [...prev.positions, ...fetchMoreResult.positions]
                 };
             }
-        });
+        }).catch((e) => console.error(e));
     };
 
     return {

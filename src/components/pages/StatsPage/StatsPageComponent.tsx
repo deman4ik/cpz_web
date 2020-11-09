@@ -9,8 +9,12 @@ import styles from "./index.module.css";
 
 interface Props {
     formatData: any;
+    title: string;
     width: number;
+    fullWidth?: boolean;
     displayType: string;
+    chartStyles?: any;
+    tabStyles?: any;
 }
 
 const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
@@ -18,7 +22,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightW
     ssr: false
 });
 
-const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width }) => (
+const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width, fullWidth, title }) => (
     <>
         {!formatData.chartData || !formatData.chartData.length ? (
             <LoadingIndicator />
@@ -27,9 +31,10 @@ const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width }
                 data={formatData.chartData}
                 type={ChartType.area}
                 size={{ height: 470, width }}
+                fullWidth={fullWidth}
             />
         )}
-        <div className={styles.performanceTitle}>{`My ${capitalize(displayType)} Total Statistics`}</div>
+        <div className={styles.performanceTitle}>{title}</div>
         <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
     </>
 );

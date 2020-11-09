@@ -78,7 +78,7 @@ export const useFetchData = () => {
                     notifications: [...prev.notifications, ...fetchMoreResult.notifications]
                 };
             }
-        });
+        }).catch((e) => console.error(e));
     };
 
     const formatData = useMemo(() => (!loading && data ? getFormatData(data.notifications) : []), [data, loading]);

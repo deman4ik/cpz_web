@@ -1,16 +1,12 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { useState, useEffect } from "react";
-import { CheckedFilters } from "../components/pages/StatsPage/types";
+import { CheckedFilters } from "components/pages/StatsPage/types";
+import { ParsedUrlQuery } from "querystring";
 
-export const useFilters = (_exchange: string | string[] | undefined, _asset: string | string[] | undefined) => {
-    const [checkedFilters, setCheckedFilters] = useState<CheckedFilters>({
-        exchange: null,
-        asset: null
-    });
-    const [selectedFilter, setSelectedFilter] = useState<CheckedFilters>({
-        exchange: null,
-        asset: null
-    });
+const initialState = { exchange: null, asset: null };
+export const useFilters = ({ exchange, asset }: ParsedUrlQuery) => {
+    const [checkedFilters, setCheckedFilters] = useState<CheckedFilters>(initialState);
+    const [selectedFilter, setSelectedFilter] = useState<CheckedFilters>(initialState);
 
     const checkFilterButton = (label: string, item: string) => {
         if (checkedFilters[label] === item) {
@@ -22,16 +18,16 @@ export const useFilters = (_exchange: string | string[] | undefined, _asset: str
 
     useEffect(() => {
         const filters = {
-            exchange: _exchange === "null" || !_exchange ? null : (_exchange as string),
-            asset: _asset === "null" || !_asset ? null : (_asset as string)
+            exchange: exchange === "null" || !exchange ? null : (exchange as string),
+            asset: asset === "null" || !asset ? null : (asset as string)
         };
 
         setCheckedFilters(filters);
         setSelectedFilter(filters);
-    }, [_exchange, _asset]);
+    }, [exchange, asset]);
 
     const clearFilters = () => {
-        setCheckedFilters({ exchange: null, asset: null });
+        setCheckedFilters(initialState);
     };
 
     const confirmSelectedFilters = () => {

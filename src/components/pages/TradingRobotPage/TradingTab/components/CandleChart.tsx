@@ -92,7 +92,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
 
                 return result;
             }
-        });
+        }).catch((e) => console.error(e));
     };
     useEffect(() => {
         if (!loading && data) {

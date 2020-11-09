@@ -50,6 +50,7 @@ export interface PropsLighweightChart {
 export interface PropsWrapChart {
     data: any;
     loading?: boolean;
+    fullWidth?: boolean;
     markers?: any[];
     lines?: any[];
     onFetchMore?: (offset: number, signal?: AbortSignal) => void;
