@@ -15,7 +15,7 @@ import styles from "./index.module.css";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
-import { Modals } from "components/pages/SignalRobotsInfoPage/Modals";
+import { Modals } from "components/pages/TradingRobotsSearchPage/Modals";
 
 interface Props {
     width: number;
@@ -45,7 +45,7 @@ const _SignalRobots: React.FC<Props> = ({ width, type }) => {
     return (
         <div>
             <RobotsPageContainer data={formatData} displayType={type} width={width} />
-            <Modals afterClose={refetch} />
+            <Modals width={width} afterClose={refetch} />
         </div>
     );
 };
