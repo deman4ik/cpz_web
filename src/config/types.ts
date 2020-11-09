@@ -16,12 +16,6 @@ export enum PageType {
     supportRequests = "Support Requests"
 }
 
-export enum TabType {
-    trading,
-    myStatistic,
-    publicStatistic
-}
-
 export interface DeviceProps {
     isMobile: boolean;
 }

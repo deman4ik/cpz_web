@@ -1,31 +1,42 @@
-.container {
-  margin-top: 20px;
-  margin-right: 10px;
+.exchangeHeader {
+    display: flex;
+    align-items: center;
+    background-color: var(--dark);
+    padding: 10px 20px;
 }
 
-.regionTitle {
-  text-align: center;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 5px;
-  font-size: var(--normal3);
-  color: var(--accent);
+.exchange {
+    font-size: var(--big1);
+    color: white;
 }
 
-.cardItemsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding-left: 0;
-  padding-bottom: 8px;
+.aggregatedStats {
+    font-size: var(--normal0);
+    color: var(--accent);
+    padding-left: 20px;
 }
 
-@media (max-width: 1200px) {
-  .container {
-    margin-left: 10px;
-  }
+@media (max-width: 1080px) {
+    .exchange {
+        font-size: var(--normal3);
+    }
+    .aggregatedStats {
+        padding-left: 15px;
+    }
+}
+
+@media (max-width: 720px) {
+    .exchangeHeader {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .exchange {
+        font-size: var(--normal1);
+    }
+    .aggregatedStats {
+        font-size: var(--small2);
+        padding-left: 8px;
+    }
 }

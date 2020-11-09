@@ -14,9 +14,19 @@ import styles from "./index.module.css";
 interface Props {
     setTitle: (title: string) => void;
     type: string;
-    onClose: () => void;
+    onClose: (changesMade?: boolean) => void;
 }
 
+const actionTypes = {
+    delete: USER_ROBOT_DELETE,
+    start: USER_ROBOT_START,
+    stop: USER_ROBOT_STOP
+};
+const actions = {
+    delete: "userRobotDelete",
+    start: "userRobotStart",
+    stop: "userRobotStop"
+};
 const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     const [formError, setFormError] = useState("");
     const { data } = useQuery(ROBOT);
@@ -24,47 +34,47 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     useEffect(() => {
         setTitle(`${capitalize(type)} ${data ? data.robot.name : null}`);
     }, [data, setTitle, type]);
-    const [actionOnRobot] = useMutation(type === "delete" ? DELETE_ROBOT : ACTION_ROBOT);
-    const [userRobotAction, { loading }] = useMutation(
-        type === "delete" ? USER_ROBOT_DELETE : type === "start" ? USER_ROBOT_START : USER_ROBOT_STOP
-    );
 
-    const handleOnPressSubmit = () => {
-        const message = type === "start" ? "started" : "stopped";
-        const variables = {
-            id: data.robot.userRobotId
-        };
-        const variablesLocal = {
-            robot: data.robot,
-            message
-        };
-        const action = {
-            delete: "userRobotDelete",
-            start: "userRobotStart",
-            stop: "userRobotStop"
-        };
-        userRobotAction({
-            variables
-        }).then((response) => {
-            const result = response.data[action[type]].success;
-            if (result) {
-                if (type !== "delete") {
-                    variablesLocal.message = response.data[action[type]].status;
-                }
-                actionOnRobot({ variables: variablesLocal });
-                if (type === "start") {
-                    event({
-                        action: "start",
-                        category: "Robots",
-                        label: "start",
-                        value: data.robot.userRobotId
-                    });
-                }
-                onClose();
-            } else {
-                setFormError(response.data[action[type]].error);
+    const robotAction = actionTypes[type];
+    const [userRobotAction, { loading }] = useMutation(robotAction);
+
+    const variables = {
+        id: data.robot.userRobotId
+    };
+
+    function handleResponse(response: any) {
+        const { result } = response.data[actions[type]];
+        if (result === "OK") {
+            if (type === "start") {
+                event({
+                    action: "start",
+                    category: "Robots",
+                    label: "start",
+                    value: data.robot.userRobotId
+                });
             }
-        });
+            onClose(true);
+        } else {
+            setFormError(response.data[actions[type]].error);
+        }
+    }
+    const handleOnPressSubmit = async () => {
+        try {
+            const userRobotActionResponse = await userRobotAction({ variables });
+            handleResponse(userRobotActionResponse);
+            if (type === "start") {
+                event({
+                    action: "start",
+                    category: "Robots",
+                    label: "start",
+                    value: data.robot.userRobotId
+                });
+            }
+            onClose(true);
+        } catch (e) {
+            console.error(e);
+            setFormError(e.message);
+        }
     };
 
     return (

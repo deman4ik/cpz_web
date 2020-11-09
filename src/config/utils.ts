@@ -2,6 +2,7 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
+import { UnitsToTypes, volumes } from "components/ui/Modals/types";
 
 export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
@@ -27,12 +28,11 @@ export const getStats = (robot): RobotStats => {
     };
 };
 
-export const getVolume = (settings) =>
-    settings ? (settings.volumeType === "assetStatic" ? settings.volume : settings.volumeInCurrency) : null;
+export const getVolume = (settings) => (settings ? settings[volumes[settings.volumeType]] : null);
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);
-    const displayUnits = settings.volumeType === "currencyDynamic" ? availableUnits.currency : availableUnits.asset;
+    const displayUnits = UnitsToTypes[settings.volumeType];
     return `${volume} ${displayUnits || ""}`;
 };
 
@@ -121,3 +121,25 @@ export const buildRobotSettings = ({ volumeType, volume, currency }) => ({
     volumeType,
     ...(volumeType === "assetStatic" ? { volume: Number(volume) } : { volumeInCurrency: Number(currency) })
 });
+
+export const getTimeFromNow = (d: string): string => {
+    const formattedDate = formatDate(d);
+    if (formattedDate === "") return "";
+
+    const past = dayjs.utc(d);
+    const now = dayjs();
+
+    if (now.month() !== past.month() || now.date() !== past.date()) return formattedDate;
+
+    const diff = dayjs(now.diff(past));
+    const { hours, minutes } = diff.toObject();
+
+    if (hours >= 6) return formattedDate;
+
+    if (!hours && !minutes) return "less than a minute ago";
+
+    const timeFromNow = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""} 
+    ${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""} ago`;
+
+    return timeFromNow;
+};

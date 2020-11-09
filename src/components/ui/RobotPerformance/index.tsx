@@ -8,18 +8,14 @@ import { POLL_INTERVAL } from "config/constants";
 import { PerformanceEmpty } from "./PerformanceEmpty";
 import { PerformanceComponent } from "./PerformanceComponent";
 // helpers
-import { getFormatData, queryParam, title } from "./helpers";
-// types
-import { displayType } from "./types";
-// styles
-import styles from "./index.module.css";
+import { getFormatData, queryParam } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     width: number;
-    type: displayType;
+    type: string;
 }
 
 const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
@@ -40,8 +36,7 @@ const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
     }, [loading, data, type]);
 
     return (
-        <div className={styles.container}>
-            <div className={styles.regionTitle}>{title[type]}</div>
+        <div>
             {!formatData.length ? (
                 <PerformanceEmpty width={width} displayType={type} />
             ) : (

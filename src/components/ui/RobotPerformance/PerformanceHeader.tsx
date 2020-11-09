@@ -4,9 +4,18 @@ import styles from "./PerformanceHeader.module.css";
 
 const _PerformanceHeader: React.FC = () => (
     <div className={styles.headerContainer}>
-        <div className={[styles.titleName, styles.titleFont].join(" ")}>Name</div>
-        <div className={[styles.titlePerformance, styles.titleFont].join(" ")}>Performance</div>
-        <div className={[styles.titleStatistics, styles.titleFont].join(" ")}>Statistics</div>
+        <div className={styles.title} style={{ flex: 0.2 }}>
+            Name
+        </div>
+        <div className={styles.title} style={{ flex: 0.45 }}>
+            Performance
+        </div>
+        <div className={styles.title} style={{ flex: 0.15 }}>
+            Profit
+        </div>
+        <div className={styles.title} style={{ flex: 0.2 }}>
+            Statistics
+        </div>
     </div>
 );
 

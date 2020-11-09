@@ -5,18 +5,13 @@ import { HeaderStatsSection } from "./HeaderStatsSection";
 import { Tooltip } from "components/ui/Tooltip";
 
 import styles from "./styles/index.module.css";
-import { HeaderTabs } from "./HeaderTabs";
-import { TabType } from "config/types";
 
 interface Props {
     robotData: any;
-    activeTab: TabType;
-    setActiveTab: (tab: TabType) => void;
     subscribe: (variables: any) => void;
-    isUserSubscribed: boolean;
 }
 
-const _Header: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subscribe, isUserSubscribed }) => {
+const _Header: React.FC<Props> = ({ robotData, subscribe }) => {
     const { robot } = robotData;
     return (
         <>
@@ -33,7 +28,6 @@ const _Header: React.FC<Props> = ({ robotData, activeTab, setActiveTab, subscrib
                     </div>
                 </div>
                 <HeaderStatsSection robotData={robotData} />
-                <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} isUserSubscribed={isUserSubscribed} />
             </div>
         </>
     );

@@ -16,10 +16,9 @@ import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     type: string;
-    width: number;
 }
 
-const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
+const _RobotOpenPositions: React.FC<Props> = ({ type }) => {
     /*Auth user id*/
     const {
         authState: { user_id }
@@ -47,7 +46,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading]);
 
-    return <OpenPositionsComponent formatData={formatData} width={width} displayType={type} />;
+    return <OpenPositionsComponent formatData={formatData} displayType={type} />;
 };
 
 export const RobotOpenPositions = memo(_RobotOpenPositions);

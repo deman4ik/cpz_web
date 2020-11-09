@@ -6,10 +6,11 @@ import styles from "./index.module.css";
 interface Props {
     title?: ReactNode;
     subtitle?: ReactNode;
+    isOpen?: boolean;
 }
 
-export const Accordion: React.FC<Props> = ({ title, subtitle, children }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+export const Accordion: React.FC<Props> = ({ title, subtitle, isOpen, children }) => {
+    const [isExpanded, setIsExpanded] = useState(isOpen || false);
     const handleOnClick = () => {
         setIsExpanded(!isExpanded);
     };

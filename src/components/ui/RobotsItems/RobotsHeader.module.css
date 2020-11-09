@@ -1,66 +1,13 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 20px;
-  margin: 2px 0;
-  background-color: var(--dark);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin: 2px 0;
+    background-color: var(--dark);
 }
 
-.titleName {
-  display: flex;
-  flex-direction: column;
-  flex: 0.55;
-  color: var(--accent);
-  font-size: var(--small1);
-  min-width: 286px;
-}
-
-.titlePerformance {
-  display: flex;
-  flex-direction: column;
-  flex: 0.6;
-  color: var(--accent);
-  font-size: var(--small1);
-  padding-left: 10px;
-  padding-right: 40px;
-}
-
-.titleStatistics {
-  display: flex;
-  flex-direction: column;
-  flex: 0.51;
-  color: var(--accent);
-  font-size: var(--small1);
-}
-
-.titleStatus {
-  display: flex;
-  flex-direction: column;
-  flex: 0.5;
-  color: var(--accent);
-  font-size: var(--small1);
-}
-
-.titleAction {
-  display: flex;
-  flex-direction: column;
-  flex: 0.32;
-  color: var(--accent);
-  font-size: var(--small1);
-}
-
-@media (max-width: 1350px) {
-  .titleAction {
-    flex: 0.33;
-  }
-}
-
-@media (max-width: 1250px) {
-  .titleStatistics {
-    flex: 0.52;
-  }
-  .titleAction {
-    flex: 0.38;
-  }
+.title {
+    color: var(--accent);
+    font-size: var(--small1);
 }

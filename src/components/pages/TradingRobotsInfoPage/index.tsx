@@ -1,17 +1,34 @@
 import React from "react";
-
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { DefaultTemplate } from "components/layout";
+
+// types
 import { PageType } from "config/types";
+
+// components
+import { DefaultTemplate } from "components/layout";
 import { PageToolbar } from "components/common";
 import { RobotPerformance } from "components/ui/RobotPerformance";
 import { RobotOpenPositions } from "components/ui/RobotOpenPositions";
 import { SignalRobots } from "components/ui/SignalsRobots";
-import { Modals } from "./Modals";
-import styles from "./index.module.css";
+import TabNavigation from "components/basic/TabNavigation";
 
 export const RobotsPage: React.FC = () => {
     const { width } = useWindowDimensions();
+
+    const tabSchema = [
+        {
+            title: "Open Positions",
+            tabPage: <RobotOpenPositions type="robots" />
+        },
+        {
+            title: "Total Performance",
+            tabPage: <RobotPerformance width={width} type="robots" />
+        },
+        {
+            title: "Trading robots",
+            tabPage: <SignalRobots width={width} type="robots" />
+        }
+    ];
 
     return (
         <DefaultTemplate
@@ -20,15 +37,7 @@ export const RobotsPage: React.FC = () => {
             subTitle="Automated Trading"
             width={width}
             toolbar={<PageToolbar displayType="robots" />}>
-            <div className={styles.container}>
-                <div className={styles.wrapper}>
-                    <RobotPerformance width={width} type="robots" />
-                </div>
-                <div className={styles.wrapper}>
-                    <RobotOpenPositions width={width} type="robots" />
-                </div>
-            </div>
-            <SignalRobots width={width} displayType="robots" />
-        </DefaultTemplate> /*Modals moved to SignalRobots*/
+            <TabNavigation tabSchema={tabSchema} />
+        </DefaultTemplate>
     );
 };

@@ -59,9 +59,6 @@ export const RobotsItem: React.FC<Props> = ({
                     <div className={styles.primaryText}>{item.name}</div>
                     <div className={styles.profitWrap}>
                         <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
-                        <div className={styles.profitText} style={colorAction(item.profit > 0)}>
-                            {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
-                        </div>
                     </div>
                 </div>
                 <ChevronRightIcon color="white" size={26} />
@@ -70,6 +67,10 @@ export const RobotsItem: React.FC<Props> = ({
                 {item.performance && item.performance.length ? (
                     <AreaChart height={120} data={item.performance} />
                 ) : null}
+            </div>
+            <div style={{ flex: 0.01 }} />
+            <div className={styles.profitCell} style={{ ...colorAction(item.profit > 0) }}>
+                {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
             </div>
             <div className={styles.cellStatistics}>
                 {item.winRate ? (

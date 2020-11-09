@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext, useEffect } from "react";
+import React, { useMemo, useState, useContext } from "react";
 import Router, { useRouter } from "next/router";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -17,7 +17,7 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { USER_ROBOT_INFO_FOR_USER, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 // constants
-import { PageType, TabType } from "config/types";
+import { PageType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
 // context
 import { AuthContext } from "libs/hoc/context";
@@ -30,7 +30,6 @@ export const TradingRobotPage: React.FC = () => {
     const [pageIsNew] = useState(isNewPage());
 
     const { width } = useWindowDimensions();
-    const [activeTab, setActiveTab] = useState<TabType>(TabType.trading);
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
     const router = useRouter();
 
@@ -81,13 +80,8 @@ export const TradingRobotPage: React.FC = () => {
                 <NoRecentData message="No recent data available" />
             ) : (
                 <>
-                    <PageHeader
-                        robotData={robotData}
-                        subscribe={subscribe}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                    />
-                    <PageTabs robotData={robotData} activeTab={activeTab} width={width} />
+                    <PageHeader robotData={robotData} subscribe={subscribe} />
+                    <PageTabs robotData={robotData} width={width} isOwnedByUser={robotData.robot.isOwnedByUser} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}

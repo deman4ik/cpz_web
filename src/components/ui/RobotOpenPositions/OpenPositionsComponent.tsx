@@ -1,47 +1,21 @@
-import React, { Fragment, memo } from "react";
-import Router from "next/router";
+import React, { memo } from "react";
 
 // components
-import { Accordion } from "components/basic";
-import { DummyCards } from "components/common";
-import { OpenPositionsHeader } from "./OpenPositionsHeader";
-import { OpenPositionsItem } from "./OpenPositionsItem";
-import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
-import { OpenPositionsTitle } from "./OpenPositionsTitle";
-import { OpenPositionsSubtitle } from "./OpenPositionsSubtitle";
+import OpenPositionsTable from "./OpenPositionsTable";
 import NothingComponent from "components/common/NothingComponent/";
-// hooks
-import { useShowDimension } from "hooks/useShowDimension";
-// constants
-import { SCREEN_TYPE } from "config/constants";
 // helpers
-import { exchangeName } from "config/utils";
-import { title } from "./helpers";
+import { exchangeName, formatMoney, getColor, valueWithSign } from "config/utils";
 // styles
 import styles from "./OpenPositionsComponent.module.css";
 
 interface Props {
     formatData: any;
     displayType: string;
-    width: number;
 }
 
-const cardWidth = 310;
-const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, width }) => {
-    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
-    const countDummyCards = (dataLength) => {
-        const cardsInARow = width - 200 <= 0 ? 1 : Math.floor((width - 200) / cardWidth);
-        const module = dataLength % cardsInARow;
-        return module ? cardsInARow - module : 0;
-    };
-
-    const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${displayType}/robot/${code}`);
-    };
-
+const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType }) => {
     return (
-        <div className={styles.container}>
-            <div className={styles.regionTitle}>{title[displayType]}</div>
+        <div>
             {!formatData.length ? (
                 <div style={{ marginTop: "20px" }}>
                     <NothingComponent
@@ -52,44 +26,38 @@ const _OpenPositionsComponent: React.FC<Props> = ({ formatData, displayType, wid
                     />
                 </div>
             ) : (
-                formatData.map((titleItem) => (
-                    <div key={titleItem.exchange} style={{ marginTop: 5 }}>
+                formatData.map((exchangeGroup, index) => (
+                    <div key={exchangeGroup.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
                         <div>
-                            {titleItem.assets.map((asset) => (
-                                <Accordion
-                                    key={asset.asset}
-                                    title={<OpenPositionsTitle title={exchangeName(titleItem.exchange)} />}
-                                    subtitle={
-                                        <OpenPositionsSubtitle
-                                            volume={asset.volume}
-                                            profit={asset.profit}
-                                            asset={asset.asset}
-                                        />
-                                    }>
-                                    {isDesktopView ? (
-                                        <Fragment key={asset.asset}>
-                                            <OpenPositionsHeader />
-                                            {asset.robots.map((item, idx) => (
-                                                <OpenPositionsItem
-                                                    item={item}
-                                                    key={idx}
-                                                    onRedirectToDetailView={handleRedirectToDetailView}
-                                                />
-                                            ))}
-                                        </Fragment>
-                                    ) : (
-                                        <div key={asset.value} className={styles.cardItemsContainer}>
-                                            {asset.robots.map((item, idx) => (
-                                                <OpenPositionsItemCard
-                                                    item={item}
-                                                    key={idx}
-                                                    onRedirectToDetailView={handleRedirectToDetailView}
-                                                />
-                                            ))}
-                                            {DummyCards(countDummyCards(asset.robots.length), cardWidth)}
+                            {exchangeGroup.assets.map((asset) => (
+                                <>
+                                    <div className={styles.exchangeHeader}>
+                                        <span className={styles.exchange}>{`${exchangeName(exchangeGroup.exchange)} ${
+                                            asset.asset
+                                        }`}</span>
+                                        <div className={styles.aggregatedStats}>
+                                            <div>
+                                                Amount:&nbsp;
+                                                <span
+                                                    style={{
+                                                        color: getColor(asset.volume < 0)
+                                                    }}>
+                                                    {`${valueWithSign(asset.volume)} ${asset.asset}`}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                Unrealized Profit:&nbsp;
+                                                <span
+                                                    style={{
+                                                        color: getColor(asset.profit < 0)
+                                                    }}>
+                                                    {`${valueWithSign(formatMoney(asset.profit))} $`}
+                                                </span>
+                                            </div>
                                         </div>
-                                    )}
-                                </Accordion>
+                                    </div>
+                                    <OpenPositionsTable key={asset.asset} displayType={displayType} asset={asset} />
+                                </>
                             ))}
                         </div>
                     </div>
