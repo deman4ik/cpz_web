@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { stats, fullStats } from "graphql/queryFragments";
+import { stats, fullStats, statsConfig } from "graphql/queryFragments";
 
 export const SIGNALS_SEARCH = gql`
     query signal_robots_search(
@@ -98,8 +98,10 @@ export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
         $asset: String_comparison_exp
         $type: String_comparison_exp
         $user_id: uuid
+        $limit: Int
     ) {
         stats: v_user_aggr_stats(
+            limit: $limit
             where: { type: $type, exchange: $exchange, asset: $asset, user_id: { _eq: $user_id } }
         ) {
             user_id
@@ -118,12 +120,68 @@ export const ALL_USER_ROBOTS_AGGR_STATS = gql`
             user_id
             id
             asset
+            ${statsConfig}
             exchange
+        }
+    }
+`;
+
+export const ROBOTS_TOTAL_PERFORMANCE = gql`
+    query robots_total_performance {
+        stats: v_robot_aggr_stats(order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]) {
+            ${statsConfig}
+            asset
+            exchange
+            id
+        }
+    }
+`;
+export const ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
+    query robots_total_performance_with_stats(
+        $limit: Int
+        $exchange: String_comparison_exp
+        $asset: String_comparison_exp
+    ) {
+        stats: v_robot_aggr_stats(
+            limit: $limit
+            where: { exchange: $exchange, asset: $asset }
+            order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
+        ) {
+            statistics: full_stats
             equity
-            profit: net_profit
-            tradesCount: trades_count
-            winRate: win_rate
-            maxDrawdown: max_drawdown
+            asset
+            exchange
+            id
+        }
+    }
+`;
+
+export const USER_ROBOTS_TOTAL_PERFORMANCE = gql`
+    query user_robots_total_performance {
+        stats: v_user_robot_aggr_stats(order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]) {
+            ${statsConfig}
+            asset
+            exchange
+            id
+        }
+    }
+`;
+
+export const USER_ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
+    query user_robots_total_performance_with_stats(
+        $limit: Int
+        $exchange: String_comparison_exp
+        $asset: String_comparison_exp
+    ) {
+        stats: v_user_robot_aggr_stats(
+            limit: $limit
+            where: { exchange: $exchange, asset: $asset }
+            order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
+        ) {
+            statistics: full_stats
+            asset
+            exchange
+            id
         }
     }
 `;

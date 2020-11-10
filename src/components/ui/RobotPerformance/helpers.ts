@@ -1,4 +1,4 @@
-import { capitalize, exchangeName } from "../../../config/utils";
+import { capitalize, exchangeName } from "config/utils";
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) =>
     !exchange && !asset

@@ -82,7 +82,7 @@ const useFetchSignalRobotPositions = (robotData) => {
                 offset: closedPositionsData.positions.length,
                 limit: CLOSED_POSITIONS_LIMIT
             }
-        });
+        }).catch((e) => console.error(e));
         setLimit(closedPositionsData.positions.length + CLOSED_POSITIONS_LIMIT);
     };
 

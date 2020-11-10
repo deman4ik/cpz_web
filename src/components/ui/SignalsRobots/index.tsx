@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { RobotsPageContainer } from "./RobotsPageContainer";
-import { Modals } from "components/pages/SignalRobotsInfoPage/Modals";
+import { Modals } from "components/pages/TradingRobotsSearchPage/Modals";
 
 interface Props {
     data: any;
@@ -13,7 +13,7 @@ const _SignalRobots: React.FC<Props> = ({ data, width, type, refetch }) => {
     return (
         <div>
             <RobotsPageContainer data={data} displayType={type} width={width} />
-            <Modals afterClose={refetch} />
+            <Modals width={width} afterClose={refetch} />
         </div>
     );
 };

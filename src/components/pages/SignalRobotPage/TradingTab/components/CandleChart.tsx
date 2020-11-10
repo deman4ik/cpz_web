@@ -64,7 +64,7 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
             };
             fetchMore({
                 variables
-            });
+            }).catch((e) => console.error(e));
             setLimit((oldLimit) => oldLimit + LIMIT);
         },
         []

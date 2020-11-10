@@ -142,7 +142,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
                     robots: [...prev.robots, ...fetchMoreResult.robots]
                 };
             }
-        });
+        }).catch((e) => console.error(e));
     };
 
     return {

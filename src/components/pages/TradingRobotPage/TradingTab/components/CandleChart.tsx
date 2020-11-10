@@ -65,7 +65,7 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
             fetchMore({
                 variables,
                 context: { fetchOptions: { signal } }
-            });
+            }).catch((e) => console.error(e));
         },
         []
     );

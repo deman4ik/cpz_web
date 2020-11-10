@@ -4,6 +4,8 @@ export enum PageType {
     notifications = "Notifications",
     profile = "Profile",
     robotStats = "Robot Stats",
+    manageRobotsStats = "Robots Performance",
+    manageUserRobotsStats = "User Robots Performance",
     support = "Support",
     community = "Community",
     dashboard = "Dashboard",

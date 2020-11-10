@@ -7,6 +7,7 @@ import { formatTotalUsers } from "../../utils";
 import { Card } from "components/basic";
 import StatsContainer from "./StatsContainer";
 import TimestampStats from "./TimestampStats";
+import styles from "../../styles/Dasboard.module.css";
 
 // TODO: работа с шириной в зависимости от других карточек
 const UserStats: React.FC<any> = () => {
@@ -14,7 +15,7 @@ const UserStats: React.FC<any> = () => {
     const { data } = useQuery(USERS_BY_ROBOTS_AGGREGATE);
 
     return (
-        <Card style={{ minHeight: "305px", margin: "15px", flexGrow: "0.2" }}>
+        <Card className={styles.card}>
             {data?.usersTotal && (
                 <>
                     <StatsContainer title="Users" data={formatTotalUsers(data)} />

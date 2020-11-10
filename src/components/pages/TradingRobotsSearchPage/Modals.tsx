@@ -8,15 +8,14 @@ import { modalType } from "../types";
 
 interface Props {
     width: number;
-    afterClose: () => void;
+    afterClose?: () => void;
 }
-// robots/search/ page
 
 export const Modals: React.FC<Props> = ({ width, afterClose }) => {
     const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
     const handleClose = (needsRefreshing: boolean) => {
-        if (needsRefreshing) {
+        if (needsRefreshing && afterClose) {
             afterClose();
         }
         handleSetVisible();

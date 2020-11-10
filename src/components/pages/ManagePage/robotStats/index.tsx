@@ -1,71 +1,68 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "@apollo/client";
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { useFilters } from "hooks/useFilters";
-import { USER_SIGNAL_ROBOT_STATS_AGGREGATE } from "graphql/signals/queries";
-import { POLL_INTERVAL } from "config/constants";
-import { DefaultTemplate } from "components/layout";
-import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
-import { StatsPageComponent } from "./StatsPageComponent";
-import NothingComponent from "components/common/NothingComponent/";
-import { getFormatData, getSubTitle } from "./helpers";
-import { capitalize } from "config/utils";
+import { ManagementTemplate } from "components/layout";
 import { PageType } from "config/types";
-import styles from "./index.module.css";
-import { AuthContext } from "libs/hoc/context";
 import { StatsFiltersModal } from "components/ui/Modals/StatsFiltersModal";
-import { QueueTypes } from "components/pages/StatsPage/types";
+import NothingComponent from "components/common/NothingComponent";
+import { StatsPageComponent } from "components/pages/StatsPage/StatsPageComponent";
+import styles from "../../StatsPage/index.module.css";
+import { AuthContext } from "libs/hoc/context";
+import { useFilters } from "hooks/useFilters";
+import { POLL_INTERVAL } from "config/constants";
+import { extractRoute, getFormatData, getSubTitle } from "components/pages/StatsPage/helpers";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { StatsPageButtonToolbar } from "components/pages/StatsPage/StatsPageButtonToolbar";
+import { entity, mapQueriesToRoutes, mapRoutesToDisplayTypes } from "components/pages/ManagePage/robotStats/constants";
 
-export const StatsPage: React.FC = () => {
+export const ManageRobotsStats: React.FC = () => {
     const {
-        authState: { isAuth, user_id }
+        authState: { isAuth }
     } = useContext(AuthContext);
-
     const { width } = useWindowDimensions();
     const router = useRouter();
-    const displayType = router.route.split("/")[1];
+    const displayType = mapRoutesToDisplayTypes[extractRoute(router.route)];
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
 
+    const componentEntity = entity[PageType[displayType]];
+
     const handlePressBack = () => {
-        router.push(`/${displayType}`);
+        router.back();
     };
 
     const { selectedFilter, ...restFilterProps } = useFilters(router.query);
     const { asset, exchange } = selectedFilter;
 
-    const { loading, data } = useQuery(USER_SIGNAL_ROBOT_STATS_AGGREGATE, {
+    const { data, loading } = useQueryWithAuth(true, mapQueriesToRoutes[displayType], {
         variables: {
             limit: 1,
             asset: asset ? { _eq: asset } : { _is_null: true },
-            exchange: exchange ? { _eq: exchange } : { _is_null: true },
-            type: { _eq: QueueTypes[displayType] },
-            user_id
+            exchange: exchange ? { _eq: exchange } : { _is_null: true }
         },
         pollInterval: POLL_INTERVAL
     });
 
-    const formatData = useMemo(
-        () => (!loading && data ? getFormatData(data.stats[0]) : { chartData: null, robotStatistic: null }),
-        [loading, data]
-    );
+    const formatData = useMemo(() => {
+        if (!loading && data) {
+            return getFormatData(data.stats[0]);
+        }
+        return { chartData: null, robotStatistic: null };
+    }, [loading, data]);
 
     const toggleFiltersVisibility = () => {
-        setFiltersModalVisibility((prev) => !prev);
+        setFiltersModalVisibility((isOpen) => !isOpen);
     };
 
     return (
-        <DefaultTemplate
-            page={PageType[displayType]}
-            title={`My ${capitalize(displayType)} Total Performance`}
+        <ManagementTemplate
+            navigateBack={handlePressBack}
+            title={`${componentEntity} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
             toolbar={isAuth && <StatsPageButtonToolbar toggleFiltersVisibility={toggleFiltersVisibility} />}
-            width={width}
-            handlePressBack={handlePressBack}>
+            page={PageType[displayType]}>
             <StatsFiltersModal
                 isOpen={isFiltersModalVisible}
-                title={`Filter My Total ${capitalize(displayType)} Performance`}
+                title={`Filter Total ${componentEntity} Performance`}
                 onClose={toggleFiltersVisibility}
                 selectedFilter={selectedFilter}
                 {...restFilterProps}
@@ -80,10 +77,11 @@ export const StatsPage: React.FC = () => {
                         formatData={formatData}
                         width={width}
                         displayType={displayType}
-                        title={`My ${capitalize(displayType)} Total Statistics`}
+                        fullWidth
+                        title={PageType[displayType]}
                     />
                 )}
             </>
-        </DefaultTemplate>
+        </ManagementTemplate>
     );
 };
