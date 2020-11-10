@@ -128,6 +128,63 @@ export const ALL_ROBOTS = gql`
     }
 `;
 
+export const BACKTESTS = gql`
+    query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
+        backtests(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
+            id
+            robot_id
+            exchange
+            status
+            asset
+            timeframe
+            strategy
+            exchange
+            backtest_logs {
+                data
+            }
+            backtest_stats {
+                statistics
+                equity_avg
+            }
+            backtest_settings {
+                robot_settings
+                strategy_settings
+            }
+            backtest_signals {
+                id
+            }
+            backtest_signals_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            backtest_stats_aggregate {
+                aggregate {
+                    count
+                }
+            }
+        }
+    }
+`;
+
+export const BACKTESTS_AGGREGATE = gql`
+    query get_backtests_aggregate($where: backtests_bool_exp) {
+        backtests_aggregate(where: $where) {
+            aggregate {
+                count
+            }
+        }
+    }
+`;
+
+export const GET_ROBOT_NAMES_BY_ID = gql`
+    query get_robot_names_by_ids($where: robots_bool_exp) {
+        robots(where: $where) {
+            id
+            name
+        }
+    }
+`;
 /**
  *  Общее количество роботов
  *  Использование:  manage/users
