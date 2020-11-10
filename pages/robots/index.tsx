@@ -1,8 +1,8 @@
 import React from "react";
 
 import { withApollo, withAuth, withDevice } from "libs/hoc";
-import { RobotsPage } from "components/pages/TradingRobotsInfoPage";
+import TradingRobotsInfoPage from "components/pages/TradingRobotsInfoPage";
 
-const Page = () => <RobotsPage />;
+const Page = () => <TradingRobotsInfoPage />;
 
 export default withApollo(withAuth(withDevice(Page)));

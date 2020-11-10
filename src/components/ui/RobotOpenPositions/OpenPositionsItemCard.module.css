@@ -16,7 +16,7 @@
     flex-direction: row;
 }
 
-.rowCaption {
+.cardCaption {
     background-color: var(--dark);
     padding: 10px 5px 10px 10px;
     cursor: pointer;
@@ -24,7 +24,8 @@
     opacity: 1;
 }
 
-.rowBody {
+.cardBody {
+    margin-top: 5px;
     padding: 0 10px 10px;
     align-items: flex-start;
 }
@@ -72,8 +73,8 @@
 }
 
 .colFlexEnd {
-  display: flex;
-  align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
 }
 
 .rowFlexEnd {

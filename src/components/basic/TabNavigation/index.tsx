@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 // types
 import { TabSchema } from "./types";
@@ -24,4 +24,4 @@ const TabNavigation = ({ tabSchema }: Props): JSX.Element => {
     );
 };
 
-export default TabNavigation;
+export default memo(TabNavigation);

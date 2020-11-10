@@ -1,0 +1,26 @@
+.exchange {
+    font-size: var(--big1);
+    color: white;
+}
+
+.assetHeader {
+    font-size: var(--normal1);
+    background-color: var(--dark);
+    color: white;
+    padding: 10px 20px;
+}
+
+@media (max-width: 1080px) {
+    .exchange {
+        font-size: var(--normal3);
+    }
+}
+
+@media (max-width: 480px) {
+    .exchange {
+        font-size: var(--normal1);
+    }
+    .assetHeader {
+        font-size: var(--normal0);
+    }
+}

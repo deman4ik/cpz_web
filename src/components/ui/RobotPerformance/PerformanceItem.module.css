@@ -11,6 +11,13 @@
 .col {
     display: flex;
     flex-direction: column;
+    color: white;
+}
+
+.inlineText {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .wraperBlock {

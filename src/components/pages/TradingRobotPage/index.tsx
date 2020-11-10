@@ -1,25 +1,18 @@
 import React, { useMemo, useState, useContext } from "react";
 import Router, { useRouter } from "next/router";
-
 import { useQuery, useMutation } from "@apollo/client";
-
-// components
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { DefaultTemplate } from "components/layout";
 import { PageHeader } from "./Header";
-import { PageTabs } from "./PageTabs";
+import RobotPageContent from "components/pages/common/RobotPageContent";
 import { Toolbar } from "./Toolbar";
 import { Modals } from "./Modals";
 import { formatRobotData } from "./helpers";
-// hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
-// graphql
 import { USER_ROBOT_INFO_FOR_USER, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
-// constants
-import { PageType } from "config/types";
+import { PageType, RobotsType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
-// context
 import { AuthContext } from "libs/hoc/context";
 import { isNewPage } from "utils/common";
 
@@ -81,7 +74,7 @@ export const TradingRobotPage: React.FC = () => {
             ) : (
                 <>
                     <PageHeader robotData={robotData} subscribe={subscribe} />
-                    <PageTabs robotData={robotData} width={width} isOwnedByUser={robotData.robot.isOwnedByUser} />
+                    <RobotPageContent type={RobotsType.robots} robotData={robotData} width={width} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}

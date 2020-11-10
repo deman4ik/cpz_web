@@ -1,46 +1,20 @@
-import React, { memo, useState, useEffect, useContext } from "react";
-import { useQuery } from "@apollo/client";
-// graphql
-import { ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE } from "graphql/signals/queries";
-// constants
-import { POLL_INTERVAL } from "config/constants";
-// components
+import React, { memo } from "react";
 import { PerformanceEmpty } from "./PerformanceEmpty";
 import { PerformanceComponent } from "./PerformanceComponent";
-// helpers
-import { getFormatData, queryParam } from "./helpers";
-// context
-import { AuthContext } from "libs/hoc/context";
-import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     width: number;
     type: string;
+    data: any;
 }
 
-const _RobotPerformance: React.FC<Props> = ({ width, type }) => {
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
-
-    const [formatData, setFormatData] = useState([]);
-    const { data, loading } = useQueryWithAuth(true, ALL_USER_SIGNAL_ROBOTS_STATS_AGGREGATE, {
-        variables: { type: { _eq: queryParam[type] }, user_id },
-        pollInterval: POLL_INTERVAL
-    });
-
-    useEffect(() => {
-        if (!loading && data) {
-            setFormatData(getFormatData(data.stats, type));
-        }
-    }, [loading, data, type]);
-
+const _RobotPerformance: React.FC<Props> = ({ width, type, data }) => {
     return (
         <div>
-            {!formatData.length ? (
+            {!data || !data?.length ? (
                 <PerformanceEmpty width={width} displayType={type} />
             ) : (
-                <PerformanceComponent width={width} formatData={formatData} displayType={type} />
+                <PerformanceComponent width={width} formatData={data} displayType={type} />
             )}
         </div>
     );

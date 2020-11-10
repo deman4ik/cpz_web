@@ -1,7 +1,7 @@
 import React from "react";
 import { withApollo, withAuth, withDevice } from "libs/hoc";
 
-import { SignalRobotPage } from "components/pages/SignalRobotPage";
+import SignalRobotPage from "components/pages/SignalRobotPage";
 
 const Page = () => <SignalRobotPage />;
 

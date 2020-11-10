@@ -5,7 +5,7 @@ import { PerformanceComponent } from "components/ui/RobotPerformance/Performance
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { POLL_INTERVAL } from "config/constants";
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { getFormatData } from "components/ui/RobotPerformance/helpers";
+import { formatStats } from "components/ui/RobotPerformance/helpers";
 import { Card } from "components/basic";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { DocumentNode } from "@apollo/client";
@@ -26,7 +26,7 @@ export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const formattedData = useMemo(() => !loading && data && getFormatData(data.stats, type), [loading, data]);
+    const formattedData = useMemo(() => !loading && data && formatStats(data.stats, type), [loading, data]);
     return (
         <Card className={styles.card}>
             <div className={styles.regionTitle}>{title}</div>
@@ -37,7 +37,7 @@ export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title,
                     title={PageType[mapRoutesToDisplayTypes[displayType]]}
                 />
             ) : (
-                <PerformanceComponent width={width} formatData={formattedData} displayType={displayType} />
+                <PerformanceComponent width={width} formatData={formattedData} displayType={displayType} compact />
             )}
         </Card>
     );

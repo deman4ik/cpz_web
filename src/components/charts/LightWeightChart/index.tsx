@@ -26,7 +26,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
         return isMobile ? size.width - 22 : 1180 - widthSubtractor;
     };
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ height: size.height }}>
             <Chart
                 data={data}
                 loading={loading}

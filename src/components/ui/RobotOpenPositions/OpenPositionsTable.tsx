@@ -14,20 +14,21 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 
 import styles from "./OpenPositionsTable.module.css";
+import { formatMoney, getColor, valueWithSign } from "config/utils";
 
 const cardWidth = 310;
 
 type Props = {
-    displayType: string;
+    type: string;
     asset: any;
 };
 
-const OpenPositionsTable = ({ displayType, asset }: Props): JSX.Element => {
+const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
     const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
 
     const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${displayType}/robot/${code}`);
+        Router.push(`/${type}/robot/${code}`);
     };
 
     const countDummyCards = (dataLength) => {
@@ -48,10 +49,26 @@ const OpenPositionsTable = ({ displayType, asset }: Props): JSX.Element => {
                             <div className={styles.tableHeaderText}>Entry</div>
                         </div>
                         <div className={styles.wrapper} style={{ flex: 0.2 }}>
-                            <div className={styles.tableHeaderText}>Amount</div>
+                            <div className={styles.tableHeaderText}>
+                                Amount:&nbsp;
+                                <span
+                                    style={{
+                                        color: getColor(asset.volume < 0)
+                                    }}>
+                                    {`${valueWithSign(asset.volume)} ${asset.asset}`}
+                                </span>
+                            </div>
                         </div>
                         <div className={styles.wrapper} style={{ flex: 0.3 }}>
-                            <div className={styles.tableHeaderText}>Unrealized Profit</div>
+                            <div className={styles.tableHeaderText}>
+                                Unrealized Profit:&nbsp;
+                                <span
+                                    style={{
+                                        color: getColor(asset.profit < 0)
+                                    }}>
+                                    {`${valueWithSign(formatMoney(asset.profit))} $`}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     {asset.robots.map((item, idx) => (

@@ -5,7 +5,7 @@ import { styles } from "./LightWeightChart.style";
 import { toolTipTemplate, toolTipArrowTemplate, toolTipTemplateArea } from "./templates";
 import { PropsLighweightChart, ChartType } from "./types";
 import { color } from "config/constants";
-import { getCartOptionsConfig, getLeftOffsetButton } from "./helpers";
+import { getChartOptionsConfig, getLeftOffsetButton } from "./helpers";
 import { debounce } from "lodash";
 import { setStylesToRef } from "components/pages/helpers";
 
@@ -59,7 +59,7 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     }, [data]);
 
     useEffect(() => {
-        const currentChart = createChart(chartRef.current, getCartOptionsConfig(size));
+        const currentChart = createChart(chartRef.current, getChartOptionsConfig(size));
 
         let series;
         if (type === ChartType.candle) {
