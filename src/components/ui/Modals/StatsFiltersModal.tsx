@@ -4,7 +4,7 @@ import { StatsPageFilters } from "components/pages/StatsPage/StatsPageFilters";
 import { Button, Modal } from "components/basic";
 import { useLazyQuery } from "@apollo/client";
 import { FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS } from "graphql/signals/queries";
-import { getLabelCombinations, getQueueType } from "components/pages/StatsPage/helpers";
+import { getLabelCombinations } from "components/pages/StatsPage/helpers";
 import { CheckedFilters } from "components/pages/StatsPage/types";
 
 interface StatsFiltersModalProps {

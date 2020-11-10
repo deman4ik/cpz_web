@@ -8,7 +8,6 @@ import NothingComponent from "components/common/NothingComponent";
 import { StatsPageComponent } from "components/pages/StatsPage/StatsPageComponent";
 import styles from "../../StatsPage/index.module.css";
 import { AuthContext } from "libs/hoc/context";
-import { ROBOTS_TOTAL_PERFORMANCE_WITH_STATS } from "graphql/signals/queries";
 import { useFilters } from "hooks/useFilters";
 import { POLL_INTERVAL } from "config/constants";
 import { extractRoute, getFormatData, getSubTitle } from "components/pages/StatsPage/helpers";
