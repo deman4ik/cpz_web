@@ -11,8 +11,6 @@ interface StatsFiltersModalProps {
     isOpen: boolean;
     title: string;
     onClose: () => void;
-    user_id?: string;
-    displayType: string;
     selectedFilter?: CheckedFilters;
     checkedFilters: CheckedFilters;
     confirmSelectedFilters: () => void;
@@ -24,8 +22,6 @@ export const StatsFiltersModal: FC<StatsFiltersModalProps> = ({
     isOpen,
     title,
     onClose,
-    user_id,
-    displayType,
     checkedFilters,
     confirmSelectedFilters,
     checkFilterButton,
@@ -35,13 +31,7 @@ export const StatsFiltersModal: FC<StatsFiltersModalProps> = ({
 
     const getOppositeFilterName = (filterName: string) => (filterName === "asset" ? "exchange" : "asset");
 
-    const variables: { type: { _eq: string }; user_id?: string } = {
-        type: getQueueType(displayType)
-    };
-    if (user_id) {
-        variables.user_id = user_id;
-    }
-    const [getData, { data, loading }] = useLazyQuery(FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS, { variables });
+    const [getData, { data, loading }] = useLazyQuery(FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS);
 
     useEffect(() => {
         if (getData) {

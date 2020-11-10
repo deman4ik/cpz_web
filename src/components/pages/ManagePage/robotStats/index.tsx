@@ -65,7 +65,6 @@ export const ManageRobotsStats: React.FC = () => {
                 isOpen={isFiltersModalVisible}
                 title={`Filter Total ${componentEntity} Performance`}
                 onClose={toggleFiltersVisibility}
-                displayType={displayType}
                 selectedFilter={selectedFilter}
                 {...restFilterProps}
             />
