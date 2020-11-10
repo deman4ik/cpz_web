@@ -23,7 +23,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightW
 });
 
 const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width, fullWidth, title }) => (
-    <>
+    <div className={styles.container}>
         {!formatData.chartData || !formatData.chartData.length ? (
             <LoadingIndicator />
         ) : (
@@ -36,7 +36,7 @@ const _StatsPageComponent: React.FC<Props> = ({ formatData, displayType, width, 
         )}
         <div className={styles.performanceTitle}>{title}</div>
         <PerformanceTabComponent width={width} robotStatistic={formatData.robotStatistic} />
-    </>
+    </div>
 );
 
 export const StatsPageComponent = memo(_StatsPageComponent);

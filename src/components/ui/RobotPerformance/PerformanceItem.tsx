@@ -8,17 +8,43 @@ import styles from "./PerformanceItem.module.css";
 interface Props {
     item: any;
     onRedirectToDetailView: (path: string) => void;
+    compact?: boolean;
+    noShadow?: boolean;
 }
 
 const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
 
-export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
+export const PerformanceItem: React.FC<Props> = ({
+    item,
+    onRedirectToDetailView,
+    compact = false,
+    noShadow = false
+}) => {
     const handleOnClick = () => {
         onRedirectToDetailView(item.path);
     };
 
+    const statsSeciton = (
+        <>
+            <div className={!compact ? styles.col : styles.inlineText} style={{ flex: 15 }}>
+                {compact && <span className={styles.secondaryText}>Win Rate:&nbsp;</span>}
+                {`${item.winRate} %`}
+            </div>
+            <div
+                className={!compact ? styles.col : styles.inlineText}
+                style={{ color: getColor(item.maxDrawdown < 0), flex: 15 }}>
+                {compact && <span className={styles.secondaryText}>Max Drawdown:&nbsp;</span>}
+                {`${formatMoney(item.maxDrawdown)} $`}
+            </div>
+            <div className={!compact ? styles.col : styles.inlineText} style={{ flex: 10 }}>
+                {compact && <span className={styles.secondaryText}>Trades Count:&nbsp;</span>}
+                {item.tradesCount}
+            </div>
+        </>
+    );
+
     return (
-        <div className={styles.tableRow}>
+        <div className={styles.tableRow} style={noShadow ? { borderTopWidth: 0 } : {}}>
             <div className={styles.col} style={{ flex: 20 }}>
                 <div className={styles.wraperBlock} onClick={handleOnClick}>
                     <div className={styles.wraperName}>
@@ -34,15 +60,13 @@ export const PerformanceItem: React.FC<Props> = ({ item, onRedirectToDetailView 
             <div className={styles.col} style={{ color: getColor(item.profit < 0), flex: 15 }}>
                 {item.profit ? `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $` : null}
             </div>
-            <div className={styles.col} style={{ flex: 15 }}>
-                {`${item.winRate} %`}
-            </div>
-            <div className={styles.col} style={{ color: getColor(item.maxDrawdown < 0), flex: 15 }}>
-                {`${formatMoney(item.maxDrawdown)} $`}
-            </div>
-            <div className={styles.col} style={{ flex: 10 }}>
-                {item.tradesCount}
-            </div>
+            {compact ? (
+                <div className={styles.col} style={{ flex: 15 }}>
+                    {statsSeciton}
+                </div>
+            ) : (
+                statsSeciton
+            )}
         </div>
     );
 };

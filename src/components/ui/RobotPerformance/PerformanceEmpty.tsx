@@ -28,8 +28,7 @@ const _PerformanceEmpty: React.FC<Props> = ({ width, displayType, title }) => {
         <>
             {isDesktopView ? (
                 <div className={styles.container}>
-                    <PerformanceHeader />
-                    <PerformanceItem item={item} onRedirectToDetailView={handleRedirectToDetailView} />
+                    <PerformanceItem item={item} onRedirectToDetailView={handleRedirectToDetailView} compact noShadow />
                 </div>
             ) : (
                 <div className={styles.cardItemsContainer}>
