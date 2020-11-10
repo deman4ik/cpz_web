@@ -44,7 +44,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
                 setIsChartLoaded={setIsChartLoaded}
             />
             {!isChartLoaded && <div style={{ height: 400 }} />}
-            <PerformanceTabComponent width={width} robotStatistic={robotStatistics} />{" "}
+            <PerformanceTabComponent width={width} robotStatistic={robotStatistics} />
         </>
     );
 };
