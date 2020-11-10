@@ -13,7 +13,7 @@ const getStats = (backtest) => {
     const result: Stats = {};
     if (backtest_stats && backtest_stats.length) {
         const firstStats = backtest_stats[0];
-        const { statistics, equity_avg } = firstStats
+        const { statistics, equity_avg } = firstStats;
         result.performance = equity_avg;
         result.profit = statistics.netProfit.all;
         result.winRate = statistics.winRate.all;
@@ -33,7 +33,7 @@ export const formatBackTestsData = ({ backtests }: { backtests: any }): any => {
             id,
             robot_id,
             status,
-            backtest_settings: [settings],
+            backtest_settings: [settings]
         } = backtest;
         const { performance, profit, winRate, maxDrawdown, tradesCount } = getStats(backtest);
         const { robot_settings, strategy_settings } = settings || {};

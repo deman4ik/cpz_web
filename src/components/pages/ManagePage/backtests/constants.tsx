@@ -104,5 +104,5 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 width: 90
             }
         ]
-    },
+    }
 ];
