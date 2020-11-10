@@ -12,7 +12,7 @@ export const linksHeader = [
     },
     {
         title: "Signals",
-        href: "/user_robots"
+        href: "/signals"
     },
     {
         title: "Notifications",

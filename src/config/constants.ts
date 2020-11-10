@@ -98,11 +98,11 @@ export const ROUTES: Array<string> = [
     ...AUTH_ROUTES,
     "/profile",
     "/notifications",
-    "/user_robots",
+    "/signals",
     "/robots",
-    "/user_robots/search",
+    "/signals/search",
     "/robots/search",
-    "/user_robots/robot/",
+    "/signals/robot/",
     "/robots/robot/",
     "/support"
 ];

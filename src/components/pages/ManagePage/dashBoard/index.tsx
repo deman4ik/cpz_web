@@ -14,7 +14,6 @@ const MangeDashboard: React.FC<any> = () => {
     return (
         <ManagementTemplate title="Dashboard" subTitle="Users dashboard" page={PageType.dashboard} withToolbar={false}>
             <div className={styles.cards_wrapper}>
-                <UserStats />
                 <RobotsTotalPerformance
                     title="Robots Total Performance"
                     query={ROBOTS_TOTAL_PERFORMANCE}
@@ -25,6 +24,7 @@ const MangeDashboard: React.FC<any> = () => {
                     query={USER_ROBOTS_TOTAL_PERFORMANCE}
                     type="user_robots"
                 />
+                <UserStats />
             </div>
         </ManagementTemplate>
     );

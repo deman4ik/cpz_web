@@ -67,8 +67,6 @@ export const StatsPage: React.FC = () => {
                 isOpen={isFiltersModalVisible}
                 title={`Filter My Total ${capitalize(displayType)} Performance`}
                 onClose={toggleFiltersVisibility}
-                user_id={user_id}
-                displayType={displayType}
                 selectedFilter={selectedFilter}
                 {...restFilterProps}
             />

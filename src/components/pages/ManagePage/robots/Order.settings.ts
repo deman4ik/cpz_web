@@ -8,8 +8,8 @@ export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "robots_statistics_down", label: "Robots statistic ↓" },
     { value: "user_robots_up", label: "User robots ↑" },
     { value: "user_robots_down", label: "User robots ↓" },
-    { value: "user_signals_up", label: "User user_robots ↑" },
-    { value: "user_signals_down", label: "User user_robots ↓" }
+    { value: "user_signals_up", label: "User signals ↑" },
+    { value: "user_signals_down", label: "User signals ↓" }
 ];
 export const SORT_METHODS: SortMethodType = {
     robots_statistics_up: { equity: "asc" },
