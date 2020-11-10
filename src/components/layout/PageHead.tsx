@@ -42,5 +42,15 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
                 />
             </>
         )}
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+                __html: `{
+                "@context" : "http://schema.org",
+                "@type" : "SoftwareApplication",
+                "image" : "https://cryptuoso.com/img/logo.png"
+            }`
+            }}
+        />
     </Head>
 );
