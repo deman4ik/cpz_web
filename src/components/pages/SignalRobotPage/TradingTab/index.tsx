@@ -8,13 +8,16 @@ import { floatPositions } from "../helpers";
 import styles from "./index.module.css";
 
 interface Props {
-    data: any;
-    robot: any;
+    tradingData: any;
+    robotData: any;
     width: number;
 }
 
-const _TradingTab: React.FC<Props> = ({ data, robot, width }) => {
+const _TradingTab: React.FC<Props> = ({ tradingData, robotData, width }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
+
+    const { robot } = robotData;
+
     const {
         loading,
         handleLoadMore,
@@ -23,47 +26,42 @@ const _TradingTab: React.FC<Props> = ({ data, robot, width }) => {
         closedPositions,
         signals,
         recordsCount
-    } = useMemo(() => data, [data]);
+    } = useMemo(() => tradingData, [tradingData]);
 
     return (
         <>
             <CandleChart robot={robot} signals={signals} width={width} setIsChartLoaded={setIsChartLoaded} />
-            {loading ? (
+            {!isChartLoaded && <div className={styles.empty} />}
+            {loading && (
                 <div className={styles.loading}>
                     <LoadingIndicator />
                 </div>
-            ) : !isChartLoaded ? (
-                <div className={styles.empty} />
-            ) : (
-                <>
-                    <div className={styles.container}>
-                        {Object.keys(floatPositions).map((key) => (
-                            <OpenPositionsList
-                                key={key}
-                                robot={robot}
-                                data={
-                                    key === "signals"
-                                        ? signals
-                                        : openPositions && openPositions.length
-                                        ? openPositions
-                                        : []
-                                }
-                                positionInfo={floatPositions[key]}
-                            />
-                        ))}
-                    </div>
-                    <ClosedPositionsList
-                        robot={robot}
-                        handleLoadMore={handleLoadMore}
-                        data={closedPositions}
-                        recordsCount={recordsCount}
-                        isLoadingMore={isLoadingMore}
-                        width={width}
-                    />
-                </>
             )}
+            <>
+                <div className={styles.container}>
+                    {Object.keys(floatPositions).map((key) => (
+                        <OpenPositionsList
+                            key={key}
+                            robot={robot}
+                            data={
+                                key === "signals" ? signals : openPositions && openPositions.length ? openPositions : []
+                            }
+                            positionInfo={floatPositions[key]}
+                        />
+                    ))}
+                </div>
+                <ClosedPositionsList
+                    robot={robot}
+                    handleLoadMore={handleLoadMore}
+                    data={closedPositions}
+                    recordsCount={recordsCount}
+                    isLoadingMore={isLoadingMore}
+                    width={width}
+                />
+            </>
+            )
         </>
     );
 };
 
-export const TradingTab = memo(_TradingTab);
+export default memo(_TradingTab);

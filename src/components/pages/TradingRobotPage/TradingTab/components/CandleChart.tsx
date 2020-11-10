@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { ChartType } from "components/charts/LightWeightChart/types";
@@ -56,44 +56,19 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     useEffect(() => {
         limitRef.current = limit;
     }, [limit]);
-    const onFetchMore = (offset: number, signal?: AbortSignal) => {
-        const variables = {
-            offset: limitRef.current,
-            limit: limitRef.current + LIMIT
-        };
-        fetchMore({
-            variables,
-            context: { fetchOptions: { signal } },
-            updateQuery: (prev: any, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                let result = null;
-                try {
-                    const prevCandlesByTime = prev.candles.reduce((acc, curr) => {
-                        acc[curr.candle.time] = curr;
-                        return acc;
-                    }, {});
-                    const uniqueCandles = [...prev.candles];
-                    for (let i = 0; i < fetchMoreResult.candles.length; i++) {
-                        const fetchedCandle = fetchMoreResult.candles[i].candle;
-                        if (!Object.prototype.hasOwnProperty.call(prevCandlesByTime, fetchedCandle.time)) {
-                            uniqueCandles.push(fetchedCandle);
-                        }
-                    }
-
-                    setLimit((oldLimit) => oldLimit + (uniqueCandles.length - prev.candles.length));
-
-                    result = {
-                        ...prev,
-                        candles: uniqueCandles
-                    };
-                } catch (err) {
-                    result = prev;
-                }
-
-                return result;
-            }
-        });
-    };
+    const onFetchMore = useCallback(
+        () => (offset: number, signal?: AbortSignal) => {
+            const variables = {
+                offset: limitRef.current,
+                limit: limitRef.current + LIMIT
+            };
+            fetchMore({
+                variables,
+                context: { fetchOptions: { signal } }
+            });
+        },
+        []
+    );
     useEffect(() => {
         if (!loading && data) {
             setCandleChartData(getCandleChartData(data, asset, !!userRobot));

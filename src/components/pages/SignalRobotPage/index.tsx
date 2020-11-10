@@ -3,12 +3,12 @@ import Router, { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { DefaultTemplate } from "components/layout";
 import { Header } from "./Header";
-import PageContent from "./PageContent";
+import RobotPageContent from "../common/RobotPageContent";
 import { NoRecentData, LoadingIndicator } from "components/common";
 import { Toolbar } from "./Toolbar";
 import { Modals } from "./Modals/index";
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { PageType } from "config/types";
+import { PageType, RobotsType } from "config/types";
 import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { POLL_INTERVAL } from "config/constants";
@@ -79,7 +79,7 @@ const SignalRobotPage = (): JSX.Element => {
             ) : (
                 <>
                     <Header subscribe={subscribe} robotData={robotData} />
-                    <PageContent robotData={robotData} width={width} />
+                    <RobotPageContent type={RobotsType.signals} robotData={robotData} width={width} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}

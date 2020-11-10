@@ -31,29 +31,20 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
     );
 
     const robotStatistics = useMemo(() => getRobotStatistic(robot.fullStats?.statistics), [robot]);
-    return (
+    return !robot ? (
+        <LoadingIndicator />
+    ) : !chartData ? (
+        <NoRecentData message="No recent data available" style={{ marginTop: 20 }} />
+    ) : (
         <>
-            {!robot ? (
-                <LoadingIndicator />
-            ) : (
-                <>
-                    {!chartData ? (
-                        <NoRecentData message="No recent data available" style={{ marginTop: 20 }} />
-                    ) : (
-                        <LightWeightChartWithNoSSR
-                            data={chartData}
-                            type={ChartType.area}
-                            size={{ height: 400, width }}
-                            setIsChartLoaded={setIsChartLoaded}
-                        />
-                    )}
-                    {isChartLoaded ? (
-                        <>
-                            <PerformanceTabComponent width={width} robotStatistic={robotStatistics} />
-                        </>
-                    ) : null}
-                </>
-            )}
+            <LightWeightChartWithNoSSR
+                data={chartData}
+                type={ChartType.area}
+                size={{ height: 400, width }}
+                setIsChartLoaded={setIsChartLoaded}
+            />
+            {!isChartLoaded && <div style={{ height: 400 }} />}
+            <PerformanceTabComponent width={width} robotStatistic={robotStatistics} />{" "}
         </>
     );
 };

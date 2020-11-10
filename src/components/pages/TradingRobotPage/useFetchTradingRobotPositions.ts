@@ -12,7 +12,7 @@ interface RobotData {
     robot: any;
 }
 
-export const useFetchPositionData = (robotData: RobotData): any => {
+const useFetchTradingRobotPosition = (robotData: RobotData): any => {
     const {
         authState: { user_id }
     } = useContext(AuthContext);
@@ -91,3 +91,5 @@ export const useFetchPositionData = (robotData: RobotData): any => {
         loading: loading || loadingAggregate || loadingOpenPos
     };
 };
+
+export default useFetchTradingRobotPosition;

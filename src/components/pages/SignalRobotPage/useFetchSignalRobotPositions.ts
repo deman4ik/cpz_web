@@ -10,10 +10,13 @@ import { getAlerts } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 
-const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
+const useFetchSignalRobotPositions = (robotData) => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
+
+    const { user_signals: userRobot, robot } = robotData;
+    const { isUserSubscribed } = robot;
     const robotPositionsQuery = isAuth && isUserSubscribed ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
 
     const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
@@ -110,4 +113,4 @@ const useFetchPositionData = (isUserSubscribed, userRobot, robot) => {
     };
 };
 
-export default useFetchPositionData;
+export default useFetchSignalRobotPositions;
