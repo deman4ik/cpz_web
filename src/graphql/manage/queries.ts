@@ -132,6 +132,10 @@ export const BACKTESTS = gql`
     query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
         backtests(limit: $limit, where: $where, order_by: $order_by) {
             asset
+            exchange
+            timeframe
+            strategy
+            robot_id
             id
             backtest_all_stats {
                 equity_avg
@@ -147,10 +151,7 @@ export const BACKTESTS = gql`
             left_bars
             processed_bars
             robot {
-                id
                 code
-                available
-                status
             }
             settings
             status
