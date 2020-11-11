@@ -13,7 +13,11 @@ import { BACKTESTS, BACKTESTS_AGGREGATE } from "graphql/manage/queries";
 import { formatBackTestsData } from "components/pages/ManagePage/backtests/utils";
 
 const getSearchOptions = (query: string) => {
-    return { robot: { code: { _ilike: `%${query}%` } } };
+    const queryIsNotEmpty = query && query.trim();
+    if (queryIsNotEmpty) {
+        return { robot: { code: { _ilike: `%${query}%` } } };
+    }
+    return null;
 };
 const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;
 

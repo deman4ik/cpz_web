@@ -13,10 +13,9 @@ const getStats = (stats) => {
         const statsObject = stats[0];
         const { statistics, equity_avg } = statsObject;
         result.performance = equity_avg;
-        result.profit = statistics.netProfit.all;
-        result.winRate = statistics.winRate.all;
-        result.maxDrawdown = statistics.maxDrawdown.all;
-        result.tradesCount = statistics.tradesCount.all;
+        Object.keys(statistics).forEach((key) => {
+            result[key] = statistics[key].all;
+        });
         result.last_position_exit_date = statsObject.last_position_exit_date;
     }
     return result;
