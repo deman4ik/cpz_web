@@ -2,30 +2,95 @@ import React from "react";
 //utils
 import { STATUS_COLORS } from "config/constants";
 import { buildRobotChartCell } from "components/pages/ManagePage/utils";
+import { formatDate } from "config/utils";
 
 export const BACKTESTS_TABLE_COLUMNS = [
+    {
+        Header: "Robot Info",
+        id: "robot_info",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Robot ID",
+                accessor: (v) => v.robot.id,
+                isVisible: true,
+                width: 262
+            },
+            {
+                Header: "Robot Code",
+                accessor: (v) => v.robot.code,
+                isVisible: true,
+                width: 262
+            },
+            {
+                Header: "Availability",
+                accessor: (v) => v.robot.available,
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Status",
+                accessor: (v) => v.robot.status,
+                isVisible: true,
+                Cell: ({ value }: { value: number }): JSX.Element => (
+                    <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
+                ),
+                width: 100
+            }
+        ]
+    },
     {
         Header: "Back Test Info",
         id: "backtest_info",
         disableSortBy: false,
         columns: [
             {
-                Header: "Robot ID",
-                accessor: "robot_id",
+                Header: "Date From",
+                accessor: (v) => formatDate(v.date_from),
                 isVisible: true,
-                width: 262
+                width: 200
             },
             {
-                Header: "Robot Name",
-                accessor: "name",
+                Header: "Date To",
+                accessor: (v) => formatDate(v.date_to),
                 isVisible: true,
-                width: 262
+                width: 200
             },
             {
-                Header: "ID",
-                accessor: "id",
+                Header: "Completed",
+                accessor: (v) => `${v.completed_percent}%`,
                 isVisible: true,
-                width: 262
+                width: 100
+            },
+            {
+                Header: "Processed Bars",
+                accessor: "processed_bars",
+                isVisible: true,
+                width: 150
+            },
+            {
+                Header: "Bars Left",
+                accessor: "left_bars",
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Total Bars",
+                accessor: "total_bars",
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Error",
+                accessor: (v) => v.errors || "No errors",
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Local",
+                accessor: (v) => (v.settings.local ? "Yes" : "No"),
+                isVisible: true,
+                width: 100
             },
             {
                 Header: "Asset",
@@ -34,22 +99,34 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 width: 80
             },
             {
-                Header: "Strategy",
-                accessor: "strategy",
+                Header: "Populate History",
+                accessor: (v) => (v.settings.populateHistory ? "Yes" : "No"),
                 isVisible: true,
-                width: 180
+                width: 150
             },
             {
-                Header: "Time Frame",
-                accessor: "timeframe",
+                Header: "Save Logs",
+                accessor: (v) => (v.settings.saveLogs ? "Yes" : "No"),
                 isVisible: true,
-                width: 130
+                width: 150
             },
             {
-                Header: "Exchange",
-                accessor: "exchange",
+                Header: "Save Positions",
+                accessor: (v) => (v.settings.savePositions ? "Yes" : "No"),
                 isVisible: true,
-                width: 100
+                width: 150
+            },
+            {
+                Header: "Save Signals",
+                accessor: (v) => (v.settings.saveSignals ? "Yes" : "No"),
+                isVisible: true,
+                width: 150
+            },
+            {
+                Header: "Finished At",
+                accessor: (v) => formatDate(v.finished_at),
+                isVisible: true,
+                width: 200
             },
             {
                 Header: "Status",
@@ -102,6 +179,13 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 isVisible: true,
                 sortSchema: { field: "stats", subfield: "trades_count" },
                 width: 90
+            },
+            {
+                Header: "Last Position Exit Date",
+                accessor: (v) => formatDate(v.last_position_exit_date),
+                isVisible: true,
+                sortSchema: { field: "stats", subfield: "trades_count" },
+                width: 250
             }
         ]
     }

@@ -31,7 +31,7 @@ export interface ColumnsArraySchema {
         disableSortBy?: boolean;
         columns: {
             Header: string;
-            accessor: string;
+            accessor: any;
             isVisible: boolean;
             sortSchema?: { field: string; subfield?: string };
             width?: number;

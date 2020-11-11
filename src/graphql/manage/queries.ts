@@ -130,39 +130,31 @@ export const ALL_ROBOTS = gql`
 
 export const BACKTESTS = gql`
     query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
-        backtests(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
-            id
-            robot_id
-            exchange
-            status
+        backtests(limit: $limit, where: $where, order_by: $order_by) {
             asset
-            timeframe
-            strategy
-            exchange
-            backtest_logs {
-                data
-            }
-            backtest_stats {
-                statistics
+            id
+            backtest_all_stats {
                 equity_avg
+                last_position_exit_date
+                statistics
             }
-            backtest_settings {
-                robot_settings
-                strategy_settings
-            }
-            backtest_signals {
+            completed_percent
+            currency
+            date_from
+            date_to
+            error
+            finished_at
+            left_bars
+            processed_bars
+            robot {
                 id
+                code
+                available
+                status
             }
-            backtest_signals_aggregate {
-                aggregate {
-                    count
-                }
-            }
-            backtest_stats_aggregate {
-                aggregate {
-                    count
-                }
-            }
+            settings
+            status
+            total_bars
         }
     }
 `;
@@ -177,10 +169,11 @@ export const BACKTESTS_AGGREGATE = gql`
     }
 `;
 
-export const GET_ROBOT_NAMES_BY_ID = gql`
+export const GET_ROBOTS_BY_ID = gql`
     query get_robot_names_by_ids($where: robots_bool_exp) {
         robots(where: $where) {
             id
+            available
             name
         }
     }
