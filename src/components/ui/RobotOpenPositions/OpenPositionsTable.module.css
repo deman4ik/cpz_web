@@ -15,6 +15,10 @@
     font-size: var(--small1);
 }
 
+.headerValueSpan {
+    font-size: var(--normal1);
+}
+
 .wrapper {
     display: flex;
     align-items: center;

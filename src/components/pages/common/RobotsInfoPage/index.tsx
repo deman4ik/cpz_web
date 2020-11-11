@@ -63,7 +63,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             tabPage: <RobotOpenPositions type={type} data={formatPositions(openPositionsData?.positions)} />
         },
         {
-            title: "Trading robots",
+            title: `${typeIsSignals ? "Signal" : "Trading"} robots`,
             tabPage: (
                 <SignalRobots
                     data={formatRobots(typeIsSignals ? robotsData?.signals : robotsData?.robots)}

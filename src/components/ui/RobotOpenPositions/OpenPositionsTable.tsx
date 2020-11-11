@@ -1,32 +1,21 @@
 import React from "react";
 import Router from "next/router";
-
-// constants
-import { SCREEN_TYPE } from "config/constants";
-
-// components
 import { OpenPositionsItem } from "./OpenPositionsItem";
 import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
 import { DummyCards } from "components/common";
-
-//hooks
-import useWindowDimensions from "hooks/useWindowDimensions";
-import { useShowDimension } from "hooks/useShowDimension";
-
 import styles from "./OpenPositionsTable.module.css";
 import { formatMoney, getColor, valueWithSign } from "config/utils";
 
 const cardWidth = 310;
 
 type Props = {
+    width: number;
+    mobile: boolean;
     type: string;
     asset: any;
 };
 
-const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
-    const { width } = useWindowDimensions();
-    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
-
+const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element => {
     const handleRedirectToDetailView = (code: string) => {
         Router.push(`/${type}/robot/${code}`);
     };
@@ -39,7 +28,7 @@ const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
 
     return (
         <>
-            {isDesktopView ? (
+            {!mobile ? (
                 <>
                     <div className={styles.tableHeader}>
                         <div className={styles.wrapper} style={{ flex: 0.3 }}>
@@ -52,6 +41,7 @@ const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
                             <div className={styles.tableHeaderText}>
                                 Amount:&nbsp;
                                 <span
+                                    className={styles.headerValueSpan}
                                     style={{
                                         color: getColor(asset.volume < 0)
                                     }}>
@@ -63,6 +53,7 @@ const OpenPositionsTable = ({ type, asset }: Props): JSX.Element => {
                             <div className={styles.tableHeaderText}>
                                 Unrealized Profit:&nbsp;
                                 <span
+                                    className={styles.headerValueSpan}
                                     style={{
                                         color: getColor(asset.profit < 0)
                                     }}>
