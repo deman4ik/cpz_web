@@ -1,8 +1,11 @@
 import NothingComponent from "components/common/NothingComponent";
-import { exchangeName } from "config/utils";
+import { exchangeName, formatMoney, getColor, valueWithSign } from "config/utils";
 import React, { memo } from "react";
 import OpenPositionsTable from "./OpenPositionsTable";
 import styles from "./index.module.css";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
 
 interface Props {
     type: string;
@@ -10,6 +13,11 @@ interface Props {
 }
 
 const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
+    const { width } = useWindowDimensions();
+    const { showDimension: desktopSize } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
+
+    const mobile = !desktopSize;
+
     return (
         <div>
             {!data.length ? (
@@ -28,8 +36,34 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                         <div>
                             {exchangeGroup.assets.map((asset) => (
                                 <div key={asset.asset}>
-                                    <div className={styles.assetHeader}>{asset.asset}</div>
-                                    <OpenPositionsTable type={type} asset={asset} />
+                                    <div className={styles.assetHeader}>
+                                        {asset.asset}
+                                        {mobile && (
+                                            <div className={styles.assetHeaderMobileStats}>
+                                                <div className={styles.tableHeaderText}>
+                                                    Amount:&nbsp;
+                                                    <span
+                                                        className={styles.headerValueSpan}
+                                                        style={{
+                                                            color: getColor(asset.volume < 0)
+                                                        }}>
+                                                        {`${valueWithSign(asset.volume)} ${asset.asset}`}
+                                                    </span>
+                                                </div>
+                                                <div className={styles.tableHeaderText}>
+                                                    Unrealized Profit:&nbsp;
+                                                    <span
+                                                        className={styles.headerValueSpan}
+                                                        style={{
+                                                            color: getColor(asset.profit < 0)
+                                                        }}>
+                                                        {`${valueWithSign(formatMoney(asset.profit))} $`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <OpenPositionsTable width={width} mobile={mobile} type={type} asset={asset} />
                                 </div>
                             ))}
                         </div>
