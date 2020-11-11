@@ -1,52 +1,85 @@
-.checkBoxWrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
+.wrapper {
+    color: #fff;
+    font-size: var(--normal1);
+    display: flex;
+    align-items: center;
 }
 
-.textColor {
-  color: white;
+.wrapper.disabled {
+    color: var(--whiteLight);
 }
 
-.textColorDisabled {
-  color: var(--whiteLight);
-} 
-
-.checkbox {
-  height: 16px;
-  width: 16px;
-  border: 2px solid;
-  border-radius: 2px;
-  margin-right: 10px;
-  position: relative;
+.container {
+    height: 16px;
+    width: 16px;
+    display: inline;
+    position: relative;
+    cursor: pointer;
+    padding-left: 25px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.unchecked {
-  border-color: var(--whiteFaded);
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    top: 0;
+    left: 0;
+    margin: 0;
 }
 
-.disabled {
-  border-color: rgba(0, 0, 0, 0.26);
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border: 2px solid;
+    border-radius: 2px;
 }
 
-.checked {
-  border-color: var(--accent);
+.disabled .container .checkmark {
+    border-color: rgba(0, 0, 0, 0.26) !important;
+    color: var(--whiteLight);
 }
 
-.checkedIcon {
-  position: absolute;
-  top: -4px;
-  left: -2px;
+.container input:checked + .checkmark {
+    border-color: var(--accent);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked + .checkmark:after {
+    display: block;
+}
+
+.container .checkmark:after {
+    left: 4px;
+    bottom: 2px;
+    width: 5px;
+    height: 12px;
+    border: solid var(--primary);
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .loadingContainer {
-  display: flex;
-  justify-content: flex-start;
-  position: absolute;
-  top: 0;
-  left: 2px;
-  bottom: 0;
-  right: 0;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: 2px;
+    bottom: 0;
+    right: 0;
 }

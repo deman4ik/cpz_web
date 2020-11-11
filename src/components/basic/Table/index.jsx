@@ -3,8 +3,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useState, useEffect } from "react";
-import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
-// components
+import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination, useRowSelect } from "react-table";
 import { ColumnControlModal } from "./components/ColumnControlModal";
 
 import Toolbar from "./components/Toolbar";
@@ -12,8 +11,8 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Pagination from "./components/Pagination";
 import { LoadingIndicator } from "components/common";
-// styles
 import styles from "./styles/Common.module.css";
+import IndeterminateCheckbox from "./components/IndeterminateCheckbox";
 
 const Table = ({
     columns,
@@ -37,7 +36,6 @@ const Table = ({
         columns: groupedCols,
         page,
         prepareRow,
-        state: { pageIndex, pageSize, sortBy },
         pageOptions,
         gotoPage,
         pageCount,
@@ -45,10 +43,13 @@ const Table = ({
         canPreviousPage,
         setPageSize,
         allColumns,
-        setHiddenColumns
+        setHiddenColumns,
+        selectedFlatRows,
+        state: { pageIndex, pageSize, sortBy, selectedRowIds }
     } = useTable(
         {
             columns: cols,
+            defaultColumn: ({ value }) => <td style={{ width: 50 }}>value</td>,
             data,
             initialState: {
                 pageIndex: 0,
@@ -66,7 +67,35 @@ const Table = ({
         useBlockLayout,
         useResizeColumns,
         useSortBy,
-        usePagination
+        usePagination,
+        useRowSelect,
+        (hooks) => {
+            hooks.columns.push((columns) => [
+                {
+                    Header: "Toggle",
+                    id: "selection_head",
+                    columns: [
+                        {
+                            id: "selection",
+                            Header: (
+                                { getToggleAllRowsSelectedProps } // TODO: checkbox toggling visibility of the column
+                            ) => (
+                                <div>
+                                    <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+                                </div>
+                            ),
+                            Cell: ({ row }) => (
+                                <div>
+                                    <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+                                </div>
+                            ),
+                            width: 50
+                        }
+                    ]
+                },
+                ...columns
+            ]);
+        }
     );
 
     useEffect(() => {
