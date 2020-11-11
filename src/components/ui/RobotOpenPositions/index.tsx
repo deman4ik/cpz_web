@@ -40,7 +40,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                         {asset.asset}
                                         {mobile && (
                                             <div className={styles.assetHeaderMobileStats}>
-                                                <div className={styles.tableHeaderText}>
+                                                <div>
                                                     Amount:&nbsp;
                                                     <span
                                                         className={styles.headerValueSpan}
@@ -50,7 +50,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                                         {`${valueWithSign(asset.volume)} ${asset.asset}`}
                                                     </span>
                                                 </div>
-                                                <div className={styles.tableHeaderText}>
+                                                <div>
                                                     Unrealized Profit:&nbsp;
                                                     <span
                                                         className={styles.headerValueSpan}
