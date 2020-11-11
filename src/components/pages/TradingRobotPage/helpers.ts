@@ -39,10 +39,11 @@ export const formatRobotData = (robot: any) => {
     };
 };
 
-export const createVariable = (robotData, type) =>
-    robotData.userRobot
+export const createVariable = (robotData, type) => {
+    return robotData.userRobot
         ? {
               variables: {
+                  isVisible: true,
                   cache: {
                       id: robotData.userRobot.id,
                       tableName: "userRobot"
@@ -53,10 +54,13 @@ export const createVariable = (robotData, type) =>
                       userRobotId: robotData.userRobot.id
                   },
                   subs: {
-                      volume: robotData.userRobot.settings.volume,
                       exchange: robotData.robot.exchange,
                       asset: robotData.robot.asset,
-                      currency: robotData.robot.currency
+                      currency: robotData.robot.currency,
+                      settings: {
+                          volume: robotData.userRobot.user_robot_settings.user_robot_settings.volume,
+                          volumeType: robotData.userRobot.user_robot_settings.user_robot_settings.volumeType
+                      }
                   },
                   type
               }
@@ -81,7 +85,7 @@ export const createVariable = (robotData, type) =>
                   type
               }
           };
-
+};
 const getEntryMarker = (position_entry, asset, isOwnedByUser) => {
     const { entry_action, entry_date, entry_candle_timestamp, entry_price, id, code } = position_entry;
     const entryAction = position_entry.entry_action === "short";
