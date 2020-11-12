@@ -25,18 +25,30 @@ export const CheckBox: React.FC<Props> = forwardRef(
         };
 
         return (
-            <div className={`${styles.wrapper}  ${disabled ? styles.disabled : ""}`}>
-                <label style={style} className={`${styles.container}`}>
-                    {isLoading && (
+            <label
+                style={{ ...style, ...(label ? { paddingLeft: 25 } : {}) }}
+                className={`${styles.container}  ${disabled ? styles.disabled : ""}`}>
+                <div onClick={handleClick}>
+                    {isLoading ? (
                         <div className={styles.loadingContainer}>
                             <LoadingIndicator size={10} />
                         </div>
+                    ) : (
+                        <>
+                            <input
+                                className={styles.checkbox}
+                                type="checkbox"
+                                defaultChecked={checked}
+                                ref={ref}
+                                {...rest}
+                                disabled={disabled}
+                            />
+                            <span title={title} className={`${styles.checkmark}`} />
+                        </>
                     )}
-                    <input className={styles.checkbox} type="checkbox" defaultChecked={checked} ref={ref} {...rest} />
-                    <span title={title} onClick={handleClick} className={`${styles.checkmark}`} />
-                </label>
-                {label}
-            </div>
+                    {label}
+                </div>
+            </label>
         );
     }
 );

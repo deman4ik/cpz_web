@@ -13,10 +13,9 @@ import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
 import modalStyles from "../styles/ControlModal.module.css";
 
 interface ModalProps {
-    title: string;
     columns: any;
-    isModalVisible: boolean;
-    toggleModal: () => void;
+    isOpen: boolean;
+    toggle: () => void;
     setColumns: (columns) => void;
 }
 
@@ -26,7 +25,7 @@ enum MoveDirection {
 }
 
 export const ColumnControlModal = (props: ModalProps): JSX.Element => {
-    const { title, columns, isModalVisible, toggleModal, setColumns } = props;
+    const { columns, isOpen, toggle, setColumns } = props;
 
     const [colsState, setColsState] = useState(columns);
     const saveChanges = () => setColumns(colsState);
@@ -152,9 +151,9 @@ export const ColumnControlModal = (props: ModalProps): JSX.Element => {
 
     return (
         <Modal
-            isOpen={isModalVisible}
-            title={title}
-            onClose={toggleModal}
+            isOpen={isOpen}
+            title="Configure columns"
+            onClose={toggle}
             className={modalStyles.modal}
             footer={
                 <>
@@ -163,11 +162,11 @@ export const ColumnControlModal = (props: ModalProps): JSX.Element => {
                         icon="check"
                         onClick={() => {
                             saveChanges();
-                            toggleModal();
+                            toggle();
                         }}
                         className="success"
                     />
-                    <Button title="Discard" icon="close" onClick={toggleModal} className="dimmed" />
+                    <Button title="Discard" icon="close" onClick={toggle} className="dimmed" />
                 </>
             }>
             <div className={modalStyles.body}>

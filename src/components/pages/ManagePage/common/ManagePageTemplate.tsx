@@ -65,15 +65,15 @@ const ManagePageTemplate = ({
     );
 
     const onChangeSort = useCallback(
-        (column: { id: string; desc: boolean; sortSchema: { field: string; subfield: string } }) => {
+        (column: { id: string; desc: boolean; fieldSchema: { field: string; subfield: string } }) => {
             if (column) {
-                const { id, desc, sortSchema } = column;
+                const { id, desc, fieldSchema } = column;
                 const sortDirection = desc ? "desc" : "asc";
                 let newOrderBy: OrderBy = {
                     [id]: sortDirection
                 };
-                if (sortSchema) {
-                    const { field, subfield } = sortSchema;
+                if (fieldSchema) {
+                    const { field, subfield } = fieldSchema;
                     newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
                 }
                 setOrderBy(newOrderBy);

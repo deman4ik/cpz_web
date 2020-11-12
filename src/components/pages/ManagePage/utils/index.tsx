@@ -4,6 +4,7 @@ import React from "react";
 // components
 import { RobotChartCell } from "components/basic/Table/components/cells";
 import { CheckBox } from "components/basic";
+import { DocumentNode } from "graphql";
 
 /**
  *  Утилита сборки тайтлов для раздела статистики
@@ -33,9 +34,10 @@ export interface ColumnsArraySchema {
             Header: string;
             accessor: string;
             isVisible: boolean;
-            sortSchema?: { field: string; subfield?: string };
+            fieldSchema?: { field: string; subfield?: string };
             width?: number;
-            Cell?: (props: any) => any;
+            Cell?: (props: any) => JSX.Element;
+            mutationQuery?: DocumentNode;
         }[];
     };
 }
@@ -46,10 +48,4 @@ export const defineProperty = (object, property, value) =>
 export const buildRobotChartCell = ({ value }) =>
     value.length ? <RobotChartCell performance={value} height={120} /> : null;
 
-export const buildCheckBoxCell = ({ value }) => (
-    <CheckBox
-        style={{ display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}
-        checked={value}
-        disabled
-    />
-);
+export const buildDisabledCheckboxCell = ({ value }) => <CheckBox checked={value} disabled />;

@@ -11,7 +11,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "robot_code",
                 isVisible: true,
                 width: 262,
-                sortSchema: { field: "robot", subfield: "code" }
+                fieldSchema: { field: "robot", subfield: "code" }
             }
         ]
     },
@@ -38,14 +38,14 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "user_name",
                 isVisible: true,
                 width: 152,
-                sortSchema: { field: "user", subfield: "name" }
+                fieldSchema: { field: "user", subfield: "name" }
             },
             {
                 Header: "ID",
                 accessor: "user_id",
                 isVisible: true,
                 width: 324,
-                sortSchema: { field: "user", subfield: "id" }
+                fieldSchema: { field: "user", subfield: "id" }
             }
         ]
     },
@@ -65,7 +65,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "volume",
                 isVisible: true,
                 width: 125,
-                sortSchema: { field: "user_signal_settings", subfield: "signal_settings" }
+                fieldSchema: { field: "user_signal_settings", subfield: "signal_settings" }
             }
         ]
     }

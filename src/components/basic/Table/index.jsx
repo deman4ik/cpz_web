@@ -27,7 +27,9 @@ const Table = ({
     isLoading
 }) => {
     const [cols, setCols] = useState(columns);
-    const [isModalVisible, setModalVisibility] = useState(false);
+
+    const [controlModalOpen, setControlModalOpen] = useState(false);
+    const [actoinModalOpen, setActionModalOpen] = useState(false);
 
     const {
         getTableProps,
@@ -49,7 +51,6 @@ const Table = ({
     } = useTable(
         {
             columns: cols,
-            defaultColumn: ({ value }) => <td style={{ width: 50 }}>value</td>,
             data,
             initialState: {
                 pageIndex: 0,
@@ -72,7 +73,7 @@ const Table = ({
         (hooks) => {
             hooks.columns.push((columns) => [
                 {
-                    Header: "Toggle",
+                    Header: "Select",
                     id: "selection_head",
                     columns: [
                         {
@@ -89,9 +90,10 @@ const Table = ({
                                     <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
                                 </div>
                             ),
-                            width: 50
+                            width: 80
                         }
-                    ]
+                    ],
+                    isVisible: false
                 },
                 ...columns
             ]);
@@ -111,17 +113,21 @@ const Table = ({
         const { id, desc } = sortBy[0];
 
         // allColumns contains all the nested columns
-        const { sortSchema } = allColumns.find((column) => column.id === id);
-        onChangeSort({ id, desc, sortSchema });
+        const { fieldSchema } = allColumns.find((column) => column.id === id);
+        onChangeSort({ id, desc, fieldSchema });
     }, [onChangeSort, sortBy, allColumns]);
 
-    const toggleModal = () => {
-        setModalVisibility(!isModalVisible);
+    const toggleControlModal = () => {
+        setControlModalOpen(!controlModalOpen);
+    };
+
+    const toggleActionModal = () => {
+        setActionModalOpen(!actoinModalOpen);
     };
 
     return (
         <div className={styles.wrapper}>
-            <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
+            <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleControlModal} />
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
@@ -159,9 +165,15 @@ const Table = ({
             <ColumnControlModal
                 columns={groupedCols}
                 setColumns={setCols}
-                title="Configure columns"
-                isModalVisible={isModalVisible}
-                toggleModal={toggleModal}
+                isOpen={controlModalOpen}
+                toggle={toggleControlModal}
+            />
+
+            <ActoinModal
+                columns={groupedCols}
+                isOpen={actoinModalOpen}
+                toggle={toggleActionModal}
+                selectedRows={selectedFlatRows}
             />
         </div>
     );

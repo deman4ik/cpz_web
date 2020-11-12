@@ -1,25 +1,21 @@
-.wrapper {
+.container {
     color: #fff;
     font-size: var(--normal1);
     display: flex;
     align-items: center;
-}
-
-.wrapper.disabled {
-    color: var(--whiteLight);
-}
-
-.container {
-    height: 16px;
-    width: 16px;
-    display: inline;
     position: relative;
     cursor: pointer;
-    padding-left: 25px;
+    height: 20px;
+    padding-left: 16px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.container.disabled {
+    color: var(--whiteLight);
+    pointer-events: none;
 }
 
 .container input {
@@ -35,7 +31,7 @@
 
 .checkmark {
     position: absolute;
-    top: 0;
+    top: 2px;
     left: 0;
     height: 16px;
     width: 16px;
@@ -43,7 +39,7 @@
     border-radius: 2px;
 }
 
-.disabled .container .checkmark {
+.disabled .checkmark {
     border-color: rgba(0, 0, 0, 0.26) !important;
     color: var(--whiteLight);
 }
