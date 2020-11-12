@@ -152,6 +152,10 @@ export const BACKTESTS = gql`
             processed_bars
             robot {
                 code
+                robot_settings {
+                    strategy_settings
+                    robot_settings
+                }
             }
             settings
             status

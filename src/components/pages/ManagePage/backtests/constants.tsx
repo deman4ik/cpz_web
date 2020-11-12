@@ -351,5 +351,60 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 width: 262
             }
         ]
+    },
+    {
+        Header: "Robot Settings",
+        id: "robot_settings",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Volume",
+                accessor: (v) => v.robot.volume,
+                isVisible: true,
+                width: 80
+            },
+            {
+                Header: "Volume Type",
+                accessor: (v) => v.robot.volumeType,
+                isVisible: true,
+                width: 120
+            },
+            {
+                Header: "Adjustment",
+                accessor: (v) => v.robot.adjustment,
+                isVisible: true,
+                width: 110
+            },
+            {
+                Header: "Atr Period",
+                accessor: (v) => v.robot.atrPeriod,
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Dist Init",
+                accessor: (v) => v.robot.distInit,
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Look Back",
+                accessor: (v) => v.robot.lookback,
+                isVisible: true,
+                width: 100
+            },
+            {
+                Header: "Required History Max Bars",
+                accessor: (v) => v.robot.requiredHistoryMaxBars,
+                isVisible: true,
+                width: 200
+            },
+            {
+                Header: "SMA Size",
+                accessor: (v) => v.robot.smaSize,
+                isVisible: true,
+                width: 100
+            }
+        ]
     }
 ];
