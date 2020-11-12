@@ -31,7 +31,12 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "status",
                 isVisible: true,
                 width: 85,
-                mutationQuery: SET_USER_STATUS
+                mutation: SET_USER_STATUS,
+                mutationInputOptions: [
+                    { title: "Blocked", value: -1 },
+                    { title: "New", value: 0 },
+                    { title: "Enabled", value: 1 }
+                ]
             },
             {
                 Header: "Roles",

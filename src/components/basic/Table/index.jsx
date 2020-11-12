@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination, useRowSelect } from "react-table";
 import { ColumnControlModal } from "./components/ColumnControlModal";
 
@@ -13,6 +13,7 @@ import Pagination from "./components/Pagination";
 import { LoadingIndicator } from "components/common";
 import styles from "./styles/Common.module.css";
 import IndeterminateCheckbox from "./components/IndeterminateCheckbox";
+import ActionModal from "./components/ActionModal";
 
 const Table = ({
     columns,
@@ -47,6 +48,7 @@ const Table = ({
         allColumns,
         setHiddenColumns,
         selectedFlatRows,
+        visibleColumns,
         state: { pageIndex, pageSize, sortBy, selectedRowIds }
     } = useTable(
         {
@@ -100,6 +102,29 @@ const Table = ({
         }
     );
 
+    const groupedColsWithoutSelect = useMemo(() => groupedCols.slice(1, groupedCols.length), []);
+
+    const groupedColsWithMutations = useMemo(
+        () =>
+            groupedColsWithoutSelect
+                .filter((group) => {
+                    return (
+                        group.columns.filter((col) => {
+                            return typeof col.mutation !== "undefined";
+                        }).length > 0
+                    );
+                })
+                .map((group) => {
+                    return {
+                        ...group,
+                        columns: group.columns.filter((col) => {
+                            return typeof col.mutation !== "undefined";
+                        })
+                    };
+                }),
+        [groupedColsWithoutSelect]
+    );
+
     useEffect(() => {
         // creating allColumns-like array since isVisible is being set to true by default
         const flatCols = [];
@@ -127,7 +152,13 @@ const Table = ({
 
     return (
         <div className={styles.wrapper}>
-            <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleControlModal} />
+            <Toolbar
+                itemsCount={itemsCount}
+                onChangeSearch={onChangeSearch}
+                toggleControlModal={toggleControlModal}
+                toggleActionModal={toggleActionModal}
+                actionModalCanBeOpened={groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0}
+            />
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
@@ -163,14 +194,14 @@ const Table = ({
             />
 
             <ColumnControlModal
-                columns={groupedCols}
+                columns={groupedCols.slice(1, groupedCols.length)}
                 setColumns={setCols}
                 isOpen={controlModalOpen}
                 toggle={toggleControlModal}
             />
 
-            <ActoinModal
-                columns={groupedCols}
+            <ActionModal
+                columns={groupedColsWithMutations}
                 isOpen={actoinModalOpen}
                 toggle={toggleActionModal}
                 selectedRows={selectedFlatRows}

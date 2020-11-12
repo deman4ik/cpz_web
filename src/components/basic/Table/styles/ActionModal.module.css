@@ -1,0 +1,53 @@
+.body {
+    color: white;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}
+
+.firstStepContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hidden {
+    transform: translateX(-100%);
+    transition: ease-in-out 0.3s;
+}
+
+.shown {
+    transform: translateX(0);
+    transition: ease-in-out 0.3s;
+}
+
+.group {
+    margin-bottom: 40px;
+}
+
+.group:last-child {
+    margin: 0;
+}
+
+.group:first-child .groupHeader {
+    margin-top: 0;
+}
+
+.itemGroup {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.itemContainer {
+    margin-bottom: 5px;
+}
+
+.item {
+    font-size: var(--normal2);
+    cursor: pointer;
+}
+
+.item:hover {
+    color: var(--accent);
+}

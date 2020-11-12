@@ -25,6 +25,11 @@ export const getItemsFromTitles = (item: any, titlesScheme: { [key: string]: str
     });
 };
 
+type SelectInput = { title: string | number; value: any }[];
+type TextInput = "string";
+type NumericInput = "number";
+export type InputOptions = SelectInput | TextInput | NumericInput;
+
 export interface ColumnsArraySchema {
     [index: number]: {
         Header: string;
@@ -37,7 +42,8 @@ export interface ColumnsArraySchema {
             fieldSchema?: { field: string; subfield?: string };
             width?: number;
             Cell?: (props: any) => JSX.Element;
-            mutationQuery?: DocumentNode;
+            mutation?: DocumentNode;
+            mutationInputOptions?: InputOptions;
         }[];
     };
 }
