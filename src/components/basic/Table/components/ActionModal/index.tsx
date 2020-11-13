@@ -28,8 +28,10 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Elem
     const handlePressBack = () => {
         setBlock(true);
         setStep(Steps.select);
-        setColumn(null);
-        setTimeout(() => setBlock(false), 150);
+        setTimeout(() => {
+            setBlock(false);
+            setColumn(null);
+        }, 150);
     };
 
     return (
@@ -55,7 +57,11 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Elem
                     ))}
                 </div>
                 {(step === Steps.input || inputRemovalBlocked) && (
-                    <SecondStep selectedColumn={column} handlePressBack={handlePressBack} />
+                    <SecondStep
+                        selectedColumn={selectedColumn}
+                        handlePressBack={handlePressBack}
+                        itemsIds={selectedRows.map((item) => item.original.id)}
+                    />
                 )}
             </div>
         </Modal>
