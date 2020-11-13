@@ -10,16 +10,11 @@ import { BACKTESTS_TABLE_COLUMNS } from "components/pages/ManagePage/backtests/c
 
 //graphql
 import { BACKTESTS, BACKTESTS_AGGREGATE } from "graphql/manage/queries";
-import { formatBackTestsData } from "components/pages/ManagePage/backtests/utils";
-
-const getSearchOptions = (query: string) => {
-    const queryIsNotEmpty = query && query.trim();
-    if (queryIsNotEmpty) {
-        return { robot: { code: { _ilike: `%${query}%` } } };
-    }
-    return null;
-};
-const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;
+import {
+    formatBackTestsData,
+    getItemsCount,
+    getSearchOptions
+} from "components/pages/ManagePage/backtests/utils";
 
 const ManageBackTests: React.FC = () => {
     return (

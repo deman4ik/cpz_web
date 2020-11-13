@@ -3,6 +3,7 @@ import React from "react";
 import { STATUS_COLORS } from "config/constants";
 import { buildRobotChartCell } from "components/pages/ManagePage/utils";
 import { formatDate } from "config/utils";
+import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
 
 export const BACKTESTS_TABLE_COLUMNS = [
     {
@@ -359,51 +360,22 @@ export const BACKTESTS_TABLE_COLUMNS = [
         columns: [
             {
                 Header: "Volume",
-                accessor: (v) => v.robot.volume,
+                accessor: (v) => v.robot.robot_settings.volume,
                 isVisible: true,
                 width: 80
             },
             {
                 Header: "Volume Type",
-                accessor: (v) => v.robot.volumeType,
+                accessor: (v) => v.robot.robot_settings.volumeType,
                 isVisible: true,
                 width: 120
             },
             {
-                Header: "Adjustment",
-                accessor: (v) => v.robot.adjustment,
+                Header: "Strategy Settings",
+                accessor: (v) => v.robot.strategy_settings,
                 isVisible: true,
-                width: 110
-            },
-            {
-                Header: "Atr Period",
-                accessor: (v) => v.robot.atrPeriod,
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Dist Init",
-                accessor: (v) => v.robot.distInit,
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Look Back",
-                accessor: (v) => v.robot.lookback,
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Required History Max Bars",
-                accessor: (v) => v.robot.requiredHistoryMaxBars,
-                isVisible: true,
-                width: 200
-            },
-            {
-                Header: "SMA Size",
-                accessor: (v) => v.robot.smaSize,
-                isVisible: true,
-                width: 100
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+                width: 250
             }
         ]
     }

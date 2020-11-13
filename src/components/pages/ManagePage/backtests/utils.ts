@@ -1,3 +1,7 @@
+import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
+import { capitalize } from "config/utils";
+import { string } from "prop-types";
+
 type StatType = { all: number };
 type Stats = {
     performance?: { x: number; y: number }[];
@@ -27,7 +31,7 @@ const flattenRobotData = (robot) => {
     }
     const { robot_settings: settings, ...restProps } = robot;
     const { robot_settings, strategy_settings } = settings;
-    return { ...restProps, ...robot_settings, ...strategy_settings };
+    return { ...restProps, robot_settings, strategy_settings };
 };
 export const formatBackTestsData = ({ backtests }: { backtests: any }): any => {
     return backtests.map((backtest) => {
@@ -42,3 +46,13 @@ export const formatBackTestsData = ({ backtests }: { backtests: any }): any => {
         };
     });
 };
+
+export const getSearchOptions = (query: string) => {
+    const queryIsNotEmpty = query && query.trim();
+    if (queryIsNotEmpty) {
+        return { robot: { code: { _ilike: `%${query}%` } } };
+    }
+    return null;
+};
+
+export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;
