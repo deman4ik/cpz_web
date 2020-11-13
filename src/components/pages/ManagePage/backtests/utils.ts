@@ -1,7 +1,3 @@
-import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
-import { capitalize } from "config/utils";
-import { string } from "prop-types";
-
 type StatType = { all: number };
 type Stats = {
     performance?: { x: number; y: number }[];
