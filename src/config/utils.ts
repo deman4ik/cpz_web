@@ -29,6 +29,7 @@ export const getStats = (robot): RobotStats => {
 };
 
 export const getVolume = (settings) => (settings ? settings[volumes[settings.volumeType]] : null);
+export const getVolumeType = (settings) => (settings ? settings.volumeType : null);
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);

@@ -3,6 +3,7 @@ import React from "react";
 import { STATUS_COLORS } from "config/constants";
 import { buildRobotChartCell } from "components/pages/ManagePage/utils";
 import { formatDate } from "config/utils";
+import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
 
 export const BACKTESTS_TABLE_COLUMNS = [
     {
@@ -349,6 +350,32 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 accessor: (v) => v.robot.code,
                 isVisible: true,
                 width: 262
+            }
+        ]
+    },
+    {
+        Header: "Robot Settings",
+        id: "robot_settings",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Volume",
+                accessor: (v) => v.robot.robot_settings.volume,
+                isVisible: true,
+                width: 80
+            },
+            {
+                Header: "Volume Type",
+                accessor: (v) => v.robot.robot_settings.volumeType,
+                isVisible: true,
+                width: 120
+            },
+            {
+                Header: "Strategy Settings",
+                accessor: (v) => v.robot.strategy_settings,
+                isVisible: true,
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+                width: 250
             }
         ]
     }

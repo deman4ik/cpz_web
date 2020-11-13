@@ -1,5 +1,4 @@
 .container {
-    height: 58px;
     width: 100%;
     box-shadow: var(--shadow);
     background-color: var(--dark);
@@ -8,6 +7,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    justify-content: space-between;
 }
 
 .title,
@@ -18,16 +18,10 @@
     align-items: center;
 }
 
-.title {
-    width: 30%;
-}
-
 .icon {
     display: flex;
     align-items: center;
     margin: 5px;
-    position: absolute;
-    right: 10px;
     padding-bottom: 5px;
 }
 
