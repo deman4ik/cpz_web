@@ -43,7 +43,7 @@ export interface ColumnsArraySchema {
         disableSortBy?: boolean;
         columns: {
             Header: string;
-            accessor: string;
+            accessor: any;
             isVisible: boolean;
             fieldSchema?: { field: string; subfield?: string };
             width?: number;
@@ -60,6 +60,6 @@ export const defineProperty = (object, property, value) =>
     Object.defineProperty(object, property, { value, writable: false });
 
 export const buildRobotChartCell = ({ value }) =>
-    value.length ? <RobotChartCell performance={value} height={120} /> : null;
+    value && value.length ? <RobotChartCell performance={value} height={120} /> : null;
 
 export const buildDisabledCheckboxCell = ({ value }) => <CheckBox checked={value} disabled />;

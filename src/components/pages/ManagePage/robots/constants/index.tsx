@@ -2,6 +2,7 @@ import React from "react";
 //utils
 import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "../../utils";
 import { STATUS_COLORS } from "config/constants";
+import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
 
 export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     {
@@ -94,109 +95,17 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 width: 100
             },
             {
-                Header: "Max Bars",
-                accessor: "requiredHistoryMaxBars",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
+                Header: "Volume Type",
+                accessor: "volumeType",
+                isVisible: true,
+                width: 120
             },
             {
-                Header: "Sma Size",
-                accessor: "smaSize",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Dist Init",
-                accessor: "distInit",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Lookback",
-                accessor: "lookback",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Atr. Period",
-                accessor: "atrPeriod",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Adjustment",
-                accessor: "adjustment",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Adx High",
-                accessor: "adxHigh",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Adx Period",
-                accessor: "adxPeriod",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Trail Bars",
-                accessor: "trailBars",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Adx",
-                accessor: "adx",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Tick",
-                accessor: "tick",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Ratio",
-                accessor: "ratio",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Series Size",
-                accessor: "seriesSize",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 100
-            },
-            {
-                Header: "Order Stop Loss",
-                accessor: "orderStopLoss",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 130
-            },
-            {
-                Header: "Order Take Profit",
-                accessor: "orderTakeProfit",
-                isVisible: false,
-                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
-                width: 135
+                Header: "Strategy Settings",
+                accessor: "strategy_settings",
+                isVisible: true,
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+                width: 250
             }
         ]
     },

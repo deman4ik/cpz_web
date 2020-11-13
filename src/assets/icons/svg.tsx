@@ -11,6 +11,20 @@ export const AssignmentIcon: React.FC<Props> = ({ color, size = 24 }) => (
     </svg>
 );
 
+export const BackBurger: React.FC<Props> = ({ color, size = 24 }) => (
+    <svg
+        aria-hidden="true"
+        focusable="false"
+        width="1em"
+        height="1em"
+        style={{ transform: "rotate(360deg)", width: size, height: size }}
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 24 24">
+        <path d="M5 13l4 4l-1.4 1.42L1.18 12L7.6 5.58L9 7l-4 4h16v2H5m16-7v2H11V6h10m0 10v2H11v-2h10z" fill={color} />
+        <rect x="0" y="0" width="24" height="24" fill="rgba(0, 0, 0, 0)" />
+    </svg>
+);
+
 export const MultiLineChartIcon: React.FC<Props> = ({ color, size = 24 }) => (
     <svg style={{ width: size, height: size }} fill={color} viewBox="0 0 24 24">
         <path d="M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56l6.49 3.74z" />

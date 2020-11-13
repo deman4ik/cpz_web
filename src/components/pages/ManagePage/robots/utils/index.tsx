@@ -1,5 +1,5 @@
 // utils
-import { getVolume, getStats } from "config/utils";
+import { getVolume, getStats, getVolumeType } from "config/utils";
 
 // constants
 import { ROBOTS_AVAILABLE_CODES } from "config/constants";
@@ -26,6 +26,7 @@ export const formatRobots = ({ robots }: { robots: any }): any => {
             id,
             status,
             volume: getVolume(robot_settings),
+            volumeType: getVolumeType(robot_settings),
             available: ROBOTS_AVAILABLE_CODES[available],
             performance: equity,
             maxDrawdown,
@@ -36,7 +37,7 @@ export const formatRobots = ({ robots }: { robots: any }): any => {
             trading,
             user_robots: user_robots_aggregate.aggregate.count,
             user_signals: user_signals_aggregate.aggregate.count,
-            ...strategy_settings
+            strategy_settings
         };
     });
 };

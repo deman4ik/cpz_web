@@ -16,7 +16,6 @@ import { ALL_ROBOTS, ALL_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 
 const ManageRobots: React.FC = () => {
     const getItemsCount = (data) => data.robots_aggregate?.aggregate?.count;
-
     return (
         <ManagePageTemplate
             pageType={PageType.manageRobots}

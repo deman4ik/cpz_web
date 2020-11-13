@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import { ChevronDownIcon, ChevronUpIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
@@ -14,15 +14,28 @@ export const Accordion: React.FC<Props> = ({ title, subtitle, isOpen, children }
     const handleOnClick = () => {
         setIsExpanded(!isExpanded);
     };
+    const ref = useRef(null);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setIsExpanded(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
 
     return (
-        <div>
+        <div ref={ref}>
             <div className={`${styles.container} ${styles.ripple}`} onClick={handleOnClick}>
-                <div className={styles.title}>{title}</div>
-                <div className={styles.subtitle}>{subtitle}</div>
+                {title && <div className={styles.title}>{title}</div>}
+                {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
                 <div className={styles.icon}>{isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}</div>
             </div>
-            {isExpanded ? <div>{children}</div> : null}{" "}
+            {isExpanded ? <div style={{ position: "relative" }}>{children}</div> : null}{" "}
         </div>
     );
 };
