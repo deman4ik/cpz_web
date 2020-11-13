@@ -8,7 +8,7 @@ function SIGNAL_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
       ) {
         candles: v_candles${timeframe}_user_signal_positions(
           where: {
-            user_signal_id: { _eq: $userSignalId }
+            user_signal: { id: { _eq: $userSignalId } }
           }
           limit: 1
         ) {
