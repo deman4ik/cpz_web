@@ -25,7 +25,8 @@ const Table = ({
     itemsCount,
     onChangeSearch,
     onChangeSort,
-    isLoading
+    isLoading,
+    refetch
 }) => {
     const [cols, setCols] = useState(columns);
 
@@ -205,6 +206,7 @@ const Table = ({
                 isOpen={actoinModalOpen}
                 toggle={toggleActionModal}
                 selectedRows={selectedFlatRows}
+                onSubmit={refetch}
             />
         </div>
     );

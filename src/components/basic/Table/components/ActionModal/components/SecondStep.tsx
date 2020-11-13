@@ -8,7 +8,7 @@ import { InputType } from "components/pages/ManagePage/utils";
 import { useMutation } from "@apollo/client";
 import { Button } from "components/basic/Button";
 
-const SecondStep = ({ selectedColumn, handlePressBack, itemsIds }) => {
+const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }) => {
     const { mutation } = selectedColumn;
     const inputType = selectedColumn.mutationInputType;
     const inputOptions = selectedColumn.mutationInputOptions;
@@ -35,7 +35,7 @@ const SecondStep = ({ selectedColumn, handlePressBack, itemsIds }) => {
                 [selectedColumn.id]: inputValue,
                 ids: itemsIds
             }
-        });
+        }).then(() => onSubmit());
     };
 
     useEffect(() => {

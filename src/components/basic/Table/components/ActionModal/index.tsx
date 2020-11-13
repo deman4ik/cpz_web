@@ -8,6 +8,7 @@ type Props = {
     isOpen: boolean;
     toggle: () => void;
     selectedRows: any;
+    onSubmit: () => void;
 };
 
 enum Steps {
@@ -15,7 +16,7 @@ enum Steps {
     input = "Enter new value for selected entries"
 }
 
-const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Element => {
+const ActionModal = ({ columns, isOpen, toggle, selectedRows, onSubmit }: Props): JSX.Element => {
     const [step, setStep] = useState(Steps.select);
     const [selectedColumn, setColumn] = useState(null);
     const [inputRemovalBlocked, setBlock] = useState(false);
@@ -32,6 +33,11 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Elem
             setBlock(false);
             setColumn(null);
         }, 150);
+    };
+
+    const submitAndClose = () => {
+        onSubmit();
+        toggle();
     };
 
     return (
@@ -61,6 +67,7 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Elem
                         selectedColumn={selectedColumn}
                         handlePressBack={handlePressBack}
                         itemsIds={selectedRows.map((item) => item.original.id)}
+                        onSubmit={submitAndClose}
                     />
                 )}
             </div>

@@ -47,3 +47,9 @@ export type RobotSettings = {
 
 type OrderByOption = "desc" | "asc";
 export type OrderBy = { [x: string]: { [y: string]: OrderByOption } | OrderByOption };
+
+export enum UserStatus {
+    blocked = -1,
+    new = 0,
+    enabled = 1
+}

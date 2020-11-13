@@ -2,6 +2,16 @@ import { REGEXS } from "config/constants";
 // utils
 import { formatDate } from "config/utils";
 import { defineProperty } from "../../utils";
+import { UserStatus } from "config/types";
+
+const getUserStatus = (val) =>
+    val === UserStatus.blocked
+        ? "Blocked"
+        : val === UserStatus.enabled
+        ? "Enabled"
+        : val === UserStatus.new
+        ? "New"
+        : "Unknown";
 
 export const getSearchOptions = (value: string): any => {
     const where: any = {
@@ -29,7 +39,7 @@ export const formatData = ({ users }: { users: any }) => {
         defineProperty(row, "name", user.name);
         defineProperty(row, "id", user.id);
         defineProperty(row, "email", user.email);
-        defineProperty(row, "status", user.status ? "active" : "inactive");
+        defineProperty(row, "status", getUserStatus(user.status));
         defineProperty(row, "telegram_id", user.telegram_id);
         defineProperty(row, "telegram_username", user.telegram_username);
         defineProperty(row, "roles", { default: user.roles?.defaultRole, allowed: user.roles?.allowedRoles });

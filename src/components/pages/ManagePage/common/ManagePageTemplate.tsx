@@ -50,7 +50,7 @@ const ManagePageTemplate = ({
 
     const offset = useMemo(() => limit * pageIndex, [limit, pageIndex]);
 
-    const { data, loading: isLoading } = useQueryWithAuth(true, dataQuery, {
+    const { data, loading: isLoading, refetch } = useQueryWithAuth(true, dataQuery, {
         variables: { limit, where, offset, order_by: orderBy }
     });
 
@@ -100,6 +100,7 @@ const ManagePageTemplate = ({
                 onChangeSearch={onChangeSearch}
                 onChangeSort={onChangeSort}
                 isLoading={isLoading}
+                refetch={refetch}
             />
         </ManagementTemplate>
     );
