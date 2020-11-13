@@ -1,35 +1,35 @@
-import React, { FC, useEffect, useRef } from "react";
-import { Accordion } from "components/basic";
+import React, { FC } from "react";
 import { HeaderStatsSectionItem } from "components/pages/TradingRobotPage/Header/HeaderStatsSectionItem";
 import { v4 as uuid } from "uuid";
-import style from "./BacktestSettingsItem.module.css";
 
 interface StrategySettingsItemProps {
     value: { [key: string]: any };
 }
 export const StrategySettingsItem: FC<StrategySettingsItemProps> = ({ value }) => {
+    if (!value) {
+        return null;
+    }
     const entries = Object.entries(value);
     const firstEntry = entries[0];
     const restEntries = entries.slice(1, entries.length);
 
+    const customStyles = { label: { marginLeft: 0 } };
     return (
-        <div className={style.root}>
+        <div>
             {restEntries && !!restEntries.length ? (
-                <Accordion title={`${firstEntry[0]}: ${firstEntry[1]}`}>
-                    <div className={style.container}>
-                        {restEntries.map((item) => (
-                            <HeaderStatsSectionItem
-                                customStyles={{ container: { width: 215, marginBottom: 15 }, label: { marginLeft: 0 } }}
-                                key={uuid()}
-                                value={item[1]}
-                                label={item[0]}
-                            />
-                        ))}
-                    </div>
-                </Accordion>
+                <div>
+                    {restEntries.map((item) => (
+                        <HeaderStatsSectionItem
+                            customStyles={customStyles}
+                            key={uuid()}
+                            value={item[1]}
+                            label={item[0]}
+                        />
+                    ))}
+                </div>
             ) : (
                 <HeaderStatsSectionItem
-                    customStyles={{ label: { marginLeft: 0 } }}
+                    customStyles={customStyles}
                     key={uuid()}
                     value={firstEntry[1]}
                     label={firstEntry[0]}
