@@ -45,8 +45,9 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     // history candles load
     const historyQueryVars =
         isAuth && userRobot
-            ? { robotId: userRobot ? userRobot.id : robotId, limit, user_id }
-            : { robotId: userRobot ? userRobot.id : robotId, limit };
+            ? { robotId: userRobot?.id || robotId, limit, user_id }
+            : { robotId: userRobot?.id || robotId, limit };
+
     const { loading, data, fetchMore } = useQuery(candleQueries.history, {
         variables: historyQueryVars,
         notifyOnNetworkStatusChange: true
@@ -76,10 +77,11 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     }, [loading, data, asset]);
 
     // realtime candles load
-    const varsSubscription = isAuth ? { robotId, user_id } : { robotId };
+    const varsSubscription = isAuth ? { robotId: userRobot?.id || robotId, user_id } : { robotId };
     const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
         variables: varsSubscription
     });
+
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {
             return;
