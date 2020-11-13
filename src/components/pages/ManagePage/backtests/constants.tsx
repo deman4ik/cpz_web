@@ -360,13 +360,13 @@ export const BACKTESTS_TABLE_COLUMNS = [
         columns: [
             {
                 Header: "Volume",
-                accessor: (v) => v.robot.robot_settings.volume,
+                accessor: (v) => v.robot.robot_settings?.volume,
                 isVisible: true,
                 width: 80
             },
             {
                 Header: "Volume Type",
-                accessor: (v) => v.robot.robot_settings.volumeType,
+                accessor: (v) => v.robot.robot_settings?.volumeType,
                 isVisible: true,
                 width: 120
             },
