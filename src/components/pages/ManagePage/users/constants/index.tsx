@@ -1,6 +1,6 @@
 import { SET_USER_STATUS } from "graphql/manage/users/mutations";
 import React from "react";
-import { ColumnsArraySchema, buildDisabledCheckboxCell } from "../../utils";
+import { ColumnsArraySchema, buildDisabledCheckboxCell, CallMode, InputType } from "../../utils";
 
 export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     {
@@ -33,10 +33,12 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 width: 85,
                 mutation: SET_USER_STATUS,
                 mutationInputOptions: [
-                    { title: "Blocked", value: -1 },
-                    { title: "New", value: 0 },
-                    { title: "Enabled", value: 1 }
-                ]
+                    { label: "Blocked", value: -1 },
+                    { label: "New", value: 0 },
+                    { label: "Enabled", value: 1 }
+                ],
+                mutationInputType: InputType.select,
+                mutationCallMode: CallMode.single
             },
             {
                 Header: "Roles",

@@ -25,10 +25,16 @@ export const getItemsFromTitles = (item: any, titlesScheme: { [key: string]: str
     });
 };
 
-type SelectInput = { title: string | number; value: any }[];
-type TextInput = "string";
-type NumericInput = "number";
-export type InputOptions = SelectInput | TextInput | NumericInput;
+export type InputOptions = { label: string | number; value: any }[] | "string" | "number";
+export enum InputType {
+    select = "select",
+    text = "text",
+    number = "number"
+}
+export enum CallMode {
+    single,
+    multiple
+}
 
 export interface ColumnsArraySchema {
     [index: number]: {
@@ -44,6 +50,8 @@ export interface ColumnsArraySchema {
             Cell?: (props: any) => JSX.Element;
             mutation?: DocumentNode;
             mutationInputOptions?: InputOptions;
+            mutationCallMode?: CallMode;
+            mutationInputType?: InputType;
         }[];
     };
 }

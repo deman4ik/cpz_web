@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "components/basic/Modal";
-import styles from "../styles/ActionModal.module.css";
-import { EffectButton } from "components/basic/EffectButton";
+import styles from "./index.module.css";
+import SecondStep from "./components/SecondStep";
 
 type Props = {
     columns: any;
@@ -17,24 +17,28 @@ enum Steps {
 
 const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Element => {
     const [step, setStep] = useState(Steps.select);
-    const [selectedColumn, setSelectedColumn] = useState(null);
+    const [selectedColumn, setColumn] = useState(null);
     const [inputRemovalBlocked, setBlock] = useState(false);
 
     const handlePressItem = (column) => {
-        setSelectedColumn(column);
+        setColumn(column);
         setStep(Steps.input);
     };
 
     const handlePressBack = () => {
         setBlock(true);
         setStep(Steps.select);
-        setTimeout(() => setBlock(false), 300);
+        setColumn(null);
+        setTimeout(() => setBlock(false), 150);
     };
 
     return (
-        <Modal isOpen={isOpen} title={step} onClose={toggle}>
+        <Modal isOpen={isOpen} title={step} onClose={toggle} style={{ width: 400 }}>
             <div className={styles.body}>
-                <div className={`${styles.firstStepContainer} ${step === Steps.input ? styles.hidden : styles.shown}`}>
+                <div
+                    className={`${styles.container} ${styles.firstStepContainer} ${
+                        step === Steps.input ? styles.hidden : styles.shown
+                    }`}>
                     {columns.map((group, i) => (
                         <div key={i} className={styles.group}>
                             <h2 className={styles.groupHeader}>{group.Header}</h2>
@@ -51,9 +55,7 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows }: Props): JSX.Elem
                     ))}
                 </div>
                 {(step === Steps.input || inputRemovalBlocked) && (
-                    <div className={styles.inputStep}>
-                        <EffectButton icon="arrowleft" onClick={handlePressBack} />
-                    </div>
+                    <SecondStep selectedColumn={column} handlePressBack={handlePressBack} />
                 )}
             </div>
         </Modal>

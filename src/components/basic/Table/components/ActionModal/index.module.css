@@ -1,25 +1,33 @@
 .body {
     color: white;
-    height: 100%;
     position: relative;
     width: 100%;
     min-height: 200px;
 }
 
-.firstStepContainer {
+.container {
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
+.firstStepContainer {
+    z-index: 9999;
+}
+
+.secondStepContainer {
+    z-index: 9998;
+}
+
 .hidden {
     transform: translateX(-100%);
-    transition: ease-in-out 0.3s;
+    transition: ease-in-out 0.15s;
 }
 
 .shown {
     transform: translateX(0);
-    transition: ease-in-out 0.3s;
+    transition: ease-in-out 0.15s;
 }
 
 .group {
@@ -50,4 +58,11 @@
 
 .item:hover {
     color: var(--accent);
+}
+
+.backButtonWrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
 }

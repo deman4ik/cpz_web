@@ -102,7 +102,7 @@ const Table = ({
         }
     );
 
-    const groupedColsWithoutSelect = useMemo(() => groupedCols.slice(1, groupedCols.length), []);
+    const groupedColsWithoutSelect = useMemo(() => groupedCols.slice(1, groupedCols.length), [groupedCols]);
 
     const groupedColsWithMutations = useMemo(
         () =>

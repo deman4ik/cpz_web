@@ -8,11 +8,12 @@ interface Props {
     title: string;
     footer?: JSX.Element;
     children?: React.ReactNode;
-    onClose: React.MouseEventHandler;
+    onClose?: React.MouseEventHandler;
+    style?: React.CSSProperties;
 }
 
-export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose }) => (
-    <div className={styles.content}>
+export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style }) => (
+    <div className={styles.content} style={style}>
         {title && (
             <div className={styles.header}>
                 <div className={styles.title}>{title}</div>

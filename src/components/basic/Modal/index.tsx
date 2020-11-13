@@ -31,8 +31,12 @@ export const Modal: React.FC<Props> = (props) => {
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={`${styles.modal} ${props.className}`} style={props.style}>
-                    <ModalTemplate title={props.title} onClose={props.onClose} footer={props.footer}>
+                <div ref={modalRef} className={`${styles.modal} ${props.className}`}>
+                    <ModalTemplate
+                        title={props.title}
+                        onClose={props.onClose}
+                        footer={props.footer}
+                        style={props.style}>
                         {props.children}
                     </ModalTemplate>
                 </div>

@@ -73,12 +73,12 @@
 
 @media (max-width: 480px) {
     .content {
-        width: 100vw;
-        height: 100vh;
+        width: 100vw !important;
+        height: 100vh !important;
     }
 
     .body {
-        max-height: unset;
-        height: calc(100vh - 100px);
+        max-height: unset !important;
+        height: calc(100vh - 100px) !important;
     }
 }
