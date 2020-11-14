@@ -23,8 +23,6 @@ export const CheckBox: React.FC<Props> = forwardRef(
             }
         };
 
-        console.log(rest, checked)
-
         const id = uniqueId();
 
         return (
