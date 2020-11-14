@@ -44,8 +44,17 @@ const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }: Pro
                     ids: itemsIds
                 }
             }).then(() => onSubmit());
-        else {
-            // TODO: call mutation N times for each selected item
+        else if (callMode === CallMode.multiple) {
+            Promise.all([
+                ...itemsIds.map((id) =>
+                    mutate({
+                        variables: {
+                            [selectedColumn.id]: inputValue,
+                            id
+                        }
+                    })
+                )
+            ]).then(() => onSubmit());
         }
     };
 

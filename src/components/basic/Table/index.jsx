@@ -36,8 +36,6 @@ const Table = ({
 
     const toggleSelect = useCallback(() => setSelectEnabled(!selectEnabled), [selectEnabled]);
 
-    console.log(selectEnabled);
-
     const {
         getTableProps,
         getTableBodyProps,
