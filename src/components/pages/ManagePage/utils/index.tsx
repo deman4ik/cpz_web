@@ -31,6 +31,10 @@ export enum InputType {
     text = "text",
     number = "number"
 }
+
+/**
+ * single – mutation is called one time
+ */
 export enum CallMode {
     single,
     multiple

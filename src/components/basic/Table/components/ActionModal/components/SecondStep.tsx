@@ -37,7 +37,7 @@ const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }: Pro
     const [mutate, { loading }] = useMutation(mutation);
 
     const callMutation = () => {
-        if (callMode === CallMode.multiple)
+        if (callMode === CallMode.single)
             mutate({
                 variables: {
                     [selectedColumn.id]: inputValue,
