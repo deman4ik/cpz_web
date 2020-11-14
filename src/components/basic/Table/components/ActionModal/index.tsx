@@ -41,11 +41,11 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows, onSubmit }: Props)
     };
 
     return (
-        <Modal isOpen={isOpen} title={step} onClose={toggle} style={{ width: 400 }}>
+        <Modal isOpen={isOpen} title={step} onClose={toggle} style={{ width: 400 }} contentHeight={230}>
             <div className={styles.body}>
                 <div
                     className={`${styles.container} ${styles.firstStepContainer} ${
-                        step === Steps.input ? styles.hidden : styles.shown
+                        step === Steps.input ? styles.slideLeft : styles.unslide
                     }`}>
                     {columns.map((group, i) => (
                         <div key={i} className={styles.group}>

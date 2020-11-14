@@ -8,7 +8,8 @@ import {
     FilterVariantRemoveIcon,
     SettingsIcon,
     CloseIcon,
-    BorderColorIcon as EditIcon
+    BorderColorIcon as EditIcon,
+    PlusBox
 } from "assets/icons/svg";
 
 interface Props {
@@ -29,7 +30,8 @@ const components = {
     filtervariantremove: FilterVariantRemoveIcon,
     settings: SettingsIcon,
     close: CloseIcon,
-    edit: EditIcon
+    edit: EditIcon,
+    plusbox: PlusBox
 };
 
 export const CaptionButton: React.FC<Props> = ({
@@ -52,7 +54,7 @@ export const CaptionButton: React.FC<Props> = ({
             className={getClassName().join(" ")}
             style={{ ...style, display: hidden ? "none" : "flex" }}
             onClick={onClick}>
-            <div className="btn-text">{title}</div>
+            {title && <div className="btn-text">{title}</div>}
             <i className="icon" style={{ width: 20, height: 20 }}>
                 <SpecificIcon size={20} />
             </i>

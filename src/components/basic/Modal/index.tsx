@@ -12,6 +12,7 @@ interface Props {
     className?: string;
     style?: React.CSSProperties;
     footer?: JSX.Element;
+    contentHeight?: number | string;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -36,7 +37,8 @@ export const Modal: React.FC<Props> = (props) => {
                         title={props.title}
                         onClose={props.onClose}
                         footer={props.footer}
-                        style={props.style}>
+                        style={props.style}
+                        contentHeight={props.contentHeight}>
                         {props.children}
                     </ModalTemplate>
                 </div>

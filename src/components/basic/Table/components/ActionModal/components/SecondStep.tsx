@@ -4,11 +4,18 @@ import { EffectButton } from "components/basic/EffectButton";
 import { Select } from "components/basic/Select";
 import { Input } from "components/basic/Input";
 import styles from "../index.module.css";
-import { InputType } from "components/pages/ManagePage/utils";
+import { InputType, CallMode } from "components/pages/ManagePage/utils";
 import { useMutation } from "@apollo/client";
 import { Button } from "components/basic/Button";
 
-const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }) => {
+type Props = {
+    selectedColumn: any;
+    handlePressBack: () => void;
+    itemsIds: [any];
+    onSubmit: () => void;
+};
+
+const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }: Props): JSX.Element => {
     const { mutation } = selectedColumn;
     const inputType = selectedColumn.mutationInputType;
     const inputOptions = selectedColumn.mutationInputOptions;
@@ -30,12 +37,16 @@ const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }) => 
     const [mutate, { loading }] = useMutation(mutation);
 
     const callMutation = () => {
-        mutate({
-            variables: {
-                [selectedColumn.id]: inputValue,
-                ids: itemsIds
-            }
-        }).then(() => onSubmit());
+        if (callMode === CallMode.multiple)
+            mutate({
+                variables: {
+                    [selectedColumn.id]: inputValue,
+                    ids: itemsIds
+                }
+            }).then(() => onSubmit());
+        else {
+            // TODO: call mutation N times for each selected item
+        }
     };
 
     useEffect(() => {
@@ -63,7 +74,7 @@ const SecondStep = ({ selectedColumn, handlePressBack, itemsIds, onSubmit }) => 
                     <Input value={inputValue} onChangeText={setInput} type={inputType} />
                 )}
             </div>
-            <Button title="Apply" type="success" onClick={callMutation} isLoading={loading} />
+            <Button title="Apply" type="success" onClick={callMutation} isLoading={loading} style={{ marginLeft: 5 }} />
         </div>
     );
 };
