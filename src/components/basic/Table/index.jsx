@@ -150,8 +150,11 @@ const Table = ({
         const flatCols = [];
         cols.forEach((col) => flatCols.push(...col.columns));
 
-        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor));
-    }, [cols, setHiddenColumns]);
+        setHiddenColumns([
+            ...flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor),
+            ...(groupedColsWithMutations.length === 0 ? ["selection"] : [])
+        ]);
+    }, [cols, groupedColsWithMutations.length, setHiddenColumns]);
 
     useEffect(() => {
         if (!sortBy[0]) return;
