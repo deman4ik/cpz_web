@@ -85,6 +85,7 @@ export const CheckBox: React.FC<Props> = forwardRef(
                             width: 12px;
                             border: 2px solid;
                             border-radius: 2px;
+                            ${checked ? "border-color: var(--accent);" : ""};
                         }
 
                         .checkbox:disabled + label:before {
@@ -96,12 +97,9 @@ export const CheckBox: React.FC<Props> = forwardRef(
                             pointer-events: none;
                         }
 
-                        .checkbox:checked + label:before {
-                            border-color: var(--accent);
-                        }
-
-                        .checkbox:checked + label:after {
+                        .checkbox + label:after {
                             content: "";
+                            display: ${checked ? "block" : "none"};
                             position: absolute;
                             left: 5px;
                             top: 2px;

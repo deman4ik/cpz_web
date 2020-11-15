@@ -11,9 +11,8 @@ import Body from "./components/Body";
 import Pagination from "./components/Pagination";
 import { LoadingIndicator } from "components/common";
 import styles from "./styles/Common.module.css";
-import IndeterminateCheckbox from "./components/IndeterminateCheckbox";
 import ActionModal from "./components/ActionModal";
-import { CaptionButton } from "components/basic";
+import { CaptionButton, CheckBox } from "components/basic";
 
 const Table = ({
     columns,
@@ -99,14 +98,17 @@ const Table = ({
                     columns: [
                         {
                             id: "selection",
-                            Header: ({ getToggleAllRowsSelectedProps, selectEnabled: checkboxesShown }) => (
-                                <div style={getCheckBoxCellStyle(checkboxesShown)}>
-                                    <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-                                </div>
-                            ),
+                            Header: ({ getToggleAllRowsSelectedProps, selectEnabled: checkboxesShown }) => {
+                                console.log(getToggleAllRowsSelectedProps());
+                                return (
+                                    <div style={getCheckBoxCellStyle(checkboxesShown)}>
+                                        <CheckBox {...getToggleAllRowsSelectedProps()} />
+                                    </div>
+                                );
+                            },
                             Cell: ({ row, selectEnabled: checkboxesShown }) => (
                                 <div style={getCheckBoxCellStyle(checkboxesShown)}>
-                                    <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+                                    <CheckBox {...row.getToggleRowSelectedProps()} />
                                 </div>
                             ),
                             width: 65
