@@ -18,13 +18,17 @@ import styles from "./styles/Common.module.css";
 const Table = ({
     columns,
     data,
+    withoutPagination,
     pageSizeOptions,
     setLimit,
     setPageIndex,
     pageCount: ControlledPageCount,
     itemsCount,
+    tableStyles,
+    headerStyles,
     onChangeSearch,
     onChangeSort,
+    onRowClick,
     isLoading
 }) => {
     const [cols, setCols] = useState(columns);
@@ -84,14 +88,15 @@ const Table = ({
         // allColumns contains all the nested columns
         const { sortSchema } = allColumns.find((column) => column.id === id);
         onChangeSort({ id, desc, sortSchema });
-    }, [onChangeSort, sortBy, allColumns]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sortBy, allColumns]);
 
     const toggleModal = () => {
         setModalVisibility(!isModalVisible);
     };
 
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} style={tableStyles}>
             <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
@@ -99,9 +104,10 @@ const Table = ({
                     <LoadingIndicator />
                 ) : (
                     <>
-                        <Header tableProps={getTableProps()} headerGroups={headerGroups} />
+                        <Header tableProps={getTableProps()} headerGroups={headerGroups} headerStyles={headerStyles} />
 
                         <Body
+                            onRowClick={onRowClick}
                             tableProps={getTableProps()}
                             bodyProps={getTableBodyProps()}
                             page={page}
@@ -111,21 +117,23 @@ const Table = ({
                 )}
             </div>
 
-            <Pagination
-                tableInstance={{
-                    pageOptions,
-                    pageIndex,
-                    gotoPage,
-                    pageCount,
-                    canNextPage,
-                    canPreviousPage
-                }}
-                setLimit={setLimit}
-                pageSizeOptions={pageSizeOptions}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-                setPageIndex={setPageIndex}
-            />
+            {!withoutPagination && (
+                <Pagination
+                    tableInstance={{
+                        pageOptions,
+                        pageIndex,
+                        gotoPage,
+                        pageCount,
+                        canNextPage,
+                        canPreviousPage
+                    }}
+                    setLimit={setLimit}
+                    pageSizeOptions={pageSizeOptions}
+                    pageSize={pageSize}
+                    setPageSize={setPageSize}
+                    setPageIndex={setPageIndex}
+                />
+            )}
 
             <ColumnControlModal
                 columns={groupedCols}

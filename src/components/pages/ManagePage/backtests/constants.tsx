@@ -3,150 +3,225 @@ import React from "react";
 import { STATUS_COLORS } from "config/constants";
 import { buildRobotChartCell } from "components/pages/ManagePage/utils";
 import { formatDate } from "config/utils";
+import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
 
+export const backTestInfoColumns = {
+    Header: "Back Test Info",
+    id: "backtest_info",
+    disableSortBy: false,
+    columns: [
+        {
+            Header: "ID",
+            accessor: "id",
+            isVisible: true,
+            width: 200
+        },
+        {
+            Header: "Exchange",
+            accessor: "exchange",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Asset",
+            accessor: "asset",
+            isVisible: true,
+            width: 80
+        },
+        {
+            Header: "Currency",
+            accessor: "currency",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Strategy",
+            accessor: "strategy",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Time Frame",
+            accessor: "timeframe",
+            isVisible: true,
+            width: 120
+        },
+        {
+            Header: "Date From",
+            accessor: "date_from",
+            isVisible: true,
+            Cell: ({ value }: { value: string }) => formatDate(value),
+            width: 200
+        },
+        {
+            Header: "Date To",
+            accessor: "date_to",
+            Cell: ({ value }: { value: string }) => formatDate(value),
+            isVisible: true,
+            width: 200
+        }
+    ]
+};
+export const backTestStatusColumns = {
+    Header: "Status",
+    id: "backtest_status",
+    disableSortBy: true,
+    columns: [
+        {
+            Header: "Total Bars",
+            accessor: "total_bars",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Left Bars",
+            accessor: "left_bars",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Processed Bars",
+            accessor: "processed_bars",
+            isVisible: true,
+            width: 150
+        },
+        {
+            Header: "Completed",
+            accessor: "completed_percent",
+            Cell: ({ value }: { value: string }) => `${value} %`,
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Error",
+            accessor: "errors",
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Status",
+            accessor: "status",
+            isVisible: true,
+            Cell: ({ value }: { value: number }): JSX.Element => (
+                <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
+            ),
+            width: 100
+        }
+    ]
+};
+export const settingsColumns = {
+    Header: "Settings",
+    id: "settings",
+    disableSortBy: true,
+    columns: [
+        {
+            Header: "Local",
+            accessor: (v) => v.settings.local,
+            isVisible: true,
+            width: 100
+        },
+        {
+            Header: "Populate History",
+            accessor: (v) => v.settings.populateHistory,
+            isVisible: true,
+            width: 150
+        },
+        {
+            Header: "Save Logs",
+            accessor: (v) => v.settings.saveLogs,
+            isVisible: true,
+            width: 150
+        },
+        {
+            Header: "Save Positions",
+            accessor: (v) => v.settings.savePositions,
+            isVisible: true,
+            width: 150
+        },
+        {
+            Header: "Save Signals",
+            accessor: (v) => v.settings.saveSignals,
+            isVisible: true,
+            width: 150
+        }
+    ]
+};
+const robotStatsColumns = (inPercent?) => {
+    const itemWidth = inPercent && "100%";
+    return [
+        {
+            Header: "Performance",
+            accessor: "performance",
+            isVisible: true,
+            Cell: buildRobotChartCell,
+            sortSchema: { field: "stats", subfield: "equity_avg" },
+            width: itemWidth || 200
+        },
+        {
+            Header: "Profit",
+            accessor: "netProfit",
+            isVisible: true,
+            sortSchema: { field: "stats", subfield: "net_profit" },
+            width: itemWidth || 90
+        },
+        {
+            Header: "W/R",
+            accessor: "winRate",
+            isVisible: true,
+            sortSchema: { field: "stats", subfield: "win_rate" },
+            width: itemWidth || 70
+        },
+        {
+            Header: "Max Drawdown",
+            accessor: "maxDrawdown",
+            isVisible: true,
+            sortSchema: { field: "stats", subfield: "max_drawdown" },
+            width: itemWidth || 125
+        },
+        {
+            Header: "Trades",
+            accessor: "tradesCount",
+            isVisible: true,
+            sortSchema: { field: "stats", subfield: "trades_count" },
+            width: itemWidth || 90
+        }
+    ];
+};
+const robotSettings = {
+    Header: "Robot Settings",
+    id: "robot_settings",
+    disableSortBy: false,
+    columns: [
+        {
+            Header: "Volume",
+            accessor: (v) => v.robot.robot_settings?.volume,
+            isVisible: true,
+            width: 80
+        },
+        {
+            Header: "Volume Type",
+            accessor: (v) => v.robot.robot_settings?.volumeType,
+            isVisible: true,
+            width: 120
+        },
+        {
+            Header: "Strategy Settings",
+            accessor: (v) => v.robot.strategy_settings,
+            isVisible: true,
+            Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+            width: 250
+        }
+    ]
+};
 export const BACKTESTS_TABLE_COLUMNS = [
-    {
-        Header: "Back Test Info",
-        id: "backtest_info",
-        disableSortBy: false,
-        columns: [
-            {
-                Header: "ID",
-                accessor: "id",
-                isVisible: true,
-                width: 200
-            },
-            {
-                Header: "Exchange",
-                accessor: "exchange",
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Asset",
-                accessor: "asset",
-                isVisible: true,
-                width: 80
-            },
-            {
-                Header: "Currency",
-                accessor: "currency",
-                isVisible: true,
-                width: 80
-            },
-            {
-                Header: "Strategy",
-                accessor: "strategy",
-                isVisible: true,
-                width: 120
-            },
-            {
-                Header: "Time Frame",
-                accessor: "timeframe",
-                isVisible: true,
-                width: 120
-            },
-            {
-                Header: "Date From",
-                accessor: (v) => formatDate(v.date_from),
-                isVisible: true,
-                width: 200
-            },
-            {
-                Header: "Date To",
-                accessor: (v) => formatDate(v.date_to),
-                isVisible: true,
-                width: 200
-            }
-        ]
-    },
-    {
-        Header: "Status",
-        id: "backtest_status",
-        disableSortBy: true,
-        columns: [
-            {
-                Header: "Total Bars",
-                accessor: "total_bars",
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Left Bars",
-                accessor: "left_bars",
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Processed Bars",
-                accessor: "processed_bars",
-                isVisible: true,
-                width: 150
-            },
-            {
-                Header: "Completed",
-                accessor: (v) => `${v.completed_percent}%`,
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Error",
-                accessor: (v) => v.errors || "",
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Status",
-                accessor: "status",
-                isVisible: true,
-                Cell: ({ value }: { value: number }): JSX.Element => (
-                    <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
-                ),
-                width: 100
-            }
-        ]
-    },
+    backTestInfoColumns,
+    backTestStatusColumns,
     {
         Header: "Statistics",
         id: "statistics",
         disableSortBy: true,
         columns: [
-            {
-                Header: "Performance",
-                accessor: "performance",
-                isVisible: true,
-                Cell: buildRobotChartCell,
-                sortSchema: { field: "stats", subfield: "equity_avg" },
-                width: 200
-            },
-            {
-                Header: "Profit",
-                accessor: "netProfit",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "net_profit" },
-                width: 90
-            },
-            {
-                Header: "W/R",
-                accessor: "winRate",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "win_rate" },
-                width: 70
-            },
-            {
-                Header: "Max Drawdown",
-                accessor: "maxDrawdown",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "max_drawdown" },
-                width: 125
-            },
-            {
-                Header: "Trades",
-                accessor: "tradesCount",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
-                width: 90
-            },
+            ...robotStatsColumns(),
             {
                 Header: "Rating",
                 accessor: "rating",
@@ -296,43 +371,7 @@ export const BACKTESTS_TABLE_COLUMNS = [
             }
         ]
     },
-    {
-        Header: "Settings",
-        id: "settings",
-        disableSortBy: true,
-        columns: [
-            {
-                Header: "Local",
-                accessor: (v) => (v.settings.local ? "Yes" : "No"),
-                isVisible: true,
-                width: 100
-            },
-            {
-                Header: "Populate History",
-                accessor: (v) => (v.settings.populateHistory ? "Yes" : "No"),
-                isVisible: true,
-                width: 150
-            },
-            {
-                Header: "Save Logs",
-                accessor: (v) => (v.settings.saveLogs ? "Yes" : "No"),
-                isVisible: true,
-                width: 150
-            },
-            {
-                Header: "Save Positions",
-                accessor: (v) => (v.settings.savePositions ? "Yes" : "No"),
-                isVisible: true,
-                width: 150
-            },
-            {
-                Header: "Save Signals",
-                accessor: (v) => (v.settings.saveSignals ? "Yes" : "No"),
-                isVisible: true,
-                width: 150
-            }
-        ]
-    },
+    settingsColumns,
     {
         Header: "Robot Info",
         id: "robot_info",
@@ -349,6 +388,74 @@ export const BACKTESTS_TABLE_COLUMNS = [
                 accessor: (v) => v.robot.code,
                 isVisible: true,
                 width: 262
+            }
+        ]
+    },
+    robotSettings
+];
+
+export const BACKTEST_ITEM_TABLE_COLUMNS = [
+    {
+        Header: "Robot Info",
+        id: "robot_info",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Robot ID",
+                accessor: "robot_id",
+                isVisible: true,
+                width: "100%",
+            }
+        ]
+    },
+    {
+        Header: "Statistics",
+        id: "statistics",
+        disableSortBy: true,
+        columns: [
+            ...robotStatsColumns(true),
+            {
+                Header: "Strategy Settings",
+                accessor: (v) => v.backtest_settings?.strategy_settings,
+                isVisible: true,
+                width: "100%",
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
+            }
+        ]
+    }
+];
+
+export const BackSettingsTableColumns = [
+    {
+        Header: "Robot Settings",
+        id: "robot_settings",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Active From",
+                accessor: "active_from",
+                width: "100%",
+                Cell: ({ value }: { value: string }) => formatDate(value),
+                isVisible: true
+            },
+            {
+                Header: "Volume",
+                width: "100%",
+                accessor: (v) => v.robot_settings.volume,
+                isVisible: true
+            },
+            {
+                Header: "Volume Type",
+                width: "100%",
+                accessor: (v) => v.robot_settings.volumeType,
+                isVisible: true
+            },
+            {
+                Header: "Strategy Settings",
+                width: "100%",
+                accessor: (v) => v.strategy_settings,
+                isVisible: true,
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
             }
         ]
     }

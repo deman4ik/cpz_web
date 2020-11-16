@@ -309,13 +309,13 @@ export const CANDLES_FOR_USER_SIGNAL = (timeframe: number) => gql`
   }
 `;
 
-export const CANDLES_FOR_ROBOT = (timeframe: number) => gql`
+export const CANDLES_FOR_ROBOT = (timeframe: number, type?: string) => gql`
   query get_candles_for_robot(
     $robotId: uuid!
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_positions(
+    candles: v_candles${timeframe}${type ? `_${type}` : ""}_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
@@ -370,7 +370,8 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
 export function buildRobotPositionCandlesQuery(
     timeframe: number,
     isAuth: boolean,
-    belongsToUser = false
+    belongsToUser = false,
+    type?: string
 ): DocumentNode {
     if (isAuth) {
         if (belongsToUser) {
@@ -378,7 +379,7 @@ export function buildRobotPositionCandlesQuery(
         }
         return CANDLES_FOR_USER_SIGNAL(timeframe);
     }
-    return CANDLES_FOR_ROBOT(timeframe);
+    return CANDLES_FOR_ROBOT(timeframe, type);
 }
 
 export const USER_ROBOTS_BY_EXCHANGE_ID = gql`

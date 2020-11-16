@@ -1,5 +1,8 @@
 import { modalType } from "./types";
 import { RefObject } from "react";
+import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
+import { buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
+import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
 
 const actions = ["delete", "start", "stop"];
 
@@ -34,3 +37,18 @@ export async function fetchWithStatus(asyncOperation: any, setLoadingFunction: (
         setLoadingFunction(false);
     }
 }
+
+export const candleQueries = (timeframe: number, isAuth?: boolean, isAuthAndRobotOwned?: boolean) => ({
+    backtest: {
+        history: buildRobotPositionCandlesQuery(timeframe, isAuthAndRobotOwned, false, "backtest"),
+        realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe, "backtest")
+    },
+    robot: {
+        history: buildRobotPositionCandlesQuery(timeframe, isAuthAndRobotOwned),
+        realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
+    },
+    signal: {
+        history: buildRobotPositionCandlesQuery(timeframe, isAuthAndRobotOwned),
+        realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
+    }
+});

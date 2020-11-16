@@ -39,7 +39,9 @@ const Pagination = ({ tableInstance, setPageIndex, setLimit, pageSizeOptions, pa
 
     const trimmedPageOptions = React.useMemo(trimPageOptions, [trimPageOptions]);
 
-    useEffect(() => setLimit(pageSizeOptions[0]), [setLimit, pageSizeOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => setLimit(pageSizeOptions[0]), [pageSizeOptions]);
+
     return (
         <table className={`${styles.table} ${paginationStyles.pagination}`}>
             <tbody>

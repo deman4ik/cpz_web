@@ -128,34 +128,66 @@ export const ALL_ROBOTS = gql`
     }
 `;
 
+const backtest_info = `asset
+            id
+            exchange
+            timeframe
+            currency
+            strategy
+            robot_id
+            date_from
+            date_to`;
+
+const backtest_status = `left_bars
+            total_bars
+            processed_bars
+            completed_percent
+            status
+            error`;
+
 export const BACKTESTS = gql`
     query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
         backtests(limit: $limit, where: $where, order_by: $order_by) {
-            asset
-            exchange
-            timeframe
-            strategy
-            robot_id
-            id
-            backtest_all_stats {
+            ${backtest_info}
+            ${backtest_status}
+            backtest_stats {
                 equity_avg
                 last_position_exit_date
                 statistics
             }
-            completed_percent
-            currency
-            date_from
-            date_to
-            error
+
             finished_at
-            left_bars
-            processed_bars
             robot {
                 code
+                robot_settings {
+                    strategy_settings
+                    robot_settings
+                }
             }
             settings
-            status
-            total_bars
+        }
+    }
+`;
+export const BACKTEST = gql`
+    query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
+        backtests(limit: $limit, where: $where, order_by: $order_by) {
+            robot_id
+            ${backtest_info}
+            backtest_stats {
+                equity
+                last_position_exit_date
+                statistics
+            }
+            robot {
+                id
+                name
+                code
+            }
+            backtest_settings {
+                active_from
+                robot_settings
+                strategy_settings
+            }
         }
     }
 `;

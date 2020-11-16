@@ -7,15 +7,14 @@ import { POLL_INTERVAL } from "config/constants";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { formatStats } from "components/ui/RobotPerformance/helpers";
 import { Card } from "components/basic";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import { DocumentNode } from "@apollo/client";
 import { mapRoutesToDisplayTypes } from "components/pages/ManagePage/robotStats/constants";
 import { PageType } from "config/types";
+import { QueryType } from "components/pages/ManagePage/common/types";
 
 interface RobotsTotalPerformanceProps {
     title: string;
     type: string;
-    query: DocumentNode | TypedDocumentNode<any, any>;
+    query: QueryType;
 }
 export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title, query, type }) => {
     const { width } = useWindowDimensions();

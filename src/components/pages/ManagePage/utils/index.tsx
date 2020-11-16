@@ -34,7 +34,7 @@ export interface ColumnsArraySchema {
             accessor: any;
             isVisible: boolean;
             sortSchema?: { field: string; subfield?: string };
-            width?: number;
+            width?: number | string;
             Cell?: (props: any) => any;
         }[];
     };

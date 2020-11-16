@@ -7,9 +7,10 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
         $robotId: uuid!
         $user_id: uuid  
       ) {
-        candles: v_candles${timeframe}_positions(
+        candles: v_candles${timeframe}_user_positions(
           where: {
-            robot_id: { _eq: $robotId }
+            user_robot_id: { _eq: $robotId }
+            user_robot: { user_id: { _eq: $user_id } }    
           }
           limit: 1
         ) {
@@ -24,23 +25,17 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
           }
           position_entry
           position_exit
-          robot {
-            user_signals(where:{user_id:{_eq:$user_id}}) {
-              volume
-              subscribed_at
-            }
-          }
         }
       }
     `;
 }
 
-function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
+function ROBOT_POSITION_CANDLE_SUB(timeframe: number, type?: string) {
     return gql`
       subscription candles(
         $robotId: uuid!
       ) {
-        candles: v_candles${timeframe}_positions(
+        candles: v_candles${timeframe}${type ? `_${type}` : ""}_positions(
           where: {
             robot_id: { _eq: $robotId }
           }
@@ -62,6 +57,6 @@ function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
     `;
 }
 
-export function buildRobotPositionCandleSubQuery(isAuth: boolean, timeframe: number): DocumentNode {
-    return isAuth ? ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe) : ROBOT_POSITION_CANDLE_SUB(timeframe);
+export function buildRobotPositionCandleSubQuery(isAuth: boolean, timeframe: number, type?: string): DocumentNode {
+    return isAuth ? ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe) : ROBOT_POSITION_CANDLE_SUB(timeframe, type);
 }

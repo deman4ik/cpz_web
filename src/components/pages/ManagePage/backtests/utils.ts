@@ -1,3 +1,5 @@
+import back from "node-html-parser/dist/back";
+
 type StatType = { all: number };
 type Stats = {
     performance?: { x: number; y: number }[];
@@ -21,15 +23,37 @@ const getStats = (stats) => {
     return result;
 };
 
+const flattenRobotData = (robot) => {
+    if (!robot) {
+        return {};
+    }
+    const { robot_settings: settings, ...restProps } = robot;
+    if (settings) {
+        const { robot_settings, strategy_settings } = settings;
+        return { ...restProps, robot_settings, strategy_settings };
+    }
+    return robot;
+};
 export const formatBackTestsData = ({ backtests }: { backtests: any }): any => {
     return backtests.map((backtest) => {
         const { backtest_all_stats, robot, ...restFields } = backtest;
         const backtest_data = getStats(backtest_all_stats);
+        const robotData = flattenRobotData(robot);
 
         return {
             ...restFields,
-            robot: robot || {},
+            robot: robotData,
             ...backtest_data
         };
     });
 };
+
+export const getSearchOptions = (query: string) => {
+    const queryIsNotEmpty = query && query.trim();
+    if (queryIsNotEmpty) {
+        return { robot: { code: { _ilike: `%${query}%` } } };
+    }
+    return null;
+};
+
+export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;

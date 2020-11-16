@@ -7,13 +7,17 @@ import styles from "../styles/Common.module.css";
 import bodyStyles from "../styles/Body.module.css";
 import cellStyles from "../styles/Cell.module.css";
 
-const Body = ({ tableProps, bodyProps, page, prepareRow }) => (
+const Body = ({ tableProps, bodyProps, page, prepareRow, onRowClick }) => (
     <table {...tableProps} className={`${styles.table}`}>
         <tbody {...bodyProps}>
             {page.map((row) => {
                 prepareRow(row);
                 return (
-                    <tr {...row.getRowProps()} className={bodyStyles.body_row} key={uuid()}>
+                    <tr
+                        {...row.getRowProps()}
+                        onClick={() => onRowClick && onRowClick(row.original)}
+                        className={`${bodyStyles.body_row} ${onRowClick && bodyStyles.clickable_row}`}
+                        key={uuid()}>
                         {row.cells.map((cell) => (
                             <td
                                 {...cell.getCellProps()}
