@@ -2,18 +2,18 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useState, useEffect } from "react";
-import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination } from "react-table";
-// components
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useTable, useSortBy, useBlockLayout, useResizeColumns, usePagination, useRowSelect } from "react-table";
 import { ColumnControlModal } from "./components/ColumnControlModal";
-
 import Toolbar from "./components/Toolbar";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Pagination from "./components/Pagination";
 import { LoadingIndicator } from "components/common";
-// styles
 import styles from "./styles/Common.module.css";
+import IndeterminateCheckbox from "./components/IndeterminateCheckbox";
+import ActionModal from "./components/ActionModal";
+import { CaptionButton } from "components/basic";
 
 const Table = ({
     columns,
@@ -25,10 +25,16 @@ const Table = ({
     itemsCount,
     onChangeSearch,
     onChangeSort,
-    isLoading
+    isLoading,
+    refetch
 }) => {
     const [cols, setCols] = useState(columns);
-    const [isModalVisible, setModalVisibility] = useState(false);
+
+    const [controlModalOpen, setControlModalOpen] = useState(false);
+    const [actionModalOpen, setActionModalOpen] = useState(false);
+    const [selectEnabled, setSelectEnabled] = useState(false);
+
+    const toggleSelect = useCallback(() => setSelectEnabled(!selectEnabled), [selectEnabled]);
 
     const {
         getTableProps,
@@ -37,7 +43,6 @@ const Table = ({
         columns: groupedCols,
         page,
         prepareRow,
-        state: { pageIndex, pageSize, sortBy },
         pageOptions,
         gotoPage,
         pageCount,
@@ -45,7 +50,9 @@ const Table = ({
         canPreviousPage,
         setPageSize,
         allColumns,
-        setHiddenColumns
+        setHiddenColumns,
+        selectedFlatRows,
+        state: { pageIndex, pageSize, sortBy }
     } = useTable(
         {
             columns: cols,
@@ -61,12 +68,81 @@ const Table = ({
             disableSortRemove: true,
             disableMultiSort: true,
             autoResetSortBy: false,
-            autoResetHiddenColumns: false
+            autoResetHiddenColumns: false,
+            selectEnabled,
+            toggleSelect
         },
         useBlockLayout,
         useResizeColumns,
         useSortBy,
-        usePagination
+        usePagination,
+        useRowSelect,
+        (hooks) => {
+            const getCheckBoxCellStyle = (show = true) => ({
+                display: show ? "flex" : "none",
+                justifyContent: "center",
+                width: "100%"
+            });
+
+            hooks.columns.push((columns) => [
+                {
+                    Header: ({ toggleSelect: toggle, selectEnabled: checkboxesShown }) => (
+                        <div style={getCheckBoxCellStyle()}>
+                            <CaptionButton
+                                icon={checkboxesShown ? "close" : "plusbox"}
+                                onClick={toggle}
+                                style={{ height: "unset", color: "white" }}
+                            />
+                        </div>
+                    ),
+                    id: "selection_head",
+                    columns: [
+                        {
+                            id: "selection",
+                            Header: ({ getToggleAllRowsSelectedProps, selectEnabled: checkboxesShown }) => (
+                                <div style={getCheckBoxCellStyle(checkboxesShown)}>
+                                    <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+                                </div>
+                            ),
+                            Cell: ({ row, selectEnabled: checkboxesShown }) => (
+                                <div style={getCheckBoxCellStyle(checkboxesShown)}>
+                                    <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+                                </div>
+                            ),
+                            width: 65
+                        }
+                    ],
+                    isVisible: false
+                },
+                ...columns
+            ]);
+        }
+    );
+
+    const groupedColsWithoutSelect = useMemo(
+        () => (selectEnabled ? groupedCols.slice(1, groupedCols.length) : groupedCols),
+        [selectEnabled, groupedCols]
+    );
+
+    const groupedColsWithMutations = useMemo(
+        () =>
+            groupedColsWithoutSelect
+                .filter((group) => {
+                    return (
+                        group.columns.filter((col) => {
+                            return typeof col.mutation !== "undefined";
+                        }).length > 0
+                    );
+                })
+                .map((group) => {
+                    return {
+                        ...group,
+                        columns: group.columns.filter((col) => {
+                            return typeof col.mutation !== "undefined";
+                        })
+                    };
+                }),
+        [groupedColsWithoutSelect]
     );
 
     useEffect(() => {
@@ -74,25 +150,40 @@ const Table = ({
         const flatCols = [];
         cols.forEach((col) => flatCols.push(...col.columns));
 
-        setHiddenColumns(flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor));
-    }, [cols, setHiddenColumns]);
+        setHiddenColumns([
+            ...flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor),
+            ...(groupedColsWithMutations.length === 0 ? ["selection"] : [])
+        ]);
+    }, [cols, groupedColsWithMutations.length, setHiddenColumns]);
 
     useEffect(() => {
         if (!sortBy[0]) return;
         const { id, desc } = sortBy[0];
 
         // allColumns contains all the nested columns
-        const { sortSchema } = allColumns.find((column) => column.id === id);
-        onChangeSort({ id, desc, sortSchema });
+        const { fieldSchema } = allColumns.find((column) => column.id === id);
+        onChangeSort({ id, desc, fieldSchema });
     }, [onChangeSort, sortBy, allColumns]);
 
-    const toggleModal = () => {
-        setModalVisibility(!isModalVisible);
+    const toggleControlModal = () => {
+        setControlModalOpen(!controlModalOpen);
+    };
+
+    const toggleActionModal = () => {
+        setActionModalOpen(!actionModalOpen);
     };
 
     return (
         <div className={styles.wrapper}>
-            <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
+            <Toolbar
+                itemsCount={itemsCount}
+                onChangeSearch={onChangeSearch}
+                toggleControlModal={toggleControlModal}
+                toggleActionModal={toggleActionModal}
+                actionModalCanBeOpened={
+                    selectEnabled && groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0
+                }
+            />
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
@@ -128,11 +219,18 @@ const Table = ({
             />
 
             <ColumnControlModal
-                columns={groupedCols}
+                columns={groupedCols.slice(1, groupedCols.length)}
                 setColumns={setCols}
-                title="Configure columns"
-                isModalVisible={isModalVisible}
-                toggleModal={toggleModal}
+                isOpen={controlModalOpen}
+                toggle={toggleControlModal}
+            />
+
+            <ActionModal
+                columns={groupedColsWithMutations}
+                isOpen={actionModalOpen}
+                toggle={toggleActionModal}
+                selectedRows={selectedFlatRows}
+                onSubmit={refetch}
             />
         </div>
     );

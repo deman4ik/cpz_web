@@ -15,7 +15,7 @@ import {
     TextSearch,
     PlayListCheck,
     MessageAlert,
-    SheildKey,
+    ShieldKey,
     TextBoxSearch,
     PlusBox,
     Check
@@ -27,7 +27,7 @@ export const ICON_COLOR = "#ffffff";
 export const STEP_CARD_ICONS = {
     robots: <RobotIcon size={ICON_SIZE} color={ICON_COLOR} />,
     signals: <MultiLineChartIcon size={ICON_SIZE} color={ICON_COLOR} />,
-    apiKey: <SheildKey size={ICON_SIZE} color={ICON_COLOR} />,
+    apiKey: <ShieldKey size={ICON_SIZE} color={ICON_COLOR} />,
     community: <TelegramIcon size={ICON_SIZE} color={ICON_COLOR} />,
     accountPlus: <AccountPlus size={ICON_SIZE} color={ICON_COLOR} />,
     email: <EmailIcon size={ICON_SIZE} color={ICON_COLOR} />,

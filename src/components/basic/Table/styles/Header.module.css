@@ -10,7 +10,8 @@
     position: relative;
     white-space: nowrap;
     overflow: hidden;
-    padding: 10px 20px;
+    padding: 10px 5px 10px 20px;
+    height: 40px;
 }
 
 .resizer_wrapper {
