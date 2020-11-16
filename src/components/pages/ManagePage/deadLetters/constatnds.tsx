@@ -1,3 +1,5 @@
+import React from "react";
+import { StrategySettingsItem } from "../backtests/StrategySettingsItem";
 import { ColumnsArraySchema } from "../utils";
 
 export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
@@ -20,10 +22,6 @@ export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Updated at",
                 accessor: "updated_at"
-            },
-            {
-                Header: "Type",
-                accessor: "type"
             }
         ]
     },
@@ -50,6 +48,11 @@ export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Type",
                 accessor: "type"
+            },
+            {
+                Header: "Data",
+                accessor: "data",
+                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
             }
         ]
     }

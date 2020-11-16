@@ -380,7 +380,7 @@ export const DEAD_LETTERS_AGGREGATE = gql`
     query get_dead_letters_aggregate {
         dead_letters_aggregate {
             aggregate {
-                nodes
+                count
             }
         }
     }
