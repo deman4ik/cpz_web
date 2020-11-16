@@ -48,7 +48,7 @@ export interface ColumnsArraySchema {
         columns: {
             Header: string;
             accessor: any;
-            isVisible: boolean;
+            isVisible?: boolean;
             fieldSchema?: { field: string; subfield?: string };
             width?: number;
             Cell?: (props: any) => JSX.Element;

@@ -358,3 +358,30 @@ export const SUPPORT_REQUESTS_AGGREGATE = gql`
         }
     }
 `;
+
+export const DEAD_LETTERS = gql`
+    query get_dead_letters {
+        dead_letters {
+            created_at
+            data
+            event_id
+            id
+            processed
+            resend
+            timestamp
+            topic
+            type
+            updated_at
+        }
+    }
+`;
+
+export const DEAD_LETTERS_AGGREGATE = gql`
+    query get_dead_letters_aggregate {
+        dead_letters_aggregate {
+            aggregate {
+                nodes
+            }
+        }
+    }
+`;
