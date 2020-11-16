@@ -8,8 +8,6 @@
 .container {
     height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 .firstStepContainer {
@@ -20,10 +18,11 @@
 
 .secondStepContainer {
     position: absolute;
-    top:0;
+    top: 0;
     z-index: 9998;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .slideLeft {
@@ -50,20 +49,15 @@
 
 .itemGroup {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.item {
+    padding: 5px;
 }
 
 .itemContainer {
     margin-bottom: 5px;
-}
-
-.item {
-    font-size: var(--normal2);
-    cursor: pointer;
-}
-
-.item:hover {
-    color: var(--accent);
 }
 
 .backButtonWrapper {

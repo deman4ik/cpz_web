@@ -98,14 +98,11 @@ const Table = ({
                     columns: [
                         {
                             id: "selection",
-                            Header: ({ getToggleAllRowsSelectedProps, selectEnabled: checkboxesShown }) => {
-                                console.log(getToggleAllRowsSelectedProps());
-                                return (
-                                    <div style={getCheckBoxCellStyle(checkboxesShown)}>
-                                        <CheckBox {...getToggleAllRowsSelectedProps()} />
-                                    </div>
-                                );
-                            },
+                            Header: ({ getToggleAllRowsSelectedProps, selectEnabled: checkboxesShown }) => (
+                                <div style={getCheckBoxCellStyle(checkboxesShown)}>
+                                    <CheckBox {...getToggleAllRowsSelectedProps()} />
+                                </div>
+                            ),
                             Cell: ({ row, selectEnabled: checkboxesShown }) => (
                                 <div style={getCheckBoxCellStyle(checkboxesShown)}>
                                     <CheckBox {...row.getToggleRowSelectedProps()} />
