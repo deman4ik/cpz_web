@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Modal } from "components/basic/Modal";
 import styles from "./index.module.css";
 import SecondStep from "./components/SecondStep";
+import { Button } from "components/basic/Button";
 
 type Props = {
     columns: any;
@@ -12,8 +13,8 @@ type Props = {
 };
 
 enum Steps {
-    select = "Select a column to edit",
-    input = "Enter new value for selected entries"
+    select = "Select an action",
+    input = "Enter new value"
 }
 
 const ActionModal = ({ columns, isOpen, toggle, selectedRows, onSubmit }: Props): JSX.Element => {
@@ -21,27 +22,36 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows, onSubmit }: Props)
     const [selectedColumn, setColumn] = useState(null);
     const [inputRemovalBlocked, setBlock] = useState(false);
 
+    const reset = useCallback((delay = 0) => {
+        setBlock(true);
+        setStep(Steps.select);
+        setTimeout(() => {
+            setBlock(false);
+            setColumn(null);
+        }, delay);
+    }, []);
+
     const handlePressItem = (column) => {
         setColumn(column);
         setStep(Steps.input);
     };
 
     const handlePressBack = () => {
-        setBlock(true);
-        setStep(Steps.select);
-        setTimeout(() => {
-            setBlock(false);
-            setColumn(null);
-        }, 150);
+        reset(150);
+    };
+
+    const handleClose = () => {
+        toggle();
+        reset();
     };
 
     const submitAndClose = () => {
         onSubmit();
-        toggle();
+        handleClose();
     };
 
     return (
-        <Modal isOpen={isOpen} title={step} onClose={toggle} style={{ width: 400 }} contentHeight={230}>
+        <Modal isOpen={isOpen} title={step} onClose={handleClose} style={{ width: 400 }} contentHeight={230}>
             <div className={styles.body}>
                 <div
                     className={`${styles.container} ${styles.firstStepContainer} ${
@@ -52,10 +62,12 @@ const ActionModal = ({ columns, isOpen, toggle, selectedRows, onSubmit }: Props)
                             <h2 className={styles.groupHeader}>{group.Header}</h2>
                             <div className={styles.itemGroup}>
                                 {group.columns.map((col, j) => (
-                                    <div key={j} className={styles.itemContainer}>
-                                        <span className={styles.item} onClick={() => handlePressItem(col)}>
-                                            {col.Header}
-                                        </span>
+                                    <div key={j}>
+                                        <Button
+                                            type="dimmed"
+                                            title={`Edit ${col.Header}`}
+                                            onClick={() => handlePressItem(col)}
+                                        />
                                     </div>
                                 ))}
                             </div>
