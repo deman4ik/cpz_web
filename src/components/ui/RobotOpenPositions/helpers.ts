@@ -24,9 +24,10 @@ const getSignalPositionData = (position) => {
 
 export const formatSignalsPositions = (positions: any) =>
     positions?.reduce((acc, position) => {
-        const item = acc.find((el) => el.exchange === position.robot.exchange);
-        const obj = {
+        const existingExchange = acc.find((el) => el.exchange === position.robot.exchange);
+        const newExchange = {
             exchange: position.robot.exchange,
+            profit: 0,
             assets: []
         };
         const robot = getSignalPositionData(position);
@@ -36,22 +37,25 @@ export const formatSignalsPositions = (positions: any) =>
             profit: position.profit,
             robots: [robot]
         };
-        if (item) {
-            const findAsset = item.assets.find((el) => el.asset === position.robot.asset);
-            if (!findAsset) {
-                item.assets.push(asset);
+        if (existingExchange) {
+            const existingAsset = existingExchange.assets.find((el) => el.asset === position.robot.asset);
+            if (!existingAsset) {
+                existingExchange.assets.push(asset);
+                existingExchange.profit += asset.profit;
             } else {
-                findAsset.robots.push(robot);
-                findAsset.volume = round(
-                    findAsset.volume + (robot.direction === "short" ? -1 : 1) * position.volume,
+                existingAsset.robots.push(robot);
+                existingAsset.volume = round(
+                    existingAsset.volume + (robot.direction === "short" ? -1 : 1) * position.volume,
                     6
                 );
-                findAsset.profit = (findAsset.profit || 0) + (robot.profit || 0);
+                existingAsset.profit = (existingAsset.profit || 0) + (robot.profit || 0);
+                existingExchange.profit += robot.profit || 0;
             }
         } else {
-            obj.assets = [asset];
+            newExchange.assets = [asset];
+            newExchange.profit = asset.profit;
         }
-        return item ? acc : [...acc, obj];
+        return existingExchange ? acc : [...acc, newExchange];
     }, []) || [];
 
 const getTradingPositionData = (position) => {
@@ -74,9 +78,10 @@ const getTradingPositionData = (position) => {
 
 export const formatTradingRobotPositions = (positions: any) =>
     positions?.reduce((acc, position) => {
-        const item = acc.find((el) => el.exchange === position.exchange);
-        const obj = {
+        const existingExchange = acc.find((el) => el.exchange === position.exchange);
+        const newExchange = {
             exchange: position.exchange,
+            profit: 0,
             assets: []
         };
         const robot = getTradingPositionData(position);
@@ -86,17 +91,22 @@ export const formatTradingRobotPositions = (positions: any) =>
             profit: position.profit,
             robots: [robot]
         };
-        if (item) {
-            const findAsset = item.assets.find((el) => el.asset === position.asset);
-            if (!findAsset) {
-                item.assets.push(asset);
+        if (existingExchange) {
+            const existingAsset = existingExchange.assets.find((el) => el.asset === position.asset);
+            if (!existingAsset) {
+                existingExchange.assets.push(asset);
             } else {
-                findAsset.robots.push(robot);
-                findAsset.volume = round(findAsset.volume + (robot.direction === "short" ? -1 : 1) * robot.volume, 6);
-                findAsset.profit = (findAsset.profit || 0) + (robot.profit || 0);
+                existingAsset.robots.push(robot);
+                existingAsset.volume = round(
+                    existingAsset.volume + (robot.direction === "short" ? -1 : 1) * robot.volume,
+                    6
+                );
+                existingAsset.profit = (existingAsset.profit || 0) + (robot.profit || 0);
+                existingExchange.profit += robot.profit || 0;
             }
         } else {
-            obj.assets = [asset];
+            newExchange.assets = [asset];
+            newExchange.profit = asset.profit;
         }
-        return item ? acc : [...acc, obj];
+        return existingExchange ? acc : [...acc, newExchange];
     }, []) || [];
