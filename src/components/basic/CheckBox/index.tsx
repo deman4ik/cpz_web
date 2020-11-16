@@ -13,10 +13,11 @@ interface Props {
     onClick?: () => void;
     ref?: any;
     title?: string;
+    indeterminate?: boolean;
 }
 
 export const CheckBox: React.FC<Props> = forwardRef(
-    ({ style, checked = false, label, disabled, onClick, isLoading, ...rest }, ref) => {
+    ({ style, checked = false, label, disabled, onClick, isLoading, indeterminate, ...rest }, ref) => {
         const handleClick = () => {
             if (!disabled) {
                 if (onClick) onClick();
@@ -85,7 +86,7 @@ export const CheckBox: React.FC<Props> = forwardRef(
                             width: 12px;
                             border: 2px solid;
                             border-radius: 2px;
-                            ${checked ? "border-color: var(--accent);" : ""};
+                            ${indeterminate || checked ? "border-color: var(--accent);" : ""};
                         }
 
                         .checkbox:disabled + label:before {
@@ -99,17 +100,17 @@ export const CheckBox: React.FC<Props> = forwardRef(
 
                         .checkbox + label:after {
                             content: "";
-                            display: ${checked ? "block" : "none"};
+                            display: ${indeterminate || checked ? "block" : "none"};
                             position: absolute;
                             left: 5px;
-                            top: 2px;
-                            width: 5px;
+                            top: ${indeterminate ? "-3px" : "2px"};
+                            width: ${indeterminate ? "6px" : "5px"};
                             height: 12px;
                             border: solid var(--primary);
-                            border-width: 0 2px 2px 0;
-                            -webkit-transform: rotate(45deg);
-                            -ms-transform: rotate(45deg);
-                            transform: rotate(45deg);
+                            border-width: 0 ${indeterminate ? "0" : "2px"} 2px 0;
+                            -webkit-transform: ${indeterminate ? "none" : "rotate(45deg)"};
+                            -ms-transform: ${indeterminate ? "none" : "rotate(45deg)"};
+                            transform: ${indeterminate ? "none" : "rotate(45deg)"};
                         }
 
                         .loader {
