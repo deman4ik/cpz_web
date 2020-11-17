@@ -6,6 +6,7 @@ import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
 
 interface TableComponentProps {
     tableStyles?: any;
+    refetch?: () => void;
     headerStyles?: any;
     setFilters: (value: any) => void;
     columns: ColumnsArraySchema;
@@ -31,6 +32,7 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
         itemsCount = 0,
         onRowClick,
         data,
+        refetch,
         headerStyles,
         loading
     } = props;
@@ -66,6 +68,7 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
 
     return (
         <Table
+            refetch={refetch}
             withoutPagination={withoutPagination}
             onRowClick={onRowClick}
             headerStyles={headerStyles}

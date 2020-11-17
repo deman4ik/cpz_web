@@ -6,7 +6,6 @@ import { formatDate } from "config/utils";
 import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
-
 export const backTestInfoColumns = {
     Header: "Back Test Info",
     id: "backtest_info",
