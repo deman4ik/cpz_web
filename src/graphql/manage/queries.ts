@@ -128,52 +128,6 @@ export const ALL_ROBOTS = gql`
     }
 `;
 
-export const BACKTESTS = gql`
-    query get_backtests($limit: Int, $offset: Int, $where: backtests_bool_exp, $order_by: [backtests_order_by!]) {
-        backtests(limit: $limit, where: $where, order_by: $order_by) {
-            asset
-            exchange
-            timeframe
-            strategy
-            robot_id
-            id
-            backtest_all_stats {
-                equity_avg
-                last_position_exit_date
-                statistics
-            }
-            completed_percent
-            currency
-            date_from
-            date_to
-            error
-            finished_at
-            left_bars
-            processed_bars
-            robot {
-                code
-                robot_settings {
-                    strategy_settings
-                    robot_settings
-                }
-            }
-            settings
-            status
-            total_bars
-        }
-    }
-`;
-
-export const BACKTESTS_AGGREGATE = gql`
-    query get_backtests_aggregate($where: backtests_bool_exp) {
-        backtests_aggregate(where: $where) {
-            aggregate {
-                count
-            }
-        }
-    }
-`;
-
 export const GET_ROBOTS_BY_ID = gql`
     query get_robot_names_by_ids($where: robots_bool_exp) {
         robots(where: $where) {

@@ -17,13 +17,17 @@ import { CaptionButton, CheckBox } from "components/basic";
 const Table = ({
     columns,
     data,
+    withoutPagination,
     pageSizeOptions,
     setLimit,
     setPageIndex,
     pageCount: ControlledPageCount,
     itemsCount,
+    tableStyles,
+    headerStyles,
     onChangeSearch,
     onChangeSort,
+    onRowClick,
     isLoading,
     refetch
 }) => {
@@ -173,25 +177,28 @@ const Table = ({
     };
 
     return (
-        <div className={styles.wrapper}>
-            <Toolbar
-                itemsCount={itemsCount}
-                onChangeSearch={onChangeSearch}
-                toggleControlModal={toggleControlModal}
-                toggleActionModal={toggleActionModal}
-                actionModalCanBeOpened={
-                    selectEnabled && groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0
-                }
-            />
+        <div className={styles.wrapper} style={tableStyles}>
+            {!!itemsCount && (
+                <Toolbar
+                    itemsCount={itemsCount}
+                    onChangeSearch={onChangeSearch}
+                    toggleControlModal={toggleControlModal}
+                    toggleActionModal={toggleActionModal}
+                    actionModalCanBeOpened={
+                        selectEnabled && groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0
+                    }
+                />
+            )}
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
                     <LoadingIndicator />
                 ) : (
                     <>
-                        <Header tableProps={getTableProps()} headerGroups={headerGroups} />
+                        <Header tableProps={getTableProps()} headerGroups={headerGroups} headerStyles={headerStyles} />
 
                         <Body
+                            onRowClick={onRowClick}
                             tableProps={getTableProps()}
                             bodyProps={getTableBodyProps()}
                             page={page}
@@ -201,21 +208,23 @@ const Table = ({
                 )}
             </div>
 
-            <Pagination
-                tableInstance={{
-                    pageOptions,
-                    pageIndex,
-                    gotoPage,
-                    pageCount,
-                    canNextPage,
-                    canPreviousPage
-                }}
-                setLimit={setLimit}
-                pageSizeOptions={pageSizeOptions}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-                setPageIndex={setPageIndex}
-            />
+            {!withoutPagination && (
+                <Pagination
+                    tableInstance={{
+                        pageOptions,
+                        pageIndex,
+                        gotoPage,
+                        pageCount,
+                        canNextPage,
+                        canPreviousPage
+                    }}
+                    setLimit={setLimit}
+                    pageSizeOptions={pageSizeOptions}
+                    pageSize={pageSize}
+                    setPageSize={setPageSize}
+                    setPageIndex={setPageIndex}
+                />
+            )}
 
             <ColumnControlModal
                 columns={groupedCols.slice(1, groupedCols.length)}

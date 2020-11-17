@@ -1,46 +1,29 @@
 import React, { memo } from "react";
-
-import { formatMoney } from "config/utils";
-import { getSubscriptionDuration, activeDays, getProfit, getDisplayedVolume } from "../helpers";
-import { color } from "config/constants";
+import { SCREEN_TYPE } from "config/constants";
 import styles from "./styles/HeaderStatsSection.module.css";
+import {
+    HeaderStatsSectionItem,
+    HeaderStatsSectionItemProps
+} from "components/pages/SignalRobotPage/Header/HeaderStatsSectionItem";
+import { useShowDimension } from "hooks/useShowDimension";
 
 interface Props {
-    robotData: any;
+    config: HeaderStatsSectionItemProps[];
+    width: number;
+    columnsNum?: number;
 }
 
-const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
-    const { isUserSubscribed } = robotData.robot;
-    const profit = getProfit(robotData);
+const _HeaderStatsSection: React.FC<Props> = ({ config, columnsNum = 2, width }) => {
+    const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
+
+    const numberOfColumns = isDesktopView ? columnsNum : 1;
+    const gridColumnsString = Array.from({ length: numberOfColumns }, () => "1fr").join(" ");
 
     return (
-        <div className={styles.robotStats}>
-            <div className={styles.robotStatsCol}>
-                <div className={styles.robotStatsRow}>
-                    <div className={styles.robotStatsLabel}>Profit&nbsp;</div>
-                    <div
-                        className={styles.robotStatsValue}
-                        style={{ color: profit > 0 ? color.positive : color.negative }}>
-                        {`${formatMoney(profit)} $`}
-                    </div>
-                </div>
-                <div className={styles.robotStatsRow}>
-                    <div className={styles.robotStatsLabel}>Amount&nbsp;</div>
-                    <div className={styles.robotStatsValue}>{getDisplayedVolume(robotData)}</div>
-                </div>
-            </div>
-            <div className={styles.robotStatsCol}>
-                <div className={styles.robotStatsRow}>
-                    <div className={styles.robotStatsLabel}>Active&nbsp;</div>
-                    <div className={styles.robotStatsValue}>{activeDays(robotData)}</div>
-                </div>
-                {isUserSubscribed && (
-                    <div className={styles.robotStatsRow}>
-                        <div className={styles.robotStatsLabel}>Subscribed&nbsp;</div>
-                        <div className={styles.robotStatsValue}>{getSubscriptionDuration(robotData)}</div>
-                    </div>
-                )}
-            </div>
+        <div className={styles.robotStats} style={{ gridTemplateColumns: gridColumnsString }}>
+            {config.map((i) => (
+                <HeaderStatsSectionItem key={i.label} {...i} />
+            ))}
         </div>
     );
 };

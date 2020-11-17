@@ -1,0 +1,15 @@
+.title {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 10px 20px;
+    font-size: var(--normal3);
+    color: var(--accent);
+}
+
+.container {
+    height: 50%;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}

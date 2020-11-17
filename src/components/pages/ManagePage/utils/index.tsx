@@ -49,9 +49,10 @@ export interface ColumnsArraySchema {
             Header: string;
             accessor: any;
             isVisible: boolean;
+            sortSchema?: { field: string; subfield?: string };
+            width?: number | string;
+            Cell?: (props: any) => any;
             fieldSchema?: { field: string; subfield?: string };
-            width?: number;
-            Cell?: (props: any) => JSX.Element;
             mutation?: DocumentNode;
             mutationInputOptions?: InputOptions;
             mutationCallMode?: CallMode;

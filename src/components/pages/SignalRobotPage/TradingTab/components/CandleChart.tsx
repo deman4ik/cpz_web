@@ -13,6 +13,8 @@ import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { getLegend } from "config/utils";
 import { AuthContext } from "libs/hoc/context";
+import { candleQueries } from "components/pages/helpers";
+import { CandleChartComponent } from "components/common/CandleChartComponent";
 
 interface Props {
     robot: any;
@@ -20,122 +22,27 @@ interface Props {
     width: number;
     setIsChartLoaded: (isChartLoaded: boolean) => void;
 }
-const LIMIT = 120;
-
-const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
-    loading: () => <LoadingIndicator style={{ height: 400 }} />,
-    ssr: false
-});
 
 const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded }) => {
     const {
-        authState: { isAuth, user_id }
+        authState: { isAuth }
     } = useContext(AuthContext);
+    const { timeframe, id: robotId, user_signal_id: userSignalId } = robot;
 
-    const { asset, timeframe, id: robotId, user_signal_id: userSignalId } = robot;
+    const authAndOwnedByUser = isAuth && userSignalId;
+    const signalCandleQueries = candleQueries(timeframe, isAuth, authAndOwnedByUser).signal;
 
-    const candleQueries = {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth && userSignalId),
-        realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
-    };
-
-    const legend = getLegend(robot);
-    const [limit, setLimit] = useState(LIMIT);
-    const [chartData, setChartData] = useState({ candles: [], markers: [] });
-
-    // history candles load
-    const historyQueryVars = isAuth && userSignalId ? { limit, userSignalId } : { robotId, limit };
-    const { loading, data, fetchMore } = useQuery(candleQueries.history, {
-        variables: historyQueryVars,
-        notifyOnNetworkStatusChange: true
-    });
-
-    const limitRef = useRef(limit);
-
-    useEffect(() => {
-        limitRef.current = limit;
-    }, [limit]);
-
-    const onFetchMore = useCallback(
-        () => (offset: number) => {
-            const variables = {
-                offset: limitRef.current,
-                limit: limitRef.current + LIMIT
-            };
-            fetchMore({
-                variables
-            }).catch((e) => console.error(e));
-            setLimit((oldLimit) => oldLimit + LIMIT);
-        },
-        []
-    );
-
-    useEffect(() => {
-        if (!loading && data) {
-            setChartData(getCandleChartData(data, asset));
-        }
-    }, [loading, data, asset]);
-
-    // realtime candles load
-    const varsSubscription = isAuth ? { userSignalId } : { robotId };
-    const { data: dataUpdate } = useSubscription(candleQueries.realTimeSub, {
-        variables: varsSubscription
-    });
-
-    useEffect(() => {
-        if (!data || !dataUpdate || !dataUpdate.candles.length) {
-            return;
-        }
-
-        const { updateCandle, markers } = getUpdatedCandleChartData(dataUpdate, asset);
-        const { candles: oldCandles } = chartData;
-        if (!updateCandle.time) {
-            return;
-        }
-
-        const existingCandleIndex = oldCandles.findIndex((el) => el.time === updateCandle.time);
-        if (existingCandleIndex === -1) {
-            setChartData((prev) => ({
-                candles: [...prev.candles, updateCandle],
-                markers: [...prev.markers, ...markers]
-            }));
-            setLimit((oldLimit) => oldLimit + 1);
-        } else {
-            setChartData((prev) => {
-                const candleId = prev.candles.findIndex((el) => el.time === updateCandle.time);
-                if (candleId === -1) {
-                    return {
-                        candles: prev.candles,
-                        markers: [...prev.markers, ...markers]
-                    };
-                }
-
-                const newCandles = [...prev.candles];
-                newCandles[candleId] = updateCandle;
-                return {
-                    candles: newCandles,
-                    markers: [...prev.markers, ...markers]
-                };
-            });
-        }
-    }, [dataUpdate, asset]);
-
-    const [mutateChartData] = useMutation(SET_CHART_DATA);
-    useEffect(() => {
-        mutateChartData({ variables: { limit, robotId, timeframe } });
-    }, [limit]);
+    const variables = authAndOwnedByUser ? { userSignalId } : { robotId };
 
     return (
-        <LightWeightChartWithNoSSR
-            loading={loading}
-            data={chartData.candles}
-            onFetchMore={onFetchMore}
-            markers={chartData.markers}
-            lines={signals}
-            legend={legend}
+        <CandleChartComponent
+            robot={robot}
+            signals={signals}
+            variables={variables}
+            realTimeSubQuery={signalCandleQueries.realTimeSub}
+            historyQuery={signalCandleQueries.history}
+            width={width}
             setIsChartLoaded={setIsChartLoaded}
-            size={{ width, height: 400 }}
-            type={ChartType.candle}
         />
     );
 };

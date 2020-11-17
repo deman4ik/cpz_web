@@ -1,12 +1,11 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "libs/hoc/context";
-import { DocumentNode, LazyQueryHookOptions, LazyQueryResult, TypedDocumentNode, useLazyQuery } from "@apollo/client";
-import { httpErrors } from "config/constants";
-import { useRefreshToken } from "libs/accessToken";
+import { LazyQueryHookOptions, LazyQueryResult, useLazyQuery } from "@apollo/client";
+import { QueryType } from "components/pages/ManagePage/common/types";
 
 export const useQueryWithAuth = (
     authRequired: boolean,
-    query: DocumentNode | TypedDocumentNode<any, any>,
+    query: QueryType,
     options: LazyQueryHookOptions<any, any>
 ): LazyQueryResult<any, any> => {
     const { authState } = useContext(AuthContext);

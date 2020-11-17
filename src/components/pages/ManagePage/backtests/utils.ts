@@ -1,3 +1,5 @@
+import { capitalize } from "config/utils";
+
 type StatType = { all: number };
 type Stats = {
     performance?: { x: number; y: number }[];
@@ -26,8 +28,11 @@ const flattenRobotData = (robot) => {
         return {};
     }
     const { robot_settings: settings, ...restProps } = robot;
-    const { robot_settings, strategy_settings } = settings;
-    return { ...restProps, robot_settings, strategy_settings };
+    if (settings) {
+        const { robot_settings, strategy_settings } = settings;
+        return { ...restProps, robot_settings, strategy_settings };
+    }
+    return robot;
 };
 export const formatBackTestsData = ({ backtests }: { backtests: any }): any => {
     return backtests.map((backtest) => {
@@ -51,4 +56,10 @@ export const getSearchOptions = (query: string) => {
     return null;
 };
 
-export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;
+export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count || 0;
+
+export const titleFromLowerCase = (id: string) =>
+    id
+        .split("_")
+        .map((i) => capitalize(i))
+        .join(" ");

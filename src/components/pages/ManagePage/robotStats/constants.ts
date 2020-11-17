@@ -3,7 +3,8 @@ import { ROBOTS_TOTAL_PERFORMANCE_WITH_STATS, USER_ROBOTS_TOTAL_PERFORMANCE_WITH
 
 export const mapRoutesToDisplayTypes = {
     "manage/robots": "manageRobotsStats",
-    "manage/user_robots": "manageUserRobotsStats"
+    "manage/user_robots": "manageUserRobotsStats",
+    "manage/backtest": "manageBackTest"
 };
 
 export const mapQueriesToRoutes = {
