@@ -16,7 +16,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightW
 interface CandleChartComponentProps {
     robot: any;
     signals?: any;
-    variables: { userSignalId?: string; robotId?: string };
+    variables: { userSignalId?: string; robotId?: string; backtest_id?: string };
     realTimeSubQuery: QueryType;
     historyQuery: QueryType;
     width: number;

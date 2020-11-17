@@ -2,7 +2,6 @@ import React, { FC, memo } from "react";
 import { useTableFilters } from "hooks/useTableFilters";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { POLL_INTERVAL } from "config/constants";
-import { getItemsCount } from "components/pages/ManagePage/backtests/utils";
 import { TableComponent } from "components/pages/ManagePage/common/TableComponent";
 import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
 import { QueryType } from "components/pages/ManagePage/common/types";
@@ -10,12 +9,13 @@ import { QueryType } from "components/pages/ManagePage/common/types";
 export interface TableWithQueryProps {
     tableStyles?: any;
     headerStyles?: any;
+    withoutPagination?: boolean;
     aggregate_query: QueryType;
     query: QueryType;
     columns: ColumnsArraySchema;
-    formatData: (data: any) => any;
-    getItemsCount: (data: any) => number;
-    getSearchOptions: (data: any) => any;
+    formatData?: (data: any) => any;
+    getItemsCount?: (data: any) => number;
+    getSearchOptions?: (data: any) => any;
     onRowClick?: (data?: any) => any;
 }
 
@@ -23,6 +23,8 @@ export const TableWithQueryComponent: FC<TableWithQueryProps> = ({
     formatData,
     tableStyles,
     getSearchOptions,
+    getItemsCount,
+    withoutPagination,
     onRowClick,
     headerStyles,
     columns,
@@ -38,7 +40,7 @@ export const TableWithQueryComponent: FC<TableWithQueryProps> = ({
         variables: { where },
         pollInterval: POLL_INTERVAL
     });
-    const itemsCount = aggrData ? getItemsCount(aggrData) : 0;
+    const itemsCount = aggrData && getItemsCount ? getItemsCount(aggrData) : 0;
     const pageCount = getPageCount(itemsCount);
 
     const { data, loading } = useQueryWithAuth(true, query, {
@@ -47,11 +49,12 @@ export const TableWithQueryComponent: FC<TableWithQueryProps> = ({
 
     const tableData = data && formatData ? formatData(data) : data || [];
 
-    const onClick = () => onRowClick(tableData.find((i) => i.backtest_stats));
+    // const onClick = () => onRowClick(tableData.find((i) => i.backtest_stats));
     return (
         <TableComponent
             headerStyles={headerStyles}
-            onRowClick={onClick}
+            withoutPagination={withoutPagination}
+            onRowClick={onRowClick}
             tableStyles={tableStyles}
             columns={columns}
             setFilters={setFilters}

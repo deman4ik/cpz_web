@@ -11,16 +11,20 @@ import { BACKTEST_ITEM_TABLE_COLUMNS, BACKTESTS_TABLE_COLUMNS } from "components
 import { formatBackTestsData, getItemsCount, getSearchOptions } from "components/pages/ManagePage/backtests/utils";
 import { ManagementTemplate } from "components/layout";
 import { TableWithQuery } from "components/pages/ManagePage/common/TableWithQuery";
-import { BACKTEST, BACKTESTS, BACKTESTS_AGGREGATE } from "graphql/manage/queries";
 import { BackTestTabs } from "components/pages/ManagePage/backtests/components/BackTestTabs";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { Title } from "components/pages/ManagePage/backtests/components/Title";
 import { Container } from "components/pages/ManagePage/backtests/components/Container";
+import { BACKTEST, BACKTESTS, BACKTESTS_AGGREGATE } from "graphql/robots/backtest";
 
 const ManageBackTests: React.FC = () => {
     const [selectedBackTestRobotID, setBackTestRobotID] = useState(null);
-    const [robotData, setRobotData] = useState(null);
+    const [robotData, _setRobotData] = useState(null);
 
+    const setRobotData = (data) => {
+        _setRobotData(data);
+        console.log(data)
+    };
     const { width } = useWindowDimensions();
 
     const searchByRobotId = () => ({ robot_id: { _eq: selectedBackTestRobotID } });
@@ -42,25 +46,26 @@ const ManageBackTests: React.FC = () => {
                 />
             </Container>
             <Container>
-                <Title title="Back Test's Robots" />
                 {selectedBackTestRobotID && (
-                    <TableWithQuery
-                        headerStyles={{ width: "100%" }}
-                        onRowClick={setRobotData}
-                        query={BACKTEST}
-                        aggregate_query={BACKTESTS_AGGREGATE}
-                        columns={BACKTEST_ITEM_TABLE_COLUMNS}
-                        formatData={formatBackTestsData}
-                        getItemsCount={getItemsCount}
-                        getSearchOptions={searchByRobotId}
-                    />
+                    <>
+                        <Title title="Back Test's Robots" />
+                        <TableWithQuery
+                            withoutPagination
+                            onRowClick={setRobotData}
+                            query={BACKTEST}
+                            aggregate_query={BACKTESTS_AGGREGATE}
+                            columns={BACKTEST_ITEM_TABLE_COLUMNS(width)}
+                            formatData={formatBackTestsData}
+                            getSearchOptions={searchByRobotId}
+                        />
+                    </>
                 )}
             </Container>
             <Container>
                 {robotData && (
                     <>
-                        <Title title={robotData.robot.code} />
-                        <BackTestTabs robotData={robotData} width={width} robot_id={selectedBackTestRobotID} />
+                        <Title title="Robot Stats" />
+                        <BackTestTabs robotData={robotData} width={width} />
                     </>
                 )}
             </Container>

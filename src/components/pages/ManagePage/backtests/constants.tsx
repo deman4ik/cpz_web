@@ -3,7 +3,8 @@ import React from "react";
 import { STATUS_COLORS } from "config/constants";
 import { buildRobotChartCell } from "components/pages/ManagePage/utils";
 import { formatDate } from "config/utils";
-import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
+import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
+import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
 export const backTestInfoColumns = {
     Header: "Back Test Info",
@@ -146,8 +147,7 @@ export const settingsColumns = {
         }
     ]
 };
-const robotStatsColumns = (inPercent?) => {
-    const itemWidth = inPercent && "100%";
+const robotStatsColumns = (widths: number[] = []) => {
     return [
         {
             Header: "Performance",
@@ -155,35 +155,35 @@ const robotStatsColumns = (inPercent?) => {
             isVisible: true,
             Cell: buildRobotChartCell,
             sortSchema: { field: "stats", subfield: "equity_avg" },
-            width: itemWidth || 200
+            width: widths[0] || 200
         },
         {
             Header: "Profit",
             accessor: "netProfit",
             isVisible: true,
             sortSchema: { field: "stats", subfield: "net_profit" },
-            width: itemWidth || 90
+            width: widths[1] || 90
         },
         {
             Header: "W/R",
             accessor: "winRate",
             isVisible: true,
             sortSchema: { field: "stats", subfield: "win_rate" },
-            width: itemWidth || 70
+            width: widths[2] || 70
         },
         {
             Header: "Max Drawdown",
             accessor: "maxDrawdown",
             isVisible: true,
             sortSchema: { field: "stats", subfield: "max_drawdown" },
-            width: itemWidth || 125
+            width: widths[3] || 125
         },
         {
             Header: "Trades",
             accessor: "tradesCount",
             isVisible: true,
             sortSchema: { field: "stats", subfield: "trades_count" },
-            width: itemWidth || 90
+            width: widths[4] || 90
         }
     ];
 };
@@ -208,7 +208,7 @@ const robotSettings = {
             Header: "Strategy Settings",
             accessor: (v) => v.robot.strategy_settings,
             isVisible: true,
-            Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+            Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />,
             width: 250
         }
     ]
@@ -394,36 +394,44 @@ export const BACKTESTS_TABLE_COLUMNS = [
     robotSettings
 ];
 
-export const BACKTEST_ITEM_TABLE_COLUMNS = [
-    {
-        Header: "Robot Info",
-        id: "robot_info",
-        disableSortBy: false,
-        columns: [
-            {
-                Header: "Robot ID",
-                accessor: "robot_id",
-                isVisible: true,
-                width: "100%",
-            }
-        ]
-    },
-    {
-        Header: "Statistics",
-        id: "statistics",
-        disableSortBy: true,
-        columns: [
-            ...robotStatsColumns(true),
-            {
-                Header: "Strategy Settings",
-                accessor: (v) => v.backtest_settings?.strategy_settings,
-                isVisible: true,
-                width: "100%",
-                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
-            }
-        ]
-    }
-];
+export const BACKTEST_ITEM_TABLE_COLUMNS = (width: number) => {
+    const firstColumnWidth = 300;
+    const lastColumnWidth = 350;
+    const restColumnsCount = 5;
+    let restColumnsWidths = (width - (firstColumnWidth + lastColumnWidth)) / restColumnsCount;
+    if (restColumnsWidths < 100) restColumnsWidths = 100;
+    const widthsArr = Array.from({ length: restColumnsCount }, () => restColumnsWidths);
+    return [
+        {
+            Header: "Robot Info",
+            id: "robot_info",
+            disableSortBy: false,
+            columns: [
+                {
+                    Header: "Robot ID",
+                    accessor: "robot_id",
+                    isVisible: true,
+                    width: firstColumnWidth
+                }
+            ]
+        },
+        {
+            Header: "Statistics",
+            id: "statistics",
+            disableSortBy: true,
+            columns: [
+                ...robotStatsColumns(widthsArr),
+                {
+                    Header: "Strategy Settings",
+                    accessor: (v) => v.backtest_settings?.strategy_settings,
+                    isVisible: true,
+                    width: lastColumnWidth,
+                    Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />
+                }
+            ]
+        }
+    ];
+};
 
 export const BackSettingsTableColumns = [
     {
@@ -455,7 +463,66 @@ export const BackSettingsTableColumns = [
                 width: "100%",
                 accessor: (v) => v.strategy_settings,
                 isVisible: true,
-                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
+                Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />
+            }
+        ]
+    }
+];
+
+const backtest_signal_columns = [
+    "id",
+    "action",
+    "candle_timestamp",
+    "created_at",
+    "order_type",
+    "position_id",
+    "position_code",
+    "position_prefix",
+    "price",
+    "robot_id",
+    "type",
+    "updated_at"
+];
+export const BACKTEST_SIGNALS_COLUMNS = () => [
+    {
+        Header: "Back Test Signals",
+        id: "backtest_signals",
+        disableSortBy: false,
+        columns: backtest_signal_columns.map((id) => ({
+            Header: titleFromLowerCase(id),
+            accessor: id,
+            width: "100%",
+            Cell: ({ value }: { value: string }) => (id.indexOf("_at") >= 0 ? formatDate(value) : value),
+            isVisible: true
+        }))
+    }
+];
+const logs_columns = ["backtest_id", "candle_timestamp", "created_at", "id", "robot_id", "updated_at"];
+
+export const getLogsColumns = () => [
+    {
+        Header: "Logs Info",
+        id: "logs_info",
+        disableSortBy: false,
+        columns: logs_columns.map((id) => ({
+            Header: titleFromLowerCase(id),
+            accessor: id,
+            width: "100%",
+            Cell: ({ value }: { value: string }) => (id.indexOf("_at") >= 0 ? formatDate(value) : value),
+            isVisible: true
+        }))
+    },
+    {
+        Header: "Logs Data",
+        id: "logs_data",
+        disableSortBy: false,
+        columns: [
+            {
+                Header: "Logs Data",
+                accessor: "data",
+                width: "100%",
+                Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />,
+                isVisible: true
             }
         ]
     }

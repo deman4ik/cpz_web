@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { HeaderStatsSectionItem } from "components/pages/TradingRobotPage/Header/HeaderStatsSectionItem";
 import { v4 as uuid } from "uuid";
 
-interface StrategySettingsItemProps {
+interface DynamicDataCellProps {
     value: { [key: string]: any };
 }
-export const StrategySettingsItem: FC<StrategySettingsItemProps> = ({ value }) => {
+export const DynamicDataCell: FC<DynamicDataCellProps> = ({ value }) => {
     if (!value) {
         return null;
     }

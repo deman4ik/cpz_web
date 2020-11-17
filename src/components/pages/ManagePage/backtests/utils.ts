@@ -1,4 +1,5 @@
 import back from "node-html-parser/dist/back";
+import { capitalize } from "config/utils";
 
 type StatType = { all: number };
 type Stats = {
@@ -56,4 +57,10 @@ export const getSearchOptions = (query: string) => {
     return null;
 };
 
-export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count;
+export const getItemsCount = (data) => data.backtests_aggregate?.aggregate?.count || 0;
+
+export const titleFromLowerCase = (id: string) =>
+    id
+        .split("_")
+        .map((i) => capitalize(i))
+        .join(" ");

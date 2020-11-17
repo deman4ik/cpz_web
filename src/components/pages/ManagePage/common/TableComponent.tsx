@@ -9,9 +9,9 @@ interface TableComponentProps {
     headerStyles?: any;
     setFilters: (value: any) => void;
     columns: ColumnsArraySchema;
-    getSearchOptions: (data: any) => any;
-    itemsCount: number;
-    pageCount: number;
+    getSearchOptions?: (data: any) => any;
+    itemsCount?: number;
+    pageCount?: number;
     withoutPagination?: boolean;
     setPageIndex: (index: number) => void;
     onRowClick?: (params?: any) => any;
@@ -27,8 +27,8 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
         tableStyles,
         withoutPagination,
         setPageIndex,
-        pageCount,
-        itemsCount,
+        pageCount = 1,
+        itemsCount = 0,
         onRowClick,
         data,
         headerStyles,
@@ -40,7 +40,7 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
 
     const onChangeSearch = (value) => {
         const trimmedVal = value.trim();
-        if (trimmedVal) {
+        if (trimmedVal && getSearchOptions) {
             setWhere(getSearchOptions(trimmedVal));
         } else {
             setWhere(null);

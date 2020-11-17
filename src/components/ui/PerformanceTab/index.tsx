@@ -35,7 +35,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth
     return !fullStats ? (
         <LoadingIndicator />
     ) : !chartData ? (
-        <NoRecentData message="No recent data available" style={{ marginTop: 20 }} />
+        <NoRecentData message="No recent data available" />
     ) : (
         <>
             <LightWeightChartWithNoSSR

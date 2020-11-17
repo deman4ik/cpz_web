@@ -65,7 +65,7 @@ const SignalRobotPage = (): JSX.Element => {
     return (
         <DefaultTemplate
             page={PageType.signals}
-            title="Signals"`
+            title="Signals"
             subTitle={robotData ? robotData.robot.name : ""}
             width={width}
             toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}

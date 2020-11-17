@@ -97,7 +97,9 @@ const Table = ({
 
     return (
         <div className={styles.wrapper} style={tableStyles}>
-            <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
+            {!!itemsCount && (
+                <Toolbar itemsCount={itemsCount} onChangeSearch={onChangeSearch} toggleModal={toggleModal} />
+            )}
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
