@@ -19,12 +19,8 @@ import { BACKTEST, BACKTESTS, BACKTESTS_AGGREGATE } from "graphql/robots/backtes
 
 const ManageBackTests: React.FC = () => {
     const [selectedBackTestRobotID, setBackTestRobotID] = useState(null);
-    const [robotData, _setRobotData] = useState(null);
+    const [robotData, setRobotData] = useState(null);
 
-    const setRobotData = (data) => {
-        _setRobotData(data);
-        console.log(data)
-    };
     const { width } = useWindowDimensions();
 
     const searchByRobotId = () => ({ robot_id: { _eq: selectedBackTestRobotID } });

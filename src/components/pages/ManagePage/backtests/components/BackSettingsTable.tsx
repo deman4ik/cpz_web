@@ -12,7 +12,7 @@ interface BackSettingsTableProps {
     tableData: Settings[];
 }
 
-const EMPTY_SETTINGS_MESSAGE = "No settings available"
+const EMPTY_SETTINGS_MESSAGE = "No settings available";
 export const BackSettingsTable: FC<BackSettingsTableProps> = ({ tableData }) => {
     return (
         <div>
