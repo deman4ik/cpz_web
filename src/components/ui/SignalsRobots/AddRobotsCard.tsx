@@ -2,21 +2,22 @@ import React from "react";
 import Router from "next/router";
 
 import { CaptionButton } from "../../basic";
-import styles from "./SignalRobotsAddSignals.module.css";
+import styles from "./AddRobotsCard.module.css";
 
 interface Props {
     displayType: string;
+    mobile?: boolean;
 }
 
-export const SignalRobotsAddSignals: React.FC<Props> = ({ displayType }) => {
+export const AddRobotsCard: React.FC<Props> = ({ displayType, mobile = false }) => {
     const handleOnClick = () => {
         Router.push(`/${displayType}/search`);
     };
 
     return (
-        <div className={styles.itemContainer}>
+        <div className={mobile ? styles.mobileContainer : styles.container}>
             <div className={styles.border} onClick={handleOnClick}>
-                <CaptionButton title={`Add ${displayType}`} icon="plus" />
+                <CaptionButton title={`Add ${displayType}`} icon="plus" responsive={false} />
             </div>
         </div>
     );

@@ -15,6 +15,7 @@ import { ALL_USER_ROBOTS_AGGR_STATS, OPEN_POSITIONS_FOR_USER_SIGNALS, USER_SIGNA
 import { formatTradingRobots, formatSignalRobots } from "components/ui/SignalsRobots/helpers";
 import { OPEN_USER_POSITIONS, USER_ROBOTS } from "graphql/robots/queries";
 import { formatSignalsPositions, formatTradingRobotPositions } from "components/ui/RobotOpenPositions/helpers";
+import { AddRobotsCardWithHeader } from "components/common/AddRobotsCardWithHeader";
 
 type Props = {
     type: RobotsType;
@@ -53,6 +54,8 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
     // TODO: use single function to parse both signal and trading robots
     const formatRobots = typeIsSignals ? formatSignalRobots : formatTradingRobots;
 
+    const parsedRobotsData = formatRobots(typeIsSignals ? robotsData?.signals : robotsData?.robots);
+    const userHasRobots = parsedRobotsData.length > 0;
     const tabSchema = [
         {
             title: "Total Performance",
@@ -64,14 +67,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
         },
         {
             title: `${typeIsSignals ? "Signal" : "Trading"} robots`,
-            tabPage: (
-                <SignalRobots
-                    data={formatRobots(typeIsSignals ? robotsData?.signals : robotsData?.robots)}
-                    width={width}
-                    type={type}
-                    refetch={refetch}
-                />
-            )
+            tabPage: <SignalRobots data={parsedRobotsData} width={width} type={type} refetch={refetch} />
         }
     ];
 
@@ -82,7 +78,13 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             subTitle={typeIsSignals ? "Manual Trading" : "Automated Trading"}
             width={width}
             toolbar={<PageToolbar displayType={typeIsSignals ? RobotsType.signals : RobotsType.robots} />}>
-            <TabNavigation tabSchema={tabSchema} />
+            {userHasRobots ? (
+                <TabNavigation tabSchema={tabSchema} />
+            ) : (
+                <div style={{ padding: 5 }}>
+                    <AddRobotsCardWithHeader type={type} />
+                </div>
+            )}
         </DefaultTemplate>
     );
 };

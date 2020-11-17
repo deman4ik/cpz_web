@@ -399,6 +399,7 @@ export const USER_ROBOTS = gql`
             robot_id
             started_at
             user_id
+            ${stats}
             robot {
                 id
                 name
@@ -407,7 +408,6 @@ export const USER_ROBOTS = gql`
                 exchange
                 code
                 active: started_at
-                ${stats}
             }
             user_robot_settings {
                 user_robot_settings
