@@ -1,11 +1,14 @@
 .tableHeader {
-    display: flex;
-    flex-direction: row;
     border-top-width: 2px;
     border-color: var(--darkBg);
     background-color: var(--dark);
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.tableGridRow {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
 }
 
 .tableHeaderText {
