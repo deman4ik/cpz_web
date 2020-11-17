@@ -30,14 +30,14 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
         <>
             {!mobile ? (
                 <>
-                    <div className={styles.tableHeader}>
-                        <div className={styles.wrapper} style={{ flex: 0.3 }}>
+                    <div className={`${styles.tableHeader} ${styles.tableGridRow}`}>
+                        <div className={styles.wrapper}>
                             <div className={styles.tableHeaderText}>Position</div>
                         </div>
-                        <div className={styles.wrapper} style={{ flex: 0.2 }}>
+                        <div className={styles.wrapper}>
                             <div className={styles.tableHeaderText}>Entry</div>
                         </div>
-                        <div className={styles.wrapper} style={{ flex: 0.2 }}>
+                        <div className={styles.wrapper}>
                             <div className={styles.tableHeaderText}>
                                 Amount:&nbsp;
                                 <span
@@ -49,7 +49,7 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.wrapper} style={{ flex: 0.3 }}>
+                        <div className={styles.wrapper}>
                             <div className={styles.tableHeaderText}>
                                 Unrealized Profit:&nbsp;
                                 <span
