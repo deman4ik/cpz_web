@@ -8,17 +8,21 @@ interface Props {
     title: string;
     footer?: JSX.Element;
     children?: React.ReactNode;
-    onClose: React.MouseEventHandler;
+    onClose?: React.MouseEventHandler;
+    style?: React.CSSProperties;
+    contentHeight?: number | string;
 }
 
-export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose }) => (
-    <div className={styles.content}>
+export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight }) => (
+    <div className={styles.content} style={style}>
         {title && (
             <div className={styles.header}>
                 <div className={styles.title}>{title}</div>
             </div>
         )}
-        <div className={styles.body}>{children}</div>
+        <div className={styles.body} style={{ height: contentHeight || "unset" }}>
+            {children}
+        </div>
         {footer && <div className={styles.footer}>{footer}</div>}
         <div className={styles.icon}>
             <EffectButton icon="windowclose" color={color.accent} onClick={onClose} />

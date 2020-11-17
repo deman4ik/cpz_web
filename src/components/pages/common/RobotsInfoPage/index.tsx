@@ -78,10 +78,10 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
     return (
         <DefaultTemplate
             page={typeIsSignals ? PageType.signals : PageType.robots}
-            title={typeIsSignals ? "Signals" : "Robots"}
+            title={typeIsSignals ? PageType.signals : PageType.robots}
             subTitle={typeIsSignals ? "Manual Trading" : "Automated Trading"}
             width={width}
-            toolbar={<PageToolbar displayType="robots" />}>
+            toolbar={<PageToolbar displayType={typeIsSignals ? RobotsType.signals : RobotsType.robots} />}>
             <TabNavigation tabSchema={tabSchema} />
         </DefaultTemplate>
     );

@@ -304,7 +304,7 @@ export const MessageAlert: React.FC<Props> = ({ color = "white", size = 24 }) =>
     </svg>
 );
 
-export const SheildKey: React.FC<Props> = ({ color = "white", size = 24 }) => (
+export const ShieldKey: React.FC<Props> = ({ color = "white", size = 24 }) => (
     <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox="0 0 24 24">
         <path
             fill="currentColor"

@@ -32,7 +32,16 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
             ) : (
                 data.map((exchangeGroup, index) => (
                     <div key={exchangeGroup.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
-                        <h1 className={styles.exchange}>{exchangeName(exchangeGroup.exchange)}</h1>
+                        <div>
+                            <h1 className={styles.exchange}>
+                                {exchangeName(exchangeGroup.exchange)}&nbsp;
+                                <span
+                                    style={{
+                                        fontSize: ".8em",
+                                        color: getColor(exchangeGroup.profit < 0)
+                                    }}>{`${valueWithSign(formatMoney(exchangeGroup.profit))}$`}</span>
+                            </h1>
+                        </div>
                         <div>
                             {exchangeGroup.assets.map((asset) => (
                                 <div key={asset.asset}>

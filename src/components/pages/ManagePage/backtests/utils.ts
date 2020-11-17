@@ -1,4 +1,3 @@
-import back from "node-html-parser/dist/back";
 import { capitalize } from "config/utils";
 
 type StatType = { all: number };

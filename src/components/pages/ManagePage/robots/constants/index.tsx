@@ -1,6 +1,6 @@
 import React from "react";
 //utils
-import { ColumnsArraySchema, buildRobotChartCell, buildCheckBoxCell } from "../../utils";
+import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "../../utils";
 import { STATUS_COLORS } from "config/constants";
 import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
 
@@ -49,35 +49,35 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "performance",
                 isVisible: true,
                 Cell: buildRobotChartCell,
-                sortSchema: { field: "stats", subfield: "equity_avg" },
+                fieldSchema: { field: "stats", subfield: "equity_avg" },
                 width: 200
             },
             {
                 Header: "Profit",
                 accessor: "profit",
                 isVisible: true,
-                sortSchema: { field: "stats", subfield: "net_profit" },
+                fieldSchema: { field: "stats", subfield: "net_profit" },
                 width: 90
             },
             {
                 Header: "W/R",
                 accessor: "winRate",
                 isVisible: true,
-                sortSchema: { field: "stats", subfield: "win_rate" },
+                fieldSchema: { field: "stats", subfield: "win_rate" },
                 width: 90
             },
             {
                 Header: "Max Drawdown",
                 accessor: "maxDrawdown",
                 isVisible: true,
-                sortSchema: { field: "stats", subfield: "max_drawdown" },
+                fieldSchema: { field: "stats", subfield: "max_drawdown" },
                 width: 125
             },
             {
                 Header: "Trades",
                 accessor: "tradesCount",
                 isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 90
             }
         ]
@@ -91,7 +91,7 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Volume",
                 accessor: "volume",
                 isVisible: false,
-                sortSchema: { field: "robot_settings", subfield: "robot_settings" },
+                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
@@ -119,14 +119,14 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Signals",
                 accessor: "signals",
                 isVisible: true,
-                Cell: buildCheckBoxCell,
+                Cell: buildDisabledCheckboxCell,
                 width: 90
             },
             {
                 Header: "Trading",
                 accessor: "trading",
                 isVisible: true,
-                Cell: buildCheckBoxCell,
+                Cell: buildDisabledCheckboxCell,
                 width: 90
             }
         ]
@@ -140,14 +140,14 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
                 Header: "Robots",
                 accessor: "user_robots",
                 isVisible: true,
-                sortSchema: { field: "user_robots_aggregate", subfield: "count" },
+                fieldSchema: { field: "user_robots_aggregate", subfield: "count" },
                 width: 90
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
                 isVisible: true,
-                sortSchema: { field: "user_signals_aggregate", subfield: "count" },
+                fieldSchema: { field: "user_signals_aggregate", subfield: "count" },
                 width: 90
             }
         ]

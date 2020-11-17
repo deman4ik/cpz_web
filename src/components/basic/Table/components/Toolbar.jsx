@@ -7,10 +7,17 @@ import { GlobalFilter } from "./Filters";
 // styles
 import styles from "../styles/Toolbar.module.css";
 
-const Toolbar = ({ itemsCount, onChangeSearch, toggleModal }) => (
+const Toolbar = ({
+    itemsCount,
+    onChangeSearch,
+    toggleControlModal,
+    toggleActionModal,
+    actionModalCanBeOpened = false
+}) => (
     <div className={styles.toolbar}>
         <GlobalFilter itemsCount={itemsCount} onChangeSearch={onChangeSearch} />
-        <CaptionButton title="Configure" icon="settings" onClick={toggleModal} />
+        <CaptionButton title="Edit" icon="edit" onClick={toggleActionModal} hidden={!actionModalCanBeOpened} />
+        <CaptionButton title="Configure" icon="settings" onClick={toggleControlModal} />
     </div>
 );
 

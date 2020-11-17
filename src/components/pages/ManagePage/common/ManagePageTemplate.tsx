@@ -3,12 +3,8 @@ import { DocumentNode } from "@apollo/client";
 // components
 import { ManagementTemplate } from "components/layout";
 // hooks
-import { POLL_INTERVAL } from "config/constants";
-import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { ColumnsArraySchema } from "../utils";
 import { PageType } from "config/types";
-import { TableComponent } from "components/pages/ManagePage/common/TableComponent";
-import { useTableFilters } from "hooks/useTableFilters";
 import { TableWithQuery } from "components/pages/ManagePage/common/TableWithQuery";
 
 type ManagePageProps = {
