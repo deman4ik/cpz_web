@@ -411,16 +411,6 @@ export const ROBOTS_SEARCH = gql`
                 robot_settings {
                     robot_settings
                 }
-                user_robots(where: { user_id: { _eq: $user_id } }) {
-                    id
-                    user_id
-                    status
-                    user_robot_settings {
-                        user_robot_settings
-                    }
-                    started_at
-                    ${stats}
-                }
         }
     }
 `;

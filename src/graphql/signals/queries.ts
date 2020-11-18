@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { stats, fullStats, statsConfig } from "graphql/queryFragments";
+import { stats, statsConfig } from "graphql/queryFragments";
 
 export const SIGNALS_SEARCH = gql`
     query signal_robots_search(
@@ -23,15 +23,6 @@ export const SIGNALS_SEARCH = gql`
             ${stats}
             robot_settings {
                 robot_settings
-            }
-            user_signals(where: { user_id: { _eq: $user_id } }) {
-                id
-                user_id
-                subscribed_at
-                user_signal_settings {
-                    signal_settings
-                }
-                ${stats}
             }
         }
     }
