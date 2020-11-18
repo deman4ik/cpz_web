@@ -1,0 +1,13 @@
+.labelContainer {
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    font-size: var(--normal2);
+}
+
+@media (max-width: 480px) {
+    .labelContainer {
+        font-size: var(--normal0);
+    }
+}

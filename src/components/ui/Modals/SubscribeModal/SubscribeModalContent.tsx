@@ -72,7 +72,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
 
     useEffect(() => {
         if (robotData && parsedLimits.length && areValuesEmpty()) {
-            const { settings: robotSettings } = robotData.robot.subs;
+            const { settings: robotSettings } = robotData?.robot.subs;
             const { volumeType: robotVolumeType } = robotSettings;
 
             const volumeByType = volumes[robotVolumeType];

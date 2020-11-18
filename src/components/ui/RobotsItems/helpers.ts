@@ -40,7 +40,7 @@ export const formatVariables = (item, buttonType: string, displayType?: string) 
     return {
         variables: {
             cache: item.cache,
-            robot: { id: item.id, name: item.name, userRobotId: item.user_robots.id },
+            robot: { id: item.id, name: item.name, userRobotId: item.user_robots.id, code: item.code },
             subs: {
                 settings: item.settings,
                 exchange: item.exchange,

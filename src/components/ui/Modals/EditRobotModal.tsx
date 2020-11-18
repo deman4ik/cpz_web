@@ -61,7 +61,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
         const settings = buildSettings({ volumeType, inputValues });
         userRobotEdit({
             variables: {
-                id: robotData.robot.userRobotId,
+                id: robotData?.robot.userRobotId,
                 settings
             }
         })

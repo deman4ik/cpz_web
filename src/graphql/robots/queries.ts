@@ -371,6 +371,7 @@ export const USER_ROBOTS = gql`
             robot_id
             started_at
             user_id
+            ${stats}
             robot {
                 id
                 name
@@ -379,7 +380,6 @@ export const USER_ROBOTS = gql`
                 exchange
                 code
                 active: started_at
-                ${stats}
             }
             user_robot_settings {
                 user_robot_settings
@@ -410,16 +410,6 @@ export const ROBOTS_SEARCH = gql`
                 ${stats}
                 robot_settings {
                     robot_settings
-                }
-                user_robots(where: { user_id: { _eq: $user_id } }) {
-                    id
-                    user_id
-                    status
-                    user_robot_settings {
-                        user_robot_settings
-                    }
-                    started_at
-                    ${stats}
                 }
         }
     }
