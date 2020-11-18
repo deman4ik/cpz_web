@@ -62,9 +62,9 @@ export const formatTradingRobots = (robots: any) =>
             robot_id,
             user_robot_settings: { user_robot_settings }
         } = userRobot;
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userRobot);
 
         const { name, asset, currency, exchange, active, code } = robot;
-        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
         return {
             cache: {
                 id,
