@@ -312,3 +312,35 @@ export const SUPPORT_REQUESTS_AGGREGATE = gql`
         }
     }
 `;
+
+export const DEAD_LETTERS = gql`
+    query get_dead_letters(
+        $where: dead_letters_bool_exp
+        $limit: Int
+        $offset: Int
+        $order_by: [dead_letters_order_by!]
+    ) {
+        dead_letters(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
+            created_at
+            data
+            event_id
+            id
+            processed
+            resend
+            timestamp
+            topic
+            type
+            updated_at
+        }
+    }
+`;
+
+export const DEAD_LETTERS_AGGREGATE = gql`
+    query get_dead_letters_aggregate($where: dead_letters_bool_exp) {
+        dead_letters_aggregate(where: $where) {
+            aggregate {
+                count
+            }
+        }
+    }
+`;

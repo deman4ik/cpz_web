@@ -13,19 +13,16 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Code",
                 accessor: "name",
-                isVisible: true,
                 width: 262
             },
             {
                 Header: "ID",
                 accessor: "id",
-                isVisible: true,
                 width: 262
             },
             {
                 Header: "Status",
                 accessor: "status",
-                isVisible: true,
                 Cell: ({ value }: { value: number }): JSX.Element => (
                     <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
                 ),
@@ -34,7 +31,6 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Availability",
                 accessor: "available",
-                isVisible: true,
                 width: 150
             }
         ]
@@ -47,7 +43,6 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Performance",
                 accessor: "performance",
-                isVisible: true,
                 Cell: buildRobotChartCell,
                 fieldSchema: { field: "stats", subfield: "equity_avg" },
                 width: 200
@@ -55,28 +50,24 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Profit",
                 accessor: "profit",
-                isVisible: true,
                 fieldSchema: { field: "stats", subfield: "net_profit" },
                 width: 90
             },
             {
                 Header: "W/R",
                 accessor: "winRate",
-                isVisible: true,
                 fieldSchema: { field: "stats", subfield: "win_rate" },
                 width: 90
             },
             {
                 Header: "Max Drawdown",
                 accessor: "maxDrawdown",
-                isVisible: true,
                 fieldSchema: { field: "stats", subfield: "max_drawdown" },
                 width: 125
             },
             {
                 Header: "Trades",
                 accessor: "tradesCount",
-                isVisible: true,
                 fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 90
             }
@@ -97,7 +88,6 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Volume Type",
                 accessor: "volumeType",
-                isVisible: true,
                 width: 120
             },
             {
@@ -109,7 +99,6 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             }
         ]
     },
-
     {
         Header: "Types",
         id: "types",
@@ -118,14 +107,12 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Signals",
                 accessor: "signals",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 90
             },
             {
                 Header: "Trading",
                 accessor: "trading",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 90
             }
@@ -139,14 +126,12 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Robots",
                 accessor: "user_robots",
-                isVisible: true,
                 fieldSchema: { field: "user_robots_aggregate", subfield: "count" },
                 width: 90
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
-                isVisible: true,
                 fieldSchema: { field: "user_signals_aggregate", subfield: "count" },
                 width: 90
             }
