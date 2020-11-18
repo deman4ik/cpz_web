@@ -10,6 +10,7 @@ import { Button } from "components/basic";
 import { actionText } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./index.module.css";
+import Router from "next/router";
 
 interface Props {
     setTitle: (title: string) => void;
@@ -39,7 +40,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     const [userRobotAction, { loading }] = useMutation(robotAction);
 
     const variables = {
-        id: data.robot.userRobotId
+        id: data?.robot.userRobotId
     };
 
     function handleResponse(response: any) {
@@ -50,7 +51,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: data.robot.userRobotId
+                    value: data?.robot.userRobotId
                 });
             }
             onClose(true);
@@ -67,10 +68,11 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: data.robot.userRobotId
+                    value: data?.robot.userRobotId
                 });
             }
             onClose(true);
+            Router.push(`/robots/robot/${data?.robot.code}`);
         } catch (e) {
             console.error(e);
             setFormError(e.message);
