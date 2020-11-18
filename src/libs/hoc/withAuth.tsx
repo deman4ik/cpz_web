@@ -11,7 +11,8 @@ import redirect from "../redirect";
 import { AuthContext } from "libs/hoc/context";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 
-const pathToRedirectIfLogin = "/robots";
+const loginPath = "/login";
+const homePath = "/robots";
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
@@ -32,14 +33,13 @@ export const withAuth = (Page) => {
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
         const { accessToken } = nextCookies(ctx);
-
         if (ctx.res) {
-            if (accessToken && !isLanding) {
+            if (!isLanding) {
                 if (
-                    AUTH_ROUTES.includes(ctx.pathname) ||
-                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken(accessToken) !== "manager")
+                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken(accessToken) !== "manager") ||
+                    (getUserIdFromAccessToken(accessToken) && AUTH_ROUTES.includes(ctx.pathname))
                 ) {
-                    redirect(ctx, pathToRedirectIfLogin);
+                    redirect(ctx, homePath);
                 }
             }
         }
