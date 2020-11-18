@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { event } from "libs/gtag";
 import { ROBOT } from "graphql/local/queries";
@@ -10,8 +10,9 @@ import { buildSettings, getLimitsForSignal } from "../helpers";
 import { AddRobotInputsMap, volumeTypeOptions } from "../constants";
 import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButtons";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
-import { Input, InputTypes, InputValues } from "components/ui/Modals/types";
+import { Input } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
+import { AuthContext } from "libs/hoc/context";
 import Router from "next/router";
 
 interface Props {
@@ -26,6 +27,9 @@ interface Props {
 const inputs = AddRobotInputsMap;
 
 const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpen, title }) => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
     //local states
     const [formError, setFormError] = useState("");
     // mutations
@@ -40,7 +44,8 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         variables: {
             exchange: !robotData ? null : robotData?.robot.subs.exchange,
             asset: !robotData ? null : asset,
-            currency: !robotData ? null : robotData?.robot.subs.currency
+            currency: !robotData ? null : robotData?.robot.subs.currency,
+            user_id
         },
         skip: !robotData
     });
@@ -58,7 +63,8 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         errors
     } = useSubscribeModal({
         limits,
-        inputs
+        inputs,
+        robotData
     });
 
     const writeToCache = (settings) => {

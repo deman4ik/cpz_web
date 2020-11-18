@@ -1,4 +1,4 @@
-import { capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
+import { capitalize, getStats, getVolume, getVolumeType, getVolumeWithUnit } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
 
@@ -21,6 +21,7 @@ export const formatRobotData = (robot: any) => {
             currency,
             timeframe,
             volume: getVolume(robot_settings),
+            volumeType: getVolumeType(robot_settings),
             displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
             fullStats,
             equity,
@@ -40,51 +41,57 @@ export const formatRobotData = (robot: any) => {
 };
 
 export const createVariable = (robotData, type) => {
-    return robotData.userRobot
-        ? {
-              variables: {
-                  isVisible: true,
-                  cache: {
-                      id: robotData.userRobot.id,
-                      tableName: "userRobot"
-                  },
-                  robot: {
-                      id: robotData.robot.id,
-                      name: robotData.robot.name,
-                      userRobotId: robotData.userRobot.id
-                  },
-                  subs: {
-                      exchange: robotData.robot.exchange,
-                      asset: robotData.robot.asset,
-                      currency: robotData.robot.currency,
-                      settings: {
-                          volume: robotData.userRobot.user_robot_settings.user_robot_settings.volume,
-                          volumeType: robotData.userRobot.user_robot_settings.user_robot_settings.volumeType
-                      }
-                  },
-                  type
-              }
-          }
-        : {
-              variables: {
-                  cache: {
-                      id: robotData.robot.id,
-                      tableName: "userRobot"
-                  },
-                  robot: {
-                      id: robotData.robot.id,
-                      name: robotData.robot.name,
-                      userRobotId: null
-                  },
-                  subs: {
-                      volume: robotData.robot.volume,
-                      exchange: robotData.robot.exchange,
-                      asset: robotData.robot.asset,
-                      currency: robotData.robot.currency
-                  },
-                  type
-              }
-          };
+    const { robot, userRobot } = robotData;
+    if (userRobot) {
+        return {
+            variables: {
+                isVisible: true,
+                cache: {
+                    id: userRobot.id,
+                    tableName: "userRobot"
+                },
+                robot: {
+                    id: robot.id,
+                    name: robot.name,
+                    userRobotId: userRobot.id
+                },
+                subs: {
+                    exchange: robot.exchange,
+                    asset: robot.asset,
+                    currency: robot.currency,
+                    settings: {
+                        volume: userRobot.user_robot_settings.user_robot_settings.volume,
+                        volumeType: userRobot.user_robot_settings.user_robot_settings.volumeType
+                    }
+                },
+                type
+            }
+        };
+    }
+    return {
+        variables: {
+            isVisible: true,
+            cache: {
+                id: robot.id,
+                tableName: "userRobot"
+            },
+            robot: {
+                id: robot.id,
+                name: robot.name,
+                userRobotId: null
+            },
+            subs: {
+                exchange: robot.exchange,
+                asset: robot.asset,
+                currency: robot.currency,
+                settings: {
+                    volume: robot.volume,
+                    volumeType: robot.volumeType
+                }
+            },
+            type
+        }
+    };
 };
 const getEntryMarker = (position_entry, asset, isOwnedByUser) => {
     const { entry_action, entry_date, entry_candle_timestamp, entry_price, id, code } = position_entry;

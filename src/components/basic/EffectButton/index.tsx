@@ -19,8 +19,11 @@ const icons = {
 export const EffectButton: React.FC<Props> = ({ icon, onClick, color = "white" }) => {
     const Icon = icons[icon];
 
+    const handleClick = (e) => {
+        onClick(e);
+    };
     return (
-        <div className={`${styles.wrapper} ${styles.ripple}`} onClick={onClick}>
+        <div className={`${styles.wrapper} ${styles.ripple}`} onClick={handleClick}>
             <i className={styles.icon}>
                 <Icon size={22} color={color} />
             </i>

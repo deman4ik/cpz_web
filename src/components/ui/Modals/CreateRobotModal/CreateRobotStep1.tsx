@@ -60,6 +60,10 @@ const _CreateRobotStep1: React.FC<Props> = ({
         }
     }, []);
 
+    useEffect(() => {
+        setIsAddKeyVisible(!dataPicker.length);
+    }, [dataPicker]);
+
     return (
         <>
             <div className={styles.container}>

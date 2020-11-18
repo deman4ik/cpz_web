@@ -7,6 +7,7 @@ interface SelectVolumeTypeProps {
     volumeType: string;
     onChangeVolumeType: Dispatch<SetStateAction<InputTypes>>;
     enabled: boolean;
+    width?: number;
     volumeTypeDescription: string;
     volumeTypeOptions: VolumeTypeOption[];
 }
@@ -15,12 +16,14 @@ export const SelectVolumeType: FC<SelectVolumeTypeProps> = ({
     volumeTypeDescription,
     onChangeVolumeType,
     enabled,
+    width,
     volumeTypeOptions
 }) => {
     return (
         <div className={styles_subs.fieldset}>
             <div>
                 <Select
+                    width={width}
                     data={volumeTypeOptions}
                     value={volumeType}
                     onChangeValue={onChangeVolumeType}

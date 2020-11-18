@@ -6,6 +6,7 @@ import { volumeTypeOptions } from "../constants";
 interface UseSubscribeModalProps {
     limits: any;
     inputs: InputMap;
+    robotData?: any;
 }
 const getInitialValues = (inputs: Input[]) =>
     inputs.reduce((a, v) => {
@@ -14,8 +15,9 @@ const getInitialValues = (inputs: Input[]) =>
         return a;
     }, {});
 
-export function useSubscribeModal({ limits, inputs }: UseSubscribeModalProps) {
-    const [volumeType, setVolumeType] = useState<InputTypes>(volumeTypeOptions[0].value);
+export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
+    const getDefaultVolumeType = () => robotData.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+    const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(selectedInputs));
 
@@ -24,12 +26,18 @@ export function useSubscribeModal({ limits, inputs }: UseSubscribeModalProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [volumeType]);
 
+    useEffect(() => {
+        setVolumeType(getDefaultVolumeType());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [robotData]);
+
     const parsedLimits = parseLimits(limits);
     const minAmounts = getMinAmounts(parsedLimits);
     const maxAmounts = getMaxAmounts(parsedLimits);
 
     const validate = (type: InputTypes) => {
         return validateVolume({
+            used_percent: limits.used_balance_percent,
             type,
             value: inputValues[type],
             maxAmount: maxAmounts[type],

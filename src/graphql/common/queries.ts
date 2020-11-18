@@ -1,13 +1,19 @@
 import gql from "graphql-tag";
 
 export const GET_MARKETS = gql`
-    query get_user_markets($asset: String!, $exchange: String!, $currency: String!) {
-        v_user_markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
-            asset
-            currency
-            current_price
-            exchange
-            limits
+    query get_user_markets($user_id: uuid!, $asset: String!, $exchange: String!, $currency: String!) {
+        v_user_exchange_accs(where: { status: { _eq: "enabled" }, user: { id: { _eq: $user_id } } }) {
+            total_balance_usd
+            user {
+                markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
+                    asset
+                    current_price
+                    limits
+                }
+                amounts {
+                    used_balance_percent
+                }
+            }
         }
     }
 `;

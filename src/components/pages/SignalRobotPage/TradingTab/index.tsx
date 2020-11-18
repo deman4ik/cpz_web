@@ -59,7 +59,6 @@ const _TradingTab: React.FC<Props> = ({ tradingData, robotData, width }) => {
                     width={width}
                 />
             </>
-            )
         </>
     );
 };

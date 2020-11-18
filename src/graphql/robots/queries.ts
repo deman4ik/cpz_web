@@ -354,7 +354,7 @@ export function buildRobotPositionCandlesQuery(
 }
 
 export const USER_ROBOTS_BY_EXCHANGE_ID = gql`
-    query get_user_robots_by_exchange_id($user_ex_acc_id: uuid!, $user_id: uuid) {
+    query get_user_robots_by_exchange_id($user_ex_acc_id: uuid, $user_id: uuid) {
         user_robots(where: { user_ex_acc_id: { _eq: $user_ex_acc_id }, user_id: { _eq: $user_id } }) {
             id
             status

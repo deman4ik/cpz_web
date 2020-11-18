@@ -12,7 +12,6 @@ export const Modals: React.FC = () => {
     const onClose = () => {
         handleSetVisible({ isVisible: false, type: "" });
     };
-
     return (
         <>
             <Modal

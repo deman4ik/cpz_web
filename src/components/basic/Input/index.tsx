@@ -137,6 +137,8 @@ export const Input: React.FC<InputProps> = ({
                         flex: 1;
                     }
                     .error_line {
+                        position: absolute;
+                        top: 50px;
                         color: white;
                         background-color: var(--negative);
                         padding: 3px 10px 3px;
@@ -145,6 +147,7 @@ export const Input: React.FC<InputProps> = ({
                         width: 100%;
                     }
                     .input {
+                        border: 2px solid var(--lightBg);
                         margin-top: 5px;
                         background-color: var(--darkBg);
                         color: var(--accent);

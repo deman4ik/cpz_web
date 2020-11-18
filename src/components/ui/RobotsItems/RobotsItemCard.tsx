@@ -44,7 +44,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                         </div>
                         <div className={styles.footerRow}>
                             <div className={styles.secondaryText}>
-                                {item.volume ? `${item.volume} ${item.asset}` : ""}
+                                {item.displayedVolume || `${item.volume} ${item.asset}`}
                             </div>
                             <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
                                 {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}

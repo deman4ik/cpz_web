@@ -22,6 +22,7 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
+import { ModalLoading } from "components/ui/Modals/ModalLoading";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -51,21 +52,23 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     };
 
     const { data: robotData } = useQuery(ROBOT);
+    const { exchange, asset, currency } = robotData.robot.subs;
+
     const variables = {
-        exchange: !robotData ? null : robotData.robot.subs.exchange,
-        asset: !robotData ? null : robotData.robot.subs.asset,
-        currency: !robotData ? null : robotData.robot.subs.currency
+        exchange: !robotData ? null : exchange,
+        asset: !robotData ? null : asset,
+        currency: !robotData ? null : currency
     };
     const { data, loading } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
         variables: { ...variables, user_id },
         skip: !robotData
     });
-
     const { data: limitsData, loading: limitsLoading } = useQuery(GET_MARKETS, {
         variables: {
-            exchange: !robotData ? null : robotData?.robot.subs.exchange,
-            asset: !robotData ? null : robotData.robot.subs.asset,
-            currency: !robotData ? null : robotData?.robot.subs.currency
+            exchange: !robotData ? null : exchange,
+            asset: !robotData ? null : asset,
+            currency: !robotData ? null : currency,
+            user_id
         },
         skip: !robotData
     });
@@ -99,7 +102,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         errors
     } = useSubscribeModal({
         limits,
-        inputs
+        inputs,
+        robotData
     });
 
     const handleOnCreate = () => {
@@ -197,54 +201,51 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const enabled = !(loading || createRobotLoading || startLoading);
     return (
         <>
-            {!enabled ? (
-                <LoadingIndicator />
-            ) : (
-                <>
-                    <div className={styles.wizardContainer}>
-                        <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
-                    </div>
-                    <ErrorLine formError={formError} />
-                    {step === 1 && dataPicker && (
-                        <CreateRobotStep1
-                            dataPicker={dataPicker}
-                            selectedKey={inputKey}
-                            variables={{ ...variables, user_id }}
-                            hasError={!!formError}
-                            onClose={onClose}
-                            setFormError={setFormError}
-                            handleOnNext={handleOnNext}
-                            handleOnChangeExchange={handleOnChangeExchange}
-                        />
-                    )}
-                    {step === 2 && (
-                        <CreateRobotStep2
-                            volumeTypeOptions={robotVolumeTypeOptions}
-                            inputs={inputs}
-                            robotData={robotData}
-                            formError={formError}
-                            inputValues={inputValues}
-                            setInputValues={setInputValues}
-                            validate={validate}
-                            setVolumeType={setVolumeType}
-                            volumeType={volumeType}
-                            parsedLimits={parsedLimits}
-                            onKeyPress={onKeyPress}
-                            enabled={enabled}
-                            handleOnBack={handleOnBack}
-                            handleOnCreate={handleOnCreate}
-                            isValid={isValid()}
-                        />
-                    )}
-                    {step === 3 && (
-                        <CreateRobotStep3
-                            robotName={robotData ? robotData.robot.name : null}
-                            handleOnStart={handleOnStart}
-                            onClose={onClose}
-                        />
-                    )}
-                </>
-            )}
+            {!enabled && <ModalLoading />}
+            <>
+                <div className={styles.wizardContainer}>
+                    <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
+                </div>
+                <ErrorLine formError={formError} />
+                {step === 1 && dataPicker && (
+                    <CreateRobotStep1
+                        dataPicker={dataPicker}
+                        selectedKey={inputKey}
+                        variables={{ ...variables, user_id }}
+                        hasError={!!formError}
+                        onClose={onClose}
+                        setFormError={setFormError}
+                        handleOnNext={handleOnNext}
+                        handleOnChangeExchange={handleOnChangeExchange}
+                    />
+                )}
+                {step === 2 && (
+                    <CreateRobotStep2
+                        volumeTypeOptions={robotVolumeTypeOptions}
+                        inputs={inputs}
+                        robotData={robotData}
+                        formError={formError}
+                        inputValues={inputValues}
+                        setInputValues={setInputValues}
+                        validate={validate}
+                        setVolumeType={setVolumeType}
+                        volumeType={volumeType}
+                        parsedLimits={parsedLimits}
+                        onKeyPress={onKeyPress}
+                        enabled={enabled}
+                        handleOnBack={handleOnBack}
+                        handleOnCreate={handleOnCreate}
+                        isValid={isValid()}
+                    />
+                )}
+                {step === 3 && (
+                    <CreateRobotStep3
+                        robotName={robotData ? robotData.robot.name : null}
+                        handleOnStart={handleOnStart}
+                        onClose={onClose}
+                    />
+                )}
+            </>
         </>
     );
 };

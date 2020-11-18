@@ -3,6 +3,7 @@
 }
 
 .wrapper {
+    z-index: 200;
     display: flex;
     cursor: pointer;
     border-radius: 50%;
