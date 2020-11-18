@@ -40,6 +40,7 @@ export const ROBOT = gql`
             }
             id
             name
+            code
             userRobotId
         }
         ChartData @client {
