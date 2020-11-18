@@ -7,8 +7,7 @@ import { SCREEN_TYPE } from "../../../config/constants";
 import { SET_MODAL_STATE } from "../../../graphql/local/mutations";
 import { MODAL_VISIBLE } from "../../../graphql/local/queries";
 import { RobotsItem, RobotsItemCard } from "../RobotsItems";
-import { SignalRobotsAddSignals } from "./SignalRobotsAddSignals";
-import { SignalRobotsAddSignalsCard } from "./SignalRobotsAddSignalsCard";
+import { AddRobotsCard } from "./AddRobotsCard";
 import { RobotsHeader } from "../RobotsItems/RobotsHeader";
 import styles from "./index.module.css";
 import { useDummyCarts } from "../../../hooks/useDummyCarts";
@@ -51,7 +50,7 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
                             onRedirectToDetailView={handleRedirectToDetailView}
                         />
                     ))}
-                    <SignalRobotsAddSignals displayType={displayType} />
+                    <AddRobotsCard displayType={displayType} />
                 </div>
             ) : (
                 <div className={styles.containerCard}>
@@ -64,7 +63,7 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
                             onRedirectToDetailView={handleRedirectToDetailView}
                         />
                     ))}
-                    <SignalRobotsAddSignalsCard displayType={displayType} />
+                    <AddRobotsCard displayType={displayType} mobile />
                     {DummyCards(dummyCards, cartWidth)}
                 </div>
             )}
