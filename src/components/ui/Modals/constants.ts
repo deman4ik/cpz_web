@@ -14,7 +14,7 @@ export const volumeTypeOptions = [
 export const robotVolumeTypeOptions = [
     ...volumeTypeOptions,
     {
-        label: "Dynamic to asset",
+        label: "Dynamic asset",
         value: InputTypes.assetDynamicDelta
     },
     {

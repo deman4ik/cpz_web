@@ -6,6 +6,7 @@ import { UnitsToTypes } from "components/ui/Modals/types";
 export interface ValueInputProps {
     validate?: (value?: any) => any;
     volume?: ReactText | string | number;
+    width?: number;
     unit: UnitsToTypes;
     onKeyPress: (e?: any) => void;
     onChangeText: (value: string) => void;
@@ -13,6 +14,7 @@ export interface ValueInputProps {
     onBlur?: (e?: any) => void;
 }
 export const ValueInput: FC<ValueInputProps> = ({
+    width,
     validate,
     volume = "",
     onKeyPress,
@@ -25,7 +27,7 @@ export const ValueInput: FC<ValueInputProps> = ({
         <Input
             type="number"
             value={volume.toString()}
-            width={150}
+            width={width || 150}
             error={validate()}
             right
             onKeyPress={onKeyPress}

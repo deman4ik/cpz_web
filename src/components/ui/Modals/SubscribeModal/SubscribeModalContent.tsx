@@ -9,7 +9,6 @@ import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolu
 import { InputMap, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOption } from "components/ui/Modals/types";
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
-import { createPrivateKey } from "crypto";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
@@ -40,7 +39,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     setInputValues,
     volumeTypeOptions
 }) => {
-    const [price, minAmount, , minAmountUSD] = parsedLimits;
+    const [price, minAmount, , minAmountUSD, , balance] = parsedLimits;
     const [displayedValues, setDisplayedValues] = useState(inputValues);
     const asset = robotData?.robot.subs.asset;
     const selectedInputs = inputs[volumeType];
@@ -58,16 +57,13 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         newValues[type] = Number(value);
         newDisplayedValues[type] = value;
 
-        // if (type !== InputTypes.balancePercent) {
-        // temporary removal of percentage logic TODO remove restriction when implemented
-        Object.keys(newValues).forEach((el) => {
-            if (el !== type && el !== InputTypes.balancePercent) {
-                const newValue = translateValue({ value, price }, type, el) || minVals[el];
+        Object.keys(newValues)
+            .filter((i) => i !== type) // we just set value of the type
+            .forEach((el) => {
+                const newValue = translateValue({ value, price, balance }, type, el) || minVals[el];
                 newValues[el] = newValue;
                 newDisplayedValues[el] = formatNumber(newValue);
-            }
-        });
-        // }
+            });
         setInputValues(newValues);
         setDisplayedValues(newDisplayedValues);
     };
@@ -78,6 +74,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         if (robotData && parsedLimits.length && areValuesEmpty()) {
             const { settings: robotSettings } = robotData.robot.subs;
             const { volumeType: robotVolumeType } = robotSettings;
+
             const volumeByType = volumes[robotVolumeType];
             onChange(robotVolumeType)(robotSettings[volumeByType]);
         }
@@ -103,6 +100,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                 <div className={styles_subs.form}>
                     <MinimumAmount asset={robotData ? asset : ""} minAmount={minAmount} minAmountUSD={minAmountUSD} />
                     <SelectVolumeType
+                        width={230}
                         volumeTypeOptions={volumeTypeOptions}
                         volumeTypeDescription={volumeTypeDescriptions[volumeType]}
                         enabled={enabled}
@@ -112,6 +110,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                     <div className={styles_subs.fieldset}>
                         <div className={styles.input_group}>
                             <MainInput
+                                width={180}
                                 showDelimiter={false}
                                 validate={() => validate(volumeType)}
                                 volume={displayedValues[volumeType]}
@@ -125,6 +124,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                     <div key={`subscribe-${type}`} className={styles.input_container}>
                                         <Delimiter />
                                         <ValueInput
+                                            width={180}
                                             key={`subscribe-${type}`}
                                             validate={() => validate(type)}
                                             volume={displayedValues[type]}
