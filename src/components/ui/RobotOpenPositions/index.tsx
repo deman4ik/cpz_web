@@ -2,10 +2,11 @@ import NothingComponent from "components/common/NothingComponent";
 import { exchangeName, formatMoney, getColor, valueWithSign } from "config/utils";
 import React, { memo } from "react";
 import OpenPositionsTable from "./OpenPositionsTable";
-import styles from "./index.module.css";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
+import styles from "./index.module.css";
+import tableStyles from "./OpenPositionsTable.module.css";
 
 interface Props {
     type: string;
@@ -32,7 +33,27 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
             ) : (
                 data.map((exchangeGroup, index) => (
                     <div key={exchangeGroup.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
-                        <h1 className={styles.exchange}>{exchangeName(exchangeGroup.exchange)}</h1>
+                        <div
+                            className={mobile ? styles.exchangeContainerMobile : tableStyles.tableGridRow}
+                            style={{ padding: "0 20px" }}>
+                            <div title="Unrealized Profit" className={styles.exchange}>
+                                {exchangeName(exchangeGroup.exchange)}&nbsp;
+                            </div>
+
+                            <span
+                                className={styles.exchange}
+                                style={{
+                                    color: "var(--accent)",
+                                    fontSize: "var(--normal1)",
+                                    gridColumnStart: 4
+                                }}>
+                                Unrealized Profit:&nbsp;
+                                <span
+                                    style={{
+                                        color: getColor(exchangeGroup.profit < 0)
+                                    }}>{`${valueWithSign(formatMoney(exchangeGroup.profit))} $`}</span>
+                            </span>
+                        </div>
                         <div>
                             {exchangeGroup.assets.map((asset) => (
                                 <div key={asset.asset}>

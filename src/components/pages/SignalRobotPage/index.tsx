@@ -78,7 +78,7 @@ const SignalRobotPage = (): JSX.Element => {
                 <NoRecentData message="No recent data available" />
             ) : (
                 <>
-                    <Header subscribe={subscribe} robotData={robotData} />
+                    <Header subscribe={subscribe} robotData={robotData} width={width} />
                     <RobotPageContent type={RobotsType.signals} robotData={robotData} width={width} />
                     <Modals
                         isModalVisible={isModalVisible}

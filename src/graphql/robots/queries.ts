@@ -2,6 +2,35 @@ import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
 import { fullStats, stats } from "graphql/queryFragments";
 
+export const candles = `candle {
+            id
+            time
+            open
+            high
+            low
+            close
+            volume
+          }
+          position_entry
+          position_exit`;
+
+export const position_fields = `id
+            code
+            direction
+            status
+            entry_date
+            entry_candle_timestamp
+            entry_price
+            entry_action
+            exit_date
+            exit_candle_timestamp
+            exit_price
+            exit_action
+            bars_held
+            profit
+            alerts
+            volume`;
+
 export const TOP_PERFORMANCE_ROBOTS = gql`
     query get_top_robots_by_stats($limit: Int) {
         v_robot_stats(limit: $limit, order_by: { recovery_factor: desc_nulls_last }) {
@@ -123,22 +152,7 @@ export const SIGNAL_POSITIONS_FOR_USER = gql`
             offset: $offset
             order_by: $orderBy
         ) {
-            id
-            code
-            direction
-            status
-            entry_date
-            entry_candle_timestamp
-            entry_price
-            entry_action
-            exit_date
-            exit_candle_timestamp
-            exit_price
-            exit_action
-            bars_held
-            profit
-            alerts
-            volume
+            ${position_fields}
             robot {
                 id
                 user_signals(where: { user_id: { _eq: $user_id } }) {
@@ -185,22 +199,7 @@ export const ROBOT_POSITIONS_IN_INTERVAL = gql`
             offset: $offset
             order_by: $orderBy
         ) {
-            id
-            code
-            direction
-            status
-            entry_date
-            entry_candle_timestamp
-            entry_price
-            entry_action
-            exit_date
-            exit_candle_timestamp
-            exit_price
-            exit_action
-            bars_held
-            profit
-            alerts
-            volume
+            ${position_fields}
         }
     }
 `;
@@ -219,22 +218,7 @@ export const ROBOT_POSITIONS = gql`
             offset: $offset
             order_by: $orderBy
         ) {
-            id
-            code
-            direction
-            status
-            entry_date
-            entry_candle_timestamp
-            entry_price
-            entry_action
-            exit_date
-            exit_candle_timestamp
-            exit_price
-            exit_action
-            bars_held
-            profit
-            alerts
-            volume
+            ${position_fields}
         }
     }
 `;
@@ -294,45 +278,42 @@ export const CANDLES_FOR_USER_SIGNAL = (timeframe: number) => gql`
       limit: $limit
       offset: $offset
     ) {
-      candle {
-        id
-        time
-        open
-        high
-        low
-        close
-        volume
-      }
-      position_entry
-      position_exit
+      ${candles}
     }
   }
 `;
 
-export const CANDLES_FOR_ROBOT = (timeframe: number) => gql`
+export const CANDLES_FOR_ROBOT = (timeframe: number, type?: string) => gql`
   query get_candles_for_robot(
     $robotId: uuid!
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_positions(
+    candles: v_candles${timeframe}${type ? `_${type}` : ""}_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
       limit: $limit
       offset: $offset
     ) {
-      candle {
-        id
-        time
-        open
-        high
-        low
-        close
-        volume
+      ${candles}
+    }
+  }
+`;
+export const CANDLES_FOR_BACKTEST = (timeframe: number, type?: string) => gql`
+  query get_candles_for_backtest(
+    $backtest_id: uuid!
+    $limit: Int
+    $offset: Int
+  ) {
+    candles: v_candles${timeframe}_backtest_positions(
+      where: {
+        backtest_id: { _eq: $backtest_id }
       }
-      position_entry
-      position_exit
+      limit: $limit
+      offset: $offset
+    ) {
+      ${candles}
     }
   }
 `;
@@ -352,17 +333,7 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
       limit: $limit
       offset: $offset
     ) {
-      candle {
-        id
-        time
-        open
-        high
-        low
-        close
-        volume
-      }
-      position_entry
-      position_exit
+      ${candles}
     }
   }
 `;
@@ -370,7 +341,8 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
 export function buildRobotPositionCandlesQuery(
     timeframe: number,
     isAuth: boolean,
-    belongsToUser = false
+    belongsToUser = false,
+    type?: string
 ): DocumentNode {
     if (isAuth) {
         if (belongsToUser) {
@@ -378,7 +350,7 @@ export function buildRobotPositionCandlesQuery(
         }
         return CANDLES_FOR_USER_SIGNAL(timeframe);
     }
-    return CANDLES_FOR_ROBOT(timeframe);
+    return CANDLES_FOR_ROBOT(timeframe, type);
 }
 
 export const USER_ROBOTS_BY_EXCHANGE_ID = gql`
@@ -399,6 +371,7 @@ export const USER_ROBOTS = gql`
             robot_id
             started_at
             user_id
+            ${stats}
             robot {
                 id
                 name
@@ -407,7 +380,6 @@ export const USER_ROBOTS = gql`
                 exchange
                 code
                 active: started_at
-                ${stats}
             }
             user_robot_settings {
                 user_robot_settings
@@ -438,16 +410,6 @@ export const ROBOTS_SEARCH = gql`
                 ${stats}
                 robot_settings {
                     robot_settings
-                }
-                user_robots(where: { user_id: { _eq: $user_id } }) {
-                    id
-                    user_id
-                    status
-                    user_robot_settings {
-                        user_robot_settings
-                    }
-                    started_at
-                    ${stats}
                 }
         }
     }

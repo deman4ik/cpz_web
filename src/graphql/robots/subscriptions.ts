@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
+import { candles } from "graphql/robots/queries";
 
 function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
     return gql`
@@ -14,17 +15,7 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
           }
           limit: 1
         ) {
-          candle {
-            id
-            time
-            open
-            high
-            low
-            close
-            volume
-          }
-          position_entry
-          position_exit
+          ${candles}
         }
       }
     `;
@@ -41,17 +32,23 @@ function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
           }
           limit: 1
         ) {
-          candle {
-            id
-            time
-            open
-            high
-            low
-            close
-            volume
+          ${candles}
+        }
+      }
+    `;
+}
+export function BACKTEST_POSITION_CANDLE_SUB(timeframe: number) {
+    return gql`
+      subscription candles(
+        $backtest_id: uuid!
+      ) {
+        candles: v_candles${timeframe}_backtest_positions(
+          where: {
+            backtest_id: { _eq: $backtest_id }
           }
-          position_entry
-          position_exit
+          limit: 1
+        ) {
+          ${candles}
         }
       }
     `;

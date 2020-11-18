@@ -2,7 +2,7 @@ import React from "react";
 //utils
 import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "../../utils";
 import { STATUS_COLORS } from "config/constants";
-import { StrategySettingsItem } from "components/pages/ManagePage/backtests/StrategySettingsItem";
+import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
 
 export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
     {
@@ -93,7 +93,8 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Strategy Settings",
                 accessor: "strategy_settings",
-                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />,
+                isVisible: true,
+                Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />,
                 width: 250
             }
         ]

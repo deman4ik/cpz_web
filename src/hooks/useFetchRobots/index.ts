@@ -14,6 +14,7 @@ import LocalStorageService from "services/localStorageService";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { RobotsType } from "config/types";
 
 //TODO: refactor
 export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_stats: any) => any) => {
@@ -42,6 +43,7 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     const defaultVariables = {
         where: {
             [QUERY_KEY[dispayType]]: { _eq: true },
+            _not: { [`user_${RobotsType[dispayType]}`]: { user_id: { _eq: user_id } } },
             ...filtersQuery.robot
         },
         hash: filtersQuery.hash

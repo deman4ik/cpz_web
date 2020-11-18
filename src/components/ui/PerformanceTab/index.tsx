@@ -8,7 +8,8 @@ import { PerformanceTabComponent } from "./PerformanceTabComponent";
 import { getRobotStatistic } from "./helpers";
 
 interface Props {
-    robot: any;
+    fullStats: any;
+    fullWidth?: boolean;
     width: number;
 }
 
@@ -17,27 +18,28 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
     ssr: false
 });
 
-const _PerformanceTabRobotPage: React.FC<Props> = ({ robot, width }) => {
+const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
     const chartData = useMemo(
         () =>
-            !robot.fullStats?.equity
+            !fullStats?.equity
                 ? null
-                : robot.fullStats.equity.map((pos) => ({
+                : fullStats.equity.map((pos) => ({
                       time: dayjs.utc(pos.x / 1000).valueOf(),
                       value: pos.y
                   })),
-        [robot]
+        [fullStats]
     );
 
-    const robotStatistics = useMemo(() => getRobotStatistic(robot.fullStats?.statistics), [robot]);
-    return !robot ? (
+    const robotStatistics = useMemo(() => getRobotStatistic(fullStats?.statistics), [fullStats]);
+    return !fullStats ? (
         <LoadingIndicator />
     ) : !chartData ? (
-        <NoRecentData message="No recent data available" style={{ marginTop: 20 }} />
+        <NoRecentData message="No recent data available" />
     ) : (
         <>
             <LightWeightChartWithNoSSR
+                fullWidth={fullWidth}
                 data={chartData}
                 type={ChartType.area}
                 size={{ height: 400, width }}
