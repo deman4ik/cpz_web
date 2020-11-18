@@ -50,6 +50,7 @@ const cacheQuery = gql`
             id
             userRobotId
             name
+            code
             subs {
                 settings
                 asset

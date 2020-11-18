@@ -29,9 +29,9 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title }) => {
 
     const { data, loading } = useQuery(GET_MARKETS, {
         variables: {
-            exchange: robotData.robot.subs.exchange,
-            asset: robotData.robot.subs.asset,
-            currency: robotData.robot.subs.currency
+            exchange: robotData?.robot.subs.exchange,
+            asset: robotData?.robot.subs.asset,
+            currency: robotData?.robot.subs.currency
         },
         skip: !robotData
     });
@@ -56,7 +56,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title }) => {
         const settings = buildSettings({ volumeType, inputValues });
         userRobotEdit({
             variables: {
-                id: robotData.robot.userRobotId,
+                id: robotData?.robot.userRobotId,
                 settings
             }
         }).then((response) => {

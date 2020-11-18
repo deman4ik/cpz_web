@@ -12,6 +12,7 @@ import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButt
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Input, InputTypes, InputValues } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
+import Router from "next/router";
 
 interface Props {
     actionType?: string;
@@ -33,6 +34,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     const [cacheSubscription] = useMutation(SUBSCRIBE);
     //queries
     const { data: robotData } = useQuery(ROBOT);
+
     const asset = robotData?.robot.subs.asset;
     const { data: limitsData, loading } = useQuery(GET_MARKETS, {
         variables: {
@@ -81,7 +83,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     }, [editError, editLoading, subscribeError, subscribeLoading]);
 
     useEffect(() => {
-        setTitle(`${actionType === "edit" ? "Edit" : "Follow"} ${robotData.robot.name}`);
+        setTitle(`${actionType === "edit" ? "Edit" : "Follow"} ${robotData?.robot.name}`);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setTitle, actionType]);
 
@@ -116,6 +118,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                             value: robotData?.robot.id
                         });
                         onClose(true);
+                        Router.push(`/signals/robot/${robotData?.robot.code}`);
                     }
                 })
                 .catch((e) => console.error(e));
