@@ -20,7 +20,6 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(selectedInputs));
-    const [usedPercent, setUserPercent] = useState(limits.used_balance_percent);
 
     useEffect(() => {
         setInputValues(getInitialValues(selectedInputs));
@@ -38,7 +37,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
 
     const validate = (type: InputTypes) => {
         return validateVolume({
-            used_percent: usedPercent,
+            used_percent: limits.used_balance_percent,
             type,
             value: inputValues[type],
             maxAmount: maxAmounts[type],

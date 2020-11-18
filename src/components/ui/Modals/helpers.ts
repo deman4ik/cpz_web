@@ -47,7 +47,7 @@ interface BuildSettingsProps {
 }
 export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    result[volumes[volumeType]] = Number(inputValues[volumeType]);
+    result[volumes[volumeType]] = Number(Number(inputValues[volumeType]).toFixed(4));
     return result;
 };
 

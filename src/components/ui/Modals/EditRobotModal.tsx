@@ -85,7 +85,11 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
 
     useEffect(() => {
         setTitle(`Edit ${robotData.robot.name}`);
-    });
+    }, []);
+
+    useEffect(() => {
+        setFormError("");
+    }, [isOpen]);
 
     const enabled = !(loading || editRobotLoading);
     return (
