@@ -1,5 +1,5 @@
 import React from "react";
-import { StrategySettingsItem } from "../backtests/StrategySettingsItem";
+import { DynamicDataCell } from "../backtests/DynamicDataCell";
 import { ColumnsArraySchema } from "../utils";
 
 export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
@@ -12,10 +12,6 @@ export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "id"
             },
             {
-                Header: "Event ID",
-                accessor: "event_id"
-            },
-            {
                 Header: "Created at",
                 accessor: "created_at"
             },
@@ -26,9 +22,13 @@ export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
         ]
     },
     {
-        Header: "Letter Info",
-        id: "letter_info",
+        Header: "Event Info",
+        id: "event_info",
         columns: [
+            {
+                Header: "Event ID",
+                accessor: "event_id"
+            },
             {
                 Header: "Processed",
                 accessor: "processed"
@@ -52,7 +52,7 @@ export const DEAD_LETTERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Data",
                 accessor: "data",
-                Cell: ({ value }: { value: any }): JSX.Element => <StrategySettingsItem value={value} />
+                Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />
             }
         ]
     }

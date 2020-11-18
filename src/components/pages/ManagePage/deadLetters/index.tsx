@@ -3,6 +3,7 @@ import { DEAD_LETTERS, DEAD_LETTERS_AGGREGATE } from "graphql/manage/queries";
 import React from "react";
 import ManagePageTemplate from "../common/ManagePageTemplate";
 import { DEAD_LETTERS_TABLE_COLUMNS } from "./constatnds";
+import { getSearchOptions, getItemsCount, parseDeadLetters } from "./utils";
 
 const DeadLettersPage = (): JSX.Element => {
     return (
@@ -11,9 +12,9 @@ const DeadLettersPage = (): JSX.Element => {
             columns={DEAD_LETTERS_TABLE_COLUMNS}
             dataQuery={DEAD_LETTERS}
             aggregateQuery={DEAD_LETTERS_AGGREGATE}
-            formatData={(data) => data.dead_letters}
-            getItemsCount={(data) => data.aggregate.nodes}
-            getSearchOptions={() => null}
+            formatData={parseDeadLetters}
+            getItemsCount={getItemsCount}
+            getSearchOptions={getSearchOptions}
         />
     );
 };
