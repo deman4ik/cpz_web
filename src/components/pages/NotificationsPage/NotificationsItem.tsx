@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import Link from "next/link";
-import { formatDate } from "config/utils";
+import { formatDate, getTimeFromNow } from "config/utils";
 import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItem.module.css";
 
@@ -18,7 +18,9 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
         <div className={styles.tableRow}>
             <div className={styles.lineGroup}>
                 <div className={styles.dateGroup}>
-                    <div className={styles.dateText}>{formatDate(item.timestamp)}</div>
+                    <div className={styles.dateText} title={formatDate(item.timestamp)}>
+                        {getTimeFromNow(item.timestamp)}
+                    </div>
                     {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
                 </div>
                 {showMessage(item, handleOnPressNotification)}

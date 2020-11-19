@@ -11,7 +11,7 @@ export const failedSet = (item, onClick) => (
     <div className={styles.rowCard} style={{ flex: 1 }}>
         <div className={styles.textMessageCard}>{`${item.data.error} Robot`}&nbsp;</div>
         <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-            {item.robot.name}&nbsp;
+            {item.robot?.name}&nbsp;
         </div>
         <div className={styles.textAccentCard}>{item.data.userRobotId}</div>
         <div className={styles.textMessageCard}>
@@ -38,7 +38,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                     <div className={styles.textMessageCard}>Trade&nbsp;</div>
                     <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageCard}>{item.data.code}</div>
                 </div>
@@ -59,7 +59,7 @@ export const robotTradeSet = (item, onClick) => (
                         <div className={styles.colRobot}>
                             <div className={styles.textAccentCard}>Amount</div>
                             <div className={styles.textMessageCard}>
-                                {`${item.data.entryExecuted} ${item.robot.asset}`}
+                                {`${item.data.entryExecuted} ${item.robot?.asset}`}
                             </div>
                         </div>
                         <div className={styles.colRobot} style={{ marginTop: 5 }}>
@@ -74,7 +74,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                     <div className={styles.textMessageCard}>Trade&nbsp;</div>
                     <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageCard}>{item.data.code}</div>
                 </div>
@@ -98,7 +98,7 @@ export const robotTradeSet = (item, onClick) => (
                             <div className={styles.colRobot}>
                                 <div className={styles.textAccentCard}>Amount</div>
                                 <div className={styles.textMessageCard}>
-                                    {`${item.data.exitExecuted} ${item.robot.asset}`}
+                                    {`${item.data.exitExecuted} ${item.robot?.asset}`}
                                 </div>
                             </div>
                             <div className={styles.colRobot}>
@@ -124,7 +124,7 @@ export const errorSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageCard}>Robot&nbsp;</div>
             <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}&nbsp;
+                {item.robot?.name}&nbsp;
             </div>
         </div>
         <div className={styles.textAccentCard}>{item.data.userRobotId}&nbsp;</div>
@@ -149,9 +149,9 @@ export const signalAlertSet = (item, onClick) => {
             <div className={styles.row} style={{ flexWrap: "wrap" }}>
                 <div className={styles.textMessageCard}>Signal&nbsp;</div>
                 <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                    {item.robot.name}&nbsp;
+                    {item.robot?.name}&nbsp;
                 </div>
-                <div className={styles.textMessageCard}>{item.robot_position.code}</div>
+                <div className={styles.textMessageCard}>{item.robot_position?.code}</div>
             </div>
             <div className={styles.alertRow}>
                 <div className={styles.colRobot}>
@@ -182,7 +182,7 @@ export const robotSet = (item, onClick) => (
         <div className={styles.row} style={{ flexWrap: "wrap" }}>
             <div className={styles.textMessageCard}>Robot&nbsp;</div>
             <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}&nbsp;
+                {item.robot?.name}&nbsp;
             </div>
             <div className={styles.textMessageCard}>{`is ${item.type.split(".")[1]}`}</div>
         </div>
@@ -199,7 +199,7 @@ export const signalTradeSet = (item, onClick) => (
                 <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
                 <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                     <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageCard}>{item.data.code}</div>
                 </div>
@@ -225,7 +225,7 @@ export const signalTradeSet = (item, onClick) => (
                 <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
                 <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                     <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageCard}>{item.data.code}</div>
                 </div>
