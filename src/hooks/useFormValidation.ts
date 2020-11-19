@@ -56,6 +56,7 @@ export const useFormValidation = (initialState, validate) => {
         values,
         errors,
         isValid,
-        setValid
+        setValid,
+        setErrors: (newErrors) => setErrors({ ...errors, ...newErrors })
     };
 };
