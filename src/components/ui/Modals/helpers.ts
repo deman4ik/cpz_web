@@ -111,10 +111,9 @@ const translateFunctions = {
         balancePercent: ({ value, balance }) => getPercent(value, balance)
     },
     balancePercent: {
-        assetStatic: ({ value, balance, price }) => {
-            const currency = calculateCurrencyFromPercent(value, balance);
-            return calculateAsset(currency, price);
-        },
+        assetStatic: ({ value, balance, price }) => calculateAsset(calculateCurrencyFromPercent(value, balance), price),
+        assetDynamicDelta: ({ value, balance, price }) =>
+            calculateAsset(calculateCurrencyFromPercent(value, balance), price),
         currencyDynamic: ({ value, balance }) => calculateCurrencyFromPercent(value, balance)
     }
 };
