@@ -132,7 +132,7 @@ export const getTimeFromNow = (d: string): string => {
 
     if (now.month() !== past.month() || now.date() !== past.date()) return formattedDate;
 
-    const diff = dayjs(now.diff(past));
+    const diff = dayjs.utc(now.diff(past));
     const { hours, minutes } = diff.toObject();
 
     if (hours >= 6) return formattedDate;
