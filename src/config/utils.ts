@@ -128,7 +128,7 @@ export const getTimeFromNow = (d: string): string => {
     if (formattedDate === "") return "";
 
     const past = dayjs.utc(d);
-    const now = dayjs();
+    const now = dayjs.utc();
 
     if (now.month() !== past.month() || now.date() !== past.date()) return formattedDate;
 
