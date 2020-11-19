@@ -3,6 +3,7 @@ import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
 import { UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
 export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
@@ -68,13 +69,7 @@ export const formatDate = (date: string, addUTC = true): string => {
     return addUTC ? `${res} UTC` : res;
 };
 
-export const exchangeName = (code: string) =>
-    code
-        ? code
-              .split("_")
-              .map((word) => capitalize(word))
-              .join(" ")
-        : code;
+export const exchangeName = (code: string) => (code ? titleFromLowerCase(code) : code);
 
 export const getLegend = (robot) =>
     `${exchangeName(robot.exchange)} ${robot.asset}/${robot.currency} ${timeFrameFormat[robot.timeframe].abbr}`;

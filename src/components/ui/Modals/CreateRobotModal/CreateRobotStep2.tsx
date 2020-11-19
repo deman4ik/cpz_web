@@ -25,6 +25,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
     inputs,
     handleOnBack,
     isValid,
+    minAmounts,
     handleOnCreate,
     volumeTypeOptions
 }) => {
@@ -32,6 +33,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
         <div className={styles.container}>
             <div className={styles.form}>
                 <SubscribeModalContent
+                    minAmounts={minAmounts}
                     volumeTypeOptions={volumeTypeOptions}
                     robotData={robotData}
                     formError={formError}
@@ -47,6 +49,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
                 />
                 <div className={styles.btns}>
                     <Button
+                        isLoading={!enabled}
                         className={styles.btn}
                         title="Back"
                         icon="chevronleft"

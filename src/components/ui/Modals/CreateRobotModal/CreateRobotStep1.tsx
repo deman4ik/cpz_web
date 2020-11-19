@@ -10,6 +10,7 @@ import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
 interface Props {
     dataPicker: any; // Todo any
     selectedKey: string;
+    enabled: boolean;
     variables: any; // Todo any
     hasError?: boolean;
     handleOnNext: () => void;
@@ -26,11 +27,12 @@ const _CreateRobotStep1: React.FC<Props> = ({
     handleOnNext,
     handleOnChangeExchange,
     setFormError,
+    enabled,
     onClose
 }) => {
     const [newName, setNewName] = useState("");
     const [isAddKeyVisible, setIsAddKeyVisible] = useState(!dataPicker.length);
-    const { exchange } = variables.exchange;
+    const { exchange } = variables;
     const refetchQueries = [
         {
             query: GET_USER_EXCHANGES_WITH_MARKETS,
@@ -104,6 +106,7 @@ const _CreateRobotStep1: React.FC<Props> = ({
                     <>
                         <div className={styles.btns}>
                             <Button
+                                isLoading={!enabled}
                                 className={styles.btn}
                                 title="Cancel"
                                 icon="close"

@@ -22,7 +22,6 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
-import { ModalLoading } from "components/ui/Modals/ModalLoading";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -52,7 +51,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     };
 
     const { data: robotData } = useQuery(ROBOT);
-    const { exchange, asset, currency } = robotData.robot.subs;
+    const { exchange, asset, currency } = robotData?.robot.subs || {};
 
     const variables = {
         exchange: !robotData ? null : exchange,
@@ -90,7 +89,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [actionOnRobot] = useMutation(ACTION_ROBOT);
     const [userRobotStart, { loading: startLoading }] = useMutation(USER_ROBOT_START);
 
-    const limits = useMemo(() => !limitsLoading && getLimitsForRobot(limitsData), [limitsLoading, limitsData]);
+    const limits = useMemo(() => !limitsLoading && limitsData && getLimitsForRobot(limitsData), [
+        limitsLoading,
+        limitsData
+    ]);
 
     const {
         inputValues,
@@ -99,6 +101,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         validate,
         volumeType,
         setVolumeType,
+        minAmounts,
         errors
     } = useSubscribeModal({
         limits,
@@ -201,7 +204,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const enabled = !(loading || createRobotLoading || startLoading);
     return (
         <>
-            {!enabled && <ModalLoading />}
+            {/*{!enabled && <ModalLoading />}*/}
             <>
                 <div className={styles.wizardContainer}>
                     <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
@@ -209,6 +212,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 <ErrorLine formError={formError} />
                 {step === 1 && dataPicker && (
                     <CreateRobotStep1
+                        enabled={enabled}
                         dataPicker={dataPicker}
                         selectedKey={inputKey}
                         variables={{ ...variables, user_id }}
@@ -221,6 +225,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 )}
                 {step === 2 && (
                     <CreateRobotStep2
+                        minAmounts={minAmounts}
                         volumeTypeOptions={robotVolumeTypeOptions}
                         inputs={inputs}
                         robotData={robotData}
@@ -240,6 +245,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 )}
                 {step === 3 && (
                     <CreateRobotStep3
+                        enabled={enabled}
                         robotName={robotData ? robotData.robot.name : null}
                         handleOnStart={handleOnStart}
                         onClose={onClose}

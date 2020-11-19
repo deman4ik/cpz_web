@@ -1,7 +1,7 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .loading {
     position: absolute;
@@ -11,133 +11,137 @@
     z-index: 100;
     top: 45px;
 }
+.modalInput {
+    width: 100%;
+}
 .bodyTitle {
-  margin-bottom: 15px;
-  text-align: center;
-  font-size: var(--normal2);
-  line-height: var(--big1);
-  color: var(--accent);
-    margin-right: 25px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: var(--normal2);
+    line-height: var(--big1);
+    color: var(--accent);
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .formComment {
-  margin-bottom: 25px;
+    margin-bottom: 25px;
 }
 
 .bodyText {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: var(--normal1);
-  line-height: var(--normal2);
-  color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--normal1);
+    line-height: var(--normal2);
+    color: white;
 }
 
 .textWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 380px;
 }
 
 .fieldset {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .btns {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .btn {
-  margin: 10px;
+    margin: 10px;
 }
 
 .label {
-  color: var(--accent);
+    color: var(--accent);
 }
 
 .wizardContainer {
-  min-width: 550px;
-  margin: 0 40px 20px;
+    min-width: 550px;
+    margin: 0 40px 20px;
 }
 
 .selectGroup {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .btnSelectGroup {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .noKeysText {
-  display: flex;
-  margin-bottom: 20px;
-  justify-content: center;
-  font-size: var(--normal2);
-  color: var(--accent);
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    font-size: var(--normal2);
+    color: var(--accent);
 }
 
 .step3 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 400px;
-  margin: -30px auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: -30px auto 30px;
 }
 
 .iconWrapper {
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 .input_group {
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .value_group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .value_row {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
 }
 
 .volume {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .volume_text {
-  font-size: var(--normal2);
-  color: white;
-  margin-left: 5px;
+    min-width: 35px;
+    font-size: var(--normal2);
+    color: white;
+    margin-left: 5px;
 }
 
 .delimiter {
-  font-size: var(--normal2);
-  color: white;
-  text-align: center;
-  padding-right: 40px;
+    font-size: var(--normal2);
+    color: white;
+    text-align: center;
+    padding-right: 40px;
 }
 
 .input_container {
@@ -146,24 +150,24 @@
 }
 
 @media (max-width: 768px) {
-  .wizardContainer {
-    min-width: unset;
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  .selectGroup {
-    flex-direction: column;
-  }
-  .btnSelectGroup {
-    margin-left: 0;
-  }
-  .select {
-    margin-bottom: 10px;
-  }
-  .container {
-    min-width: 250px;
-  }
-  .step3 {
-    min-width: 250px;
-  }
+    .wizardContainer {
+        min-width: unset;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .selectGroup {
+        flex-direction: column;
+    }
+    .btnSelectGroup {
+        margin-left: 0;
+    }
+    .select {
+        margin-bottom: 10px;
+    }
+    .container {
+        min-width: 250px;
+    }
+    .step3 {
+        min-width: 250px;
+    }
 }

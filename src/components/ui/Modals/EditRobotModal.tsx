@@ -13,7 +13,6 @@ import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/Subsc
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "libs/hoc/context";
-import { ModalLoading } from "components/ui/Modals/ModalLoading";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -29,7 +28,8 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
 
     const [formError, setFormError] = useState("");
     const { data: robotData } = useQuery(ROBOT);
-    const { exchange, asset, currency } = robotData.robot.subs;
+
+    const { exchange, asset, currency } = robotData?.robot?.subs || {};
     const { data, loading, refetch } = useQuery(GET_MARKETS, {
         variables: {
             exchange,
@@ -49,6 +49,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
         validate,
         volumeType,
         setVolumeType,
+        minAmounts,
         errors
     } = useSubscribeModal({
         limits,
@@ -84,8 +85,8 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
     };
 
     useEffect(() => {
-        setTitle(`Edit ${robotData.robot.name}`);
-    }, []);
+        setTitle(`Edit ${robotData?.robot.name || "Robot"}`);
+    }, [robotData]);
 
     useEffect(() => {
         setFormError("");
@@ -94,7 +95,6 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
     const enabled = !(loading || editRobotLoading);
     return (
         <Modal isOpen={isOpen} onClose={() => onClose()} title={title}>
-            {!enabled && <ModalLoading />}
             <>
                 <SubscribeModalContent
                     volumeTypeOptions={robotVolumeTypeOptions}
@@ -104,6 +104,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
                     setInputValues={setInputValues}
                     validate={validate}
                     inputs={inputs}
+                    minAmounts={minAmounts}
                     setVolumeType={setVolumeType}
                     volumeType={volumeType}
                     parsedLimits={parsedLimits}
@@ -113,6 +114,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
                 <div className={styles.btns}>
                     <Button
                         className={styles.btn}
+                        isLoading={!enabled}
                         title="Save"
                         icon="check"
                         type="success"

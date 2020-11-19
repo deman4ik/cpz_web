@@ -60,6 +60,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         validate,
         volumeType,
         setVolumeType,
+        minAmounts,
         errors
     } = useSubscribeModal({
         limits,
@@ -152,6 +153,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                 />
             }>
             <SubscribeModalContent
+                minAmounts={minAmounts}
                 volumeTypeOptions={volumeTypeOptions}
                 inputValues={inputValues}
                 setInputValues={setInputValues}
