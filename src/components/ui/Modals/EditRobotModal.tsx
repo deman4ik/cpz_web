@@ -29,7 +29,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
 
     const [formError, setFormError] = useState("");
     const { data: robotData } = useQuery(ROBOT);
-    const { exchange, asset, currency } = robotData.robot.subs;
+    const { exchange, asset, currency } = robotData?.robot.subs || {};
     const { data, loading, refetch } = useQuery(GET_MARKETS, {
         variables: {
             exchange,
@@ -84,7 +84,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
     };
 
     useEffect(() => {
-        setTitle(`Edit ${robotData.robot.name}`);
+        setTitle(`Edit ${robotData?.robot.name}`);
     }, []);
 
     useEffect(() => {
