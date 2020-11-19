@@ -14,7 +14,6 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "libs/hoc/context";
 
-
 interface Props {
     onClose: (changesMade?: boolean) => void;
     isOpen: boolean;

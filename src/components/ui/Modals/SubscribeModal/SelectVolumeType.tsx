@@ -8,7 +8,6 @@ interface SelectVolumeTypeProps {
     onChangeVolumeType: Dispatch<SetStateAction<InputTypes>>;
     enabled: boolean;
     width?: number;
-    volumeTypeDescription: string;
     volumeTypeOptions: VolumeTypeOption[];
 }
 export const SelectVolumeType: FC<SelectVolumeTypeProps> = ({
