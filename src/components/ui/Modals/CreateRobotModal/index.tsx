@@ -205,7 +205,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const enabled = !(loading || createRobotLoading || startLoading);
     return (
         <>
-            {!enabled && <ModalLoading />}
             <>
                 <div className={styles.wizardContainer}>
                     <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
