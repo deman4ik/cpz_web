@@ -1,7 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
-import { AssetTypes, formatNumber, translateValue, trimNumber } from "components/ui/Modals/helpers";
 import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
@@ -10,6 +9,7 @@ import { InputMap, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOpt
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
+import { formatNumber, translateValue } from "components/ui/Modals/helpers";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
@@ -43,6 +43,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     volumeTypeOptions
 }) => {
     const [price, , , , , balance] = parsedLimits;
+
     const [displayedValues, setDisplayedValues] = useState(inputValues);
     const asset = robotData?.robot.subs.asset;
     const currency = robotData?.robot.subs.currency;

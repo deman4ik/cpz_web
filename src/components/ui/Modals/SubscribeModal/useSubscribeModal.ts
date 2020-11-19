@@ -19,6 +19,7 @@ interface UseSubscribeModalProps {
 }
 
 const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
+
 export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
     const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());

@@ -13,14 +13,12 @@ export const USER_REQUESTS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "ID",
                 accessor: "id",
-                isVisible: true,
                 width: 310,
                 fieldSchema: { field: "user", subfield: "id" }
             },
             {
                 Header: "Name",
                 accessor: "name",
-                isVisible: true,
                 fieldSchema: { field: "user", subfield: "name" }
             }
         ]
@@ -32,20 +30,17 @@ export const USER_REQUESTS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Count",
                 accessor: "messages_count",
-                isVisible: true,
                 width: 80
             },
             {
                 Header: "Time",
                 accessor: "timestamp",
-                isVisible: true,
                 width: 175,
                 fieldSchema: { field: "lastMessage", subfield: "timestamp" }
             },
             {
                 Header: "Last message",
                 accessor: "message",
-                isVisible: true,
                 width: 450,
                 fieldSchema: { field: "lastMessage", subfield: "data" },
                 Cell: ({

@@ -11,25 +11,21 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Name",
                 accessor: "name",
-                isVisible: true,
                 width: 130
             },
             {
                 Header: "ID",
                 accessor: "id",
-                isVisible: true,
                 width: 190
             },
             {
                 Header: "Email",
                 accessor: "email",
-                isVisible: true,
                 width: 250
             },
             {
                 Header: "Status",
                 accessor: "status",
-                isVisible: true,
                 width: 85,
                 mutation: SET_USER_STATUS,
                 mutationInputOptions: [
@@ -43,7 +39,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Roles",
                 accessor: "roles",
-                isVisible: true,
                 Cell: ({ value }: { value: any }): JSX.Element => (
                     <div>
                         <div>{value.default}</div>
@@ -54,7 +49,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Created",
                 accessor: "created_at",
-                isVisible: true,
                 width: 180
             }
         ]
@@ -66,13 +60,11 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
         columns: [
             {
                 Header: "Username",
-                accessor: "telegram_username",
-                isVisible: true
+                accessor: "telegram_username"
             },
             {
                 Header: "ID",
-                accessor: "telegram_id",
-                isVisible: true
+                accessor: "telegram_id"
             }
         ]
     },
@@ -84,21 +76,18 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Robots",
                 accessor: "user_robots",
-                isVisible: true,
                 width: 85,
                 fieldSchema: { field: "user_robots_aggregate", subfield: "count" }
             },
             {
                 Header: "Signals",
                 accessor: "user_signals",
-                isVisible: true,
                 width: 85,
                 fieldSchema: { field: "user_signals_aggregate", subfield: "count" }
             },
             {
                 Header: "API Keys",
                 accessor: "user_api_keys",
-                isVisible: true,
                 width: 85,
                 fieldSchema: { field: "user_exchange_accs_aggregate", subfield: "count" }
             }
@@ -112,7 +101,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Email",
                 accessor: "signals_email_notifications",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 75,
                 fieldSchema: { field: "settings" }
@@ -120,7 +108,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Telegram",
                 accessor: "signals_telegram_notifications",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 95,
                 fieldSchema: { field: "settings" }
@@ -135,7 +122,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Email",
                 accessor: "trading_email_notifications",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 75,
                 fieldSchema: { field: "settings" }
@@ -143,7 +129,6 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Telegram",
                 accessor: "trading_telegram_notifications",
-                isVisible: true,
                 Cell: buildDisabledCheckboxCell,
                 width: 95,
                 fieldSchema: { field: "settings" }

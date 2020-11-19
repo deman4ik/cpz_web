@@ -20,13 +20,12 @@ const INITIAL_STATE = {
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
 const message = `If you do not see the Telegram login widget here, Telegram may be blocked in your country. Please use a proxy or VPN to access the Telegram login widget.`;
 const _Login: React.FC = () => {
-    const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
+    const { handleSubmit, handleChange, values, errors, isValid, setValid, setErrors } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
 
-    const [login, { loading, success, error }] = useEmailLogin({ email: values.email, password: values.password });
-    const errorRef = useRef(error);
+    const [login, { loading }] = useEmailLogin({ email: values.email, password: values.password });
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -36,26 +35,26 @@ const _Login: React.FC = () => {
         }
     };
 
+    const handleLogin = () => {
+        nullifyAccessToken();
+        if (isValid && !loading)
+            login().then(
+                () => {
+                    Router.push("/robots");
+                },
+                (err) => {
+                    setValid(false);
+                    setErrors({ password: err.message });
+                }
+            );
+    };
+
     useEffect(() => {
-        if (isValid && !loading && !success) {
-            nullifyAccessToken();
-            login();
-        }
+        handleLogin();
     }, [isValid]);
 
-    useEffect(() => {
-        if (success) {
-            Router.push("/robots");
-        } else if (error && errorRef.current !== error) {
-            setValid(false);
-            errors.password = error;
-            errorRef.current = error;
-        }
-    }, [success, error]);
-
     const handleFormSubmit = (e) => {
-        e.preventDefault();
-        handleSubmit();
+        handleSubmit(e);
     };
 
     return (

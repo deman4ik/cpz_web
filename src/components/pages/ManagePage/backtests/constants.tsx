@@ -225,148 +225,127 @@ export const BACKTESTS_TABLE_COLUMNS = [
             {
                 Header: "Rating",
                 accessor: "rating",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 90
             },
             {
                 Header: "Average Loss",
                 accessor: "avgLoss",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 130
             },
             {
                 Header: "Local Max",
                 accessor: "localMax",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 120
             },
             {
                 Header: "Loss Rate",
                 accessor: "lossRate",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 100
             },
             {
                 Header: "Average Profit",
                 accessor: "avgProfit",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 130
             },
             {
                 Header: "Gross Loss",
                 accessor: "grossLoss",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 120
             },
             {
                 Header: "Average Bars Held",
                 accessor: "avgBarsHeld",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 180
             },
             {
                 Header: "Gross Profit",
                 accessor: "grossProfit",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 130
             },
             {
                 Header: "Payoff Ration",
                 accessor: "payoffRatio",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 130
             },
             {
                 Header: "Average Net Profit",
                 accessor: "avgNetProfit",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 150
             },
             {
                 Header: "Profit Factor",
                 accessor: "profitFactor",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 130
             },
             {
                 Header: "Trades Losing",
                 accessor: "tradesLosing",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 150
             },
             {
                 Header: "Max Consecutive Wins",
                 accessor: "maxConsecWins",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 200
             },
             {
                 Header: "Max Consecutive Losses",
                 accessor: "maxConsecLosses",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 200
             },
             {
                 Header: "Max Drawdown Date",
                 accessor: (v) => formatDate(v.maxDrawdownDate),
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 180
             },
             {
                 Header: "Average Profit Winners",
                 accessor: "avgProfitWinners",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 180
             },
             {
                 Header: "Average Bars Held Losing",
                 accessor: "avgBarsHeldLosing",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 200
             },
             {
                 Header: "Average Bars Held Winning",
                 accessor: "avgBarsHeldWinning",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 200
             },
             {
                 Header: "Current Win Sequence",
                 accessor: "currentWinSequence",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 180
             },
             {
                 Header: "Current Loss Sequence",
                 accessor: "currentLossSequence",
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 200
             },
             {
                 Header: "Last Position Exit Date",
                 accessor: (v) => formatDate(v.last_position_exit_date),
-                isVisible: true,
-                sortSchema: { field: "stats", subfield: "trades_count" },
+                fieldSchema: { field: "stats", subfield: "trades_count" },
                 width: 250
             }
         ]
@@ -380,13 +359,11 @@ export const BACKTESTS_TABLE_COLUMNS = [
             {
                 Header: "Robot ID",
                 accessor: "robot_id",
-                isVisible: true,
                 width: 262
             },
             {
                 Header: "Robot Code",
                 accessor: (v) => v.robot.code,
-                isVisible: true,
                 width: 262
             }
         ]

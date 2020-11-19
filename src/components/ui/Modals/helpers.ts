@@ -93,19 +93,22 @@ const translateFunctions = {
     //from Type
     assetStatic: {
         //to Types
-        currencyDynamic: ({ value, price }) => calculateCurrency(value, price),
         assetDynamicDelta: ({ value }) => value,
-        balancePercent: ({ value, price, balance }) => getPercent(calculateCurrency(value, price), balance)
+        balancePercent: ({ value, price, balance }) => getPercent(calculateCurrency(value, price), balance),
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price)
     },
     assetDynamicDelta: {
         //to Types
-        currencyDynamic: ({ value, price }) => calculateCurrency(value, price)
+        currencyDynamic: ({ value, price }) => calculateCurrency(value, price),
+        assetStatic: ({ value }) => value,
+        balancePercent: ({ value, price, balance }) => getPercent(calculateCurrency(value, price), balance)
     },
     //from Type
     currencyDynamic: {
         //to Types
         assetStatic: ({ value, price }) => calculateAsset(value, price),
-        assetDynamicDelta: ({ value, price }) => calculateAsset(value, price)
+        assetDynamicDelta: ({ value, price }) => calculateAsset(value, price),
+        balancePercent: ({ value, balance }) => getPercent(value, balance)
     },
     balancePercent: {
         assetStatic: ({ value, balance, price }) => {

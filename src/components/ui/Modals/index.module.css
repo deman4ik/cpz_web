@@ -21,6 +21,14 @@
     line-height: var(--big1);
     color: var(--accent);
 }
+.loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #58585863;
+    z-index: 100;
+    top: 45px;
+}
 
 .form {
     display: flex;

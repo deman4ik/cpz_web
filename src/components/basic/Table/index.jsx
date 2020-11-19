@@ -154,7 +154,9 @@ const Table = ({
         cols.forEach((col) => flatCols.push(...col.columns));
 
         setHiddenColumns([
-            ...flatCols.filter((col) => !col.isVisible).map((col) => col.id || col.accessor),
+            ...flatCols
+                .filter((col) => typeof col.isVisible !== "undefined" && !col.isVisible)
+                .map((col) => col.id || col.accessor),
             ...(groupedColsWithMutations.length === 0 ? ["selection"] : [])
         ]);
     }, [cols, groupedColsWithMutations.length, setHiddenColumns]);

@@ -22,6 +22,7 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
+import { ModalLoading } from "components/ui/Modals/ModalLoading";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -204,7 +205,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const enabled = !(loading || createRobotLoading || startLoading);
     return (
         <>
-            {/*{!enabled && <ModalLoading />}*/}
+            {!enabled && <ModalLoading />}
             <>
                 <div className={styles.wizardContainer}>
                     <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />

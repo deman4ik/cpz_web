@@ -14,7 +14,8 @@ import {
     AccountDetails,
     MessageAlert,
     MenuIcon,
-    BackBurger
+    BackBurger,
+    DeadLetter
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
@@ -40,7 +41,8 @@ const components = {
     userRobots: AccountDetails,
     supportRequests: MessageAlert,
     menu: MenuIcon,
-    backBurger: BackBurger
+    backBurger: BackBurger,
+    deadLetter: DeadLetter
 };
 
 const _NavItem: React.FC<Props> = ({ item, active, handleOnClick, styles }) => {
