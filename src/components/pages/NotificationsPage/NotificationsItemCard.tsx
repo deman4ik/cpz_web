@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { formatDate } from "config/utils";
+import { formatDate, getTimeFromNow } from "config/utils";
 import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItemCard.module.css";
 
@@ -17,7 +17,9 @@ export const _NotificationsItemCard: React.FC<Props> = ({ item, routeNotificatio
     return (
         <div className={styles.card}>
             <div className={styles.dateGroup}>
-                <div className={styles.dateText}>{formatDate(item.timestamp)}</div>
+                <div className={styles.dateText} title={formatDate(item.timestamp)}>
+                    {getTimeFromNow(item.timestamp)}
+                </div>
                 {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
             </div>
             {showMessage(item, handleOnPressNotification, true)}
