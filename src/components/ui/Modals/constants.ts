@@ -28,12 +28,12 @@ export const CurrencyDynamicInputs = [{ type: InputTypes.currencyDynamic }, { ty
 export const AssetDynamicDeltaInputs = [{ type: InputTypes.assetDynamicDelta }, { type: InputTypes.currencyDynamic }];
 export const BalancePercentInputs = [
     { type: InputTypes.balancePercent },
-    { type: InputTypes.assetStatic },
-    { type: InputTypes.currencyDynamic }
+    { type: InputTypes.currencyDynamic },
+    { type: InputTypes.assetStatic }
 ];
 
 export const AddRobotInputsMap = {
-    // depending on type of trading volume, set of input will be chosen
+    // depending on type of trading volume, set of inputs will be chosen
     [InputTypes.assetStatic]: AssetStaticInputs,
     [InputTypes.currencyDynamic]: CurrencyDynamicInputs,
     [InputTypes.assetDynamicDelta]: AssetDynamicDeltaInputs,
