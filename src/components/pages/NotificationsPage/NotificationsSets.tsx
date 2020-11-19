@@ -12,7 +12,7 @@ export const failedSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>{`${item.data.error} Robot`}&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}
+                {item.robot?.name}
             </div>
             <div className={styles.textMessageDesktop}>&nbsp;(</div>
             <div className={styles.textAccent}>{item.data.userRobotId}</div>
@@ -44,7 +44,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.code}</div>
                 </div>
@@ -54,7 +54,7 @@ export const robotTradeSet = (item, onClick) => (
                         {capitalize(item.data.entryAction)}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.robot.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.robot?.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.entryPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
@@ -66,7 +66,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.code}</div>
                 </div>
@@ -78,7 +78,7 @@ export const robotTradeSet = (item, onClick) => (
                             .join(" ")}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.robot.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.robot?.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.exitPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
@@ -98,7 +98,7 @@ export const errorSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}
+                {item.robot?.name}
             </div>
             <div className={styles.textMessageDesktop}>&nbsp;(</div>
             <div className={styles.textAccent}>{item.data.userRobotId}&nbsp;</div>
@@ -127,7 +127,7 @@ export const signalAlertSet = (item, onClick) => {
             <div className={styles.row}>
                 <div className={styles.textMessageDesktop}>Signal&nbsp;</div>
                 <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                    {item.robot.name}&nbsp;
+                    {item.robot?.name}&nbsp;
                 </div>
                 <div className={styles.textMessageDesktop}>{item.positionCode}</div>
             </div>
@@ -152,7 +152,7 @@ export const robotSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}&nbsp;
+                {item.robot?.name}&nbsp;
             </div>
             <div className={styles.textMessageDesktop}>{`is ${item.type.split(".")[1]}`}</div>
         </div>
@@ -171,7 +171,7 @@ export const signalTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
                 </div>
@@ -191,7 +191,7 @@ export const signalTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.robot?.name}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
                 </div>
