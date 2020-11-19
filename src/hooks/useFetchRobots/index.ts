@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 // graphql
-import { SIGNAL_ROBOTS_AGGREGATE } from "graphql/signals/queries";
+import { ROBOTS_AGGREGATE } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
 import { SET_SEARCH_LIMIT, SET_SEARCH_PROPS } from "graphql/local/mutations";
 // constants
@@ -43,15 +43,20 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
     const defaultVariables = {
         where: {
             [QUERY_KEY[dispayType]]: { _eq: true },
-            _not: { [`user_${RobotsType[dispayType]}`]: { user_id: { _eq: user_id } } },
             ...filtersQuery.robot
         },
         hash: filtersQuery.hash
     };
 
+    if (isAuth)
+        defaultVariables.where = {
+            ...defaultVariables.where,
+            _not: { [`user_${RobotsType[dispayType]}`]: { user_id: { _eq: user_id } } }
+        };
+
     const { data: data_count, loading: loading_aggregate, refetch: refetchCounts } = useQueryWithAuth(
         false,
-        SIGNAL_ROBOTS_AGGREGATE,
+        ROBOTS_AGGREGATE,
         {
             variables: defaultVariables,
             pollInterval: POLL_INTERVAL
