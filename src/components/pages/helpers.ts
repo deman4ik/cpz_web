@@ -44,11 +44,11 @@ export const candleQueries = (timeframe: number, isAuth?: boolean, isAuthAndRobo
         realTimeSub: BACKTEST_POSITION_CANDLE_SUB(timeframe)
     },
     robot: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuthAndRobotOwned),
+        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned),
         realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
     },
     signal: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuthAndRobotOwned),
+        history: buildRobotPositionCandlesQuery(timeframe, isAuth),
         realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
     }
 });
