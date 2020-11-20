@@ -39,3 +39,5 @@ export type VolumeTypeOption = {
 export type InputMap = {
     [key in InputTypes]?: Input[];
 };
+
+export type Precision = { amount: number; price: number };

@@ -38,7 +38,7 @@ export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) =
                     displayType={displayType}
                 />
             )}
-            <Modals width={width} afterClose={refetch} type="robot" />
+            <Modals width={width} afterClose={refetch} type="robots" />
         </>
     );
 };
