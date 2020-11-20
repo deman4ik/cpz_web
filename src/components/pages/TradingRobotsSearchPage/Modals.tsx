@@ -8,10 +8,11 @@ import { modalType } from "../types";
 
 interface Props {
     width: number;
+    type: string;
     afterClose?: () => void;
 }
 
-export const Modals: React.FC<Props> = ({ width, afterClose }) => {
+export const Modals: React.FC<Props> = ({ width, afterClose, type }) => {
     const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
     const handleClose = (needsRefreshing: boolean) => {
@@ -35,6 +36,7 @@ export const Modals: React.FC<Props> = ({ width, afterClose }) => {
                 <ActionRobotModal setTitle={setTitleModal} onClose={handleClose} type={dataModal.ModalVisible.type} />
             </Modal>
             <EditRobotModal
+                type={type}
                 isOpen={getIsVisibleStatus(modalType.edit, dataModal)}
                 onClose={handleClose}
                 title={titleModal}
