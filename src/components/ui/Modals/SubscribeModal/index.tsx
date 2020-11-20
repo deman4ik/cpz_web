@@ -53,21 +53,13 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     //utilities
     const limits = useMemo(() => !loading && limitsData && getLimitsForSignal(limitsData), [loading, limitsData]);
 
-    const {
-        inputValues,
-        setInputValues,
-        parsedLimits,
-        validate,
-        volumeType,
-        usedAccountPercent,
-        setVolumeType,
-        minAmounts,
-        errors
-    } = useSubscribeModal({
+    const subscribeModalProps = useSubscribeModal({
         limits,
         inputs,
         robotData
     });
+
+    const { inputValues, volumeType, errors, precision } = subscribeModalProps;
 
     const writeToCache = (settings) => {
         cacheSubscription({
@@ -100,7 +92,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
 
     //handlers
     const onSubmit = () => {
-        const settings = buildSettings({ volumeType, inputValues });
+        const settings = buildSettings({ volumeType, inputValues, precision });
         const variables = {
             robotId: robotData?.robot.id,
             settings
@@ -154,16 +146,9 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                 />
             }>
             <SubscribeModalContent
-                usedAccountPercent={usedAccountPercent}
-                minAmounts={minAmounts}
+                {...subscribeModalProps}
                 volumeTypeOptions={volumeTypeOptions}
-                inputValues={inputValues}
-                setInputValues={setInputValues}
-                validate={validate}
                 inputs={inputs}
-                setVolumeType={setVolumeType}
-                volumeType={volumeType}
-                parsedLimits={parsedLimits}
                 robotData={robotData}
                 onKeyPress={onKeyPress}
                 enabled={enabled}

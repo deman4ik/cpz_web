@@ -95,24 +95,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         limitsData
     ]);
 
-    const {
-        inputValues,
-        setInputValues,
-        parsedLimits,
-        validate,
-        volumeType,
-        setVolumeType,
-        usedAccountPercent,
-        minAmounts,
-        errors
-    } = useSubscribeModal({
+    const subscribeModalProps = useSubscribeModal({
         limits,
         inputs,
         robotData
     });
 
+    const { inputValues, volumeType, precision, errors } = subscribeModalProps;
     const handleOnCreate = () => {
-        const settings = buildSettings({ volumeType, inputValues });
+        const settings = buildSettings({ volumeType, inputValues, precision });
 
         userRobotCreate({
             variables: {
@@ -226,18 +217,11 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 )}
                 {step === 2 && (
                     <CreateRobotStep2
-                        minAmounts={minAmounts}
                         volumeTypeOptions={robotVolumeTypeOptions}
                         inputs={inputs}
+                        {...subscribeModalProps}
                         robotData={robotData}
-                        usedAccountPercent={usedAccountPercent}
                         formError={formError}
-                        inputValues={inputValues}
-                        setInputValues={setInputValues}
-                        validate={validate}
-                        setVolumeType={setVolumeType}
-                        volumeType={volumeType}
-                        parsedLimits={parsedLimits}
                         onKeyPress={onKeyPress}
                         enabled={enabled}
                         handleOnBack={handleOnBack}

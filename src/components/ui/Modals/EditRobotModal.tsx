@@ -43,25 +43,17 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
 
     const limits = useMemo(() => !loading && data && getLimits(data, limitsPropToType[type]), [loading, data]);
 
-    const {
-        inputValues,
-        setInputValues,
-        parsedLimits,
-        validate,
-        volumeType,
-        setVolumeType,
-        minAmounts,
-        usedAccountPercent,
-        errors
-    } = useSubscribeModal({
+    const subscribeModalProps = useSubscribeModal({
         limits,
         inputs,
         robotData
     });
+    const { inputValues, volumeType, precision, errors } = subscribeModalProps;
+
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
 
     const handleOnSubmit = () => {
-        const settings = buildSettings({ volumeType, inputValues });
+        const settings = buildSettings({ volumeType, inputValues, precision });
         userRobotEdit({
             variables: {
                 id: robotData?.robot.userRobotId,
@@ -99,18 +91,11 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
         <Modal isOpen={isOpen} onClose={() => onClose()} title={title}>
             <>
                 <SubscribeModalContent
+                    {...subscribeModalProps}
                     volumeTypeOptions={robotVolumeTypeOptions}
                     robotData={robotData}
                     formError={formError}
-                    inputValues={inputValues}
-                    setInputValues={setInputValues}
-                    validate={validate}
-                    usedAccountPercent={usedAccountPercent}
                     inputs={inputs}
-                    minAmounts={minAmounts}
-                    setVolumeType={setVolumeType}
-                    volumeType={volumeType}
-                    parsedLimits={parsedLimits}
                     onKeyPress={onKeyPress}
                     enabled={enabled}
                 />

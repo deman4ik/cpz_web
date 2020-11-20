@@ -12,43 +12,16 @@ interface CreateRobotStep2Props extends SubscribeModalContentProps {
     isValid: boolean;
 }
 const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
-    robotData,
-    formError,
-    inputValues,
-    usedAccountPercent,
-    setInputValues,
-    validate,
-    setVolumeType,
-    volumeType,
-    parsedLimits,
-    onKeyPress,
-    enabled,
-    inputs,
     handleOnBack,
     isValid,
-    minAmounts,
     handleOnCreate,
-    volumeTypeOptions
+    enabled,
+    ...subscribeModalProps
 }) => {
     return (
         <div className={styles.container}>
             <div className={styles.form}>
-                <SubscribeModalContent
-                    usedAccountPercent={usedAccountPercent}
-                    minAmounts={minAmounts}
-                    volumeTypeOptions={volumeTypeOptions}
-                    robotData={robotData}
-                    formError={formError}
-                    inputValues={inputValues}
-                    setInputValues={setInputValues}
-                    validate={validate}
-                    inputs={inputs}
-                    setVolumeType={setVolumeType}
-                    volumeType={volumeType}
-                    parsedLimits={parsedLimits}
-                    onKeyPress={onKeyPress}
-                    enabled={enabled}
-                />
+                <SubscribeModalContent {...subscribeModalProps} enabled={enabled} />
                 <div className={styles.btns}>
                     <Button
                         isLoading={!enabled}

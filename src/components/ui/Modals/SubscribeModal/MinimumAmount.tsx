@@ -18,7 +18,7 @@ export const MinimumAmount: FC<MinimumAmountProps> = ({ minAmount, asset, minAmo
     const minUSD = trimNumber(minAmountUSD || 0);
     const min = trimNumber(minAmount || 0);
 
-    const percentValue = getPercent(minAmountUSD, balance).toFixed(2);
+    const percentValue = getPercent(minAmountUSD, balance);
     const minPercentValue =
         volumeType === InputTypes.balancePercent ? (
             <>
