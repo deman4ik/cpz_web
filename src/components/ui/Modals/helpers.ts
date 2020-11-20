@@ -26,7 +26,9 @@ export const getLimits = (data, type) => {
     const { v_user_exchange_accs } = data || {};
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
-    const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
+    const exchangeAccWithUserBalanceUsage = v_user_exchange_accs.find((i) => i.amounts.used_balance_percent !== null);
+
+    const { amounts, total_balance_usd, user } = exchangeAccWithUserBalanceUsage;
 
     const { markets } = user;
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Input, InputMap, InputTypes, InputValues, Precision, volumes } from "components/ui/Modals/types";
+import { InputMap, InputTypes, InputValues, Precision } from "components/ui/Modals/types";
 import {
     AssetTypes,
     CurrencyTypes,
