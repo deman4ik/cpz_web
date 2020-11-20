@@ -10,6 +10,7 @@ import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
 import { formatNumber, translateValue } from "components/ui/Modals/helpers";
+import { PercentsAvailable } from "components/ui/Modals/SubscribeModal/PercentnsAvailable";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
@@ -17,6 +18,7 @@ export interface SubscribeModalContentProps {
     volumeType: InputTypes;
     parsedLimits: number[];
     robotData: any;
+    usedAccountPercent: number;
     onKeyPress: (e: any) => void;
     enabled: boolean;
     formError: string;
@@ -36,6 +38,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     onKeyPress,
     formError,
     enabled,
+    usedAccountPercent,
     inputs,
     inputValues,
     setInputValues,
@@ -94,6 +97,15 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                         onChangeVolumeType={setVolumeType}
                         volumeType={volumeType}
                     />
+                    <VolumeDescription volumeType={volumeType} asset={asset} currency={currency} />
+                    <PercentsAvailable usedAccountPercent={usedAccountPercent} volumeType={volumeType} />
+                    <MinimumAmount
+                        balance={balance}
+                        volumeType={volumeType}
+                        asset={robotData ? asset : ""}
+                        minAmount={minAmounts[InputTypes.assetStatic]}
+                        minAmountUSD={minAmounts[InputTypes.currencyDynamic]}
+                    />
                     <div className={styles_subs.fieldset}>
                         <div className={styles.input_group}>
                             <MainInput
@@ -107,18 +119,11 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                 onChangeText={onChange(volumeType)}
                                 unit={UnitsToTypes[volumeType]}
                             />
-                            <VolumeDescription volumeType={volumeType} asset={asset} currency={currency} />
-                            <MinimumAmount
-                                volumeType={volumeType}
-                                asset={robotData ? asset : ""}
-                                minAmount={minAmounts[InputTypes.assetStatic]}
-                                minAmountUSD={minAmounts[InputTypes.currencyDynamic]}
-                            />
                             {selectedInputs.filter(notSelectedAndNotPercentage).map((input, i) => {
                                 const { type } = input;
                                 return (
                                     <div key={`subscribe-${type}`} className={styles.input_container}>
-                                        {i >= 1 && <Delimiter />}
+                                        <Delimiter />
                                         <ValueInput
                                             disabled={!enabled}
                                             customClassName={styles.modalInput}

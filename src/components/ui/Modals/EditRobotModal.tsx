@@ -50,6 +50,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
         volumeType,
         setVolumeType,
         minAmounts,
+        usedAccountPercent,
         errors
     } = useSubscribeModal({
         limits,
@@ -103,6 +104,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
                     inputValues={inputValues}
                     setInputValues={setInputValues}
                     validate={validate}
+                    usedAccountPercent={usedAccountPercent}
                     inputs={inputs}
                     minAmounts={minAmounts}
                     setVolumeType={setVolumeType}
