@@ -9,7 +9,7 @@ export const actionText = {
         "If there are any open positions created by this robot, they will be cancelled (closed). This may potentially cause profit loss."
 };
 
-const getLimits = (data, type) => {
+export const getLimits = (data, type) => {
     const result = {
         total_balance_usd: 0,
         used_balance_percent: 0,
@@ -55,6 +55,10 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
     return result;
 };
 
+export const limitsPropToType = {
+    signals: "userSignal",
+    robot: "userRobot"
+};
 export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
 
 export const getLimitsForRobot = (data) => getLimits(data, "userRobot");

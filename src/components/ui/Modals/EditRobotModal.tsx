@@ -6,7 +6,7 @@ import { ROBOT } from "graphql/local/queries";
 import { GET_MARKETS } from "graphql/common/queries";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { Button, Modal } from "components/basic";
-import { buildSettings, getLimitsForRobot } from "./helpers";
+import { buildSettings, getLimits, limitsPropToType } from "./helpers";
 import { robotVolumeTypeOptions } from "./constants";
 import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
@@ -18,12 +18,13 @@ interface Props {
     onClose: (changesMade?: boolean) => void;
     isOpen: boolean;
     title: string;
+    type: string;
     setTitle: (title: string) => void;
     code?: string;
 }
 const inputs = AddRobotInputsMap;
 
-const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) => {
+const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
@@ -40,7 +41,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
         skip: !robotData
     });
 
-    const limits = useMemo(() => !loading && data && getLimitsForRobot(data), [loading, data]);
+    const limits = useMemo(() => !loading && data && getLimits(data, limitsPropToType[type]), [loading, data]);
 
     const subscribeModalProps = useSubscribeModal({
         limits,

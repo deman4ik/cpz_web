@@ -13,7 +13,7 @@ const _SignalRobots: React.FC<Props> = ({ data, width, type, refetch }) => {
     return (
         <div>
             <RobotsPageContainer data={data} displayType={type} width={width} />
-            <Modals width={width} afterClose={refetch} />
+            <Modals width={width} afterClose={refetch} type={type} />
         </div>
     );
 };

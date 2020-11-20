@@ -30,6 +30,8 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(initialValues);
 
+    const usedAccountPercent = limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0);
+
     useEffect(() => {
         setVolumeType(getDefaultVolumeType());
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +69,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         const valuesEmpty = inputValues && Object.values(inputValues).filter((i) => i).length === 0;
         if (!valuesEmpty) {
             return validateVolume({
-                used_percent: limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0), //removing percent usage from current robot, so we could reassign that
+                used_percent: usedAccountPercent,
                 type,
                 value: inputValues[type],
                 maxAmount: maxAmounts[type],
@@ -89,6 +91,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         minAmounts,
         precision,
         maxAmounts,
+        usedAccountPercent,
         validate,
         volumeType,
         setVolumeType,
