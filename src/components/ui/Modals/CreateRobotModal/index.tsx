@@ -64,7 +64,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     });
     const { data: limitsData, loading: limitsLoading } = useQuery(GET_MARKETS, {
         variables: {
-            id: inputKey,
+            id: inputKey || null,
             exchange: !robotData ? null : exchange,
             asset: !robotData ? null : asset,
             currency: !robotData ? null : currency,
