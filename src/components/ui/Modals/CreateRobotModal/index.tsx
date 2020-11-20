@@ -22,7 +22,6 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { GET_MARKETS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
-import { ModalLoading } from "components/ui/Modals/ModalLoading";
 
 interface Props {
     onClose: (changesMade: boolean) => void;

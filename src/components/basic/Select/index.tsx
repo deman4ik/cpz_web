@@ -24,7 +24,6 @@ export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 20
             <style jsx>
                 {`
                     .select {
-                        margin-bottom: 10px;
                         outline: none;
                         background-color: var(--darkBg);
                         color: var(--accent);
