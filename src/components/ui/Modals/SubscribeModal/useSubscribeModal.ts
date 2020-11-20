@@ -30,7 +30,9 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(initialValues);
 
-    const usedAccountPercent = limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0);
+    const usedAccountPercent = Math.ceil(
+        limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0)
+    );
 
     useEffect(() => {
         setVolumeType(getDefaultVolumeType());

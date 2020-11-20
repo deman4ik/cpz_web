@@ -20,7 +20,9 @@ export const getLimits = (data, type) => {
     const { v_user_exchange_accs } = data || {};
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
-    const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
+    const exchangeAccWithUserBalanceUsage = v_user_exchange_accs.find((i) => i.amounts.used_balance_percent !== null);
+
+    const { amounts, total_balance_usd, user } = exchangeAccWithUserBalanceUsage;
 
     const { markets } = user;
 
@@ -57,7 +59,7 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
 
 export const limitsPropToType = {
     signals: "userSignal",
-    robot: "userRobot"
+    robots: "userRobot"
 };
 export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
 
@@ -68,7 +70,7 @@ export const calculateCurrency = (asset: string | number, price: number): number
 export const calculateAsset = (currency: string | number, price: number): number =>
     price === 0 ? 0 : Number(currency) / price;
 
-export const getPercent = (amountUSD, balance) => (amountUSD / balance) * 100;
+export const getPercent = (amountUSD, balance) => Math.ceil((amountUSD / balance) * 100);
 
 export const formatNumber = (n: number, precision?: number): string => formatMoney(n, precision || 6);
 
