@@ -102,6 +102,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         validate,
         volumeType,
         setVolumeType,
+        usedAccountPercent,
         minAmounts,
         errors
     } = useSubscribeModal({
@@ -229,6 +230,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         volumeTypeOptions={robotVolumeTypeOptions}
                         inputs={inputs}
                         robotData={robotData}
+                        usedAccountPercent={usedAccountPercent}
                         formError={formError}
                         inputValues={inputValues}
                         setInputValues={setInputValues}

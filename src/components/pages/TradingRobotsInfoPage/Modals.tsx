@@ -25,6 +25,7 @@ export const Modals: React.FC = () => {
                 />
             </Modal>
             <EditRobotModal
+                type="robot"
                 isOpen={getIsVisibleStatus(modalType.edit, dataModal)}
                 onClose={onClose}
                 title={titleModal}

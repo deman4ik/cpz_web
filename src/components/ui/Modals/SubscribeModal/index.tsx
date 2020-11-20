@@ -59,6 +59,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         parsedLimits,
         validate,
         volumeType,
+        usedAccountPercent,
         setVolumeType,
         minAmounts,
         errors
@@ -153,6 +154,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                 />
             }>
             <SubscribeModalContent
+                usedAccountPercent={usedAccountPercent}
                 minAmounts={minAmounts}
                 volumeTypeOptions={volumeTypeOptions}
                 inputValues={inputValues}

@@ -2,28 +2,40 @@ import React, { FC } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
 import { InputTypes } from "components/ui/Modals/types";
-import { AssetTypes, trimNumber } from "components/ui/Modals/helpers";
+import { AssetTypes, formatNumber, getPercent, trimNumber } from "components/ui/Modals/helpers";
 
 interface MinimumAmountProps {
     minAmount: number;
+    balance: number;
     asset: string;
     volumeType: InputTypes;
     minAmountUSD: number;
 }
-export const MinimumAmount: FC<MinimumAmountProps> = ({ minAmount, asset, minAmountUSD, volumeType }) => {
+const textStyle = { color: "white" };
+
+export const MinimumAmount: FC<MinimumAmountProps> = ({ minAmount, asset, minAmountUSD, volumeType, balance }) => {
     const isCurrentVolumeTypeAssetType = AssetTypes.includes(volumeType);
     const minUSD = trimNumber(minAmountUSD || 0);
     const min = trimNumber(minAmount || 0);
+
+    const percentValue = getPercent(minAmountUSD, balance).toFixed(2);
+    const minPercentValue =
+        volumeType === InputTypes.balancePercent ? (
+            <>
+                <span>{`${percentValue || 0} %`}</span>
+                &nbsp;≈&nbsp;
+            </>
+        ) : null;
     const currencyValue = (
         <>
             <span>{minUSD || 0}</span>
-            &nbsp;<span style={{ color: "white" }}>$</span>
+            &nbsp;<span style={textStyle}>$</span>
         </>
     );
     const assetValue = (
         <>
             <span>{min || 0}</span>&nbsp;
-            <span style={{ color: "white" }}>{asset}</span>
+            <span style={textStyle}>{asset}</span>
         </>
     );
     const primaryValue = isCurrentVolumeTypeAssetType ? assetValue : currencyValue;
@@ -33,6 +45,7 @@ export const MinimumAmount: FC<MinimumAmountProps> = ({ minAmount, asset, minAmo
             <div className={styles.value_group}>
                 <div className={styles_subs.label}>Minimal value is&nbsp;</div>
                 <div className={styles.value_row}>
+                    {minPercentValue}
                     {primaryValue}&nbsp;≈&nbsp;{secondaryValue}
                 </div>
             </div>

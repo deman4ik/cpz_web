@@ -6,8 +6,9 @@
 }
 
 .formComment {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
+    align-self: center;
 }
 
 .label {
@@ -18,15 +19,14 @@
     display: grid;
     text-align: center;
     font-size: 12px;
-    margin: 10px 0 10px 0;
+    margin: 5px auto;
 }
 
 .label.description span{
-    line-height: 2;
+    line-height: var(--normal2);
 }
 .fieldset {
     width: 100%;
-    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;

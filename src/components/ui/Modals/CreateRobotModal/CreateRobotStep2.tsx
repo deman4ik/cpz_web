@@ -15,6 +15,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
     robotData,
     formError,
     inputValues,
+    usedAccountPercent,
     setInputValues,
     validate,
     setVolumeType,
@@ -33,6 +34,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
         <div className={styles.container}>
             <div className={styles.form}>
                 <SubscribeModalContent
+                    usedAccountPercent={usedAccountPercent}
                     minAmounts={minAmounts}
                     volumeTypeOptions={volumeTypeOptions}
                     robotData={robotData}
