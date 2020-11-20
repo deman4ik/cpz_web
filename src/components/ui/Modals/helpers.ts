@@ -1,5 +1,5 @@
 import { formatMoney } from "config/utils";
-import { InputTypes, InputValues, volumes } from "components/ui/Modals/types";
+import { InputTypes, InputValues, Precision, volumes } from "components/ui/Modals/types";
 import { number } from "prop-types";
 
 export const actionText = {
@@ -8,14 +8,19 @@ export const actionText = {
     stop:
         "If there are any open positions created by this robot, they will be cancelled (closed). This may potentially cause profit loss."
 };
-
+export const precisionToVolumeMap = {
+    [InputTypes.assetDynamicDelta]: "amount",
+    [InputTypes.assetStatic]: "amount",
+    [InputTypes.currencyDynamic]: "price"
+};
+export const defaultPrecision = { price: 1, amount: 8 };
 export const getLimits = (data, type) => {
     const result = {
         total_balance_usd: 0,
         used_balance_percent: 0,
         asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } },
         price: 0,
-        precision: { price: 1, amount: 8 }
+        precision: defaultPrecision
     };
     const { v_user_exchange_accs } = data || {};
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
@@ -48,12 +53,14 @@ type SettingsType = {
 interface BuildSettingsProps {
     volumeType: InputTypes;
     inputValues: InputValues;
-    precision: number;
+    precision: Precision;
 }
 
 export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    result[volumes[volumeType]] = Number(Number(inputValues[volumeType]).toFixed(precision));
+    result[volumes[volumeType]] = Number(
+        Number(inputValues[volumeType]).toFixed(precision[precisionToVolumeMap[volumeType]])
+    );
     return result;
 };
 

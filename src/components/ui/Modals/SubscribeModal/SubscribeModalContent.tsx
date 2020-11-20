@@ -5,11 +5,19 @@ import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
 import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolumeType";
-import { InputMap, InputTypes, InputValues, UnitsToTypes, volumes, VolumeTypeOption } from "components/ui/Modals/types";
+import {
+    InputMap,
+    InputTypes,
+    InputValues,
+    Precision,
+    UnitsToTypes,
+    volumes,
+    VolumeTypeOption
+} from "components/ui/Modals/types";
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
-import { formatNumber, translateValue } from "components/ui/Modals/helpers";
+import { formatNumber, precisionToVolumeMap, translateValue } from "components/ui/Modals/helpers";
 import { PercentsAvailable } from "components/ui/Modals/SubscribeModal/PercentnsAvailable";
 
 export interface SubscribeModalContentProps {
@@ -18,7 +26,7 @@ export interface SubscribeModalContentProps {
     volumeType: InputTypes;
     parsedLimits: number[];
     robotData: any;
-    precision: number;
+    precision: Precision;
     usedAccountPercent: number;
     onKeyPress: (e: any) => void;
     enabled: boolean;
@@ -61,14 +69,14 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
 
         const numValue = Number(value);
         newValues[type] = numValue;
-        newDisplayedValues[type] = formatNumber(numValue, precision);
+        newDisplayedValues[type] = formatNumber(numValue, precision[precisionToVolumeMap[type]]);
 
         Object.keys(newValues)
             .filter((i) => i !== type)
             .forEach((el) => {
                 const newValue = translateValue({ value, price, balance }, type, el);
                 newValues[el] = newValue;
-                newDisplayedValues[el] = formatNumber(newValue, precision);
+                newDisplayedValues[el] = formatNumber(newValue, precision[precisionToVolumeMap[el]]);
             });
         setInputValues(newValues);
         setDisplayedValues(newDisplayedValues);

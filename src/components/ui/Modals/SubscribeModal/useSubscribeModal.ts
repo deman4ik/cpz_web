@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Input, InputMap, InputTypes, InputValues, volumes } from "components/ui/Modals/types";
+import { InputMap, InputTypes, InputValues, Precision } from "components/ui/Modals/types";
 import {
     AssetTypes,
     CurrencyTypes,
+    defaultPrecision,
     getInputValues,
-    getMaxAmounts,
-    getMinAmounts,
     parseLimits,
     translateValue,
     validateVolume
@@ -19,16 +18,19 @@ interface UseSubscribeModalProps {
 }
 
 const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
-const precisionToVolumeMap = {
-    [InputTypes.assetDynamicDelta]: "amount",
-    [InputTypes.assetStatic]: "amount",
-    [InputTypes.currencyDynamic]: "price"
-};
+
 export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
     const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
+    const getPrecision = () => (limits && limits.precision) || defaultPrecision;
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(initialValues);
+    const [precision, setPrecision] = useState<Precision>(getPrecision());
+
+    useEffect(() => {
+        setPrecision(getPrecision());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [volumeType, limits]);
 
     const usedAccountPercent = Math.ceil(
         limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0)
@@ -84,7 +86,6 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const getErrors = () => selectedInputs.map((input) => validate(input.type));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const errors = useMemo(() => getErrors().filter((i) => i), [inputValues, volumeType]);
-    const precision = (limits && limits.precision[precisionToVolumeMap[volumeType]]) || 0;
 
     return {
         inputValues,
