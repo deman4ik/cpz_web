@@ -19,9 +19,9 @@ export const getLimits = (data, type) => {
     const { v_user_exchange_accs } = data || {};
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
-    const { total_balance_usd, user } = v_user_exchange_accs[0];
+    const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
 
-    const { amounts, markets } = user;
+    const { markets } = user;
 
     if (markets && markets.length) {
         const { current_price, limits } = markets[0];
