@@ -15,7 +15,6 @@ export const precisionToVolumeMap = {
 };
 export const defaultPrecision = { price: 1, amount: 8 };
 export const getLimits = (data, type) => {
-    console.log(data, 'DATA');
     const result = {
         total_balance_usd: 0,
         used_balance_percent: 0,
