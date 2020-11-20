@@ -17,6 +17,7 @@ export interface SubscribeModalContentProps {
     volumeType: InputTypes;
     parsedLimits: number[];
     robotData: any;
+    precision: number;
     onKeyPress: (e: any) => void;
     enabled: boolean;
     formError: string;
@@ -26,6 +27,7 @@ export interface SubscribeModalContentProps {
     validate: (type: InputTypes) => void;
     volumeTypeOptions: VolumeTypeOption[];
 }
+
 const SELECT_AMOUNT = "Select amount type and enter desired trading amount";
 export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     validate,
@@ -37,6 +39,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     formError,
     enabled,
     inputs,
+    precision,
     inputValues,
     setInputValues,
     minAmounts,
@@ -53,15 +56,16 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         const newValues = { ...inputValues };
         const newDisplayedValues = { ...displayedValues };
 
-        newValues[type] = Number(value);
-        newDisplayedValues[type] = value;
+        const numValue = Number(value);
+        newValues[type] = numValue;
+        newDisplayedValues[type] = formatNumber(numValue, precision);
 
         Object.keys(newValues)
             .filter((i) => i !== type)
             .forEach((el) => {
                 const newValue = translateValue({ value, price, balance }, type, el);
                 newValues[el] = newValue;
-                newDisplayedValues[el] = formatNumber(newValue);
+                newDisplayedValues[el] = formatNumber(newValue, precision);
             });
         setInputValues(newValues);
         setDisplayedValues(newDisplayedValues);

@@ -14,7 +14,8 @@ const getLimits = (data, type) => {
         total_balance_usd: 0,
         used_balance_percent: 0,
         asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } },
-        price: 0
+        price: 0,
+        precision: { price: 1, amount: 8 }
     };
     const { v_user_exchange_accs } = data || {};
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
@@ -24,10 +25,11 @@ const getLimits = (data, type) => {
     const { amounts, markets } = user;
 
     if (markets && markets.length) {
-        const { current_price, limits } = markets[0];
+        const { current_price, limits, precision } = markets[0];
 
         result.asset = limits[type];
         result.price = current_price;
+        result.precision = precision;
     }
     result.total_balance_usd = total_balance_usd;
     result.used_balance_percent = amounts.used_balance_percent || 0;
@@ -44,10 +46,12 @@ type SettingsType = {
 interface BuildSettingsProps {
     volumeType: InputTypes;
     inputValues: InputValues;
+    precision: number;
 }
-export const buildSettings = ({ volumeType, inputValues }: BuildSettingsProps) => {
+
+export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps) => {
     const result: SettingsType = { volumeType };
-    result[volumes[volumeType]] = Number(Number(inputValues[volumeType]).toFixed(6));
+    result[volumes[volumeType]] = Number(Number(inputValues[volumeType]).toFixed(precision));
     return result;
 };
 
@@ -62,7 +66,7 @@ export const calculateAsset = (currency: string | number, price: number): number
 
 export const getPercent = (amountUSD, balance) => (amountUSD / balance) * 100;
 
-export const formatNumber = (n: number): string => formatMoney(n, 6);
+export const formatNumber = (n: number, precision?: number): string => formatMoney(n, precision || 6);
 
 export const trimNumber = (n: number): string => Number(n.toFixed(6)).toString();
 
@@ -93,14 +97,14 @@ const translateFunctions = {
     //from Type
     assetStatic: {
         //to Types
-        assetDynamicDelta: ({ value }) => value,
+        assetDynamicDelta: ({ value }) => Number(value),
         balancePercent: ({ value, price, balance }) => getPercent(calculateCurrency(value, price), balance),
         currencyDynamic: ({ value, price }) => calculateCurrency(value, price)
     },
     assetDynamicDelta: {
         //to Types
         currencyDynamic: ({ value, price }) => calculateCurrency(value, price),
-        assetStatic: ({ value }) => value,
+        assetStatic: ({ value }) => Number(value),
         balancePercent: ({ value, price, balance }) => getPercent(calculateCurrency(value, price), balance)
     },
     //from Type

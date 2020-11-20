@@ -7,6 +7,7 @@ export const GET_MARKETS = gql`
             user {
                 markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
                     asset
+                    precision
                     current_price
                     limits
                 }

@@ -19,7 +19,11 @@ interface UseSubscribeModalProps {
 }
 
 const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
-
+const precisionToVolumeMap = {
+    [InputTypes.assetDynamicDelta]: "amount",
+    [InputTypes.assetStatic]: "amount",
+    [InputTypes.currencyDynamic]: "price"
+};
 export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
     const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
@@ -76,12 +80,14 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const getErrors = () => selectedInputs.map((input) => validate(input.type));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const errors = useMemo(() => getErrors().filter((i) => i), [inputValues, volumeType]);
+    const precision = (limits && limits.precision[precisionToVolumeMap[volumeType]]) || 0;
 
     return {
         inputValues,
         setInputValues,
         parsedLimits,
         minAmounts,
+        precision,
         maxAmounts,
         validate,
         volumeType,
