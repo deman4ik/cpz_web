@@ -6,7 +6,7 @@ export const supportContent = () => [
         icon: "help",
         iconColor: color.secondary, //secondary
         title: "Documentation",
-        text: "Learn all about Cryptuoso Platform.\n How to configure and use signals, robots and exchange accounts.",
+        text: "Learn all about Cryptuoso Robots.\n How to configure and use signals, robots and exchange accounts.",
         button: "DOCUMENTATION",
         buttonType: "outline-secondary",
         href: DOCS_URL
