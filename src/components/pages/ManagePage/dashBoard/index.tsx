@@ -6,7 +6,7 @@ import UserStats from "./components/UserStats";
 // styles
 import styles from "./styles/Dasboard.module.css";
 // constants
-import { PageType } from "config/types";
+import { PageType, RobotsType } from "config/types";
 import { RobotsTotalPerformance } from "./components/RobotsTotalPerformance";
 import { ROBOTS_TOTAL_PERFORMANCE, USER_ROBOTS_TOTAL_PERFORMANCE } from "graphql/signals/queries";
 
@@ -17,7 +17,7 @@ const MangeDashboard: React.FC<any> = () => {
                 <RobotsTotalPerformance
                     title="Robots Total Performance"
                     query={ROBOTS_TOTAL_PERFORMANCE}
-                    type="robots"
+                    type={RobotsType.robots}
                 />
                 <RobotsTotalPerformance
                     title="User Robots Total Performance"

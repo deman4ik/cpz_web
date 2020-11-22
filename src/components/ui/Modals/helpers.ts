@@ -1,6 +1,5 @@
 import { formatMoney } from "config/utils";
-import { InputTypes, InputValues, Precision, volumes } from "components/ui/Modals/types";
-import { number } from "prop-types";
+import { InputTypes, InputValues, Precision, RobotResult, volumes } from "components/ui/Modals/types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -14,6 +13,40 @@ export const precisionToVolumeMap = {
     [InputTypes.currencyDynamic]: "price"
 };
 export const defaultPrecision = { price: 1, amount: 8 };
+
+function parseRobotResult(data, type) {
+    const result: RobotResult = {};
+    const { v_user_exchange_accs } = data || {};
+    if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
+
+    const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
+
+    const { markets } = user;
+
+    if (markets && markets.length) {
+        const { current_price, limits, precision } = markets[0];
+        result.asset = limits[type];
+        result.price = current_price;
+        result.precision = precision;
+    }
+    result.total_balance_usd = total_balance_usd;
+    result.used_balance_percent = amounts.used_balance_percent || 0;
+    return result;
+}
+export const limitsPropToType = {
+    signals: "userSignal",
+    robots: "userRobot"
+};
+function parseSignalResult(data, type) {
+    const { v_user_markets: markets } = data;
+    if (!(markets && markets.length)) return {};
+
+    const { limits, ...rest } = markets[0];
+    return {
+        ...rest,
+        asset: limits[type]
+    };
+}
 export const getLimits = (data, type) => {
     const result = {
         total_balance_usd: 0,
@@ -22,26 +55,13 @@ export const getLimits = (data, type) => {
         price: 0,
         precision: defaultPrecision
     };
-    const { v_user_exchange_accs } = data || {};
-    if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
-
-    const exchangeAccWithUserBalanceUsage = v_user_exchange_accs.find((i) => i.amounts.used_balance_percent !== null);
-
-    const { amounts, total_balance_usd, user } = exchangeAccWithUserBalanceUsage;
-
-    const { markets } = user;
-
-    if (markets && markets.length) {
-        const { current_price, limits, precision } = markets[0];
-
-        result.asset = limits[type];
-        result.price = current_price;
-        result.precision = precision;
+    let parsedData;
+    if (type === limitsPropToType.robots) {
+        parsedData = parseRobotResult(data, type);
+    } else if (type === limitsPropToType.signals) {
+        parsedData = parseSignalResult(data, type);
     }
-    result.total_balance_usd = total_balance_usd;
-    result.used_balance_percent = amounts.used_balance_percent || 0;
-
-    return result;
+    return { ...result, ...parsedData };
 };
 type SettingsType = {
     volumeType: string;
@@ -64,10 +84,6 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
     return result;
 };
 
-export const limitsPropToType = {
-    signals: "userSignal",
-    robots: "userRobot"
-};
 export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
 
 export const getLimitsForRobot = (data) => getLimits(data, "userRobot");
@@ -175,13 +191,5 @@ type AmountType = {
     [InputTypes.assetStatic]: number;
     [InputTypes.currencyDynamic]: number;
 };
-export function getMinAmounts(parsedLimits): AmountType {
-    const [, minAmount, , minAmountUSD] = parsedLimits;
-    return { [InputTypes.assetStatic]: minAmount, [InputTypes.currencyDynamic]: minAmountUSD };
-}
-export function getMaxAmounts(parsedLimits): AmountType {
-    const [, , maxAmount, , maxAmountUSD] = parsedLimits;
-    return { [InputTypes.assetStatic]: maxAmount, [InputTypes.currencyDynamic]: maxAmountUSD };
-}
 export const AssetTypes = [InputTypes.assetDynamicDelta, InputTypes.assetStatic];
 export const CurrencyTypes = [InputTypes.currencyDynamic, InputTypes.balancePercent];

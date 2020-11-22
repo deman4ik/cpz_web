@@ -4,7 +4,7 @@ import { buildRobotPositionCandlesQuery, CANDLES_FOR_BACKTEST } from "graphql/ro
 import { BACKTEST_POSITION_CANDLE_SUB, buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
 
-const actions = ["delete", "start", "stop"];
+export const actions = ["delete", "start", "stop"];
 
 export const getIsVisibleStatus = (
     modal: modalType,

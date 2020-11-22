@@ -1,7 +1,6 @@
 import { capitalize, getStats, getVolume, getVolumeType, getVolumeWithUnit } from "config/utils";
 import { color } from "config/constants";
 import dayjs from "libs/dayjs";
-import { volumes } from "components/ui/Modals/types";
 
 // TODO: use DB-like structure
 export const formatRobotData = (robot: any) => {
@@ -45,7 +44,6 @@ export const createVariable = (robotData, type) => {
     const { robot, userRobot } = robotData;
     if (userRobot) {
         const { user_robot_settings } = userRobot.user_robot_settings;
-        const volumeType = volumes[user_robot_settings.volumeType];
         return {
             variables: {
                 isVisible: true,
@@ -62,10 +60,7 @@ export const createVariable = (robotData, type) => {
                     exchange: robot.exchange,
                     asset: robot.asset,
                     currency: robot.currency,
-                    settings: {
-                        [volumeType]: user_robot_settings[volumeType],
-                        volumeType: user_robot_settings.volumeType
-                    }
+                    settings: user_robot_settings
                 },
                 type
             }

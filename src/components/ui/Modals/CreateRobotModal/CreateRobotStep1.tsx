@@ -106,7 +106,6 @@ const _CreateRobotStep1: React.FC<Props> = ({
                     <>
                         <div className={styles.btns}>
                             <Button
-                                isLoading={!enabled}
                                 className={styles.btn}
                                 title="Cancel"
                                 icon="close"
@@ -115,6 +114,7 @@ const _CreateRobotStep1: React.FC<Props> = ({
                                 onClick={onClose}
                             />
                             <Button
+                                isLoading={!enabled}
                                 className={styles.btn}
                                 title="Next"
                                 icon="chevronright"

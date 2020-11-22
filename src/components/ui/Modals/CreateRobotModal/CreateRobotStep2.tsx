@@ -24,7 +24,6 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
                 <SubscribeModalContent {...subscribeModalProps} enabled={enabled} />
                 <div className={styles.btns}>
                     <Button
-                        isLoading={!enabled}
                         className={styles.btn}
                         title="Back"
                         icon="chevronleft"
@@ -33,6 +32,7 @@ const _CreateRobotStep2: React.FC<CreateRobotStep2Props> = ({
                         onClick={handleOnBack}
                     />
                     <Button
+                        isLoading={!enabled}
                         className={styles.btn}
                         title="Next"
                         icon="chevronright"

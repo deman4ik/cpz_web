@@ -17,7 +17,7 @@ import {
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
-import { formatNumber, precisionToVolumeMap, translateValue } from "components/ui/Modals/helpers";
+import { AssetTypes, formatNumber, precisionToVolumeMap, translateValue } from "components/ui/Modals/helpers";
 import { PercentsAvailable } from "components/ui/Modals/SubscribeModal/PercentnsAvailable";
 
 export interface SubscribeModalContentProps {
@@ -30,7 +30,7 @@ export interface SubscribeModalContentProps {
     usedAccountPercent: number;
     onKeyPress: (e: any) => void;
     enabled: boolean;
-    formError: string;
+    formError?: string;
     inputs: InputMap;
     minAmounts: { [key in InputTypes]?: number };
     inputValues: InputValues;
@@ -74,9 +74,9 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         Object.keys(newValues)
             .filter((i) => i !== type)
             .forEach((el) => {
-                const newValue = translateValue({ value, price, balance }, type, el);
+                const newValue = translateValue({ value, price, balance }, type, el) || 0;
                 newValues[el] = newValue;
-                newDisplayedValues[el] = formatNumber(newValue, precision[precisionToVolumeMap[el]]);
+                newDisplayedValues[el] = Number(newValue.toFixed(6)) || 0;
             });
         setInputValues(newValues);
         setDisplayedValues(newDisplayedValues);
@@ -95,10 +95,12 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);
 
+    const getUnit = (type) => (AssetTypes.includes(type) && asset) || UnitsToTypes[type];
+
     const notSelectedAndNotPercentage = (i) => ![volumeType, InputTypes.balancePercent].includes(i.type);
     return (
         <>
-            <ErrorLine formError={formError} />
+            {formError && <ErrorLine formError={formError} />}
             <div className={styles.container}>
                 <div className={styles.bodyTitle}>{SELECT_AMOUNT}</div>
                 <div className={styles_subs.form}>
@@ -129,7 +131,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                 volume={displayedValues[volumeType]}
                                 onKeyPress={onKeyPress}
                                 onChangeText={onChange(volumeType)}
-                                unit={UnitsToTypes[volumeType]}
+                                unit={getUnit(volumeType)}
                             />
                             {selectedInputs.filter(notSelectedAndNotPercentage).map((input, i) => {
                                 const { type } = input;
@@ -145,7 +147,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                             volume={displayedValues[type]}
                                             onKeyPress={onKeyPress}
                                             onChangeText={onChange(type)}
-                                            unit={UnitsToTypes[type]}
+                                            unit={getUnit(type)}
                                         />
                                     </div>
                                 );
