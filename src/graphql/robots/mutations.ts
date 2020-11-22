@@ -9,8 +9,8 @@ export const USER_ROBOT_CREATE = gql`
 `;
 
 export const USER_ROBOT_EDIT = gql`
-    mutation userRobotEdit($id: uuid!, $settings: UserRobotSettings!) {
-        userRobotEdit(id: $id, settings: $settings) {
+    mutation userRobotEdit($robotId: uuid!, $settings: UserRobotSettings!) {
+        userRobotEdit(id: $robotId, settings: $settings) {
             result
         }
     }

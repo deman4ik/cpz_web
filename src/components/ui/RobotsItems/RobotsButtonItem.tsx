@@ -22,13 +22,19 @@ export const RobotsButtonItem: React.FC<Props> = ({
     robotStatus
 }) => {
     const { title, icon, type, hoverTitle, hoverIcon, hoverType } = displayData[displayType];
-    const checker = displayType === "signals" ? isSubscribed : robotStatus;
-    const canDisplayHover = () =>
-        (displayType === "robots" && (robotStatus === "started" || robotStatus === "paused")) ||
-        (displayType === "signals" && isSubscribed);
-    const canDisplayEdit = () =>
-        (displayType === "signals" && isSubscribed) || (displayType === "robots" && robotStatus === "stopped");
-    const canDisplayDelete = () => displayType === "robots" && robotStatus === "stopped";
+    const isRobotType = displayType === "robots";
+    const isSignalType = displayType === "signals";
+
+    const checker = isSignalType ? isSubscribed : robotStatus;
+    const statusStarted = robotStatus === "started";
+    const statusStopped = robotStatus === "stopped";
+    const statusPaused = robotStatus === "paused";
+
+    const typeSignalAndSubscribed = isSignalType && isSubscribed;
+    const typeRobotAndStopped = isRobotType && statusStopped;
+    const canDisplayHover = () => (isRobotType && (statusStarted || statusPaused)) || typeSignalAndSubscribed;
+    const canDisplayEdit = () => typeSignalAndSubscribed || typeRobotAndStopped;
+    const canDisplayDelete = () => typeRobotAndStopped;
 
     return (
         <div className={styles.cellAction}>
@@ -39,7 +45,7 @@ export const RobotsButtonItem: React.FC<Props> = ({
                 isUppercase
                 width={120}
                 size="small"
-                disabled={displayType === "robots" && robotStatus === "stopping"}
+                disabled={isRobotType && robotStatus === "stopping"}
                 hoverChanges={
                     canDisplayHover()
                         ? {

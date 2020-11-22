@@ -1,4 +1,5 @@
 import { InputTypes } from "components/ui/Modals/types";
+import { RobotsType } from "config/types";
 
 export const volumeTypeOptions = [
     {
@@ -23,6 +24,10 @@ export const robotVolumeTypeOptions = [
     }
 ];
 
+export const volumeTypeOptionsMap = {
+    [RobotsType.robots]: robotVolumeTypeOptions,
+    [RobotsType.signals]: volumeTypeOptions
+};
 export const AssetStaticInputs = [{ type: InputTypes.assetStatic }, { type: InputTypes.currencyDynamic }];
 export const CurrencyDynamicInputs = [{ type: InputTypes.currencyDynamic }, { type: InputTypes.assetStatic }];
 export const AssetDynamicDeltaInputs = [{ type: InputTypes.assetDynamicDelta }, { type: InputTypes.currencyDynamic }];

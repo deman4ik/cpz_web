@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useContext, useEffect, useMemo, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "libs/hoc/context";
 
@@ -19,7 +19,7 @@ import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
-import { GET_MARKETS } from "graphql/common/queries";
+import { GET_MARKETS_ROBOTS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 
@@ -62,16 +62,27 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         variables: { ...variables, user_id },
         skip: !robotData
     });
-    const { data: limitsData, loading: limitsLoading } = useQuery(GET_MARKETS, {
+
+    const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
             id: inputKey,
             exchange: !robotData ? null : exchange,
             asset: !robotData ? null : asset,
             currency: !robotData ? null : currency,
             user_id
-        },
-        skip: !robotData
+        }
     });
+
+    useEffect(() => {
+        setFormError("");
+    }, [step]);
+
+    useEffect(() => {
+        const noMarketsYetAndNotRunning = inputKey && !limitsData && !limitsLoading;
+        if (noMarketsYetAndNotRunning) {
+            getMarkets();
+        }
+    }, [inputKey]);
 
     const handleOnChangeExchange = (value?: string) => {
         const key =
@@ -111,31 +122,33 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 settings,
                 userExAccId: inputKey
             }
-        }).then((response) => {
-            if (response.data.userRobotCreate.result) {
-                setNewRobotId(response.data.userRobotCreate.result);
-                createRobot({
-                    variables: {
-                        settings,
-                        robotInfo: {
-                            robotId: robotData.robot.id,
-                            userRobotId: response.data.userRobotCreate.result,
-                            code
+        })
+            .then((response) => {
+                if (response.data.userRobotCreate.result) {
+                    setNewRobotId(response.data.userRobotCreate.result);
+                    createRobot({
+                        variables: {
+                            settings,
+                            robotInfo: {
+                                robotId: robotData.robot.id,
+                                userRobotId: response.data.userRobotCreate.result,
+                                code
+                            }
                         }
-                    }
-                }).then((res) => {
-                    event({
-                        action: "create",
-                        category: "Robots",
-                        label: "create",
-                        value: robotData.robot.id
+                    }).then((res) => {
+                        event({
+                            action: "create",
+                            category: "Robots",
+                            label: "create",
+                            value: robotData.robot.id
+                        });
                     });
-                });
-            } else {
-                setFormError(response.data.userRobotCreate.error);
-            }
-            handleOnNext();
-        });
+                } else {
+                    setFormError(response.data.userRobotCreate.error);
+                }
+                handleOnNext();
+            })
+            .catch((e) => setFormError(e.message));
     };
 
     const onKeyPress = (e) => {
@@ -221,7 +234,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         inputs={inputs}
                         {...subscribeModalProps}
                         robotData={robotData}
-                        formError={formError}
                         onKeyPress={onKeyPress}
                         enabled={enabled}
                         handleOnBack={handleOnBack}

@@ -3,16 +3,18 @@ import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
-import { GET_MARKETS } from "graphql/common/queries";
-import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { queriesToRobotTypeMap } from "graphql/common/queries";
 import { Button, Modal } from "components/basic";
 import { buildSettings, getLimits, limitsPropToType } from "./helpers";
-import { robotVolumeTypeOptions } from "./constants";
+import { volumeTypeOptionsMap } from "./constants";
 import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "libs/hoc/context";
+import { EDIT_SIGNAL } from "graphql/signals/mutations";
+import { RobotsType } from "config/types";
+import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -24,6 +26,14 @@ interface Props {
 }
 const inputs = AddRobotInputsMap;
 
+const queryToEditType = {
+    [RobotsType.signals]: EDIT_SIGNAL,
+    [RobotsType.robots]: USER_ROBOT_EDIT
+};
+const mapPropToType = {
+    [RobotsType.robots]: "userRobotEdit",
+    [RobotsType.signals]: "userSignalEdit"
+};
 const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
     const { authState } = useContext(AuthContext);
 
@@ -31,7 +41,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     const { data: robotData } = useQuery(ROBOT);
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
-    const { data, loading, refetch } = useQuery(GET_MARKETS, {
+    const { data, loading, refetch } = useQuery(queriesToRobotTypeMap[type], {
         variables: {
             exchange,
             asset,
@@ -50,19 +60,21 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     });
     const { inputValues, volumeType, precision, errors } = subscribeModalProps;
 
-    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
+    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);
 
     const handleOnSubmit = () => {
         const settings = buildSettings({ volumeType, inputValues, precision });
+        const prop = mapPropToType[type];
         userRobotEdit({
             variables: {
-                id: robotData?.robot.userRobotId,
+                robotId: robotData?.robot.userRobotId || robotData?.robot.id,
                 settings
             }
         })
             .then((response) => {
-                if (response.data.userRobotEdit.result !== "OK") {
-                    setFormError(response.data.userRobotEdit.error);
+                const { data: responseData } = response;
+                if (responseData[prop].result !== "OK") {
+                    setFormError(responseData[prop].error);
                 }
                 refetch().catch((e) => console.error(e));
                 onClose(true);
@@ -92,7 +104,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
             <>
                 <SubscribeModalContent
                     {...subscribeModalProps}
-                    volumeTypeOptions={robotVolumeTypeOptions}
+                    volumeTypeOptions={volumeTypeOptionsMap[type]}
                     robotData={robotData}
                     formError={formError}
                     inputs={inputs}
