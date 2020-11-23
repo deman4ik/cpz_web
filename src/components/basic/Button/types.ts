@@ -42,6 +42,7 @@ export interface ButtonProps extends ButtonInnerProps {
     isLoading?: boolean;
     width?: number;
     disabled?: boolean;
+    blocked?: boolean;
     onClick?: () => void;
     className?: string;
     hoverChanges?: HoverChangesProps;
