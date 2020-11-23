@@ -31,7 +31,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [disabledEdit, setDisabledEdit] = useState(false);
+    const [editDisabled, setEditDisabled] = useState(true);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
     const [dataPicker, setDataPicker] = useState([]);
     const { data, loading } = useQuery(GET_EXCHANGES);
@@ -121,9 +121,13 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     useEffect(() => {
         if (!loadingCheck && options) {
             const checkElements = ["stopped", "paused"];
-            setDisabledEdit(
-                dataCheck.user_robots.some((el) => checkElements.includes(el.status)) && options.status !== "invalid"
-            );
+            const canEdit =
+                !dataCheck.user_robots.some((el) => checkElements.includes(el.status)) && options.status !== "invalid";
+            if (!canEdit) {
+                setEditDisabled(true);
+
+                setErrorMessage("This key cannot be edited at this time.");
+            }
         }
     }, [options, loadingCheck, dataCheck]);
 
@@ -142,7 +146,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                             value={inputName}
                             selectTextOnFocus
                             width={260}
-                            readonly={!!options}
+                            disabled={!!options}
                             onChangeText={(value) => handleOnChangeName(value)}
                         />
                     </div>
@@ -198,7 +202,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         width={125}
                         title={options ? "edit key" : "add key"}
                         isLoading={isFetching}
-                        disabled={disabledEdit}
+                        disabled={editDisabled}
                         icon="check"
                         isUppercase
                     />
