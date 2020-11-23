@@ -3,7 +3,6 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "graphql/robots/mutations";
-import { DELETE_ROBOT, ACTION_ROBOT } from "graphql/local/mutations";
 import { capitalize } from "config/utils";
 import { ErrorLine } from "components/common";
 import { Button } from "components/basic";
@@ -32,15 +31,16 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     const [formError, setFormError] = useState("");
     const { data } = useQuery(ROBOT);
 
+    const { name, code, userRobotId } = data?.robot;
     useEffect(() => {
-        setTitle(`${capitalize(type)} ${data ? data.robot.name : null}`);
-    }, [data, setTitle, type]);
+        setTitle(`${capitalize(type)} ${name || null}`);
+    }, [name, setTitle, type]);
 
     const robotAction = actionTypes[type];
     const [userRobotAction, { loading }] = useMutation(robotAction);
 
     const variables = {
-        id: data?.robot.userRobotId
+        id: userRobotId
     };
 
     function handleResponse(response: any) {
@@ -51,7 +51,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: data?.robot.userRobotId
+                    value: userRobotId
                 });
             }
             onClose(true);
@@ -68,11 +68,11 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: data?.robot.userRobotId
+                    value: userRobotId
                 });
             }
             onClose(true);
-            Router.push(`/robots/robot/${data?.robot.code}`);
+            Router.push(`/robots${code ? `/robot/${code}` : "?tab=2"}`);
         } catch (e) {
             console.error(e);
             setFormError(e.message);
@@ -85,7 +85,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             <div className={styles.container}>
                 <div className={styles.textWrapper}>
                     <div className={styles.bodyTitle}>
-                        Are you sure you want to {type} this {data ? data.robot.name : ""} robot?
+                        Are you sure you want to {type} this {name || ""} robot?
                     </div>
                     <div className={styles.bodyText}>{actionText[type]}</div>
                 </div>

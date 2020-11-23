@@ -15,6 +15,7 @@ import { AuthContext } from "libs/hoc/context";
 import { EDIT_SIGNAL } from "graphql/signals/mutations";
 import { RobotsType } from "config/types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -41,14 +42,13 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     const { data: robotData } = useQuery(ROBOT);
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
-    const { data, loading, refetch } = useQuery(queriesToRobotTypeMap[type], {
+    const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
             exchange,
             asset,
             currency,
             user_id: authState.user_id
-        },
-        skip: !robotData
+        }
     });
 
     const limits = useMemo(() => !loading && data && getLimits(data, limitsPropToType[type]), [loading, data]);

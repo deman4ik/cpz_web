@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { FC, memo, useState } from "react";
 
 // types
 import { TabSchema } from "./types";
@@ -11,10 +11,11 @@ import styles from "./styles/index.module.css";
 
 type Props = {
     tabSchema: TabSchema;
+    defaultActiveTab?: number;
 };
 
-const TabNavigation = ({ tabSchema }: Props): JSX.Element => {
-    const [activeTab, setActiveTab] = useState(0);
+const TabNavigation: FC<Props> = ({ tabSchema, defaultActiveTab }): JSX.Element => {
+    const [activeTab, setActiveTab] = useState(defaultActiveTab || 0);
 
     return (
         <div className={styles.container}>

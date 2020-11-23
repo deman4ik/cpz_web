@@ -14,6 +14,7 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { AuthContext } from "libs/hoc/context";
 import Router from "next/router";
 import { RobotsType } from "config/types";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     actionType?: string;
@@ -40,14 +41,13 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     const { data: robotData } = useQuery(ROBOT);
 
     const asset = robotData?.robot.subs.asset;
-    const { data: limitsData, loading } = useQuery(GET_MARKETS_SIGNALS, {
+    const { data: limitsData, loading } = useQueryWithAuth(true, GET_MARKETS_SIGNALS, {
         variables: {
             exchange: !robotData ? null : robotData?.robot.subs.exchange,
             asset: !robotData ? null : asset,
             currency: !robotData ? null : robotData?.robot.subs.currency,
             user_id
-        },
-        skip: !robotData
+        }
     });
 
     //utilities

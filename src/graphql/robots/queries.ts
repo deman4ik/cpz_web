@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
 import { fullStats, stats } from "graphql/queryFragments";
+import { RobotsType } from "config/types";
 
 export const candles = `candle {
             id
@@ -338,6 +339,11 @@ export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
   }
 `;
 
+const queriesToType = {
+    [RobotsType.robots]: CANDLES_FOR_USER_ROBOT,
+    [RobotsType.signals]: CANDLES_FOR_USER_SIGNAL
+};
+
 export function buildRobotPositionCandlesQuery(
     timeframe: number,
     isAuth: boolean,
@@ -346,11 +352,10 @@ export function buildRobotPositionCandlesQuery(
 ): DocumentNode {
     if (isAuth) {
         if (belongsToUser) {
-            return CANDLES_FOR_USER_ROBOT(timeframe);
+            return queriesToType[type](timeframe);
         }
-        return CANDLES_FOR_USER_SIGNAL(timeframe);
     }
-    return CANDLES_FOR_ROBOT(timeframe, type);
+    return CANDLES_FOR_ROBOT(timeframe);
 }
 
 export const USER_ROBOTS_BY_EXCHANGE_ID = gql`
