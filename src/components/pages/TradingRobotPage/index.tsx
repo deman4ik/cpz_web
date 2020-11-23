@@ -33,7 +33,7 @@ export const TradingRobotPage: React.FC = () => {
         router.back();
     };
 
-    const { data: robotInfoData, loading } = useQuery(robotInfoQuery, {
+    const { data: robotInfoData, loading, refetch } = useQuery(robotInfoQuery, {
         variables: queryVars,
         pollInterval: POLL_INTERVAL
     });
@@ -76,6 +76,7 @@ export const TradingRobotPage: React.FC = () => {
                     <PageHeader robotData={robotData} subscribe={subscribe} />
                     <RobotPageContent type={RobotsType.robots} robotData={robotData} width={width} />
                     <Modals
+                        afterClose={refetch}
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}
                         code={router.query.code as string}

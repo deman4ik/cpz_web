@@ -22,10 +22,11 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
     robotStatus
 }) => {
     const { title, icon, type } = displayData[displayType];
-    const checker = displayType === "signals" ? isSubscribed : robotStatus;
-    const canDisplayEdit = () =>
-        (displayType === "signals" && isSubscribed) || (displayType === "robots" && robotStatus === "stopped");
-    const canDisplayDelete = () => displayType === "robots" && robotStatus === "stopped";
+    const isTypeSignals = displayType === "signals";
+    const isTypeRobots = displayType === "robots";
+    const checker = isTypeSignals ? isSubscribed : robotStatus;
+    const canDisplayEdit = () => (isTypeSignals && isSubscribed) || isTypeRobots;
+    const canDisplayDelete = () => isTypeRobots && robotStatus === "stopped";
 
     return (
         <div className={styles.btnRow}>
@@ -36,7 +37,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
                 title={title(checker)}
                 type={type(checker)}
                 isUppercase
-                disabled={displayType === "robots" && robotStatus === "stopping"}
+                disabled={isTypeRobots && robotStatus === "stopping"}
                 style={{ marginLeft: 2, marginRight: 8 }}
                 size="small"
                 onClick={subscribeToggle}
