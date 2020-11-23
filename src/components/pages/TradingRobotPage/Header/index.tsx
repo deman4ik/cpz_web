@@ -24,7 +24,7 @@ const _PageHeader: React.FC<Props> = ({ robotData, subscribe }) => {
                     </div>
                     <HeaderButton subscribe={subscribe} robotData={robotData} />
                 </div>
-                {userRobot.message && (
+                {userRobot?.message && (
                     <div className={styles.headerMessage}>
                         <MessageAlert color={color.negative} size={22} />
                         <div>{capitalize(userRobot.message || null)}</div>
