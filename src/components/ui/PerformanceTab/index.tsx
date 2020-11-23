@@ -20,6 +20,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
 
 const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
+
     const chartData = useMemo(
         () =>
             !fullStats?.equity
@@ -32,9 +33,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth
     );
 
     const robotStatistics = useMemo(() => getRobotStatistic(fullStats?.statistics), [fullStats]);
-    return !fullStats ? (
-        <LoadingIndicator />
-    ) : !chartData ? (
+    return !fullStats || Object.keys(fullStats).length === 0 ? (
         <NoRecentData message="No recent data available" />
     ) : (
         <>
