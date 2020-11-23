@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Button } from "components/basic";
 import { formatMoney, colorAction } from "config/utils";
 import styles from "./PerformanceItemCard.module.css";
+import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 
 interface Props {
     item: any;
@@ -16,7 +17,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
     const handleOnPress = () => {
         onRedirectToDetailView(item.path);
     };
-
+    console.log(item);
     return (
         <div className={styles.container}>
             <div className={styles.headerCard}>
@@ -50,26 +51,12 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                         <div className={styles.emptyChart} />
                     )}
                 </div>
-                <div className={styles.statCol}>
-                    {item.winRate || item.winRate === 0 ? (
-                        <>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Win Rate</div>
-                                <div className={styles.statValue}>{item.winRate} %</div>
-                            </div>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Max Drawdown</div>
-                                <div className={styles.primaryText} style={colorAction(item.maxDrawdown > 0)}>
-                                    {`${formatMoney(item.maxDrawdown)} $`}
-                                </div>
-                            </div>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Trades Count</div>
-                                <div className={styles.statValue}>{item.tradesCount}</div>
-                            </div>
-                        </>
-                    ) : null}
-                </div>
+                <WinRateStatistics
+                    classNames={{ container: styles.statCol, wrapper: styles.statRow }}
+                    winRate={item.winRate}
+                    maxDrawdown={item.maxDrawdown}
+                    tradesCount={item.tradesCount}
+                />
             </div>
         </div>
     );
