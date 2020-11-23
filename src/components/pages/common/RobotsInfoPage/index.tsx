@@ -16,6 +16,7 @@ import { formatTradingRobots, formatSignalRobots } from "components/ui/SignalsRo
 import { OPEN_USER_POSITIONS, USER_ROBOTS } from "graphql/robots/queries";
 import { formatSignalsPositions, formatTradingRobotPositions } from "components/ui/RobotOpenPositions/helpers";
 import { AddRobotsCardWithHeader } from "components/common/AddRobotsCardWithHeader";
+import { useRouter } from "next/router";
 
 type Props = {
     type: RobotsType;
@@ -27,6 +28,8 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
     const {
         authState: { user_id }
     } = useContext(AuthContext);
+    const router = useRouter();
+    const defaultOpenTab = Number(router.query.tab || 0);
 
     // FOR TOTAL PERFORMANCE TAB
     const { data: allRobotsData } = useQueryWithAuth(true, ALL_USER_ROBOTS_AGGR_STATS, {
@@ -79,7 +82,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             width={width}
             toolbar={<PageToolbar displayType={typeIsSignals ? RobotsType.signals : RobotsType.robots} />}>
             {userHasRobots ? (
-                <TabNavigation tabSchema={tabSchema} />
+                <TabNavigation defaultActiveTab={defaultOpenTab} tabSchema={tabSchema} />
             ) : (
                 <div style={{ padding: 5 }}>
                     <AddRobotsCardWithHeader type={type} />

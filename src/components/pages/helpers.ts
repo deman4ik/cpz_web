@@ -3,6 +3,7 @@ import { RefObject } from "react";
 import { buildRobotPositionCandlesQuery, CANDLES_FOR_BACKTEST } from "graphql/robots/queries";
 import { BACKTEST_POSITION_CANDLE_SUB, buildRobotPositionCandleSubQuery } from "graphql/robots/subscriptions";
 import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
+import { RobotsType } from "config/types";
 
 export const actions = ["delete", "start", "stop"];
 
@@ -44,11 +45,11 @@ export const candleQueries = (timeframe: number, isAuth?: boolean, isAuthAndRobo
         realTimeSub: BACKTEST_POSITION_CANDLE_SUB(timeframe)
     },
     robot: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned),
+        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned, RobotsType.robots),
         realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
     },
     signal: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth),
+        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned, RobotsType.signals),
         realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
     }
 });
