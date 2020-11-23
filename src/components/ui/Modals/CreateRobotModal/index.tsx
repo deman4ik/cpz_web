@@ -13,7 +13,7 @@ import { StepWizard } from "components/basic";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
-import { ErrorLine } from "components/common";
+import { ErrorLine, LoadingIndicator } from "components/common";
 import { buildSettings, getLimitsForRobot } from "../helpers";
 import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";
@@ -41,7 +41,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [formError, setFormError] = useState("");
     const [newRobotId, setNewRobotId] = useState("");
     const [step, setStep] = useState(1);
-
+    const [loadingState, setLoadingState] = useState(true);
     const handleOnNext = () => {
         setStep(step + 1);
     };
@@ -205,9 +205,13 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         }
     }, [dataPicker]);
 
+    useEffect(() => {
+        setLoadingState(loading || createRobotLoading || startLoading);
+    }, [loading, createRobotLoading, startLoading]);
+
     const isValid = () => !errors.length;
 
-    const enabled = !(loading || createRobotLoading || startLoading);
+    const enabled = !loadingState;
     return (
         <>
             <>
@@ -215,7 +219,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                     <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
                 </div>
                 <ErrorLine formError={formError} />
-                {step === 1 && dataPicker && (
+                {step === 1 && (
                     <CreateRobotStep1
                         enabled={enabled}
                         dataPicker={dataPicker}
