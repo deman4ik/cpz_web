@@ -40,12 +40,13 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     //queries
     const { data: robotData } = useQuery(ROBOT);
 
+    const { name, code, id, subs } = robotData?.robot;
     const asset = robotData?.robot.subs.asset;
     const { data: limitsData, loading } = useQueryWithAuth(true, GET_MARKETS_SIGNALS, {
         variables: {
-            exchange: !robotData ? null : robotData?.robot.subs.exchange,
+            exchange: !robotData ? null : subs.exchange,
             asset: !robotData ? null : asset,
-            currency: !robotData ? null : robotData?.robot.subs.currency,
+            currency: !robotData ? null : subs.currency,
             user_id
         }
     });
@@ -72,21 +73,17 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     }, [editError, editLoading, subscribeError, subscribeLoading]);
 
     useEffect(() => {
-        setTitle(`${actionType === "edit" ? "Edit" : "Follow"} ${robotData?.robot.name}`);
-    }, [setTitle, actionType, robotData]);
+        setTitle(`${actionType === "edit" ? "Edit" : "Follow"} ${name}`);
+    }, [setTitle, actionType, name]);
 
     //validation
     const enabled = !editLoading && !subscribeLoading;
 
-    const actions = {
-        edit,
-        subscribe
-    };
     //handlers
     const onSubmit = async () => {
         const settings = buildSettings({ volumeType, inputValues, precision });
         const variables = {
-            robotId: robotData?.robot.id,
+            robotId: id,
             settings
         };
         if (actionType === "edit") {
@@ -107,10 +104,10 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                             action: "subscribe",
                             category: "Signals",
                             label: "subscribe",
-                            value: robotData?.robot.id
+                            value: id
                         });
                         onClose(true);
-                        Router.push(`/signals/robot/${robotData?.robot.code}`);
+                        Router.push(`/signals${code ? `/robot/${code}` : "?tab=2"}`);
                     }
                 })
                 .catch((e) => console.error(e));
