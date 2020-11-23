@@ -27,21 +27,19 @@ const _Toolbar: React.FC<Props> = ({ robotData, subscribe }) => {
                 />
             ) : (
                 <>
+                    <CaptionButton
+                        title="edit"
+                        icon="settings"
+                        responsive
+                        onClick={() => handleOnPressAction("edit")}
+                    />
                     {userRobot?.status === "stopped" ? (
-                        <>
-                            <CaptionButton
-                                title="edit"
-                                icon="settings"
-                                responsive
-                                onClick={() => handleOnPressAction("edit")}
-                            />
-                            <CaptionButton
-                                title="delete"
-                                icon="close"
-                                responsive
-                                onClick={() => handleOnPressAction("delete")}
-                            />
-                        </>
+                        <CaptionButton
+                            title="delete"
+                            icon="close"
+                            responsive
+                            onClick={() => handleOnPressAction("delete")}
+                        />
                     ) : null}
                 </>
             )}
