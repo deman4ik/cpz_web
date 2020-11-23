@@ -54,6 +54,7 @@ export const RobotsItem: React.FC<Props> = ({
     const handleOnPressDetails = () => {
         onRedirectToDetailView(item.code);
     };
+    console.log(item, 'ASLDJNAKS');
     const { profit, performance } = item;
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>

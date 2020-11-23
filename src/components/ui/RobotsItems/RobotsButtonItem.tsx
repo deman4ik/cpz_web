@@ -33,7 +33,7 @@ export const RobotsButtonItem: React.FC<Props> = ({
     const typeSignalAndSubscribed = isSignalType && isSubscribed;
     const typeRobotAndStopped = isRobotType && statusStopped;
     const canDisplayHover = () => (isRobotType && (statusStarted || statusPaused)) || typeSignalAndSubscribed;
-    const canDisplayEdit = () => typeSignalAndSubscribed || isRobotType;
+    const canDisplayEdit = () => typeSignalAndSubscribed || (isRobotType && robotStatus);
     const canDisplayDelete = () => typeRobotAndStopped;
 
     return (
