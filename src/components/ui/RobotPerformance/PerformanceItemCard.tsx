@@ -17,7 +17,6 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
     const handleOnPress = () => {
         onRedirectToDetailView(item.path);
     };
-    console.log(item);
     return (
         <div className={styles.container}>
             <div className={styles.headerCard}>

@@ -62,7 +62,7 @@ export const displayData = {
     },
     robots: {
         title: (checker) => (!checker ? "Add" : buttonName[checker]),
-        icon: (checker) => (checker ? (checker === "paused" ? "close" : "check") : "plus"),
+        icon: (checker) => (checker ? (checker === "paused" ? "" : "check") : "plus"),
         type: (checker) => (checker ? (checker === "paused" ? "negative" : "success") : "primary"),
         hoverTitle: (checker) => hoverTitle[checker],
         hoverIcon: (checker) => hoverIcon[checker],

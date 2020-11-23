@@ -17,6 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
     width,
     className,
     disabled,
+    blocked,
     responsive,
     size = "normal",
     hoverChanges,
@@ -54,7 +55,7 @@ export const Button: React.FC<ButtonProps> = ({
     const handleOnClick = isSubmitButton
         ? null
         : () => {
-              if (!isLoading && !disabled && onClick) {
+              if (!isLoading && !disabled && onClick && !blocked) {
                   onClick();
               }
           };
@@ -105,7 +106,8 @@ export const Button: React.FC<ButtonProps> = ({
         
           .btn {
             display: flex;
-            cursor: ${disabled ? "auto" : "pointer"};
+            pointer-events: ${blocked ? "none" : "auto"};
+            cursor: ${disabled || blocked ? "auto" : "pointer"};
             width: ${width ? `${width}px` : "min-content"};
             height: ${props[size].height}px;
             padding-left: 10px;
