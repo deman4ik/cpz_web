@@ -7,14 +7,18 @@ import { VisibleModal } from "./types";
 interface Props {
     isModalVisible: VisibleModal;
     setModalVisibility: (isModalVisible: VisibleModal) => void;
+    afterClose: () => void;
     width: number;
     code: string;
 }
 
 const actions = ["start", "stop", "delete"];
-const _Modals: React.FC<Props> = ({ isModalVisible, width, setModalVisibility, code }) => {
+const _Modals: React.FC<Props> = ({ isModalVisible, width, setModalVisibility, code, afterClose }) => {
     const [titleModal, setTitleModal] = useState(null);
-    const handleSetVisible = () => {
+    const handleSetVisible = (needsRefreshing?: boolean) => {
+        if (needsRefreshing) {
+            afterClose();
+        }
         setModalVisibility({ isVisible: false, type: "" });
     };
     return (
@@ -29,13 +33,13 @@ const _Modals: React.FC<Props> = ({ isModalVisible, width, setModalVisibility, c
             />
             <Modal
                 isOpen={isModalVisible.isVisible && isModalVisible.type === "create"}
-                onClose={handleSetVisible}
+                onClose={() => handleSetVisible()}
                 title="Add Trading Robot">
                 <CreateRobotModal onClose={handleSetVisible} code={code} width={width} />
             </Modal>
             <Modal
                 isOpen={isModalVisible.isVisible && actions.includes(isModalVisible.type)}
-                onClose={handleSetVisible}
+                onClose={() => handleSetVisible()}
                 title={titleModal}>
                 <ActionRobotModal type={isModalVisible.type} setTitle={setTitleModal} onClose={handleSetVisible} />
             </Modal>

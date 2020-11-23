@@ -32,8 +32,9 @@ export const RobotsButtonItem: React.FC<Props> = ({
 
     const typeSignalAndSubscribed = isSignalType && isSubscribed;
     const typeRobotAndStopped = isRobotType && statusStopped;
-    const canDisplayHover = () => (isRobotType && (statusStarted || statusPaused)) || typeSignalAndSubscribed;
-    const canDisplayEdit = () => typeSignalAndSubscribed || typeRobotAndStopped;
+
+    const canDisplayHover = () => (isRobotType && statusStarted) || typeSignalAndSubscribed;
+    const canDisplayEdit = () => typeSignalAndSubscribed || (isRobotType && robotStatus);
     const canDisplayDelete = () => typeRobotAndStopped;
 
     return (
@@ -45,6 +46,7 @@ export const RobotsButtonItem: React.FC<Props> = ({
                 isUppercase
                 width={120}
                 size="small"
+                blocked={isRobotType && statusPaused}
                 disabled={isRobotType && robotStatus === "stopping"}
                 hoverChanges={
                     canDisplayHover()
