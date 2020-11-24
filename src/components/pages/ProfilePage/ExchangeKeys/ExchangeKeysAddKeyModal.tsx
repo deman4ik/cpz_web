@@ -31,14 +31,9 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [disabledEdit, setDisabledEdit] = useState(false);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
     const [dataPicker, setDataPicker] = useState([]);
     const { data, loading } = useQuery(GET_EXCHANGES);
-
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
 
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
@@ -54,12 +49,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         errorPolicy: "all"
     });
 
-    const { data: dataCheck, loading: loadingCheck } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
-        variables: {
-            user_ex_acc_id: options ? options.id : null,
-            user_id
-        }
-    });
     const handleOnChangeName = (value: string) => {
         setInputName(value);
     };
@@ -118,15 +107,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         }
     }, [inputExchange, loading, data]);
 
-    useEffect(() => {
-        if (!loadingCheck && options) {
-            const checkElements = ["stopped", "paused"];
-            setDisabledEdit(
-                dataCheck.user_robots.some((el) => checkElements.includes(el.status)) && options.status !== "invalid"
-            );
-        }
-    }, [options, loadingCheck, dataCheck]);
-
     return (
         <>
             {errorMessage && (
@@ -142,7 +122,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                             value={inputName}
                             selectTextOnFocus
                             width={260}
-                            readonly={!!options}
+                            disabled={!!options}
                             onChangeText={(value) => handleOnChangeName(value)}
                         />
                     </div>
@@ -198,7 +178,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         width={125}
                         title={options ? "edit key" : "add key"}
                         isLoading={isFetching}
-                        disabled={disabledEdit}
                         icon="check"
                         isUppercase
                     />
