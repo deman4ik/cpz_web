@@ -40,9 +40,7 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
             </div>
             <div className={styles.rowCard} style={{ justifyContent: "space-between" }}>
                 <div className={styles.mobileCardRow} style={{ flex: 1 }}>
-                    <div className={styles.mobileCardTextKey}>
-                        {activeTab === SectionType.signals ? "Price" : "Entry"}
-                    </div>
+                    <div className={styles.mobileCardTextKey}>Entry</div>
                     <div className={styles.mobileCardPrice}>{formatMoney(item.entry_price || item.price)} $</div>
                     <div className={styles.mobileCardDate} title={formatDate(item.entry_date)}>
                         {getTimeFromNow(item.entry_date)}
@@ -57,6 +55,12 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                         </div>
                     </div>
                 )}
+                <div className={styles.mobileCardRow} style={{ flex: 1, alignItems: "flex-end" }}>
+                    <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
+                    <div className={styles.mobileCardPrice} style={colorAction(item.profit > 0)}>
+                        {valueWithSign(formatMoney(item.profit))} $
+                    </div>
+                </div>
             </div>
             {activeTab === SectionType.closedPositions && (
                 <div className={styles.posCardFooter}>
