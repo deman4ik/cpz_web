@@ -31,14 +31,9 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [editDisabled, setEditDisabled] = useState(true);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
     const [dataPicker, setDataPicker] = useState([]);
     const { data, loading } = useQuery(GET_EXCHANGES);
-
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
 
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
@@ -54,12 +49,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         errorPolicy: "all"
     });
 
-    const { data: dataCheck, loading: loadingCheck } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
-        variables: {
-            user_ex_acc_id: options ? options.id : null,
-            user_id
-        }
-    });
     const handleOnChangeName = (value: string) => {
         setInputName(value);
     };
@@ -117,19 +106,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             if (!inputExchange && data.exchanges && data.exchanges.length > 0) setInputExchange(data.exchanges[0].code);
         }
     }, [inputExchange, loading, data]);
-
-    useEffect(() => {
-        if (!loadingCheck && options) {
-            const checkElements = ["stopped", "paused"];
-            const canEdit =
-                !dataCheck.user_robots.some((el) => checkElements.includes(el.status)) && options.status !== "invalid";
-            if (!canEdit) {
-                setEditDisabled(true);
-
-                setErrorMessage("This key cannot be edited at this time.");
-            }
-        }
-    }, [options, loadingCheck, dataCheck]);
 
     return (
         <>
@@ -202,7 +178,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         width={125}
                         title={options ? "edit key" : "add key"}
                         isLoading={isFetching}
-                        disabled={editDisabled}
                         icon="check"
                         isUppercase
                     />

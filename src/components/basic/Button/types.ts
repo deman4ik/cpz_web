@@ -47,4 +47,5 @@ export interface ButtonProps extends ButtonInnerProps {
     className?: string;
     hoverChanges?: HoverChangesProps;
     clickable?: boolean;
+    tooltip?: string;
 }

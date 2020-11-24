@@ -21,7 +21,8 @@ export const Button: React.FC<ButtonProps> = ({
     responsive,
     size = "normal",
     hoverChanges,
-    clickable = true
+    clickable = true,
+    tooltip
 }) => {
     const rounded = type?.includes("roundend");
     const iconSize = 15;
@@ -61,7 +62,7 @@ export const Button: React.FC<ButtonProps> = ({
           };
 
     return (
-        <div className={withHover}>
+        <div className={withHover} title={tooltip}>
             {/* eslint-disable-next-line react/button-has-type */}
             <button type={buttonType} className={classNamesMain.join(" ")} style={style} onClick={handleOnClick}>
                 {isLoading ? (
