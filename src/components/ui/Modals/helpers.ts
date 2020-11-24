@@ -30,7 +30,7 @@ const getLimits = (data, type) => {
         result.price = current_price;
     }
     result.total_balance_usd = total_balance_usd;
-    result.used_balance_percent = amounts.used_balance_percent || 0;
+    result.used_balance_percent = amounts?.used_balance_percent || 0;
 
     return result;
 };

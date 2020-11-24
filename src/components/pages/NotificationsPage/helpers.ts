@@ -11,28 +11,13 @@ export const actionOpen = (action) => actionSignals.includes(action);
 
 export const getFormatData = (notifications) =>
     notifications.map((notification) => {
-        const { type, data, user_robot, user_position, robot_position, robot, timestamp, readed, id } = notification;
+        const { type, data, timestamp, readed, id } = notification;
         return {
             id,
             type,
             data,
             timestamp,
-            readed,
-            user_position,
-            robot_position,
-            robot: user_robot
-                ? {
-                      code: user_robot.robot.code,
-                      name: user_robot.robot.name,
-                      asset: user_robot.robot.asset
-                  }
-                : robot
-                ? {
-                      code: robot.code,
-                      name: robot.name,
-                      asset: robot.asset
-                  }
-                : null
+            readed
         };
     });
 
@@ -48,7 +33,9 @@ const messageMap = {
     "order.error": "error",
     "message.support-reply": "message",
     "message.broadcast": "message",
-    "user_ex_acc.error": "user"
+    "user_ex_acc.error": "user",
+    "signal-trade.new": "signalTrade",
+    "signal-alert.new": "signalAlert"
 };
 
 export const headerSelectData = [
@@ -88,7 +75,6 @@ export const showMessage = (item, onClick, card = false) => {
         signalTrade: () => setFunc.signalTradeSet(item, onClick),
         user: () => setFunc.userSet(item, onClick)
     };
-
     return messages[messageMap[item.type]]();
 };
 
@@ -97,20 +83,20 @@ export const getRedirectionLink = (item) => {
         failed: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         message: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         robotTrade: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         signalAlert: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         robot: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         signalTrade: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         user: () => ({ link: "/profile", redirect: true })

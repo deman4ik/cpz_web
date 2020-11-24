@@ -16,7 +16,7 @@ const getInitialValues = (inputs: Input[]) =>
     }, {});
 
 export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
-    const getDefaultVolumeType = () => robotData.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+    const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
     const selectedInputs = inputs[volumeType];
     const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(selectedInputs));
@@ -37,7 +37,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
 
     const validate = (type: InputTypes) => {
         return validateVolume({
-            used_percent: limits.used_balance_percent,
+            used_percent: limits?.used_balance_percent,
             type,
             value: inputValues[type],
             maxAmount: maxAmounts[type],
