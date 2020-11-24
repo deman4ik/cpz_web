@@ -16,7 +16,7 @@ interface Props {
 }
 
 const EDIT_TOOLTIP =
-    "Enabled keys that have linked robots\nwith  'starting', 'started' or 'stopping'\nstatus cannot be edited.";
+    "Enabled keys that have linked started robots cannot be edited.";
 const DELETE_TOOLTIP = "Keys that have any robots linked cannot be removed.";
 
 const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => {
