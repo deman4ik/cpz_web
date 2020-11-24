@@ -15,8 +15,7 @@ interface Props {
     handleSetVisibleModal: (key: ModalKey, formOptions: any) => void;
 }
 
-const EDIT_TOOLTIP =
-    "Enabled keys that have linked started robots cannot be edited.";
+const EDIT_TOOLTIP = "Enabled keys that have linked started robots cannot be edited.";
 const DELETE_TOOLTIP = "Keys that have any robots linked cannot be removed.";
 
 const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => {
