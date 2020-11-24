@@ -3,7 +3,7 @@ import React, { memo, useContext, useEffect, useState } from "react";
 import { Button } from "components/basic";
 import { ModalKey } from "./types";
 import { ChevronRightIcon } from "assets/icons/svg";
-import { capitalize, exchangeName, truncate, getColor } from "config/utils";
+import { capitalize, exchangeName, truncate, getColor, formatMoney } from "config/utils";
 import { color } from "config/constants";
 import styles from "./ExchangeKeysCard.module.css";
 import { useQuery } from "@apollo/client";
@@ -15,9 +15,16 @@ interface Props {
     handleSetVisibleModal: (key: ModalKey, formOptions: any) => void;
 }
 
+const EDIT_TOOLTIP =
+    "Enabled keys that have linked robots\nwith  'starting', 'started' or 'stopping'\nstatus cannot be edited.";
+const DELETE_TOOLTIP = "Keys that have any robots linked cannot be removed.";
+
 const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => {
     const [editDisabled, setEditDisabled] = useState(false);
+    const [deleteDisabled, setDeleteDisabled] = useState(false);
+
     const [editTooltip, setEditTooltip] = useState(null);
+    const [deleteTooltip, setDeleteTooltip] = useState(null);
 
     const handleOnPressEditName = () => {
         handleSetVisibleModal(ModalKey.editName, { name: item.name, id: item.id });
@@ -35,16 +42,20 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
 
     useEffect(() => {
         if (!loadingCheck && item) {
+            const userHasNoRobots = dataCheck.user_robots.length === 0;
+
+            if (userHasNoRobots) {
+                setDeleteDisabled(true);
+                setDeleteTooltip(DELETE_TOOLTIP);
+            }
+
             const everyRobotIsStoppedOrPaused = dataCheck.user_robots.every((el) =>
                 ["stopped", "paused"].includes(el.status)
             );
-            const canEdit =
-                item.status === "invalid" || dataCheck.user_robots.length === 0 || everyRobotIsStoppedOrPaused;
+            const canEdit = item.status === "invalid" || userHasNoRobots || everyRobotIsStoppedOrPaused;
             if (!canEdit) {
                 setEditDisabled(true);
-                setEditTooltip(
-                    "Enabled keys that have linked robots with 'starting', 'started' or 'stopping' status cannot be edited"
-                );
+                setEditTooltip(EDIT_TOOLTIP);
             }
         }
     }, [item, loadingCheck, dataCheck]);
@@ -92,6 +103,14 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                             {capitalize(item.status)}
                         </div>
                     </div>
+                    <div className={styles.exchangeRow} style={{ marginTop: 10 }}>
+                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                            Balance
+                        </div>
+                        <div className={styles.tableCellText} style={{ marginLeft: 10 }}>
+                            {formatMoney(item.balance)} $
+                        </div>
+                    </div>
                 </div>
             </div>
             {item.status === "invalid" && item.error && (
@@ -121,6 +140,8 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                     type="dimmed"
                     style={{ marginLeft: 6 }}
                     onClick={handlePressDelete}
+                    disabled={deleteDisabled}
+                    tooltip={deleteTooltip}
                 />
             </div>
         </div>
