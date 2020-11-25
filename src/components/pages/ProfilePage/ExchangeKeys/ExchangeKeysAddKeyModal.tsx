@@ -2,14 +2,12 @@ import React, { memo, useState, useEffect, useContext, Props } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
-import { USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
 import { UPDATE_EXCHANGE_KEY } from "graphql/profile/mutations";
 import { Button, Select, Input, Textarea } from "components/basic";
 import { color } from "config/constants";
 import { event } from "libs/gtag";
-import { AddKey, ExchangeKeysAddKeyModalProps, UpdateExchangeKeyVars } from "./types";
+import { ExchangeKeysAddKeyModalProps, UpdateExchangeKeyVars } from "./types";
 // context
-import { AuthContext } from "libs/hoc/context";
 import styles from "./ExchangeKeysAddKeyModal.module.css";
 import { fetchWithStatus } from "components/pages/helpers";
 import { HTMLButtonTypes } from "components/basic/Button/types";

@@ -120,6 +120,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                         minAmount={minAmounts[InputTypes.assetStatic]}
                         minAmountUSD={minAmounts[InputTypes.currencyDynamic]}
                     />
+
                     <div className={styles_subs.fieldset}>
                         <div className={styles.input_group}>
                             <MainInput
@@ -133,11 +134,18 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                 onChangeText={onChange(volumeType)}
                                 unit={getUnit(volumeType)}
                             />
+                            {volumeType === InputTypes.balancePercent && (
+                                <PercentsAvailable
+                                    usedAccountPercent={usedAccountPercent}
+                                    volumeType={volumeType}
+                                    short
+                                />
+                            )}
                             {selectedInputs.filter(notSelectedAndNotPercentage).map((input, i) => {
                                 const { type } = input;
                                 return (
                                     <div key={`subscribe-${type}`} className={styles.input_container}>
-                                        <Delimiter />
+                                        <Delimiter first={i === 0} />
                                         <ValueInput
                                             disabled={!enabled}
                                             customClassName={styles.modalInput}

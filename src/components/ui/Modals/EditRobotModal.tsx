@@ -44,6 +44,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     const { exchange, asset, currency } = robotData?.robot.subs || {};
     const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
+            id: robotData?.robot.user_ex_acc_id,
             exchange,
             asset,
             currency,

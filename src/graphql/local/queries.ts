@@ -27,22 +27,7 @@ export const MODAL_VISIBLE = gql`
 
 export const ROBOT = gql`
     query {
-        robot: Robot @client {
-            cache {
-                id
-                tableName
-            }
-            subs {
-                settings
-                asset
-                exchange
-                currency
-            }
-            id
-            code
-            name
-            userRobotId
-        }
+        robot: Robot
         ChartData @client {
             limit
             robotId

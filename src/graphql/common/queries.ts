@@ -3,13 +3,15 @@ import { RobotsType } from "config/types";
 
 export const GET_MARKETS_ROBOTS = gql`
     query get_user_markets_robots($id: uuid, $user_id: uuid!, $asset: String!, $exchange: String!, $currency: String!) {
-        v_user_exchange_accs(where: { id: { _eq: $id }, status: { _eq: "enabled" }, user: { id: { _eq: $user_id } } }) {
+        v_user_exchange_accs(
+            where: { id: { _eq: $id }, exchange: { _eq: $exchange }, user: { id: { _eq: $user_id } } }
+        ) {
             total_balance_usd
             amounts {
                 used_balance_percent
             }
             user {
-                markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {
+                markets(where: { asset: { _eq: $asset }, currency: { _eq: $currency } }) {
                     asset
                     precision
                     current_price

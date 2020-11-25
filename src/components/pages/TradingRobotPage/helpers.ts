@@ -56,7 +56,8 @@ export const createVariable = (robotData, type) => {
                     code: robot.code,
                     id: robot.id,
                     name: robot.name,
-                    userRobotId: userRobot.id
+                    userRobotId: userRobot.id,
+                    user_ex_acc_id: userRobot.user_ex_acc_id
                 },
                 subs: {
                     exchange: robot.exchange,
