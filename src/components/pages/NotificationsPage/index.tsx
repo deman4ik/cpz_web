@@ -21,15 +21,9 @@ export const NotificationsPage: React.FC = () => {
     } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
-    const {
-        isLoadingMore,
-        recordsCount,
-        formatData,
-        handleLoadMore,
-        loading,
-        inputSelect,
-        setFilters
-    } = useFetchData();
+    const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading, inputSelect, setFilters } = useFetchData(
+        true
+    );
 
     return (
         <DefaultTemplate

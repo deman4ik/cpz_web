@@ -17,7 +17,13 @@ import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { RobotsType } from "config/types";
 
 //TODO: refactor
-export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_stats: any) => any) => {
+export const useFetchRobots = (
+    dispayType: string,
+    formatRobotsData: (v_robot_stats: any) => any,
+    preserveScrollPosition?: boolean
+) => {
+    const [position, setPosition] = useState(window.pageYOffset);
+
     /*Обработка контекста аутентификации*/
     const {
         authState: { isAuth, user_id, authIsSet }
@@ -121,13 +127,14 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
 
     const onFetchMore = () => {
         setIsLoadingMore(true);
+        setPosition(window.pageYOffset);
+
         fetchMore({
             variables: {
                 offset: data && data.robots.length,
                 limit: SHOW_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
-                setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
                 setLimit(data && data.robots.length + SHOW_LIMIT);
 
@@ -149,7 +156,17 @@ export const useFetchRobots = (dispayType: string, formatRobotsData: (v_robot_st
                     robots: [...prev.robots, ...fetchMoreResult.robots]
                 };
             }
-        }).catch((e) => console.error(e));
+        })
+            .catch((e) => console.error(e))
+            .finally(() => {
+                if (preserveScrollPosition) {
+                    setPosition((_position) => {
+                        window.scrollTo(0, _position);
+                        return position;
+                    });
+                }
+                setIsLoadingMore(false);
+            });
     };
 
     return {
