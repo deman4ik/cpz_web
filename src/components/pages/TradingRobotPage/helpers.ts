@@ -4,7 +4,7 @@ import dayjs from "libs/dayjs";
 
 // TODO: use DB-like structure
 export const formatRobotData = (robot: any) => {
-    const { id, exchange, asset, name, currency, timeframe, user_robot, fullStats, active } = robot;
+    const { id, exchange, asset, name, code, currency, timeframe, user_robot, fullStats, active } = robot;
     const {
         robot_settings: { robot_settings }
     } = robot;
@@ -18,6 +18,7 @@ export const formatRobotData = (robot: any) => {
             exchange,
             asset,
             name,
+            code,
             currency,
             timeframe,
             volume: getVolume(robot_settings),
@@ -52,6 +53,7 @@ export const createVariable = (robotData, type) => {
                     tableName: "userRobot"
                 },
                 robot: {
+                    code: robot.code,
                     id: robot.id,
                     name: robot.name,
                     userRobotId: userRobot.id
@@ -74,6 +76,7 @@ export const createVariable = (robotData, type) => {
                 tableName: "userRobot"
             },
             robot: {
+                code: robot.code,
                 id: robot.id,
                 name: robot.name,
                 userRobotId: null

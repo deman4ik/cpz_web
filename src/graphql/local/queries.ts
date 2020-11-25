@@ -39,6 +39,7 @@ export const ROBOT = gql`
                 currency
             }
             id
+            code
             name
             userRobotId
         }

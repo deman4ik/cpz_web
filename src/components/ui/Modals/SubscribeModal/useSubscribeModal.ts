@@ -6,6 +6,7 @@ import {
     defaultPrecision,
     getInputValues,
     parseLimits,
+    precisionToVolumeMap,
     translateValue,
     validateVolume
 } from "components/ui/Modals/helpers";
@@ -73,6 +74,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         const valuesEmpty = inputValues && Object.values(inputValues).filter((i) => i).length === 0;
         if (!valuesEmpty) {
             return validateVolume({
+                precision: precision[precisionToVolumeMap[type]],
                 used_percent: usedAccountPercent,
                 type,
                 value: inputValues[type],

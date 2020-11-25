@@ -21,28 +21,35 @@ const _Modals: React.FC<Props> = ({ isModalVisible, width, setModalVisibility, c
         }
         setModalVisibility({ isVisible: false, type: "" });
     };
+    const isVisible = (type) => isModalVisible.isVisible && isModalVisible.type === type;
     return (
         <>
-            <EditRobotModal
-                type="robots"
-                isOpen={isModalVisible.isVisible && isModalVisible.type === "edit"}
-                onClose={handleSetVisible}
-                title={titleModal}
-                setTitle={setTitleModal}
-                code={code}
-            />
-            <Modal
-                isOpen={isModalVisible.isVisible && isModalVisible.type === "create"}
-                onClose={() => handleSetVisible()}
-                title="Add Trading Robot">
-                <CreateRobotModal onClose={handleSetVisible} code={code} width={width} />
-            </Modal>
-            <Modal
-                isOpen={isModalVisible.isVisible && actions.includes(isModalVisible.type)}
-                onClose={() => handleSetVisible()}
-                title={titleModal}>
-                <ActionRobotModal type={isModalVisible.type} setTitle={setTitleModal} onClose={handleSetVisible} />
-            </Modal>
+            {isVisible("edit") && (
+                <EditRobotModal
+                    type="robots"
+                    isOpen={isVisible("edit")}
+                    onClose={handleSetVisible}
+                    title={titleModal}
+                    setTitle={setTitleModal}
+                    code={code}
+                />
+            )}
+            {isVisible("create") && (
+                <Modal
+                    isOpen={isModalVisible.isVisible && isModalVisible.type === "create"}
+                    onClose={() => handleSetVisible()}
+                    title="Add Trading Robot">
+                    <CreateRobotModal onClose={handleSetVisible} code={code} width={width} />
+                </Modal>
+            )}
+            {isModalVisible.isVisible && actions.includes(isModalVisible.type) && (
+                <Modal
+                    isOpen={isModalVisible.isVisible && actions.includes(isModalVisible.type)}
+                    onClose={() => handleSetVisible()}
+                    title={titleModal}>
+                    <ActionRobotModal type={isModalVisible.type} setTitle={setTitleModal} onClose={handleSetVisible} />
+                </Modal>
+            )}
         </>
     );
 };

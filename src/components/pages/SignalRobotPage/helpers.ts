@@ -225,7 +225,7 @@ export const createVariable = (robotData, type) => {
     return {
         variables: {
             cache: { id: robot.id, tableName: "charts" },
-            robot: { id: robot.id, name: robot.name, userRobotId: null },
+            robot: { id: robot.id, name: robot.name, userRobotId: null, code: robot.code },
             subs: {
                 settings: user_signals?.settings || robot.settings,
                 exchange: robot.exchange,
