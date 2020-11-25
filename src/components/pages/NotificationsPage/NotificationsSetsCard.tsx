@@ -144,7 +144,6 @@ const components = {
 
 export const signalAlertSet = (item, onClick) => {
     const SpecificIcon = components[actionIcon(item.data.action)];
-    console.log(item)
     return (
         <div className={styles.rowCard} style={{ flex: 1 }}>
             <div className={styles.row} style={{ flexWrap: "wrap" }}>
@@ -157,7 +156,11 @@ export const signalAlertSet = (item, onClick) => {
             <div className={styles.alertRow}>
                 <div className={styles.colRobot}>
                     <div className={styles.textAccentCard}>Price</div>
-                    <div className={styles.textMessageCard}>{`${item.data.price} $`}</div>
+                    <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
+                </div>
+                <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                    <div className={styles.textAccentCard}>Amount</div>
+                    <div className={styles.textMessageCard}>{item.data.volume}</div>
                 </div>
                 <div className={styles.colRobot}>
                     <div className={styles.textAccentCard}>Action</div>
@@ -194,7 +197,6 @@ export const robotSet = (item, onClick) => (
 );
 
 export const signalTradeSet = (item, onClick) => {
-    console.log(item)
     return (
         <div className={styles.rowCard}>
             {actionOpen(item.data.action) ? (
@@ -215,7 +217,11 @@ export const signalTradeSet = (item, onClick) => {
                         </div>
                         <div className={styles.colRobot}>
                             <div className={styles.textAccentCard}>Price</div>
-                            <div className={styles.textMessageCard}>{`${item.data.price} $`}</div>
+                            <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
+                        </div>
+                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                            <div className={styles.textAccentCard}>Amount</div>
+                            <div className={styles.textMessageCard}>{item.data.volume}</div>
                         </div>
                         <div className={styles.colRobot}>
                             <div className={styles.textAccentCard}>Date</div>
@@ -244,7 +250,11 @@ export const signalTradeSet = (item, onClick) => {
                             </div>
                             <div className={styles.colRobot} style={{ marginTop: 5 }}>
                                 <div className={styles.textAccentCard}>Price</div>
-                                <div className={styles.textMessageCard}>{`${item.data.price} $`}</div>
+                                <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
+                            </div>
+                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                                <div className={styles.textAccentCard}>Amount</div>
+                                <div className={styles.textMessageCard}>{item.data.volume}</div>
                             </div>
                         </div>
                         <div className={styles.rowRobot}>
@@ -253,6 +263,10 @@ export const signalTradeSet = (item, onClick) => {
                                 <div className={styles.textMessageCard} style={colorAction(item.data.profit > 0)}>
                                     {`${valueWithSign(formatMoney(item.data.profit))} $`}
                                 </div>
+                            </div>
+                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                                <div className={styles.textAccentCard}>Bars Held</div>
+                                <div className={styles.textMessageCard}>{item.data.barsHeld}</div>
                             </div>
                             <div className={styles.colRobot} style={{ marginTop: 5 }}>
                                 <div className={styles.textAccentCard}>Date</div>

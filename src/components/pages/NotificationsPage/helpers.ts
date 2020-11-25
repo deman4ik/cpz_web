@@ -2,7 +2,7 @@ import * as Sets from "./NotificationsSets";
 import * as SetsCard from "./NotificationsSetsCard";
 import { color, DOCS_URL, SUPPORT_URL } from "config/constants";
 
-const actionTypes = ["long", "closeShort"];
+const actionTypes = ["long", "closeLong", "closeShort"];
 const actionSignals = ["long", "short"];
 export const actionName = (action) => (actionTypes.includes(action) ? "BUY" : "SELL");
 export const actionIcon = (action) => (actionTypes.includes(action) ? "arrowup" : "arrowdown");
@@ -58,7 +58,7 @@ export const filters = {
         "user-robot.resumed",
         "message.support-reply"
     ],
-    signals: ["signal.trade", "signal.alert"],
+    signals: ["signal.trade", "signal.alert", "signal-trade.new", "signal-alert.new"],
     trading: ["user-robot.trade"],
     error: ["order.error", "user_ex_acc.error"]
 };
