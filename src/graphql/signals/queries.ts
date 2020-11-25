@@ -54,7 +54,7 @@ export const ALL_SIGNAL_ROBOTS = gql`
     }
 `;
 
-export const SIGNAL_ROBOTS_AGGREGATE = gql`
+export const ROBOTS_AGGREGATE = gql`
     query get_signal_robots_aggr($hash: String!, $where: robots_bool_exp) {
         robots_aggregate(where: $where) @connection(key: "robots_aggregate", filter: ["hash"]) {
             aggregate {

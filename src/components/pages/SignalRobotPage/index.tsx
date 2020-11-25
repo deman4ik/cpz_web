@@ -10,12 +10,13 @@ import { Modals } from "./Modals/index";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { PageType, RobotsType } from "config/types";
 import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
-import { SET_ROBOT_DATA } from "graphql/local/mutations";
+import { SET_MODAL_STATE } from "graphql/local/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { formatRobotData } from "./helpers";
 import { AuthContext } from "libs/hoc/context";
 import { isNewPage } from "utils/common";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { MODAL_VISIBLE } from "graphql/local/queries";
 
 const SignalRobotPage = (): JSX.Element => {
     /*Определение контекста для страницы робота*/
@@ -43,10 +44,8 @@ const SignalRobotPage = (): JSX.Element => {
         ssr: false
     });
 
-    const [setRobotData] = useMutation(SET_ROBOT_DATA, {
-        onCompleted: (resolve) => {
-            setModalVisibility({ isVisible: true, type: resolve.setRobot });
-        }
+    const [setSubscride] = useMutation(SET_MODAL_STATE, {
+        refetchQueries: [{ query: MODAL_VISIBLE }]
     });
 
     const robotData = useMemo(() => (!loading && data && data.robot.length ? formatRobotData(data.robot[0]) : null), [
@@ -54,14 +53,14 @@ const SignalRobotPage = (): JSX.Element => {
         loading
     ]);
 
-    const subscribe = (variables) => {
+    const subscribe = async ({ variables }) => {
         if (!isAuth) {
             Router.push("/auth/login");
         } else {
-            setRobotData(variables);
+            await setSubscride({ variables });
+            setModalVisibility({ isVisible: true, type: variables.type });
         }
     };
-
     return (
         <DefaultTemplate
             page={PageType.signals}

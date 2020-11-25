@@ -28,15 +28,13 @@ const hoverType = {
 };
 
 export const formatVariables = (item, buttonType: string, displayType?: string) => {
-    const type = displayType
-        ? displayType === "signals"
-            ? item.isSubscribed
-                ? "unsubscribe"
-                : "subscribe"
-            : !item.user_robots.status
-            ? "create"
-            : statusTypes[item.user_robots.status]
-        : buttonType;
+    const { status } = item.user_robots;
+    const subscribeAction = item.isSubscribed ? "unsubscribe" : "subscribe";
+    const actionByRobotStatus = status ? statusTypes[status] : "create";
+    const actionByRobotType = displayType === "signals" ? subscribeAction : actionByRobotStatus;
+
+    const type = displayType ? actionByRobotType : buttonType;
+
     return {
         variables: {
             cache: item.cache,
@@ -64,7 +62,7 @@ export const displayData = {
     },
     robots: {
         title: (checker) => (!checker ? "Add" : buttonName[checker]),
-        icon: (checker) => (checker ? (checker === "paused" ? "close" : "check") : "plus"),
+        icon: (checker) => (checker ? (checker === "paused" ? "" : "check") : "plus"),
         type: (checker) => (checker ? (checker === "paused" ? "negative" : "success") : "primary"),
         hoverTitle: (checker) => hoverTitle[checker],
         hoverIcon: (checker) => hoverIcon[checker],

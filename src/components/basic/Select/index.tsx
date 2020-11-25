@@ -14,9 +14,9 @@ export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 20
     };
     return (
         <div className="select_container">
-            <select value={value} onChange={onChange} className="select" disabled={!enabled}>
+            <select value={value || ""} onChange={onChange} className="select" disabled={!enabled}>
                 {data.map((item) => (
-                    <option key={item.value} value={item.value}>
+                    <option key={item.value} value={item.value || ""}>
                         {item.label}
                     </option>
                 ))}
@@ -24,7 +24,6 @@ export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 20
             <style jsx>
                 {`
                     .select {
-                        margin-bottom: 10px;
                         outline: none;
                         background-color: var(--darkBg);
                         color: var(--accent);

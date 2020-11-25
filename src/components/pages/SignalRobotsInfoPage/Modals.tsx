@@ -5,6 +5,7 @@ import { SubscribeModal, UnsubscribeModal } from "components/ui/Modals";
 import { Modal } from "components/basic";
 import { getIsVisibleStatus } from "../helpers";
 import { modalType } from "../types";
+import { RobotsType } from "config/types";
 
 export const Modals: React.FC<{ afterClose: () => void }> = ({ afterClose }) => {
     const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
@@ -18,6 +19,7 @@ export const Modals: React.FC<{ afterClose: () => void }> = ({ afterClose }) => 
     return (
         <>
             <SubscribeModal
+                type={RobotsType.signals}
                 isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
                 title={titleModal}
                 onClose={handleClose}

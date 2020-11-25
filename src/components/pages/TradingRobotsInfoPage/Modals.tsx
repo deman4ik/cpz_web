@@ -5,9 +5,10 @@ import { ActionRobotModal, EditRobotModal } from "components/ui/Modals";
 import { Modal } from "components/basic";
 import { getIsVisibleStatus } from "../helpers";
 import { modalType } from "../types";
+import { RobotsType } from "config/types";
 
 export const Modals: React.FC = () => {
-    const { titleModal, setTitleModal, dataModal, handleSetVisible, afterClose } = useVisibleModal();
+    const { titleModal, setTitleModal, dataModal, handleSetVisible } = useVisibleModal();
 
     const onClose = () => {
         handleSetVisible({ isVisible: false, type: "" });
@@ -25,6 +26,7 @@ export const Modals: React.FC = () => {
                 />
             </Modal>
             <EditRobotModal
+                type={RobotsType.robots}
                 isOpen={getIsVisibleStatus(modalType.edit, dataModal)}
                 onClose={onClose}
                 title={titleModal}

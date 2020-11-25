@@ -20,7 +20,9 @@ const useFetchSignalRobotPositions = (robotData) => {
     const robotPositionsQuery = isAuth && isUserSubscribed ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
 
     const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const [closedPositions, setClosedPositions] = useState([]);
+
     const queryVars = isAuth && isUserSubscribed ? { user_id } : null;
 
     const { data: signalsData, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
@@ -66,6 +68,10 @@ const useFetchSignalRobotPositions = (robotData) => {
         }
     );
 
+    useEffect(() => {
+        if (closedPositionsData?.positions) setClosedPositions(closedPositionsData?.positions);
+    }, [closedPositionsData?.positions]);
+
     const { data: aggrData, loading: loadingAggregate } = useQuery(SIGNAL_ROBOT_POSITIONS_AGGREGATE, {
         variables: {
             robotId: robot.id,
@@ -76,14 +82,13 @@ const useFetchSignalRobotPositions = (robotData) => {
     });
 
     const handleLoadMore = () => {
-        setIsLoadingMore(true);
         fetchMore({
             variables: {
-                offset: closedPositionsData.positions.length,
+                offset: limit,
                 limit: CLOSED_POSITIONS_LIMIT
             }
         }).catch((e) => console.error(e));
-        setLimit(closedPositionsData.positions.length + CLOSED_POSITIONS_LIMIT);
+        setLimit(limit + CLOSED_POSITIONS_LIMIT);
     };
 
     useEffect(() => {
@@ -103,13 +108,13 @@ const useFetchSignalRobotPositions = (robotData) => {
     );
 
     return {
-        loading: loadingOpenSignals || loadingOpenPositions || loadingClosedPositions || loadingAggregate,
+        loading: loadingOpenSignals || loadingOpenPositions || loadingAggregate,
         openPositions: openPositionsData?.positions || [],
-        closedPositions: closedPositionsData?.positions || [],
+        closedPositions,
         signals,
         recordsCount,
         handleLoadMore,
-        isLoadingMore
+        isLoadingMore: loadingClosedPositions
     };
 };
 

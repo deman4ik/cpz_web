@@ -9,6 +9,7 @@ import { LoadingIndicator } from "components/common";
 import { Modals } from "./Modals";
 // helpers
 import { formatRobotsData } from "./helpers";
+import { RobotsType } from "config/types";
 
 interface Props {
     displayType: string;
@@ -38,7 +39,7 @@ export const RobotsSearchContainer: React.FC<Props> = ({ displayType, width }) =
                     displayType={displayType}
                 />
             )}
-            <Modals width={width} afterClose={refetch} />
+            <Modals width={width} afterClose={refetch} type={RobotsType.robots} />
         </>
     );
 };

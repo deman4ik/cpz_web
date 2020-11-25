@@ -4,6 +4,8 @@ import { HeaderButton } from "./HeaderButton";
 import { HeaderStatsSection } from "./HeaderStatsSection";
 import { capitalize } from "config/utils";
 import styles from "./styles/index.module.css";
+import { MessageAlert } from "assets/icons/svg";
+import { color } from "config/constants";
 
 interface Props {
     robotData: any;
@@ -22,7 +24,12 @@ const _PageHeader: React.FC<Props> = ({ robotData, subscribe }) => {
                     </div>
                     <HeaderButton subscribe={subscribe} robotData={robotData} />
                 </div>
-                <div className={styles.headerMessage}>{capitalize(userRobot || null)}</div>
+                {userRobot?.message && (
+                    <div className={styles.headerMessage}>
+                        <MessageAlert color={color.negative} size={22} />
+                        <div>{capitalize(userRobot.message || null)}</div>
+                    </div>
+                )}
             </div>
             <HeaderStatsSection robotData={robotData} />
         </div>

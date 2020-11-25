@@ -3,6 +3,7 @@ import React, { memo, useState } from "react";
 import { SubscribeModal, UnsubscribeModal } from "components/ui/Modals";
 import { Modal } from "components/basic";
 import { VisibleModal } from "../types";
+import { RobotsType } from "config/types";
 
 interface Props {
     isModalVisible: VisibleModal;
@@ -33,6 +34,7 @@ const _Modals: React.FC<Props> = ({ isModalVisible, setModalVisibility, afterClo
                 title={modalTitle}
                 onClose={handleClose}
                 setTitle={setModalTitle}
+                type={RobotsType.signals}
                 actionType={isModalVisible.type}
             />
             <Modal isOpen={isUnsubscribeModal} onClose={resetModal} title={modalTitle}>

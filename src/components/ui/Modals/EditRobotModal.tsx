@@ -3,71 +3,78 @@ import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
-import { GET_MARKETS } from "graphql/common/queries";
-import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { queriesToRobotTypeMap } from "graphql/common/queries";
 import { Button, Modal } from "components/basic";
-import { buildSettings, getLimitsForRobot } from "./helpers";
-import { robotVolumeTypeOptions } from "./constants";
+import { buildSettings, getLimits, limitsPropToType } from "./helpers";
+import { volumeTypeOptionsMap } from "./constants";
 import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "libs/hoc/context";
-import { ModalLoading } from "components/ui/Modals/ModalLoading";
+import { EDIT_SIGNAL } from "graphql/signals/mutations";
+import { RobotsType } from "config/types";
+import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
     isOpen: boolean;
     title: string;
+    type: string;
     setTitle: (title: string) => void;
     code?: string;
 }
 const inputs = AddRobotInputsMap;
 
-const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) => {
+const queryToEditType = {
+    [RobotsType.signals]: EDIT_SIGNAL,
+    [RobotsType.robots]: USER_ROBOT_EDIT
+};
+const mapPropToType = {
+    [RobotsType.robots]: "userRobotEdit",
+    [RobotsType.signals]: "userSignalEdit"
+};
+const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
     const { data: robotData } = useQuery(ROBOT);
+
     const { exchange, asset, currency } = robotData?.robot.subs || {};
-    const { data, loading, refetch } = useQuery(GET_MARKETS, {
+    const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
             exchange,
             asset,
             currency,
             user_id: authState.user_id
-        },
-        skip: !robotData
+        }
     });
 
-    const limits = useMemo(() => !loading && data && getLimitsForRobot(data), [loading, data]);
+    const limits = useMemo(() => !loading && data && getLimits(data, limitsPropToType[type]), [loading, data]);
 
-    const {
-        inputValues,
-        setInputValues,
-        parsedLimits,
-        validate,
-        volumeType,
-        setVolumeType,
-        errors
-    } = useSubscribeModal({
+    const subscribeModalProps = useSubscribeModal({
         limits,
         inputs,
         robotData
     });
-    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
+    const { inputValues, volumeType, precision, errors } = subscribeModalProps;
+
+    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);
 
     const handleOnSubmit = () => {
-        const settings = buildSettings({ volumeType, inputValues });
+        const settings = buildSettings({ volumeType, inputValues, precision });
+        const prop = mapPropToType[type];
         userRobotEdit({
             variables: {
-                id: robotData?.robot.userRobotId,
+                robotId: robotData?.robot.userRobotId || robotData?.robot.id,
                 settings
             }
         })
             .then((response) => {
-                if (response.data.userRobotEdit.result !== "OK") {
-                    setFormError(response.data.userRobotEdit.error);
+                const { data: responseData } = response;
+                if (responseData[prop].result !== "OK") {
+                    setFormError(responseData[prop].error);
                 }
                 refetch().catch((e) => console.error(e));
                 onClose(true);
@@ -84,8 +91,8 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
     };
 
     useEffect(() => {
-        setTitle(`Edit ${robotData.robot.name}`);
-    }, []);
+        setTitle(`Edit ${robotData?.robot.name || "Robot"}`);
+    }, [robotData]);
 
     useEffect(() => {
         setFormError("");
@@ -94,25 +101,20 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle }) 
     const enabled = !(loading || editRobotLoading);
     return (
         <Modal isOpen={isOpen} onClose={() => onClose()} title={title}>
-            {!enabled && <ModalLoading />}
             <>
                 <SubscribeModalContent
-                    volumeTypeOptions={robotVolumeTypeOptions}
+                    {...subscribeModalProps}
+                    volumeTypeOptions={volumeTypeOptionsMap[type]}
                     robotData={robotData}
                     formError={formError}
-                    inputValues={inputValues}
-                    setInputValues={setInputValues}
-                    validate={validate}
                     inputs={inputs}
-                    setVolumeType={setVolumeType}
-                    volumeType={volumeType}
-                    parsedLimits={parsedLimits}
                     onKeyPress={onKeyPress}
                     enabled={enabled}
                 />
                 <div className={styles.btns}>
                     <Button
                         className={styles.btn}
+                        isLoading={!enabled}
                         title="Save"
                         icon="check"
                         type="success"

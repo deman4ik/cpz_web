@@ -13,7 +13,12 @@ interface Props {
 const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
     const robotStatus = robotData.userRobot ? robotData.userRobot.status : null;
     const { title, icon, type, hoverTitle, hoverType, hoverIcon } = displayData.robots;
+
+    const robotPaused = robotStatus === "paused";
     const handleOnPress = () => {
+        if (robotPaused) {
+            return;
+        }
         subscribe(createVariable(robotData, statusTypes[robotStatus]));
     };
 
@@ -25,11 +30,12 @@ const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
                     title={title(robotStatus)}
                     type={type(robotStatus)}
                     className={styles.headerButton}
+                    blocked={robotPaused}
                     disabled={robotStatus === "stopping"}
                     size="small"
                     width={112}
                     hoverChanges={
-                        robotStatus === "started" || robotStatus === "paused"
+                        robotStatus === "started"
                             ? {
                                   type: hoverType(robotStatus),
                                   title: hoverTitle(robotStatus),

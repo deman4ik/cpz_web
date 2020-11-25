@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
@@ -21,8 +21,8 @@ const useFetchTradingRobotPosition = (robotData: RobotData): any => {
 
     const statusOptions = userRobot ? ["closed", "closedAuto"] : ["closed"];
 
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
+    const [closedPositions, setClosedPositions] = useState([]);
 
     const queryVars = {
         robotId: userRobot ? userRobot.id : robot.id,
@@ -39,6 +39,10 @@ const useFetchTradingRobotPosition = (robotData: RobotData): any => {
             pollInterval: POLL_INTERVAL
         }
     );
+
+    useEffect(() => {
+        if (closedPositionsData?.positions) setClosedPositions(closedPositionsData?.positions);
+    }, [closedPositionsData?.positions]);
 
     const { data: aggrData, loading: loadingAggregate } = useQuery(
         userRobot ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
@@ -71,24 +75,22 @@ const useFetchTradingRobotPosition = (robotData: RobotData): any => {
     );
 
     const handleLoadMore = () => {
-        setIsLoadingMore(true);
-
         fetchMore({
             variables: {
-                offset: closedPositionsData.positions.length,
+                offset: limit,
                 limit: CLOSED_POSITIONS_LIMIT
             }
         }).catch((e) => console.error(e));
-        setLimit(closedPositionsData.positions.length + CLOSED_POSITIONS_LIMIT);
+        setLimit(limit + CLOSED_POSITIONS_LIMIT);
     };
 
     return {
-        isLoadingMore,
+        isLoadingMore: loading,
         recordsCount,
-        openPositions: openPositionsData?.positions,
-        closedPositions: closedPositionsData?.positions,
+        openPositions: openPositionsData?.positions || [],
+        closedPositions,
         handleLoadMore,
-        loading: loading || loadingAggregate || loadingOpenPos
+        loading: loadingAggregate || loadingOpenPos
     };
 };
 

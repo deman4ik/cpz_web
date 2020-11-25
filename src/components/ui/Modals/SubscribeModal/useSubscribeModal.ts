@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
-import { Input, InputMap, InputTypes, InputValues } from "components/ui/Modals/types";
-import { getMaxAmounts, getMinAmounts, parseLimits, validateVolume } from "components/ui/Modals/helpers";
+import { useEffect, useMemo, useState } from "react";
+import { InputMap, InputTypes, InputValues, Precision } from "components/ui/Modals/types";
+import {
+    AssetTypes,
+    CurrencyTypes,
+    defaultPrecision,
+    getInputValues,
+    parseLimits,
+    translateValue,
+    validateVolume
+} from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
 
 interface UseSubscribeModalProps {
@@ -8,54 +16,85 @@ interface UseSubscribeModalProps {
     inputs: InputMap;
     robotData?: any;
 }
-const getInitialValues = (inputs: Input[]) =>
-    inputs.reduce((a, v) => {
-        // eslint-disable-next-line no-param-reassign
-        a[v.type] = "";
-        return a;
-    }, {});
+
+const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
 export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
     const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
+    const getPrecision = () => (limits && limits.precision) || defaultPrecision;
     const selectedInputs = inputs[volumeType];
-    const [inputValues, setInputValues] = useState<InputValues>(getInitialValues(selectedInputs));
+    const [inputValues, setInputValues] = useState<InputValues>(initialValues);
+    const [precision, setPrecision] = useState<Precision>(getPrecision());
 
     useEffect(() => {
-        setInputValues(getInitialValues(selectedInputs));
+        setPrecision(getPrecision());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [volumeType]);
+    }, [volumeType, limits]);
+
+    const usedAccountPercent = Math.ceil(
+        limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0)
+    );
 
     useEffect(() => {
         setVolumeType(getDefaultVolumeType());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData]);
 
-    const parsedLimits = parseLimits(limits);
-    const minAmounts = getMinAmounts(parsedLimits);
-    const maxAmounts = getMaxAmounts(parsedLimits);
+    const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
+    const [price, minAmount, , minAmountUSD, , balance] = parsedLimits;
+
+    const { currencyDynamic, assetStatic } = InputTypes;
+    const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
+    const currentVolumeTypeInAsset = AssetTypes.includes(volumeType);
+
+    const getPercent = (amountUSD) => Math.ceil(Number((amountUSD / balance) * 100));
+
+    const getTranslatedValue = (value, from, to) => translateValue({ value, price }, from, to);
+
+    const calculateAmounts = (amountUSD, amount) => {
+        let result;
+        if (currentVolumeTypeInCurrency) {
+            const assetValue = getTranslatedValue(amountUSD, currencyDynamic, assetStatic);
+            result = getInputValues(assetValue, amountUSD, assetValue, getPercent(amountUSD));
+        } else if (currentVolumeTypeInAsset) {
+            const currencyValue = getTranslatedValue(amount, assetStatic, currencyDynamic);
+            result = getInputValues(amount, currencyValue, amount, getPercent(currencyValue));
+        }
+        return result;
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const minAmounts = useMemo(() => calculateAmounts(minAmountUSD, minAmount), [volumeType, parsedLimits]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const maxAmounts = {}; //useMemo(() => calculateAmounts(maxAmountUSD, maxAmount), [volumeType, parsedLimits]);
 
     const validate = (type: InputTypes) => {
-        return validateVolume({
-            used_percent: limits?.used_balance_percent,
-            type,
-            value: inputValues[type],
-            maxAmount: maxAmounts[type],
-            minAmount: minAmounts[type]
-        });
+        const valuesEmpty = inputValues && Object.values(inputValues).filter((i) => i).length === 0;
+        if (!valuesEmpty) {
+            return validateVolume({
+                used_percent: usedAccountPercent,
+                type,
+                value: inputValues[type],
+                maxAmount: maxAmounts[type],
+                minAmount: minAmounts[type]
+            });
+        }
+        return false;
     };
 
-    const getErrors = () => {
-        return selectedInputs.map((input) => validate(input.type));
-    };
-    const errors = getErrors().filter((i) => i);
+    const getErrors = () => selectedInputs.map((input) => validate(input.type));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const errors = useMemo(() => getErrors().filter((i) => i), [inputValues, volumeType]);
 
     return {
         inputValues,
         setInputValues,
         parsedLimits,
         minAmounts,
+        precision,
         maxAmounts,
+        usedAccountPercent,
         validate,
         volumeType,
         setVolumeType,

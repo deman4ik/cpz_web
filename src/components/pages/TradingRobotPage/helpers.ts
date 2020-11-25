@@ -43,6 +43,7 @@ export const formatRobotData = (robot: any) => {
 export const createVariable = (robotData, type) => {
     const { robot, userRobot } = robotData;
     if (userRobot) {
+        const { user_robot_settings } = userRobot.user_robot_settings;
         return {
             variables: {
                 isVisible: true,
@@ -59,10 +60,7 @@ export const createVariable = (robotData, type) => {
                     exchange: robot.exchange,
                     asset: robot.asset,
                     currency: robot.currency,
-                    settings: {
-                        volume: userRobot.user_robot_settings.user_robot_settings.volume,
-                        volumeType: userRobot.user_robot_settings.user_robot_settings.volumeType
-                    }
+                    settings: user_robot_settings
                 },
                 type
             }

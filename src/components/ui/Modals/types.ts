@@ -39,3 +39,19 @@ export type VolumeTypeOption = {
 export type InputMap = {
     [key in InputTypes]?: Input[];
 };
+
+export type Precision = { amount: number; price: number };
+
+export type AmountType = { amount: number; amountUSD: number };
+
+export type AssetType = {
+    min: AmountType;
+    max: AmountType;
+};
+export type RobotResult = {
+    asset?: AssetType;
+    price?: number;
+    precision?: Precision;
+    total_balance_usd?: number;
+    used_balance_percent?: number;
+};

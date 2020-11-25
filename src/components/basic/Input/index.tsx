@@ -23,6 +23,7 @@ export interface InputProps {
     readonly?: boolean;
     style?: CSSProperties;
     right?: boolean;
+    disabled?: boolean;
     autoComplete?: string;
 }
 
@@ -46,6 +47,7 @@ export const Input: React.FC<InputProps> = ({
     readonly,
     maxLength = 30,
     autoComplete = "hidden",
+    disabled,
     onFocus,
     onBlur
 }) => {
@@ -69,6 +71,7 @@ export const Input: React.FC<InputProps> = ({
         const styleInput = ["input"];
         if (error) styleInput.push("error");
         if (right) styleInput.push("right");
+        if (disabled) styleInput.push("disabled");
         return styleInput;
     };
 
@@ -177,6 +180,10 @@ export const Input: React.FC<InputProps> = ({
                     }
                     .input::-webkit-inner-spin-button {
                         display: none;
+                    }
+                    .disabled {
+                        pointer-events: none;
+                        opacity: 0.5;
                     }
 
                     @media (max-width: 480px) {

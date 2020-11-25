@@ -7,6 +7,7 @@ import { UNSUBSCRIBE } from "graphql/local/mutations";
 import { Button } from "components/basic";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
+import Router from "next/router";
 
 interface Props {
     onClose: (needsRefreshing?: boolean) => void;
@@ -19,6 +20,8 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     const [unsubscribeSend, { loading }] = useMutation(UNSUBSCRIBE_FROM_SIGNALS);
     const [unsubscribe] = useMutation(UNSUBSCRIBE);
 
+    const { code } = data?.robot;
+
     useEffect(() => {
         setTitle(`Unfollowing ${data.robot.name}`);
     });
@@ -29,13 +32,16 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                 if (response.data.userSignalUnsubscribe.result === "OK") {
                     unsubscribe({
                         variables: { cache: data.robot.cache, chartData: data.ChartData }
-                    });
+                    }).catch((e) => console.error(e));
                 } else {
                     setFormError(response.data.userSignalUnsubscribe.result);
                 }
                 onClose(true);
             })
-            .catch((e) => console.error(e));
+            .catch((e) => console.error(e))
+            .finally(() => {
+                Router.push(`/signals${code ? `/robot/${code}` : "?tab=2"}`);
+            });
     };
 
     return (
