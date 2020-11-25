@@ -35,9 +35,7 @@ const messageMap = {
     "order.error": "error",
     "message.support-reply": "message",
     "message.broadcast": "message",
-    "user_ex_acc.error": "user",
-    "signal-trade.new": "signalTrade",
-    "signal-alert.new": "signalAlert"
+    "user_ex_acc.error": "user"
 };
 
 export const headerSelectData = [
