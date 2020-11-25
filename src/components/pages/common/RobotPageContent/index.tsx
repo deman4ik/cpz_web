@@ -22,7 +22,7 @@ const PageContent: React.FC<Props> = ({ type, robotData, width }) => {
     const fetchPositions = typeIsSignals ? useFetchSignalRobotPositions : useFetchTradingRobotPositions;
     const robotOwned = typeIsSignals ? userSignals : userRobot || null;
 
-    const tradingPageData = fetchPositions(robotData);
+    const tradingPageData = fetchPositions(robotData, true);
 
     const tabSchema = [
         {
