@@ -4,12 +4,7 @@ import { RobotsType } from "config/types";
 export const GET_MARKETS_ROBOTS = gql`
     query get_user_markets_robots($id: uuid, $user_id: uuid!, $asset: String!, $exchange: String!, $currency: String!) {
         v_user_exchange_accs(
-            where: {
-                id: { _eq: $id }
-                exchange: { _eq: $exchange }
-                status: { _eq: "enabled" }
-                user: { id: { _eq: $user_id } }
-            }
+            where: { id: { _eq: $id }, exchange: { _eq: $exchange }, user: { id: { _eq: $user_id } } }
         ) {
             total_balance_usd
             amounts {
