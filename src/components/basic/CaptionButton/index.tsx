@@ -9,7 +9,8 @@ import {
     SettingsIcon,
     CloseIcon,
     BorderColorIcon as EditIcon,
-    PlusBox
+    PlusBox,
+    BullHorn
 } from "assets/icons/svg";
 
 interface Props {
@@ -31,7 +32,8 @@ const components = {
     settings: SettingsIcon,
     close: CloseIcon,
     edit: EditIcon,
-    plusbox: PlusBox
+    plusbox: PlusBox,
+    announcement: BullHorn
 };
 
 export const CaptionButton: React.FC<Props> = ({

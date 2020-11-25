@@ -16,6 +16,7 @@ type ManagePageProps = {
     formatData: (data: any) => any;
     getItemsCount: (data: any) => number;
     getSearchOptions: (data: any) => any;
+    toolbar?: JSX.Element;
 };
 
 const ManagePageTemplate = ({
@@ -26,25 +27,29 @@ const ManagePageTemplate = ({
     formatData,
     getItemsCount,
     tableStyles,
-    getSearchOptions
+    getSearchOptions,
+    toolbar
 }: ManagePageProps): JSX.Element => {
     return (
-        <ManagementTemplate title={pageType} page={pageType}>
-            <TableWithQuery
-                tableStyles={tableStyles}
-                aggregate_query={aggregateQuery}
-                query={dataQuery}
-                columns={columns}
-                formatData={formatData}
-                getItemsCount={getItemsCount}
-                getSearchOptions={getSearchOptions}
-            />
-        </ManagementTemplate>
+        <>
+            <ManagementTemplate title={pageType} page={pageType} toolbar={toolbar}>
+                <TableWithQuery
+                    tableStyles={tableStyles}
+                    aggregate_query={aggregateQuery}
+                    query={dataQuery}
+                    columns={columns}
+                    formatData={formatData}
+                    getItemsCount={getItemsCount}
+                    getSearchOptions={getSearchOptions}
+                />
+            </ManagementTemplate>
+        </>
     );
 };
 
 ManagePageTemplate.defaultProps = {
-    tableStyles: null
+    tableStyles: null,
+    toolbar: null
 };
 
 export default ManagePageTemplate;

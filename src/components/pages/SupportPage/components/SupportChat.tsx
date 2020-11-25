@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 // components
 import { Chat } from "components/common";
@@ -16,28 +16,29 @@ export interface SupportChatProps {
 
 const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
     /*data fetching*/
-    const { messages, loading } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
+    const { messages, loading: fetching } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
+
     /*send support message*/
-    const [sendSupportMessage, { loading: loadingSend, data: dataSend, error: errorSend }] = useMutation(
-        SEND_SUPPOT_MESSAGE
-    );
-    const sendSupportMessageCallback = (message: string) => {
-        sendSupportMessage({ variables: { message, to: user_id } });
-    };
+    const [success, setSuccess] = useState(false);
+    const [sendMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE);
+
+    useEffect(() => setSuccess(data?.supportMessage.result === "OK"), [data?.supportMessage.result]);
 
     return (
         <Chat
             title="Have a personal problem regarding connecting an exchange or billing? Send message here:"
             containerProps={{
-                loading,
+                loading: fetching,
                 messages,
-                formatCallback: (data) => formatMessage(data, { username: "Me" })
+                formatCallback: (messageData) => formatMessage(messageData, { username: "Me" })
             }}
             chatFormProps={{
-                loading: loadingSend,
-                error: errorSend || dataSend?.supportMessage?.error,
-                success: Boolean(dataSend?.supportMessage?.success),
-                submitCallback: sendSupportMessageCallback
+                loading,
+                error: error || (!success && data?.supportMessage.result),
+                success,
+                submitCallback: (message: string) => {
+                    sendMessage({ variables: { message } });
+                }
             }}
         />
     );

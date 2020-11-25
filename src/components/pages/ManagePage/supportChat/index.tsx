@@ -1,13 +1,11 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 // hooks
-import useWindowDimensions from "hooks/useWindowDimensions";
 import useFetchChatMessages from "hooks/useFetchChatMessages";
 // components
 import { ManagementTemplate } from "components/layout";
-import { EffectButton } from "components/basic";
 import { Chat } from "components/common";
 // utils
 import { formatMessage } from "components/common/Chat/utils";
@@ -21,47 +19,47 @@ import { GET_USER_INFO } from "graphql/user/queries";
 import { PageType } from "config/types";
 
 const ManageSupportChat = () => {
-    const { width } = useWindowDimensions(); // width hook П
     /*user_id*/
     const router = useRouter();
     const { user_id } = router.query;
+
     /*fetch chat data*/
-    const { messages, error, loading } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
-    const { data: user_data } = useQuery(GET_USER_INFO, {
+    const { messages, error, loading: fetching } = useFetchChatMessages(GET_SUPPORT_MESSAGES, user_id);
+    const { data: userData } = useQuery(GET_USER_INFO, {
         variables: { user_id }
     });
-    const username = user_data?.users[0]?.name || "";
-    const messagesContextUsername = username || user_data?.users[0]?.telegram_username || user_id;
+    const username = userData?.users[0]?.name || "";
+    const messagesContextUsername = username || userData?.users[0]?.telegram_username || user_id;
 
     /*reply support message mutation*/
-    const [replySupportMessage, { loading: loadingReply, data: dataReply, error: errorReply }] = useMutation(
-        REPLY_SUPPORT_MESSAGE
-    );
-    const sendMessageCallback = (message: string): void => {
-        replySupportMessage({ variables: { message, to: user_id } });
-    };
+    const [success, setSuccess] = useState(false);
+    const [reply, { loading: loadingReply, data, error: replyError }] = useMutation(REPLY_SUPPORT_MESSAGE);
+
+    useEffect(() => setSuccess(data?.replySupportMessage.result === "OK"), [data?.replySupportMessage.result]);
 
     const handlePressBack = () => {
         router.back();
     };
 
     return (
-        <ManagementTemplate title="Support chat" page={PageType.supportRequests} navigateBack={handlePressBack}>
+        <ManagementTemplate title="Support chat" page={PageType.managementSupport} navigateBack={handlePressBack}>
             <div className={styles.support_chat_wrapper}>
                 <Chat
-                    title={`Chat with ${username} (${user_id})`}
+                    title={`Chat with ${username} [${user_id}]`}
                     containerProps={{
-                        loading,
+                        loading: fetching,
                         messages,
-                        formatCallback: (data) =>
-                            formatMessage(data, { supportContext: true, username: messagesContextUsername }),
-                        notMessagesText: error && "Error loading user data!"
+                        formatCallback: (messageData) =>
+                            formatMessage(messageData, { supportContext: true, username: messagesContextUsername }),
+                        notMessagesText: error && "Error fetching user data"
                     }}
                     chatFormProps={{
                         loading: loadingReply,
-                        error: errorReply || dataReply?.replySupportMessage?.error,
-                        success: Boolean(dataReply?.replySupportMessage?.success && user_data),
-                        submitCallback: sendMessageCallback
+                        error: replyError || (!success && data?.replySupportMessage.result),
+                        success: userData && success,
+                        submitCallback: (message: string): void => {
+                            reply({ variables: { message, to: user_id } });
+                        }
                     }}
                 />
             </div>

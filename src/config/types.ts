@@ -15,7 +15,7 @@ export enum PageType {
     manageBacktests = "Back Tests",
     userRobots = "User Robots",
     userSignals = "User Signals",
-    supportRequests = "Support Requests",
+    managementSupport = "Support",
     deadLetters = "Dead Letters"
 }
 
