@@ -76,7 +76,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
             .forEach((el) => {
                 const newValue = translateValue({ value, price, balance }, type, el) || 0;
                 newValues[el] = newValue;
-                newDisplayedValues[el] = Number(newValue.toFixed(6)) || 0;
+                newDisplayedValues[el] = Number(newValue.toFixed(precision[precisionToVolumeMap[el]])) || 0;
             });
         setInputValues(newValues);
         setDisplayedValues(newDisplayedValues);

@@ -8,6 +8,7 @@ import { Button } from "components/basic";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
 import Router from "next/router";
+import { currentPage, Pages } from "components/ui/Modals/helpers";
 
 interface Props {
     onClose: (needsRefreshing?: boolean) => void;
@@ -20,11 +21,10 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     const [unsubscribeSend, { loading }] = useMutation(UNSUBSCRIBE_FROM_SIGNALS);
     const [unsubscribe] = useMutation(UNSUBSCRIBE);
 
-    const { code } = data?.robot;
-
     useEffect(() => {
-        setTitle(`Unfollowing ${data.robot.name}`);
-    });
+        setTitle(`Unfollowing ${data?.robot.name}`);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
     const handleOnSubmit = () => {
         unsubscribeSend({ variables: { robotId: data.robot.id } })
@@ -36,12 +36,13 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                 } else {
                     setFormError(response.data.userSignalUnsubscribe.result);
                 }
+                if (currentPage(Router.pathname) === Pages.signal) {
+                    Router.push("/signals?tab=2");
+                }
+
                 onClose(true);
             })
-            .catch((e) => console.error(e))
-            .finally(() => {
-                Router.push(`/signals${code ? `/robot/${code}` : "?tab=2"}`);
-            });
+            .catch((e) => console.error(e));
     };
 
     return (

@@ -6,7 +6,7 @@ import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "graphql/ro
 import { capitalize } from "config/utils";
 import { ErrorLine } from "components/common";
 import { Button } from "components/basic";
-import { actionText } from "./helpers";
+import { actionText, currentPage, Pages } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./index.module.css";
 import Router from "next/router";
@@ -71,8 +71,10 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     value: userRobotId
                 });
             }
+            if (type === "delete" && currentPage(Router.pathname) === Pages.robot) {
+                Router.push(`/robots?tab=2`);
+            }
             onClose(true);
-            Router.push(`/robots${code ? `/robot/${code}` : "?tab=2"}`);
         } catch (e) {
             console.error(e);
             setFormError(e.message);

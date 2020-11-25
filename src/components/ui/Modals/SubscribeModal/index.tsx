@@ -5,7 +5,7 @@ import { ROBOT } from "graphql/local/queries";
 import { GET_MARKETS_SIGNALS } from "graphql/common/queries";
 import { EDIT_SIGNAL, SUBSCRIBE_TO_SIGNALS } from "graphql/signals/mutations";
 import { Modal } from "components/basic";
-import { buildSettings, getLimitsForSignal } from "../helpers";
+import { buildSettings, currentPage, getLimitsForSignal, Pages } from "../helpers";
 import { AddRobotInputsMap, volumeTypeOptions } from "../constants";
 import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButtons";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
@@ -40,8 +40,9 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     //queries
     const { data: robotData } = useQuery(ROBOT);
 
-    const { name, code, id, subs } = robotData?.robot;
+    const { name, code, id, subs } = robotData?.robot || {};
     const asset = robotData?.robot.subs.asset;
+
     const { data: limitsData, loading } = useQueryWithAuth(true, GET_MARKETS_SIGNALS, {
         variables: {
             exchange: !robotData ? null : subs.exchange,

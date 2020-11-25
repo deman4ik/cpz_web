@@ -20,6 +20,7 @@ export const Modals: React.FC<ModalsProps> = ({ afterClose }) => {
             afterClose();
         }
     };
+    const isSubscribeModalOpen = getIsVisibleStatus(modalType.subscribe, dataModal);
     return (
         <>
             <Modal
@@ -28,14 +29,16 @@ export const Modals: React.FC<ModalsProps> = ({ afterClose }) => {
                 onClose={handleSetVisible}>
                 <UnsubscribeModal setTitle={setTitleModal} onClose={onClose} />
             </Modal>
-            <SubscribeModal
-                type={RobotsType.signals}
-                isOpen={getIsVisibleStatus(modalType.subscribe, dataModal)}
-                title={titleModal}
-                onClose={onClose}
-                actionType={dataModal.ModalVisible.type}
-                setTitle={setTitleModal}
-            />
+            {isSubscribeModalOpen && (
+                <SubscribeModal
+                    type={RobotsType.signals}
+                    isOpen={isSubscribeModalOpen}
+                    title={titleModal}
+                    onClose={onClose}
+                    actionType={dataModal.ModalVisible.type}
+                    setTitle={setTitleModal}
+                />
+            )}
         </>
     );
 };

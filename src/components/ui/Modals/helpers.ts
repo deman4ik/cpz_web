@@ -100,9 +100,20 @@ export const formatNumber = (n: number, precision?: number): string => formatMon
 
 export const trimNumber = (n: number): string => Number(n.toFixed(6)).toString();
 
-export const getAmtErrors = (val: string | number, minAmt: number, maxAmt: number): string | boolean => {
-    if (Number(val) < minAmt) return `Minimal amount is ${minAmt}`;
-    if (Number(val) > maxAmt) return `Max amount is ${maxAmt}`;
+export const roundWithPrecision = (number: number, precision: number) => {
+    if (precision === 1) {
+        return Math.floor(number * 10) / 10;
+    }
+    return Number(number.toFixed(precision));
+};
+export const getAmtErrors = (
+    val: string | number,
+    minAmt: number,
+    maxAmt: number,
+    precision: number
+): string | boolean => {
+    if (Number(val) < minAmt) return `Minimal amount is ${roundWithPrecision(minAmt, precision)}`;
+    if (Number(val) > maxAmt) return `Max amount is ${roundWithPrecision(maxAmt, precision)}`;
 
     return false;
 };
@@ -161,6 +172,7 @@ export function translateValue(args: any, fromType: string, toType: string): num
 }
 
 interface ValidateVolumeProps {
+    precision: number;
     used_percent: number;
     type: string;
     value: string | number;
@@ -168,7 +180,9 @@ interface ValidateVolumeProps {
     maxAmount: string | number;
 }
 
-const validateCurrencies = ({ value, minAmount, maxAmount }) => getAmtErrors(value, minAmount, maxAmount);
+const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
+    getAmtErrors(value, minAmount, maxAmount, precision);
+
 const validateBalancePercent = ({ value, used_percent }) => !(value >= 1 && value < 100 - used_percent);
 
 const validationFunctions = {
@@ -194,3 +208,17 @@ type AmountType = {
 };
 export const AssetTypes = [InputTypes.assetDynamicDelta, InputTypes.assetStatic];
 export const CurrencyTypes = [InputTypes.currencyDynamic, InputTypes.balancePercent];
+
+export enum Pages {
+    robot = "robot",
+    signals = "signals",
+    signal = "signal"
+}
+
+const routesToPagesMap = {
+    "/robots/robot/[code]": Pages.robot,
+    "/signals": Pages.signals,
+    "/signals/robot/[code]": Pages.signal
+};
+
+export const currentPage = (path: string) => routesToPagesMap[path];

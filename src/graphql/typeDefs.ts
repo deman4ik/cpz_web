@@ -36,6 +36,7 @@ export const typeDefs = gql`
         userRobotId: String
         name: String!
         subs: SubsData
+        code: String
     }
 
     extend type RobotInfo {

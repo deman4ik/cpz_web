@@ -14,7 +14,7 @@ import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
 import { ErrorLine, LoadingIndicator } from "components/common";
-import { buildSettings, getLimitsForRobot } from "../helpers";
+import { buildSettings, currentPage, getLimitsForRobot, Pages } from "../helpers";
 import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";
 import styles from "../index.module.css";
@@ -22,6 +22,7 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { GET_MARKETS_ROBOTS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
+import Router from "next/router";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -54,9 +55,9 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const { exchange, asset, currency } = robotData?.robot.subs || {};
 
     const variables = {
-        exchange: !robotData ? null : exchange,
-        asset: !robotData ? null : asset,
-        currency: !robotData ? null : currency
+        exchange,
+        asset,
+        currency
     };
     const { data, loading } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
         variables: { ...variables, user_id },
@@ -66,9 +67,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
             id: inputKey,
-            exchange: !robotData ? null : exchange,
-            asset: !robotData ? null : asset,
-            currency: !robotData ? null : currency,
+            ...variables,
             user_id
         }
     });
@@ -78,8 +77,9 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     }, [step]);
 
     useEffect(() => {
+        const variablesAvailable = Object.values(variables).filter((i) => i).length > 0;
         const noMarketsYetAndNotRunning = inputKey && !limitsData && !limitsLoading;
-        if (noMarketsYetAndNotRunning) {
+        if (noMarketsYetAndNotRunning && variablesAvailable) {
             getMarkets();
         }
     }, [inputKey]);
@@ -136,6 +136,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             }
                         }
                     }).then((res) => {
+                        const robotCode = code || robotData?.robot.code;
+                        if (currentPage(Router.pathname) !== Pages.robot) {
+                            Router.push(`/robots${robotCode ? `/robot/${robotCode}` : "?tab=2"}`);
+                        }
                         event({
                             action: "create",
                             category: "Robots",
