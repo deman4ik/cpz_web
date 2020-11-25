@@ -30,7 +30,8 @@ function parseRobotResult(data, type) {
         result.precision = precision;
     }
     result.total_balance_usd = total_balance_usd;
-    result.used_balance_percent = amounts.used_balance_percent || 0;
+    result.used_balance_percent = amounts?.used_balance_percent || 0;
+
     return result;
 }
 export const limitsPropToType = {
