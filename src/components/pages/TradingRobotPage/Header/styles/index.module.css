@@ -60,10 +60,12 @@
         margin-bottom: 5px;
     }
     .container {
+        max-width: 100%;
         align-items: center;
         margin-bottom: 30px;
     }
     .headerMessage{
+        max-width: 80%;
         text-align: center;
         margin: 15px 0;
     }
