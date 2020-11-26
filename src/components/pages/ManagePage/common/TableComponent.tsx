@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo } from "react";
+import React, { FC, memo, useCallback, useMemo } from "react";
 import Table from "components/basic/Table";
 import { ITEMS_PER_PAGE_OPTIONS } from "components/pages/ManagePage/common/constants";
 import { OrderBy } from "config/types";
@@ -36,9 +36,9 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
         headerStyles,
         loading
     } = props;
-    const setLimit = (limit: any) => setFilters((prev) => ({ ...prev, limit }));
-    const setWhere = (where: any) => setFilters((prev) => ({ ...prev, where }));
-    const setOrderBy = (orderBy: any) => setFilters((prev) => ({ ...prev, orderBy }));
+    const setLimit = useCallback((limit: any) => setFilters((prev) => ({ ...prev, limit })), [setFilters]);
+    const setWhere = useCallback((where: any) => setFilters((prev) => ({ ...prev, where })), [setFilters]);
+    const setOrderBy = useCallback((orderBy: any) => setFilters((prev) => ({ ...prev, orderBy })), [setFilters]);
 
     const onChangeSearch = (value) => {
         const trimmedVal = value.trim();
@@ -49,20 +49,23 @@ const _TableComponent: FC<TableComponentProps> = (props) => {
         }
     };
 
-    const onChangeSort = (column: { id: string; desc: boolean; sortSchema: { field: string; subfield: string } }) => {
-        if (column) {
-            const { id, desc, sortSchema } = column;
-            const sortDirection = desc ? "desc" : "asc";
-            let newOrderBy: OrderBy = {
-                [id]: sortDirection
-            };
-            if (sortSchema) {
-                const { field, subfield } = sortSchema;
-                newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
+    const onChangeSort = useCallback(
+        (column: { id: string; desc: boolean; sortSchema: { field: string; subfield: string } }) => {
+            if (column) {
+                const { id, desc, sortSchema } = column;
+                const sortDirection = desc ? "desc" : "asc";
+                let newOrderBy: OrderBy = {
+                    [id]: sortDirection
+                };
+                if (sortSchema) {
+                    const { field, subfield } = sortSchema;
+                    newOrderBy = { [field]: subfield ? { [subfield]: sortDirection } : sortDirection };
+                }
+                setOrderBy(newOrderBy);
             }
-            setOrderBy(newOrderBy);
-        }
-    };
+        },
+        [setOrderBy]
+    );
 
     const tableColumns = useMemo(() => columns, [columns]);
 

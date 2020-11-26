@@ -164,7 +164,6 @@ const Table = ({
     useEffect(() => {
         if (!sortBy[0]) return;
         const { id, desc } = sortBy[0];
-
         // allColumns contains all the nested columns
         const { fieldSchema } = allColumns.find((column) => column.id === id);
         onChangeSort({ id, desc, fieldSchema });
@@ -180,17 +179,15 @@ const Table = ({
 
     return (
         <div className={styles.wrapper} style={tableStyles}>
-            {!!itemsCount && (
-                <Toolbar
-                    itemsCount={itemsCount}
-                    onChangeSearch={onChangeSearch}
-                    toggleControlModal={toggleControlModal}
-                    toggleActionModal={toggleActionModal}
-                    actionModalCanBeOpened={
-                        selectEnabled && groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0
-                    }
-                />
-            )}
+            <Toolbar
+                itemsCount={itemsCount}
+                onChangeSearch={onChangeSearch}
+                toggleControlModal={toggleControlModal}
+                toggleActionModal={toggleActionModal}
+                actionModalCanBeOpened={
+                    selectEnabled && groupedColsWithMutations.length > 0 && selectedFlatRows.length > 0
+                }
+            />
 
             <div className={`${styles.overflow_scroll} ${styles.content_wrapper}`}>
                 {isLoading ? (
