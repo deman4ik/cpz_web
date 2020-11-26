@@ -1,17 +1,3 @@
 .textarea {
-    background-color: var(--darkBg);
-    color: var(--accent);
-    border-radius: 2px;
-    padding: 11px;
-    overflow: hidden;
-    font-size: var(--normal1);
-    width: 100%;
-    min-height: 100px;
-}
-
-@media (max-width: 480px) {
-    .textarea {
-        width: 250px;
-        height: 90px;
-    }
+    
 }

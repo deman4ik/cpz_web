@@ -15,13 +15,21 @@ const modalStyle = {
 
 export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
     const [announcement, setAnnouncement] = useState("");
+    const [error, setError] = useState(null);
     const [announce, { loading }] = useMutation(BROADCAST_NEWS);
 
-    const postAnnouncement = () => {
+    const handleAnnouncePress = () => {
+        setError(null);
         if (announcement !== "")
-            announce({ variables: { message: announcement } }).then(() => {
-                onClose();
-            });
+            announce({ variables: { message: announcement } }).then(
+                () => {
+                    onClose();
+                },
+                (err) => setError(err)
+            );
+        else {
+            setError("Empty announcements are not allowed.");
+        }
     };
 
     return (
@@ -30,8 +38,8 @@ export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
             onClose={onClose}
             title="Post new annonuncement"
             style={modalStyle}
-            footer={<Button title="Announce" type="success" onClick={postAnnouncement} isLoading={loading} />}>
-            <Textarea value={announcement} onChangeText={setAnnouncement} rows={5} resizable />
+            footer={<Button title="Announce" type="success" onClick={handleAnnouncePress} isLoading={loading} />}>
+            <Textarea value={announcement} onChangeText={setAnnouncement} rows={5} resizable error={error} />
         </Modal>
     );
 };
