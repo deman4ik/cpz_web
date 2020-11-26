@@ -4,7 +4,7 @@ export const getSearchOptions = (query: string) => {
     return {
         _or: [
             { type: defaultCondition },
-            { topic: defaultCondition },
+            { topic: defaultCondition }
             //{ id: defaultCondition },
             //{ event_id: defaultCondition }
         ]
