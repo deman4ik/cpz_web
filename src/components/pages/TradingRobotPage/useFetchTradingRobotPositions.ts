@@ -12,12 +12,13 @@ interface RobotData {
     robot: any;
 }
 
-const useFetchTradingRobotPosition = (robotData: RobotData): any => {
+const useFetchTradingRobotPosition = (robotData: RobotData, preserveScrollPosition?: boolean): any => {
     const {
         authState: { user_id }
     } = useContext(AuthContext);
 
     const { userRobot, robot } = robotData;
+    const [position, setPosition] = useState(window.pageYOffset);
 
     const statusOptions = userRobot ? ["closed", "closedAuto"] : ["closed"];
 
@@ -74,14 +75,25 @@ const useFetchTradingRobotPosition = (robotData: RobotData): any => {
         [aggrData, loadingAggregate]
     );
 
+    if (preserveScrollPosition) {
+        window.requestAnimationFrame(() => {
+            if (preserveScrollPosition) {
+                window.scrollTo(0, position);
+            }
+        });
+    }
     const handleLoadMore = () => {
+        setPosition(window.pageYOffset);
         fetchMore({
             variables: {
                 offset: limit,
                 limit: CLOSED_POSITIONS_LIMIT
             }
-        }).catch((e) => console.error(e));
-        setLimit(limit + CLOSED_POSITIONS_LIMIT);
+        })
+            .then(() => {
+                setLimit(limit + CLOSED_POSITIONS_LIMIT);
+            })
+            .catch((e) => console.error(e));
     };
 
     return {

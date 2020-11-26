@@ -10,7 +10,9 @@ import { getAlerts } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 
-const useFetchSignalRobotPositions = (robotData) => {
+const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolean) => {
+    const [position, setPosition] = useState(window.pageYOffset);
+
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
@@ -38,7 +40,13 @@ const useFetchSignalRobotPositions = (robotData) => {
             pollInterval: POLL_INTERVAL
         }
     );
-
+    if (preserveScrollPosition) {
+        window.requestAnimationFrame(() => {
+            if (preserveScrollPosition) {
+                window.scrollTo(0, position);
+            }
+        });
+    }
     const { data: openPositionsData, loading: loadingOpenPositions, refetch: refetch_open } = useQuery(
         robotPositionsQuery,
         {
@@ -82,6 +90,7 @@ const useFetchSignalRobotPositions = (robotData) => {
     });
 
     const handleLoadMore = () => {
+        setPosition(window.pageYOffset);
         fetchMore({
             variables: {
                 offset: limit,
