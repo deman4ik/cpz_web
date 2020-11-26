@@ -2,7 +2,7 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
-import { UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { InputTypes, UnitsToTypes, volumes } from "components/ui/Modals/types";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
 export const formatMoney = (value: number, fractionDigits = 2): string => {
@@ -34,7 +34,8 @@ export const getVolumeType = (settings) => (settings ? settings.volumeType : nul
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);
-    const displayUnits = availableUnits[UnitsToTypes[settings.volumeType]];
+    const isTypePercent = settings.volumeType === InputTypes.balancePercent;
+    const displayUnits = isTypePercent ? "%" : availableUnits[UnitsToTypes[settings.volumeType]];
     return `${volume || 0} ${displayUnits || ""}`;
 };
 
