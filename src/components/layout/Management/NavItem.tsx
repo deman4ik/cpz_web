@@ -39,7 +39,7 @@ const components = {
     manageRobots: ListBulleted,
     userSignals: AccountStar,
     userRobots: AccountDetails,
-    supportRequests: MessageAlert,
+    managementSupport: MessageAlert,
     menu: MenuIcon,
     backBurger: BackBurger,
     deadLetter: DeadLetter
