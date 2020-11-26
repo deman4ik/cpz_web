@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Textarea, Modal, Button } from "components/basic";
-import styles from "../styles/AnnouncementModal.module.css";
 import { useMutation } from "@apollo/client";
 import { BROADCAST_NEWS } from "graphql/manage/mutations";
 
