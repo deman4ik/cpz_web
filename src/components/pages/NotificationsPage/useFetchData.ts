@@ -126,6 +126,7 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
         }).then((result) => {
             setInputSelect(result.data.setNotificationsProps);
             setChangeStatus(true);
+            refetch();
         });
     };
 
