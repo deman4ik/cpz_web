@@ -23,9 +23,9 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
         <div className={styles.robotStats}>
             <div className={styles.robotStatsCol}>
                 <HeaderStatsSectionItem
-                    value={`${formatMoney(getProfit(displayData))} $`}
+                    value={`${formatMoney(getProfit(robotData))} $`}
                     label="Profit"
-                    customStyles={{ value: { color: getProfit(displayData) > 0 ? color.positive : color.negative } }}
+                    customStyles={{ value: { color: getProfit(robotData) > 0 ? color.positive : color.negative } }}
                 />
                 <HeaderStatsSectionItem label="Amount" value={displayData.displayedVolume} />
             </div>
