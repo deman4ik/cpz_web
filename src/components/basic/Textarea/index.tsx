@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./index.module.css";
 
 interface Props {
     value: string;
@@ -7,10 +6,18 @@ interface Props {
     rows?: number;
     resizable?: boolean;
     error?: string;
+    placeholder?: string;
 }
 
-export const Textarea: React.FC<Props> = ({ value, onChangeText, rows = 2, resizable = false, error = null }) => {
-    const handleOnChange = (e) => {
+export const Textarea: React.FC<Props> = ({
+    value,
+    onChangeText,
+    rows = 2,
+    resizable = false,
+    error = null,
+    placeholder = ""
+}) => {
+    const handleChange = (e) => {
         onChangeText(e.target.value);
     };
 
@@ -19,9 +26,9 @@ export const Textarea: React.FC<Props> = ({ value, onChangeText, rows = 2, resiz
             <textarea
                 value={value}
                 rows={rows}
-                onChange={handleOnChange}
+                onChange={handleChange}
                 className="textarea"
-                style={{ resize: resizable ? "vertical" : "none" }}
+                placeholder={placeholder}
             />
             <div className="errorContainer" />
             <style jsx>{`
@@ -30,13 +37,16 @@ export const Textarea: React.FC<Props> = ({ value, onChangeText, rows = 2, resiz
                     background-color: var(--darkBg);
                     color: var(--accent);
                     border-radius: 2px 2px ${error ? "0 0" : "2px 2px"};
-                    padding: 11px;
+                    padding: 10px;
                     overflow: hidden;
+                    overflow: auto;
                     font-size: var(--normal1);
                     width: 100%;
-                    min-height: 100px;
+                    height: 100%;
                     border: 1px solid transparent;
-                    ${error ? "border-color: var(--negative);" : ""}
+                    resize: ${resizable ? "vertical" : "none"};
+                    ${error ? "border-color: var(--negative);" : ""};
+                    opacity: ${value.length === 0 ? "70%" : "100%"};
                 }
                 .errorContainer {
                     width: 100%;

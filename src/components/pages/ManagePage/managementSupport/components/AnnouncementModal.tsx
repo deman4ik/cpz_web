@@ -15,6 +15,7 @@ const modalStyle = {
 export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
     const [announcement, setAnnouncement] = useState("");
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const [announce, { loading }] = useMutation(BROADCAST_NEWS);
 
     const handleAnnouncePress = () => {
@@ -22,7 +23,8 @@ export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
         if (announcement !== "")
             announce({ variables: { message: announcement } }).then(
                 () => {
-                    onClose();
+                    setSuccess(true);
+                    setTimeout(onClose, 1000);
                 },
                 (err) => setError(err)
             );
@@ -37,7 +39,16 @@ export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
             onClose={onClose}
             title="Post new annonuncement"
             style={modalStyle}
-            footer={<Button title="Announce" type="success" onClick={handleAnnouncePress} isLoading={loading} />}>
+            footer={
+                <Button
+                    title="Announce"
+                    icon={success ? "check" : ""}
+                    type="success"
+                    onClick={handleAnnouncePress}
+                    isLoading={loading}
+                    disabled={success}
+                />
+            }>
             <Textarea value={announcement} onChangeText={setAnnouncement} rows={5} resizable error={error} />
         </Modal>
     );

@@ -1,57 +1,31 @@
 .chat_form_container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.chat_form_textarea_wrapper{
-  position: relative;
-  width: 100%;
-  margin: auto;
+.chat_form_button {
+    width: 60%;
+    margin: auto;
+    padding-top: 15px;
 }
-
-.chat_form_textarea{
-  border-radius: 5px;
-  box-sizing: border-box;
-  padding: 8px;
-  overflow-y: auto;
-  background-color: var(--darkBg);
-  display: block;
-  width: 100%;
-  color: var(--accent);
-  font-size: var(--small1);
-  font-family: inherit;
-  resize: none;
-}
-
-.chat_form_textarea::placeholder{
-  color: var(--accent);
-}
-.chat_form_textarea:focus .chat_form_textarea_placeholder {
-  display: none;
-}
-
-.chat_form_button{
-  width: 60%;
-  margin: auto;
-  padding-top: 15px;
-}
-.chat_form_error{
-  padding-top: 20px;
-  color: #ff0000;
+.chat_form_error {
+    padding-top: 20px;
+    color: #ff0000;
 }
 
 /* responsive */
 @media (min-width: 550px) {
-  .chat_form_textarea_wrapper{
-    width: 78%;
-  }
-  .chat_form_button{
-    width: 20%;
-    padding-top: 0;
-  }
-  .chat_form_container{
-    height: 50px;
-    flex-direction: row;
-  }
+    .chat_form_textarea_wrapper {
+        width: 78%;
+    }
+    .chat_form_button {
+        width: 20%;
+        padding-top: 0;
+    }
+    .chat_form_container {
+        height: 50px;
+        flex-direction: row;
+    }
 }
