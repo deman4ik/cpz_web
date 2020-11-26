@@ -71,7 +71,8 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     const maxAmounts = {}; //useMemo(() => calculateAmounts(maxAmountUSD, maxAmount), [volumeType, parsedLimits]);
 
     const validate = (type: InputTypes) => {
-        const valuesEmpty = inputValues && Object.values(inputValues).filter((i) => i).length === 0;
+        // eslint-disable-next-line eqeqeq
+        const valuesEmpty = inputValues && Object.values(inputValues).filter((i) => i == 0 || i).length === 0;
         if (!valuesEmpty) {
             return validateVolume({
                 precision: precision[precisionToVolumeMap[type]],

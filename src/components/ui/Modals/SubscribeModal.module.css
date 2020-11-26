@@ -22,7 +22,7 @@
     margin: 5px auto;
 }
 
-.label.description span{
+.label.description span {
     line-height: var(--normal2);
 }
 .fieldset {

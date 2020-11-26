@@ -474,6 +474,7 @@ export const USER_ROBOT_INFO_FOR_USER = gql`
             active: started_at
             user_robot: user_robots(where: { user_id: { _eq: $user_id } }) {
                 id
+                user_ex_acc_id
                 status
                 started_at
                 ${fullStats}

@@ -34,6 +34,7 @@ export const typeDefs = gql`
         cache: CacheData!
         id: String!
         userRobotId: String
+        user_ex_acc_id: String
         name: String!
         subs: SubsData
         code: String

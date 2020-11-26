@@ -2,7 +2,7 @@ import * as Sets from "./NotificationsSets";
 import * as SetsCard from "./NotificationsSetsCard";
 import { color, DOCS_URL, SUPPORT_URL } from "config/constants";
 
-const actionTypes = ["long", "closeShort"];
+const actionTypes = ["long", "closeLong", "closeShort"];
 const actionSignals = ["long", "short"];
 export const actionName = (action) => (actionTypes.includes(action) ? "BUY" : "SELL");
 export const actionIcon = (action) => (actionTypes.includes(action) ? "arrowup" : "arrowdown");
@@ -11,28 +11,13 @@ export const actionOpen = (action) => actionSignals.includes(action);
 
 export const getFormatData = (notifications) =>
     notifications.map((notification) => {
-        const { type, data, user_robot, user_position, robot_position, robot, timestamp, readed, id } = notification;
+        const { type, data, timestamp, readed, id } = notification;
         return {
             id,
             type,
             data,
             timestamp,
-            readed,
-            user_position,
-            robot_position,
-            robot: user_robot
-                ? {
-                      code: user_robot.robot.code,
-                      name: user_robot.robot.name,
-                      asset: user_robot.robot.asset
-                  }
-                : robot
-                ? {
-                      code: robot.code,
-                      name: robot.name,
-                      asset: robot.asset
-                  }
-                : null
+            readed
         };
     });
 
@@ -73,7 +58,7 @@ export const filters = {
         "user-robot.resumed",
         "message.support-reply"
     ],
-    signals: ["signal.trade", "signal.alert"],
+    signals: ["signal.trade", "signal.alert", "signal-trade.new", "signal-alert.new"],
     trading: ["user-robot.trade"],
     error: ["order.error", "user_ex_acc.error"]
 };
@@ -90,7 +75,6 @@ export const showMessage = (item, onClick, card = false) => {
         signalTrade: () => setFunc.signalTradeSet(item, onClick),
         user: () => setFunc.userSet(item, onClick)
     };
-
     return messages[messageMap[item.type]]();
 };
 
@@ -99,20 +83,20 @@ export const getRedirectionLink = (item) => {
         failed: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         message: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         robotTrade: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         signalAlert: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         robot: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         signalTrade: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         user: () => ({ link: "/profile", redirect: true })

@@ -12,7 +12,8 @@ import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 const RECORDS_LIMIT = 10;
-export const useFetchData = () => {
+export const useFetchData = (preserveScrollPosition?: boolean) => {
+    const [position, setPosition] = useState(window.pageYOffset);
     /*auth context*/
     const {
         authState: { user_id }
@@ -64,6 +65,7 @@ export const useFetchData = () => {
 
     const handleLoadMore = () => {
         setIsLoadingMore(true);
+        setPosition(window.pageYOffset);
 
         fetchMore({
             variables: {
@@ -71,14 +73,23 @@ export const useFetchData = () => {
                 limit: RECORDS_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
-                setIsLoadingMore(false);
                 if (!fetchMoreResult) return prev;
                 setLimit(data.notifications.length + RECORDS_LIMIT);
                 return {
                     notifications: [...prev.notifications, ...fetchMoreResult.notifications]
                 };
             }
-        }).catch((e) => console.error(e));
+        })
+            .catch((e) => console.error(e))
+            .finally(() => {
+                if (preserveScrollPosition) {
+                    setPosition((_position) => {
+                        window.scrollTo(0, _position);
+                        return position;
+                    });
+                }
+                setIsLoadingMore(false);
+            });
     };
 
     const formatData = useMemo(() => (!loading && data ? getFormatData(data.notifications) : []), [data, loading]);

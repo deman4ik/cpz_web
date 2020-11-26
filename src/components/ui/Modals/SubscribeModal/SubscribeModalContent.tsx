@@ -137,7 +137,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                 const { type } = input;
                                 return (
                                     <div key={`subscribe-${type}`} className={styles.input_container}>
-                                        <Delimiter />
+                                        <Delimiter first={i === 0} />
                                         <ValueInput
                                             disabled={!enabled}
                                             customClassName={styles.modalInput}
