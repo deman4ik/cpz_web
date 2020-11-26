@@ -134,8 +134,10 @@ export const getTimeFromNow = (d: string): string => {
 
     if (!hours && !minutes) return "less than a minute ago";
 
-    const timeFromNow = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""} 
-    ${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""} ago`;
+    const hoursStr = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""}`;
+    const minutesStr = `${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""}`;
+
+    const timeFromNow = `${hours > 0 ? hoursStr : minutesStr} ago`;
 
     return timeFromNow;
 };
