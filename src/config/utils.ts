@@ -36,7 +36,7 @@ export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) 
     const volume = getVolume(settings);
     const isTypePercent = settings.volumeType === InputTypes.balancePercent;
     const displayUnits = isTypePercent ? "%" : availableUnits[UnitsToTypes[settings.volumeType]];
-    return `${volume} ${displayUnits || ""}`;
+    return `${volume || 0} ${displayUnits || ""}`;
 };
 
 export const getUserSignalVolume = (signal) => {
