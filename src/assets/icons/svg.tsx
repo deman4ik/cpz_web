@@ -25,6 +25,15 @@ export const BackBurger: React.FC<Props> = ({ color, size = 24 }) => (
     </svg>
 );
 
+export const BullHorn: React.FC<Props> = ({ color = "white", size = 24 }) => (
+    <svg style={{ height: size, width: size }} viewBox="0 0 24 24">
+        <path
+            fill={color}
+            d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M15,15.6L13,14H4V10H13L15,8.4V15.6M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"
+        />
+    </svg>
+);
+
 export const MultiLineChartIcon: React.FC<Props> = ({ color, size = 24 }) => (
     <svg style={{ width: size, height: size }} fill={color} viewBox="0 0 24 24">
         <path d="M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56l6.49 3.74z" />

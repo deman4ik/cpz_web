@@ -37,7 +37,7 @@ const components = {
     manageRobots: ListBulleted,
     userSignals: AccountStar,
     userRobots: AccountDetails,
-    supportRequests: MessageAlert
+    managementSupport: MessageAlert
 };
 
 const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
