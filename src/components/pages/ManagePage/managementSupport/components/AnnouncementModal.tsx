@@ -18,13 +18,20 @@ export const AnnouncementModal = ({ isOpen, onClose }: Props): JSX.Element => {
     const [success, setSuccess] = useState(false);
     const [announce, { loading }] = useMutation(BROADCAST_NEWS);
 
+    const closeAndReset = () => {
+        onClose();
+        setAnnouncement("");
+        setError(null);
+        setSuccess(false);
+    };
+
     const handleAnnouncePress = () => {
         setError(null);
         if (announcement !== "")
             announce({ variables: { message: announcement } }).then(
                 () => {
                     setSuccess(true);
-                    setTimeout(onClose, 1000);
+                    setTimeout(closeAndReset, 1000);
                 },
                 (err) => setError(err)
             );
