@@ -52,7 +52,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         setStep(step - 1);
     };
 
-    const { data: robotData } = useQuery(ROBOT(RobotsType.robots));
+    const { data: robotData } = useQuery(ROBOT(RobotsType.signals));
     const { exchange, asset, currency } = robotData?.robot.subs || {};
 
     const variables = {
