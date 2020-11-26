@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import Router from "next/router";
 // helpers
-import { formatMoney, colorAction } from "config/utils";
 import { formatVariables } from "./helpers";
 // types
 import { SignalItem } from "../RobotsList/types";
