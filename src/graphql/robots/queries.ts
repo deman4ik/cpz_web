@@ -376,6 +376,7 @@ export const USER_ROBOTS = gql`
             robot_id
             started_at
             user_id
+            user_ex_acc_id
             ${stats}
             robot {
                 id
@@ -386,6 +387,7 @@ export const USER_ROBOTS = gql`
                 code
                 active: started_at
             }
+            
             user_robot_settings {
                 user_robot_settings
             }

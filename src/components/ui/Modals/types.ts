@@ -10,10 +10,10 @@ export enum Units {
     percent = "%"
 }
 export enum UnitsToTypes {
-    assetStatic = Units.BTC,
-    assetDynamicDelta = Units.BTC,
-    currencyDynamic = Units.USD,
-    balancePercent = Units.percent
+    assetStatic = "asset",
+    assetDynamicDelta = "asset",
+    currencyDynamic = "currency",
+    balancePercent = "percent"
 }
 export type Input = {
     type: InputTypes;

@@ -38,7 +38,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     const [subscribe, { loading: subscribeLoading, error: subscribeError }] = useMutation(SUBSCRIBE_TO_SIGNALS);
     const [edit, { loading: editLoading, error: editError }] = useMutation(EDIT_SIGNAL);
     //queries
-    const { data: robotData } = useQuery(ROBOT);
+    const { data: robotData } = useQuery(ROBOT(RobotsType.signals));
 
     const { name, code, id, subs } = robotData?.robot || {};
     const asset = robotData?.robot.subs.asset;

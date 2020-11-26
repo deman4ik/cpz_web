@@ -60,20 +60,18 @@ export const formatTradingRobots = (robots: any) =>
             started_at,
             robot,
             robot_id,
+            user_ex_acc_id,
             user_robot_settings: { user_robot_settings }
         } = userRobot;
         const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userRobot);
 
-        const { name, asset, currency, exchange, active, code } = robot;
+        const { active, currency, asset, ...restOfRobot } = robot;
         return {
             cache: {
                 id,
                 tableName: "user_robots"
             },
             id: robot_id,
-            asset,
-            currency,
-            exchange,
             settings: user_robot_settings,
             volume: getVolume(user_robot_settings),
             displayedVolume: getVolumeWithUnit(user_robot_settings, { currency, asset }),
@@ -85,11 +83,13 @@ export const formatTradingRobots = (robots: any) =>
             started_at: started_at ? dayjs.utc(started_at).fromNow(true) : 0,
             performance: equity,
             profit,
-            name,
             winRate,
             maxDrawdown,
             tradesCount,
             isSubscribed: false,
-            code
+            currency,
+            user_ex_acc_id,
+            asset,
+            ...restOfRobot
         };
     }) || [];

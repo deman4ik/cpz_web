@@ -95,7 +95,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);
 
-    const getUnit = (type) => (AssetTypes.includes(type) && asset) || UnitsToTypes[type];
+    const getUnit = (type) => (AssetTypes.includes(type) && asset);
 
     const notSelectedAndNotPercentage = (i) => ![volumeType, InputTypes.balancePercent].includes(i.type);
     return (

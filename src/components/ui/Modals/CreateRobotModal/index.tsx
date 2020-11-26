@@ -23,6 +23,7 @@ import { GET_MARKETS_ROBOTS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import Router from "next/router";
+import { RobotsType } from "config/types";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -51,7 +52,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         setStep(step - 1);
     };
 
-    const { data: robotData } = useQuery(ROBOT);
+    const { data: robotData } = useQuery(ROBOT(RobotsType.robots));
     const { exchange, asset, currency } = robotData?.robot.subs || {};
 
     const variables = {

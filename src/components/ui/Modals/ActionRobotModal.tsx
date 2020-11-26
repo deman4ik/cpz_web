@@ -10,6 +10,7 @@ import { actionText, currentPage, Pages } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./index.module.css";
 import Router from "next/router";
+import { RobotsType } from "config/types";
 
 interface Props {
     setTitle: (title: string) => void;
@@ -29,7 +30,7 @@ const actions = {
 };
 const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     const [formError, setFormError] = useState("");
-    const { data } = useQuery(ROBOT);
+    const { data } = useQuery(ROBOT(RobotsType.robots));
 
     const { name, code, userRobotId } = data?.robot;
     useEffect(() => {
