@@ -15,7 +15,8 @@ import {
     MessageAlert,
     MenuIcon,
     BackBurger,
-    DeadLetter
+    DeadLetter,
+    AlertCircle
 } from "assets/icons/svg";
 import { NotificationCounter } from "components/ui/NotificationCounter";
 import { PageType } from "config/types";
@@ -42,7 +43,8 @@ const components = {
     managementSupport: MessageAlert,
     menu: MenuIcon,
     backBurger: BackBurger,
-    deadLetter: DeadLetter
+    deadLetter: DeadLetter,
+    error: AlertCircle
 };
 
 const _NavItem: React.FC<Props> = ({ item, active, handleOnClick, styles }) => {
