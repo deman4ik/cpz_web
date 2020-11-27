@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useContext, Props } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -13,9 +13,33 @@ import { fetchWithStatus } from "components/pages/helpers";
 import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const errorMessages = {
-    KEYS_ARE_REQUIRED: "Public and Private API Keys are required",
-    LONG_NAME: "Too long name. Max 50"
+    KEYS_ARE_REQUIRED: "Both Public and Private API Keys are required",
+    LONG_NAME: "Max name length is 50 symbols."
 };
+
+const exchangeLinks = [
+    {
+        exchange: "Binance Futures",
+        links: [
+            { label: "Create Binance account", link: "https://www.binance.com/en/futures/ref/cryptuoso" },
+            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/binance-futures" }
+        ]
+    },
+    {
+        exchange: "Bitfinex",
+        links: [
+            { label: "Create Bitfinex account", link: "https://www.bitfinex.com/?refcode=BBRrpRJZ" },
+            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/bitfinex" }
+        ]
+    },
+    {
+        exchange: "Kraken",
+        links: [
+            { label: "Create Kraken account", link: "https://r.kraken.com/mqVYO" },
+            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/kraken" }
+        ]
+    }
+];
 
 const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     options,
@@ -23,9 +47,11 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     refetchQueries,
     isExchangeDisabled,
     onClose,
-    handleOnSubmit
+    handleOnSubmit,
+    displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
+    const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
     const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
@@ -113,7 +139,34 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                 </div>
             )}
             <form className={styles.container} onSubmit={handleOnPress}>
-                <div style={{ marginBottom: 20 }}>
+                {guideDisplayed && (
+                    <div className={styles.guide} style={{ width: 260 }}>
+                        <div className={styles.closeGuideButton}>
+                            <Button icon="close" onClick={() => setGuideDisplayed(false)} />
+                        </div>
+                        Don&apos;t have {exchange ? `a ${exchange}` : "an"} account? <br />
+                        Register it here.
+                        <br />
+                        <br /> Learn how to create API Keys: <br />
+                        <div className={styles.exchangesContainer}>
+                            {exchangeLinks.map((item) => (
+                                <div key={item.exchange} className={styles.exchange}>
+                                    {item.exchange}
+                                    <div>
+                                        {item.links.map((el) => (
+                                            <div key={el.label} className={styles.guideLink}>
+                                                <a href={el.link} target="_blank" rel="noreferrer">
+                                                    {el.label}
+                                                </a>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                <div style={{ margin: "20px 0" }}>
                     <div className={styles.tableCellText}>My Exchange API Key Name</div>
                     <div style={{ marginTop: 6 }}>
                         <Input

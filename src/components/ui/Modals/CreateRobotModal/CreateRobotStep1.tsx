@@ -98,6 +98,7 @@ const _CreateRobotStep1: React.FC<Props> = ({
                     )}
                     {isAddKeyVisible ? (
                         <ExchangeKeysAddKeyModal
+                            displayGuide
                             exchange={exchange}
                             refetchQueries={refetchQueries}
                             isExchangeDisabled
