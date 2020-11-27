@@ -5,6 +5,8 @@ export const GET_EXCHANGES = gql`
         exchanges {
             code
             name
+            ref_link
+            docs_link
         }
     }
 `;

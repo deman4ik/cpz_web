@@ -17,30 +17,6 @@ const errorMessages = {
     LONG_NAME: "Max name length is 50 symbols."
 };
 
-const exchangeLinks = [
-    {
-        exchange: "Binance Futures",
-        links: [
-            { label: "Create Binance account", link: "https://www.binance.com/en/futures/ref/cryptuoso" },
-            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/binance-futures" }
-        ]
-    },
-    {
-        exchange: "Bitfinex",
-        links: [
-            { label: "Create Bitfinex account", link: "https://www.bitfinex.com/?refcode=BBRrpRJZ" },
-            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/bitfinex" }
-        ]
-    },
-    {
-        exchange: "Kraken",
-        links: [
-            { label: "Create Kraken account", link: "https://r.kraken.com/mqVYO" },
-            { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/kraken" }
-        ]
-    }
-];
-
 const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     options,
     exchange,
@@ -56,8 +32,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
-    const [dataPicker, setDataPicker] = useState([]);
     const { data, loading } = useQuery(GET_EXCHANGES);
+
+    const [exchanges, setExchanges] = useState([]);
+    const [chosenExchange, setChosenExchange] = useState(null);
 
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
@@ -77,8 +55,9 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         setInputName(value);
     };
 
-    const handleOnChangeExchange = (value: string) => {
-        setInputExchange(value);
+    const handleOnChangeExchange = (code: string) => {
+        setInputExchange(code);
+        setChosenExchange(exchanges.find((ex) => ex.code === code));
     };
 
     const handleOnChangeKeys = (text: string, key: string) => {
@@ -120,16 +99,16 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     };
 
     useEffect(() => {
-        if (!loading) {
-            setDataPicker(
-                data.exchanges.map((item) => ({
-                    label: item.name,
-                    value: item.code
-                }))
-            );
-            if (!inputExchange && data.exchanges && data.exchanges.length > 0) setInputExchange(data.exchanges[0].code);
+        if (!loading && data && data.exchanges) {
+            setExchanges(data.exchanges);
+            if (data.exchanges.length > 0 && !inputExchange) {
+                setChosenExchange(data.exchanges[0]);
+                setInputExchange(data.exchanges[0]);
+            } else {
+                setChosenExchange(data.exchanges.find((ex) => ex.code === inputExchange));
+            }
         }
-    }, [inputExchange, loading, data]);
+    }, [loading, data, inputExchange]);
 
     return (
         <>
@@ -139,31 +118,23 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                 </div>
             )}
             <form className={styles.container} onSubmit={handleOnPress}>
-                {guideDisplayed && (
+                {guideDisplayed && chosenExchange && (
                     <div className={styles.guide} style={{ width: 260 }}>
                         <div className={styles.closeGuideButton}>
                             <Button icon="close" onClick={() => setGuideDisplayed(false)} />
                         </div>
-                        Don&apos;t have {exchange ? `a ${exchange}` : "an"} account? <br />
-                        Register it here.
+                        Don&apos;t have a {chosenExchange.name} account? <br />
+                        Register it{" "}
+                        <a href={chosenExchange.ref_link} target="_blank" rel="noreferrer">
+                            here
+                        </a>
+                        .
                         <br />
-                        <br /> Learn how to create API Keys: <br />
-                        <div className={styles.exchangesContainer}>
-                            {exchangeLinks.map((item) => (
-                                <div key={item.exchange} className={styles.exchange}>
-                                    {item.exchange}
-                                    <div>
-                                        {item.links.map((el) => (
-                                            <div key={el.label} className={styles.guideLink}>
-                                                <a href={el.link} target="_blank" rel="noreferrer">
-                                                    {el.label}
-                                                </a>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <br /> Learn how to create API Keys in{" "}
+                        <a href={chosenExchange.docs_link} target="_blank" rel="noreferrer">
+                            our guide
+                        </a>
+                        .
                     </div>
                 )}
                 <div style={{ margin: "20px 0" }}>
@@ -183,7 +154,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                     <div style={{ marginTop: 6 }}>
                         <Select
                             value={inputExchange}
-                            data={dataPicker}
+                            data={exchanges.map((item) => ({
+                                label: item.name,
+                                value: item.code
+                            }))}
                             width={260}
                             enabled={!isExchangeDisabled}
                             onChangeValue={(itemValue) => handleOnChangeExchange(itemValue)}
