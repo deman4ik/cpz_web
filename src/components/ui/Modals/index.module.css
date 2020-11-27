@@ -96,7 +96,6 @@
 
 .noKeysText {
     display: flex;
-    margin-bottom: 20px;
     justify-content: center;
     font-size: var(--normal2);
     color: var(--accent);
