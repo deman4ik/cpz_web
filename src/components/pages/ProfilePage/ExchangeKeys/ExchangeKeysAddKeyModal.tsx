@@ -28,18 +28,32 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
-    const [inputExchange, setInputExchange] = useState(options && options.exchange ? options.exchange : exchange);
+    const [receivedExchangeCode, setReceivedExchangeCode] = useState(
+        options && options.exchange ? options.exchange : exchange
+    );
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
     const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
-    const { data, loading } = useQuery(GET_EXCHANGES);
 
     const [exchanges, setExchanges] = useState([]);
     const [chosenExchange, setChosenExchange] = useState(null);
 
+    const { data } = useQuery(GET_EXCHANGES, {
+        onCompleted: () => {
+            setExchanges(data.exchanges);
+            if (data.exchanges.length > 0 && !receivedExchangeCode) {
+                console.log("setting chosen and input");
+                setChosenExchange(data.exchanges[0]);
+                setReceivedExchangeCode(data.exchanges[0].code);
+            } else if (!chosenExchange) {
+                setChosenExchange(data.exchanges.find((ex) => ex.code === receivedExchangeCode));
+            }
+        }
+    });
+
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
-        exchange: inputExchange,
+        exchange: receivedExchangeCode,
         keys: { key: inputKeys.public, secret: inputKeys.secret }
     };
     if (options && options.id) {
@@ -56,7 +70,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     };
 
     const handleOnChangeExchange = (code: string) => {
-        setInputExchange(code);
+        setReceivedExchangeCode(code);
         setChosenExchange(exchanges.find((ex) => ex.code === code));
     };
 
@@ -97,18 +111,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             }
         }
     };
-
-    useEffect(() => {
-        if (!loading && data && data.exchanges) {
-            setExchanges(data.exchanges);
-            if (data.exchanges.length > 0 && !inputExchange) {
-                setChosenExchange(data.exchanges[0]);
-                setInputExchange(data.exchanges[0]);
-            } else {
-                setChosenExchange(data.exchanges.find((ex) => ex.code === inputExchange));
-            }
-        }
-    }, [loading, data, inputExchange]);
 
     return (
         <>
@@ -153,7 +155,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                     <div className={styles.tableCellText}>Exchange</div>
                     <div style={{ marginTop: 6 }}>
                         <Select
-                            value={inputExchange}
+                            value={receivedExchangeCode}
                             data={exchanges.map((item) => ({
                                 label: item.name,
                                 value: item.code
