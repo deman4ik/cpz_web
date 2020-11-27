@@ -41,6 +41,7 @@
     font-size: var(--small1);
     line-height: var(--normal3);
     color: var(--accent);
+    max-width: 50%;
 }
 
 @media (max-width: 825px) {
