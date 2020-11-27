@@ -26,6 +26,7 @@ const _PageHeader: React.FC<Props> = ({ robotData, subscribe }) => {
                 </div>
             </div>
             <HeaderStatsSection robotData={robotData} />
+
             {userRobot?.message && (
                 <div className={styles.headerMessage}>
                     <MessageAlert color={color.negative} style={{ minWidth: 22 }} size={22} />
