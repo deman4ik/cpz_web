@@ -20,6 +20,7 @@ export const GET_USER_EXCHANGES = gql`
             status
             user_id
             balance: total_balance_usd
+            error
         }
     }
 `;

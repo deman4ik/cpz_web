@@ -1,5 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from "react";
-
+import React, { memo, useContext, useState } from "react";
 import { Button } from "components/basic";
 import { ModalKey } from "./types";
 import { ChevronRightIcon } from "assets/icons/svg";
@@ -32,32 +31,34 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
     const {
         authState: { user_id }
     } = useContext(AuthContext);
-    const { data: dataCheck, loading: loadingCheck } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
+    const { data } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
         variables: {
             user_ex_acc_id: item ? item.id : null,
             user_id
+        },
+        onCompleted: () => {
+            console.log(item);
+            if (item) {
+                const userHasNoRobots = data.user_robots.length === 0;
+
+                if (!userHasNoRobots) {
+                    setDeleteDisabled(true);
+                    setDeleteTooltip(DELETE_TOOLTIP);
+                }
+
+                const everyRobotIsStoppedOrPaused = data.user_robots.every((el) =>
+                    ["stopped", "paused"].includes(el.status)
+                );
+
+                const canEdit = item.status === "invalid" || userHasNoRobots || everyRobotIsStoppedOrPaused;
+
+                if (!canEdit) {
+                    setEditDisabled(true);
+                    setEditTooltip(EDIT_TOOLTIP);
+                }
+            }
         }
     });
-
-    useEffect(() => {
-        if (!loadingCheck && item) {
-            const userHasNoRobots = dataCheck.user_robots.length === 0;
-
-            if (userHasNoRobots) {
-                setDeleteDisabled(true);
-                setDeleteTooltip(DELETE_TOOLTIP);
-            }
-
-            const everyRobotIsStoppedOrPaused = dataCheck.user_robots.every((el) =>
-                ["stopped", "paused"].includes(el.status)
-            );
-            const canEdit = item.status === "invalid" || userHasNoRobots || everyRobotIsStoppedOrPaused;
-            if (!canEdit) {
-                setEditDisabled(true);
-                setEditTooltip(EDIT_TOOLTIP);
-            }
-        }
-    }, [item, loadingCheck, dataCheck]);
 
     const handlePressEdit = () => {
         handleSetVisibleModal(ModalKey.addKey, {
@@ -82,45 +83,42 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                     <Button isUppercase size="small" icon="bordercolor" onClick={handleOnPressEditName} />
                 </div>
             </div>
-            <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                <div>
-                    <div className={styles.exchangeRow}>
+            <div>
+                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                    <div className={styles.exchangeCell}>
                         <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                             Exchange
                         </div>
-                        <div className={styles.tableCellText} style={{ marginLeft: 10 }}>
-                            {exchangeName(item.exchange)}
-                        </div>
+                        <div className={styles.tableCellText}>{exchangeName(item.exchange)}</div>
                     </div>
-                    <div className={styles.exchangeRow} style={{ marginTop: 10 }}>
+                    <div className={styles.exchangeCell}>
                         <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                             Status
                         </div>
                         <div
                             className={styles.tableCellText}
-                            style={{ marginLeft: 10, color: getColor(item.status === "invalid") }}>
+                            style={{ color: getColor(["invalid", "disabled"].includes(item.status)) }}>
                             {capitalize(item.status)}
                         </div>
                     </div>
-                    <div className={styles.exchangeRow} style={{ marginTop: 10 }}>
+                    <div className={styles.exchangeCell}>
                         <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                             Balance
                         </div>
-                        <div className={styles.tableCellText} style={{ marginLeft: 10 }}>
-                            {formatMoney(item.balance)} $
-                        </div>
+                        <div className={styles.tableCellText}>{formatMoney(item.balance)} $</div>
                     </div>
+                    {item.error && (
+                        <div className={styles.errorCell}>
+                            <div className={[styles.errorCellText].join(" ")}>
+                                <div>
+                                    <div style={{ color: color.negative }}>&gt; {item.error}</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-            {item.status === "invalid" && item.error && (
-                <div className={[styles.rowError, styles.errorGroup].join(" ")}>
-                    <ChevronRightIcon color={color.negative} size={26} />
-                    <div>
-                        <div style={{ color: color.negative }}>{item.error}</div>
-                    </div>
-                </div>
-            )}
-            <div className={[styles.row, styles.btnGroup].join(" ")}>
+            <div className={styles.btnGroup}>
                 <Button
                     title="Edit"
                     width={77}
