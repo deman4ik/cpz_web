@@ -24,12 +24,11 @@ const _PageHeader: React.FC<Props> = ({ robotData, subscribe }) => {
                     </div>
                     <HeaderButton subscribe={subscribe} robotData={robotData} />
                 </div>
-
             </div>
             <HeaderStatsSection robotData={robotData} />
             {userRobot?.message && (
                 <div className={styles.headerMessage}>
-                    <MessageAlert color={color.negative} size={22} />
+                    <MessageAlert color={color.negative} style={{ minWidth: 22 }} size={22} />
                     <div>{capitalize(userRobot.message || null)}</div>
                 </div>
             )}
