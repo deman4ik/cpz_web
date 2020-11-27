@@ -60,7 +60,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         asset,
         currency
     };
-    const { data, loading } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
+    const { data, loading, refetch: refetchUserExchangeKeys } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
         variables: { ...variables, user_id },
         skip: !robotData
     });
@@ -72,6 +72,10 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             user_id
         }
     });
+
+    useEffect(() => {
+        refetchUserExchangeKeys();
+    }, []);
 
     useEffect(() => {
         setFormError("");
