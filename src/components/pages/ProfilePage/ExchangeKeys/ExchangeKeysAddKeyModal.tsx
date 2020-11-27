@@ -13,7 +13,7 @@ import { fetchWithStatus } from "components/pages/helpers";
 import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const errorMessages = {
-    KEYS_ARE_REQUIRED: "Both public and Private API Keys are required",
+    KEYS_ARE_REQUIRED: "Both Public and Private API Keys are required",
     LONG_NAME: "Max name length is 50 symbols."
 };
 
@@ -21,21 +21,21 @@ const exchangeLinks = [
     {
         exchange: "Binance Futures",
         links: [
-            { label: "Create account", link: "https://www.binance.com/en/futures/ref/cryptuoso" },
+            { label: "Create Binance account", link: "https://www.binance.com/en/futures/ref/cryptuoso" },
             { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/binance-futures" }
         ]
     },
     {
         exchange: "Bitfinex",
         links: [
-            { label: "Create account", link: "https://www.bitfinex.com/?refcode=BBRrpRJZ" },
+            { label: "Create Bitfinex account", link: "https://www.bitfinex.com/?refcode=BBRrpRJZ" },
             { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/bitfinex" }
         ]
     },
     {
         exchange: "Kraken",
         links: [
-            { label: "Create account", link: "https://r.kraken.com/mqVYO" },
+            { label: "Create Kraken account", link: "https://r.kraken.com/mqVYO" },
             { label: "Our guide", link: "https://support.cryptuoso.com/exchange-accounts/kraken" }
         ]
     }
