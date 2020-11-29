@@ -42,7 +42,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         onCompleted: () => {
             setExchanges(data.exchanges);
             if (data.exchanges.length > 0 && !receivedExchangeCode) {
-                console.log("setting chosen and input");
                 setChosenExchange(data.exchanges[0]);
                 setReceivedExchangeCode(data.exchanges[0].code);
             } else if (!chosenExchange) {
