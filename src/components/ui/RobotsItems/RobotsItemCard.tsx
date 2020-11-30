@@ -15,7 +15,7 @@ interface Props {
     robotSubscribe: (variables: any) => void;
 }
 
-const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe, onRedirectToDetailView }) => {
     const subscribeToggle = () => {
@@ -66,7 +66,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
                     {item.performance && item.performance.length ? (
-                        <DinamicAreaChart height={120} data={item.performance} />
+                        <DynamicAreaChart height={120} data={item.performance} />
                     ) : (
                         <div className={styles.emptyChart} />
                     )}
