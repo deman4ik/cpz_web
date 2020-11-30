@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useContext } from "react";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 // graphql
 import { ROBOTS_AGGREGATE } from "graphql/signals/queries";
 import { GET_SEARCH_PROPS, GET_SEARCH_LIMIT } from "graphql/local/queries";
@@ -15,6 +15,7 @@ import LocalStorageService from "services/localStorageService";
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { RobotsType } from "config/types";
+import { useScrollPosition } from "hooks/useScrollPosition";
 
 //TODO: refactor
 export const useFetchRobots = (
@@ -22,8 +23,7 @@ export const useFetchRobots = (
     formatRobotsData: (v_robot_stats: any) => any,
     preserveScrollPosition?: boolean
 ) => {
-    const [position, setPosition] = useState(window.pageYOffset);
-
+    const { preservePosition, restorePosition } = useScrollPosition();
     /*Обработка контекста аутентификации*/
     const {
         authState: { isAuth, user_id, authIsSet }
@@ -37,6 +37,7 @@ export const useFetchRobots = (
 
     const { data: searchProps } = useQuery(GET_SEARCH_PROPS);
     const { data: searchLimit } = useQuery(GET_SEARCH_LIMIT);
+
     const [limit, setLimit] = useState(storageLimit || searchLimit?.Limit[dispayType]);
     const [filtersQuery, setFiltersQuery] = useState({
         robot: {},
@@ -77,17 +78,24 @@ export const useFetchRobots = (
     };
 
     if (isAuth) variables.user_id = user_id;
+
+    const [robotsData, setRobotsData] = useState([]);
+    useEffect(() => {
+        if (preserveScrollPosition) restorePosition();
+    }, [preserveScrollPosition, restorePosition, robotsData]);
+
     const { data, loading, error, fetchMore, refetch: refetchStats } = useQueryWithAuth(
         false,
         QUERIES_TYPE[dispayType],
         {
             variables,
-            pollInterval: POLL_INTERVAL
+            pollInterval: POLL_INTERVAL,
+            onCompleted: () => {
+                preservePosition();
+                setRobotsData(formatRobotsData(data.robots));
+            }
         }
     );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const robotsData = useMemo(() => (!loading && data ? formatRobotsData(data.robots) : []), [data]);
 
     /* Установка начального значения фильтров */
     useEffect(() => {
@@ -127,28 +135,25 @@ export const useFetchRobots = (
 
     const onFetchMore = () => {
         setIsLoadingMore(true);
-        setPosition(window.pageYOffset);
-
         fetchMore({
             variables: {
-                offset: data && data.robots.length,
+                offset: limit,
                 limit: SHOW_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                setLimit(data && data.robots.length + SHOW_LIMIT);
 
                 /*Запоминание лимита  данных на странице*/
                 LocalStorageService.writeItems([
                     {
                         key: `${dispayType}_limit`,
-                        value: data && data.robots.length + SHOW_LIMIT
+                        value: limit + SHOW_LIMIT
                     }
                 ]);
 
                 setSearchLimit({
                     variables: {
-                        limit: data && data.robots.length + SHOW_LIMIT,
+                        limit: limit + SHOW_LIMIT,
                         type: dispayType
                     }
                 });
@@ -159,12 +164,7 @@ export const useFetchRobots = (
         })
             .catch((e) => console.error(e))
             .finally(() => {
-                if (preserveScrollPosition) {
-                    setPosition((_position) => {
-                        window.scrollTo(0, _position);
-                        return position;
-                    });
-                }
+                setLimit(limit + SHOW_LIMIT);
                 setIsLoadingMore(false);
             });
     };

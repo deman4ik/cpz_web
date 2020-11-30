@@ -9,7 +9,7 @@ export const actionIcon = (action) => (actionTypes.includes(action) ? "arrowup" 
 export const actionColor = (action) => (actionTypes.includes(action) ? color.positive : color.negative);
 export const actionOpen = (action) => actionSignals.includes(action);
 
-export const getFormatData = (notifications: Array<any>): any =>
+export const parseNotifications = (notifications: Array<any>): any =>
     notifications
         .map((notification) => {
             const { type, data, timestamp, readed, id } = notification;

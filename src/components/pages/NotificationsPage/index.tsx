@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 // hooks
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { useFetchData } from "./useFetchData";
+import { useFetchNotifications } from "./useFetchNotifications";
 // components
 import { LoadingIndicator } from "components/common";
 import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
@@ -21,9 +21,14 @@ export const NotificationsPage: React.FC = () => {
     } = useContext(AuthContext);
 
     const { width } = useWindowDimensions();
-    const { isLoadingMore, recordsCount, formatData, handleLoadMore, loading, inputSelect, setFilters } = useFetchData(
-        true
-    );
+    const {
+        isLoadingMore,
+        recordsCount,
+        notifications,
+        handleLoadMore,
+        inputSelect,
+        setFilters
+    } = useFetchNotifications(true);
 
     return (
         <DefaultTemplate
@@ -31,11 +36,7 @@ export const NotificationsPage: React.FC = () => {
             title="Notifications"
             width={width}
             toolbar={isAuth && <ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}>
-            {loading ? (
-                <div className="loading">
-                    <LoadingIndicator />
-                </div>
-            ) : !formatData.length ? (
+            {!notifications.length ? (
                 <div
                     style={{
                         display: "flex",
@@ -51,7 +52,7 @@ export const NotificationsPage: React.FC = () => {
                     handleLoadMore={handleLoadMore}
                     isLoadingMore={isLoadingMore}
                     recordsCount={recordsCount}
-                    formatData={formatData}
+                    notifications={notifications}
                     width={width}
                 />
             )}
