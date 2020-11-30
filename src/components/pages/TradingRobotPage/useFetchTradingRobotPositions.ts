@@ -6,6 +6,7 @@ import { ROBOT_POSITIONS, ROBOT_POSITIONS_FOR_USER, USER_ROBOT_POSITIONS_AGGREGA
 import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useScrollPosition } from "hooks/useScrollPosition";
 
 interface RobotData {
     userRobot: any;
@@ -18,12 +19,13 @@ const useFetchTradingRobotPosition = (robotData: RobotData, preserveScrollPositi
     } = useContext(AuthContext);
 
     const { userRobot, robot } = robotData;
-    const [position, setPosition] = useState(window.pageYOffset);
 
+    const { preservePosition, restorePosition } = useScrollPosition();
+
+    const [loadingMore, setLoadingMore] = useState(false);
     const statusOptions = userRobot ? ["closed", "closedAuto"] : ["closed"];
 
     const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
-    const [closedPositions, setClosedPositions] = useState([]);
 
     const queryVars = {
         robotId: userRobot ? userRobot.id : robot.id,
@@ -33,17 +35,19 @@ const useFetchTradingRobotPosition = (robotData: RobotData, preserveScrollPositi
         orderBy: { entry_date: "desc" }
     };
 
-    const { data: closedPositionsData, loading, fetchMore } = useQuery(
-        userRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS,
-        {
-            variables: userRobot ? { ...queryVars, user_id } : queryVars,
-            pollInterval: POLL_INTERVAL
-        }
-    );
-
+    const [closedPositions, setClosedPositions] = useState([]);
     useEffect(() => {
-        if (closedPositionsData?.positions) setClosedPositions(closedPositionsData?.positions);
-    }, [closedPositionsData?.positions]);
+        if (preserveScrollPosition) restorePosition();
+    }, [preserveScrollPosition, restorePosition, closedPositions]);
+
+    const { data: closedPositionsData, fetchMore } = useQuery(userRobot ? ROBOT_POSITIONS_FOR_USER : ROBOT_POSITIONS, {
+        variables: userRobot ? { ...queryVars, user_id } : queryVars,
+        pollInterval: POLL_INTERVAL,
+        onCompleted: () => {
+            if (preserveScrollPosition) preservePosition();
+            setClosedPositions(closedPositionsData?.positions);
+        }
+    });
 
     const { data: aggrData, loading: loadingAggregate } = useQuery(
         userRobot ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
@@ -75,29 +79,23 @@ const useFetchTradingRobotPosition = (robotData: RobotData, preserveScrollPositi
         [aggrData, loadingAggregate]
     );
 
-    if (preserveScrollPosition) {
-        window.requestAnimationFrame(() => {
-            if (preserveScrollPosition) {
-                window.scrollTo(0, position);
-            }
-        });
-    }
     const handleLoadMore = () => {
-        setPosition(window.pageYOffset);
+        setLoadingMore(true);
         fetchMore({
             variables: {
                 offset: limit,
                 limit: CLOSED_POSITIONS_LIMIT
             }
         })
-            .then(() => {
+            .catch((e) => console.error(e))
+            .finally(() => {
                 setLimit(limit + CLOSED_POSITIONS_LIMIT);
-            })
-            .catch((e) => console.error(e));
+                setLoadingMore(false);
+            });
     };
 
     return {
-        isLoadingMore: loading,
+        isLoadingMore: loadingMore,
         recordsCount,
         openPositions: openPositionsData?.positions || [],
         closedPositions,
