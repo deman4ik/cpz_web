@@ -29,7 +29,7 @@ export const DynamicDataCell: FC<DynamicDataCellProps> = ({ value }) => {
                             label={item[0]}
                         />
                     );
-                console.log(item);
+
                 return (
                     <HeaderStatsSectionItem
                         customStyles={{ label: customStyles.label }}

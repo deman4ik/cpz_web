@@ -36,7 +36,6 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
             user_id
         },
         onCompleted: () => {
-            console.log(item);
             if (item) {
                 const userHasNoRobots = data.user_robots.length === 0;
 
