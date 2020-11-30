@@ -67,7 +67,10 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         const newValues = { ...inputValues };
         const newDisplayedValues = { ...displayedValues };
 
-        const numValue = Number(value);
+        let numValue = Number(value);
+        if (type === InputTypes.balancePercent && numValue === 0) {
+            numValue = 1;
+        }
         newValues[type] = numValue;
         newDisplayedValues[type] = formatNumber(numValue, precision[precisionToVolumeMap[type]]);
 

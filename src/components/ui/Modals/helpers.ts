@@ -183,9 +183,9 @@ interface ValidateVolumeProps {
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent = 0 }) => {
+const validateBalancePercent = ({ value, used_percent = 0, minAmount }) => {
     const maxPercentValue = 100 - used_percent;
-    if (value < 1) return "Minimal amount is 1%";
+    if (value < minAmount) return `Minimal amount is ${minAmount}%`;
     if (value > maxPercentValue) return `Maximum amount is ${maxPercentValue}%`;
     return false;
 };
