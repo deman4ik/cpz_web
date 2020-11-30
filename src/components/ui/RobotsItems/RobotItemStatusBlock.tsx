@@ -25,8 +25,8 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
                 </>
             );
     } else {
-        const userRobotStatus = !typeIsSignals && user_robots.status;
-        const activeAndWithStatus = !typeIsSignals && active && userRobotStatus;
+        const userRobotStatus = user_robots.status;
+        const activeAndWithStatus = active && userRobotStatus;
         const statusIsStarted = userRobotStatus === "started";
 
         if (activeAndWithStatus || statusIsStarted)
