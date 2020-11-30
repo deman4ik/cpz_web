@@ -1,53 +1,82 @@
 .errorContainer {
-  width: calc(100% + 80px);
-  margin: -30px -40px 20px;
-  padding: 10px 20px;
-  background-color: var(--negative);
+    width: calc(100% + 80px);
+    margin: -30px -40px 20px;
+    padding: 10px 20px;
+    background-color: var(--negative);
 }
 
 .errorText {
-  text-align: center;
-  color: white;
+    text-align: center;
+    color: white;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background-color: var(--rgbaDark);
-  border-radius: 2px;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: var(--rgbaDark);
+    border-radius: 2px;
+    align-items: center;
 }
 
 .tableCellText {
-  font-size: var(--normal1);
-  color: white;
+    font-size: var(--normal1);
+    color: white;
 }
 
 .areaGroup {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .apikeyGroup {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .row {
-  margin-left: 5px;
-  margin-right: 5px;
+    margin: 0 5px;
+}
+
+.guide {
+    position: relative;
+    padding: 10px;
+    color: white;
+    font-size: 0.8em;
+    border: 0.5px ridge var(--accent);
+}
+
+.closeGuideButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.exchangesContainer {
+    margin-top: 10px;
+}
+
+.exchange {
+    margin-top: 5px;
+}
+
+.exchange:first-child {
+    margin-top: 0;
+}
+
+.guideLink {
+    margin-left: 10px;
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0;
-  }
-  .areaGroup {
-    margin-bottom: 10px;
-  }
+    .container {
+        padding: 0;
+    }
+    .areaGroup {
+        margin-bottom: 10px;
+    }
 }

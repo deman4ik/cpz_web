@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import { ChevronRightIcon } from "assets/icons/svg";
-import { formatMoney, getColor } from "config/utils";
+import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 import styles from "./PerformanceItem.module.css";
 
 interface Props {
@@ -32,7 +32,7 @@ export const PerformanceItem: React.FC<Props> = ({
             </div>
             <div
                 className={!compact ? styles.col : styles.inlineText}
-                style={{ color: getColor(item.maxDrawdown < 0), flex: 15 }}>
+                style={{ color: getColorForMoney(item.maxDrawdown), flex: 15 }}>
                 {compact && <span className={styles.secondaryText}>Max Drawdown:&nbsp;</span>}
                 {`${formatMoney(item.maxDrawdown)} $`}
             </div>
@@ -57,8 +57,8 @@ export const PerformanceItem: React.FC<Props> = ({
                 {item?.equity?.length ? <DynamicAreaChart height={100} data={item.equity} /> : null}
             </div>
             <div className={styles.col} style={{ flex: 1 }} />
-            <div className={styles.col} style={{ color: getColor(item.profit < 0), flex: 15 }}>
-                {item.profit ? `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $` : null}
+            <div className={styles.col} style={{ color: getColorForMoney(item.profit), flex: 15 }}>
+                {item.profit ? `${valueWithSign(formatMoney(item.profit))} $` : null}
             </div>
             {compact ? (
                 <div className={styles.col} style={{ flex: 15 }}>

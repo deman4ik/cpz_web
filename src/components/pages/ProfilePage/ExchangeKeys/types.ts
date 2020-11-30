@@ -37,4 +37,5 @@ export interface ExchangeKeysAddKeyModalProps {
     isExchangeDisabled?: boolean;
     onClose?: (changesMade?: boolean) => void;
     handleOnSubmit?: (key: string) => void;
+    displayGuide?: boolean;
 }

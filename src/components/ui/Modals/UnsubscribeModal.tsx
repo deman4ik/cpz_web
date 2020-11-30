@@ -9,6 +9,7 @@ import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
 import Router from "next/router";
 import { currentPage, Pages } from "components/ui/Modals/helpers";
+import { RobotsType } from "config/types";
 
 interface Props {
     onClose: (needsRefreshing?: boolean) => void;
@@ -17,7 +18,7 @@ interface Props {
 
 const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     const [formError, setFormError] = useState("");
-    const { data } = useQuery(ROBOT);
+    const { data } = useQuery(ROBOT(RobotsType.signals));
     const [unsubscribeSend, { loading }] = useMutation(UNSUBSCRIBE_FROM_SIGNALS);
     const [unsubscribe] = useMutation(UNSUBSCRIBE);
 

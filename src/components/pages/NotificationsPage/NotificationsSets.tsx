@@ -3,7 +3,7 @@ import React from "react";
 
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, colorAction, formatMoney, valueWithSign, colorDirection } from "config/utils";
+import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
 import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
 import styles from "./NotificationsSets.module.css";
 
@@ -27,15 +27,17 @@ export const failedSet = (item, onClick) => (
     </div>
 );
 
-export const messageSet = (item) => (
-    <div className={[styles.messageRow, styles.textMessageDesktop].join(" ")}>
-        <NotificationsNode
-            message={`${item.type === "message.support-reply" ? "Support Team" : "Announcement"} - ${
-                item.data.message
-            }`}
-        />
-    </div>
-);
+export const messageSet = (item) => {
+    return (
+        <div className={[styles.messageRow, styles.textMessageDesktop].join(" ")}>
+            <NotificationsNode
+                message={`${item.type === "message.support-reply" ? "Support Team" : "Announcement"} - ${
+                    item.data.message || item.data.data.message
+                }`}
+            />
+        </div>
+    );
+};
 
 export const robotTradeSet = (item, onClick) => (
     <div>
@@ -54,7 +56,7 @@ export const robotTradeSet = (item, onClick) => (
                         {capitalize(item.data.entryAction)}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.robot?.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.data.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.entryPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
@@ -78,13 +80,13 @@ export const robotTradeSet = (item, onClick) => (
                             .join(" ")}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.robot?.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.data.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.exitPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{formatDate(item.data.exitDate)}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
-                    <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
+                    <div className={styles.textMessageDesktop} style={{ color: getColorForMoney(item.data.profit) }}>
                         {`${valueWithSign(formatMoney(item.data.profit))} $`}
                     </div>
                 </div>
@@ -211,14 +213,16 @@ export const signalTradeSet = (item, onClick) => {
                         <div className={styles.textMessageDesktop}>{`${item.data.price} $`}</div>
                         <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
                         <div className={styles.textMessageDesktop}>{`${item.data.volume} ${item.data.asset}`}</div>
-                        <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
-                        <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
-                            {`${valueWithSign(formatMoney(item.data.profit))} $`}
-                        </div>
-                        <div className={styles.textAccent}>&nbsp;&nbsp;Bars Held&nbsp;</div>
-                        <div className={styles.textMessageDesktop}>{item.data.barsHeld}</div>
                         <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
                         <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Bars Held&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{item.data.barsHeld}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
+                        <div
+                            className={styles.textMessageDesktop}
+                            style={{ color: getColorForMoney(item.data.profit) }}>
+                            {`${valueWithSign(formatMoney(item.data.profit))} $`}
+                        </div>
                     </div>
                 </>
             )}

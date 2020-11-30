@@ -58,6 +58,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
     const formatRobots = typeIsSignals ? formatSignalRobots : formatTradingRobots;
 
     const parsedRobotsData = formatRobots(typeIsSignals ? robotsData?.signals : robotsData?.robots);
+
     const userHasRobots = parsedRobotsData.length > 0;
     const tabSchema = [
         {

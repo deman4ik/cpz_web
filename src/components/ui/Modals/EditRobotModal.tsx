@@ -39,7 +39,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
-    const { data: robotData } = useQuery(ROBOT);
+    const { data: robotData } = useQuery(ROBOT(type));
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
     const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {

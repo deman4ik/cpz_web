@@ -9,9 +9,10 @@ import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 import { getAlerts } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
+import { useScrollPosition } from "hooks/useScrollPosition";
 
 const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolean) => {
-    const [position, setPosition] = useState(window.pageYOffset);
+    const { preservePosition, restorePosition } = useScrollPosition();
 
     const {
         authState: { isAuth, user_id }
@@ -22,9 +23,7 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
     const robotPositionsQuery = isAuth && isUserSubscribed ? SIGNAL_POSITIONS_FOR_USER : ROBOT_POSITIONS_IN_INTERVAL;
 
     const [limit, setLimit] = useState(CLOSED_POSITIONS_LIMIT);
-
-    const [closedPositions, setClosedPositions] = useState([]);
-
+    const [loadingMore, setLoadingMore] = useState(false);
     const queryVars = isAuth && isUserSubscribed ? { user_id } : null;
 
     const { data: signalsData, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(
@@ -40,13 +39,7 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
             pollInterval: POLL_INTERVAL
         }
     );
-    if (preserveScrollPosition) {
-        window.requestAnimationFrame(() => {
-            if (preserveScrollPosition) {
-                window.scrollTo(0, position);
-            }
-        });
-    }
+
     const { data: openPositionsData, loading: loadingOpenPositions, refetch: refetch_open } = useQuery(
         robotPositionsQuery,
         {
@@ -61,24 +54,26 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
         }
     );
 
-    const { data: closedPositionsData, loading: loadingClosedPositions, fetchMore, refetch: refetch_closed } = useQuery(
-        robotPositionsQuery,
-        {
-            variables: {
-                robotId: robot.id,
-                dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
-                status: { _eq: "closed" },
-                limit,
-                orderBy: { entry_date: "desc" },
-                ...queryVars
-            },
-            pollInterval: POLL_INTERVAL
-        }
-    );
-
+    const [closedPositions, setClosedPositions] = useState([]);
     useEffect(() => {
-        if (closedPositionsData?.positions) setClosedPositions(closedPositionsData?.positions);
-    }, [closedPositionsData?.positions]);
+        if (preserveScrollPosition) restorePosition();
+    }, [preserveScrollPosition, restorePosition, closedPositions]);
+
+    const { data: closedPositionsData, fetchMore, refetch: refetch_closed } = useQuery(robotPositionsQuery, {
+        variables: {
+            robotId: robot.id,
+            dateFrom: isUserSubscribed ? userRobot.subscribed_at : null,
+            status: { _eq: "closed" },
+            limit,
+            orderBy: { entry_date: "desc" },
+            ...queryVars
+        },
+        pollInterval: POLL_INTERVAL,
+        onCompleted: () => {
+            if (preserveScrollPosition) preservePosition();
+            setClosedPositions(closedPositionsData?.positions);
+        }
+    });
 
     const { data: aggrData, loading: loadingAggregate } = useQuery(SIGNAL_ROBOT_POSITIONS_AGGREGATE, {
         variables: {
@@ -90,14 +85,18 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
     });
 
     const handleLoadMore = () => {
-        setPosition(window.pageYOffset);
+        setLoadingMore(true);
         fetchMore({
             variables: {
                 offset: limit,
                 limit: CLOSED_POSITIONS_LIMIT
             }
-        }).catch((e) => console.error(e));
-        setLimit(limit + CLOSED_POSITIONS_LIMIT);
+        })
+            .catch((e) => console.error(e))
+            .finally(() => {
+                setLimit(limit + CLOSED_POSITIONS_LIMIT);
+                setLoadingMore(false);
+            });
     };
 
     useEffect(() => {
@@ -123,7 +122,7 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
         signals,
         recordsCount,
         handleLoadMore,
-        isLoadingMore: loadingClosedPositions
+        isLoadingMore: loadingMore
     };
 };
 

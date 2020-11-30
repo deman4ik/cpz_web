@@ -5,6 +5,8 @@ export const GET_EXCHANGES = gql`
         exchanges {
             code
             name
+            ref_link
+            docs_link
         }
     }
 `;
@@ -18,6 +20,7 @@ export const GET_USER_EXCHANGES = gql`
             status
             user_id
             balance: total_balance_usd
+            error
         }
     }
 `;

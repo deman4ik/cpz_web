@@ -7,10 +7,10 @@ import {
     getIconName,
     colorDirection,
     formatMoney,
-    colorAction,
     valueWithSign,
     getTimeFromNow,
-    formatDate
+    formatDate,
+    getColorForMoney
 } from "config/utils";
 import { color } from "config/constants";
 import { PropsOpenPositionsItem } from "./types";
@@ -65,7 +65,9 @@ export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRe
                 <div className={styles.tableCellText}>{`${item.volume} ${item.robot.asset}`}</div>
             </div>
             <div className={styles.col}>
-                <div className={styles.tableCellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
+                <div
+                    className={styles.tableCellText}
+                    style={{ color: getColorForMoney(item.profit) }}>{`${valueWithSign(
                     formatMoney(item.profit)
                 )} $`}</div>
             </div>

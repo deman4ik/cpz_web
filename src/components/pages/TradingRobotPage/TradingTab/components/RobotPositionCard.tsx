@@ -1,7 +1,15 @@
 import React from "react";
 
 import { Robot, SectionType } from "../../types";
-import { formatDate, valueWithSign, colorAction, formatMoney, splitCapitaize, getTimeFromNow } from "config/utils";
+import {
+    formatDate,
+    valueWithSign,
+    formatMoney,
+    splitCapitaize,
+    getTimeFromNow,
+    getColorForMoney,
+    colorAction
+} from "config/utils";
 import { VolumePositionRobotPageItem } from ".";
 import styles from "./styles/RobotPositionCard.module.css";
 
@@ -57,7 +65,7 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                 )}
                 <div className={styles.mobileCardRow} style={{ flex: 1, alignItems: "flex-end" }}>
                     <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
-                    <div className={styles.mobileCardPrice} style={colorAction(item.profit > 0)}>
+                    <div className={styles.mobileCardPrice} style={{ color: getColorForMoney(item.profit) }}>
                         {valueWithSign(formatMoney(item.profit))} $
                     </div>
                 </div>
@@ -73,7 +81,9 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                     <div className={styles.posCardCol}>
                         <div className={styles.mobileCardTextKey}>
                             Profit&nbsp;&nbsp;
-                            <span className={styles.mobileCardTextValue} style={colorAction(item.profit > 0)}>
+                            <span
+                                className={styles.mobileCardTextValue}
+                                style={{ color: getColorForMoney(item.profit) }}>
                                 {valueWithSign(formatMoney(item.profit))} $
                             </span>
                         </div>

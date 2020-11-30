@@ -9,17 +9,19 @@ export const actionIcon = (action) => (actionTypes.includes(action) ? "arrowup" 
 export const actionColor = (action) => (actionTypes.includes(action) ? color.positive : color.negative);
 export const actionOpen = (action) => actionSignals.includes(action);
 
-export const getFormatData = (notifications) =>
-    notifications.map((notification) => {
-        const { type, data, timestamp, readed, id } = notification;
-        return {
-            id,
-            type,
-            data,
-            timestamp,
-            readed
-        };
-    });
+export const parseNotifications = (notifications: Array<any>): any =>
+    notifications
+        .map((notification) => {
+            const { type, data, timestamp, readed, id } = notification;
+            return {
+                id,
+                type,
+                data,
+                timestamp,
+                readed
+            };
+        })
+        .sort((a, b) => a.timestamp - b.timestamp);
 
 const messageMap = {
     "user-robot.failed": "failed",

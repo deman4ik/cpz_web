@@ -6,14 +6,16 @@ import { GET_NOTIFICATIONS_PROPS } from "graphql/local/queries";
 import { SET_NOTIFICATIONS_PROPS } from "graphql/local/mutations";
 import { UPDATE_NOTIFICATIONS } from "graphql/user/mutations";
 import { POLL_INTERVAL } from "config/constants";
-import { getFormatData, filters } from "./helpers";
+import { parseNotifications, filters } from "./helpers";
 // context
 import { AuthContext } from "libs/hoc/context";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { useScrollPosition } from "hooks/useScrollPosition";
 
 const RECORDS_LIMIT = 10;
-export const useFetchData = (preserveScrollPosition?: boolean) => {
-    const [position, setPosition] = useState(window.pageYOffset);
+export const useFetchNotifications = (preserveScrollPosition?: boolean) => {
+    const { preservePosition, restorePosition } = useScrollPosition();
+
     /*auth context*/
     const {
         authState: { user_id }
@@ -30,6 +32,11 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
         where = { ...where, ...{ type: { _in: filters[inputSelect] } } };
     }
 
+    const [notifications, setNotificationsData] = useState([]);
+    useEffect(() => {
+        if (preserveScrollPosition) restorePosition();
+    }, [preserveScrollPosition, restorePosition, notifications]);
+
     const { data, loading, fetchMore, refetch } = useQueryWithAuth(true, GET_NOTIFICATIONS, {
         variables: {
             offset: 0,
@@ -37,7 +44,11 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
             where
         },
         pollInterval: POLL_INTERVAL,
-        notifyOnNetworkStatusChange: changeStatus
+        notifyOnNetworkStatusChange: changeStatus,
+        onCompleted: () => {
+            preservePosition();
+            setNotificationsData(parseNotifications(data.notifications));
+        }
     });
 
     const [updateReaded] = useMutation(UPDATE_NOTIFICATIONS, {
@@ -65,16 +76,13 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
 
     const handleLoadMore = () => {
         setIsLoadingMore(true);
-        setPosition(window.pageYOffset);
-
         fetchMore({
             variables: {
-                offset: data.notifications.length,
+                offset: limit,
                 limit: RECORDS_LIMIT
             },
             updateQuery: (prev: any, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                setLimit(data.notifications.length + RECORDS_LIMIT);
                 return {
                     notifications: [...prev.notifications, ...fetchMoreResult.notifications]
                 };
@@ -82,17 +90,10 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
         })
             .catch((e) => console.error(e))
             .finally(() => {
-                if (preserveScrollPosition) {
-                    setPosition((_position) => {
-                        window.scrollTo(0, _position);
-                        return position;
-                    });
-                }
+                setLimit(limit + RECORDS_LIMIT);
                 setIsLoadingMore(false);
             });
     };
-
-    const formatData = useMemo(() => (!loading && data ? getFormatData(data.notifications) : []), [data, loading]);
 
     const recordsCount = useMemo(
         () => (!loadingCount && dataCount ? dataCount.notifications_aggregate.aggregate.count : 0),
@@ -100,7 +101,7 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
     );
 
     useEffect(() => {
-        const unreadData = formatData.filter((el) => !el.readed).map((el) => el.id);
+        const unreadData = notifications.filter((el) => !el.readed).map((el) => el.id);
         if (unreadData.length) {
             updateReaded({
                 variables: {
@@ -109,7 +110,7 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
                 }
             });
         }
-    }, [updateReaded, formatData]);
+    }, [updateReaded, notifications]);
 
     useEffect(() => {
         if (refetch && refetch_aggregate) {
@@ -126,6 +127,7 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
         }).then((result) => {
             setInputSelect(result.data.setNotificationsProps);
             setChangeStatus(true);
+            refetch();
         });
     };
 
@@ -138,7 +140,7 @@ export const useFetchData = (preserveScrollPosition?: boolean) => {
     return {
         isLoadingMore,
         recordsCount,
-        formatData,
+        notifications,
         handleLoadMore,
         loading: loading || loadingCount,
         inputSelect,

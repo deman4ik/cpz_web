@@ -25,6 +25,15 @@ export const BackBurger: React.FC<Props> = ({ color, size = 24 }) => (
     </svg>
 );
 
+export const BullHorn: React.FC<Props> = ({ color = "white", size = 24 }) => (
+    <svg style={{ height: size, width: size }} viewBox="0 0 24 24">
+        <path
+            fill={color}
+            d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M15,15.6L13,14H4V10H13L15,8.4V15.6M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"
+        />
+    </svg>
+);
+
 export const MultiLineChartIcon: React.FC<Props> = ({ color, size = 24 }) => (
     <svg style={{ width: size, height: size }} fill={color} viewBox="0 0 24 24">
         <path d="M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56l6.49 3.74z" />
@@ -399,6 +408,15 @@ export const DeadLetter: React.FC<Props> = ({ color = "white", size = 24 }) => (
         <path
             fill={color}
             d="M13.09 18H4V8L12 13L20 8V13.09C20.72 13.21 21.39 13.46 22 13.81V6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H13.09C13.04 19.67 13 19.34 13 19C13 18.66 13.04 18.33 13.09 18M20 6L12 11L4 6H20M20.41 19L22.54 21.12L21.12 22.54L19 20.41L16.88 22.54L15.47 21.12L17.59 19L15.47 16.88L16.88 15.47L19 17.59L21.12 15.47L22.54 16.88L20.41 19Z"
+        />
+    </svg>
+);
+
+export const AlertCircle: React.FC<Props> = ({ color = "white", size = 24 }) => (
+    <svg style={{ height: size, width: size }} viewBox="0 0 24 24">
+        <path
+            fill={color}
+            d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"
         />
     </svg>
 );

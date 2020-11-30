@@ -2,8 +2,10 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
-import { UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { InputTypes, UnitsToTypes, volumes } from "components/ui/Modals/types";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
+
+const getNumber = (val: number | string) => Number(val.toString().replace(/[^0-9.-]+/g, ""));
 
 export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
@@ -34,8 +36,9 @@ export const getVolumeType = (settings) => (settings ? settings.volumeType : nul
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);
-    const displayUnits = UnitsToTypes[settings.volumeType];
-    return `${volume} ${displayUnits || ""}`;
+    const isTypePercent = settings.volumeType === InputTypes.balancePercent;
+    const displayUnits = isTypePercent ? "%" : availableUnits[UnitsToTypes[settings.volumeType]];
+    return `${volume || 0} ${displayUnits || ""}`;
 };
 
 export const getUserSignalVolume = (signal) => {
@@ -50,7 +53,10 @@ export const getRobotVolume = (robot) => {
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
-export const valueWithSign = (value: number | string): string => (Number(value) > 0 ? `+${value}` : `${value}`);
+export const valueWithSign = (value: number | string): string => {
+    const valAsNumber = getNumber(value);
+    return valAsNumber > 0 ? `+${value}` : valAsNumber < 0 ? `${value}` : "0";
+};
 
 export const capitalize = (s: string) => {
     if (typeof s !== "string") return "";
@@ -84,6 +90,11 @@ export const colorDirection = (direction: string): any => ({
 });
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
+
+export const getColorForMoney = (value: number) => {
+    const num = getNumber(formatMoney(value));
+    return getColor(!(num > 0));
+};
 export const getIconName = (direction: string) => (direction === "short" ? "arrowdown" : "arrowup");
 export const getIconNameAction = (check: boolean) => (!check ? "arrowdown" : "arrowup");
 
@@ -134,8 +145,10 @@ export const getTimeFromNow = (d: string): string => {
 
     if (!hours && !minutes) return "less than a minute ago";
 
-    const timeFromNow = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""} 
-    ${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""} ago`;
+    const hoursStr = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""}`;
+    const minutesStr = `${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""}`;
+
+    const timeFromNow = `${hours > 0 ? hoursStr : minutesStr} ago`;
 
     return timeFromNow;
 };

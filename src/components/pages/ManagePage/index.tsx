@@ -5,9 +5,10 @@ import ManageRobots from "./robots";
 import ManageBackTests from "./backtests";
 import ManageUserSignals from "./userSignals";
 import ManageUserRobots from "./userRobots";
-import ManageSupportRequests from "./supportRequests";
+import ManageSupportRequests from "./managementSupport";
 import ManageSupportChat from "./supportChat";
 import ManageDeadLetters from "./deadLetters";
+import ManageErrors from "./errors";
 
 export {
     MangeDashboard,
@@ -18,5 +19,6 @@ export {
     ManageUserRobots,
     ManageDeadLetters,
     ManageSupportRequests,
-    ManageSupportChat
+    ManageSupportChat,
+    ManageErrors
 };

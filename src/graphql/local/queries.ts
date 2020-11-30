@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { RobotsType } from "config/types";
 
 export const USER = gql`
     query {
@@ -25,9 +26,33 @@ export const MODAL_VISIBLE = gql`
     }
 `;
 
-export const ROBOT = gql`
+const SignalTypeFields = `cache {
+                id
+                tableName
+            }
+            subs {
+                settings
+                asset
+                exchange
+                currency
+            }
+            id
+            code
+            name
+            userRobotId`;
+const RobotTypeFields = `
+            ${SignalTypeFields}
+            user_ex_acc_id`;
+
+const robotFieldsToType = {
+    [RobotsType.signals]: SignalTypeFields,
+    [RobotsType.robots]: RobotTypeFields
+};
+export const ROBOT = (type) => gql`
     query {
-        robot: Robot
+        robot: Robot @client {
+            ${robotFieldsToType[type]}
+        }
         ChartData @client {
             limit
             robotId

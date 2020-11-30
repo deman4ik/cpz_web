@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import { formatMoney, colorAction } from "config/utils";
+import { formatMoney, valueWithSign, getColorForMoney } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { RobotsButtonItemCard, RobotItemStatusBlock } from ".";
 import { formatVariables } from "./helpers";
@@ -15,7 +15,7 @@ interface Props {
     robotSubscribe: (variables: any) => void;
 }
 
-const DinamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe, onRedirectToDetailView }) => {
     const subscribeToggle = () => {
@@ -46,8 +46,8 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                             <div className={styles.secondaryText}>
                                 {item.displayedVolume || `${item.volume} ${item.asset}`}
                             </div>
-                            <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
-                                {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
+                            <div className={styles.primaryText} style={{ color: getColorForMoney(item.profit) }}>
+                                {item.profit ? `${valueWithSign(formatMoney(item.profit))} $` : null}
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             <div className={styles.chartStat}>
                 <div className={styles.chartCol}>
                     {item.performance && item.performance.length ? (
-                        <DinamicAreaChart height={120} data={item.performance} />
+                        <DynamicAreaChart height={120} data={item.performance} />
                     ) : (
                         <div className={styles.emptyChart} />
                     )}
@@ -84,7 +84,9 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                             </div>
                             <div className={styles.statRow}>
                                 <div className={styles.label}>Max Drawdown</div>
-                                <div className={styles.primaryText} style={colorAction(item.maxDrawdown > 0)}>
+                                <div
+                                    className={styles.primaryText}
+                                    style={{ color: getColorForMoney(item.maxDrawdown) }}>
                                     {`${formatMoney(item.maxDrawdown)} $`}
                                 </div>
                             </div>

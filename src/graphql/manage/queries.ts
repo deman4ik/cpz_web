@@ -344,3 +344,33 @@ export const DEAD_LETTERS_AGGREGATE = gql`
         }
     }
 `;
+
+export const ERROR_EVENTS = gql`
+    query get_error_events(
+        $where: error_events_bool_exp
+        $limit: Int
+        $offset: Int
+        $order_by: [error_events_order_by!]
+    ) {
+        error_events(where: $where, limit: $limit, offset: $offset, order_by: $order_by) {
+            created_at
+            data
+            event_id
+            id
+            timestamp
+            topic
+            type
+            updated_at
+        }
+    }
+`;
+
+export const ERROR_EVENTS_AGGREGATE = gql`
+    query get_error_events_aggregate($where: error_events_bool_exp) {
+        error_events_aggregate(where: $where) {
+            aggregate {
+                count
+            }
+        }
+    }
+`;

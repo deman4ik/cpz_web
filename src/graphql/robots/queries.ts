@@ -230,10 +230,10 @@ export const ROBOT_POSITIONS_FOR_USER = gql`
         $status: String_comparison_exp
         $limit: Int
         $offset: Int
-        $orderBy: [user_positions_order_by!]
+        $orderBy: [v_user_positions_order_by!]
         $user_id: uuid
     ) {
-        positions: user_positions(
+        positions: v_user_positions(
             where: {
                 user_robot_id: { _eq: $robotId }
                 status: $status
@@ -376,6 +376,7 @@ export const USER_ROBOTS = gql`
             robot_id
             started_at
             user_id
+            user_ex_acc_id
             ${stats}
             robot {
                 id
@@ -386,6 +387,7 @@ export const USER_ROBOTS = gql`
                 code
                 active: started_at
             }
+            
             user_robot_settings {
                 user_robot_settings
             }
@@ -508,7 +510,7 @@ export const ROBOT_INFO_FOR_ROBOTS = gql`
 
 export const OPEN_USER_POSITIONS = gql`
     query get_open_user_positions($user_id: uuid) {
-        positions: user_positions(
+        positions: v_user_positions(
             where: { status: { _eq: "open" }, user_id: { _eq: $user_id }, user_robot: { user_id: { _eq: $user_id } } }
             order_by: { entry_date: desc, exchange: asc, asset: asc }
         ) {
