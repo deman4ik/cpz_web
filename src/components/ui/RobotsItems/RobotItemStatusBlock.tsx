@@ -2,6 +2,8 @@ import React from "react";
 
 import styles from "./RobotsItem.module.css";
 import { StatisticElement } from "components/ui/RobotsItems/StatisticsElement";
+import { capitalize } from "lodash";
+import { RobotsType } from "config/types";
 
 interface Props {
     item: any;
@@ -9,19 +11,29 @@ interface Props {
 }
 
 export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => {
+    const typeIsSignals = displayType === RobotsType.signals;
     const { active, user_robots } = item || {};
-    const activeAndWithStatus = active && user_robots.status;
-    const statusIsStarted = user_robots.status === "started";
-    return (
-        <div className={styles.statsWrapper}>
-            {displayType === "signals" && active ? <StatisticElement label="Active" value={active} /> : null}
-            {displayType === "robots" && (activeAndWithStatus || statusIsStarted) ? (
-                <StatisticElement
-                    label={`${statusIsStarted ? "Started" : "Active"}`}
-                    value={statusIsStarted ? item.started_at : active}
-                />
-            ) : null}
-            {item.isSubscribed ? <StatisticElement label="Subscribed" value={item.subscribed} /> : null}
-        </div>
-    );
+
+    let statsContent = null;
+
+    if (typeIsSignals) {
+        if (active)
+            statsContent = (
+                <>
+                    <StatisticElement label="Active" value={active} />
+                    {item.isSubscribed && <StatisticElement label="Subscribed" value={item.subscribed} />}
+                </>
+            );
+    } else {
+        const userRobotStatus = !typeIsSignals && user_robots.status;
+        const activeAndWithStatus = !typeIsSignals && active && userRobotStatus;
+        const statusIsStarted = userRobotStatus === "started";
+
+        if (activeAndWithStatus || statusIsStarted)
+            statsContent = (
+                <StatisticElement label={capitalize(userRobotStatus)} value={statusIsStarted ? item.started_at : ""} />
+            );
+    }
+
+    return <div className={styles.statsWrapper}>{statsContent}</div>;
 };
