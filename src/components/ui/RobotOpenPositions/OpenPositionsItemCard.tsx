@@ -7,11 +7,11 @@ import {
     capitalize,
     getIconName,
     getColor,
-    colorAction,
     formatMoney,
     valueWithSign,
     getTimeFromNow,
-    formatDate
+    formatDate,
+    getColorForMoney
 } from "config/utils";
 import styles from "./OpenPositionsItemCard.module.css";
 import { PropsOpenPositionsItem } from "./types";
@@ -77,7 +77,9 @@ export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, 
                         <span className={styles.headerText} style={{ marginBottom: 2 }}>
                             Unrealized Profit
                         </span>
-                        <span className={styles.cellText} style={{ ...colorAction(item.profit > 0) }}>{`${valueWithSign(
+                        <span
+                            className={styles.cellText}
+                            style={{ color: getColorForMoney(item.profit) }}>{`${valueWithSign(
                             formatMoney(item.profit)
                         )} $`}</span>
                     </div>

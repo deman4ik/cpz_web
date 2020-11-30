@@ -3,7 +3,7 @@ import React from "react";
 
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, colorAction, formatMoney, valueWithSign, colorDirection } from "config/utils";
+import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
 import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
 import styles from "./NotificationsSets.module.css";
 
@@ -103,7 +103,9 @@ export const robotTradeSet = (item, onClick) => (
                             </div>
                             <div className={styles.colRobot}>
                                 <div className={styles.textAccentCard}>Profit</div>
-                                <div className={styles.textMessageCard} style={colorAction(item.data.profit > 0)}>
+                                <div
+                                    className={styles.textMessageCard}
+                                    style={{ color: getColorForMoney(item.data.profit) }}>
                                     {`${valueWithSign(formatMoney(item.data.profit))} $`}
                                 </div>
                             </div>
@@ -260,7 +262,9 @@ export const signalTradeSet = (item, onClick) => {
                         <div className={styles.rowRobot}>
                             <div className={styles.colRobot}>
                                 <div className={styles.textAccentCard}>Profit</div>
-                                <div className={styles.textMessageCard} style={colorAction(item.data.profit > 0)}>
+                                <div
+                                    className={styles.textMessageCard}
+                                    style={{ color: getColorForMoney(item.data.profit) }}>
                                     {`${valueWithSign(formatMoney(item.data.profit))} $`}
                                 </div>
                             </div>

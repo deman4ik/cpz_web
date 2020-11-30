@@ -20,13 +20,7 @@ export const GET_MARKETS_ROBOTS = gql`
     }
 `;
 export const GET_MARKETS_SIGNALS = gql`
-    query get_user_markets_signals(
-        $id: uuid
-        $user_id: uuid!
-        $asset: String!
-        $exchange: String!
-        $currency: String!
-    ) {
+    query get_user_markets_signals($id: uuid, $user_id: uuid!, $asset: String, $exchange: String, $currency: String) {
         v_user_markets(
             where: {
                 exchange: { _eq: $exchange }

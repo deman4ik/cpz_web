@@ -1,5 +1,5 @@
 import NothingComponent from "components/common/NothingComponent";
-import { exchangeName, formatMoney, getColor, valueWithSign } from "config/utils";
+import { exchangeName, formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 import React, { memo } from "react";
 import OpenPositionsTable from "./OpenPositionsTable";
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -50,7 +50,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                 Unrealized Profit:&nbsp;
                                 <span
                                     style={{
-                                        color: getColor(exchangeGroup.profit < 0)
+                                        color: getColorForMoney(exchangeGroup.profit)
                                     }}>{`${valueWithSign(formatMoney(exchangeGroup.profit))} $`}</span>
                             </span>
                         </div>
@@ -66,7 +66,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                                     <span
                                                         className={styles.headerValueSpan}
                                                         style={{
-                                                            color: getColor(asset.volume < 0)
+                                                            color: getColorForMoney(asset.volume)
                                                         }}>
                                                         {`${valueWithSign(asset.volume)} ${asset.asset}`}
                                                     </span>
@@ -76,7 +76,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                                     <span
                                                         className={styles.headerValueSpan}
                                                         style={{
-                                                            color: getColor(asset.profit < 0)
+                                                            color: getColorForMoney(asset.profit)
                                                         }}>
                                                         {`${valueWithSign(formatMoney(asset.profit))} $`}
                                                     </span>

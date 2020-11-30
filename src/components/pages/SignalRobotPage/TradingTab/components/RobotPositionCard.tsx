@@ -9,12 +9,12 @@ import {
     capitalize,
     formatMoney,
     splitCapitaize,
-    getTimeFromNow
+    getTimeFromNow,
+    getColorForMoney
 } from "config/utils";
 import { SectionType } from "../../types";
 
 import styles from "./styles/RobotPositionCard.module.css";
-import { color } from "config/constants";
 
 interface Props {
     item: any;
@@ -68,7 +68,7 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                 {activeTab === SectionType.openPositions && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
                         <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
-                        <div className={styles.mobileCardPrice} style={{ ...colorAction(item.profit > 0) }}>
+                        <div className={styles.mobileCardPrice} style={{ color: getColorForMoney(item.profit) }}>
                             {valueWithSign(formatMoney(profit))} $
                         </div>
                     </div>
@@ -100,7 +100,9 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                     <div className={styles.posCardCol}>
                         <div className={styles.mobileCardTextKey}>
                             Profit&nbsp;&nbsp;
-                            <span className={styles.mobileCardTextValue} style={colorAction(item.profit > 0)}>
+                            <span
+                                className={styles.mobileCardTextValue}
+                                style={{ color: getColorForMoney(item.profit) }}>
                                 {valueWithSign(formatMoney(item.profit))} $
                             </span>
                         </div>
