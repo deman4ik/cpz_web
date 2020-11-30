@@ -4,7 +4,7 @@ export * from "./Button";
 export * from "./EffectButton";
 export * from "./CaptionButton";
 export * from "./SearchInput";
-export * from "./Accordion";
+export * from "./ExpandedList";
 export * from "./CheckBox";
 export * from "./Input";
 export * from "./Modal";

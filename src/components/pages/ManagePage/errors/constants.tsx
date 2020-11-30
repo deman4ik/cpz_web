@@ -51,7 +51,7 @@ export const ERROR_EVENTS_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Data",
                 accessor: "data",
-                width: 400,
+                width: 450,
                 Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />
             }
         ]

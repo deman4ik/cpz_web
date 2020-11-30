@@ -1,13 +1,15 @@
 .container {
     width: 100%;
-    box-shadow: var(--shadow);
-    background-color: var(--dark);
-    cursor: pointer;
-    user-select: none;
+    height: 100%;
+    background: transparent;
+}
+
+.accordionHead {
     display: flex;
     align-items: center;
     position: relative;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .title,
@@ -21,8 +23,6 @@
 .icon {
     display: flex;
     align-items: center;
-    margin: 5px;
-    padding-bottom: 5px;
 }
 
 .ripple {

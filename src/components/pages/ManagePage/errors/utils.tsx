@@ -16,5 +16,5 @@ export const getItemsCount = (data: any): number => {
 };
 
 export const parseErrors = (data: any): number => {
-    return data.error_events;
+    return data.error_events.map((error_event) => ({ ...error_event, data: error_event.data.data }));
 };
