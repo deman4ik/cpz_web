@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { colorAction, formatMoney } from "config/utils";
+import { formatMoney, getColorForMoney } from "config/utils";
 import { StatisticElement } from "components/ui/RobotsItems/StatisticsElement";
 
 interface WinRateStatisticsProps {
@@ -23,7 +23,7 @@ export const WinRateStatistics: FC<WinRateStatisticsProps> = ({
                         className={classNames.wrapper}
                         label="Max Drawdown"
                         value={`${formatMoney(maxDrawdown)} $`}
-                        valueTextStyle={colorAction(maxDrawdown > 0)}
+                        valueTextStyle={{ color: getColorForMoney(maxDrawdown) }}
                     />
                     <StatisticElement label="Trades Count" value={tradesCount} className={classNames.wrapper} />
                 </div>

@@ -1,7 +1,6 @@
 import React, { memo, useContext, useState } from "react";
 import { Button } from "components/basic";
 import { ModalKey } from "./types";
-import { ChevronRightIcon } from "assets/icons/svg";
 import { capitalize, exchangeName, truncate, getColor, formatMoney } from "config/utils";
 import { color } from "config/constants";
 import styles from "./ExchangeKeysCard.module.css";

@@ -5,6 +5,8 @@ import { RobotStats } from "./types";
 import { InputTypes, UnitsToTypes, volumes } from "components/ui/Modals/types";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
+const getNumber = (val: number | string) => Number(val.toString().replace(/[^0-9.-]+/g, ""));
+
 export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
 
@@ -51,7 +53,10 @@ export const getRobotVolume = (robot) => {
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
-export const valueWithSign = (value: number | string): string => (Number(value) > 0 ? `+${value}` : `${value}`);
+export const valueWithSign = (value: number | string): string => {
+    const valAsNumber = getNumber(value);
+    return valAsNumber > 0 ? `+${value}` : valAsNumber < 0 ? `${value}` : "0";
+};
 
 export const capitalize = (s: string) => {
     if (typeof s !== "string") return "";
@@ -85,6 +90,11 @@ export const colorDirection = (direction: string): any => ({
 });
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
+
+export const getColorForMoney = (value: number) => {
+    const num = getNumber(formatMoney(value));
+    return getColor(!(num > 0));
+};
 export const getIconName = (direction: string) => (direction === "short" ? "arrowdown" : "arrowup");
 export const getIconNameAction = (check: boolean) => (!check ? "arrowdown" : "arrowup");
 

@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import { Button } from "components/basic";
-import { formatMoney, colorAction } from "config/utils";
+import { formatMoney, valueWithSign, getColorForMoney } from "config/utils";
 import styles from "./PerformanceItemCard.module.css";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 
@@ -26,8 +26,8 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             {item.name}
                         </div>
                         {item.profit ? (
-                            <div className={styles.primaryText} style={colorAction(item.profit > 0)}>
-                                {`${item.profit > 0 ? "+" : ""}${formatMoney(item.profit)} $`}
+                            <div className={styles.primaryText} style={{ color: getColorForMoney(item.profit) }}>
+                                {`${valueWithSign(formatMoney(item.profit))} $`}
                             </div>
                         ) : null}
                     </div>

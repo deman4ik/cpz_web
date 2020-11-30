@@ -1,8 +1,15 @@
 import React from "react";
 
-import { formatDate, capitalize, valueWithSign, formatMoney, colorDirection, getTimeFromNow } from "config/utils";
+import {
+    formatDate,
+    capitalize,
+    valueWithSign,
+    formatMoney,
+    colorDirection,
+    getTimeFromNow,
+    getColorForMoney
+} from "config/utils";
 import styles from "./styles/RobotPositionItem.module.css";
-import { color } from "config/constants";
 
 interface Props {
     item: any;
@@ -45,9 +52,7 @@ export const RobotPositionItem: React.FC<Props> = ({ item, robot }) => {
                 <div className={styles.tableCellText}>{item.bars_held}</div>
             </div>
             <div className={styles.col} style={{ flex: 0.5, justifyContent: "center" }}>
-                <div
-                    className={styles.tableCellText}
-                    style={{ color: item.profit > 0 ? color.positive : color.negative }}>
+                <div className={styles.tableCellText} style={{ color: getColorForMoney(item.profit) }}>
                     {valueWithSign(formatMoney(item.profit))} $
                 </div>
             </div>
