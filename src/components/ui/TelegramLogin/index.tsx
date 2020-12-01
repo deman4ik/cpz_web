@@ -31,12 +31,11 @@ const _TelegramLogin: React.FC<Props> = ({
     const [errorModalVisible, setModalVisibility] = useState(false);
     const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, error }] = useTelegramLogin(loginData);
+    const [login, { loading, error }] = useTelegramLogin({ data: loginData });
     const errorRef = useRef(error);
 
     useEffect(() => {
         (window as any).onTelegramAuth = (data) => {
-            console.warn("Data received on auth:", data);
             if (userId)
                 addTelegram({
                     variables: { data },

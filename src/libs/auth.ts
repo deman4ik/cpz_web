@@ -114,7 +114,7 @@ const useSetRefreshToken = (params: AuthActionParams): AuthAction => {
     return [action, { loading, success, error }];
 };
 
-export const useTelegramLogin = (variables: { id: any; hash: string }) => {
+export const useTelegramLogin = (variables: { data: any }) => {
     return useSetRefreshToken({ mutation: LOGIN_TELEGRAM, variables });
 };
 
