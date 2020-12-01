@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import { nullifyAccessToken, putTokenInCookie, useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
-import { DocumentNode, useMutation } from "@apollo/client";
+import { DocumentNode, MutationHookOptions, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 import {
@@ -60,7 +60,7 @@ export const testindBool = async () => {
 };
 
 type AuthAction = [
-    () => Promise<any>,
+    (options?: MutationHookOptions) => Promise<any>,
     {
         loading?: boolean;
         success: boolean;
@@ -69,61 +69,66 @@ type AuthAction = [
     }
 ];
 
-type AuthActionParams = { mutation: DocumentNode; variables?: any };
-
-const useAuthMutation = ({ mutation, variables }: AuthActionParams): AuthAction => {
-    const [action, { loading, error, data }] = useMutation(mutation);
+const useAuthMutation = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        if (data?.result) {
-            setSuccess(true);
+    const [action, { loading, error, data }] = useMutation(mutation, {
+        ...options,
+        onCompleted: () => {
+            if (data && data.result) {
+                setSuccess(true);
+                setErrorMessage(error?.graphQLErrors[0]?.message || "");
+            }
+            if (options?.onCompleted) options.onCompleted(data);
         }
-    }, [data?.result]);
+    });
 
-    useEffect(() => {
-        setErrorMessage(error?.graphQLErrors[0]?.message || "");
-    }, [error?.graphQLErrors]);
-
-    return [() => action({ variables }), { loading, success, error: errorMessage, result: data?.result }];
+    return [action, { loading, success, error: errorMessage, result: data?.result }];
 };
 
-const useUpdateAccessToken = ({ mutation, variables }: AuthActionParams): AuthAction => {
-    const [action, { loading, error, result }] = useAuthMutation({ variables, mutation });
+const useUpdateAccessToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
     const [token, setAccessToken] = useAccessToken();
-    useEffect(() => {
-        if (result?.accessToken) {
-            const { accessToken } = result;
-            if (token !== accessToken) {
-                setAccessToken(accessToken);
-                putTokenInCookie(accessToken);
+    const [action, { loading, error, result }] = useAuthMutation(mutation, {
+        ...options,
+        onCompleted: () => {
+            if (result && result.accessToken) {
+                console.log(result);
+                const { accessToken } = result;
+                if (token !== accessToken) {
+                    setAccessToken(accessToken);
+                    putTokenInCookie(accessToken);
+                }
             }
+            if (options?.onCompleted) options.onCompleted(result);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [result?.accessToken, setAccessToken]);
+    });
 
     return [action, { loading, success: !!result?.accessToken, error }];
 };
 
-const useSetRefreshToken = (params: AuthActionParams): AuthAction => {
-    const [action, { loading, success, error }] = useUpdateAccessToken(params);
-    useEffect(() => {
-        if (success) setRefreshTokenReceived();
-    }, [success]);
+const useSetRefreshToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
+    const [action, { loading, success, error }] = useUpdateAccessToken(mutation, {
+        ...options,
+        onCompleted: () => {
+            if (success) setRefreshTokenReceived();
+            if (options?.onCompleted) options.onCompleted(success);
+        }
+    });
+
     return [action, { loading, success, error }];
 };
 
-export const useTelegramLogin = (variables: { id: any; hash: string }) => {
-    return useSetRefreshToken({ mutation: LOGIN_TELEGRAM, variables });
+export const useTelegramLogin = (options?: MutationHookOptions) => {
+    return useSetRefreshToken(LOGIN_TELEGRAM, options);
 };
 
-export const useEmailLogin = (variables: { email: string; password: string }) => {
-    return useSetRefreshToken({ mutation: LOGIN, variables });
+export const useEmailLogin = (options?: MutationHookOptions) => {
+    return useSetRefreshToken(LOGIN, options);
 };
 
 export const useLogout = (): AuthAction => {
-    const [logoutAction, { loading, success, error }] = useAuthMutation({ mutation: LOGOUT });
+    const [logoutAction, { loading, success, error }] = useAuthMutation(LOGOUT);
     const [, setAccessToken] = useAccessToken();
 
     useEffect(() => {
@@ -138,7 +143,7 @@ export const useLogout = (): AuthAction => {
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
-    const [register, { loading, error, result }] = useAuthMutation({ mutation: REGISTER, variables });
+    const [register, { loading, error, result }] = useAuthMutation(REGISTER, { variables });
 
     useEffect(() => {
         if (result?.userId) writeUserToCache(client, result?.userId);
@@ -148,11 +153,11 @@ export const useRegistration = (variables: { email: string; password: string }, 
 };
 
 export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
-    return useSetRefreshToken({ mutation: ACTIVATE_ACCOUNT, variables });
+    return useSetRefreshToken(ACTIVATE_ACCOUNT, { variables });
 };
 
 export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
-    const [resetPassword, { success, error, result }] = useAuthMutation({ mutation: PASSWORD_RESET, variables });
+    const [resetPassword, { success, error, result }] = useAuthMutation(PASSWORD_RESET, { variables });
 
     useEffect(() => {
         if (result?.userId) writeUserToCache(client, result?.userId);
@@ -166,15 +171,15 @@ export const useResetConfirmation = (variables: {
     secretCode: string;
     password: string;
 }): AuthAction => {
-    return useSetRefreshToken({ mutation: CONFIRM_PASSWORD_RESET, variables });
+    return useSetRefreshToken(CONFIRM_PASSWORD_RESET, { variables });
 };
 
 export const useChangeEmail = (variables: { email: string }): AuthAction => {
-    return useAuthMutation({ mutation: CHANGE_EMAIL, variables });
+    return useAuthMutation(CHANGE_EMAIL, { variables });
 };
 
 export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
-    return useUpdateAccessToken({ mutation: CONFIRM_CHANGE_EMAIL, variables });
+    return useUpdateAccessToken(CONFIRM_CHANGE_EMAIL, { variables });
 };
 
 export function fetchAccessToken() {

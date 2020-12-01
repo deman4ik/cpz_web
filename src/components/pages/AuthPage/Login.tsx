@@ -25,7 +25,7 @@ const _Login: React.FC = () => {
         validateAuth
     );
 
-    const [login, { loading }] = useEmailLogin({ email: values.email, password: values.password });
+    const [login, { loading }] = useEmailLogin();
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -38,7 +38,7 @@ const _Login: React.FC = () => {
     const handleLogin = () => {
         nullifyAccessToken();
         if (isValid && !loading)
-            login().then(
+            login({ variables: { email: values.email, password: values.password } }).then(
                 () => {
                     Router.push("/robots");
                 },

@@ -28,9 +28,8 @@ const _TelegramLogin: React.FC<Props> = ({
 }) => {
     let instance;
 
-    const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, error }] = useTelegramLogin(loginData);
+    const [login, { loading, error }] = useTelegramLogin();
     const errorRef = useRef(error);
 
     useEffect(() => {
@@ -42,12 +41,13 @@ const _TelegramLogin: React.FC<Props> = ({
                     refetchQueries: [{ query: GET_USER_INFO }]
                 }).catch((err) => (errorRef.current = err.message));
             else {
-                setLoginData(data);
-                login()
-                    .then(() => {
-                        Router.push("/robots");
-                    })
-                    .catch((err) => (errorRef.current = err.message));
+                login({
+                    variables: { data },
+                    onCompleted: () => {
+                        if (!error) Router.push("/robots");
+                        else errorRef.current = error;
+                    }
+                }).catch((err) => (errorRef.current = err.message));
             }
         };
         const script = document.createElement("script");
@@ -60,7 +60,7 @@ const _TelegramLogin: React.FC<Props> = ({
         script.setAttribute("data-onauth", "onTelegramAuth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, borderRadius, buttonSize, instance, login, userId, userPic]);
+    }, [addTelegram, borderRadius, buttonSize, error, instance, login, userId, userPic]);
 
     return (
         <>
