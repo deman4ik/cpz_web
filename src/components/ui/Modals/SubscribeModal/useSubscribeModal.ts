@@ -43,7 +43,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
     }, [robotData]);
 
     const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
-    const [price, minAmount, , minAmountUSD, , balance] = parsedLimits;
+    const { price, minAmount, minAmountUSD, balance, maxPercentAmount } = parsedLimits;
 
     const { currencyDynamic, assetStatic } = InputTypes;
     const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
@@ -79,7 +79,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
                 used_percent: usedAccountPercent,
                 type,
                 value: inputValues[type],
-                maxAmount: maxAmounts[type],
+                maxAmount: type === InputTypes.balancePercent ? maxPercentAmount : maxAmounts[type],
                 minAmount: minAmounts[type]
             });
         }
