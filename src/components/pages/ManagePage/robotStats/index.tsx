@@ -68,7 +68,7 @@ export const ManageRobotsStats: React.FC = () => {
                 {...restFilterProps}
             />
             <>
-                {!formatData.chartData || !formatData.robotStatistic ? (
+                {!formatData.robotStatistic ? (
                     <div className={styles.loadingContainer}>
                         <NothingComponent beforeButtonKeyWord="stats" buttonSize="normal" />
                     </div>
