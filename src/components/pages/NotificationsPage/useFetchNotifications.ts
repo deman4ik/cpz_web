@@ -33,9 +33,6 @@ export const useFetchNotifications = (preserveScrollPosition?: boolean) => {
     }
 
     const [notifications, setNotificationsData] = useState([]);
-    useEffect(() => {
-        if (preserveScrollPosition) restorePosition();
-    }, [preserveScrollPosition, restorePosition, notifications]);
 
     const { data, loading, fetchMore, refetch } = useQueryWithAuth(true, GET_NOTIFICATIONS, {
         variables: {
@@ -44,12 +41,15 @@ export const useFetchNotifications = (preserveScrollPosition?: boolean) => {
             where
         },
         pollInterval: POLL_INTERVAL,
-        notifyOnNetworkStatusChange: changeStatus,
-        onCompleted: () => {
-            preservePosition();
-            setNotificationsData(parseNotifications(data.notifications));
-        }
+        notifyOnNetworkStatusChange: changeStatus
     });
+
+    useEffect(() => {
+        if (preserveScrollPosition) preservePosition();
+        if (data?.notifications) setNotificationsData(parseNotifications(data.notifications));
+        if (preserveScrollPosition) restorePosition();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data?.notifications]);
 
     const [updateReaded] = useMutation(UPDATE_NOTIFICATIONS, {
         refetchQueries: [

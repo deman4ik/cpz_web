@@ -80,22 +80,22 @@ export const useFetchRobots = (
     if (isAuth) variables.user_id = user_id;
 
     const [robotsData, setRobotsData] = useState([]);
-    useEffect(() => {
-        if (preserveScrollPosition) restorePosition();
-    }, [preserveScrollPosition, restorePosition, robotsData]);
 
     const { data, loading, error, fetchMore, refetch: refetchStats } = useQueryWithAuth(
         false,
         QUERIES_TYPE[dispayType],
         {
             variables,
-            pollInterval: POLL_INTERVAL,
-            onCompleted: () => {
-                preservePosition();
-                setRobotsData(formatRobotsData(data.robots));
-            }
+            pollInterval: POLL_INTERVAL
         }
     );
+
+    useEffect(() => {
+        if (preserveScrollPosition) preservePosition();
+        if (data?.robots) setRobotsData(formatRobotsData(data?.robots));
+        if (preserveScrollPosition) restorePosition();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data?.robots]);
 
     /* Установка начального значения фильтров */
     useEffect(() => {
