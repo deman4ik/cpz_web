@@ -28,6 +28,7 @@ const _TelegramLogin: React.FC<Props> = ({
 }) => {
     let instance;
 
+    const [errorModalVisible, setModalVisibility] = useState(false);
     const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
     const [login, { loading, error }] = useTelegramLogin(loginData);
@@ -40,14 +41,20 @@ const _TelegramLogin: React.FC<Props> = ({
                 addTelegram({
                     variables: { data },
                     refetchQueries: [{ query: GET_USER_INFO }]
-                }).catch((err) => (errorRef.current = err.message));
+                }).catch((err) => {
+                    errorRef.current = err.message;
+                    setModalVisibility(true);
+                });
             else {
                 setLoginData(data);
                 login()
                     .then(() => {
                         Router.push("/robots");
                     })
-                    .catch((err) => (errorRef.current = err.message));
+                    .catch((err) => {
+                        errorRef.current = err.message;
+                        setModalVisibility(true);
+                    });
             }
         };
         const script = document.createElement("script");
@@ -82,7 +89,7 @@ const _TelegramLogin: React.FC<Props> = ({
                     </span>
                 </div>
             )}
-            <Modal title="Error" isOpen={!!errorRef.current} onClose={() => (errorRef.current = "")}>
+            <Modal title="Error" isOpen={errorModalVisible} onClose={() => setModalVisibility(false)}>
                 <div className={styles.errorText}>{errorRef.current}</div>
             </Modal>
         </>

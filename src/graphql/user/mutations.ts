@@ -53,7 +53,7 @@ export const SET_NOTIFICATION_SETTINGS = gql`
 `;
 
 export const ADD_TELEGRAM_ACCOUNT = gql`
-    mutation setTelegram($data: JSON!) {
+    mutation setTelegram($data: TelegramInput!) {
         setTelegram(data: $data) {
             result
         }
