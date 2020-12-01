@@ -1,6 +1,7 @@
 export enum PageType {
     robots = "Robots",
     signals = "Signals",
+    openPositoins = "Open Positoins",
     notifications = "Notifications",
     profile = "Profile",
     robotStats = "Robot Stats",

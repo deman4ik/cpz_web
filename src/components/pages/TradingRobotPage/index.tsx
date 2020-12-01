@@ -14,13 +14,11 @@ import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { PageType, RobotsType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
 import { AuthContext } from "libs/hoc/context";
-import { isNewPage } from "utils/common";
 
 export const TradingRobotPage: React.FC = () => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
-    const [pageIsNew] = useState(isNewPage());
 
     const { width } = useWindowDimensions();
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
@@ -28,10 +26,6 @@ export const TradingRobotPage: React.FC = () => {
 
     const robotInfoQuery = isAuth ? USER_ROBOT_INFO_FOR_USER : ROBOT_INFO_FOR_ROBOTS;
     const queryVars = isAuth ? { code: router.query.code, user_id } : { code: router.query.code };
-
-    const handlePressBack = () => {
-        router.back();
-    };
 
     const { data: robotInfoData, loading, refetch } = useQuery(robotInfoQuery, {
         variables: queryVars,
@@ -62,9 +56,8 @@ export const TradingRobotPage: React.FC = () => {
             page={PageType.robots}
             title="Trading Robot"
             subTitle={robotData?.robot.name || ""}
-            width={width}
             toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
-            handlePressBack={pageIsNew ? null : handlePressBack}>
+            handleBackNavigation>
             {loading ? (
                 <div className="loading">
                     <LoadingIndicator />

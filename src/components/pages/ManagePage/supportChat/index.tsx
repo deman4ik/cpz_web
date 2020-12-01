@@ -37,12 +37,8 @@ const ManageSupportChat = () => {
 
     useEffect(() => setSuccess(data?.replySupportMessage.result === "OK"), [data?.replySupportMessage.result]);
 
-    const handlePressBack = () => {
-        router.back();
-    };
-
     return (
-        <ManagementTemplate title="Support chat" page={PageType.managementSupport} navigateBack={handlePressBack}>
+        <ManagementTemplate title="Support chat" page={PageType.managementSupport} handleBackNavigation>
             <div className={styles.support_chat_wrapper}>
                 <Chat
                     title={`Chat with ${username} [${user_id}]`}

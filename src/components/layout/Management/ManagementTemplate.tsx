@@ -17,6 +17,7 @@ import { LayoutContext } from "libs/hoc/context";
 
 //styles
 import styles from "./styles/Template.module.css";
+import Router from "next/router";
 
 interface Props {
     title?: string;
@@ -25,6 +26,7 @@ interface Props {
     toolbar?: any;
     navigateBack?: () => void;
     withToolbar?: boolean;
+    handleBackNavigation?: boolean | (() => void);
 }
 
 export const ManagementTemplate: React.FC<Props> = ({
@@ -33,7 +35,7 @@ export const ManagementTemplate: React.FC<Props> = ({
     children,
     page,
     toolbar,
-    navigateBack,
+    handleBackNavigation,
     withToolbar = true
 }) => {
     const { width } = useWindowDimensions();
@@ -55,6 +57,10 @@ export const ManagementTemplate: React.FC<Props> = ({
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
     const toggleNavBar = () => setMenuOpen(!isNavOpen);
+
+    const navigateBack =
+        handleBackNavigation &&
+        (typeof handleBackNavigation === "function" ? handleBackNavigation : () => Router.back());
 
     return (
         <div className={styles.container}>

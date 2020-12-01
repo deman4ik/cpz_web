@@ -4,7 +4,6 @@ import React, { useContext } from "react";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFetchNotifications } from "./useFetchNotifications";
 // components
-import { LoadingIndicator } from "components/common";
 import { ToolbarNotificationsPage } from "./ToolbarNotificationsPage";
 import { DefaultTemplate } from "components/layout";
 import { NotificationsContainer } from "./NotificationsContainer";
@@ -34,7 +33,6 @@ export const NotificationsPage: React.FC = () => {
         <DefaultTemplate
             page={PageType.notifications}
             title="Notifications"
-            width={width}
             toolbar={isAuth && <ToolbarNotificationsPage inputSelect={inputSelect} setInputSelect={setFilters} />}>
             {!notifications.length ? (
                 <div

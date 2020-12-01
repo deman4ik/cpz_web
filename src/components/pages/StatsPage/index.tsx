@@ -61,8 +61,7 @@ export const StatsPage: React.FC = () => {
             title={`My ${capitalize(displayType)} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
             toolbar={isAuth && <StatsPageButtonToolbar toggleFiltersVisibility={toggleFiltersVisibility} />}
-            width={width}
-            handlePressBack={handlePressBack}>
+            handleBackNavigation={handlePressBack}>
             <StatsFiltersModal
                 isOpen={isFiltersModalVisible}
                 title={`Filter My Total ${capitalize(displayType)} Performance`}

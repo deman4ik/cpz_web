@@ -28,9 +28,6 @@
     margin-bottom: 10px;
     align-items: flex-end;
     flex-direction: column;
-    font-size: var(--small1);
-    line-height: var(--normal2);
-    color: white;
 }
 
 .label {

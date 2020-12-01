@@ -6,17 +6,29 @@ import { NavBar } from "./NavBar";
 
 import { PageType } from "config/types";
 import styles from "./styles/Template.module.css";
+import Router from "next/router";
+import { isNewPage } from "utils/common";
 
 interface Props {
     title?: string;
     subTitle?: string;
     page?: PageType;
-    width: number;
     toolbar?: any;
-    handlePressBack?: () => void;
+    handleBackNavigation?: boolean | (() => void);
 }
 
-export const DefaultTemplate: React.FC<Props> = ({ title, subTitle, children, page, handlePressBack, toolbar }) => {
+export const DefaultTemplate: React.FC<Props> = ({
+    title,
+    subTitle,
+    children,
+    page,
+    toolbar,
+    handleBackNavigation = false
+}) => {
+    const handlePressBack =
+        handleBackNavigation &&
+        (typeof handleBackNavigation === "function" ? handleBackNavigation : !isNewPage() ? () => Router.back() : null);
+
     return (
         <div
             className={styles.container}

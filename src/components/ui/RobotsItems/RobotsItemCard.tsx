@@ -1,12 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
-
-import { formatMoney, valueWithSign, getColorForMoney } from "config/utils";
 import { SignalItem } from "../RobotsList/types";
 import { RobotsButtonItemCard, RobotItemStatusBlock } from ".";
 import { formatVariables } from "./helpers";
 import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
+import { WinRateStatistics } from "./WinRateStatistics";
 
 interface Props {
     item: SignalItem;
@@ -38,16 +37,13 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
         <div className={styles.container}>
             <div className={styles.headerCard} onClick={handleOnPressDetails}>
                 <div className={styles.row}>
-                    <div className={styles.col}>
+                    <div className={styles.headerCol}>
                         <div className={styles.statValue} style={{ marginBottom: 2 }}>
                             {item.name}
                         </div>
                         <div className={styles.footerRow}>
                             <div className={styles.secondaryText}>
                                 {item.displayedVolume || `${item.volume} ${item.asset}`}
-                            </div>
-                            <div className={styles.primaryText} style={{ color: getColorForMoney(item.profit) }}>
-                                {item.profit ? `${valueWithSign(formatMoney(item.profit))} $` : null}
                             </div>
                         </div>
                     </div>
@@ -77,24 +73,13 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                             <div />
                         </div>
                     ) : (
-                        <>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Win Rate</div>
-                                <div className={styles.statValue}>{item.winRate} %</div>
-                            </div>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Max Drawdown</div>
-                                <div
-                                    className={styles.primaryText}
-                                    style={{ color: getColorForMoney(item.maxDrawdown) }}>
-                                    {`${formatMoney(item.maxDrawdown)} $`}
-                                </div>
-                            </div>
-                            <div className={styles.statRow}>
-                                <div className={styles.label}>Trades Count</div>
-                                <div className={styles.statValue}>{item.tradesCount}</div>
-                            </div>
-                        </>
+                        <WinRateStatistics
+                            classNames={{ container: styles.statCol, wrapper: styles.statRow }}
+                            profit={item.profit}
+                            winRate={item.winRate}
+                            maxDrawdown={item.maxDrawdown}
+                            tradesCount={item.tradesCount}
+                        />
                     )}
                 </div>
             </div>

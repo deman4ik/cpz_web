@@ -2,7 +2,6 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import { Button } from "components/basic";
-import { formatMoney, valueWithSign, getColorForMoney } from "config/utils";
 import styles from "./PerformanceItemCard.module.css";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 
@@ -25,11 +24,6 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                         <div className={styles.statValue} style={{ marginBottom: 5 }}>
                             {item.name}
                         </div>
-                        {item.profit ? (
-                            <div className={styles.primaryText} style={{ color: getColorForMoney(item.profit) }}>
-                                {`${valueWithSign(formatMoney(item.profit))} $`}
-                            </div>
-                        ) : null}
                     </div>
                     <div className={styles.col}>
                         <Button
@@ -52,6 +46,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                 </div>
                 <WinRateStatistics
                     classNames={{ container: styles.statCol, wrapper: styles.statRow }}
+                    profit={item.profit}
                     winRate={item.winRate}
                     maxDrawdown={item.maxDrawdown}
                     tradesCount={item.tradesCount}
