@@ -117,20 +117,30 @@ export const getAmtErrors = (
 
     return false;
 };
-type Price = number;
-type MinAmount = number;
-type MaxAmount = number;
-type MinAmountUSD = number;
-type MaxAmountUSD = number;
-type Balance = number;
-export type ParsedLimits = [Price?, MinAmount?, MaxAmount?, MinAmountUSD?, MaxAmountUSD?, Balance?];
+export type ParsedLimits = {
+    price?: number;
+    minAmount?: number;
+    maxAmount?: number;
+    minAmountUSD?: number;
+    maxAmountUSD?: number;
+    balance?: number;
+    maxPercentAmount?: number;
+};
 export function parseLimits(limits: any): ParsedLimits {
     if (!(limits && limits.asset)) {
-        return [];
+        return {};
     }
     const { price, asset } = limits;
     const { min, max } = asset;
-    return [price, min.amount || 0, max.amount || 0, min.amountUSD || 0, max.amountUSD || 0, limits.total_balance_usd];
+    return {
+        price,
+        minAmount: min.amount || 0,
+        maxAmount: max.amount || 0,
+        minAmountUSD: min.amountUSD || 0,
+        maxAmountUSD: max.amountUSD || 0,
+        balance: limits.total_balance_usd,
+        maxPercentAmount: max.balancePercent
+    };
 }
 
 const calculateCurrencyFromPercent = (percent, balance) => (Number(percent) * balance) / 100;
@@ -183,7 +193,8 @@ interface ValidateVolumeProps {
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent }) => !(value >= 1 && value < 100 - used_percent);
+const validateBalancePercent = ({ value, used_percent, maxAmount = 100 }) =>
+    !(value >= 1 && value < maxAmount - used_percent);
 
 const validationFunctions = {
     assetStatic: validateCurrencies,
@@ -222,3 +233,5 @@ const routesToPagesMap = {
 };
 
 export const currentPage = (path: string) => routesToPagesMap[path];
+
+export const isObjectEmpty = (obj) => Object.values(obj).filter((i) => i === 0 || !!i).length === 0;
