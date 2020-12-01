@@ -15,12 +15,17 @@ interface Props {
     userId?: number;
     message?: string;
     buttonSize?: string;
+    borderRadius?: number;
+    userPic?: boolean;
 }
 
-const borderRadius = 2;
-const requestAccess = "write";
-const userPic = true;
-const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium" }) => {
+const _TelegramLogin: React.FC<Props> = ({
+    userId,
+    message,
+    buttonSize = "medium",
+    borderRadius = 2,
+    userPic = true
+}) => {
     let instance;
 
     const [loginData, setLoginData] = useState({ id: null, hash: null });
@@ -29,36 +34,33 @@ const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium
     const errorRef = useRef(error);
 
     useEffect(() => {
-        (window as any).TelegramLoginWidget = userId
-            ? {
-                  dataOnauth: (data) => {
-                      addTelegram({
-                          variables: { data },
-                          refetchQueries: [{ query: GET_USER_INFO }]
-                      }).catch((e) => (errorRef.current = e.message));
-                  }
-              }
-            : {
-                  dataOnauth: (data) => {
-                      setLoginData(data);
-                      login()
-                          .then(() => {
-                              Router.push("/robots");
-                          })
-                          .catch((err) => (errorRef.current = err));
-                  }
-              };
+        (window as any).onTelegramAuth = (data) => {
+            console.warn("Data received on auth:", data);
+            if (userId)
+                addTelegram({
+                    variables: { data },
+                    refetchQueries: [{ query: GET_USER_INFO }]
+                }).catch((err) => (errorRef.current = err.message));
+            else {
+                setLoginData(data);
+                login()
+                    .then(() => {
+                        Router.push("/robots");
+                    })
+                    .catch((err) => (errorRef.current = err.message));
+            }
+        };
         const script = document.createElement("script");
         script.src = "https://telegram.org/js/telegram-widget.js?7";
         script.setAttribute("data-telegram-login", process.env.TELEGRAM_BOT_NAME);
         script.setAttribute("data-size", buttonSize);
         script.setAttribute("data-radius", `${borderRadius}`);
-        script.setAttribute("data-request-access", requestAccess);
+        script.setAttribute("data-request-access", "write");
         script.setAttribute("data-userpic", `${userPic}`);
-        script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
+        script.setAttribute("data-onauth", "onTelegramAuth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, buttonSize, instance, login, userId]);
+    }, [addTelegram, borderRadius, buttonSize, instance, login, userId, userPic]);
 
     return (
         <>
