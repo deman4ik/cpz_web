@@ -18,6 +18,7 @@ yarn.lock
 
 # misc
 .DS_Store
+report.*
 
 # debug
 npm-debug.log*
