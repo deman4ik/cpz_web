@@ -173,6 +173,7 @@ export const USER_ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
             asset
             exchange
             id
+            equity
         }
     }
 `;
