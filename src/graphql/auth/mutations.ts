@@ -17,7 +17,7 @@ export const LOGIN = gql`
  * @returns accessToken
  */
 export const LOGIN_TELEGRAM = gql`
-    mutation login_with_telegram($data: JSON!) {
+    mutation login_with_telegram($data: TelegramInput!) {
         result: loginTelegram(data: $data) {
             accessToken
         }
