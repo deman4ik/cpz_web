@@ -28,9 +28,6 @@
     margin-bottom: 10px;
     align-items: flex-end;
     flex-direction: column;
-    font-size: var(--small1);
-    line-height: var(--normal2);
-    color: white;
 }
 
 .label {
@@ -47,9 +44,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .chartCol {

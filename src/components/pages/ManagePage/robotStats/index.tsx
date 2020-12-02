@@ -26,10 +26,6 @@ export const ManageRobotsStats: React.FC = () => {
 
     const componentEntity = entity[PageType[displayType]];
 
-    const handlePressBack = () => {
-        router.back();
-    };
-
     const { selectedFilter, ...restFilterProps } = useFilters(router.query);
     const { asset, exchange } = selectedFilter;
 
@@ -55,11 +51,11 @@ export const ManageRobotsStats: React.FC = () => {
 
     return (
         <ManagementTemplate
-            navigateBack={handlePressBack}
             title={`${componentEntity} Total Performance`}
             subTitle={getSubTitle(selectedFilter)}
             toolbar={isAuth && <StatsPageButtonToolbar toggleFiltersVisibility={toggleFiltersVisibility} />}
-            page={PageType[displayType]}>
+            page={PageType[displayType]}
+            handleBackNavigation>
             <StatsFiltersModal
                 isOpen={isFiltersModalVisible}
                 title={`Filter Total ${componentEntity} Performance`}

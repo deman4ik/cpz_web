@@ -24,8 +24,7 @@ export const ProfilePage = () => {
             page={PageType.profile}
             title="Profile"
             subTitle="Settings"
-            toolbar={isAuth && <ToolbarProfilePage />}
-            width={width}>
+            toolbar={isAuth && <ToolbarProfilePage />}>
             <UserContainer width={width} />
             <ExchangeKeys title="My Exchange API Keys" />
             {isAuth && <NotifySettings />}

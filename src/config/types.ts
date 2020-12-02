@@ -1,6 +1,7 @@
 export enum PageType {
     robots = "Robots",
     signals = "Signals",
+    openPositoins = "Open Positoins",
     notifications = "Notifications",
     profile = "Profile",
     robotStats = "Robot Stats",
@@ -23,6 +24,11 @@ export enum PageType {
 export enum RobotsType {
     signals = "signals",
     robots = "robots"
+}
+
+export enum PositionDirection {
+    short = "short",
+    long = "long"
 }
 
 export interface DeviceProps {

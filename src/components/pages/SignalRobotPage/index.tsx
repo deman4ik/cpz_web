@@ -14,7 +14,6 @@ import { SET_MODAL_STATE } from "graphql/local/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { formatRobotData } from "./helpers";
 import { AuthContext } from "libs/hoc/context";
-import { isNewPage } from "utils/common";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { MODAL_VISIBLE } from "graphql/local/queries";
 
@@ -26,14 +25,9 @@ const SignalRobotPage = (): JSX.Element => {
 
     const { width } = useWindowDimensions();
     const router = useRouter();
-    const [pageIsNew] = useState(isNewPage());
     const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
     const [isModalVisible, setModalVisibility] = useState({ isVisible: false, type: "" });
-
-    const handlePressBack = () => {
-        router.back();
-    };
 
     const { loading, data, refetch } = useQueryWithAuth(false, robotsInfoQuery, {
         variables: {
@@ -66,9 +60,8 @@ const SignalRobotPage = (): JSX.Element => {
             page={PageType.signals}
             title="Signals"
             subTitle={robotData ? robotData.robot.name : ""}
-            width={width}
             toolbar={robotData ? <Toolbar subscribe={subscribe} robotData={robotData} /> : null}
-            handlePressBack={pageIsNew ? null : handlePressBack}>
+            handleBackNavigation>
             {loading ? (
                 <div className="loading">
                     <LoadingIndicator />

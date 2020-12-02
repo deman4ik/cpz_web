@@ -2,9 +2,9 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import { Button } from "components/basic";
-import { formatMoney, valueWithSign, getColorForMoney } from "config/utils";
 import styles from "./PerformanceItemCard.module.css";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
+import { DataCard } from "components/ui/DataCard";
 
 interface Props {
     item: any;
@@ -18,19 +18,10 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
         onRedirectToDetailView(item.path);
     };
     return (
-        <div className={styles.container}>
-            <div className={styles.headerCard}>
+        <DataCard
+            header={
                 <div className={styles.row} onClick={handleOnPress}>
-                    <div className={styles.col}>
-                        <div className={styles.statValue} style={{ marginBottom: 5 }}>
-                            {item.name}
-                        </div>
-                        {item.profit ? (
-                            <div className={styles.primaryText} style={{ color: getColorForMoney(item.profit) }}>
-                                {`${valueWithSign(formatMoney(item.profit))} $`}
-                            </div>
-                        ) : null}
-                    </div>
+                    <div className={styles.col}>{item.name}</div>
                     <div className={styles.col}>
                         <Button
                             title="details"
@@ -41,22 +32,25 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                         />
                     </div>
                 </div>
-            </div>
-            <div className={styles.chartStat}>
-                <div className={styles.chartCol}>
-                    {item?.equity?.length ? (
-                        <DynamicAreaChart height={120} data={item.equity} />
-                    ) : (
-                        <div className={styles.emptyChart} />
-                    )}
+            }
+            body={
+                <div className={styles.chartStat}>
+                    <div className={styles.chartCol}>
+                        {item?.equity?.length ? (
+                            <DynamicAreaChart height={120} data={item.equity} />
+                        ) : (
+                            <div className={styles.emptyChart} />
+                        )}
+                    </div>
+                    <WinRateStatistics
+                        classNames={{ container: styles.statCol, wrapper: styles.statRow }}
+                        profit={item.profit}
+                        winRate={item.winRate}
+                        maxDrawdown={item.maxDrawdown}
+                        tradesCount={item.tradesCount}
+                    />
                 </div>
-                <WinRateStatistics
-                    classNames={{ container: styles.statCol, wrapper: styles.statRow }}
-                    winRate={item.winRate}
-                    maxDrawdown={item.maxDrawdown}
-                    tradesCount={item.tradesCount}
-                />
-            </div>
-        </div>
+            }
+        />
     );
 };
