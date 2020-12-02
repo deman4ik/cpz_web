@@ -29,10 +29,9 @@ const _TelegramLogin: React.FC<Props> = ({
     let instance;
 
     const [errorModalVisible, setModalVisibility] = useState(false);
-    const [loginData, setLoginData] = useState({ id: null, hash: null });
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, error }] = useTelegramLogin({ data: loginData });
-    const errorRef = useRef(error);
+    const [login, { loading }] = useTelegramLogin();
+    const errorRef = useRef(null);
 
     useEffect(() => {
         (window as any).onTelegramAuth = (data) => {
@@ -40,18 +39,22 @@ const _TelegramLogin: React.FC<Props> = ({
                 addTelegram({
                     variables: { data },
                     refetchQueries: [{ query: GET_USER_INFO }]
-                }).catch((err) => {
-                    errorRef.current = err.message;
-                    setModalVisibility(true);
-                });
+                }).catch((err) => (errorRef.current = err.message));
             else {
-                setLoginData(data);
-                login()
-                    .then(() => {
-                        Router.push("/robots");
-                    })
-                    .catch((err) => {
-                        errorRef.current = err.message;
+                login({
+                    variables: { data }
+                })
+                    .then(
+                        () => {
+                            Router.push("/robots");
+                        },
+                        (error) => {
+                            errorRef.current = error.message;
+                            setModalVisibility(true);
+                        }
+                    )
+                    .catch((error) => {
+                        errorRef.current = error.message;
                         setModalVisibility(true);
                     });
             }
