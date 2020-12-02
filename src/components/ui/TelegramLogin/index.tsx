@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
@@ -29,8 +29,8 @@ const _TelegramLogin: React.FC<Props> = ({
     let instance;
 
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-    const [login, { loading, error }] = useTelegramLogin();
-    const errorRef = useRef(error);
+    const [login, { loading }] = useTelegramLogin();
+    const errorRef = useRef(null);
 
     useEffect(() => {
         (window as any).onTelegramAuth = (data) => {
@@ -42,12 +42,17 @@ const _TelegramLogin: React.FC<Props> = ({
                 }).catch((err) => (errorRef.current = err.message));
             else {
                 login({
-                    variables: { data },
-                    onCompleted: () => {
-                        if (!error) Router.push("/robots");
-                        else errorRef.current = error;
-                    }
-                }).catch((err) => (errorRef.current = err.message));
+                    variables: { data }
+                })
+                    .then(
+                        () => {
+                            Router.push("/robots");
+                        },
+                        (error) => {
+                            errorRef.current = error.message;
+                        }
+                    )
+                    .catch((err) => (errorRef.current = err.message));
             }
         };
         const script = document.createElement("script");
@@ -60,7 +65,7 @@ const _TelegramLogin: React.FC<Props> = ({
         script.setAttribute("data-onauth", "onTelegramAuth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, borderRadius, buttonSize, error, instance, login, userId, userPic]);
+    }, [addTelegram, borderRadius, buttonSize, instance, login, userId, userPic]);
 
     return (
         <>

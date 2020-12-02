@@ -38,7 +38,9 @@ const _Login: React.FC = () => {
     const handleLogin = () => {
         nullifyAccessToken();
         if (isValid && !loading)
-            login({ variables: { email: values.email, password: values.password } }).then(
+            login({
+                variables: { email: values.email, password: values.password }
+            }).then(
                 () => {
                     Router.push("/robots");
                 },

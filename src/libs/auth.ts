@@ -72,28 +72,29 @@ type AuthAction = [
 const useAuthMutation = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [result, setResult] = useState(null);
 
-    const [action, { loading, error, data }] = useMutation(mutation, {
+    const [action, { loading, error }] = useMutation(mutation, {
         ...options,
-        onCompleted: () => {
+        onCompleted: (data) => {
             if (data && data.result) {
                 setSuccess(true);
+                setResult(data.result);
                 setErrorMessage(error?.graphQLErrors[0]?.message || "");
             }
             if (options?.onCompleted) options.onCompleted(data);
         }
     });
 
-    return [action, { loading, success, error: errorMessage, result: data?.result }];
+    return [action, { loading, success, error: errorMessage, result }];
 };
 
 const useUpdateAccessToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
     const [token, setAccessToken] = useAccessToken();
-    const [action, { loading, error, result }] = useAuthMutation(mutation, {
+    const [action, { loading, error }] = useAuthMutation(mutation, {
         ...options,
-        onCompleted: () => {
+        onCompleted: ({ result }) => {
             if (result && result.accessToken) {
-                console.log(result);
                 const { accessToken } = result;
                 if (token !== accessToken) {
                     setAccessToken(accessToken);
@@ -104,15 +105,17 @@ const useUpdateAccessToken = (mutation: DocumentNode, options?: MutationHookOpti
         }
     });
 
-    return [action, { loading, success: !!result?.accessToken, error }];
+    return [action, { loading, success: !!token, error }];
 };
 
 const useSetRefreshToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
     const [action, { loading, success, error }] = useUpdateAccessToken(mutation, {
         ...options,
-        onCompleted: () => {
-            if (success) setRefreshTokenReceived();
-            if (options?.onCompleted) options.onCompleted(success);
+        onCompleted: (result) => {
+            if (result.accessToken) {
+                setRefreshTokenReceived();
+            }
+            if (options?.onCompleted) options.onCompleted(!!result.accessToken);
         }
     });
 
@@ -128,18 +131,19 @@ export const useEmailLogin = (options?: MutationHookOptions) => {
 };
 
 export const useLogout = (): AuthAction => {
-    const [logoutAction, { loading, success, error }] = useAuthMutation(LOGOUT);
     const [, setAccessToken] = useAccessToken();
-
-    useEffect(() => {
-        if (success && setAccessToken) {
-            setAccessToken("");
-            logout();
+    const [loggedOut, setLoggedOut] = useState(false);
+    const [logoutAction, { loading, error }] = useAuthMutation(LOGOUT, {
+        onCompleted: ({ result }) => {
+            if (result.result === "OK") {
+                setAccessToken("");
+                setLoggedOut(true);
+                logout();
+            }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [success]);
+    });
 
-    return [logoutAction, { loading, success, error }];
+    return [() => logoutAction(), { loading, success: loggedOut, error }];
 };
 
 export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
