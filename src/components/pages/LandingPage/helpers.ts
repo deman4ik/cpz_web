@@ -1,7 +1,7 @@
 import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from "./types";
 import { DOCS_URL, TELEGRAM_COMMUNITY_URL, color } from "config/constants";
 
-export const supportContent = () => [
+export const supportContent = [
     {
         icon: "help",
         iconColor: color.secondary, //secondary
