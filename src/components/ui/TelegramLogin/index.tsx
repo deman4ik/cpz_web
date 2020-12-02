@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
@@ -28,13 +28,13 @@ const _TelegramLogin: React.FC<Props> = ({
 }) => {
     let instance;
 
+    const [errorModalVisible, setModalVisibility] = useState(false);
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
     const [login, { loading }] = useTelegramLogin();
     const errorRef = useRef(null);
 
     useEffect(() => {
         (window as any).onTelegramAuth = (data) => {
-            console.warn("Data received on auth:", data);
             if (userId)
                 addTelegram({
                     variables: { data },
@@ -50,9 +50,13 @@ const _TelegramLogin: React.FC<Props> = ({
                         },
                         (error) => {
                             errorRef.current = error.message;
+                            setModalVisibility(true);
                         }
                     )
-                    .catch((err) => (errorRef.current = err.message));
+                    .catch((error) => {
+                        errorRef.current = error.message;
+                        setModalVisibility(true);
+                    });
             }
         };
         const script = document.createElement("script");
@@ -87,7 +91,7 @@ const _TelegramLogin: React.FC<Props> = ({
                     </span>
                 </div>
             )}
-            <Modal title="Error" isOpen={!!errorRef.current} onClose={() => (errorRef.current = "")}>
+            <Modal title="Error" isOpen={errorModalVisible} onClose={() => setModalVisibility(false)}>
                 <div className={styles.errorText}>{errorRef.current}</div>
             </Modal>
         </>

@@ -17,14 +17,21 @@ import {
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
-import { AssetTypes, formatNumber, precisionToVolumeMap, translateValue } from "components/ui/Modals/helpers";
+import {
+    AssetTypes,
+    formatNumber,
+    isObjectEmpty,
+    ParsedLimits,
+    precisionToVolumeMap,
+    translateValue
+} from "components/ui/Modals/helpers";
 import { PercentsAvailable } from "components/ui/Modals/SubscribeModal/PercentnsAvailable";
 
 export interface SubscribeModalContentProps {
     setVolumeType: Dispatch<SetStateAction<InputTypes>>;
     setInputValues: (values: InputValues) => void;
     volumeType: InputTypes;
-    parsedLimits: number[];
+    parsedLimits: ParsedLimits;
     robotData: any;
     precision: Precision;
     usedAccountPercent: number;
@@ -56,7 +63,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     minAmounts,
     volumeTypeOptions
 }) => {
-    const [price, , , , , balance] = parsedLimits;
+    const { price, balance, maxPercentAmount } = parsedLimits;
 
     const [displayedValues, setDisplayedValues] = useState(inputValues);
     const asset = robotData?.robot.subs.asset;
@@ -82,10 +89,8 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         setDisplayedValues(newDisplayedValues);
     };
 
-    const areValuesEmpty = () => Object.values(inputValues).filter((i) => i === 0 || !!i).length === 0;
-
     useEffect(() => {
-        if (robotData && parsedLimits.length && areValuesEmpty()) {
+        if (robotData && !isObjectEmpty(parsedLimits) && isObjectEmpty(inputValues)) {
             const { settings: robotSettings } = robotData?.robot.subs;
             const { volumeType: robotVolumeType } = robotSettings;
 
@@ -112,7 +117,11 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                         volumeType={volumeType}
                     />
                     <VolumeDescription volumeType={volumeType} asset={asset} currency={currency} />
-                    <PercentsAvailable usedAccountPercent={usedAccountPercent} volumeType={volumeType} />
+                    <PercentsAvailable
+                        usedAccountPercent={usedAccountPercent}
+                        volumeType={volumeType}
+                        maxPercentAmount={maxPercentAmount}
+                    />
                     <MinimumAmount
                         balance={balance}
                         volumeType={volumeType}
@@ -136,6 +145,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                             />
                             {volumeType === InputTypes.balancePercent && (
                                 <PercentsAvailable
+                                    maxPercentAmount={maxPercentAmount}
                                     usedAccountPercent={usedAccountPercent}
                                     volumeType={volumeType}
                                     short
