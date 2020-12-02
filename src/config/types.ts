@@ -26,6 +26,11 @@ export enum RobotsType {
     robots = "robots"
 }
 
+export enum PositionDirection {
+    short = "short",
+    long = "long"
+}
+
 export interface DeviceProps {
     isMobile: boolean;
 }

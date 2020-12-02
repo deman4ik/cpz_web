@@ -249,3 +249,18 @@ export const OPEN_POSITIONS_FOR_USER_SIGNALS = gql`
         }
     }
 `;
+
+export const AGGREGATED_OPEN_POSITIONS_FOR_SIGNLAS_BY_DIRECTION = gql`
+    query get_aggregated_open_user_positions_by_direction($user_id: uuid!, $direction: String!) {
+        v_user_signal_positions_aggregate(
+            where: { user_id: { _eq: $user_id }, status: { _eq: "open" }, direction: { _eq: $direction } }
+        ) {
+            aggregate {
+                count
+            }
+            nodes {
+                profit
+            }
+        }
+    }
+`;

@@ -1,0 +1,39 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 420px;
+    height: 270px;
+    margin: 0 5px 10px;
+    background-color: var(--rgbaDark);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+    color: white;
+}
+
+.header {
+    padding: 10px 12px 10px 15px;
+    min-height: 46px;
+    background-color: var(--dark);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 234px;
+}
+
+.body {
+    padding: 5px 10px 0;
+}
+
+.footer {
+    padding: 0 5px 5px;
+}
+
+@media (max-width: 480px) {
+    .header {
+        font-size: var(--small1);
+    }
+}

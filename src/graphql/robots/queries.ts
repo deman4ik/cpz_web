@@ -536,3 +536,18 @@ export const OPEN_USER_POSITIONS = gql`
         }
     }
 `;
+
+export const AGGREGATED_OPEN_USER_POSITIONS_BY_DIRECTION = gql`
+    query get_aggregated_open_user_positions_by_direction($user_id: uuid!, $direction: String!) {
+        v_user_positions_aggregate(
+            where: { user_id: { _eq: $user_id }, status: { _eq: "open" }, direction: { _eq: $direction } }
+        ) {
+            aggregate {
+                count
+            }
+            nodes {
+                profit
+            }
+        }
+    }
+`;

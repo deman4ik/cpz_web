@@ -17,6 +17,5 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     background-color: var(--darkBg);
-    padding-top: 10px;
     padding-left: 0;
 }
