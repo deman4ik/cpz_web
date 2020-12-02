@@ -14,7 +14,7 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
     const typeIsSignals = displayType === RobotsType.signals;
     const { active, user_robots } = item || {};
 
-    let statsContent = null;
+    let statsContent = <span style={{ color: "white" }}>&#8211;</span>;
 
     if (typeIsSignals) {
         if (active)
@@ -26,13 +26,13 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
             );
     } else {
         const userRobotStatus = user_robots.status;
-        const activeAndWithStatus = active && userRobotStatus;
         const statusIsStarted = userRobotStatus === "started";
 
-        if (activeAndWithStatus || statusIsStarted)
-            statsContent = (
-                <StatisticElement label={capitalize(userRobotStatus)} value={statusIsStarted ? item.started_at : ""} />
-            );
+        const statusLabel = userRobotStatus || "Active";
+        const displayedTime = userRobotStatus ? item.started_at : item.active;
+
+        if (active || statusIsStarted)
+            statsContent = <StatisticElement label={capitalize(statusLabel)} value={displayedTime} />;
     }
 
     return <div className={styles.statsWrapper}>{statsContent}</div>;
