@@ -1,4 +1,6 @@
 .textMessageDesktop {
+  display: flex;
+  flex-direction: column;
   color: white;
   font-size: var(--normal1);
 }
