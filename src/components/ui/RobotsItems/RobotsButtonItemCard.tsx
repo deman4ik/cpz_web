@@ -25,22 +25,23 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
     const isTypeSignals = displayType === "signals";
     const isTypeRobots = displayType === "robots";
     const checker = isTypeSignals ? isSubscribed : robotStatus;
-    const canDisplayEdit = () => (isTypeSignals && isSubscribed) || isTypeRobots;
-    const canDisplayDelete = () => isTypeRobots && robotStatus === "stopped";
+    const canDisplayEdit = (isTypeSignals && isSubscribed) || isTypeRobots;
+    const canDisplayDelete = isTypeRobots && robotStatus === "stopped";
+    const statusPaused = robotStatus === "paused";
 
     return (
         <div className={styles.btnRow}>
-            {canDisplayDelete() && <Button icon="close" size="small" width={26} onClick={handleOnPressDelete} />}
-            {canDisplayEdit() && <Button icon="settings" size="small" width={26} onClick={handleOnPressChangeVolume} />}
+            {canDisplayDelete && <Button icon="close" size="small" width={26} onClick={handleOnPressDelete} />}
+            {canDisplayEdit && <Button icon="settings" size="small" width={26} onClick={handleOnPressChangeVolume} />}
             <Button
                 icon={icon(checker)}
                 title={title(checker)}
                 type={type(checker)}
                 isUppercase
                 disabled={isTypeRobots && robotStatus === "stopping"}
-                style={{ marginLeft: 2, marginRight: 8 }}
                 size="small"
                 onClick={subscribeToggle}
+                blocked={isTypeRobots && statusPaused}
             />
         </div>
     );

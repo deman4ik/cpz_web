@@ -10,9 +10,9 @@ interface StatisticElementProps {
 export const StatisticElement: FC<StatisticElementProps> = ({ label, value, valueTextStyle, className }) => {
     return (
         <div className={`${styles.statisticsElement} ${className || ""}`}>
-            <div className={styles.secondaryText}>{label}&nbsp;</div>
+            <div className={styles.secondaryText}>{label}</div>
             <div className={styles.statisticsText} style={valueTextStyle}>
-                {value}
+                &nbsp;{value}
             </div>
         </div>
     );

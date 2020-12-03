@@ -1,4 +1,5 @@
 import { Button } from "components/basic";
+import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
 import { PositionDirection, RobotsType } from "config/types";
 import { formatMoney, getColorForMoney } from "config/utils";
 import { capitalize } from "lodash";
@@ -40,20 +41,32 @@ export const RobotAggrOpenPositionsCard: React.FC<Props> = ({ openPositionsAggrD
             }
             body={
                 <div className={styles.body}>
-                    {Object.keys(openPositionsAggrData).map((direction) => (
-                        <div key={direction} className={styles.positionSection}>
-                            {renderDirection(direction as PositionDirection)}
-                            {openPositionsAggrData[direction].count}
-                        </div>
-                    ))}
-                </div>
-            }
-            footer={
-                <div>
-                    <span className={styles.fieldName}>Total Positions:</span>&nbsp;{netCount}
-                    <br />
-                    <span className={styles.fieldName}>Unrealized Profit:</span>&nbsp;
-                    <span style={{ color: getColorForMoney(netProfit) }}>{formatMoney(netProfit)} $</span>
+                    <StatsContainer
+                        data={[
+                            {
+                                title: "Total",
+                                value: netCount
+                            },
+                            ...Object.keys(openPositionsAggrData).map((direction) => ({
+                                title: renderDirection(direction as PositionDirection),
+                                value: openPositionsAggrData[direction].count as number
+                            }))
+                        ]}
+                        itemFontSize="var(--big1)"
+                    />
+                    <StatsContainer
+                        data={[
+                            {
+                                title: "Unrealized Profit",
+                                value: (
+                                    <span style={{ color: getColorForMoney(netProfit) }}>
+                                        {formatMoney(netProfit)} $
+                                    </span>
+                                )
+                            }
+                        ]}
+                        itemFontSize="var(--big2)"
+                    />
                 </div>
             }
         />
