@@ -230,18 +230,23 @@ export const signalTradeSet = (item, onClick) => {
     );
 };
 
-export const userSet = (item, onClick) => (
-    <div>
-        <div className={styles.row}>
-            <div className={styles.textMessageDesktop}>Your API Key&nbsp;</div>
-            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.data.name}
+export const userSet = (item, onClick) => {
+    console.log(item);
+    return (
+        <div>
+            <div className={styles.row}>
+                <div className={styles.textMessageDesktop}>Your API Key&nbsp;</div>
+                <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                    {item.data.name}
+                </div>
+                <div className={styles.textMessageDesktop}>&nbsp;is invalid!</div>
             </div>
-            <div className={styles.textMessageDesktop}>&nbsp;is invalid!</div>
+            <div className={styles.row} style={{ marginTop: 3 }}>
+                <div className={styles.textMessageDesktop}>
+                    {item.data.error}
+                    <span style={{ marginTop: 3 }}>Please update your API Key information in your Profile.</span>
+                </div>
+            </div>
         </div>
-        <div className={styles.row} style={{ marginTop: 3 }}>
-            <div className={styles.textMessageDesktop}>{item.data.error}&nbsp;</div>
-            <div className={styles.textMessageDesktop}>Please update your API Key information in your Profile.</div>
-        </div>
-    </div>
-);
+    );
+};
