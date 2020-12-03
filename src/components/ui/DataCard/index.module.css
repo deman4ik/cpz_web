@@ -5,6 +5,7 @@
     width: 420px;
     max-width: 100%;
     margin: 0 5px 10px;
+    min-height: 280px;
     background-color: var(--rgbaDark);
     border-radius: 2px;
     box-shadow: var(--shadow);

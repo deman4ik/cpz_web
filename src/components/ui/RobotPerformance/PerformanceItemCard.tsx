@@ -37,12 +37,11 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                 <div className={styles.chartStat}>
                     <div className={styles.chartCol}>
                         {item?.equity?.length ? (
-                            <DynamicAreaChart height={150} data={item.equity} />
+                            <DynamicAreaChart height={130} data={item.equity} />
                         ) : (
                             <div className={styles.emptyChart} />
                         )}
                     </div>
-                    <div style={{ height: 20 }} />
                     <StatsContainer
                         data={[
                             {
