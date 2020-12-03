@@ -4,10 +4,10 @@ import { USERS_BY_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
 import { formatTotalUsers } from "../../utils";
 // components
-import { Card } from "components/basic";
 import StatsContainer from "./StatsContainer";
 import TimestampStats from "./TimestampStats";
 import styles from "../../styles/Dasboard.module.css";
+import { DataCard } from "components/ui/DataCard";
 
 // TODO: работа с шириной в зависимости от других карточек
 const UserStats: React.FC<any> = () => {
@@ -15,14 +15,17 @@ const UserStats: React.FC<any> = () => {
     const { data } = useQuery(USERS_BY_ROBOTS_AGGREGATE);
 
     return (
-        <Card className={styles.card}>
-            {data?.usersTotal && (
-                <>
-                    <StatsContainer title="Users" data={formatTotalUsers(data)} />
-                    <TimestampStats />
-                </>
-            )}
-        </Card>
+        <DataCard
+            body={
+                data?.usersTotal && (
+                    <>
+                        <StatsContainer title="Users" data={formatTotalUsers(data)} />
+                        <div style={{ height: 30 }} />
+                        <TimestampStats />
+                    </>
+                )
+            }
+        />
     );
 };
 

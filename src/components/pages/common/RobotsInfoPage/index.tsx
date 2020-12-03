@@ -74,7 +74,6 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
                 <>
                     <div className={style.doubledSection}>
                         <div className={style.section}>
-                            <span className={style.sectionHeader}>Total Performance</span>
                             <RobotPerformance
                                 width={SCREEN_TYPE.TABLET}
                                 type={type}
@@ -82,7 +81,6 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
                             />
                         </div>
                         <div className={style.section}>
-                            <span className={style.sectionHeader}>Open Positions</span>
                             <RobotAggrOpenPositionsCard openPositionsAggrData={{ long, short }} type={type} />
                         </div>
                     </div>

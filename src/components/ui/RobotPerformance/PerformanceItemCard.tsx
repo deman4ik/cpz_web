@@ -5,6 +5,8 @@ import { Button } from "components/basic";
 import styles from "./PerformanceItemCard.module.css";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 import { DataCard } from "components/ui/DataCard";
+import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
+import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 
 interface Props {
     item: any;
@@ -42,12 +44,33 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             <div className={styles.emptyChart} />
                         )}
                     </div>
-                    <WinRateStatistics
-                        classNames={{ container: styles.statCol, wrapper: styles.statRow }}
-                        profit={item.profit}
-                        winRate={item.winRate}
-                        maxDrawdown={item.maxDrawdown}
-                        tradesCount={item.tradesCount}
+                    <StatsContainer
+                        title="Statistics"
+                        data={[
+                            {
+                                title: "Profit",
+                                value: (
+                                    <span style={{ color: getColorForMoney(item.profit) }}>
+                                        {valueWithSign(formatMoney(item.profit))} $
+                                    </span>
+                                )
+                            },
+                            {
+                                title: "Win Rate",
+                                value: <span style={{ color: getColorForMoney(item.winRate) }}>{item.winRate} %</span>
+                            },
+                            {
+                                title: "Max Drawdown",
+                                value: (
+                                    <span style={{ color: getColorForMoney(item.maxDrawdown) }}>
+                                        {valueWithSign(formatMoney(item.maxDrawdown))} $
+                                    </span>
+                                )
+                            },
+                            { title: "Trades", value: item.tradesCount }
+                        ]}
+                        titleFontSize="var(--normal3)"
+                        itemFontSize="var(--normal2)"
                     />
                 </div>
             }

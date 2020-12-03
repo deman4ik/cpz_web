@@ -3,8 +3,7 @@ import styles from "components/ui/RobotPerformance/index.module.css";
 import { PerformanceEmpty } from "components/ui/RobotPerformance/PerformanceEmpty";
 import { PerformanceComponent } from "components/ui/RobotPerformance/PerformanceComponent";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
-import { POLL_INTERVAL } from "config/constants";
-import useWindowDimensions from "hooks/useWindowDimensions";
+import { POLL_INTERVAL, SCREEN_TYPE } from "config/constants";
 import { formatStats } from "components/ui/RobotPerformance/helpers";
 import { Card } from "components/basic";
 import { mapRoutesToDisplayTypes } from "components/pages/ManagePage/robotStats/constants";
@@ -17,7 +16,6 @@ interface RobotsTotalPerformanceProps {
     query: QueryType;
 }
 export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title, query, type }) => {
-    const { width } = useWindowDimensions();
     const displayType = `manage/${type}`;
 
     const { data, loading } = useQueryWithAuth(true, query, {
@@ -26,18 +24,13 @@ export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title,
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const formattedData = useMemo(() => !loading && data && formatStats(data.stats, type), [loading, data]);
-    return (
-        <Card className={styles.card}>
-            <div className={styles.regionTitle}>{title}</div>
-            {!(formattedData && formattedData.length) ? (
-                <PerformanceEmpty
-                    width={width}
-                    displayType={displayType}
-                    title={PageType[mapRoutesToDisplayTypes[displayType]]}
-                />
-            ) : (
-                <PerformanceComponent width={width} formatData={formattedData} displayType={displayType} compact />
-            )}
-        </Card>
+    return !(formattedData && formattedData.length) ? (
+        <PerformanceEmpty
+            width={SCREEN_TYPE.TABLET}
+            displayType={displayType}
+            title={PageType[mapRoutesToDisplayTypes[displayType]]}
+        />
+    ) : (
+        <PerformanceComponent width={SCREEN_TYPE.TABLET} formatData={formattedData} displayType={displayType} compact />
     );
 };

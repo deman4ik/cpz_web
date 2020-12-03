@@ -7,6 +7,7 @@ import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
 import { WinRateStatistics } from "./WinRateStatistics";
 import { DataCard } from "../DataCard";
+import { EmptyChart } from "components/charts/EmptyChart";
 
 interface Props {
     item: SignalItem;
@@ -63,9 +64,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                     <div className={styles.chartCol}>
                         {item.performance && item.performance.length ? (
                             <DynamicAreaChart height={120} data={item.performance} />
-                        ) : (
-                            <div className={styles.emptyChart} />
-                        )}
+                        ) : null}
                     </div>
                     <div className={styles.statCol}>
                         {!item.winRate ? (

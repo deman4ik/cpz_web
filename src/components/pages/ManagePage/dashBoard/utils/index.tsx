@@ -1,4 +1,6 @@
 //types
+import { getColorForMoney, valueWithSign } from "config/utils";
+import React from "react";
 import { StatsInterface } from "../components/UserStats/StatsItem";
 import { dataInterface } from "../hooks/useFetchTimestamp";
 
@@ -22,7 +24,7 @@ const TOTAL_USERS_TITLES = {
 export const formatTotalUsers = (data): Array<StatsInterface> => {
     return Object.keys(data).map((key) => ({
         title: TOTAL_USERS_TITLES[key],
-        count: data[key].aggregate.count
+        value: data[key].aggregate.count
     }));
 };
 
@@ -32,6 +34,5 @@ export const formatTotalUsers = (data): Array<StatsInterface> => {
 export const formatPeriodUsers = (periods: Array<dataInterface>) =>
     periods.map(({ name, data }) => ({
         title: PERIODS_TEXTS[name],
-        count: data.length,
-        plus: Boolean(data.length)
+        value: <span style={{ color: getColorForMoney(data.length) }}>{valueWithSign(data.length)}</span>
     }));

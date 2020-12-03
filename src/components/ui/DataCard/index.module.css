@@ -4,7 +4,6 @@
     flex-direction: column;
     width: 100%;
     max-width: 420px;
-    height: 270px;
     margin: 0 5px 10px;
     background-color: var(--rgbaDark);
     border-radius: 2px;
@@ -21,15 +20,15 @@
 .content {
     display: flex;
     flex-direction: column;
-    height: 234px;
+    min-height: 234px;
 }
 
 .body {
-    padding: 5px 10px 0;
+    padding: 10px 20px 0 10px;
 }
 
 .footer {
-    padding: 0 5px 5px;
+    padding: 0 20px 10px 10px;
 }
 
 @media (max-width: 480px) {
