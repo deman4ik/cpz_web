@@ -78,8 +78,6 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
         variables: queryVariables
     });
 
-    console.log(dataUpdate);
-
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {
             return;
