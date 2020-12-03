@@ -36,9 +36,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                         <div
                             className={mobile ? styles.exchangeContainerMobile : tableStyles.tableGridRow}
                             style={{ padding: "0 20px" }}>
-                            <div title="Unrealized Profit" className={styles.exchange}>
-                                {exchangeName(exchangeGroup.exchange)}&nbsp;
-                            </div>
+                            <div className={styles.exchange}>{exchangeName(exchangeGroup.exchange)}&nbsp;</div>
 
                             <span
                                 className={styles.exchange}
