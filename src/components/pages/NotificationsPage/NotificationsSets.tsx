@@ -231,7 +231,6 @@ export const signalTradeSet = (item, onClick) => {
 };
 
 export const userSet = (item, onClick) => {
-    console.log(item);
     return (
         <div>
             <div className={styles.row}>
