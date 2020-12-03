@@ -110,10 +110,11 @@ export const getAmtErrors = (
     val: string | number,
     minAmt: number,
     maxAmt: number,
-    precision: number
+    precision: number,
+    unit = "amount"
 ): string | boolean => {
-    if (Number(val) < minAmt) return `Minimal amount is ${roundWithPrecision(minAmt, precision)}`;
-    if (Number(val) > maxAmt) return `Max amount is ${roundWithPrecision(maxAmt, precision)}`;
+    if (Number(val) < minAmt) return `Minimal ${unit} is ${roundWithPrecision(minAmt, precision)}`;
+    if (Number(val) > maxAmt) return `Max ${unit} is ${roundWithPrecision(maxAmt, precision)}`;
 
     return false;
 };
@@ -193,8 +194,8 @@ interface ValidateVolumeProps {
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent, maxAmount = 100 }) =>
-    !(value >= 1 && value < maxAmount - used_percent);
+const validateBalancePercent = ({ value, used_percent, maxAmount = 100, minAmount = 0 }) =>
+    getAmtErrors(value, minAmount, maxAmount - used_percent, 0, "percent");
 
 const validationFunctions = {
     assetStatic: validateCurrencies,

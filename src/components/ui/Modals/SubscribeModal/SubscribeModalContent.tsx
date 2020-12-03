@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
 import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
@@ -100,7 +100,19 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);
 
-    const getUnit = (type) => AssetTypes.includes(type) && asset;
+    const unitsLabelMap: { [key in InputTypes]: string } = useMemo(
+        () => ({
+            assetStatic: asset,
+            currencyDynamic: "$",
+            balancePercent: "%",
+            assetDynamicDelta: asset
+        }),
+        [asset]
+    );
+
+    const getUnit = (type) => {
+        return unitsLabelMap[type];
+    };
 
     const notSelectedAndNotPercentage = (i) => ![volumeType, InputTypes.balancePercent].includes(i.type);
     return (
@@ -143,14 +155,6 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
                                 onChangeText={onChange(volumeType)}
                                 unit={getUnit(volumeType)}
                             />
-                            {volumeType === InputTypes.balancePercent && (
-                                <PercentsAvailable
-                                    maxPercentAmount={maxPercentAmount}
-                                    usedAccountPercent={usedAccountPercent}
-                                    volumeType={volumeType}
-                                    short
-                                />
-                            )}
                             {selectedInputs.filter(notSelectedAndNotPercentage).map((input, i) => {
                                 const { type } = input;
                                 return (
