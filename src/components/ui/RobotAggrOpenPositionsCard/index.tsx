@@ -1,7 +1,7 @@
 import { Button } from "components/basic";
 import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
 import { PositionDirection, RobotsType } from "config/types";
-import { formatMoney, getColorForMoney } from "config/utils";
+import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 import { capitalize } from "lodash";
 import Router from "next/router";
 import React from "react";
@@ -60,7 +60,7 @@ export const RobotAggrOpenPositionsCard: React.FC<Props> = ({ openPositionsAggrD
                                 title: "Unrealized Profit",
                                 value: (
                                     <span style={{ color: getColorForMoney(netProfit) }}>
-                                        {formatMoney(netProfit)} $
+                                        {valueWithSign(formatMoney(netProfit))} $
                                     </span>
                                 )
                             }
