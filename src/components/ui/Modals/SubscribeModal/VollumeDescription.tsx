@@ -10,9 +10,9 @@ interface VolumeDescriptionProps {
 export const VolumeDescription: FC<VolumeDescriptionProps> = ({ volumeType, asset, currency }) => {
     const volumeTypeDescriptions = useMemo(
         () => ({
-            [InputTypes.balancePercent]: `fixed in percents of user's balance`,
+            [InputTypes.balancePercent]: `calculated in percentages of user's balance`,
             [InputTypes.assetStatic]: `fixed in ${asset}`,
-            [InputTypes.assetDynamicDelta]: `fixed in ${asset}`,
+            [InputTypes.assetDynamicDelta]: `increasing with profit and decreasing with loss`,
             [InputTypes.currencyDynamic]: `fixed in ${currency}`
         }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
