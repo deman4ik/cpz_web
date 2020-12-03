@@ -108,7 +108,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                             value: id
                         });
                         onClose(true);
-                        Router.push(`/signals${code ? `/robot/${code}` : "?tab=2"}`);
+                        Router.push(`/signals${code ? `/robot/${code}` : ""}`);
                     }
                 })
                 .catch((e) => console.error(e));

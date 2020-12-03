@@ -520,6 +520,7 @@ export const OPEN_USER_POSITIONS = gql`
             entry_date
             entry_price
             volume: entry_executed
+            profit
             code
             asset
             currency

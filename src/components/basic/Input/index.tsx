@@ -181,6 +181,9 @@ export const Input: React.FC<InputProps> = ({
                     .input::-webkit-inner-spin-button {
                         display: none;
                     }
+                    .input:focus {
+                        outline: var(--primary) auto 0.5px;
+                    }
                     .disabled {
                         pointer-events: none;
                         opacity: 0.5;
