@@ -32,7 +32,7 @@ export const renderDirection = (direction: PositionDirection): JSX.Element => {
 
     return (
         <span style={{ display: "flex", alignItems: "center", padding: "0 2px" }}>
-            <span style={{ width: 50 }}>{capitalize(direction)}:</span>
+            <span style={{ width: 50 }}>{capitalize(direction)}</span>
             <Icon color={iconColor} />
         </span>
     );

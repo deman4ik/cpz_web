@@ -1,6 +1,7 @@
 /*Common styles*/
 .cards_wrapper {
     display: flex;
+    padding: 15px;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }

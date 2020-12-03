@@ -14,6 +14,7 @@ import styles from "./RobotsItem.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
+import { EmptyChart } from "components/charts/EmptyChart";
 
 interface Props {
     item: SignalItem;
