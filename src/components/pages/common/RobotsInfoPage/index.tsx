@@ -73,16 +73,12 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             {userHasRobots ? (
                 <>
                     <div className={style.doubledSection}>
-                        <div className={style.section}>
-                            <RobotPerformance
-                                width={SCREEN_TYPE.TABLET}
-                                type={type}
-                                data={formatStats(allRobotsData?.stats, type)}
-                            />
-                        </div>
-                        <div className={style.section}>
-                            <RobotAggrOpenPositionsCard openPositionsAggrData={{ long, short }} type={type} />
-                        </div>
+                        <RobotPerformance
+                            width={SCREEN_TYPE.TABLET}
+                            type={type}
+                            data={formatStats(allRobotsData?.stats, type)}
+                        />
+                        <RobotAggrOpenPositionsCard openPositionsAggrData={{ long, short }} type={type} />
                     </div>
                     <div className={style.section}>
                         <span className={style.sectionHeader}>{`My ${

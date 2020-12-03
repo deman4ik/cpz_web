@@ -6,7 +6,7 @@ import { capitalize } from "lodash";
 import Router from "next/router";
 import React from "react";
 import { DataCard } from "../DataCard";
-import { renderDirection } from "./helpers";
+import { renderDirectionValue } from "./helpers";
 import styles from "./index.module.css";
 
 interface Props {
@@ -48,12 +48,16 @@ export const RobotAggrOpenPositionsCard: React.FC<Props> = ({ openPositionsAggrD
                                 value: netCount
                             },
                             ...Object.keys(openPositionsAggrData).map((direction) => ({
-                                title: renderDirection(direction as PositionDirection),
-                                value: openPositionsAggrData[direction].count as number
+                                title: capitalize(direction),
+                                value: renderDirectionValue(
+                                    direction as PositionDirection,
+                                    openPositionsAggrData[direction].count as number
+                                )
                             }))
                         ]}
-                        itemFontSize="var(--big1)"
+                        itemFontSize="var(--normal3)"
                     />
+                    <div style={{ height: 35 }} />
                     <StatsContainer
                         data={[
                             {
@@ -65,7 +69,7 @@ export const RobotAggrOpenPositionsCard: React.FC<Props> = ({ openPositionsAggrD
                                 )
                             }
                         ]}
-                        itemFontSize="var(--big2)"
+                        itemFontSize="var(--normal3)"
                     />
                 </div>
             }

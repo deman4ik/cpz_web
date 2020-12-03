@@ -1,7 +1,6 @@
 /*common styles*/
-.stats_wrapper {
-    padding: 5px;
-    color: #ffffff;
+.wrapper {
+    margin-top: 20px;
 }
 
 .stats_title {

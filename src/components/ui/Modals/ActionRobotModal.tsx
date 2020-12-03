@@ -73,7 +73,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                 });
             }
             if (type === "delete" && currentPage(Router.pathname) === Pages.robot) {
-                Router.push(`/robots?tab=2`);
+                Router.push(`/robots`);
             }
             onClose(true);
         } catch (e) {
