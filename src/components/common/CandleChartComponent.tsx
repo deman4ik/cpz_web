@@ -7,6 +7,7 @@ import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { getCandleChartData, getUpdatedCandleChartData } from "components/pages/SignalRobotPage/helpers";
 import { QueryType } from "components/pages/ManagePage/common/types";
 import { SET_CHART_DATA } from "graphql/local/mutations";
+import { POLL_INTERVAL } from "config/constants";
 
 const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
     loading: () => <LoadingIndicator style={{ height: 400 }} />,
@@ -40,9 +41,9 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
     const [limit, setLimit] = useState(LIMIT);
     const [chartData, setChartData] = useState(initialCandleChartData);
     const { asset, timeframe, id: robotId } = robot;
-    const queryVariables = { ...variables, limit };
+    const queryVariables = { ...variables };
     const { loading, data, fetchMore } = useQuery(historyQuery, {
-        variables: queryVariables,
+        variables: { ...queryVariables, limit },
         notifyOnNetworkStatusChange: true
     });
 
@@ -76,6 +77,8 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
     const { data: dataUpdate } = useSubscription(realTimeSubQuery, {
         variables: queryVariables
     });
+
+    console.log(dataUpdate);
 
     useEffect(() => {
         if (!data || !dataUpdate || !dataUpdate.candles.length) {
