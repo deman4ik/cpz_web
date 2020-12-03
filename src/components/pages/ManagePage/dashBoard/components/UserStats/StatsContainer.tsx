@@ -18,7 +18,7 @@ const StatsContainer: React.FC<StatsProps> = ({
     itemFontSize = "var(--big1)"
 }) => {
     return (
-        <div className={styles.stats_wrapper}>
+        <div className={styles.wrapper}>
             {title && (
                 <div className={styles.stats_title} style={{ fontSize: titleFontSize }}>
                     {title}

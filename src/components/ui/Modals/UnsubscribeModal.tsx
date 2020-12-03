@@ -38,7 +38,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                     setFormError(response.data.userSignalUnsubscribe.result);
                 }
                 if (currentPage(Router.pathname) === Pages.signal) {
-                    Router.push("/signals?tab=2");
+                    Router.push("/signals");
                 }
 
                 onClose(true);

@@ -143,7 +143,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                     }).then((res) => {
                         const robotCode = code || robotData?.robot.code;
                         if (currentPage(Router.pathname) !== Pages.robot) {
-                            Router.push(`/robots${robotCode ? `/robot/${robotCode}` : "?tab=2"}`);
+                            Router.push(`/robots${robotCode ? `/robot/${robotCode}` : ""}`);
                         }
                         event({
                             action: "create",

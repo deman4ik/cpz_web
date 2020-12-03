@@ -9,14 +9,10 @@ interface Props {
 }
 
 const _RobotPerformance: React.FC<Props> = ({ width, type, data }) => {
-    return (
-        <div>
-            {!data || !data?.length ? (
-                <PerformanceEmpty width={width} displayType={type} />
-            ) : (
-                <PerformanceComponent width={width} formatData={data} displayType={type} />
-            )}
-        </div>
+    return !data || !data?.length ? (
+        <PerformanceEmpty width={width} displayType={type} />
+    ) : (
+        <PerformanceComponent width={width} formatData={data} displayType={type} />
     );
 };
 

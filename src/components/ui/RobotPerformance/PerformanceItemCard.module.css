@@ -49,14 +49,13 @@
 .chartCol {
     display: flex;
     flex-grow: 2;
-    max-width: 260px;
+    width: 100%;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 420px;
+    max-width: 100%;
     margin: 0 5px 10px;
     background-color: var(--rgbaDark);
     border-radius: 2px;

@@ -1,9 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
-
 import { Button } from "components/basic";
 import styles from "./PerformanceItemCard.module.css";
-import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 import { DataCard } from "components/ui/DataCard";
 import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
 import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
@@ -39,13 +37,13 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                 <div className={styles.chartStat}>
                     <div className={styles.chartCol}>
                         {item?.equity?.length ? (
-                            <DynamicAreaChart height={120} data={item.equity} />
+                            <DynamicAreaChart height={150} data={item.equity} />
                         ) : (
                             <div className={styles.emptyChart} />
                         )}
                     </div>
+                    <div style={{ height: 20 }} />
                     <StatsContainer
-                        title="Statistics"
                         data={[
                             {
                                 title: "Profit",
@@ -69,8 +67,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             },
                             { title: "Trades", value: item.tradesCount }
                         ]}
-                        titleFontSize="var(--normal3)"
-                        itemFontSize="var(--normal2)"
+                        itemFontSize="var(--normal3)"
                     />
                 </div>
             }

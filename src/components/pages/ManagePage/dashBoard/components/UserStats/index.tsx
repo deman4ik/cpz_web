@@ -20,7 +20,6 @@ const UserStats: React.FC<any> = () => {
                 data?.usersTotal && (
                     <>
                         <StatsContainer title="Users" data={formatTotalUsers(data)} />
-                        <div style={{ height: 30 }} />
                         <TimestampStats />
                     </>
                 )

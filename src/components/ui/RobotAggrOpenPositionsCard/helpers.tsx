@@ -1,7 +1,6 @@
 import React from "react";
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";
 import { PositionDirection, RobotsType } from "config/types";
-import { capitalize } from "lodash";
 import { getColor } from "config/utils";
 
 const aggrPositionsTableName = {
@@ -26,14 +25,14 @@ export const parseAggregatedPositionsData = (
     };
 };
 
-export const renderDirection = (direction: PositionDirection): JSX.Element => {
+export const renderDirectionValue = (direction: PositionDirection, value: number | string): JSX.Element => {
     const Icon = direction === PositionDirection.short ? ArrowDownIcon : ArrowUpIcon;
     const iconColor = getColor(direction === PositionDirection.short);
 
     return (
         <span style={{ display: "flex", alignItems: "center", padding: "0 2px" }}>
-            <span style={{ width: 50 }}>{capitalize(direction)}</span>
             <Icon color={iconColor} />
+            <span style={{ width: 20 }}>{value}</span>
         </span>
     );
 };
