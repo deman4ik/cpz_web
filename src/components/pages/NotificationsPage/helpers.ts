@@ -79,7 +79,6 @@ export const showMessage = (item, onClick: () => void, card = false): JSX.Elemen
         user: () => setFunc.userSet(item, onClick)
     };
 
-    console.log(item.type);
     const messageType = messageMap[item.type];
     if (messageType) return messages[messageType]();
     console.warn(`Unknown message type encountered: '${item.type}'`);
