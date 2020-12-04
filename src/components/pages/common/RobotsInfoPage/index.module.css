@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 5px;
 }
 
 .doubledSection {
@@ -13,6 +14,12 @@
 
 .sectionHeader {
     color: var(--accent);
-    font-size: var(--big1);
-    margin: 0 0 5px;
+    font-size: var(--normal3);
+    margin: 20px 0 10px;
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 5px 0;
+    }
 }

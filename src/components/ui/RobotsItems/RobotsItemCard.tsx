@@ -7,7 +7,6 @@ import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
 import { WinRateStatistics } from "./WinRateStatistics";
 import { DataCard } from "../DataCard";
-import { EmptyChart } from "components/charts/EmptyChart";
 
 interface Props {
     item: SignalItem;
