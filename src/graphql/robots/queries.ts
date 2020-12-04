@@ -375,6 +375,7 @@ export const USER_ROBOTS = gql`
             status
             robot_id
             started_at
+            stopped_at
             user_id
             user_ex_acc_id
             ${stats}

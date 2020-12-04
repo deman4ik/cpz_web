@@ -3,6 +3,7 @@
     background-color: var(--darkBg);
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+    width: 100%;
 }
 
 .containerCard {

@@ -2,7 +2,7 @@ import { capitalize, exchangeName } from "config/utils";
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) =>
     !exchange && !asset
-        ? `Total ${capitalize(type)} Performance`
+        ? `My ${capitalize(type)} Total Performance`
         : `${exchange ? exchangeName(exchange) : ""}${asset && exchange ? " " : ""}${asset ? capitalize(asset) : ""}`;
 
 const getAssetData = (stat, type) => {

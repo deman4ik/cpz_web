@@ -10,6 +10,11 @@ interface Props {
     displayType: string;
 }
 
+const statusMap = {
+    stopped: "stopped_at",
+    started: "started_at"
+};
+
 export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => {
     const typeIsSignals = displayType === RobotsType.signals;
     const { active, user_robots } = item || {};
@@ -26,12 +31,16 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
             );
     } else {
         const userRobotStatus = user_robots.status;
-        const statusIsStarted = userRobotStatus === "started";
+        const statusLabel = userRobotStatus || (active && "Active");
 
-        const statusLabel = userRobotStatus || "Active";
-        const displayedTime = userRobotStatus ? item.started_at : item.active;
+        let displayedTime = item.active;
 
-        if (active || statusIsStarted)
+        if (userRobotStatus) {
+            if (statusMap[userRobotStatus]) displayedTime = item[statusMap[userRobotStatus]];
+            else displayedTime = null;
+        }
+
+        if (statusLabel || displayedTime)
             statsContent = <StatisticElement label={capitalize(statusLabel)} value={displayedTime} />;
     }
 

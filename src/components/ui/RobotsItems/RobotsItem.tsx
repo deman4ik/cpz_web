@@ -69,6 +69,7 @@ export const RobotsItem: React.FC<Props> = ({
             <div className={styles.cellPerformance}>
                 {performance && performance.length ? <AreaChart height={120} data={performance} /> : null}
             </div>
+            <div style={{ flex: 2 }} />
             <ProfitItem profit={profit !== 0 ? profit : null} />
             <div className={styles.cellStatistics}>
                 <WinRateStatistics
