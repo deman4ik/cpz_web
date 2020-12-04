@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Router, { useRouter } from "next/router";
+import React from "react";
+import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
 import { useShowDimension } from "hooks/useShowDimension";
@@ -12,7 +12,6 @@ import { RobotsHeader } from "components/ui/RobotsItems";
 import styles from "./index.module.css";
 import { useDummyCarts } from "hooks/useDummyCarts";
 import { DummyCards } from "../../common";
-import { Modals } from "components/pages/TradingRobotPage/Modals";
 
 interface Props {
     data: any;

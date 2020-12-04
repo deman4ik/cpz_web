@@ -40,6 +40,8 @@
 }
 
 .secondaryText {
+    display: flex;
+    justify-content: center;
     color: var(--accent);
     font-size: var(--small1);
 }
@@ -112,6 +114,7 @@
 
 .statRow {
     display: flex;
+    flex: 1;
     margin-bottom: 10px;
     align-items: flex-end;
     flex-direction: column;

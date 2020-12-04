@@ -1,25 +1,24 @@
 .container {
-  display: flex;
-  padding-top: 0;
-  padding-left: 0;
-  background-color: var(--darkBg);
-  flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+    display: flex;
+    background-color: var(--darkBg);
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
 }
 
 .containerCard {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  background-color: var(--darkBg);
-  padding-top: 10px;
-  padding-left: 0;
-  margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    background-color: var(--darkBg);
+    padding-top: 10px;
+    padding-left: 0;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 @media (max-width: 480px) {
-  .containerCard {
-    margin-bottom: 60px;
-  }
+    .containerCard {
+        margin-bottom: 60px;
+    }
 }
