@@ -30,6 +30,7 @@ const messageMap = {
     "user-robot.paused": "robot",
     "user-robot.resumed": "robot",
     "user-robot.trade": "robotTrade",
+    "user-robot.error": "error",
     "signal.trade": "signalTrade",
     "signal-trade.new": "signalTrade",
     "signal.alert": "signalAlert",
@@ -65,7 +66,7 @@ export const filters = {
     error: ["order.error", "user_ex_acc.error"]
 };
 
-export const showMessage = (item, onClick, card = false) => {
+export const showMessage = (item, onClick: () => void, card = false): JSX.Element => {
     const setFunc = card ? SetsCard : Sets;
     const messages = {
         failed: () => setFunc.failedSet(item, onClick),
@@ -77,7 +78,11 @@ export const showMessage = (item, onClick, card = false) => {
         signalTrade: () => setFunc.signalTradeSet(item, onClick),
         user: () => setFunc.userSet(item, onClick)
     };
-    return messages[messageMap[item.type]]();
+
+    const messageType = messageMap[item.type];
+    if (messageType) return messages[messageType]();
+    console.warn(`Unknown message type encountered: '${item.type}'`);
+    return null;
 };
 
 export const getRedirectionLink = (item) => {
