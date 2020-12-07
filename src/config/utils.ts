@@ -2,7 +2,7 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
-import { InputTypes, UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { InputTypes, UnitsToTypes, volumes, VolumeTypesToLabelsMap } from "components/ui/Modals/types";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
 const getNumber = (val: number | string) => Number(val.toString().replace(/[^0-9.-]+/g, ""));
@@ -32,7 +32,7 @@ export const getStats = (robot): RobotStats => {
 };
 
 export const getVolume = (settings) => (settings ? settings[volumes[settings.volumeType]] : null);
-export const getVolumeType = (settings) => (settings ? settings.volumeType : null);
+export const getVolumeType = (settings) => (settings ? VolumeTypesToLabelsMap[settings.volumeType] : null);
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);

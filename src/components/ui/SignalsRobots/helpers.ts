@@ -1,5 +1,5 @@
 import dayjs from "../../../libs/dayjs";
-import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
+import { getStats, getVolume, getVolumeWithUnit, getVolumeType } from "config/utils";
 
 // TODO: use formatSignalData to form the array
 export const formatSignalRobots = (signals: any) => {
@@ -24,6 +24,7 @@ export const formatSignalRobots = (signals: any) => {
                     settings: signal_settings,
                     volume: getVolume(signal_settings),
                     displayedVolume: getVolumeWithUnit(signal_settings, { currency, asset }),
+                    volumeType: getVolumeType(signal_settings),
                     user_robots: {
                         status: null,
                         id: null
@@ -76,6 +77,7 @@ export const formatTradingRobots = (robots: any) =>
             settings: user_robot_settings,
             volume: getVolume(user_robot_settings),
             displayedVolume: getVolumeWithUnit(user_robot_settings, { currency, asset }),
+            volumeType: getVolumeType(user_robot_settings),
             user_robots: {
                 status,
                 id

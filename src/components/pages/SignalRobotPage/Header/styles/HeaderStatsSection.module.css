@@ -1,4 +1,5 @@
 .robotStats {
+    padding-top: 15px;
     display: grid;
     grid-gap: 5px;
 }

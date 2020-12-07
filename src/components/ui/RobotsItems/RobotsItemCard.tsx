@@ -7,6 +7,7 @@ import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
 import { WinRateStatistics } from "./WinRateStatistics";
 import { DataCard } from "../DataCard";
+import { StatisticElement } from "./StatisticsElement";
 
 interface Props {
     item: SignalItem;
@@ -84,8 +85,9 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             }
             footer={
                 <div className={styles.footerRow}>
-                    <div className={styles.col}>
+                    <div className={`${styles.col} ${styles.statsWrapper}`}>
                         <RobotItemStatusBlock item={item} displayType={displayType} />
+                        <StatisticElement label="Volume Type" value={item.volumeType} />
                     </div>
                     <RobotsButtonItemCard
                         isSubscribed={item.isSubscribed}

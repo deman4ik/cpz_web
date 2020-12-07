@@ -1,6 +1,6 @@
 import dayjs from "libs/dayjs";
 import { color } from "config/constants";
-import { capitalize, getStats, getVolume, getVolumeWithUnit } from "config/utils";
+import { capitalize, getStats, getVolume, getVolumeType, getVolumeWithUnit } from "config/utils";
 import { SectionType } from "./types";
 
 // TODO: use DB-like structure
@@ -40,6 +40,7 @@ export const formatRobotData = (robot) => {
             settings: robot_settings,
             volume: getVolume(robot_settings),
             displayedVolume: getVolumeWithUnit(robot_settings, { currency, asset }),
+            volumeType: getVolumeType(robot_settings),
             fullStats,
             equity,
             profit,
@@ -57,7 +58,8 @@ export const formatRobotData = (robot) => {
                   equity: getStats(userSignals).equity,
                   settings: userSignals.user_signal_settings?.signal_settings,
                   volume: getVolume(signalSettings),
-                  displayedVolume: getVolumeWithUnit(signalSettings, { currency, asset })
+                  displayedVolume: getVolumeWithUnit(signalSettings, { currency, asset }),
+                  volumeType: getVolumeType(robot_settings)
               }
             : null
     };

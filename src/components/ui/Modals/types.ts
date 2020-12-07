@@ -4,16 +4,25 @@ export enum InputTypes {
     currencyDynamic = "currencyDynamic",
     balancePercent = "balancePercent"
 }
+
 export enum Units {
     USD = "USD",
     BTC = "BTC",
     percent = "%"
 }
+
 export enum UnitsToTypes {
     assetStatic = "asset",
     assetDynamicDelta = "asset",
     currencyDynamic = "currency",
     balancePercent = "percent"
+}
+
+export enum VolumeTypesToLabelsMap {
+    assetStatic = "Fixed to asset",
+    assetDynamicDelta = "Dynamic asset",
+    currencyDynamic = "Fixed to currency",
+    balancePercent = "Balance percentage"
 }
 export type Input = {
     type: InputTypes;

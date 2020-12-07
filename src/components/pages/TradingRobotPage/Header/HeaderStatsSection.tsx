@@ -39,6 +39,11 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                             value={isOwnedByUser ? startedAt(robotData) : activeDays(robotData)}
                         />
                     ))}
+
+                <HeaderStatsSectionItem
+                    label="Volume Type"
+                    value={isOwnedByUser ? userRobot.volumeType : robot.volumeType}
+                />
             </div>
         </div>
     );

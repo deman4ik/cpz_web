@@ -14,6 +14,7 @@ export interface SignalItem {
     performance: Coord[];
     volume: number;
     displayedVolume: string;
+    volumeType: string;
     exchange: string;
     asset: string;
     currency: string;

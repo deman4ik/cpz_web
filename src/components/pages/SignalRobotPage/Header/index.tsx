@@ -34,7 +34,8 @@ const _Header: React.FC<Props> = ({ robotData, subscribe, width }) => {
                 valueColor: profit > 0 ? color.positive : color.negative
             },
             { label: "Amount", value: getDisplayedVolume(robotData) },
-            { label: "Active", value: activeDays(robotData) }
+            { label: "Active", value: activeDays(robotData) },
+            { label: "Volume Type", value: robot.volumeType }
         ];
         if (isUserSubscribed) {
             config.push({ label: "Subscribed", value: getSubscriptionDuration(robotData) });
