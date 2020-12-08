@@ -118,10 +118,40 @@ export const PUBLIC_STATISTICS = gql`
     }
 `;
 
+export const SIGNALS_FOR_USER = gql`
+    query get_signals_for_user($robot_id: uuid!, $user_signal_id: uuid!) {
+        signals: v_user_signal_alerts(
+            where: { robot_id: { _eq: $robot_id }, user_signal_id: { _eq: $user_signal_id } }
+        ) {
+            action
+            order_type
+            position_code
+            position_id
+            price
+            timestamp
+            volume
+        }
+    }
+`;
+
+export const SIGNALS_FOR_GUEST = gql`
+    query get_signals_for_guest($robot_id: uuid!) {
+        signals: v_robot_alerts(where: { robot_id: { _eq: $robot_id } }) {
+            action
+            order_type
+            position_code
+            position_id
+            price
+            timestamp
+            volume
+        }
+    }
+`;
+
 export const SIGNAL_POSITIONS_FOR_USER = gql`
     query get_signal_positions_for_user(
         $user_id: uuid
-        $robotId: uuid!
+        $robot_id: uuid!
         $status: String_comparison_exp
         $dateFrom: timestamp
         $dateTo: timestamp
@@ -131,7 +161,7 @@ export const SIGNAL_POSITIONS_FOR_USER = gql`
     ) {
         positions: v_user_signal_positions(
             where: {
-                robot_id: { _eq: $robotId }
+                robot_id: { _eq: $robot_id }
                 user_id: { _eq: $user_id }
                 status: $status
                 _or: [
@@ -169,7 +199,7 @@ export const SIGNAL_POSITIONS_FOR_USER = gql`
 
 export const ROBOT_POSITIONS_IN_INTERVAL = gql`
     query get_robot_positions_in_interval(
-        $robotId: uuid!
+        $robot_id: uuid!
         $status: String_comparison_exp
         $dateFrom: timestamp
         $dateTo: timestamp
@@ -179,7 +209,7 @@ export const ROBOT_POSITIONS_IN_INTERVAL = gql`
     ) {
         positions: v_robot_positions(
             where: {
-                robot_id: { _eq: $robotId }
+                robot_id: { _eq: $robot_id }
                 status: $status
                 _or: [
                     {
