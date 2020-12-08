@@ -76,7 +76,7 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                 {activeTab === SectionType.signals && (
                     <div className={styles.posCardCol} style={{ flex: 0.6 }}>
                         <div className={styles.mobileCardTextKey}>Order Type</div>
-                        <div className={styles.mobileCardTextValue}>{capitalize(item.orderType)}</div>
+                        <div className={styles.mobileCardTextValue}>{capitalize(item.order_type)}</div>
                     </div>
                 )}
                 {activeTab === SectionType.closedPositions && (
