@@ -1,5 +1,5 @@
 import NothingComponent from "components/common/NothingComponent";
-import { exchangeName, formatMoney, getColorForMoney, valueWithSign } from "config/utils";
+import { exchangeName, formatMoney, getColor, getColorForMoney, valueWithSign } from "config/utils";
 import React, { memo } from "react";
 import OpenPositionsTable from "./OpenPositionsTable";
 import useWindowDimensions from "hooks/useWindowDimensions";
@@ -64,7 +64,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
                                                     <span
                                                         className={styles.headerValueSpan}
                                                         style={{
-                                                            color: getColorForMoney(asset.volume)
+                                                            color: getColor(asset.volume <= 0)
                                                         }}>
                                                         {`${valueWithSign(asset.volume)} ${asset.asset}`}
                                                     </span>
