@@ -4,7 +4,7 @@ import { OpenPositionsItem } from "./OpenPositionsItem";
 import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
 import { DummyCards } from "components/common";
 import styles from "./OpenPositionsTable.module.css";
-import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
+import { formatMoney, getColor, getColorForMoney, valueWithSign } from "config/utils";
 
 const cardWidth = 310;
 
@@ -25,7 +25,7 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
         const module = dataLength % cardsInARow;
         return module ? cardsInARow - module : 0;
     };
-
+    console.log(asset);
     return (
         <>
             {!mobile ? (
@@ -43,7 +43,7 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
                                 <span
                                     className={styles.headerValueSpan}
                                     style={{
-                                        color: getColorForMoney(asset.volume)
+                                        color: getColor(asset.volume <= 0)
                                     }}>
                                     {`${valueWithSign(asset.volume)} ${asset.asset}`}
                                 </span>
