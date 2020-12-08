@@ -8,7 +8,7 @@ interface ProfitItemProps {
 export const ProfitItem: FC<ProfitItemProps> = ({ profit }) => {
     return (
         <div className={styles.profitCell} style={{ color: getColorForMoney(profit) }}>
-            &nbsp;{profit && `${valueWithSign(formatMoney(profit))} $`}
+            {profit && `${valueWithSign(formatMoney(profit))} $`}
         </div>
     );
 };
