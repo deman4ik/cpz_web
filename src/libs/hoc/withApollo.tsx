@@ -63,7 +63,7 @@ const cacheQuery = gql`
 
 const ssrMode = !process.browser;
 
-const httpLink = createHttpLink({
+export const httpLink = createHttpLink({
     uri: `https://${process.env.HASURA_URL}`,
     credentials: "include"
 });
