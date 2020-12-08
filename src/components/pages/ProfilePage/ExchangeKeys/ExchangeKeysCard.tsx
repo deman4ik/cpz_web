@@ -108,9 +108,7 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                     {item.error && (
                         <div className={styles.errorCell}>
                             <div className={[styles.errorCellText].join(" ")}>
-                                <div>
-                                    <div style={{ color: color.negative }}>&gt; {item.error}</div>
-                                </div>
+                                <div style={{ color: color.negative, padding: "0 5px 0 10px" }}>&gt; {item.error}</div>
                             </div>
                         </div>
                     )}

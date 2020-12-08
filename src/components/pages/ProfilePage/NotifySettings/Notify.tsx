@@ -19,6 +19,7 @@ const components = {
 };
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
+    console.log(item);
     const SpecificIcon = components[item.icon] || components.robot;
     return (
         <>
@@ -32,17 +33,20 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
                         </div>
                     </div>
                     <div className={styles.checkboxGroup}>
-                        {item.checkboxes.map((checkbox) => (
-                            <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
-                                <CheckBox
-                                    checked={checkbox.isActive}
-                                    onClick={() => toggleNotification(item.key, checkbox.name)}
-                                    label={capitalize(checkbox.name)}
-                                    isLoading={checkbox.isLoading}
-                                    disabled={checkbox.disabled}
-                                />
-                            </div>
-                        ))}
+                        {item.checkboxes.map(
+                            (checkbox) =>
+                                checkbox.name !== "email" && ( // TODO (back): implement email notifications
+                                    <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
+                                        <CheckBox
+                                            checked={checkbox.isActive}
+                                            onClick={() => toggleNotification(item.key, checkbox.name)}
+                                            label={capitalize(checkbox.name)}
+                                            isLoading={checkbox.isLoading}
+                                            disabled={checkbox.disabled}
+                                        />
+                                    </div>
+                                )
+                        )}
                     </div>
                 </div>
             </div>
