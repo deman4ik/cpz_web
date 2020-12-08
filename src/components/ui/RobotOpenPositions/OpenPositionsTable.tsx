@@ -25,7 +25,7 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
         const module = dataLength % cardsInARow;
         return module ? cardsInARow - module : 0;
     };
-    console.log(asset);
+
     return (
         <>
             {!mobile ? (
