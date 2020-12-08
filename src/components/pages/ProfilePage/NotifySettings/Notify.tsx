@@ -19,7 +19,6 @@ const components = {
 };
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
-    console.log(item);
     const SpecificIcon = components[item.icon] || components.robot;
     return (
         <>
