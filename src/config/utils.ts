@@ -2,7 +2,7 @@
 import dayjs from "../libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
-import { InputTypes, UnitsToTypes, volumes } from "components/ui/Modals/types";
+import { InputTypes, UnitsToTypes, volumes, VolumeTypesToLabelsMap } from "components/ui/Modals/types";
 import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
 const getNumber = (val: number | string) => Number(val.toString().replace(/[^0-9.-]+/g, ""));
@@ -32,7 +32,7 @@ export const getStats = (robot): RobotStats => {
 };
 
 export const getVolume = (settings) => (settings ? settings[volumes[settings.volumeType]] : null);
-export const getVolumeType = (settings) => (settings ? settings.volumeType : null);
+export const getVolumeType = (settings) => (settings ? VolumeTypesToLabelsMap[settings.volumeType] : null);
 
 export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
     const volume = getVolume(settings);
@@ -41,14 +41,22 @@ export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) 
     return `${volume || 0} ${displayUnits || ""}`;
 };
 
+export const getUserSignalSettings = (signal) => signal?.user_signal_settings?.signal_settings || null;
+
+export const getRobotSettings = (robot) => robot?.robot_settings?.robot_settings || null;
+
+export const getUserRobotSettings = (user_robot) => user_robot?.user_robot_settings?.user_robot_settings || null;
+
 export const getUserSignalVolume = (signal) => {
-    if (!signal?.user_signal_settings?.signal_settings) return null;
-    return getVolume(signal.user_signal_settings.signal_settings);
+    return getVolume(getUserSignalSettings(signal));
 };
 
 export const getRobotVolume = (robot) => {
-    if (!robot?.robot_settings?.robot_settings) return null;
-    return getVolume(robot.robot_settings.robot_settings);
+    return getVolume(getRobotSettings(robot));
+};
+
+export const getUserRobotVolume = (user_robot) => {
+    return getVolume(getUserRobotSettings(user_robot));
 };
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);

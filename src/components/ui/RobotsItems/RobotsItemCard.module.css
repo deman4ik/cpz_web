@@ -13,6 +13,14 @@
     box-shadow: var(--shadow);
 }
 
+.statsWrapper > div {
+    margin-bottom: 5px;
+}
+
+.statsWrapper > div:last-child {
+    margin-bottom: unset;
+}
+
 .row {
     display: flex;
     justify-content: space-between;
@@ -76,7 +84,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .btnRow {

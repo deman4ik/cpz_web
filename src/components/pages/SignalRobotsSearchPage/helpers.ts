@@ -1,4 +1,4 @@
-import { getStats, getVolume, getVolumeWithUnit } from "config/utils";
+import { getStats, getVolume, getVolumeType, getVolumeWithUnit } from "config/utils";
 import dayjs from "libs/dayjs";
 
 export const parseUserSettings = (robot) => {
@@ -27,6 +27,7 @@ export function parseRobotInfo(robot: any, robotSettings: any) {
         settings: robotSettings,
         volume: getVolume(robotSettings),
         displayedVolume: getVolumeWithUnit(robotSettings, { currency, asset }),
+        volumeType: getVolumeType(robotSettings),
         profit,
         performance: equity,
         subscribed: null,

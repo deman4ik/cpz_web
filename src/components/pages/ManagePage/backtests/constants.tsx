@@ -199,7 +199,7 @@ const robotSettings = {
             width: 80
         },
         {
-            Header: "Volume Type",
+            Header: "Amount Type",
             accessor: (v) => v.robot.robot_settings?.volumeType,
             isVisible: true,
             width: 120
@@ -430,7 +430,7 @@ export const BackSettingsTableColumns = [
                 isVisible: true
             },
             {
-                Header: "Volume Type",
+                Header: "Amount Type",
                 width: "100%",
                 accessor: (v) => v.robot_settings.volumeType,
                 isVisible: true

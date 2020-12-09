@@ -84,7 +84,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
             }
             footer={
                 <div className={styles.footerRow}>
-                    <div className={styles.col}>
+                    <div className={`${styles.col} ${styles.statsWrapper}`}>
                         <RobotItemStatusBlock item={item} displayType={displayType} />
                     </div>
                     <RobotsButtonItemCard

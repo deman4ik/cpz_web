@@ -81,19 +81,17 @@ export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
             {
                 Header: "Volume",
                 accessor: "volume",
-                isVisible: false,
                 fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
                 width: 100
             },
             {
-                Header: "Volume Type",
+                Header: "Amount Type",
                 accessor: "volumeType",
                 width: 120
             },
             {
                 Header: "Strategy Settings",
                 accessor: "strategy_settings",
-                isVisible: true,
                 Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />,
                 width: 250
             }

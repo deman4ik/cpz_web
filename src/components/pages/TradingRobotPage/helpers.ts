@@ -35,7 +35,8 @@ export const formatRobotData = (robot: any) => {
                   ...userRobot,
                   equity: getStats(userRobot).equity,
                   volume: getVolume(userRobotSettings),
-                  displayedVolume: getVolumeWithUnit(userRobotSettings, { currency, asset })
+                  displayedVolume: getVolumeWithUnit(userRobotSettings, { currency, asset }),
+                  volumeType: getVolumeType(userRobotSettings)
               }
             : null
     };

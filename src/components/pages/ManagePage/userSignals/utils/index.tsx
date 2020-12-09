@@ -1,16 +1,21 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { formatDate, getUserSignalVolume } from "config/utils";
+import { formatDate, getUserSignalSettings, getVolumeType, getVolumeWithUnit } from "config/utils";
 
 export const formatSignals = (data) => {
     if (!data) return [];
     return data.user_signals?.map((signal) => {
+        const { id, robot, user, subscribed_at } = signal;
+        const { code: robot_code, currency, asset } = robot;
+        const { id: user_id, name: user_name } = user;
+        const settings = getUserSignalSettings(signal);
         return {
-            id: signal.id,
-            robot_code: signal.robot?.code,
-            user_name: signal.user?.name,
-            user_id: signal.user?.id,
-            subscribed_at: formatDate(signal.subscribed_at),
-            volume: getUserSignalVolume(signal)
+            id,
+            robot_code,
+            user_name,
+            user_id,
+            subscribed_at: formatDate(subscribed_at),
+            volume: getVolumeWithUnit(settings, { currency, asset }),
+            volumeType: getVolumeType(settings)
         };
     });
 };

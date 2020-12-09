@@ -44,5 +44,5 @@ export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => 
             statsContent = <StatisticElement label={capitalize(statusLabel)} value={displayedTime} />;
     }
 
-    return <div className={styles.statsWrapper}>{statsContent}</div>;
+    return statsContent;
 };
