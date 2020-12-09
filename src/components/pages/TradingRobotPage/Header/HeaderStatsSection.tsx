@@ -40,10 +40,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                         />
                     ))}
 
-                <HeaderStatsSectionItem
-                    label="Amount Type"
-                    value={isOwnedByUser ? userRobot.volumeType : robot.volumeType}
-                />
+                {isOwnedByUser && <HeaderStatsSectionItem label="Amount Type" value={userRobot.volumeType} />}
             </div>
         </div>
     );
