@@ -62,7 +62,7 @@ export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
                 fieldSchema: { field: "user_signal_settings", subfield: "signal_settings" }
             },
             {
-                Header: "Volume Type",
+                Header: "Amount Type",
                 accessor: "volumeType",
                 width: 140,
                 fieldSchema: { field: "user_signal_settings", subfield: "signal_settings" }

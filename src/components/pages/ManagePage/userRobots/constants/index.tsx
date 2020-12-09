@@ -52,7 +52,7 @@ export const USER_ROBOTS_TABLE_COLUMNS: ColumnsArraySchema = [
                 width: 125
             },
             {
-                Header: "Volume Type",
+                Header: "Amount Type",
                 accessor: "volumeType",
                 fieldSchema: { field: "user_robot_settings", subfield: "user_robot_settings" },
                 width: 140
