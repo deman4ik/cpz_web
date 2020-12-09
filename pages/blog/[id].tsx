@@ -23,7 +23,8 @@ const components = {
             <SignalsList />
         </ApolloProvider>
     ),
-    Head
+    Head,
+    Link
 };
 
 export default function PostPage({ source, frontMatter }) {
@@ -45,6 +46,7 @@ export default function PostPage({ source, frontMatter }) {
 
             <style jsx>{`
                 .wrapper {
+                    padding: 20px 10px;
                     color: white;
                     display: flex;
                     flex-direction: column;
@@ -59,6 +61,11 @@ export default function PostPage({ source, frontMatter }) {
                 }
                 .description {
                     opacity: 0.6;
+                }
+                main {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
                 }
             `}</style>
         </div>
