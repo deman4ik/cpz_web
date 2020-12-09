@@ -41,7 +41,7 @@ export const DOCS_URL = "https://support.cryptuoso.com";
 export const TERMS_URL = "/terms-of-use";
 export const PRIVACY_URL = "/privacy-policy";
 export const SUPPORT_URL = "/support";
-export const TELEGRAM_COMMUNITY_URL = "https://t.me/joinchat/ACVS-0zaWVBgAYm8gOKYHA";
+export const TELEGRAM_COMMUNITY_URL = "https://t.me/joinchat/AAAAAEzaWVAzgkDmgOKYHA";
 
 export const color = {
     white: "#FFFFFF",
