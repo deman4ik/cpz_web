@@ -41,14 +41,22 @@ export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) 
     return `${volume || 0} ${displayUnits || ""}`;
 };
 
+export const getUserSignalSettings = (signal) => signal?.user_signal_settings?.signal_settings || null;
+
+export const getRobotSettings = (robot) => robot?.robot_settings?.robot_settings || null;
+
+export const getUserRobotSettings = (user_robot) => user_robot?.user_robot_settings?.user_robot_settings || null;
+
 export const getUserSignalVolume = (signal) => {
-    if (!signal?.user_signal_settings?.signal_settings) return null;
-    return getVolume(signal.user_signal_settings.signal_settings);
+    return getVolume(getUserSignalSettings(signal));
 };
 
 export const getRobotVolume = (robot) => {
-    if (!robot?.robot_settings?.robot_settings) return null;
-    return getVolume(robot.robot_settings.robot_settings);
+    return getVolume(getRobotSettings(robot));
+};
+
+export const getUserRobotVolume = (user_robot) => {
+    return getVolume(getUserRobotSettings(user_robot));
 };
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);

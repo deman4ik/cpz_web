@@ -63,7 +63,6 @@ export const RobotsItem: React.FC<Props> = ({
                     <div className={styles.primaryText}>{item.name}</div>
                     <div className={styles.profitWrap}>
                         <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
-                        {displayType && <div className={styles.secondaryText}>{item.volumeType || ""}</div>}
                     </div>
                 </div>
                 <ChevronRightIcon color="white" size={26} />

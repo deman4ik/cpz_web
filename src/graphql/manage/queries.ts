@@ -170,6 +170,8 @@ export const ALL_USER_SIGNALS = gql`
             id
             robot {
                 code
+                asset
+                currency
             }
             user {
                 name
@@ -224,6 +226,8 @@ export const ALL_USER_ROBOTS = gql`
             robot {
                 name
                 id
+                asset
+                currency
             }
             status
             stopped_at

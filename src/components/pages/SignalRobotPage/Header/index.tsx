@@ -35,7 +35,7 @@ const _Header: React.FC<Props> = ({ robotData, subscribe, width }) => {
             },
             { label: "Amount", value: getDisplayedVolume(robotData) },
             { label: "Active", value: activeDays(robotData) },
-            { label: "Volume Type", value: robot.volumeType }
+            { label: "Amount Type", value: robot.volumeType }
         ];
         if (isUserSubscribed) {
             config.push({ label: "Subscribed", value: getSubscriptionDuration(robotData) });
