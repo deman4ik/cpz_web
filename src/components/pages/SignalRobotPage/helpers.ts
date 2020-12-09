@@ -199,27 +199,18 @@ export const getUpdatedCandleChartData = ({ candles }, asset) => {
     return { updateCandle, markers };
 };
 
-export const getAlerts = (signals) => {
-    if (!signals) return [];
-    return signals.reduce((alerts, signal) => {
-        if (!Object.keys(signal.alerts).length) return alerts;
-        return [
-            ...alerts,
-            ...Object.entries(signal.alerts).map(([, item]: [any, any]) => {
-                const alertColor =
-                    item.action === "short" || item.action === "closeLong" ? color.negative : color.positive;
-                const axisLabelVisible = true;
-                const alertObj = {
-                    ...item,
-                    volume: signal.volume,
-                    code: signal.code,
-                    axisLabelVisible,
-                    color: alertColor
-                };
-                return alertObj;
-            })
-        ];
-    }, []);
+export const getAlerts = (_alerts) => {
+    if (!_alerts) return [];
+    return _alerts.map((alert) => {
+        const alertColor = alert.action === "short" || alert.action === "closeLong" ? color.negative : color.positive;
+        const axisLabelVisible = true;
+        return {
+            ...alert,
+            code: alert.position_code,
+            axisLabelVisible,
+            color: alertColor
+        };
+    });
 };
 
 export const createVariable = (robotData, type) => {

@@ -14,8 +14,6 @@ import styles from "./RobotsItem.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
-import { EmptyChart } from "components/charts/EmptyChart";
-import { RobotsType } from "config/types";
 
 interface Props {
     item: SignalItem;
@@ -70,7 +68,7 @@ export const RobotsItem: React.FC<Props> = ({
             <div className={styles.cellPerformance}>
                 {performance && performance.length ? <AreaChart height={120} data={performance} /> : null}
             </div>
-            <div style={{ flex: 2 }} />
+            <div style={{ flex: 0.2 }} />
             <ProfitItem profit={profit !== 0 ? profit : null} />
             <div className={styles.cellStatistics}>
                 <WinRateStatistics
