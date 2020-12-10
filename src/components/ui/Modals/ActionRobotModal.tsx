@@ -46,7 +46,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
 
     function handleResponse(response: any) {
         const { result } = response.data[actions[type]];
-        if (result === "OK") {
+        if (result) {
             if (type === "start") {
                 event({
                     action: "start",

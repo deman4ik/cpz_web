@@ -22,7 +22,7 @@ const SupportChat: React.FC<SupportChatProps> = ({ user_id }) => {
     const [success, setSuccess] = useState(false);
     const [sendMessage, { loading, data, error }] = useMutation(SEND_SUPPOT_MESSAGE);
 
-    useEffect(() => setSuccess(data?.supportMessage.result === "OK"), [data?.supportMessage.result]);
+    useEffect(() => setSuccess(data?.supportMessage.result), [data?.supportMessage.result]);
 
     return (
         <Chat

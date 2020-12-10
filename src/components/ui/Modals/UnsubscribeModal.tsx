@@ -30,7 +30,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     const handleOnSubmit = () => {
         unsubscribeSend({ variables: { robotId: data.robot.id } })
             .then((response) => {
-                if (response.data.userSignalUnsubscribe.result === "OK") {
+                if (response.data.userSignalUnsubscribe.result) {
                     unsubscribe({
                         variables: { cache: data.robot.cache, chartData: data.ChartData }
                     }).catch((e) => console.error(e));

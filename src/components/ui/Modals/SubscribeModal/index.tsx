@@ -90,7 +90,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         if (actionType === "edit") {
             edit({ variables })
                 .then((res) => {
-                    if (res.data.userSignalEdit.result === "OK") {
+                    if (res.data.userSignalEdit.result) {
                         // writeToCache(settings);
                         onClose(true);
                     }
@@ -99,7 +99,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
         } else
             subscribe({ variables })
                 .then((res) => {
-                    if (res.data.userSignalSubscribe.result === "OK") {
+                    if (res.data.userSignalSubscribe.result) {
                         // writeToCache(settings);
                         event({
                             action: "subscribe",

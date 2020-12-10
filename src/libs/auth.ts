@@ -135,7 +135,7 @@ export const useLogout = (): AuthAction => {
     const [loggedOut, setLoggedOut] = useState(false);
     const [logoutAction, { loading, error }] = useAuthMutation(LOGOUT, {
         onCompleted: ({ result }) => {
-            if (result.result === "OK") {
+            if (result.result) {
                 setAccessToken("");
                 setLoggedOut(true);
                 logout();

@@ -35,7 +35,7 @@ const ManageSupportChat = () => {
     const [success, setSuccess] = useState(false);
     const [reply, { loading: loadingReply, data, error: replyError }] = useMutation(REPLY_SUPPORT_MESSAGE);
 
-    useEffect(() => setSuccess(data?.replySupportMessage.result === "OK"), [data?.replySupportMessage.result]);
+    useEffect(() => setSuccess(data?.replySupportMessage.result), [data?.replySupportMessage.result]);
 
     return (
         <ManagementTemplate title="Support chat" page={PageType.managementSupport} handleBackNavigation>

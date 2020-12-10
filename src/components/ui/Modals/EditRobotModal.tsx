@@ -74,7 +74,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
         })
             .then((response) => {
                 const { data: responseData } = response;
-                if (responseData[prop].result !== "OK") {
+                if (!responseData[prop].result) {
                     setFormError(responseData[prop].error);
                 }
                 refetch().catch((e) => console.error(e));
