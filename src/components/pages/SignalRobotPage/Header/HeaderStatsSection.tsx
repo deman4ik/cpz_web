@@ -17,7 +17,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ config, columnsNum = 2, width })
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
 
     const numberOfColumns = isDesktopView ? columnsNum : 1;
-    const gridColumnsString = Array.from({ length: numberOfColumns }, () => "1fr").join(" ");
+    const gridColumnsString = Array.from({ length: numberOfColumns }, () => "auto").join(" ");
 
     return (
         <div className={styles.robotStats} style={{ gridTemplateColumns: gridColumnsString }}>
