@@ -49,7 +49,6 @@ export const TableWithQueryComponent: FC<TableWithQueryProps> = ({
 
     const tableData = data && formatData ? formatData(data) : data || [];
 
-    // const onClick = () => onRowClick(tableData.find((i) => i.backtest_stats));
     return (
         <TableComponent
             headerStyles={headerStyles}

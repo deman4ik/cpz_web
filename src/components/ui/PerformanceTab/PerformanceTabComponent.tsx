@@ -8,13 +8,14 @@ import { PerformanceTabItemCard } from "./PerformanceTabItemCard";
 import { PerformanceTabStatisticts } from "./PerformanceTabStatisticts";
 import { capitalize } from "../../../config/utils";
 import styles from "./PerformanceTabComponent.module.css";
+import useWindowDimensions from "hooks/useWindowDimensions";
 
 interface Props {
     robotStatistic: any;
-    width: number;
 }
 
-const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic, width }) => {
+const _PerformanceTabComponent: React.FC<Props> = ({ robotStatistic }) => {
+    const { width } = useWindowDimensions();
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
     return (
         <>

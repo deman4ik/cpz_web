@@ -77,6 +77,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
                             width={SCREEN_TYPE.TABLET}
                             type={type}
                             data={formatStats(allRobotsData?.stats, type)}
+                            titlePrefix="My"
                         />
                         <RobotAggrOpenPositionsCard openPositionsAggrData={{ long, short }} type={type} />
                     </div>

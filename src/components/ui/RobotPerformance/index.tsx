@@ -6,13 +6,14 @@ interface Props {
     width: number;
     type: string;
     data: any;
+    titlePrefix: string;
 }
 
-const _RobotPerformance: React.FC<Props> = ({ width, type, data }) => {
+const _RobotPerformance: React.FC<Props> = ({ width, type, data, titlePrefix }) => {
     return !data || !data?.length ? (
         <PerformanceEmpty width={width} displayType={type} />
     ) : (
-        <PerformanceComponent width={width} formatData={data} displayType={type} />
+        <PerformanceComponent width={width} formatData={data} displayType={type} titlePrefix={titlePrefix} />
     );
 };
 

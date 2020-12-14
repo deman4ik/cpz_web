@@ -4,16 +4,17 @@ import { Button } from "components/basic";
 import styles from "./PerformanceItemCard.module.css";
 import { DataCard } from "components/ui/DataCard";
 import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
-import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
+import { formatMoney, getColor, getColorForMoney, valueWithSign } from "config/utils";
 
 interface Props {
     item: any;
     onRedirectToDetailView: (path: string) => void;
+    titlePrefix?: string;
 }
 
 const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
 
-export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailView }) => {
+export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailView, titlePrefix }) => {
     const handleOnPress = () => {
         onRedirectToDetailView(item.path);
     };
@@ -21,7 +22,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
         <DataCard
             header={
                 <div className={styles.row} onClick={handleOnPress}>
-                    <div className={styles.col}>{item.name}</div>
+                    <div className={styles.col}>{`${titlePrefix ? `${titlePrefix} ` : ""}${item.name}`}</div>
                     <div className={styles.col}>
                         <Button
                             title="details"
@@ -54,7 +55,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             },
                             {
                                 title: "Win Rate",
-                                value: <span style={{ color: getColorForMoney(item.winRate) }}>{item.winRate} %</span>
+                                value: <span style={{ color: getColor(item.winRate < 50) }}>{item.winRate} %</span>
                             },
                             {
                                 title: "Max Drawdown",
