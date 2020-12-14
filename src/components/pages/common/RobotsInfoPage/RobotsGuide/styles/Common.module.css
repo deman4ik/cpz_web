@@ -5,8 +5,10 @@
     margin-bottom: 50px;
 }
 
-.content_container {
-    margin: 15px 0;
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .card_description {
@@ -15,15 +17,13 @@
 }
 
 .card_icon {
-    display: flex;
-    align-items: center;
     min-width: 60px;
 }
 
 .section_title {
+    margin-top: 10px;
     text-align: center;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: auto 20px;
     font-size: var(--normal3);
     color: var(--accent);
 }
@@ -34,13 +34,6 @@
     padding: 10px;
     margin: 15px 0;
     color: #ffffff;
-}
-
-.cardContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 
 /*common responsive*/

@@ -10,7 +10,8 @@ import {
     CloseIcon,
     BorderColorIcon as EditIcon,
     PlusBox,
-    BullHorn
+    BullHorn,
+    ChevronRightIcon
 } from "assets/icons/svg";
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
     onClick?: () => void;
     responsive?: boolean;
     hidden?: boolean;
+    href?: string;
 }
 
 const components = {
@@ -33,7 +35,8 @@ const components = {
     close: CloseIcon,
     edit: EditIcon,
     plusbox: PlusBox,
-    announcement: BullHorn
+    announcement: BullHorn,
+    chevronright: ChevronRightIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({
@@ -43,7 +46,8 @@ export const CaptionButton: React.FC<Props> = ({
     width,
     onClick,
     responsive = true,
-    hidden = false
+    hidden = false,
+    href = null
 }) => {
     const SpecificIcon = components[icon];
     const getClassName = () => {
@@ -55,7 +59,10 @@ export const CaptionButton: React.FC<Props> = ({
         <div
             className={getClassName().join(" ")}
             style={{ ...style, display: hidden ? "none" : "flex" }}
-            onClick={onClick}>
+            onClick={() => {
+                if (onClick) onClick();
+                if (href) window.open(href, "_blank");
+            }}>
             {title && <div className="btn-text">{title}</div>}
             <i className="icon" style={{ width: 20, height: 20 }}>
                 <SpecificIcon size={20} />

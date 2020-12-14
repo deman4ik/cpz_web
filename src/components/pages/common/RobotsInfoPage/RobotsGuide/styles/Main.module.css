@@ -1,0 +1,24 @@
+.steps_section {
+    width: 900px;
+}
+
+.step_card {
+    composes: card from "./Common.module.css";
+    margin: 15px auto;
+    display: flex;
+    padding: 25px;
+    align-items: center;
+}
+
+.step_card_accent {
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.last_step_card_container {
+    margin: auto;
+}
+
+.contact_support_container {
+    margin: auto;
+}
