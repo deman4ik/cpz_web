@@ -10,8 +10,8 @@ type Props = {
 export const AddRobotsCardWithHeader = ({ type }: Props): JSX.Element => {
     const label =
         type === RobotsType.signals
-            ? "To start manual trading - subscribe to signals"
-            : "To start automated trading - add robots";
+            ? "Choose robot for manual trading on Signals Page"
+            : "Add chosen Robot, enter your trading amount and link it with your API Keys";
     return (
         <>
             <div className={styles.labelContainer}>{label}</div>

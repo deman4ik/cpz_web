@@ -20,6 +20,7 @@ import { AddRobotsCardWithHeader } from "components/common/AddRobotsCardWithHead
 import style from "./index.module.css";
 import { RobotAggrOpenPositionsCard } from "components/ui/RobotAggrOpenPositionsCard";
 import { parseAggregatedPositionsData } from "components/ui/RobotAggrOpenPositionsCard/helpers";
+import RobotsGuide from "./RobotsGuide";
 
 type Props = {
     type: RobotsType;
@@ -89,6 +90,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
                 </>
             ) : (
                 <div style={{ padding: 5 }}>
+                    <RobotsGuide type={type} />
                     <AddRobotsCardWithHeader type={type} />
                 </div>
             )}
