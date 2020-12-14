@@ -70,7 +70,6 @@ export const ManageRobotsStats: React.FC = () => {
                     <StatsPageComponent
                         formatData={formatData}
                         displayType={displayType}
-                        fullWidth
                         title={PageType[displayType]}
                     />
                 )}

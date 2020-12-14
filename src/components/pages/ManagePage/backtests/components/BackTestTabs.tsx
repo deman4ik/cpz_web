@@ -1,16 +1,12 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC } from "react";
 import TabNavigation from "components/basic/TabNavigation";
 import { PerformanceTab } from "components/ui/PerformanceTab";
 import { BackSettingsTable } from "components/pages/ManagePage/backtests/components/BackSettingsTable";
 import { BackTestPositions } from "components/pages/ManagePage/backtests/components/BackTestPositions";
-import useFetchSignalRobotPositions from "components/pages/SignalRobotPage/useFetchSignalRobotPositions";
-import useFetchTradingRobotPositions from "components/pages/TradingRobotPage/useFetchTradingRobotPositions";
 import useFetchBackTestPosition from "components/pages/ManagePage/backtests/components/useFetchBackTestPositiions";
 import { TableWithQuery } from "components/pages/ManagePage/common/TableWithQuery";
 import { BACKTEST_SIGNALS, BACKTEST_SIGNALS_AGGREGATE } from "graphql/robots/backtest";
-import { getItemsCount, getSearchOptions } from "components/pages/ManagePage/backtests/utils";
-import { BackSettingsTableColumns, BACKTEST_SIGNALS_COLUMNS } from "components/pages/ManagePage/backtests/constants";
-import { TableComponent } from "components/pages/ManagePage/common/TableComponent";
+import { BACKTEST_SIGNALS_COLUMNS } from "components/pages/ManagePage/backtests/constants";
 import { BackTestLogs } from "components/pages/ManagePage/backtests/components/BackTestLogs";
 
 interface BackTestTabsProps {
@@ -24,9 +20,7 @@ export const BackTestTabs: FC<BackTestTabsProps> = ({ robotData, width }) => {
     const tabSchema = [
         {
             title: "Public Performance",
-            tabPage: (
-                <PerformanceTab fullStats={(robotData && robotData.backtest_stats) || {}} width={width} fullWidth />
-            )
+            tabPage: <PerformanceTab fullStats={(robotData && robotData.backtest_stats) || {}} />
         },
         {
             title: "Settings",
