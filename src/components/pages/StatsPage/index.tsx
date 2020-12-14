@@ -77,7 +77,6 @@ export const StatsPage: React.FC = () => {
                 ) : (
                     <StatsPageComponent
                         formatData={formatData}
-                        width={width}
                         displayType={displayType}
                         title={`My ${capitalize(displayType)} Total Statistics`}
                     />
