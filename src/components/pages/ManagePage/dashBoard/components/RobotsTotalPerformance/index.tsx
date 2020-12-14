@@ -1,21 +1,19 @@
 import React, { FC, useMemo } from "react";
-import styles from "components/ui/RobotPerformance/index.module.css";
 import { PerformanceEmpty } from "components/ui/RobotPerformance/PerformanceEmpty";
 import { PerformanceComponent } from "components/ui/RobotPerformance/PerformanceComponent";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { POLL_INTERVAL, SCREEN_TYPE } from "config/constants";
 import { formatStats } from "components/ui/RobotPerformance/helpers";
-import { Card } from "components/basic";
 import { mapRoutesToDisplayTypes } from "components/pages/ManagePage/robotStats/constants";
 import { PageType } from "config/types";
 import { QueryType } from "components/pages/ManagePage/common/types";
 
 interface RobotsTotalPerformanceProps {
-    title: string;
+    titlePrefix?: string;
     type: string;
     query: QueryType;
 }
-export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title, query, type }) => {
+export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ titlePrefix, query, type }) => {
     const displayType = `manage/${type}`;
 
     const { data, loading } = useQueryWithAuth(true, query, {
@@ -31,6 +29,12 @@ export const RobotsTotalPerformance: FC<RobotsTotalPerformanceProps> = ({ title,
             title={PageType[mapRoutesToDisplayTypes[displayType]]}
         />
     ) : (
-        <PerformanceComponent width={SCREEN_TYPE.TABLET} formatData={formattedData} displayType={displayType} compact />
+        <PerformanceComponent
+            width={SCREEN_TYPE.TABLET}
+            formatData={formattedData}
+            displayType={displayType}
+            titlePrefix={titlePrefix}
+            compact
+        />
     );
 };

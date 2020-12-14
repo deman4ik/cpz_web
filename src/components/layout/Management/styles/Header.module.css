@@ -47,11 +47,13 @@
 }
 
 .toolbar {
-    margin-left: 10px;
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     display: flex;
-    border: 1px solid var(--lightBg);
-    box-shadow: var(--shadow);
+    align-items: center;
+    height: var(--header-height);
+    margin-right: 10px;
 }
 
 @media (max-width: 992px) {

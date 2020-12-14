@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import useWindowDimensions from "hooks/useWindowDimensions";
 import { ManagementTemplate } from "components/layout";
 import { PageType } from "config/types";
 import { StatsFiltersModal } from "components/ui/Modals/StatsFiltersModal";
@@ -19,7 +18,6 @@ export const ManageRobotsStats: React.FC = () => {
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-    const { width } = useWindowDimensions();
     const router = useRouter();
     const displayType = mapRoutesToDisplayTypes[extractRoute(router.route)];
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);
@@ -71,7 +69,6 @@ export const ManageRobotsStats: React.FC = () => {
                 ) : (
                     <StatsPageComponent
                         formatData={formatData}
-                        width={width}
                         displayType={displayType}
                         fullWidth
                         title={PageType[displayType]}
