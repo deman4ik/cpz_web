@@ -1,23 +1,29 @@
-import React from "react";
-import Link from "next/link";
-import { TELEGRAM_COMMUNITY_URL } from "config/constants";
-import styles from "./styles/Main.module.css";
-import stylesMain from "components/pages/SupportPage/styles/Main.module.css";
+import React, { useContext } from "react";
 
 import {
     RobotIcon,
     MultiLineChartIcon,
     TelegramIcon,
     AccountPlus,
-    EmailIcon,
-    TextSearch,
     PlayListCheck,
     MessageAlert,
     ShieldKey,
     PlusBox,
     Check
 } from "assets/icons/svg";
-import { CaptionButton } from "components/basic";
+import { Button, CaptionButton } from "components/basic";
+import Router from "next/router";
+import { AuthContext } from "libs/hoc/context";
+
+const DocsButton = ({ href }) => <CaptionButton title="DOCS" icon="docs" href={href} />;
+const InlineDiv = ({ children }) => <div style={{ display: "flex", alignItems: "center" }}>{children}</div>;
+const ButtonShownIfAuthorized = ({ title, type, onClick }) => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
+    return isAuth && <Button title={title} type={type} onClick={onClick} />;
+};
 
 export interface stepsCard {
     title: React.ReactNode | string;
@@ -30,67 +36,40 @@ export interface stepsCard {
 export const SIGNALS_CARDS: Array<stepsCard> = [
     {
         title: (
-            <div>
-                Learn about manual сryptocurrency trading with{" "}
-                <a href="https://support.cryptuoso.com/signals" className={styles.step_card_accent}>
-                    Cryptuoso Signals.
-                </a>
-            </div>
+            <>
+                Learn about manual сryptocurrency trading with Cryptuoso Signals.
+                <DocsButton href="https://support.cryptuoso.com/signals" />
+            </>
         ),
         icon: MultiLineChartIcon
     },
     {
         title: (
             <>
-                <div>
-                    Choose robot for manual trading on{" "}
-                    <Link href="/signals/search">
-                        <span className={styles.step_card_accent}>Signals Page</span>
-                    </Link>
-                    .
-                </div>
-                <CaptionButton
-                    title="Learn how"
-                    icon="chevronright"
-                    href="https://support.cryptuoso.com/signals#howtochooseasignalrobottofollow?"
-                />
-            </>
-        ),
-        icon: TextSearch
-    },
-    {
-        title: (
-            <>
-                Subscribe to Signal Robot and enter your trading amount.{" "}
-                <CaptionButton
-                    title="Learn how"
-                    icon="chevronright"
-                    href="https://support.cryptuoso.com/signals#howtosubscribeonsignalsinourwebapp?"
-                />
+                Subscribe to Signal Robot and enter your trading amount.
+                <InlineDiv>
+                    <Button title="ADD SIGNALS +" type="primary" onClick={() => Router.push("/signals/search")} />
+                    <DocsButton href="https://support.cryptuoso.com/signals#howtosubscribeonsignalsinourwebapp?" />
+                </InlineDiv>
             </>
         ),
         icon: PlayListCheck
     },
     {
         title: (
-            <div>
-                Wait for Signals and execute them on your exchange{" "}
-                <Link href="/signals/search">
-                    <span className={styles.step_card_accent}>Signals Page.</span>
-                </Link>
-            </div>
+            <>
+                Wait for Signals and execute them on your exchange.
+                <DocsButton href="https://support.cryptuoso.com/signals#howtounderstandsignalsandwhattodo?" />
+            </>
         ),
         icon: MessageAlert
     },
     {
         title: (
-            <div>
-                Add your Telegram account and turn on notifications on{" "}
-                <Link href="/profile">
-                    <span className={styles.step_card_accent}>Profile Page</span>
-                </Link>{" "}
-                to immediately receive signals.
-            </div>
+            <>
+                Add your Telegram account and turn on notifications on Profile Page to immediately receive signals.
+                <ButtonShownIfAuthorized title="PROFILE" type="success" onClick={() => Router.push("/profile")} />
+            </>
         ),
         icon: TelegramIcon
     }
@@ -99,24 +78,21 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
 export const ROBOTS_CARDS: Array<stepsCard> = [
     {
         title: (
-            <div>
-                Learn about automated сryptocurrency trading with{" "}
-                <a href="https://support.cryptuoso.com/robots" className={styles.step_card_accent}>
-                    Cryptuoso Robots.
-                </a>
-            </div>
+            <>
+                Learn about automated сryptocurrency trading with Cryptuoso Robots.
+                <DocsButton href="https://support.cryptuoso.com/robots" />
+            </>
         ),
         icon: RobotIcon
     },
     {
         title: (
             <>
-                Generate your API Keys on your exchange and add them to your Cryptuoso Account.{" "}
-                <CaptionButton
-                    title="Learn how"
-                    icon="chevronright"
-                    href="https://support.cryptuoso.com/exchange-accounts"
-                />
+                Generate your API Keys on your exchange and add them to your Cryptuoso Account.
+                <InlineDiv>
+                    <Button title="ADD KEY +" type="primary" onClick={() => Router.push("/profile")} />
+                    <DocsButton href="https://support.cryptuoso.com/exchange-accounts" />
+                </InlineDiv>
             </>
         ),
         icon: ShieldKey
@@ -124,31 +100,11 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
     {
         title: (
             <>
-                <div>
-                    Choose robot for automated trading on{" "}
-                    <Link href="/robots/search">
-                        <span className={styles.step_card_accent}>Robots Page</span>
-                    </Link>
-                    .
-                </div>
-                <CaptionButton
-                    title="Learn how"
-                    icon="chevronright"
-                    href="https://support.cryptuoso.com/robots#howtochoosearobot?"
-                />
-            </>
-        ),
-        icon: TextSearch
-    },
-    {
-        title: (
-            <>
-                Add chosen Robot, enter your trading amount and link it with your API Keys.{" "}
-                <CaptionButton
-                    title="Learn how"
-                    icon="chevronright"
-                    href="https://support.cryptuoso.com/robots#howtostartrobotinourwebapp?"
-                />
+                Add chosen Robot, link it with your API Keys and enter your trading amount.
+                <InlineDiv>
+                    <Button title="ADD ROBOTS +" type="primary" onClick={() => Router.push("/robots/search")} />
+                    <DocsButton href="https://support.cryptuoso.com/robots#howtostartrobotinourwebapp?" />
+                </InlineDiv>
             </>
         ),
         icon: PlusBox
@@ -161,13 +117,13 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
 
 export const CREATE_ACCOUNT_CARD = {
     title: (
-        <div>
-            Create your{" "}
-            <Link href="/auth/login">
-                <span className={stylesMain.step_card_accent}>Cryptuoso Account</span>
-            </Link>{" "}
-            with Telegram or Email.
-        </div>
+        <>
+            Create your Cryptuoso Account with Telegram or Email.
+            <InlineDiv>
+                <Button title="LOG IN" type="success" onClick={() => Router.push("/auth/login")} />
+                <DocsButton href="https://support.cryptuoso.com/help" />
+            </InlineDiv>
+        </>
     ),
     icon: AccountPlus
 };
