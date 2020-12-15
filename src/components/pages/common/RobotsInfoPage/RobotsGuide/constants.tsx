@@ -14,15 +14,24 @@ import {
 import { Button, CaptionButton } from "components/basic";
 import Router from "next/router";
 import { AuthContext } from "libs/hoc/context";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 const DocsButton = ({ href }) => <CaptionButton title="DOCS" icon="docs" href={href} />;
 const InlineDiv = ({ children }) => <div style={{ display: "flex", alignItems: "center" }}>{children}</div>;
-const ButtonShownIfAuthorized = ({ title, type, onClick }) => {
+const ProfileButtonIfNoTg = () => {
     const {
-        authState: { isAuth }
+        authState: { user_id }
     } = useContext(AuthContext);
 
-    return isAuth && <Button title={title} type={type} onClick={onClick} />;
+    const { data } = useQueryWithAuth(true, GET_USER_INFO, { variables: { user_id } });
+
+    return (
+        (data && data.users[0] && !data.users[0].telegram_id && (
+            <Button title="PROFILE" type="success" onClick={() => Router.push("/profile")} />
+        )) ||
+        null
+    );
 };
 
 export interface stepsCard {
@@ -68,7 +77,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
         title: (
             <>
                 Add your Telegram account and turn on notifications on Profile Page to immediately receive signals.
-                <ButtonShownIfAuthorized title="PROFILE" type="success" onClick={() => Router.push("/profile")} />
+                <ProfileButtonIfNoTg />
             </>
         ),
         icon: TelegramIcon
