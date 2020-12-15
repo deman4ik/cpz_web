@@ -54,10 +54,7 @@ export interface PropsWrapChart {
     markers?: any[];
     lines?: any[];
     onFetchMore?: (offset: number, signal?: AbortSignal) => void;
-    size: {
-        width?: number;
-        height: number;
-    };
+    size: { width?: number; height: number };
     type: ChartType;
     legend?: string;
     setIsChartLoaded?: (isChartLoaded: boolean) => void;

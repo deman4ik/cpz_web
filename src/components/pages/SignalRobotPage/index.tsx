@@ -18,12 +18,12 @@ import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { MODAL_VISIBLE } from "graphql/local/queries";
 
 const SignalRobotPage = (): JSX.Element => {
-    /*Определение контекста для страницы робота*/
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const { width } = useWindowDimensions();
+    const [availableWidth, setAvailableWidth] = useState(0);
+
     const router = useRouter();
     const robotsInfoQuery = isAuth ? ROBOT_INFO_FOR_USER : ROBOT_INFO;
     const userId = isAuth ? { user_id } : null;
@@ -55,6 +55,7 @@ const SignalRobotPage = (): JSX.Element => {
             setModalVisibility({ isVisible: true, type: variables.type });
         }
     };
+
     return (
         <DefaultTemplate
             page={PageType.signals}
@@ -69,15 +70,20 @@ const SignalRobotPage = (): JSX.Element => {
             ) : !robotData ? (
                 <NoRecentData message="No recent data available" />
             ) : (
-                <>
-                    <Header subscribe={subscribe} robotData={robotData} width={width} />
-                    <RobotPageContent type={RobotsType.signals} robotData={robotData} width={width} />
+                <div
+                    style={{ width: "100%" }}
+                    ref={(el) => {
+                        if (!el) return;
+                        setAvailableWidth(el.getBoundingClientRect().width - 20);
+                    }}>
+                    <Header subscribe={subscribe} robotData={robotData} width={availableWidth} />
+                    <RobotPageContent type={RobotsType.signals} robotData={robotData} width={availableWidth} />
                     <Modals
                         isModalVisible={isModalVisible}
                         setModalVisibility={setModalVisibility}
                         afterClose={refetch}
                     />
-                </>
+                </div>
             )}
         </DefaultTemplate>
     );

@@ -2,7 +2,6 @@
 import React, { useMemo, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import useWindowDimensions from "hooks/useWindowDimensions";
 import { useFilters } from "hooks/useFilters";
 import { USER_SIGNAL_ROBOT_STATS_AGGREGATE } from "graphql/signals/queries";
 import { POLL_INTERVAL } from "config/constants";
@@ -23,7 +22,6 @@ export const StatsPage: React.FC = () => {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
 
-    const { width } = useWindowDimensions();
     const router = useRouter();
     const displayType = router.route.split("/")[1];
     const [isFiltersModalVisible, setFiltersModalVisibility] = useState(false);

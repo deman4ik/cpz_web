@@ -33,13 +33,13 @@ const PageContent: React.FC<Props> = ({ type, robotData, width }) => {
             ? [
                   {
                       title: "My Performance",
-                      tabPage: <PerformanceTab fullStats={robotOwned && robotOwned.fullStats} width={width} />
+                      tabPage: <PerformanceTab fullStats={robotOwned && robotOwned.fullStats} />
                   }
               ]
             : []),
         {
             title: "Public Performance",
-            tabPage: <PerformanceTab fullStats={robotData ? robot?.fullStats : null} width={width} />
+            tabPage: <PerformanceTab fullStats={robotData ? robot?.fullStats : null} />
         }
     ];
 

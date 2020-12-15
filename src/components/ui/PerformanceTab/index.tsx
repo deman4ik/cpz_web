@@ -10,7 +10,6 @@ import { getRobotStatistic } from "./helpers";
 interface Props {
     fullStats: any;
     fullWidth?: boolean;
-    width: number;
 }
 
 const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeightChart"), {
@@ -18,7 +17,7 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
     ssr: false
 });
 
-const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth }) => {
+const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, fullWidth }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
 
     const chartData = useMemo(
@@ -41,7 +40,7 @@ const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, width, fullWidth
                 fullWidth={fullWidth}
                 data={chartData}
                 type={ChartType.area}
-                size={{ height: 400, width }}
+                size={{ height: 400 }}
                 setIsChartLoaded={setIsChartLoaded}
             />
             {!isChartLoaded && <div style={{ height: 400 }} />}
