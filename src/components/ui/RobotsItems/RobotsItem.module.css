@@ -11,14 +11,6 @@
     margin-bottom: 2px;
 }
 
-.statsWrapper > div {
-    margin-bottom: 5px;
-}
-
-.statsWrapper > div:last-child {
-    margin-bottom: unset;
-}
-
 .cellNameWrap {
     min-width: 220px;
 }
@@ -91,6 +83,11 @@
 .statisticsElement {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.statisticsElement:last-child {
+    margin-bottom: auto;
 }
 
 .statisticsText {
