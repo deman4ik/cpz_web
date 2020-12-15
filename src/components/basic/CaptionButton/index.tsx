@@ -11,7 +11,8 @@ import {
     BorderColorIcon as EditIcon,
     PlusBox,
     BullHorn,
-    ChevronRightIcon
+    ChevronRightIcon,
+    FileQuestion
 } from "assets/icons/svg";
 
 interface Props {
@@ -36,7 +37,8 @@ const components = {
     edit: EditIcon,
     plusbox: PlusBox,
     announcement: BullHorn,
-    chevronright: ChevronRightIcon
+    chevronright: ChevronRightIcon,
+    docs: FileQuestion
 };
 
 export const CaptionButton: React.FC<Props> = ({
@@ -64,9 +66,11 @@ export const CaptionButton: React.FC<Props> = ({
                 if (href) window.open(href, "_blank");
             }}>
             {title && <div className="btn-text">{title}</div>}
-            <i className="icon" style={{ width: 20, height: 20 }}>
-                <SpecificIcon size={20} />
-            </i>
+            {SpecificIcon && (
+                <i className="icon" style={{ width: 20, height: 20 }}>
+                    <SpecificIcon size={20} />
+                </i>
+            )}
             <style jsx>
                 {`
                     .btn-text {
@@ -75,7 +79,7 @@ export const CaptionButton: React.FC<Props> = ({
                         font-size: 14px;
                         text-align: center;
                         padding-left: 10px;
-                        padding-right: 10px;
+                        padding-right: 5px;
                         white-space: nowrap;
                         opacity: 1;
                         user-select: none;
