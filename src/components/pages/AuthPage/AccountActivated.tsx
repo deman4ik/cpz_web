@@ -17,7 +17,7 @@ export const AccountActivated: React.FC = () => {
         <div className={styles.container}>
             <PageHead title="Done!" />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>

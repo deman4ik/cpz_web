@@ -17,8 +17,8 @@ export const _Caption: React.FC = () => (
     <>
         <DinamicImageWithNoSSR />
         <div className={styles.header}>
+            <Header />
             <div className={styles.container}>
-                <Header />
                 <div className={styles.headerBody}>
                     <div className={styles.groupBrand}>
                         <div className={styles.brand}>

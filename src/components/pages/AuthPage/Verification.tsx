@@ -60,7 +60,7 @@ export const Verification: React.FC = () => {
         <div className={styles.container}>
             <PageHead title="Verification" />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>

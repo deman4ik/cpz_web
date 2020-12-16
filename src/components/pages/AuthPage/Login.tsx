@@ -63,7 +63,7 @@ const _Login: React.FC = () => {
         <div className={styles.container} style={{ alignContent: "space-between" }}>
             <PageHead title="Login" />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={[styles.plate, styles.plateLogin].join(" ")}>
                 <div className={styles.cardWrapper}>
