@@ -43,7 +43,7 @@ export const ForgotPassword: React.FC = () => {
         <div className={styles.container}>
             <PageHead title="Enter the Email you have registered with. We will send you the instructions there." />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>

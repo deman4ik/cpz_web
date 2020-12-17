@@ -58,7 +58,7 @@ export const RecoverPassword: React.FC = () => {
         <div className={styles.container}>
             <PageHead title="Reset password" />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>

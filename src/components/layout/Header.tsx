@@ -8,11 +8,7 @@ import styles from "./Header.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { LoadingIndicator } from "components/common";
 
-interface Props {
-    hasHomeButton?: boolean;
-}
-
-const _Header: React.FC<Props> = ({ hasHomeButton }) => {
+const _Header: React.FC = () => {
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
@@ -31,13 +27,12 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
     return (
         <div className={styles.container}>
             <div className={styles.leftContainer}>
-                {hasHomeButton && (
-                    <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                        <Link href="/" replace>
-                            <a className={styles.btnTitle}>Cryptuoso</a>
-                        </Link>
-                    </div>
-                )}
+                <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
+                    <img src="img/logo-accent.png" alt="logo" style={{ height: "100%" }} />
+                    <Link href="/" replace>
+                        <a className={styles.btnTitle}>Cryptuoso</a>
+                    </Link>
+                </div>
                 {isAuth && (
                     <>
                         {linksHeader.map((item, idx) => (

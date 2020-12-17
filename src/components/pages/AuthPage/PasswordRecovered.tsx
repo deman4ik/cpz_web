@@ -22,7 +22,7 @@ export const PasswordRecovered: React.FC = () => {
         gtag('event', 'conversion', {'send_to': ${AW_CONVERSION_ID}/WX65CJXv5c0BEI3_k88D'});`}
             />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
