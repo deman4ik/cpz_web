@@ -38,14 +38,6 @@ jobs:
             - name: Update deployment file IMAGE and TAG
               run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/cpz/cpz-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
-            - name: Update deployment file APP dev
-              if: contains(github.ref, 'dev')
-              run: sed -i 's|<APP>|cpz-web-dev|' $GITHUB_WORKSPACE/deployment.yaml
-
-            - name: Update deployment file APP prod
-              if: contains(github.ref, 'master')
-              run: sed -i 's|<APP>|cpz-web-prod|' $GITHUB_WORKSPACE/deployment.yaml
-
             - name: Update deployment file ENV dev
               if: contains(github.ref, 'dev')
               run: sed -i 's|<ENV>|dev|' $GITHUB_WORKSPACE/deployment.yaml
