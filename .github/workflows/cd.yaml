@@ -44,7 +44,7 @@ jobs:
 
             - name: Update deployment file APP prod
               if: contains(github.ref, 'master')
-              run: sed -i 's|<APP>|cpz-web|' $GITHUB_WORKSPACE/deployment.yaml
+              run: sed -i 's|<APP>|cpz-web-prod|' $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Update deployment file ENV dev
               if: contains(github.ref, 'dev')
