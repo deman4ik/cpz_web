@@ -62,8 +62,8 @@ jobs:
 
             - name: Verify deployment dev
               if: contains(github.ref, 'dev')
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/cpz-web-dev
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=dev rollout status deployment/cpz-web-dev
 
             - name: Verify deployment prod
               if: contains(github.ref, 'master')
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/cpz-web
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cpz-web
