@@ -27,11 +27,9 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                     label="Profit"
                     customStyles={{ value: { color: getProfit(robotData) > 0 ? color.positive : color.negative } }}
                 />
-                <HeaderStatsSectionItem label="Amount" value={displayData.displayedVolume} />
-            </div>
 
-            <div className={styles.robotStatsCol}>
                 {isOwnedByUser && <HeaderStatsSectionItem label="Status" value={capitalize(userRobot.status)} />}
+
                 {notOwnedButHasActiveDays ||
                     (ownedAndStarted && (
                         <HeaderStatsSectionItem
@@ -39,7 +37,10 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
                             value={isOwnedByUser ? startedAt(robotData) : activeDays(robotData)}
                         />
                     ))}
+            </div>
 
+            <div className={styles.robotStatsCol}>
+                <HeaderStatsSectionItem label="Amount" value={displayData.displayedVolume} />
                 {isOwnedByUser && <HeaderStatsSectionItem label="Amount Type" value={userRobot.volumeType} />}
             </div>
         </div>
