@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-
 import { event } from "libs/gtag";
 import { footerLinks, footerIcons } from "./helpers";
 import styles from "./Footer.module.css";
@@ -46,8 +45,9 @@ const _Footer: React.FC = () => {
                         ))}
                     </div>
                     <div className={styles.logoBrand}>
-                        <div className={styles.logoText}>&copy; {new Date().getFullYear()} Cryptuoso</div>
-                        <div className={styles.brandRights}>&reg;</div>
+                        <div className={styles.logoText}>
+                            &copy; {new Date().getFullYear()} Cryptuoso<sup className={styles.brandRights}>&reg;</sup>
+                        </div>
                     </div>
                 </div>
             </div>
