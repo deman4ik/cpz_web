@@ -3,7 +3,7 @@ import styles from "components/ui/RobotsItems/RobotsItem.module.css";
 
 interface StatisticElementProps {
     label: string;
-    value: string | number;
+    value: string | number | null;
     valueTextStyle?: any;
     className?: string;
 }
@@ -11,9 +11,11 @@ export const StatisticElement: FC<StatisticElementProps> = ({ label, value, valu
     return (
         <div className={`${styles.statisticsElement} ${className || ""}`}>
             <div className={styles.secondaryText}>{label}</div>
-            <div className={styles.statisticsText} style={valueTextStyle}>
-                &nbsp;{value}
-            </div>
+            {value && (
+                <div className={styles.statisticsText} style={valueTextStyle}>
+                    &nbsp;{value}
+                </div>
+            )}
         </div>
     );
 };
