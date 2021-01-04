@@ -1,9 +1,9 @@
 import React, { memo, useContext } from "react";
 import Link from "next/link";
-
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
+import logoAccent from "assets/img/logo-accent.png";
 import styles from "./Header.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { LoadingIndicator } from "components/common";
@@ -28,7 +28,7 @@ const _Header: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.leftContainer}>
                 <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                    <img src="/img/logo-accent.png" alt="logo" style={{ height: "100%" }} />
+                    <img src={logoAccent} alt="logo" style={{ height: "100%" }} />
                     <Link href="/" replace>
                         <a className={styles.btnTitle}>Cryptuoso</a>
                     </Link>
