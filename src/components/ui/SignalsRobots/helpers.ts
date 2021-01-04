@@ -83,8 +83,8 @@ export const formatTradingRobots = (robots: any) =>
                 id
             },
             active: active ? dayjs.utc(active).fromNow(true) : active,
-            started_at: started_at ? dayjs.utc(started_at).fromNow(true) : 0,
-            stopped_at: stopped_at ? dayjs.utc(stopped_at).fromNow(true) : 0,
+            started_at: started_at ? dayjs.utc(started_at).fromNow(true) : null,
+            stopped_at: stopped_at ? dayjs.utc(stopped_at).fromNow(true) : null,
             performance: equity,
             profit,
             winRate,
