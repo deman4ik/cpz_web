@@ -1,9 +1,8 @@
 import React, { memo } from "react";
-
 import { displayData, statusTypes } from "components/ui/RobotsItems/helpers";
 import { Button } from "components/basic";
 import { createVariable } from "../helpers";
-import styles from "./styles/Button.module.css";
+import styles from "components/pages/TradingRobotPage/Header/styles/HeaderButton.module.css";
 
 interface Props {
     robotData: any;

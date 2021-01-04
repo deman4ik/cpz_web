@@ -1,8 +1,7 @@
 import React from "react";
-
 import { Button } from "components//basic";
 import { createVariable } from "../helpers";
-import styles from "./styles/HeaderButton.module.css";
+import styles from "components/pages/SignalRobotPage/Header/styles/HeaderButton.module.css";
 
 interface Props {
     subscribe: (variables: any) => void;
