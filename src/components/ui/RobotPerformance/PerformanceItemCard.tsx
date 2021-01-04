@@ -55,7 +55,7 @@ export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailV
                             },
                             {
                                 title: "Win Rate",
-                                value: <span style={{ color: getColor(item.winRate < 50) }}>{item.winRate} %</span>
+                                value: <span style={{ color: "white" }}>{item.winRate} %</span>
                             },
                             {
                                 title: "Max Drawdown",
