@@ -1,9 +1,8 @@
 import React, { memo } from "react";
-
 import { formatMoney, capitalize } from "config/utils";
 import { activeDays, startedAt, getProfit } from "../helpers";
 import { color } from "config/constants";
-import styles from "./styles/StatsSection.module.css";
+import styles from "components/pages/TradingRobotPage/Header/styles/HeaderStatsSection.module.css";
 import { HeaderStatsSectionItem } from "components/pages/TradingRobotPage/Header/HeaderStatsSectionItem";
 
 interface Props {
@@ -20,28 +19,22 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
     const notOwnedButHasActiveDays = !isOwnedByUser && activeDays(robotData) !== null;
     const ownedAndStarted = isOwnedByUser && userRobot.status === "started";
     return (
-        <div className={styles.robotStats}>
-            <div className={styles.robotStatsCol}>
-                <HeaderStatsSectionItem
-                    value={`${formatMoney(getProfit(robotData))} $`}
-                    label="Profit"
-                    customStyles={{ value: { color: getProfit(robotData) > 0 ? color.positive : color.negative } }}
-                />
-                <HeaderStatsSectionItem label="Amount" value={displayData.displayedVolume} />
-            </div>
-
-            <div className={styles.robotStatsCol}>
-                {isOwnedByUser && <HeaderStatsSectionItem label="Status" value={capitalize(userRobot.status)} />}
-                {notOwnedButHasActiveDays ||
-                    (ownedAndStarted && (
-                        <HeaderStatsSectionItem
-                            label={isOwnedByUser ? "Started" : "Active"}
-                            value={isOwnedByUser ? startedAt(robotData) : activeDays(robotData)}
-                        />
-                    ))}
-
-                {isOwnedByUser && <HeaderStatsSectionItem label="Amount Type" value={userRobot.volumeType} />}
-            </div>
+        <div className={styles.robotStats} style={{ gridTemplateColumns: "auto auto" }}>
+            <HeaderStatsSectionItem
+                value={`${formatMoney(getProfit(robotData))} $`}
+                label="Profit"
+                customStyles={{ value: { color: getProfit(robotData) > 0 ? color.positive : color.negative } }}
+            />
+            <HeaderStatsSectionItem label="Amount" value={displayData.displayedVolume} />
+            {isOwnedByUser && <HeaderStatsSectionItem label="Status" value={capitalize(userRobot.status)} />}
+            {isOwnedByUser && <HeaderStatsSectionItem label="Amount Type" value={userRobot.volumeType} />}
+            {notOwnedButHasActiveDays ||
+                (ownedAndStarted && (
+                    <HeaderStatsSectionItem
+                        label={isOwnedByUser ? "Started" : "Active"}
+                        value={isOwnedByUser ? startedAt(robotData) : activeDays(robotData)}
+                    />
+                ))}
         </div>
     );
 };

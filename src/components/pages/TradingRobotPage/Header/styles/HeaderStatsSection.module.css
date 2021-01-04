@@ -1,6 +1,7 @@
 .robotStats {
-  display: flex;
-  flex-direction: row;
+  padding-top: 15px;
+  display: grid;
+  grid-gap: 5px;
 }
 
 .robotStatsCol {
@@ -9,8 +10,10 @@
 }
 
 .robotStatsRow {
+  width: fit-content;
   display: flex;
   flex-direction: row;
+  width: 100%;
   justify-content: space-between;
   margin-bottom: 5px;
 }
@@ -29,7 +32,7 @@
 
 @media (max-width: 768px) {
   .robotStats {
-    flex-direction: column;
-    margin: 0 auto 5px;
+      flex-direction: column;
+      margin: 0 auto 5px;
   }
 }

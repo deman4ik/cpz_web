@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import { SCREEN_TYPE } from "config/constants";
-import styles from "./styles/HeaderStatsSection.module.css";
 import {
     HeaderStatsSectionItem,
     HeaderStatsSectionItemProps
 } from "components/pages/SignalRobotPage/Header/HeaderStatsSectionItem";
+import styles from "./styles/HeaderStatsSection.module.css";
 import { useShowDimension } from "hooks/useShowDimension";
 
 interface Props {

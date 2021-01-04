@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styles from "components/pages/TradingRobotPage/Header/styles/StatsSection.module.css";
+import styles from "components/pages/TradingRobotPage/Header/styles/HeaderStatsSection.module.css";
 
 interface HeaderStatsSectionItemProps {
     value: any;
