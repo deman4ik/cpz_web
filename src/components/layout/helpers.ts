@@ -7,20 +7,16 @@ export const MAINMENU_MIN_HEIGHT = 56;
 
 export const linksHeader = [
     {
-        title: "Robots",
+        title: "Blog",
+        href: "/blog"
+    },
+    {
+        title: "Docs",
+        href: "/docs"
+    },
+    {
+        title: "Start Trading",
         href: "/robots"
-    },
-    {
-        title: "Signals",
-        href: "/signals"
-    },
-    {
-        title: "Notifications",
-        href: "/notifications"
-    },
-    {
-        title: "Profile",
-        href: "/profile"
     }
 ];
 
