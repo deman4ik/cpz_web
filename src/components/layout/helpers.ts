@@ -54,6 +54,14 @@ export const contactIcons = {
 
 export const footerLinks = [
     {
+        href: "/blog",
+        name: "Blog"
+    },
+    {
+        href: "/docs",
+        name: "Docs"
+    },
+    {
         href: `${DOCS_URL}${TERMS_URL}`,
         name: "Terms"
     },
