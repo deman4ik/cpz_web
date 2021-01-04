@@ -28,22 +28,18 @@ const _Header: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.leftContainer}>
                 <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                    <img src="img/logo-accent.png" alt="logo" style={{ height: "100%" }} />
+                    <img src="/img/logo-accent.png" alt="logo" style={{ height: "100%" }} />
                     <Link href="/" replace>
                         <a className={styles.btnTitle}>Cryptuoso</a>
                     </Link>
                 </div>
-                {isAuth && (
-                    <>
-                        {linksHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
-                                <Link href={item.href} replace>
-                                    <a className={styles.btnTitle}>{item.title}</a>
-                                </Link>
-                            </div>
-                        ))}
-                    </>
-                )}
+                {linksHeader.map((item, idx) => (
+                    <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
+                        <Link href={item.href} replace>
+                            <a className={styles.btnTitle}>{item.title}</a>
+                        </Link>
+                    </div>
+                ))}
             </div>
             <div className={styles.rightContainer}>
                 {isAuth ? (
