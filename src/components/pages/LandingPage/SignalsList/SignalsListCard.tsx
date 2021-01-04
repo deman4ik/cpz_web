@@ -19,7 +19,7 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
     const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(robot);
     const money = (
         <div className={`${styles.primaryText} ${profit >= 0 ? styles.positive : styles.negative}`}>
-            {`${formatMoney(profit)}`} $
+            {`${profit > 0 ? "+" : ""}${formatMoney(profit)}`} $
         </div>
     );
     return (
