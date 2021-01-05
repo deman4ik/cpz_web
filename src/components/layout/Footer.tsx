@@ -20,7 +20,7 @@ const _Footer: React.FC = () => {
                 <div className={styles.colLinks}>
                     {footerLinks.map((item) => (
                         <Fragment key={item.name}>
-                            <Link href={item.href} replace>
+                            <Link href={item.href}>
                                 <a className={styles.navItem} onClick={() => hahdleOnClick(item.href)}>
                                     <span className={styles.navItemText}>{item.name}</span>
                                 </a>

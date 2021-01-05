@@ -27,13 +27,13 @@ const _Header: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                <Link href="/" replace>
+                <Link href="/">
                     <a>
                         <img className={styles.logo} src={logoAccent} alt="logo" height="34" width="34" />
                     </a>
                 </Link>
 
-                <Link href="/" replace>
+                <Link href="/">
                     <a className={styles.btnTitle}>Cryptuoso</a>
                 </Link>
             </div>
@@ -41,7 +41,7 @@ const _Header: React.FC = () => {
             <div className={styles.leftContainer}>
                 {linksHeader.map((item) => (
                     <div key={item.title} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
-                        <Link href={item.href} replace>
+                        <Link href={item.href}>
                             <a className={styles.btnTitle}>{item.title}</a>
                         </Link>
                     </div>
@@ -54,7 +54,7 @@ const _Header: React.FC = () => {
                             <LoadingIndicator />
                         ) : (
                             <div>
-                                <Link href="/" replace>
+                                <Link href="/">
                                     <a className={styles.btnTitle} onClick={logout}>
                                         Log out
                                     </a>
@@ -69,7 +69,7 @@ const _Header: React.FC = () => {
                                 key={item.title}
                                 className={styles.btnWrapper}
                                 onClick={() => handleOnClick(item.href)}>
-                                <Link href={item.href} replace>
+                                <Link href={item.href}>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
                             </div>
