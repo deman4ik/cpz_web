@@ -10,7 +10,7 @@
 
 .header {
     width: 100%;
-    max-width: 1280px;
+    max-width: var(--desktop-width);
 }
 
 .title {

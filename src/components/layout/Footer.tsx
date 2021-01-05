@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-
+import React, { Fragment, memo } from "react";
+import Link from "next/link";
 import { event } from "libs/gtag";
 import { footerLinks, footerIcons } from "./helpers";
 import styles from "./Footer.module.css";
@@ -19,13 +19,13 @@ const _Footer: React.FC = () => {
             <div className={styles.row}>
                 <div className={styles.colLinks}>
                     {footerLinks.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.href}
-                            className={styles.navItem}
-                            onClick={() => hahdleOnClick(item.href)}>
-                            <span className={styles.navItemText}>{item.name}</span>
-                        </a>
+                        <Fragment key={item.name}>
+                            <Link href={item.href}>
+                                <a className={styles.navItem} onClick={() => hahdleOnClick(item.href)}>
+                                    <span className={styles.navItemText}>{item.name}</span>
+                                </a>
+                            </Link>
+                        </Fragment>
                     ))}
                 </div>
                 <div className={styles.logoWrapper}>
@@ -46,8 +46,9 @@ const _Footer: React.FC = () => {
                         ))}
                     </div>
                     <div className={styles.logoBrand}>
-                        <div className={styles.logoText}>&copy; {new Date().getFullYear()} Cryptuoso</div>
-                        <div className={styles.brandRights}>&reg;</div>
+                        <div className={styles.logoText}>
+                            &copy; {new Date().getFullYear()} Cryptuoso<sup className={styles.brandRights}>&reg;</sup>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 import React, { memo, useContext } from "react";
 import Link from "next/link";
-
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
+import logoAccent from "assets/img/logo-accent.png";
 import styles from "./Header.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { LoadingIndicator } from "components/common";
@@ -26,24 +26,26 @@ const _Header: React.FC = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
+                <Link href="/">
+                    <a>
+                        <img className={styles.logo} src={logoAccent} alt="logo" height="34" width="34" />
+                    </a>
+                </Link>
+
+                <Link href="/">
+                    <a className={styles.btnTitle}>Cryptuoso</a>
+                </Link>
+            </div>
+
             <div className={styles.leftContainer}>
-                <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                    <img src="img/logo-accent.png" alt="logo" style={{ height: "100%" }} />
-                    <Link href="/" replace>
-                        <a className={styles.btnTitle}>Cryptuoso</a>
-                    </Link>
-                </div>
-                {isAuth && (
-                    <>
-                        {linksHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
-                                <Link href={item.href} replace>
-                                    <a className={styles.btnTitle}>{item.title}</a>
-                                </Link>
-                            </div>
-                        ))}
-                    </>
-                )}
+                {linksHeader.map((item) => (
+                    <div key={item.title} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
+                        <Link href={item.href}>
+                            <a className={styles.btnTitle}>{item.title}</a>
+                        </Link>
+                    </div>
+                ))}
             </div>
             <div className={styles.rightContainer}>
                 {isAuth ? (
@@ -51,16 +53,23 @@ const _Header: React.FC = () => {
                         {loading ? (
                             <LoadingIndicator />
                         ) : (
-                            <div className={styles.btnTitle} onClick={logout}>
-                                Log out
+                            <div>
+                                <Link href="/">
+                                    <a className={styles.btnTitle} onClick={logout}>
+                                        Log out
+                                    </a>
+                                </Link>
                             </div>
                         )}
                     </div>
                 ) : (
                     <>
-                        {authHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
-                                <Link href={item.href} replace>
+                        {authHeader.map((item) => (
+                            <div
+                                key={item.title}
+                                className={styles.btnWrapper}
+                                onClick={() => handleOnClick(item.href)}>
+                                <Link href={item.href}>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
                             </div>
