@@ -16,6 +16,11 @@
     align-items: center;
 }
 
+.leftContainer .logo:hover,
+.leftContainer .logo:focus {
+    opacity: 0.7;
+}
+
 .rightContainer {
     display: flex;
     flex-direction: row;
@@ -35,8 +40,14 @@
     opacity: 1;
 }
 
+.btnTitle:link,
 .btnTitle:visited {
     color: white;
+}
+
+.btnTitle:hover,
+.btnTitle:focus {
+    opacity: 0.7;
 }
 
 .btnTitle:active {
@@ -52,11 +63,17 @@
 
 @media (max-width: 992px) {
     .container {
-        padding: 10px 0;
+        padding-left: 15px;
+        padding-right: 15px;
     }
+
+    .rightContainer .btnWrapper:last-of-type {
+        margin-right: 0;
+    }
+
     .btnTitle {
         font-size: var(--small2);
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 }

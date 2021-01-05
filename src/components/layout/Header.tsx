@@ -27,8 +27,12 @@ const _Header: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.leftContainer}>
+                <Link href="/" replace>
+                    <a>
+                        <img className={styles.logo} src={logoAccent} alt="logo" height="34" width="34" />
+                    </a>
+                </Link>
                 <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                    <img src={logoAccent} alt="logo" style={{ height: "100%" }} />
                     <Link href="/" replace>
                         <a className={styles.btnTitle}>Cryptuoso</a>
                     </Link>
