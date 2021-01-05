@@ -31,6 +31,7 @@ function parseRobotResult(data, type) {
     }
     result.total_balance_usd = total_balance_usd;
     result.used_balance_percent = amounts?.used_balance_percent || 0;
+    result.available_balance_percent = amounts?.available_balance_percent || 0;
 
     return result;
 }

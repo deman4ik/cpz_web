@@ -63,4 +63,5 @@ export type RobotResult = {
     precision?: Precision;
     total_balance_usd?: number;
     used_balance_percent?: number;
+    available_balance_percent?: number;
 };
