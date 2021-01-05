@@ -26,17 +26,19 @@ const _Header: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.leftContainer}>
+            <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
                 <Link href="/" replace>
                     <a>
                         <img className={styles.logo} src={logoAccent} alt="logo" height="34" width="34" />
                     </a>
                 </Link>
-                <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
-                    <Link href="/" replace>
-                        <a className={styles.btnTitle}>Cryptuoso</a>
-                    </Link>
-                </div>
+
+                <Link href="/" replace>
+                    <a className={styles.btnTitle}>Cryptuoso</a>
+                </Link>
+            </div>
+
+            <div className={styles.leftContainer}>
                 {linksHeader.map((item, idx) => (
                     <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
                         <Link href={item.href} replace>
