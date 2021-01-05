@@ -11,7 +11,7 @@ export const StatisticElement: FC<StatisticElementProps> = ({ label, value, valu
     return (
         <div className={`${styles.statisticsElement} ${className || ""}`}>
             <div className={styles.secondaryText}>{label}</div>
-            {value && (
+            {!Object.is(value, null) && (
                 <div className={styles.statisticsText} style={valueTextStyle}>
                     &nbsp;{value}
                 </div>
