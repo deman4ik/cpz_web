@@ -39,8 +39,8 @@ const _Header: React.FC = () => {
             </div>
 
             <div className={styles.leftContainer}>
-                {linksHeader.map((item, idx) => (
-                    <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
+                {linksHeader.map((item) => (
+                    <div key={item.title} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
                         <Link href={item.href} replace>
                             <a className={styles.btnTitle}>{item.title}</a>
                         </Link>
@@ -53,15 +53,22 @@ const _Header: React.FC = () => {
                         {loading ? (
                             <LoadingIndicator />
                         ) : (
-                            <div className={styles.btnTitle} onClick={logout}>
-                                Log out
+                            <div>
+                                <Link href="/" replace>
+                                    <a className={styles.btnTitle} onClick={logout}>
+                                        Log out
+                                    </a>
+                                </Link>
                             </div>
                         )}
                     </div>
                 ) : (
                     <>
-                        {authHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
+                        {authHeader.map((item) => (
+                            <div
+                                key={item.title}
+                                className={styles.btnWrapper}
+                                onClick={() => handleOnClick(item.href)}>
                                 <Link href={item.href} replace>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>

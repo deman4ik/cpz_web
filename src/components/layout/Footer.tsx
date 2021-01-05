@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { Fragment, memo } from "react";
+import Link from "next/link";
 import { event } from "libs/gtag";
 import { footerLinks, footerIcons } from "./helpers";
 import styles from "./Footer.module.css";
@@ -18,13 +19,13 @@ const _Footer: React.FC = () => {
             <div className={styles.row}>
                 <div className={styles.colLinks}>
                     {footerLinks.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.href}
-                            className={styles.navItem}
-                            onClick={() => hahdleOnClick(item.href)}>
-                            <span className={styles.navItemText}>{item.name}</span>
-                        </a>
+                        <Fragment key={item.name}>
+                            <Link href={item.href} replace>
+                                <a className={styles.navItem} onClick={() => hahdleOnClick(item.href)}>
+                                    <span className={styles.navItemText}>{item.name}</span>
+                                </a>
+                            </Link>
+                        </Fragment>
                     ))}
                 </div>
                 <div className={styles.logoWrapper}>
@@ -33,15 +34,15 @@ const _Footer: React.FC = () => {
                 <div className={styles.rights}>
                     <div className={styles.social}>
                         {footerIcons.map((item) => (
-                            <a
-                                key={item.icon.name}
-                                href={item.href}
-                                className={styles.linkWrapper}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={() => hahdleOnClick(item.href)}>
-                                <item.icon />
-                            </a>
+                            <Fragment key={item.icon.name}>
+                                <a
+                                    className={styles.linkWrapper}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => hahdleOnClick(item.href)}>
+                                    <item.icon />
+                                </a>
+                            </Fragment>
                         ))}
                     </div>
                     <div className={styles.logoBrand}>
