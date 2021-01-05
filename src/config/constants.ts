@@ -36,7 +36,8 @@ export const SECRET_CODE_LENGTH = 6;
 export const LOCALHOST = "127.0.0.1";
 
 export const POLL_INTERVAL = +process.env.POLL_INTERVAL || 10000;
-export const DOCS_URL = "support.cryptuoso.com";
+export const BLOG_URL = "/blog";
+export const DOCS_URL = "/docs";
 export const TERMS_URL = "/terms-of-use";
 export const PRIVACY_URL = "/privacy-policy";
 export const SUPPORT_URL = "/support";

@@ -1,4 +1,4 @@
-import { TERMS_URL, PRIVACY_URL, SUPPORT_URL, DOCS_URL, TELEGRAM_COMMUNITY_URL } from "config/constants";
+import { BLOG_URL, DOCS_URL, TERMS_URL, PRIVACY_URL, SUPPORT_URL, TELEGRAM_COMMUNITY_URL } from "config/constants";
 import { TelegramIcon, InstagramIcon, TwitterIcon } from "assets/icons/svg";
 
 export const MAINMENU_MAX_WIDTH = 200;
@@ -8,11 +8,11 @@ export const MAINMENU_MIN_HEIGHT = 56;
 export const linksHeader = [
     {
         title: "Blog",
-        href: "/blog"
+        href: `${BLOG_URL}`
     },
     {
         title: "Docs",
-        href: "/docs"
+        href: `${DOCS_URL}`
     },
     {
         title: "Start Trading",
@@ -54,19 +54,19 @@ export const contactIcons = {
 
 export const footerLinks = [
     {
-        href: "/blog",
+        href: `${BLOG_URL}`,
         name: "Blog"
     },
     {
-        href: "/docs",
+        href: `${DOCS_URL}`,
         name: "Docs"
     },
     {
-        href: `${DOCS_URL}${TERMS_URL}`,
+        href: `${TERMS_URL}`,
         name: "Terms"
     },
     {
-        href: `${DOCS_URL}${PRIVACY_URL}`,
+        href: `${PRIVACY_URL}`,
         name: "Privacy"
     },
     {

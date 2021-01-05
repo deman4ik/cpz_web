@@ -34,15 +34,15 @@ const _Footer: React.FC = () => {
                 <div className={styles.rights}>
                     <div className={styles.social}>
                         {footerIcons.map((item) => (
-                            <Fragment key={item.icon.name}>
-                                <a
-                                    className={styles.linkWrapper}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={() => hahdleOnClick(item.href)}>
-                                    <item.icon />
-                                </a>
-                            </Fragment>
+                            <a
+                                key={item.icon.name}
+                                href={item.href}
+                                className={styles.linkWrapper}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => hahdleOnClick(item.href)}>
+                                <item.icon />
+                            </a>
                         ))}
                     </div>
                     <div className={styles.logoBrand}>
