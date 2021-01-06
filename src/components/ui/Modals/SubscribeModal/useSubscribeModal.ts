@@ -12,15 +12,24 @@ import {
 } from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
 
+type LimitsType = {
+    asset: any;
+    available_balance_percent?: number;
+    precision: any;
+    price: number;
+    total_balance_usd: number;
+    used_balance_percent: number;
+};
+
 interface UseSubscribeModalProps {
-    limits: any;
+    limits: LimitsType;
     inputs: InputMap;
     robotData?: any;
 }
 
 const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
-export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
+export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps) => {
     const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
     const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
     const getPrecision = () => (limits && limits.precision) || defaultPrecision;
@@ -33,17 +42,23 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [volumeType, limits]);
 
-    const usedAccountPercent = Math.ceil(
-        limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0)
-    );
-
     useEffect(() => {
         setVolumeType(getDefaultVolumeType());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData]);
 
     const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
-    const { price, minAmount, minAmountUSD, balance, maxPercentAmount } = parsedLimits;
+    const {
+        price,
+        minAmount,
+        minAmountUSD,
+        balance,
+        maxPercentAmount,
+        availableBalancePercent,
+        usedBalancePercent
+    } = parsedLimits;
+
+    const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
 
     const { currencyDynamic, assetStatic } = InputTypes;
     const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
@@ -80,7 +95,8 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
                 type,
                 value: inputValues[type],
                 maxAmount: type === InputTypes.balancePercent ? maxPercentAmount : maxAmounts[type],
-                minAmount: minAmounts[type]
+                minAmount: minAmounts[type],
+                availableBalancePercent
             });
         }
         return false;
@@ -103,4 +119,4 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         setVolumeType,
         errors
     };
-}
+};

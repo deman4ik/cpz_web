@@ -127,6 +127,8 @@ export type ParsedLimits = {
     maxAmountUSD?: number;
     balance?: number;
     maxPercentAmount?: number;
+    usedBalancePercent?: number;
+    availableBalancePercent?: number;
 };
 export function parseLimits(limits: any): ParsedLimits {
     if (!(limits && limits.asset)) {
@@ -141,7 +143,9 @@ export function parseLimits(limits: any): ParsedLimits {
         minAmountUSD: min.amountUSD || 0,
         maxAmountUSD: max.amountUSD || 0,
         balance: limits.total_balance_usd,
-        maxPercentAmount: max.balancePercent
+        maxPercentAmount: max.balancePercent,
+        usedBalancePercent: limits.used_balance_percent,
+        availableBalancePercent: limits.available_balance_percent
     };
 }
 
@@ -190,13 +194,15 @@ interface ValidateVolumeProps {
     value: string | number;
     minAmount: string | number;
     maxAmount: string | number;
+    availableBalancePercent: number;
 }
 
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent, maxAmount = 100, minAmount = 0 }) =>
-    getAmtErrors(value, minAmount, maxAmount - used_percent, 0, "percent");
+const validateBalancePercent = ({ value, used_percent, availableBalancePercent, maxAmount = 100, minAmount = 0 }) => {
+    return getAmtErrors(value, minAmount, maxAmount - used_percent, 0, "percent");
+};
 
 const validationFunctions = {
     assetStatic: validateCurrencies,
