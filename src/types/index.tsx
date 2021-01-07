@@ -22,6 +22,8 @@ export type RobotDataType = {
             exchange: string;
             settings: {
                 balancePercent?: number;
+                initialVolume?: number;
+                volumeInCurrency?: number;
                 volume?: number;
                 volumeType: InputTypes;
                 __typename: string;
@@ -34,9 +36,22 @@ export type RobotDataType = {
 };
 
 export type LimitsType = {
-    asset: any;
+    asset: {
+        max: {
+            amount: number;
+            amountUSD: number;
+            balancePercent?: number;
+        };
+        min: {
+            amount: number;
+            amountUSD: number;
+        };
+    };
     available_balance_percent?: number;
-    precision: any;
+    precision?: {
+        amount: number;
+        price: number;
+    };
     price: number;
     total_balance_usd: number;
     used_balance_percent: number;

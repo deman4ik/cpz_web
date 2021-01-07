@@ -1,5 +1,6 @@
 import { formatMoney } from "config/utils";
 import { InputTypes, InputValues, Precision, RobotResult, volumes } from "components/ui/Modals/types";
+import { LimitsType } from "../../../types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -12,7 +13,7 @@ export const precisionToVolumeMap = {
     [InputTypes.assetStatic]: "amount",
     [InputTypes.currencyDynamic]: "price"
 };
-export const defaultPrecision = { price: 1, amount: 8 };
+export const DEFAULT_PRECISION = { price: 1, amount: 8 };
 
 function parseRobotResult(data, type) {
     const result: RobotResult = {};
@@ -55,7 +56,7 @@ export const getLimits = (data, type) => {
         used_balance_percent: 0,
         asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } },
         price: 0,
-        precision: defaultPrecision
+        precision: DEFAULT_PRECISION
     };
     let parsedData;
     if (type === limitsPropToType.robots) {
@@ -130,7 +131,7 @@ export type ParsedLimits = {
     usedBalancePercent?: number;
     availableBalancePercent?: number;
 };
-export function parseLimits(limits: any): ParsedLimits {
+export function parseLimits(limits: LimitsType): ParsedLimits {
     if (!(limits && limits.asset)) {
         return {};
     }

@@ -42,9 +42,11 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
+
     const { data: robotData } = useQuery<RobotDataType>(ROBOT(type));
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
+
     const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
             id: robotData?.robot.user_ex_acc_id,
@@ -62,6 +64,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
         inputs,
         robotData
     });
+    console.log(robotData);
     const { inputValues, volumeType, precision, errors } = subscribeModalProps;
 
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);
@@ -80,7 +83,9 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
                 if (!responseData[prop].result) {
                     setFormError(responseData[prop].error);
                 }
-                refetch().catch((e) => console.error(e));
+                if (refetch) {
+                    refetch().catch((e) => console.error(e));
+                }
                 onClose(true);
             })
             .catch((e) => {

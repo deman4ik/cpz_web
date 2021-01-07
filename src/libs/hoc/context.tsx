@@ -1,14 +1,29 @@
-import React, { useState, createContext, useCallback } from "react";
+import React, { useState, createContext, useCallback, ReactNode, Dispatch, SetStateAction } from "react";
 
-export const AuthContext = createContext({ authState: null, setAuthState: null });
+type AuthContextPropsType = {
+    children: ReactNode;
+};
+
+type AuthStateType = {
+    isAuth: boolean;
+    authIsSet: boolean;
+    user_id?: string;
+};
+
+type AuthContextType = {
+    authState: AuthStateType;
+    setAuthState: Dispatch<SetStateAction<AuthStateType>>;
+};
+
+export const AuthContext = createContext<AuthContextType>(null!);
 
 /*Компонент провадйер контекста*/
-export const AuthContextProvider: React.FC = (props: any) => {
-    const [authState, setState] = useState({ isAuth: false, authIsSet: false });
+export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
+    const [authState, setState] = useState<AuthStateType>({ isAuth: false, authIsSet: false });
     const setAuthState = useCallback((params: any) => {
         setState({ ...params, authIsSet: true });
     }, []);
-    return <AuthContext.Provider value={{ authState, setAuthState }}>{props.children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ authState, setAuthState }}>{children}</AuthContext.Provider>;
 };
 
 export const LayoutContext = createContext({ layoutState: null, setLayoutState: null });

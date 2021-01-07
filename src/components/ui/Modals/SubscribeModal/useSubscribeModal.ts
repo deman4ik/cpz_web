@@ -3,7 +3,7 @@ import { InputMap, InputTypes, InputValues, Precision } from "components/ui/Moda
 import {
     AssetTypes,
     CurrencyTypes,
-    defaultPrecision,
+    DEFAULT_PRECISION,
     getInputValues,
     parseLimits,
     precisionToVolumeMap,
@@ -19,15 +19,17 @@ interface UseSubscribeModalProps {
     robotData?: RobotDataType;
 }
 
-const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
+const INITIAL_VALUES = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
 export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps) => {
-    const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
-    const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
-    const getPrecision = () => (limits && limits.precision) || defaultPrecision;
+    const DEFAULT_VOLUME_TYPE = robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+    const [volumeType, setVolumeType] = useState<InputTypes>(DEFAULT_VOLUME_TYPE);
+    const getPrecision = () => (limits && limits.precision) || DEFAULT_PRECISION;
     const selectedInputs = inputs[volumeType];
-    const [inputValues, setInputValues] = useState<InputValues>(initialValues);
+    const [inputValues, setInputValues] = useState<InputValues>(INITIAL_VALUES);
     const [precision, setPrecision] = useState<Precision>(getPrecision());
+
+    console.log(limits);
 
     useEffect(() => {
         setPrecision(getPrecision());
@@ -35,7 +37,7 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
     }, [volumeType, limits]);
 
     useEffect(() => {
-        setVolumeType(getDefaultVolumeType());
+        setVolumeType(DEFAULT_VOLUME_TYPE);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData]);
 
