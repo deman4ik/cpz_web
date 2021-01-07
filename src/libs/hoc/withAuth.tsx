@@ -20,14 +20,16 @@ export const withAuth = (Page) => {
         const [accessToken] = useAccessToken();
 
         useEffect(() => {
-            setAuthState({
+            setAuthState((prevState) => ({
+                ...prevState,
                 isAuth: Boolean(accessToken),
                 user_id: getUserIdFromAccessToken(accessToken),
-                isManager: getUserRoleFromAccesToken(accessToken) === "manager"
-            });
+                isManager: getUserRoleFromAccesToken(accessToken) === "manager",
+                authIsSet: true
+            }));
         }, [setAuthState, accessToken]);
 
-        return authState?.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
+        return authState.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {

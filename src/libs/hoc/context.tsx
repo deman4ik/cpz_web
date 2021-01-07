@@ -1,4 +1,4 @@
-import React, { useState, createContext, useCallback, ReactNode, Dispatch, SetStateAction } from "react";
+import React, { useState, createContext, ReactNode, Dispatch, SetStateAction } from "react";
 
 type AuthContextPropsType = {
     children: ReactNode;
@@ -18,19 +18,16 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
-/*Компонент провадйер контекста*/
-export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
-    const INITIAL_AUTH_STATE = {
-        isAuth: false,
-        authIsSet: true,
-        isManager: false,
-        user_id: null
-    };
+const INITIAL_AUTH_STATE = {
+    isAuth: false,
+    authIsSet: false,
+    isManager: false,
+    user_id: null
+};
 
-    const [authState, setState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
-    const setAuthState = useCallback((params: any) => {
-        setState({ ...params, authIsSet: true });
-    }, []);
+export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
+    const [authState, setAuthState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
+
     return <AuthContext.Provider value={{ authState, setAuthState }}>{children}</AuthContext.Provider>;
 };
 

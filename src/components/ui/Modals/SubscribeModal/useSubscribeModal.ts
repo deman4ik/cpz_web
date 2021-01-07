@@ -29,8 +29,6 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
     const [inputValues, setInputValues] = useState<InputValues>(INITIAL_VALUES);
     const [precision, setPrecision] = useState<Precision>(getPrecision());
 
-    console.log(limits);
-
     useEffect(() => {
         setPrecision(getPrecision());
         // eslint-disable-next-line react-hooks/exhaustive-deps
