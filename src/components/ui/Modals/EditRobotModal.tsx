@@ -16,6 +16,7 @@ import { EDIT_SIGNAL } from "graphql/signals/mutations";
 import { RobotsType } from "config/types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { RobotDataType } from "../../../types";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;
@@ -25,6 +26,7 @@ interface Props {
     setTitle: (title: string) => void;
     code?: string;
 }
+
 const inputs = AddRobotInputsMap;
 
 const queryToEditType = {
@@ -35,11 +37,12 @@ const mapPropToType = {
     [RobotsType.robots]: "userRobotEdit",
     [RobotsType.signals]: "userSignalEdit"
 };
+
 const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
-    const { data: robotData } = useQuery(ROBOT(type));
+    const { data: robotData } = useQuery<RobotDataType>(ROBOT(type));
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
     const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {

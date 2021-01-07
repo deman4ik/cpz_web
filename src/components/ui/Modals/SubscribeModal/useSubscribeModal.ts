@@ -11,20 +11,12 @@ import {
     validateVolume
 } from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
-
-type LimitsType = {
-    asset: any;
-    available_balance_percent?: number;
-    precision: any;
-    price: number;
-    total_balance_usd: number;
-    used_balance_percent: number;
-};
+import { LimitsType, RobotDataType } from "../../../../types";
 
 interface UseSubscribeModalProps {
     limits: LimitsType;
     inputs: InputMap;
-    robotData?: any;
+    robotData?: RobotDataType;
 }
 
 const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };

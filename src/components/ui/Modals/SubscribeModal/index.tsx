@@ -15,6 +15,7 @@ import { AuthContext } from "libs/hoc/context";
 import Router from "next/router";
 import { RobotsType } from "config/types";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
+import { RobotDataType } from "../../../../types";
 
 interface Props {
     actionType?: string;
@@ -38,7 +39,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
     const [subscribe, { loading: subscribeLoading, error: subscribeError }] = useMutation(SUBSCRIBE_TO_SIGNALS);
     const [edit, { loading: editLoading, error: editError }] = useMutation(EDIT_SIGNAL);
     //queries
-    const { data: robotData } = useQuery(ROBOT(RobotsType.signals));
+    const { data: robotData } = useQuery<RobotDataType>(ROBOT(RobotsType.signals));
 
     const { name, code, id, subs } = robotData?.robot || {};
     const asset = robotData?.robot.subs.asset;
