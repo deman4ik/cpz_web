@@ -7,7 +7,8 @@ type AuthContextPropsType = {
 type AuthStateType = {
     isAuth: boolean;
     authIsSet: boolean;
-    user_id?: string;
+    user_id: string | null;
+    isManager?: boolean;
 };
 
 type AuthContextType = {
@@ -19,7 +20,14 @@ export const AuthContext = createContext<AuthContextType>(null!);
 
 /*Компонент провадйер контекста*/
 export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
-    const [authState, setState] = useState<AuthStateType>({ isAuth: false, authIsSet: false });
+    const INITIAL_AUTH_STATE = {
+        isAuth: false,
+        authIsSet: true,
+        isManager: false,
+        user_id: null
+    };
+
+    const [authState, setState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
     const setAuthState = useCallback((params: any) => {
         setState({ ...params, authIsSet: true });
     }, []);

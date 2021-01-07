@@ -26,7 +26,7 @@ export const useFetchRobots = (
     const { preservePosition, restorePosition } = useScrollPosition();
     /*Обработка контекста аутентификации*/
     const {
-        authState: { isAuth, user_id, authIsSet }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const QUERIES_TYPE = AUTH_QUERIES[Number(isAuth)];
 
