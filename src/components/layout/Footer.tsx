@@ -2,6 +2,7 @@ import React, { Fragment, memo } from "react";
 import Link from "next/link";
 import { event } from "libs/gtag";
 import { footerLinks, footerIcons } from "./helpers";
+import { CryptuosoLogo } from "../../assets/icons/svg";
 import styles from "./Footer.module.css";
 
 const _Footer: React.FC = () => {
@@ -28,8 +29,8 @@ const _Footer: React.FC = () => {
                         </Fragment>
                     ))}
                 </div>
-                <div className={styles.logoWrapper}>
-                    <img className={styles.logoImg} src="/img/logo.png" alt="" />
+                <div className={styles.logoImg}>
+                    <CryptuosoLogo size={80} />
                 </div>
                 <div className={styles.rights}>
                     <div className={styles.social}>
