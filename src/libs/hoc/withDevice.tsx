@@ -1,18 +1,19 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
 
-import { DeviceContext } from "../deviceContext";
+import { DeviceContext } from "../../providers/deviceContext";
 import { getDisplayName } from "../getDisplayName";
 import { DeviceProps } from "config/types";
+import { NextPage, NextPageContext } from "next";
 
-export const withDevice = (Page) => {
+export const withDevice = (Page: NextPage) => {
     const WithDevice = (props) => (
         <DeviceContext.Provider value={props.device}>
             <Page {...props} />
         </DeviceContext.Provider>
     );
 
-    WithDevice.getInitialProps = async (ctx) => {
+    WithDevice.getInitialProps = async (ctx: NextPageContext) => {
         const device: DeviceProps = {
             isMobile: false
         };
@@ -20,7 +21,7 @@ export const withDevice = (Page) => {
         const userAgent = ctx.req ? ctx.req.headers["user-agent"] : navigator.userAgent;
 
         device.isMobile = Boolean(
-            userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i)
+            userAgent?.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i)
         );
 
         return {

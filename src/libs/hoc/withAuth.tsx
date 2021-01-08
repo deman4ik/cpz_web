@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useContext, useEffect } from "react";
+import nextCookies from "next-cookies";
 
 import { AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
 import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "libs/accessToken";
-import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
 import { AuthContext } from "../../providers/authContext";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
+import { NextPage, NextPageContext } from "next";
 
 const loginPath = "/login";
 const homePath = "/robots";
 
-export const withAuth = (Page) => {
+export const withAuth = (Page: NextPage) => {
     const WithAuth = (props) => {
         const { authState, setAuthState } = useContext(AuthContext);
         const [accessToken] = useAccessToken();
@@ -32,7 +33,7 @@ export const withAuth = (Page) => {
         return authState.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
     };
 
-    WithAuth.getInitialProps = async (ctx) => {
+    WithAuth.getInitialProps = async (ctx: NextPageContext) => {
         const isLanding = ctx.pathname === "/";
         const { accessToken } = nextCookies(ctx);
         if (ctx.res) {
@@ -45,6 +46,7 @@ export const withAuth = (Page) => {
                 }
             }
         }
+
         return {
             ...(Page.getInitialProps ? await Page.getInitialProps(ctx) : {}),
             accessToken
