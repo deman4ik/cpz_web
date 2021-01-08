@@ -4,19 +4,20 @@ import React, { useContext, useEffect } from "react";
 import nextCookies from "next-cookies";
 
 import { AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
-import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "libs/accessToken";
+import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccessToken } from "libs/accessToken";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
 import { AuthContext } from "../../providers/authContext";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 import { NextPage, NextPageContext } from "next";
+import { NextPageProps } from "../../types";
 
 const loginPath = "/login";
 const homePath = "/robots";
 
 export const withAuth = (Page: NextPage) => {
-    const WithAuth = (props) => {
+    const WithAuth = (props: NextPageProps) => {
         const { authState, setAuthState } = useContext(AuthContext);
         const [accessToken] = useAccessToken();
 
@@ -25,7 +26,7 @@ export const withAuth = (Page: NextPage) => {
                 ...prevState,
                 isAuth: Boolean(accessToken),
                 user_id: getUserIdFromAccessToken(accessToken),
-                isManager: getUserRoleFromAccesToken(accessToken) === "manager",
+                isManager: getUserRoleFromAccessToken(accessToken) === "manager",
                 authIsSet: true
             }));
         }, [setAuthState, accessToken]);
@@ -39,7 +40,7 @@ export const withAuth = (Page: NextPage) => {
         if (ctx.res) {
             if (!isLanding) {
                 if (
-                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken(accessToken) !== "manager") ||
+                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccessToken(accessToken) !== "manager") ||
                     (getUserIdFromAccessToken(accessToken) && AUTH_ROUTES.includes(ctx.pathname))
                 ) {
                     redirect(ctx, homePath);

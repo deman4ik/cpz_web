@@ -24,9 +24,13 @@ export const putTokenInCookie = (token: string) => {
 };
 
 export const getAccessToken = getTokenFromCookie;
+
+/**
+ * Remove access JWT token from client cookies
+ */
 export const nullifyAccessToken = () => putTokenInCookie("");
 
-export const getTokenInfo = (jwt) => {
+export const getTokenInfo = (jwt: string) => {
     const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
     return {
         token: jwt,
@@ -107,7 +111,7 @@ export const getUserIdFromAccessToken = (token?: string): string | null => {
     return null;
 };
 
-export const getUserRoleFromAccesToken = (token?: string): string | null => {
+export const getUserRoleFromAccessToken = (token?: string): string | null => {
     if (token) {
         const { role } = jwtDecode(token);
         return role;

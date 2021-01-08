@@ -5,13 +5,16 @@ import { DeviceContext } from "../../providers/deviceContext";
 import { getDisplayName } from "../getDisplayName";
 import { DeviceProps } from "config/types";
 import { NextPage, NextPageContext } from "next";
+import { NextPageProps } from "../../types";
 
 export const withDevice = (Page: NextPage) => {
-    const WithDevice = (props) => (
-        <DeviceContext.Provider value={props.device}>
-            <Page {...props} />
-        </DeviceContext.Provider>
-    );
+    const WithDevice = (props: NextPageProps) => {
+        return (
+            <DeviceContext.Provider value={props.device!}>
+                <Page {...props} />
+            </DeviceContext.Provider>
+        );
+    };
 
     WithDevice.getInitialProps = async (ctx: NextPageContext) => {
         const device: DeviceProps = {

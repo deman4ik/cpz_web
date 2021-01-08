@@ -1,8 +1,11 @@
 import { createContext } from "react";
-import { DeviceProps } from "config/types";
 
-const device: DeviceProps = {
+export type DeviceContextType = {
+    isMobile: boolean;
+};
+
+const INITIAL_DEVICE_CONTEXT_VALUE = {
     isMobile: false
 };
 
-export const DeviceContext = createContext(device);
+export const DeviceContext = createContext<DeviceContextType>(INITIAL_DEVICE_CONTEXT_VALUE);
