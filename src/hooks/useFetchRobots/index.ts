@@ -12,7 +12,7 @@ import { getHash, getSearchProps } from "config/utils";
 // services
 import LocalStorageService from "services/localStorageService";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../providers/authContext";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { RobotsType } from "config/types";
 import { useScrollPosition } from "hooks/useScrollPosition";

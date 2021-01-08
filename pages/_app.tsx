@@ -6,7 +6,8 @@ import Router from "next/router";
 import { pageview } from "libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
-import { AuthContextProvider, LayoutContextProvider } from "libs/hoc/context";
+import { AuthContextProvider} from "../src/providers/authContext";
+import { LayoutContextProvider } from "../src/providers/layoutContext";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 

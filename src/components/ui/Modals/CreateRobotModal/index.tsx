@@ -2,7 +2,7 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";

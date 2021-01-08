@@ -10,7 +10,7 @@ import { NotificationProps } from "./types";
 import { Notify } from "./Notify";
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 
 const _NotifySettings: React.FC = () => {
     const {

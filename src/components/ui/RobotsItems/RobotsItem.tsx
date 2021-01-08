@@ -11,7 +11,7 @@ import AreaChart from "components/charts/AreaChart";
 // styles
 import styles from "./RobotsItem.module.css";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
 import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
 

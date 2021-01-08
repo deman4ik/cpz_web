@@ -8,7 +8,7 @@ import styles from "./styles/Common.module.css";
 // types
 import { PageType } from "config/types";
 // auth context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 
 const SupportPage: React.FC<any> = () => {
     const {

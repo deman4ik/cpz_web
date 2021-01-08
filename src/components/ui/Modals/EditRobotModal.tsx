@@ -11,7 +11,7 @@ import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 import { EDIT_SIGNAL } from "graphql/signals/mutations";
 import { RobotsType } from "config/types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";

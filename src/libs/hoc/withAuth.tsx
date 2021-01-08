@@ -8,7 +8,7 @@ import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../providers/authContext";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 
 const loginPath = "/login";

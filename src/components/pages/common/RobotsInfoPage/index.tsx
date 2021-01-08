@@ -8,7 +8,7 @@ import { SignalRobots } from "components/ui/SignalsRobots";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { formatStats, queryParam } from "components/ui/RobotPerformance/helpers";
 import { POLL_INTERVAL, SCREEN_TYPE } from "config/constants";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 import {
     AGGREGATED_OPEN_POSITIONS_FOR_SIGNLAS_BY_DIRECTION,
     ALL_USER_ROBOTS_AGGR_STATS,

@@ -5,7 +5,7 @@ import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 import { ROBOT_POSITIONS, ROBOT_POSITIONS_FOR_USER, USER_ROBOT_POSITIONS_AGGREGATE } from "graphql/robots/queries";
 import { SIGNAL_ROBOT_POSITIONS_AGGREGATE } from "graphql/signals/queries";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 import { useScrollPosition } from "hooks/useScrollPosition";
 
 interface RobotData {

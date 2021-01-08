@@ -12,7 +12,7 @@ import { SET_CHART_DATA } from "graphql/local/mutations";
 import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
 import { ChartType } from "components/charts/LightWeightChart/types";
 import { getLegend } from "config/utils";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../../providers/authContext";
 import { candleQueries } from "components/pages/helpers";
 import { CandleChartComponent } from "components/common/CandleChartComponent";
 

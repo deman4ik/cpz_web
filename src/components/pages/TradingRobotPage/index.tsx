@@ -13,7 +13,7 @@ import { USER_ROBOT_INFO_FOR_USER, ROBOT_INFO_FOR_ROBOTS } from "graphql/robots/
 import { SET_ROBOT_DATA } from "graphql/local/mutations";
 import { PageType, RobotsType } from "config/types";
 import { POLL_INTERVAL } from "config/constants";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 
 export const TradingRobotPage: React.FC = () => {
     const {

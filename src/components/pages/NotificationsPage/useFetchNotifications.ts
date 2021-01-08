@@ -8,7 +8,7 @@ import { UPDATE_NOTIFICATIONS } from "graphql/user/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { parseNotifications, filters } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../providers/authContext";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { useScrollPosition } from "hooks/useScrollPosition";
 

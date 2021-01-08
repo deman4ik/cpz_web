@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { FetchResult, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../providers/authContext";
 import { logout } from "libs/auth";
 
 export const getTokenFromCookie = () => {

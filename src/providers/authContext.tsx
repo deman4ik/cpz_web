@@ -1,4 +1,4 @@
-import React, { useState, createContext, ReactNode, Dispatch, SetStateAction } from "react";
+import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 type AuthContextPropsType = {
     children: ReactNode;
@@ -29,11 +29,4 @@ export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
     const [authState, setAuthState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
 
     return <AuthContext.Provider value={{ authState, setAuthState }}>{children}</AuthContext.Provider>;
-};
-
-export const LayoutContext = createContext({ layoutState: null, setLayoutState: null });
-
-export const LayoutContextProvider: React.FC = ({ children }) => {
-    const [layoutState, setLayoutState] = useState({ menuOpen: null });
-    return <LayoutContext.Provider value={{ layoutState, setLayoutState }}>{children}</LayoutContext.Provider>;
 };

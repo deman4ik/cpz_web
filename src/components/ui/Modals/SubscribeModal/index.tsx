@@ -11,7 +11,7 @@ import { ModalButtons } from "components/pages/SignalRobotPage/Modals/ModalsButt
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { Input } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 import Router from "next/router";
 import { RobotsType } from "config/types";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";

@@ -6,7 +6,7 @@ import { StatsFiltersModal } from "components/ui/Modals/StatsFiltersModal";
 import NothingComponent from "components/common/NothingComponent";
 import { StatsPageComponent } from "components/pages/StatsPage/StatsPageComponent";
 import styles from "../../StatsPage/index.module.css";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 import { useFilters } from "hooks/useFilters";
 import { POLL_INTERVAL } from "config/constants";
 import { extractRoute, getFormatData, getSubTitle } from "components/pages/StatsPage/helpers";

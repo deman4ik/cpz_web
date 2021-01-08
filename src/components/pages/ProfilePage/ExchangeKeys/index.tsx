@@ -6,7 +6,7 @@ import { ExchangeKeysContainer } from "./ExchangeKeysContainer";
 import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../providers/authContext";
 
 interface Props {
     title: string;

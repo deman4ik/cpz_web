@@ -3,7 +3,7 @@ import StepCard from "../../../SupportPage/components/main/StepCard";
 import styles from "./styles/Common.module.css";
 import stylesMain from "./styles/Main.module.css";
 import { SIGNALS_CARDS, ROBOTS_CARDS, CREATE_ACCOUNT_CARD } from "./constants";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "../../../../../providers/authContext";
 import { RobotsType } from "config/types";
 
 const renderStepsCards = (cardsArray) => cardsArray.map((item, index) => <StepCard {...item} key={index} />);
