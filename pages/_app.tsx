@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
+import { AppContext, AppProps } from "next/app";
 import withSecureHeaders from "next-secure-headers";
 import Router from "next/router";
 
-import { pageview } from "../src/libs/gtag";
+import { pageview } from "libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
-// context
 import { AuthContextProvider, LayoutContextProvider } from "libs/hoc/context";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 
-// This default export is required in a new `pages/_app.js` file.
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
     return (
         <AuthContextProvider>
             <LayoutContextProvider>
@@ -21,7 +20,7 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
+MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
     let pageProps = {};
 
     if (Component?.getInitialProps) {
