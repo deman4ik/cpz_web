@@ -64,7 +64,20 @@
     align-items: center;
 }
 
+.btnWrapper a {
+    display: flex;
+    align-items: center;
+}
+
+.btnWrapper a svg {
+margin-right: 3px;
+}
+
 .btnWrapper:not(:last-of-type) {
+    margin-right: 22px;
+}
+
+.rightContainer .btnWrapper:not(:last-of-type) {
     margin-right: 12px;
 }
 

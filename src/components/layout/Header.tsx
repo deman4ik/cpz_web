@@ -3,10 +3,10 @@ import Link from "next/link";
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
-import logoAccent from "assets/img/logo-accent.png";
 import styles from "./Header.module.css";
 import { AuthContext } from "libs/hoc/context";
 import { LoadingIndicator } from "components/common";
+import { CryptuosoLogo } from "../../assets/icons/svg";
 
 const _Header: React.FC = () => {
     const {
@@ -29,7 +29,7 @@ const _Header: React.FC = () => {
             <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
                 <Link href="/">
                     <a>
-                        <img className={styles.logo} src={logoAccent} alt="logo" height="34" width="34" />
+                        <CryptuosoLogo size={34} />
                     </a>
                 </Link>
 
