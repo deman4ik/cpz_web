@@ -23,6 +23,8 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
         <meta name="keywords" content={keywords} />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
         {/*  Global site tag (gtag.js) - Google Analytics */}
         {process.env.NODE_ENV === "development" ? null : (
             <>
