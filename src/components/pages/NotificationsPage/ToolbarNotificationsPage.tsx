@@ -18,11 +18,11 @@ const _ToolbarNotificationsPage: React.FC<Props> = ({ inputSelect, setInputSelec
                 <Select
                     data={headerSelectData}
                     width={110}
-                    onValueChange={(value) => setInputSelect(value)}
+                    onChangeValue={(value) => setInputSelect(value)}
                     value={inputSelect}
                 />
             </div>
-            <CaptionButton title="Mark All as Readed" icon="check" onClick={updateNotifications} />
+            <CaptionButton title="Mark All as Read" icon="check" onClick={updateNotifications} />
         </div>
     );
 };

@@ -1,36 +1,31 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { memo, useEffect, useRef } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
 
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
-import { login } from "libs/auth";
+import { useEmailLogin } from "libs/auth";
 import { Input, Button } from "components/basic";
 import { PageHead, Header, Footer } from "components/layout";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
+import { nullifyAccessToken } from "libs/accessToken";
 
 const INITIAL_STATE = {
-    email: ""
+    email: "",
+    password: ""
 };
 
 const TelegramLoginWithNoSSR = dynamic(() => import("components/ui/TelegramLogin"), { ssr: false });
-const message =
-    "If you do not see the Telegram login widget here, it seems that the Telegram is blocked in your country. Please use a proxy or VPN to access the Telegram login widget.";
-export const Login: React.FC = () => {
-    const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
+const message = `If you do not see the Telegram login widget here, Telegram may be blocked in your country. Please use a proxy or VPN to access the Telegram login widget.`;
+const _Login: React.FC = () => {
+    const { handleSubmit, handleChange, values, errors, isValid, setValid, setErrors } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-    const [password, setPassword] = useState("");
-    const [isFetching, setIsFetching] = useState(false);
 
-    const onChangePassword = (value: string) => {
-        setPassword(value);
-    };
-
-    const handleLogin = () => {
-        handleSubmit();
-    };
+    const [login, { loading }] = useEmailLogin();
 
     const handleSwitchToStep = (step: string) => {
         if (step === "signUp") {
@@ -40,65 +35,70 @@ export const Login: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        const loginUser = async () => {
-            const result = await login({
-                email: values.email,
-                password
-            });
+    const handleLogin = () => {
+        nullifyAccessToken();
+        if (isValid && !loading)
+            login({
+                variables: { email: values.email, password: values.password }
+            }).then(
+                () => {
+                    Router.push("/robots");
+                },
+                (err) => {
+                    setValid(false);
+                    setErrors({ password: err.message });
+                }
+            );
+    };
 
-            if (result.success) {
-                Router.push("/robots");
-            } else {
-                errors.password = result.error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            loginUser();
-        }
-    }, [errors, isValid, password, setValid, values.email]);
+    useEffect(() => {
+        handleLogin();
+    }, [isValid]);
+
+    const handleFormSubmit = (e) => {
+        handleSubmit(e);
+    };
 
     return (
         <div className={styles.container} style={{ alignContent: "space-between" }}>
             <PageHead title="Login" />
-            <div className={styles.header}>
-                <Header hasHomeButton />
-            </div>
+            <Header />
             <div className={[styles.plate, styles.plateLogin].join(" ")}>
                 <div className={styles.cardWrapper}>
                     <div className={styles.content}>
-                        <div className={styles.card} style={{ justifyContent: "center" }}>
+                        <form className={styles.card} style={{ justifyContent: "center" }} onSubmit={handleFormSubmit}>
                             <div className={styles.title}>Login</div>
                             <Input
+                                label="Email"
                                 error={errors.email}
                                 value={values.email}
                                 maxLength={255}
                                 width={260}
                                 placeholder="Email"
                                 onChangeText={(text: string) => handleChange("email", text)}
+                                autoComplete="email"
                             />
                             <Input
+                                label="Password"
                                 style={{ marginTop: 8 }}
-                                value={password}
+                                value={values.password}
                                 maxLength={100}
                                 width={260}
                                 error={errors.password}
                                 placeholder="Password"
-                                onChangeText={(text) => onChangePassword(text)}
+                                onChangeText={(text) => handleChange("password", text)}
                                 type="password"
+                                autoComplete="current-password"
                             />
                             <Button
                                 style={{ marginTop: 10 }}
                                 type="success"
                                 size="big"
+                                buttonType={HTMLButtonTypes.submit}
                                 title="log in"
                                 width={260}
                                 isUppercase
-                                isLoading={isFetching}
-                                onClick={handleLogin}
+                                isLoading={loading}
                             />
                             <div className={styles.loginDescription}>
                                 If you don’t already have an account and have not used our
@@ -113,7 +113,7 @@ export const Login: React.FC = () => {
                                 isUppercase
                                 onClick={() => handleSwitchToStep("signUp")}
                             />
-                        </div>
+                        </form>
                         <div className={styles.divider_container}>
                             <div className={styles.divider} />
                             <div className={styles.divider_text}>OR</div>
@@ -130,13 +130,8 @@ export const Login: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.footerLogin}>
-                        <span>So you can&apos;t get into your account?&nbsp;</span>
-                        <span>
-                            Did you&nbsp;
-                            <span className={styles.forgotLine} onClick={() => handleSwitchToStep("forgotPassword")}>
-                                <span className={styles.decoration}>forgot your password</span>
-                            </span>
-                            ?
+                        <span className={styles.forgotLine} onClick={() => handleSwitchToStep("forgotPassword")}>
+                            <span className={styles.decoration}>Forgot your password?</span>
                         </span>
                     </div>
                 </div>
@@ -146,3 +141,5 @@ export const Login: React.FC = () => {
         </div>
     );
 };
+
+export const Login = memo(_Login);

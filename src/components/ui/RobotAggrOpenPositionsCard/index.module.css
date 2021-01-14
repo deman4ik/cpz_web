@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header:active {
+    opacity: 0.2;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.positionSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.positionSection:first-child {
+    margin-top: 10px;
+}
+
+.fieldName {
+    color: var(--accent);
+}

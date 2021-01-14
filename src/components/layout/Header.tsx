@@ -1,21 +1,21 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import Link from "next/link";
-
-import { getAccessToken } from "libs/accessToken";
 import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
+import { AuthContext } from "libs/hoc/context";
+import { LoadingIndicator } from "components/common";
+import { CryptuosoLogo } from "../../assets/icons/svg";
 
-interface Props {
-    hasHomeButton?: boolean;
-}
+const _Header: React.FC = () => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
 
-const _Header: React.FC<Props> = ({ hasHomeButton }) => {
-    const { token } = getAccessToken();
-    const { logoutProcess } = useLogoutProcess();
+    const [logout, { loading }] = useLogoutProcess();
 
-    const hahdleOnClick = (href: string) => {
+    const handleOnClick = (href: string) => {
         event({
             action: "click",
             category: "Landing",
@@ -26,38 +26,50 @@ const _Header: React.FC<Props> = ({ hasHomeButton }) => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.btnWrapper} onClick={() => handleOnClick("/")}>
+                <Link href="/">
+                    <a>
+                        <CryptuosoLogo size={34} />
+                    </a>
+                </Link>
+
+                <Link href="/">
+                    <a className={styles.btnTitle}>Cryptuoso</a>
+                </Link>
+            </div>
+
             <div className={styles.leftContainer}>
-                {hasHomeButton && (
-                    <div className={styles.btnWrapper} onClick={() => hahdleOnClick("/")}>
-                        <Link href="/" replace>
-                            <a className={styles.btnTitle}>Cryptuoso</a>
+                {linksHeader.map((item) => (
+                    <div key={item.title} className={styles.btnWrapper} onClick={() => handleOnClick(item.href)}>
+                        <Link href={item.href}>
+                            <a className={styles.btnTitle}>{item.title}</a>
                         </Link>
                     </div>
-                )}
-                {!!token && (
-                    <>
-                        {linksHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
-                                <Link href={item.href} replace>
-                                    <a className={styles.btnTitle}>{item.title}</a>
-                                </Link>
-                            </div>
-                        ))}
-                    </>
-                )}
+                ))}
             </div>
             <div className={styles.rightContainer}>
-                {token ? (
+                {isAuth ? (
                     <div className={styles.btnWrapper}>
-                        <div className={styles.btnTitle} onClick={logoutProcess}>
-                            Log out
-                        </div>
+                        {loading ? (
+                            <LoadingIndicator />
+                        ) : (
+                            <div>
+                                <Link href="/">
+                                    <a className={styles.btnTitle} onClick={logout}>
+                                        Log out
+                                    </a>
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <>
-                        {authHeader.map((item, idx) => (
-                            <div key={idx} className={styles.btnWrapper} onClick={() => hahdleOnClick(item.href)}>
-                                <Link href={item.href} replace>
+                        {authHeader.map((item) => (
+                            <div
+                                key={item.title}
+                                className={styles.btnWrapper}
+                                onClick={() => handleOnClick(item.href)}>
+                                <Link href={item.href}>
                                     <a className={styles.btnTitle}>{item.title}</a>
                                 </Link>
                             </div>

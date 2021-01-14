@@ -20,7 +20,9 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
         return composeClass;
     };
 
-    const handleOnClick = () => {
+    const handleOnClick = (e) => {
+        e.preventDefault();
+
         if (gtag_conversation) {
             gtag_report_conversion(href);
         } else {
@@ -31,10 +33,12 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
                 value: href
             });
         }
+
+        window.location.href = href;
     };
 
     return (
-        <a className={getClassName().join(" ")} style={style} href={href} onClick={handleOnClick}>
+        <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
             {title}
         </a>
     );

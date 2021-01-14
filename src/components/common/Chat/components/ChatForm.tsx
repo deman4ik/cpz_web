@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // components
 import { LoadingIndicator } from "components/common";
-import { Button } from "components/basic";
+import { Button, Textarea } from "components/basic";
 // styles
 import styles from "../styles/Common.module.css";
 import chatFormStyles from "../styles/ChatForm.module.css";
@@ -21,11 +21,11 @@ const ChatForm: React.FC<ChatFormProps> = ({ loading, success, submitCallback, e
     const [message, setMessage] = useState("");
 
     /*Form handlers*/
-    const onchangeMessage = (e): void => {
-        setMessage(e.target.value);
+    const handleChange = (val): void => {
+        setMessage(val);
     };
 
-    const onSubmit = () => {
+    const handleSubmit = () => {
         if (message) {
             submitCallback(message);
         }
@@ -42,12 +42,7 @@ const ChatForm: React.FC<ChatFormProps> = ({ loading, success, submitCallback, e
     return (
         <div className={chatFormStyles.chat_form_container}>
             <div className={chatFormStyles.chat_form_textarea_wrapper}>
-                <textarea
-                    className={chatFormStyles.chat_form_textarea}
-                    onChange={onchangeMessage}
-                    value={message}
-                    placeholder="Enter your message here..."
-                />
+                <Textarea onChangeText={handleChange} value={message} placeholder="Enter you message..." />
                 {loading && (
                     <div className={styles.loader}>
                         <LoadingIndicator />
@@ -56,7 +51,7 @@ const ChatForm: React.FC<ChatFormProps> = ({ loading, success, submitCallback, e
                 {error && <div className={chatFormStyles.chat_form_error}>Error, please try again!</div>}
             </div>
             <div className={chatFormStyles.chat_form_button}>
-                <Button onClick={onSubmit} type="success" title="Send" style={{ height: "50px", width: "100%" }} />
+                <Button onClick={handleSubmit} type="success" title="Send" style={{ height: "50px", width: "100%" }} />
             </div>
         </div>
     );

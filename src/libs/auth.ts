@@ -1,25 +1,48 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { setAccessToken } from "./accessToken";
+import { nullifyAccessToken, putTokenInCookie, useAccessToken } from "./accessToken";
 import gql from "graphql-tag";
+import { DocumentNode, MutationHookOptions, useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
 
-interface Headers {
-    Accept: string;
-    [key: string]: any;
-}
+import {
+    LOGIN,
+    LOGIN_TELEGRAM,
+    LOGOUT,
+    REGISTER,
+    ACTIVATE_ACCOUNT,
+    PASSWORD_RESET,
+    CONFIRM_PASSWORD_RESET,
+    CHANGE_EMAIL,
+    CONFIRM_CHANGE_EMAIL
+} from "graphql/auth/mutations";
+import redirect from "libs/redirect";
 
-const config = {
-    headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        credentials: "same-origin"
-    }
+export const logout = () => {
+    nullifyAccessToken();
+    localStorage.removeItem("refreshTokenSet");
+    redirect({}, "/auth/login");
 };
-
-const errorMessage = "can't fulfill the request";
 
 function timeout(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+const writeUserToCache = (client, userId) => {
+    client.writeQuery({
+        query: gql`
+            query {
+                userId @client
+            }
+        `,
+        data: {
+            userId
+        }
+    });
+};
+
+const setRefreshTokenReceived = () => {
+    if (typeof window !== "undefined") localStorage.setItem("refreshTokenSet", "true");
+};
 
 export const testind = async () => {
     const result = {
@@ -36,272 +59,145 @@ export const testindBool = async () => {
     return result;
 };
 
-export const loginTelegram = async (data) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/loginTg`, {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(data),
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
+type AuthAction = [
+    (options?: MutationHookOptions) => Promise<any>,
+    {
+        loading?: boolean;
+        success: boolean;
+        error: string;
+        result?: any;
     }
-    return result;
+];
+
+const useAuthMutation = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
+    const [success, setSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [result, setResult] = useState(null);
+
+    const [action, { loading, error }] = useMutation(mutation, {
+        ...options,
+        onCompleted: (data) => {
+            if (data && data.result) {
+                setSuccess(true);
+                setResult(data.result);
+                setErrorMessage(error?.graphQLErrors[0]?.message || "");
+            }
+            if (options?.onCompleted) options.onCompleted(data);
+        }
+    });
+
+    return [action, { loading, success, error: errorMessage, result }];
 };
 
-export const login = async (data: { email: string; password: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/login`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
-};
-
-export const logout = async () => {
-    let result = false;
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-            headers: config.headers
-        });
-        const json = await res.json();
-        result = json.success;
-        if (!result) {
-            console.error(json.error);
-        }
-    } catch (err) {
-        console.error(errorMessage);
-    }
-    return result;
-};
-
-export const register = async (data: { email: string; password: string }, client) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/register`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            client.writeQuery({
-                query: gql`
-                    query {
-                        userId @client
-                    }
-                `,
-                data: {
-                    userId: json.userId
+const useUpdateAccessToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
+    const [token, setAccessToken] = useAccessToken();
+    const [action, { loading, error }] = useAuthMutation(mutation, {
+        ...options,
+        onCompleted: ({ result }) => {
+            if (result && result.accessToken) {
+                const { accessToken } = result;
+                if (token !== accessToken) {
+                    setAccessToken(accessToken);
+                    putTokenInCookie(accessToken);
                 }
-            });
-        } else {
-            result.error = json.error;
+            }
+            if (options?.onCompleted) options.onCompleted(result);
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+    });
+
+    return [action, { loading, success: !!token, error }];
 };
 
-export const confirm = async (data: { userId: string; secretCode: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/activate-account`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            setAccessToken(json.accessToken);
-            result.success = true;
-        } else {
-            result.error = json.error;
+const useSetRefreshToken = (mutation: DocumentNode, options?: MutationHookOptions): AuthAction => {
+    const [action, { loading, success, error }] = useUpdateAccessToken(mutation, {
+        ...options,
+        onCompleted: (result) => {
+            if (result.accessToken) {
+                setRefreshTokenReceived();
+            }
+            if (options?.onCompleted) options.onCompleted(!!result.accessToken);
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+    });
+
+    return [action, { loading, success, error }];
 };
 
-export const activate = async (encode: string) => {
-    let result = false;
-
-    try {
-        const data = JSON.parse(Buffer.from(encode, "base64").toString());
-        if (typeof data === "object") {
-            result = (await confirm(data)).success;
-        }
-    } catch (err) {
-        console.error(errorMessage);
-    }
-    return result;
+export const useTelegramLogin = (options?: MutationHookOptions) => {
+    return useSetRefreshToken(LOGIN_TELEGRAM, options);
 };
 
-export const reset = async (email: string, client: any) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify({ email });
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/password-reset`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            client.writeQuery({
-                query: gql`
-                    query {
-                        userId @client
-                    }
-                `,
-                data: {
-                    userId: json.userId
-                }
-            });
-        } else {
-            result.error = json.error;
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+export const useEmailLogin = (options?: MutationHookOptions) => {
+    return useSetRefreshToken(LOGIN, options);
 };
 
-export const recover = async (data: { userId: string; secretCode: string; password: string }) => {
-    const result = {
-        success: false,
-        error: ""
-    };
-    const body = JSON.stringify(data);
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/confirm-password-reset`, {
-            method: "POST",
-            credentials: "include",
-            body,
-            headers: config.headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            result.success = true;
-            setAccessToken(json.accessToken);
-        } else {
-            result.error = json.error;
+export const useLogout = (): AuthAction => {
+    const [, setAccessToken] = useAccessToken();
+    const [loggedOut, setLoggedOut] = useState(false);
+    const [logoutAction, { loading, error }] = useAuthMutation(LOGOUT, {
+        onCompleted: ({ result }) => {
+            if (result.result) {
+                setAccessToken("");
+                setLoggedOut(true);
+                logout();
+            }
         }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+    });
+
+    return [() => logoutAction(), { loading, success: loggedOut, error }];
 };
 
-export const recoverEncoded = async (encode: string, password: string) => {
-    let result = {
-        success: false,
-        error: ""
-    };
+export const useRegistration = (variables: { email: string; password: string }, client): AuthAction => {
+    const [register, { loading, error, result }] = useAuthMutation(REGISTER, { variables });
 
-    try {
-        const data = JSON.parse(Buffer.from(encode, "base64").toString());
-        if (typeof data === "object") {
-            result = await recover({
-                ...(data as { userId: string; secretCode: string }),
-                password
-            });
-        }
-    } catch (err) {
-        result.error = "system error";
-        console.error(errorMessage);
-    }
-    return result;
+    useEffect(() => {
+        if (result?.userId) writeUserToCache(client, result?.userId);
+    }, [client, result?.userId]);
+
+    return [register, { loading, success: !!result?.userId, error }];
 };
 
-export const fetchAccessToken = async (refresh_token?: string, isLocalhost = false) => {
-    let accessToken = "";
-    const headers: Headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-    };
-    if (isLocalhost) {
-        headers["x-refresh-token"] = refresh_token;
-    }
-    if (refresh_token) {
-        headers.cookie = `refresh_token=${refresh_token}`;
-    }
-
-    try {
-        const res = await fetch(`${process.env.AUTH_API_URL}/auth/refresh-token`, {
-            method: "POST",
-            credentials: "include",
-            headers
-            //headers: refresh_token ? { ...headers, Cookie: `refresh_token=${refresh_token}` } : headers
-        });
-        const json = await res.json();
-        if (json.success) {
-            accessToken = json.accessToken;
-        }
-    } catch (err) {
-        console.error(err);
-    }
-    return accessToken;
+export const useConfirmation = (variables: { userId: string; secretCode: string }): AuthAction => {
+    return useSetRefreshToken(ACTIVATE_ACCOUNT, { variables });
 };
+
+export const usePasswordReset = (variables: { email: string }, client: any): AuthAction => {
+    const [resetPassword, { success, error, result }] = useAuthMutation(PASSWORD_RESET, { variables });
+
+    useEffect(() => {
+        if (result?.userId) writeUserToCache(client, result?.userId);
+    }, [client, result?.userId]);
+
+    return [resetPassword, { success, error }];
+};
+
+export const useResetConfirmation = (variables: {
+    userId: string;
+    secretCode: string;
+    password: string;
+}): AuthAction => {
+    return useSetRefreshToken(CONFIRM_PASSWORD_RESET, { variables });
+};
+
+export const useChangeEmail = (variables: { email: string }): AuthAction => {
+    return useAuthMutation(CHANGE_EMAIL, { variables });
+};
+
+export const useConfirmChangeEmail = (variables: { secretCode: string }): AuthAction => {
+    return useUpdateAccessToken(CONFIRM_CHANGE_EMAIL, { variables });
+};
+
+export function fetchAccessToken() {
+    return fetch(`https://${process.env.HASURA_URL}`, {
+        credentials: "include",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            operationName: "refresh_token",
+            query: `mutation refresh_token {
+        result: refreshToken {
+            accessToken
+        }
+    }`
+        })
+    }).then((res) => res.json());
+}

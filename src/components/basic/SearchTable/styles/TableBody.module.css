@@ -1,4 +1,0 @@
-.body_row {
-    composes: table_row from "./Common.module.css";
-    border-bottom: 2px solid var(--darkBg);
-}

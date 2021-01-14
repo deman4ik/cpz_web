@@ -1,27 +1,30 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_USERS_COUNT } from "graphql/manage/queries";
+import { USERS_BY_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
 import { formatTotalUsers } from "../../utils";
 // components
-import { Card } from "components/basic";
 import StatsContainer from "./StatsContainer";
 import TimestampStats from "./TimestampStats";
+import styles from "../../styles/Dasboard.module.css";
+import { DataCard } from "components/ui/DataCard";
 
 // TODO: работа с шириной в зависимости от других карточек
 const UserStats: React.FC<any> = () => {
     /*Fetch data*/
-    const { data } = useQuery(GET_USERS_COUNT);
+    const { data } = useQuery(USERS_BY_ROBOTS_AGGREGATE);
 
     return (
-        <Card style={{ minHeight: "305px", margin: "15px", flexGrow: "0.2" }}>
-            {data?.usersTotal && (
-                <>
-                    <StatsContainer title="Users" data={formatTotalUsers(data)} />
-                    <TimestampStats />
-                </>
-            )}
-        </Card>
+        <DataCard
+            body={
+                data?.usersTotal && (
+                    <>
+                        <StatsContainer title="Users" data={formatTotalUsers(data)} />
+                        <TimestampStats />
+                    </>
+                )
+            }
+        />
     );
 };
 

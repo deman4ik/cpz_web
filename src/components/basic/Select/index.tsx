@@ -5,19 +5,18 @@ interface Props {
     value: string;
     width?: number;
     enabled?: boolean;
-    onValueChange: (itemValue: string) => void;
+    onChangeValue: (itemValue: any) => void;
 }
 
-export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 200, enabled = true }) => {
+export const Select: React.FC<Props> = ({ data, value, onChangeValue, width = 200, enabled = true }) => {
     const onChange = (e) => {
-        onValueChange(e.target.value);
+        onChangeValue(e.target.value);
     };
-
     return (
         <div className="select_container">
-            <select value={value} onChange={onChange} className="select" disabled={!enabled}>
+            <select value={value || ""} onChange={onChange} className="select" disabled={!enabled}>
                 {data.map((item) => (
-                    <option key={item.value} value={item.value}>
+                    <option key={item.value} value={item.value || ""}>
                         {item.label}
                     </option>
                 ))}
@@ -25,6 +24,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 20
             <style jsx>
                 {`
                     .select {
+                        outline: none;
                         background-color: var(--darkBg);
                         color: var(--accent);
                         border-radius: 2px;
@@ -51,7 +51,7 @@ export const Select: React.FC<Props> = ({ data, value, onValueChange, width = 20
                     .select_container:after {
                         border-left: 5px solid transparent;
                         border-right: 5px solid transparent;
-                        top: 0.4em;
+                        top: 0.4rem;
                         right: 0.75em;
                         border-top: 8px solid var(--accent);
                         opacity: 0.5;

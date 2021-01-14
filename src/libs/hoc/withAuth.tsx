@@ -1,90 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React, { useContext, useEffect } from "react";
-import nextCookie from "next-cookies";
 
-import { LOCALHOST, EXCLUDE_ROUTES, EXCLUDE_AUTH_ROUTES, EXCLUDE_MANAGE_ROUTES } from "config/constants";
-import { fetchAccessToken } from "../auth";
-import { getAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "../accessToken";
+import { AUTH_ROUTES, MANAGE_ROUTES } from "config/constants";
+import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccesToken } from "libs/accessToken";
+import nextCookies from "next-cookies";
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
+import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 
-const pathToRedirect = "/auth/login";
-const pathToRedirectIfLogin = "/robots";
-
-const hardCodeRefreshToken = process.env.DEV_REFRESH_TOKEN;
-/*Проверка доступности разрешаемых роутов*/
-const checkPath = (path: string) => {
-    let match = false;
-    EXCLUDE_ROUTES.forEach((route: string) => {
-        if (path.includes(route)) {
-            match = path.includes(route);
-        }
-    });
-
-    return match;
-};
+const loginPath = "/login";
+const homePath = "/robots";
 
 export const withAuth = (Page) => {
     const WithAuth = (props) => {
-        /*Установка контекста аутентификации*/
-        const { setAuthState } = useContext(AuthContext);
-        useEffect(() => {
-            if (props?.accessToken) {
-                setAuthState({
-                    isAuth: Boolean(props.accessToken),
-                    user_id: getUserIdFromAccessToken(props.accessToken),
-                    isManager: getUserRoleFromAccesToken(props.accessToken) === "manager"
-                });
-            }
-        }, [props.accessToken, props?.accessToken, setAuthState]);
+        const { authState, setAuthState } = useContext(AuthContext);
+        const [accessToken] = useAccessToken();
 
-        return <Page {...props} />;
+        useEffect(() => {
+            setAuthState({
+                isAuth: Boolean(accessToken),
+                user_id: getUserIdFromAccessToken(accessToken),
+                isManager: getUserRoleFromAccesToken(accessToken) === "manager"
+            });
+        }, [setAuthState, accessToken]);
+
+        return authState?.authIsSet ? <Page {...{ ...props, accessToken }} /> : <LoadingDummy />;
     };
 
     WithAuth.getInitialProps = async (ctx) => {
         const isLanding = ctx.pathname === "/";
-        let accessToken = "";
+        const { accessToken } = nextCookies(ctx);
         if (ctx.res) {
-            const refresh_token =
-                ctx.req.headers.host === LOCALHOST ? hardCodeRefreshToken : nextCookie(ctx).refresh_token;
-            if (refresh_token) {
-                accessToken = await fetchAccessToken(refresh_token);
-                if (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if ((!isLanding && !checkPath(ctx.pathname)) || EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)) {
-                redirect(ctx, pathToRedirect);
-            }
-            if (accessToken && !isLanding) {
+            if (!isLanding) {
                 if (
-                    EXCLUDE_AUTH_ROUTES.includes(ctx.pathname) ||
-                    (EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname) &&
-                        getUserRoleFromAccesToken(accessToken) !== "manager") // редирект если роль не менеджера
+                    (MANAGE_ROUTES.includes(ctx.pathname) && getUserRoleFromAccesToken(accessToken) !== "manager") ||
+                    (getUserIdFromAccessToken(accessToken) && AUTH_ROUTES.includes(ctx.pathname))
                 ) {
-                    redirect(ctx, pathToRedirectIfLogin);
-                }
-            }
-        } else {
-            const accessTokenFull = getAccessToken();
-            accessToken = accessTokenFull.token;
-            const isLocalhost = window.location.origin === `http://${LOCALHOST}`;
-            if (accessToken.length === 0) {
-                accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (
-                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
-                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
-                ) {
-                    redirect(ctx, pathToRedirect);
-                }
-            } else if (Date.now() >= accessTokenFull.exp * 1000) {
-                accessToken = await fetchAccessToken(isLocalhost ? hardCodeRefreshToken : undefined, isLocalhost);
-                if (
-                    (accessToken.length === 0 && !isLanding && !checkPath(ctx.pathname)) ||
-                    EXCLUDE_MANAGE_ROUTES.includes(ctx.pathname)
-                ) {
-                    redirect(ctx, pathToRedirect);
+                    redirect(ctx, homePath);
                 }
             }
         }

@@ -6,12 +6,13 @@ import { color } from "config/constants";
 import styles from "../index.module.css";
 
 interface Props {
+    enabled: boolean;
     robotName: string;
     handleOnStart?: () => void;
-    onClose?: () => void;
+    onClose?: (changesMade?: boolean) => void;
 }
 
-const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose }) => (
+const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose, enabled }) => (
     <>
         <div className={styles.step3}>
             <i className={styles.iconWrapper}>
@@ -24,6 +25,7 @@ const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose 
         </div>
         <div className={styles.btns}>
             <Button
+                isLoading={!enabled}
                 className={styles.btn}
                 title="Yes"
                 icon="check"
@@ -31,7 +33,14 @@ const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose 
                 isUppercase
                 onClick={handleOnStart}
             />
-            <Button className={styles.btn} title="No" icon="close" type="primary" isUppercase onClick={onClose} />
+            <Button
+                className={styles.btn}
+                title="No"
+                icon="close"
+                type="primary"
+                isUppercase
+                onClick={() => onClose(true)}
+            />
         </div>
     </>
 );

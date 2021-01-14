@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { GET_USER_INFO } from "graphql/user/queries";
@@ -10,7 +10,7 @@ import { NotificationProps } from "./types";
 import { Notify } from "./Notify";
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 const _NotifySettings: React.FC = () => {
     const {
@@ -18,21 +18,18 @@ const _NotifySettings: React.FC = () => {
     } = useContext(AuthContext);
 
     const [notifications, setNotifications] = useState<NotificationProps[]>([]);
-
     const { loading } = useQuery(GET_USER_INFO, {
         onCompleted: (data) => {
             const { notifications: _notifications } = data.users[0].settings;
             setNotifications(
                 Object.keys(_notifications).map((key) => ({
                     key,
-                    checkboxes: Object.keys(_notifications[key])
-                        .filter((name) => name !== "email")
-                        .map((name) => ({
-                            name,
-                            isActive: _notifications[key][name],
-                            disabled: !data.users[0][serviceName[name]],
-                            isLoading: false
-                        })),
+                    checkboxes: Object.keys(_notifications[key]).map((name) => ({
+                        name,
+                        isActive: _notifications[key][name],
+                        disabled: !data.users[0][serviceName[name]],
+                        isLoading: false
+                    })),
                     ...extraSettings[key]
                 }))
             );
@@ -41,6 +38,7 @@ const _NotifySettings: React.FC = () => {
     });
     const [saveNotifications] = useMutation(SET_NOTIFICATION_SETTINGS);
 
+    const combinePropName = (key, name) => `${key}${capitalize(name)}`; // e.g signalsTelegram
     const toggleNotification = (key: string, name: string) => {
         const isActive = !notifications.find((el) => el.key === key).checkboxes.find((el) => el.name === name).isActive;
         setNotifications((prev) =>
@@ -59,12 +57,12 @@ const _NotifySettings: React.FC = () => {
         );
         saveNotifications({
             variables: {
-                [`${key}${capitalize(name)}`]: isActive
+                [combinePropName(key, name)]: isActive
             }
-        }).then((response) => {
-            if (response.data.setNotificationSettings.success) {
-                setNotifications((prev) =>
-                    prev.map((item) => {
+        })
+            .then((response) => {
+                setNotifications((prev) => {
+                    return prev.map((item) => {
                         if (item.key === key) {
                             const checkboxes = item.checkboxes.map((checkbox) => {
                                 if (checkbox.name === name) {
@@ -75,12 +73,10 @@ const _NotifySettings: React.FC = () => {
                             return { ...item, checkboxes };
                         }
                         return item;
-                    })
-                );
-            } else {
-                console.error(response.data);
-            }
-        });
+                    });
+                });
+            })
+            .catch((e) => console.error(e));
     };
 
     return (

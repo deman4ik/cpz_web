@@ -13,22 +13,22 @@ import styles from "./PerformanceComponent.module.css";
 interface Props {
     width: number;
     displayType: string;
+    title?: string;
 }
 
 const cardWidth = 410;
-const _PerformanceEmpty: React.FC<Props> = ({ width, displayType }) => {
+const _PerformanceEmpty: React.FC<Props> = ({ width, displayType, title }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
     const handleRedirectToDetailView = (path: string) => {
         Router.push(`/${displayType}/stats?${path}`);
     };
-    const item = getItem(displayType);
+    const item = getItem(title || displayType);
 
     return (
         <>
             {isDesktopView ? (
                 <div className={styles.container}>
-                    <PerformanceHeader />
-                    <PerformanceItem item={item} onRedirectToDetailView={handleRedirectToDetailView} />
+                    <PerformanceItem item={item} onRedirectToDetailView={handleRedirectToDetailView} compact noShadow />
                 </div>
             ) : (
                 <div className={styles.cardItemsContainer}>

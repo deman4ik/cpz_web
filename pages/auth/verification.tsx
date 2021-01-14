@@ -1,9 +1,7 @@
-import React from 'react';
-import { Verification } from '../../src/components/pages/AuthPage/Verification';
-import { withApollo } from '../../src/libs/hoc';
+import React from "react";
+import { Verification } from "components/pages/AuthPage/Verification";
+import { withApollo } from "libs/hoc";
 
-const Page = () => (
-  <Verification />
-);
+const Page = () => <Verification />;
 
 export default withApollo(Page);

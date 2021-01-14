@@ -1,0 +1,25 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.doubledSection {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.sectionHeader {
+    color: var(--accent);
+    font-size: var(--normal3);
+    margin: 20px 0 10px;
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 5px 0;
+    }
+}

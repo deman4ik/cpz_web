@@ -1,30 +1,37 @@
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
-
+import { v4 as uuid } from "uuid";
 import { Button } from "../Button";
 
-interface Props {
+export interface InputProps {
     value: string;
     icon?: string;
     placeholder?: string;
+    label?: string;
     buttonTitle?: string;
     maxLength?: number;
     type?: string;
     onChangeText?: (value) => void;
     onKeyPress?: (e: any) => void;
     onClickButton?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
     width?: number;
     responsive?: boolean;
     error?: string | boolean;
+    onSelect?: (e: any) => void;
     selectTextOnFocus?: boolean;
     readonly?: boolean;
     style?: CSSProperties;
     right?: boolean;
+    disabled?: boolean;
+    autoComplete?: string;
 }
 
-export const Input: React.FC<Props> = ({
+export const Input: React.FC<InputProps> = ({
     value,
     icon,
     placeholder,
+    label,
     buttonTitle,
     type = "text",
     onChangeText,
@@ -34,16 +41,21 @@ export const Input: React.FC<Props> = ({
     onKeyPress,
     width = 350,
     error,
+    onSelect,
     selectTextOnFocus,
     responsive,
     readonly,
-    maxLength = 30
+    maxLength = 30,
+    autoComplete = "hidden",
+    disabled,
+    onFocus,
+    onBlur
 }) => {
     const [inputValue, setInputValue] = useState(value);
     const inputRef = useRef(null);
     const handleOnInput = (e) => {
         if (type === "number") {
-            e.target.value = e.target.value.toString().slice(0, 8);
+            e.target.value = e.target.value.toString().replace(/,/g, "").slice(0, 8);
         }
         if (onChangeText) {
             onChangeText(e.target.value);
@@ -52,26 +64,22 @@ export const Input: React.FC<Props> = ({
     };
 
     const formatInput = (e) => {
-        if (type === "number") {
-            if (e.keyCode === 46 || e.keyCode === 8 || e.keyCode === 190 || e.keyCode === 13) {
-                if (e.keyCode === 13) {
-                    if (onKeyPress) onKeyPress(e);
-                }
-            } else if (e.keyCode < 48 || e.keyCode > 57) {
-                e.preventDefault();
-            }
-        } else if (onKeyPress) onKeyPress(e);
+        if (onKeyPress) onKeyPress(e);
     };
 
     const getInputClass = () => {
         const styleInput = ["input"];
         if (error) styleInput.push("error");
         if (right) styleInput.push("right");
+        if (disabled) styleInput.push("disabled");
         return styleInput;
     };
 
     const handleOnFocus = () => {
-        if (selectTextOnFocus) {
+        if (onFocus) {
+            onFocus();
+        }
+        if (selectTextOnFocus && inputValue) {
             inputRef?.current?.setSelectionRange(0, inputValue.length);
         }
     };
@@ -80,6 +88,21 @@ export const Input: React.FC<Props> = ({
         setInputValue(value);
     }, [value]);
 
+    const inputProps = {
+        className: getInputClass().join(" "),
+        placeholder,
+        maxLength,
+        ref: inputRef,
+        type: type === "number" ? "text" : type,
+        readOnly: readonly,
+        onChange: handleOnInput,
+        onKeyDown: formatInput,
+        onFocus: handleOnFocus,
+        onBlur,
+        value: inputValue,
+        autoComplete
+    };
+    const labelId = uuid();
     return (
         <div className="wrapper" style={style}>
             <div className="container">
@@ -95,18 +118,14 @@ export const Input: React.FC<Props> = ({
                         />
                     </div>
                 ) : null}
-                <input
-                    className={getInputClass().join(" ")}
-                    placeholder={placeholder}
-                    maxLength={maxLength}
-                    ref={inputRef}
-                    type={type === "number" ? "text" : type}
-                    readOnly={readonly}
-                    onChange={handleOnInput}
-                    onKeyDown={formatInput}
-                    onFocus={handleOnFocus}
-                    value={inputValue}
-                />
+                {label ? (
+                    <label htmlFor={labelId} className="input-label">
+                        {label}
+                        <input id={labelId} {...inputProps} onFocus={onFocus} onBlur={onBlur} />
+                    </label>
+                ) : (
+                    <input {...inputProps} />
+                )}
                 {error && typeof error === "string" && <div className="error_line">{error}</div>}
             </div>
             <style jsx>
@@ -121,6 +140,8 @@ export const Input: React.FC<Props> = ({
                         flex: 1;
                     }
                     .error_line {
+                        position: absolute;
+                        top: 50px;
                         color: white;
                         background-color: var(--negative);
                         padding: 3px 10px 3px;
@@ -129,6 +150,8 @@ export const Input: React.FC<Props> = ({
                         width: 100%;
                     }
                     .input {
+                        border: 2px solid var(--lightBg);
+                        margin-top: 5px;
                         background-color: var(--darkBg);
                         color: var(--accent);
                         border-radius: 2px;
@@ -142,6 +165,10 @@ export const Input: React.FC<Props> = ({
                     .input.error {
                         border: 2px solid var(--negative);
                     }
+                    .input-label {
+                        display: inline-grid;
+                        color: white;
+                    }
                     .icon {
                         position: absolute;
                         right: 5px;
@@ -153,6 +180,13 @@ export const Input: React.FC<Props> = ({
                     }
                     .input::-webkit-inner-spin-button {
                         display: none;
+                    }
+                    .input:focus {
+                        outline: var(--primary) auto 0.5px;
+                    }
+                    .disabled {
+                        pointer-events: none;
+                        opacity: 0.5;
                     }
 
                     @media (max-width: 480px) {

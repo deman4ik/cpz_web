@@ -3,15 +3,22 @@ import React from "react";
 import stylesMain from "../../styles/Main.module.css";
 import styles from "../../styles/Common.module.css";
 // constants & types
-import { stepsCard, STEP_CARD_ICONS } from "./constants";
+import { stepsCard } from "./constants";
+
+/*icons constants*/
+export const ICON_SIZE = 35;
+export const ICON_COLOR = "#ffffff";
 
 const StepCard: React.FC<stepsCard> = ({ title, icon }) => {
-    const alignContent: React.CSSProperties = { justifyContent: icon ? "baseline" : "center" };
-
+    const Icon = icon;
     return (
-        <div className={stylesMain.step_card} style={alignContent}>
-            {icon && <div className={styles.card_icon}>{STEP_CARD_ICONS[icon]}</div>}
-            <div>{title}</div>
+        <div className={stylesMain.step_card}>
+            {icon && (
+                <div className={styles.card_icon}>
+                    <Icon size={ICON_SIZE} color={ICON_COLOR} />
+                </div>
+            )}
+            <div className={styles.cardContent}>{title}</div>
         </div>
     );
 };

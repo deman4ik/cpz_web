@@ -1,79 +1,98 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
-import { ADD_TELEGRAM_ACCOUNT } from "../../../graphql/user/mutations";
-import { GET_USER_INFO } from "../../../graphql/user/queries";
-import { loginTelegram } from "../../../libs/auth";
-import { Modal } from "../../basic";
-import { LoadingIndicator } from "../../common";
+import { ADD_TELEGRAM_ACCOUNT } from "graphql/user/mutations";
+import { GET_USER_INFO } from "graphql/user/queries";
+import { useTelegramLogin } from "libs/auth";
+import { Modal } from "components/basic";
+import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
+
+const DOC_LINK = "https://support.cryptuoso.com";
 
 interface Props {
     userId?: number;
     message?: string;
     buttonSize?: string;
+    borderRadius?: number;
+    userPic?: boolean;
 }
 
-const borderRadius = 2;
-const requestAccess = "write";
-const userPic = true;
-const _TelegramLogin: React.FC<Props> = ({ userId, message, buttonSize = "medium" }) => {
+const _TelegramLogin: React.FC<Props> = ({
+    userId,
+    message,
+    buttonSize = "medium",
+    borderRadius = 2,
+    userPic = true
+}) => {
     let instance;
 
-    const [error, setError] = useState("");
-    const [loginLoading, setLoginLoading] = useState(false);
+    const [errorModalVisible, setModalVisibility] = useState(false);
     const [addTelegram, { loading: addLoading }] = useMutation(ADD_TELEGRAM_ACCOUNT);
-
-    const login = async (data) => {
-        setLoginLoading(true);
-        const result = await loginTelegram(data);
-        setLoginLoading(false);
-
-        if (result.success) {
-            Router.push("/robots");
-        } else {
-            setError(result.error);
-        }
-    };
+    const [login, { loading }] = useTelegramLogin();
+    const errorRef = useRef(null);
 
     useEffect(() => {
-        (window as any).TelegramLoginWidget = userId
-            ? {
-                  dataOnauth: (data) =>
-                      addTelegram({
-                          variables: { data },
-                          refetchQueries: [{ query: GET_USER_INFO }]
-                      }).then((response) => {
-                          if (response.data.setTelegram.error) {
-                              setError(response.data.setTelegram.error);
-                          }
-                      })
-              }
-            : {
-                  dataOnauth: (data) => login(data)
-              };
+        (window as any).onTelegramAuth = (data) => {
+            if (userId)
+                addTelegram({
+                    variables: { data },
+                    refetchQueries: [{ query: GET_USER_INFO }]
+                }).catch((err) => (errorRef.current = err.message));
+            else {
+                login({
+                    variables: { data }
+                })
+                    .then(
+                        () => {
+                            Router.push("/robots");
+                        },
+                        (error) => {
+                            errorRef.current = error.message;
+                            setModalVisibility(true);
+                        }
+                    )
+                    .catch((error) => {
+                        errorRef.current = error.message;
+                        setModalVisibility(true);
+                    });
+            }
+        };
         const script = document.createElement("script");
         script.src = "https://telegram.org/js/telegram-widget.js?7";
         script.setAttribute("data-telegram-login", process.env.TELEGRAM_BOT_NAME);
         script.setAttribute("data-size", buttonSize);
         script.setAttribute("data-radius", `${borderRadius}`);
-        script.setAttribute("data-request-access", requestAccess);
+        script.setAttribute("data-request-access", "write");
         script.setAttribute("data-userpic", `${userPic}`);
-        script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
+        script.setAttribute("data-onauth", "onTelegramAuth(user)");
         script.async = true;
         instance.appendChild(script);
-    }, [addTelegram, buttonSize, instance, userId]);
+    }, [addTelegram, borderRadius, buttonSize, instance, login, userId, userPic]);
 
     return (
         <>
             <div className={styles.container}>
-                {(loginLoading || addLoading) && <LoadingIndicator />}
+                {(loading || addLoading) && <LoadingIndicator />}
                 <div className={styles.widget} ref={(ref) => (instance = ref)} />
             </div>
-            {message && <div className={styles.telegramPlaceholder}>{message}</div>}
-            <Modal title="Error" isOpen={!!error} onClose={() => setError("")}>
-                <div className={styles.errorText}>{error}</div>
+            {message && (
+                <div className={styles.telegramPlaceholder}>
+                    <div>{message}</div>
+                    <br />
+                    <span>
+                        If you&apos;re unable to log in using the widget, your browser may be blocking third-party
+                        cookies. Learn how to fix this in{" "}
+                        <a href={`${DOC_LINK}/help#logginginviatelegram`} target="_blank" rel="noreferrer">
+                            cryptuoso docs
+                        </a>
+                        .
+                    </span>
+                </div>
+            )}
+            <Modal title="Error" isOpen={errorModalVisible} onClose={() => setModalVisibility(false)}>
+                <div className={styles.errorText}>{errorRef.current}</div>
             </Modal>
         </>
     );

@@ -15,7 +15,7 @@ const _AccountBalance: React.FC = () => (
             <div className={styles.icon}>
                 <BetaIcon color={color.lightBg} size={156} />
             </div>
-            <div className={styles.comment}>All Cryptuoso Platform’s features are free for a limited time</div>
+            <div className={styles.comment}>All Cryptuoso Robot’s features are free for a limited time</div>
         </div>
     </>
 );

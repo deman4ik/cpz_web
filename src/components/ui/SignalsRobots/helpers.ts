@@ -1,76 +1,99 @@
 import dayjs from "../../../libs/dayjs";
+import { getStats, getVolume, getVolumeWithUnit, getVolumeType } from "config/utils";
 
-export const getFormatDataSignals = (signals: any) =>
-    signals.map((signal: any) => {
-        const { id, name, asset, currency, exchange, started_at, code, user_signals } = signal.robot;
-        const res = {
-            cache: {
-                id,
-                tableName: "robots"
-            },
+// TODO: use formatSignalData to form the array
+export const formatSignalRobots = (signals: any) => {
+    return (
+        signals
+            ?.filter((signal) => signal.robot)
+            .map(({ robot }: any) => {
+                const { id, name, asset, currency, exchange, started_at, code, user_signals } = robot;
+                const userSignal = user_signals && user_signals[0];
+                const {
+                    user_signal_settings: { signal_settings }
+                } = userSignal || {};
+                const res = {
+                    cache: {
+                        id,
+                        tableName: "robots"
+                    },
+                    id,
+                    asset,
+                    currency,
+                    exchange,
+                    settings: signal_settings,
+                    volume: getVolume(signal_settings),
+                    displayedVolume: getVolumeWithUnit(signal_settings, { currency, asset }),
+                    volumeType: getVolumeType(signal_settings),
+                    user_robots: {
+                        status: null,
+                        id: null
+                    },
+                    subscribed: dayjs.utc(userSignal?.subscribed_at)?.fromNow(true),
+                    active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
+                    performance: [],
+                    profit: 0,
+                    name,
+                    winRate: 0,
+                    maxDrawdown: 0,
+                    tradesCount: 0,
+                    isSubscribed: true,
+                    code
+                };
+                if (userSignal && userSignal.stats) {
+                    const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userSignal);
+                    res.performance = equity;
+                    res.profit = profit;
+                    res.winRate = winRate;
+                    res.maxDrawdown = maxDrawdown;
+                    res.tradesCount = tradesCount;
+                }
+                return res;
+            }) || []
+    );
+};
+
+export const formatTradingRobots = (robots: any) =>
+    robots?.map((userRobot: any) => {
+        const {
             id,
-            asset,
-            currency,
-            exchange,
-            volume: user_signals[0]?.volume,
-            user_robots: {
-                status: null,
-                id: null
-            },
-            subscribed: dayjs.utc(user_signals[0]?.subscribed_at)?.fromNow(true),
-            active: started_at ? dayjs.utc(started_at).fromNow(true) : started_at,
-            performance: [],
-            profit: 0,
-            name,
-            winRate: 0,
-            maxDrawdown: 0,
-            tradesCount: 0,
-            isSubscribed: true,
-            code
-        };
-        if (user_signals.length && user_signals[0].equity) {
-            const { winRate, maxDrawdown, tradesCount, changes, profit } = user_signals[0].equity;
-            res.performance = changes || [];
-            res.profit = profit || 0;
-            res.winRate = winRate || 0;
-            res.maxDrawdown = maxDrawdown || 0;
-            res.tradesCount = tradesCount || 0;
-        }
-        return res;
-    });
+            status,
+            started_at,
+            stopped_at,
+            robot,
+            robot_id,
+            user_ex_acc_id,
+            user_robot_settings: { user_robot_settings }
+        } = userRobot;
+        const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(userRobot);
 
-export const getFormatDataRobots = (robots: any) =>
-    robots.map((userRobot: any) => {
-        const { id, status, started_at, settings, robot, robot_id, equity } = userRobot;
-        const { name, asset, currency, exchange, active, code } = robot;
+        const { active, currency, asset, ...restOfRobot } = robot;
         return {
             cache: {
                 id,
                 tableName: "user_robots"
             },
             id: robot_id,
-            asset,
-            currency,
-            exchange,
-            volume: settings.volume,
+            settings: user_robot_settings,
+            volume: getVolume(user_robot_settings),
+            displayedVolume: getVolumeWithUnit(user_robot_settings, { currency, asset }),
+            volumeType: getVolumeType(user_robot_settings),
             user_robots: {
                 status,
                 id
             },
             active: active ? dayjs.utc(active).fromNow(true) : active,
-            started_at: started_at ? dayjs.utc(started_at).fromNow(true) : 0,
-            performance: equity ? equity.changes || [] : [],
-            profit: equity ? equity.profit : 0,
-            name,
-            winRate: equity ? equity.winRate : null,
-            maxDrawdown: equity ? equity.maxDrawdown : null,
-            tradesCount: equity ? equity.tradesCount : null,
+            started_at: started_at ? dayjs.utc(started_at).fromNow(true) : null,
+            stopped_at: stopped_at ? dayjs.utc(stopped_at).fromNow(true) : null,
+            performance: equity,
+            profit,
+            winRate,
+            maxDrawdown,
+            tradesCount,
             isSubscribed: false,
-            code
+            currency,
+            user_ex_acc_id,
+            asset,
+            ...restOfRobot
         };
-    });
-
-export const title = {
-    signals: "My Signals Robots",
-    robots: "My Robots"
-};
+    }) || [];

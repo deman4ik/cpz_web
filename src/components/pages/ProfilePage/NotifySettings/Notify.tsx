@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RobotIcon, ChartLineIcon } from "assets/icons/svg";
+import { RobotIcon, ChartLineIcon, EmailIcon } from "assets/icons/svg";
 import { Tooltip } from "components/ui/Tooltip";
 import { CheckBox } from "components/basic";
 import { color } from "config/constants";
@@ -14,12 +14,12 @@ interface Props {
 }
 const components = {
     robot: RobotIcon,
-    chartline: ChartLineIcon
+    chartline: ChartLineIcon,
+    news: EmailIcon
 };
 
 export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) => {
-    const SpecificIcon = components[item.icon];
-
+    const SpecificIcon = components[item.icon] || components.robot;
     return (
         <>
             <div className={styles.container}>
@@ -32,17 +32,20 @@ export const Notify: React.FC<Props> = ({ item, toggleNotification, isLast }) =>
                         </div>
                     </div>
                     <div className={styles.checkboxGroup}>
-                        {item.checkboxes.map((checkbox) => (
-                            <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
-                                <CheckBox
-                                    checked={checkbox.isActive}
-                                    onClick={() => toggleNotification(item.key, checkbox.name)}
-                                    label={capitalize(checkbox.name)}
-                                    isLoading={checkbox.isLoading}
-                                    disabled={checkbox.disabled}
-                                />
-                            </div>
-                        ))}
+                        {item.checkboxes.map(
+                            (checkbox) =>
+                                checkbox.name !== "email" && ( // TODO (back): implement email notifications
+                                    <div className={styles.checkBoxWrapper} key={`${item.key}.${checkbox.name}`}>
+                                        <CheckBox
+                                            checked={checkbox.isActive}
+                                            onClick={() => toggleNotification(item.key, checkbox.name)}
+                                            label={capitalize(checkbox.name)}
+                                            isLoading={checkbox.isLoading}
+                                            disabled={checkbox.disabled}
+                                        />
+                                    </div>
+                                )
+                        )}
                     </div>
                 </div>
             </div>

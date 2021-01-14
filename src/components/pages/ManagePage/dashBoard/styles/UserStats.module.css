@@ -1,38 +1,38 @@
 /*common styles*/
-.stats_wrapper {
-  padding: 15px;
-  color:#ffffff;
+.wrapper {
+    margin-top: 20px;
 }
 
 .stats_title {
-  text-align: center;
-  font-size: var(--normal3);
-  color: var(--accent);
+    text-align: center;
+    color: var(--accent);
 }
 
-/*stats*/
-.stats_container{
-  display: flex;
-  padding: 15px 0;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
+/*robotStats*/
+.stats_container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-end;
 }
-/*stats item*/
-.stats_item{
-  padding: 10px 0;
-  min-width: 100px;
+/*robotStats item*/
+.stats_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 10px 10px;
 }
 
-.stats_item_title{
-  font-size: var(--normal1);
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 5px;
-  text-align: center;
-  color: var(--accent);
+.stats_item_title {
+    min-width: 60px;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 5px;
+    text-align: center;
+    color: var(--accent);
+    overflow-wrap: break-word;
 }
 .stats_item_cnt {
-  padding-top: 5px;
-  text-align: center;
-  font-size: var(--big1);
+    padding-top: 5px;
+    text-align: center;
+    font-size: var(--big1);
 }

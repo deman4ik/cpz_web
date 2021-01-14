@@ -1,26 +1,70 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import dayjs from "../libs/dayjs";
-import { timeFrameFormat, color } from "./constants";
+import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
+import { RobotStats } from "./types";
+import { InputTypes, UnitsToTypes, volumes, VolumeTypesToLabelsMap } from "components/ui/Modals/types";
+import { titleFromLowerCase } from "components/pages/ManagePage/backtests/utils";
 
-export const moneyFormat = (value: number, toFixed = 2): string => {
+const getNumber = (val: number | string) => Number(val.toString().replace(/[^0-9.-]+/g, ""));
+
+export const formatMoney = (value: number, fractionDigits = 2): string => {
     let val = "0";
 
     if (value) {
-        if (value.toString().match(/^0|-0\./g) && toFixed === 2) {
-            val = value.toFixed(6).toString().replace(/0*$/, ""); // отображение до 6 символов после точки
-        } else {
-            val = value
-                .toFixed(toFixed)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+        val = new Intl.NumberFormat("en-US", {
+            maximumFractionDigits: fractionDigits
+        }).format(value);
     }
+
     return val;
+};
+
+export const getStats = (robot): RobotStats => {
+    const { equity, profit, winRate, maxDrawdown, tradesCount } = robot.stats || robot.fullStats || {};
+
+    return {
+        equity: equity || [],
+        profit: profit || 0,
+        winRate: winRate || null,
+        maxDrawdown: maxDrawdown || null,
+        tradesCount: tradesCount || null
+    };
+};
+
+export const getVolume = (settings) => (settings ? settings[volumes[settings.volumeType]] : null);
+export const getVolumeType = (settings) => (settings ? VolumeTypesToLabelsMap[settings.volumeType] : null);
+
+export const getVolumeWithUnit = (settings, availableUnits: VolumeDisplayUnits) => {
+    const volume = getVolume(settings);
+    const isTypePercent = settings.volumeType === InputTypes.balancePercent;
+    const displayUnits = isTypePercent ? "%" : availableUnits[UnitsToTypes[settings.volumeType]];
+    return `${volume || 0} ${displayUnits || ""}`;
+};
+
+export const getUserSignalSettings = (signal) => signal?.user_signal_settings?.signal_settings || null;
+
+export const getRobotSettings = (robot) => robot?.robot_settings?.robot_settings || null;
+
+export const getUserRobotSettings = (user_robot) => user_robot?.user_robot_settings?.user_robot_settings || null;
+
+export const getUserSignalVolume = (signal) => {
+    return getVolume(getUserSignalSettings(signal));
+};
+
+export const getRobotVolume = (robot) => {
+    return getVolume(getRobotSettings(robot));
+};
+
+export const getUserRobotVolume = (user_robot) => {
+    return getVolume(getUserRobotSettings(user_robot));
 };
 
 export const round = (n: number, decimals = 0): number => +Number(`${Math.round(+`${n}e${decimals}`)}e-${decimals}`);
 
-export const valueWithSign = (value: number | string): string => (Number(value) > 0 ? `+${value}` : `${value}`);
+export const valueWithSign = (value: number | string): string => {
+    const valAsNumber = getNumber(value);
+    return valAsNumber > 0 ? `+${value}` : valAsNumber < 0 ? `${value}` : "0";
+};
 
 export const capitalize = (s: string) => {
     if (typeof s !== "string") return "";
@@ -33,18 +77,13 @@ export const splitCapitaize = (s: string): string =>
         .join(" ");
 
 export const formatDate = (date: string, addUTC = true): string => {
+    if (!date) return "";
     const res = dayjs.utc(date).format("DD MMM YY HH:mm");
     if (res === "Invalid date") return "";
     return addUTC ? `${res} UTC` : res;
 };
 
-export const exchangeName = (code: string) =>
-    code
-        ? code
-              .split("_")
-              .map((word) => capitalize(word))
-              .join(" ")
-        : code;
+export const exchangeName = (code: string) => (code ? titleFromLowerCase(code) : code);
 
 export const getLegend = (robot) =>
     `${exchangeName(robot.exchange)} ${robot.asset}/${robot.currency} ${timeFrameFormat[robot.timeframe].abbr}`;
@@ -59,6 +98,11 @@ export const colorDirection = (direction: string): any => ({
 });
 
 export const getColor = (condition: boolean) => (condition ? color.negative : color.positive);
+
+export const getColorForMoney = (value: number) => {
+    const num = getNumber(formatMoney(value));
+    return getColor(!(num > 0));
+};
 export const getIconName = (direction: string) => (direction === "short" ? "arrowdown" : "arrowup");
 export const getIconNameAction = (check: boolean) => (!check ? "arrowdown" : "arrowup");
 
@@ -86,4 +130,33 @@ export const getSearchProps = (data, displayType) => {
         result = data.SearchProps.props.find((el) => el.type === displayType);
     }
     return result;
+};
+
+export const buildRobotSettings = ({ volumeType, volume, currency }) => ({
+    volumeType,
+    ...(volumeType === "assetStatic" ? { volume: Number(volume) } : { volumeInCurrency: Number(currency) })
+});
+
+export const getTimeFromNow = (d: string): string => {
+    const formattedDate = formatDate(d);
+    if (formattedDate === "") return "";
+
+    const past = dayjs.utc(d);
+    const now = dayjs.utc();
+
+    if (now.month() !== past.month() || now.date() !== past.date()) return formattedDate;
+
+    const diff = dayjs.utc(now.diff(past));
+    const { hours, minutes } = diff.toObject();
+
+    if (hours >= 6) return formattedDate;
+
+    if (!hours && !minutes) return "less than a minute ago";
+
+    const hoursStr = `${(hours && `${hours} ${hours > 1 ? "hours" : "hour"}`) || ""}`;
+    const minutesStr = `${(minutes && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`) || ""}`;
+
+    const timeFromNow = `${hours > 0 ? hoursStr : minutesStr} ago`;
+
+    return timeFromNow;
 };

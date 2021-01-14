@@ -7,10 +7,17 @@ import gql from "graphql-tag";
  * использование: manage/support/[user_id]
  */
 export const REPLY_SUPPORT_MESSAGE = gql`
-    mutation reply_support_message($message: String!, $to: String!) {
+    mutation reply_support_message($message: String!, $to: uuid!) {
         replySupportMessage(message: $message, to: $to) {
-            success
-            error
+            result
+        }
+    }
+`;
+
+export const BROADCAST_NEWS = gql`
+    mutation broadcastNews($message: String!) {
+        broadcastNews(message: $message) {
+            result
         }
     }
 `;

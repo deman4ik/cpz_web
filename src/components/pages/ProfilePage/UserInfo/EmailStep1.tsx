@@ -25,10 +25,12 @@ export const EmailStep1: React.FC<Props> = ({
     <>
         <Input
             placeholder="Email"
+            label="Email"
             width={260}
             error={error}
             value={newEmail}
             onChangeText={(value) => setNewEmail(value)}
+            autoComplete="email"
             onKeyPress={onKeyPressChange}
         />
         <div className={styles.btns}>

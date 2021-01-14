@@ -1,48 +1,96 @@
-import React, { memo, useEffect, useState, useContext } from "react";
-import { useQuery } from "@apollo/client";
-
-// components
-import { OpenPositionsComponent } from "./OpenPositionsComponent";
-// graphql
-import { USER_SIGNALS_ROBOT_OPEN_POS } from "graphql/signals/queries";
-import { GET_USER_POSITIONS_OPEN_POS } from "graphql/robots/queries";
-// constants
-import { POLL_INTERVAL } from "config/constants";
-// helpers
-import { getFormatDataSignals, getFormatDataRobots } from "./helpers";
-// context
-import { AuthContext } from "libs/hoc/authContext";
+import NothingComponent from "components/common/NothingComponent";
+import { exchangeName, formatMoney, getColor, getColorForMoney, valueWithSign } from "config/utils";
+import React, { memo } from "react";
+import OpenPositionsTable from "./OpenPositionsTable";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
+import styles from "./index.module.css";
+import tableStyles from "./OpenPositionsTable.module.css";
 
 interface Props {
     type: string;
-    width: number;
+    data: any;
 }
 
-const _RobotOpenPositions: React.FC<Props> = ({ type, width }) => {
-    /*Auth user id*/
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
+const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
+    const { width } = useWindowDimensions();
+    const { showDimension: desktopSize } = useShowDimension(width, SCREEN_TYPE.DESKTOP);
 
-    const [formatData, setFormatData] = useState([]);
-    const { data, loading } = useQuery(type === "signals" ? USER_SIGNALS_ROBOT_OPEN_POS : GET_USER_POSITIONS_OPEN_POS, {
-        pollInterval: POLL_INTERVAL,
-        variables: { user_id }
-    });
+    const mobile = !desktopSize;
 
-    const funcCall = {
-        signals: () => getFormatDataSignals(data.positions),
-        robots: () => getFormatDataRobots(data.positions)
-    };
+    return (
+        <div>
+            {!data.length ? (
+                <div style={{ marginTop: "20px" }}>
+                    <NothingComponent
+                        beforeButtonKeyWord={type}
+                        beforeButtonMessage={`${type} positions`}
+                        buttonSize="normal"
+                        buttonStyles={{ width: "200px", margin: "auto" }}
+                    />
+                </div>
+            ) : (
+                data.map((exchangeGroup, index) => (
+                    <div key={exchangeGroup.exchange} style={{ marginTop: (index > 0 && 10) || 0 }}>
+                        <div
+                            className={mobile ? styles.exchangeContainerMobile : tableStyles.tableGridRow}
+                            style={{ padding: "0 20px" }}>
+                            <div className={styles.exchange}>{exchangeName(exchangeGroup.exchange)}&nbsp;</div>
 
-    useEffect(() => {
-        if (!loading && data) {
-            setFormatData(funcCall[type]());
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, loading]);
-
-    return <OpenPositionsComponent formatData={formatData} width={width} displayType={type} />;
+                            <span
+                                className={styles.exchange}
+                                style={{
+                                    color: "var(--accent)",
+                                    fontSize: "var(--normal1)",
+                                    gridColumnStart: 4
+                                }}>
+                                Unrealized Profit:&nbsp;
+                                <span
+                                    style={{
+                                        color: getColorForMoney(exchangeGroup.profit)
+                                    }}>{`${valueWithSign(formatMoney(exchangeGroup.profit))} $`}</span>
+                            </span>
+                        </div>
+                        <div>
+                            {exchangeGroup.assets.map((asset) => (
+                                <div key={asset.asset}>
+                                    <div className={styles.assetHeader}>
+                                        {asset.asset}
+                                        {mobile && (
+                                            <div className={styles.assetHeaderMobileStats}>
+                                                <div>
+                                                    Amount:&nbsp;
+                                                    <span
+                                                        className={styles.headerValueSpan}
+                                                        style={{
+                                                            color: getColor(asset.volume <= 0)
+                                                        }}>
+                                                        {`${valueWithSign(asset.volume)} ${asset.asset}`}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    Unrealized Profit:&nbsp;
+                                                    <span
+                                                        className={styles.headerValueSpan}
+                                                        style={{
+                                                            color: getColorForMoney(asset.profit)
+                                                        }}>
+                                                        {`${valueWithSign(formatMoney(asset.profit))} $`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <OpenPositionsTable width={width} mobile={mobile} type={type} asset={asset} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            )}
+        </div>
+    );
 };
 
-export const RobotOpenPositions = memo(_RobotOpenPositions);
+export default memo(_RobotOpenPositions);

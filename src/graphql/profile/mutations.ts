@@ -1,31 +1,25 @@
 import gql from "graphql-tag";
 
 export const UPDATE_EXCHANGE_KEY = gql`
-    mutation userExchangeAccUpsert($exchange: String!, $id: ID!, $name: String, $keys: ExchangeKeys!) {
+    mutation userExchangeAccUpsert($exchange: String!, $id: uuid, $name: String, $keys: ExchangeKeys!) {
         userExchangeAccUpsert(exchange: $exchange, id: $id, name: $name, keys: $keys) {
-            error
             result
-            success
         }
     }
 `;
 
 export const UPDATE_EXCHANGE_NAME = gql`
-    mutation userExchangeAccChangeName($name: String!, $id: ID!) {
+    mutation userExchangeAccChangeName($name: String!, $id: uuid!) {
         userExchangeAccChangeName(id: $id, name: $name) {
-            error
             result
-            success
         }
     }
 `;
 
 export const DELETE_EXCHANGE_BY_ID = gql`
-    mutation userExchangeAccDelete($id: ID!) {
+    mutation userExchangeAccDelete($id: uuid!) {
         userExchangeAccDelete(id: $id) {
-            error
             result
-            success
         }
     }
 `;

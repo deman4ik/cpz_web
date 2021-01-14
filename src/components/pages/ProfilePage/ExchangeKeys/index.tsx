@@ -6,7 +6,7 @@ import { ExchangeKeysContainer } from "./ExchangeKeysContainer";
 import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     title: string;
@@ -17,7 +17,7 @@ export const _ExchangeKeys: React.FC<Props> = ({ title }) => {
         authState: { user_id }
     } = useContext(AuthContext);
 
-    const { data, loading } = useQuery(GET_USER_EXCHANGES, {
+    const { data, loading, refetch } = useQuery(GET_USER_EXCHANGES, {
         variables: { user_id }
     });
     const formatData = useMemo(() => (!loading && data ? data.userExchange : []), [loading, data]);
@@ -25,7 +25,7 @@ export const _ExchangeKeys: React.FC<Props> = ({ title }) => {
     return (
         <div className={styles.container}>
             <div className={styles.regionTitle}>{title}</div>
-            {loading ? <LoadingIndicator /> : <ExchangeKeysContainer formatData={formatData} />}
+            {loading ? <LoadingIndicator /> : <ExchangeKeysContainer formatData={formatData} refetch={refetch} />}
         </div>
     );
 };

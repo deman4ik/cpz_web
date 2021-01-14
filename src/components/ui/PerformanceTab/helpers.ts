@@ -1,4 +1,4 @@
-import { moneyFormat, formatDate, capitalize } from "../../../config/utils";
+import { formatMoney, formatDate, capitalize } from "config/utils";
 
 export const tableHeaders = ["", "All Trades", "Long Trades", "Short Trades"];
 
@@ -8,11 +8,16 @@ const formatAsDates = (row) => ({
     short: row.short ? formatDate(row.short) : "-"
 });
 
-const propsToMoneyFormat = (obj) =>
-    Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: `${moneyFormat(obj[k])} $` }), {});
-const propsToPercent = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: `${obj[k]} %` }), {});
-const propsSimple = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: obj[k] }), {});
-const propsToNull = (obj) => Object.keys(obj).reduce((acc, k) => ({ ...acc, [k]: obj[k] || "-" }), {});
+const propsToNull = (obj) => Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: obj[key] || "-" }), {});
+
+const propsToMoney = (obj) =>
+    Object.keys(obj).reduce(
+        (acc, key) => ({ ...acc, [key]: obj[key] || obj[key] === 0 ? `${formatMoney(obj[key])} $` : "-" }),
+        {}
+    );
+
+const propsToPercent = (obj) =>
+    Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: obj[key] || obj[key] === 0 ? `${obj[key]} %` : "-" }), {});
 
 export const getRobotStatistic = (robotStatistic) =>
     !robotStatistic
@@ -22,7 +27,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Net Profit",
                       key: "netProfit",
-                      ...propsToMoneyFormat(robotStatistic.netProfit)
+                      ...propsToMoney(robotStatistic.netProfit)
                   },
                   {
                       title: "Number of Trades",
@@ -32,7 +37,7 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Average Profit",
                       key: "avgProfit",
-                      ...propsToMoneyFormat(robotStatistic.avgProfit)
+                      ...propsToMoney(robotStatistic.avgNetProfit)
                   },
                   {
                       title: "Average Bars Held",
@@ -42,22 +47,22 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Profit Factor",
                       key: "profitFactor",
-                      ...propsSimple(robotStatistic.profitFactor)
+                      ...propsToNull(robotStatistic.profitFactor)
                   },
                   {
                       title: "Recovery Factor",
                       key: "recoveryFactor",
-                      ...propsSimple(robotStatistic.recoveryFactor)
+                      ...propsToNull(robotStatistic.recoveryFactor)
                   },
                   {
                       title: "Payoff Ratio",
                       key: "payoffRatio",
-                      ...propsSimple(robotStatistic.payoffRatio)
+                      ...propsToNull(robotStatistic.payoffRatio)
                   },
                   {
                       title: "Maximum Drawdown",
                       key: "maxDrawdown",
-                      ...propsToMoneyFormat(robotStatistic.maxDrawdown)
+                      ...propsToMoney(robotStatistic.maxDrawdown)
                   },
                   {
                       title: "Maximum Drawdown Date",
@@ -74,22 +79,22 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Gross Profit",
                       key: "grossProfit",
-                      ...propsToMoneyFormat(robotStatistic.grossProfit)
+                      ...propsToMoney(robotStatistic.grossProfit)
                   },
                   {
                       title: "Average Profit",
                       key: "avgProfit",
-                      ...propsToMoneyFormat(robotStatistic.avgProfit)
+                      ...propsToMoney(robotStatistic.avgProfit)
                   },
                   {
                       title: "Average Bars Held",
                       key: "avgBarsHeld",
-                      ...propsToNull(robotStatistic.avgBarsHeld)
+                      ...propsToNull(robotStatistic.avgBarsHeldWinning)
                   },
                   {
                       title: "Max. Consecutive Winners",
                       key: "maxConnsecWins",
-                      ...robotStatistic.maxConnsecWins
+                      ...propsToNull(robotStatistic.maxConsecWins)
                   }
               ],
               losses: [
@@ -101,30 +106,25 @@ export const getRobotStatistic = (robotStatistic) =>
                   {
                       title: "Gross Loss",
                       key: "grossLoss",
-                      ...propsToMoneyFormat(robotStatistic.grossLoss)
+                      ...propsToMoney(robotStatistic.grossLoss)
                   },
                   {
                       title: "Average Loss",
                       key: "avgLoss",
-                      ...propsToMoneyFormat(robotStatistic.avgLoss)
+                      ...propsToMoney(robotStatistic.avgLoss)
                   },
                   {
                       title: "Average Bars Held",
                       key: "avgBarsHeld",
-                      ...propsToNull(robotStatistic.avgBarsHeld)
+                      ...propsToNull(robotStatistic.avgBarsHeldLosing)
                   },
                   {
                       title: "Max. Consecutive Losses",
                       key: "maxConsecLosses",
-                      ...robotStatistic.maxConsecLosses
+                      ...propsToNull(robotStatistic.maxConsecLosses)
                   }
               ]
           };
-
-export const tabName = {
-    myStatistic: "My Statistic",
-    publicStatistic: "Public Statistic"
-};
 
 export const getCardTitle = (item, subtitle) =>
     `${item.title}${item.key === "avgBarsHeld" && subtitle !== "profit" ? ` ${capitalize(subtitle)}` : ""}`;

@@ -1,0 +1,45 @@
+.body {
+    color: white;
+    height: 100%;
+    padding: 0 10px;
+}
+
+.row_item {
+    display: flex;
+    align-items: center;
+}
+
+.row_group {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.group_head {
+    margin: 5px 0px;
+}
+
+.order_arrows_group {
+    display: flex;
+    justify-content: center;
+    width: 40px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.order_arrow svg:hover path {
+    fill: var(--accent);
+}
+
+.checkbox {
+    margin: 0 5px;
+}
+
+@media (max-width: 480px) {
+    .modal {
+        max-height: 100%;
+        max-width: unset;
+        width: 100%;
+    }
+}

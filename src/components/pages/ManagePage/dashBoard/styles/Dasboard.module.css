@@ -1,6 +1,12 @@
 /*Common styles*/
 .cards_wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    display: flex;
+    padding: 15px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.card {
+    min-height: 305px;
+    margin: 15px;
+    flex-grow: 0.5;
 }

@@ -1,5 +1,4 @@
-/*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import { useState, useEffect } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 
 type errors = {
     email?: string;
@@ -17,9 +16,9 @@ export const useFormValidation = (initialState, validate) => {
 
     useEffect(() => {
         if (isSubmitting) {
-            const foundErrors = Object.keys(errors).length === 0;
-            setValid(foundErrors);
-            setSubmitting(foundErrors);
+            const noErrors = Object.keys(errors).length === 0;
+            setValid(noErrors);
+            setSubmitting(noErrors);
         }
     }, [errors, isSubmitting]);
 
@@ -39,7 +38,11 @@ export const useFormValidation = (initialState, validate) => {
         setErrors(validationErrors);
     }
 
-    function handleSubmit() {
+    function handleSubmit(e?: SyntheticEvent) {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         const validationErrors = validate(values);
         setErrors(validationErrors);
         setSubmitting(true);
@@ -53,6 +56,7 @@ export const useFormValidation = (initialState, validate) => {
         values,
         errors,
         isValid,
-        setValid
+        setValid,
+        setErrors: (newErrors) => setErrors({ ...errors, ...newErrors })
     };
 };

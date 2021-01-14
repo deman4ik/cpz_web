@@ -1,59 +1,138 @@
-export const ROBOTS_TITLES_SCHEME = {
-    info: {
-        title: "Info",
-        name: "Name: ",
-        id: "ID: ",
-        status: "Status: "
+import React from "react";
+//utils
+import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "../../utils";
+import { STATUS_COLORS } from "config/constants";
+import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
+
+export const ROBOT_TABLE_COLUMNS: ColumnsArraySchema = [
+    {
+        Header: "Robot Info",
+        id: "robot_info",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Code",
+                accessor: "name",
+                width: 262
+            },
+            {
+                Header: "ID",
+                accessor: "id",
+                width: 262
+            },
+            {
+                Header: "Status",
+                accessor: "status",
+                Cell: ({ value }: { value: number }): JSX.Element => (
+                    <div style={{ color: STATUS_COLORS[value] }}>{value}</div>
+                ),
+                width: 100
+            },
+            {
+                Header: "Availability",
+                accessor: "available",
+                width: 150
+            }
+        ]
     },
-    settings: {
-        title: "Settings",
-        volume: "Volume: ",
-        strategyParameters: {
-            smaSize: "Sma Size: ",
-            distInit: "Dist Init: ",
-            lookback: "Look Back: ",
-            atrPeriod: "After Period: ",
-            adjustment: "Adjustment: ",
-            adxHigh: "Adx High: ",
-            adxPeriod: "Adx Period: ",
-            trailBars: "Trail Bars: ",
-            adx: "Adx: ",
-            tick: "Tick: ",
-            ratio: "Ratio: ",
-            seriesSize: "Series Size: ",
-            orderStopLoss: "Order Stop Loss: ",
-            orderTakeProfit: "OrderTakeProfit: "
-        },
-        requiredHistoryMaxBars: "Max bars: "
+    {
+        Header: "Statistics",
+        id: "statistics",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Performance",
+                accessor: "performance",
+                Cell: buildRobotChartCell,
+                fieldSchema: { field: "stats", subfield: "equity_avg" },
+                width: 200
+            },
+            {
+                Header: "Profit",
+                accessor: "profit",
+                fieldSchema: { field: "stats", subfield: "net_profit" },
+                width: 90
+            },
+            {
+                Header: "W/R",
+                accessor: "winRate",
+                fieldSchema: { field: "stats", subfield: "win_rate" },
+                width: 90
+            },
+            {
+                Header: "Max Drawdown",
+                accessor: "maxDrawdown",
+                fieldSchema: { field: "stats", subfield: "max_drawdown" },
+                width: 125
+            },
+            {
+                Header: "Trades",
+                accessor: "tradesCount",
+                fieldSchema: { field: "stats", subfield: "trades_count" },
+                width: 90
+            }
+        ]
     },
-    performance: {
-        title: "Performance"
+    {
+        Header: "Settings",
+        id: "settings",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Volume",
+                accessor: "volume",
+                fieldSchema: { field: "robot_settings", subfield: "robot_settings" },
+                width: 100
+            },
+            {
+                Header: "Amount Type",
+                accessor: "volumeType",
+                width: 120
+            },
+            {
+                Header: "Strategy Settings",
+                accessor: "strategy_settings",
+                Cell: ({ value }: { value: any }): JSX.Element => <DynamicDataCell value={value} />,
+                width: 250
+            }
+        ]
     },
-    statistics: {
-        title: "Statistics",
-        stats: {
-            profit: "Profit: ",
-            winRate: "Win Rate: ",
-            maxDrawdown: "Max Drawdon: ",
-            tradesCount: "Trades count: "
-        }
+    {
+        Header: "Types",
+        id: "types",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Signals",
+                accessor: "signals",
+                Cell: buildDisabledCheckboxCell,
+                width: 90
+            },
+            {
+                Header: "Trading",
+                accessor: "trading",
+                Cell: buildDisabledCheckboxCell,
+                width: 90
+            }
+        ]
     },
-    available: {
-        title: "Available"
-    },
-    types: {
-        title: "Types"
-    },
-    entries: {
-        title: "Entries",
-        user_robots: "Robots: ",
-        user_signals: "Signals: "
+    {
+        Header: "Entries",
+        id: "entries",
+        disableSortBy: true,
+        columns: [
+            {
+                Header: "Robots",
+                accessor: "user_robots",
+                fieldSchema: { field: "user_robots_aggregate", subfield: "count" },
+                width: 90
+            },
+            {
+                Header: "Signals",
+                accessor: "user_signals",
+                fieldSchema: { field: "user_signals_aggregate", subfield: "count" },
+                width: 90
+            }
+        ]
     }
-};
-
-export const COLUMNS_WIDTH = ["28.6%", "14%", "14.2%", "14.2%", "10.2%", "10.2%", "8%"];
-
-/*HEAD TITLES*/
-export const ROBOTS_TABLE_HEADER_DATA = Object.keys(ROBOTS_TITLES_SCHEME).map((key) => ({
-    text: ROBOTS_TITLES_SCHEME[key].title
-}));
+];

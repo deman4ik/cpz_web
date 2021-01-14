@@ -1,18 +1,20 @@
-import { capitalize, exchangeName } from "../../../config/utils";
+import { capitalize, exchangeName } from "config/utils";
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) =>
     !exchange && !asset
-        ? `Total ${type}`
+        ? ` Total ${type
+              .split("_")
+              .map((word) => capitalize(word))
+              .join(" ")} Performance`
         : `${exchange ? exchangeName(exchange) : ""}${asset && exchange ? " " : ""}${asset ? capitalize(asset) : ""}`;
 
 const getAssetData = (stat, type) => {
-    const { id, asset, exchange, equity } = stat;
-    const { profit, changes, winRate, maxDrawdown, tradesCount } = equity;
+    const { id, asset, equity, exchange, profit, winRate, maxDrawdown, tradesCount } = stat;
     return {
         id,
         name: getLineName(exchange, asset, type),
         profit,
-        changes,
+        equity,
         winRate,
         maxDrawdown,
         tradesCount,
@@ -20,12 +22,14 @@ const getAssetData = (stat, type) => {
     };
 };
 
-export const getFormatData = (stats, type) =>
-    stats.reduce(
+export const formatStats = (stats, type) =>
+    stats?.reduce(
         (acc, stat) =>
-            (!stat.asset && !stat.exchange) || (stat.asset && stat.exchange) ? [...acc, getAssetData(stat, type)] : acc,
+            !stat.asset && !stat.exchange /*|| (stat.asset && stat.exchange)*/
+                ? [...acc, getAssetData(stat, type)]
+                : acc,
         []
-    );
+    ) || [];
 
 export const getItem = (displayType: string) => ({
     id: "",
@@ -41,9 +45,4 @@ export const getItem = (displayType: string) => ({
 export const queryParam = {
     signals: "signal",
     robots: "userRobot"
-};
-
-export const title = {
-    signals: "My Signals Total Performance",
-    robots: "My Robots Total Performance"
 };

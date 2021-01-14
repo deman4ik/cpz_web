@@ -7,33 +7,43 @@ import { UNSUBSCRIBE } from "graphql/local/mutations";
 import { Button } from "components/basic";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
+import Router from "next/router";
+import { currentPage, Pages } from "components/ui/Modals/helpers";
+import { RobotsType } from "config/types";
 
 interface Props {
-    onClose: () => void;
+    onClose: (needsRefreshing?: boolean) => void;
     setTitle: (title: string) => void;
 }
 
 const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
     const [formError, setFormError] = useState("");
-    const { data } = useQuery(ROBOT);
+    const { data } = useQuery(ROBOT(RobotsType.signals));
     const [unsubscribeSend, { loading }] = useMutation(UNSUBSCRIBE_FROM_SIGNALS);
     const [unsubscribe] = useMutation(UNSUBSCRIBE);
 
     useEffect(() => {
-        setTitle(`Unfollowing ${data.robot.name}`);
-    });
+        setTitle(`Unfollowing ${data?.robot.name}`);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
     const handleOnSubmit = () => {
-        unsubscribeSend({ variables: { robotId: data.robot.id } }).then((response) => {
-            if (response.data.userSignalUnsusbcribe.success) {
-                unsubscribe({
-                    variables: { cache: data.robot.cache, chartData: data.ChartData }
-                });
-            } else {
-                setFormError(response.data.userSignalSusbcribe.error);
-            }
-            onClose();
-        });
+        unsubscribeSend({ variables: { robotId: data.robot.id } })
+            .then((response) => {
+                if (response.data.userSignalUnsubscribe.result) {
+                    unsubscribe({
+                        variables: { cache: data.robot.cache, chartData: data.ChartData }
+                    }).catch((e) => console.error(e));
+                } else {
+                    setFormError(response.data.userSignalUnsubscribe.result);
+                }
+                if (currentPage(Router.pathname) === Pages.signal) {
+                    Router.push("/signals");
+                }
+
+                onClose(true);
+            })
+            .catch((e) => console.error(e));
     };
 
     return (
@@ -46,7 +56,7 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                     <div className={styles.bodyTitle}>
                         Are you sure you want to unsubscribe{"\n"}from {data ? data.robot.name : ""} signals?
                     </div>
-                    <div className={styles.bodyText}>You will lost all your signals statistics for this robot!</div>
+                    <div className={styles.bodyText}>You will lose all your signals statistics for this robot!</div>
                     <div className={styles.btns}>
                         <Button
                             className={styles.btn}

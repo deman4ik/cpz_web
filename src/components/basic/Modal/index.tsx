@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 import { ModalTemplate } from "./ModalTemplate";
-import ClientOnlyPortal from "../../../libs/ClientOnlyPortal";
+import ClientOnlyPortal from "libs/ClientOnlyPortal";
 import styles from "./index.module.css";
 
 interface Props {
@@ -9,6 +9,10 @@ interface Props {
     children?: React.ReactNode;
     onClose: React.MouseEventHandler;
     title?: string;
+    className?: string;
+    style?: React.CSSProperties;
+    footer?: JSX.Element;
+    contentHeight?: number | string;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -28,8 +32,13 @@ export const Modal: React.FC<Props> = (props) => {
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={styles.modal}>
-                    <ModalTemplate title={props.title} onClose={props.onClose}>
+                <div ref={modalRef} className={`${styles.modal} ${props.className}`}>
+                    <ModalTemplate
+                        title={props.title}
+                        onClose={props.onClose}
+                        footer={props.footer}
+                        style={props.style}
+                        contentHeight={props.contentHeight}>
                         {props.children}
                     </ModalTemplate>
                 </div>

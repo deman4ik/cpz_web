@@ -1,0 +1,44 @@
+.exchangeContainerMobile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exchange {
+    display: flex;
+    align-items: center;
+    font-size: var(--big1);
+    color: white;
+    margin: 10px 0;
+}
+
+.assetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--normal1);
+    background-color: var(--dark);
+    color: white;
+    padding: 10px 20px;
+}
+
+.assetHeaderMobileStats {
+    display: flex;
+    font-size: var(--normal0);
+    color: var(--accent);
+    flex-direction: column;
+}
+
+@media (max-width: 1080px) {
+    .exchange {
+        font-size: var(--normal3);
+    }
+}
+
+@media (max-width: 480px) {
+    .exchange {
+        font-size: var(--normal1);
+    }
+    .assetHeader {
+        font-size: var(--normal0);
+    }
+}

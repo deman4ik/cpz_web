@@ -2,39 +2,26 @@ import * as Sets from "./NotificationsSets";
 import * as SetsCard from "./NotificationsSetsCard";
 import { color, DOCS_URL, SUPPORT_URL } from "config/constants";
 
-const actionTypes = ["long", "closeShort"];
+const actionTypes = ["long", "closeLong", "closeShort"];
 const actionSignals = ["long", "short"];
 export const actionName = (action) => (actionTypes.includes(action) ? "BUY" : "SELL");
 export const actionIcon = (action) => (actionTypes.includes(action) ? "arrowup" : "arrowdown");
 export const actionColor = (action) => (actionTypes.includes(action) ? color.positive : color.negative);
 export const actionOpen = (action) => actionSignals.includes(action);
 
-export const getFormatData = (notifications) =>
-    notifications.map((notification) => {
-        const { type, data, user_robot, user_position, robot_position, robot, timestamp, readed, id } = notification;
-        return {
-            id,
-            type,
-            data,
-            timestamp,
-            readed,
-            user_position,
-            robot_position,
-            robot: user_robot
-                ? {
-                      code: user_robot.robot.code,
-                      name: user_robot.robot.name,
-                      asset: user_robot.robot.asset
-                  }
-                : robot
-                ? {
-                      code: robot.code,
-                      name: robot.name,
-                      asset: robot.asset
-                  }
-                : null
-        };
-    });
+export const parseNotifications = (notifications: Array<any>): any =>
+    notifications
+        .map((notification) => {
+            const { type, data, timestamp, readed, id } = notification;
+            return {
+                id,
+                type,
+                data,
+                timestamp,
+                readed
+            };
+        })
+        .sort((a, b) => a.timestamp - b.timestamp);
 
 const messageMap = {
     "user-robot.failed": "failed",
@@ -43,8 +30,11 @@ const messageMap = {
     "user-robot.paused": "robot",
     "user-robot.resumed": "robot",
     "user-robot.trade": "robotTrade",
+    "user-robot.error": "error",
     "signal.trade": "signalTrade",
+    "signal-trade.new": "signalTrade",
     "signal.alert": "signalAlert",
+    "signal-alert.new": "signalAlert",
     "order.error": "error",
     "message.support-reply": "message",
     "message.broadcast": "message",
@@ -71,12 +61,12 @@ export const filters = {
         "user-robot.resumed",
         "message.support-reply"
     ],
-    signals: ["signal.trade", "signal.alert"],
+    signals: ["signal.trade", "signal.alert", "signal-trade.new", "signal-alert.new"],
     trading: ["user-robot.trade"],
     error: ["order.error", "user_ex_acc.error"]
 };
 
-export const showMessage = (item, onClick, card = false) => {
+export const showMessage = (item, onClick: () => void, card = false): JSX.Element => {
     const setFunc = card ? SetsCard : Sets;
     const messages = {
         failed: () => setFunc.failedSet(item, onClick),
@@ -89,7 +79,10 @@ export const showMessage = (item, onClick, card = false) => {
         user: () => setFunc.userSet(item, onClick)
     };
 
-    return messages[messageMap[item.type]]();
+    const messageType = messageMap[item.type];
+    if (messageType) return messages[messageType]();
+    console.warn(`Unknown message type encountered: '${item.type}'`);
+    return null;
 };
 
 export const getRedirectionLink = (item) => {
@@ -97,20 +90,20 @@ export const getRedirectionLink = (item) => {
         failed: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         message: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         robotTrade: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
         signalAlert: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         robot: () => ({
-            link: `/robots/robot/${item.robot.code}`,
+            link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
         signalTrade: () => ({
-            link: `/signals/robot/${item.robot.code}`,
+            link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
         }),
         user: () => ({ link: "/profile", redirect: true })

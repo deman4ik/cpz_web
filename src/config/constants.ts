@@ -18,7 +18,7 @@ export const nearestTrades = [
     { y: 1455, type: "short" }
 ];
 
-export const DISPLAY_CLOSED_POSITIONS = 50;
+export const CLOSED_POSITIONS_LIMIT = 50;
 
 export const SCREEN_TYPE = {
     BIGGEST: 1320,
@@ -33,14 +33,14 @@ export const MIN_NAME_LENGTH = 3;
 export const MIN_PASSWORD_LENGTH = 6;
 export const SECRET_CODE_LENGTH = 6;
 
-export const LOCALHOST = "localhost:3000";
-//export const LOCALHOST = '127.0.0.1';
+export const LOCALHOST = "127.0.0.1";
 
 export const POLL_INTERVAL = +process.env.POLL_INTERVAL || 10000;
-export const DOCS_URL = "https://support.cryptuoso.com";
-export const TERMS_URL = "/terms-of-use";
-export const PRIVACY_URL = "/privacy-policy";
-export const SUPPORT_URL = "/support";
+export const BLOG_URL = "/info/blog";
+export const DOCS_URL = "/info/docs";
+export const TERMS_URL = "/info/terms-of-use";
+export const PRIVACY_URL = "/info/privacy-policy";
+export const SUPPORT_URL = "/info/support";
 export const TELEGRAM_COMMUNITY_URL = "https://t.me/joinchat/AAAAAEzaWVAzgkDmgOKYHA";
 
 export const color = {
@@ -68,11 +68,12 @@ export const color = {
     }
 };
 
-export const STATUSES_COLORS = {
+export const STATUS_COLORS = {
     started: color.positive,
     stopped: color.negative,
     paused: color.yellow
 };
+
 /*Регулярки*/
 export const REGEXS = {
     telegram_id: /^\d{9}/g,
@@ -82,8 +83,8 @@ export const REGEXS = {
 export const globalAny: any = global;
 
 /*Роуты с аутентификацией*/
-export const EXCLUDE_AUTH_ROUTES = ["/auth/signup", "/auth/login"];
-export const EXCLUDE_MANAGE_ROUTES = [
+export const AUTH_ROUTES = ["/auth/signup", "/auth/login"];
+export const MANAGE_ROUTES = [
     "/manage",
     "/manage/users",
     "/manage/robots",
@@ -93,8 +94,8 @@ export const EXCLUDE_MANAGE_ROUTES = [
 ];
 
 /*массив исключений для доступности роутов*/
-export const EXCLUDE_ROUTES: Array<string> = [
-    ...EXCLUDE_AUTH_ROUTES,
+export const ROUTES: Array<string> = [
+    ...AUTH_ROUTES,
     "/profile",
     "/notifications",
     "/signals",
@@ -113,3 +114,14 @@ export enum ROBOTS_AVAILABLE_CODES {
     User = 15,
     Anonymous = 20
 }
+
+export type VolumeDisplayUnits = {
+    currency: string;
+    asset: string;
+};
+
+export const httpErrors = {
+    JWTError: "invalid-jwt"
+};
+
+export const SOMETHING_WENT_WRONG = "Something went wrong";

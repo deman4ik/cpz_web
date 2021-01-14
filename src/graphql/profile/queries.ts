@@ -5,19 +5,22 @@ export const GET_EXCHANGES = gql`
         exchanges {
             code
             name
+            ref_link
+            docs_link
         }
     }
 `;
 
 export const GET_USER_EXCHANGES = gql`
     query user_exchange_accs($user_id: uuid) {
-        userExchange: user_exchange_accs(where: { user_id: { _eq: $user_id } }) {
-            created_at
+        userExchange: v_user_exchange_accs(where: { user_id: { _eq: $user_id } }) {
             exchange
             id
             name
             status
             user_id
+            balance: total_balance_usd
+            error
         }
     }
 `;

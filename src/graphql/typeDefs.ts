@@ -17,8 +17,14 @@ export const typeDefs = gql`
         tableName: String!
     }
 
-    extend type SubsData {
+    extend type RobotSettings {
+        volumeType: String!
         volume: Float
+        volumeInCurrency: Float
+    }
+
+    extend type SubsData {
+        settings: RobotSettings
         asset: String
         exchange: String
         currency: String
@@ -28,8 +34,10 @@ export const typeDefs = gql`
         cache: CacheData!
         id: String!
         userRobotId: String
+        user_ex_acc_id: String
         name: String!
         subs: SubsData
+        code: String
     }
 
     extend type RobotInfo {

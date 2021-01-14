@@ -1,12 +1,13 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, SyntheticEvent, useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 
 import { SET_USER_NAME } from "graphql/user/mutations";
 import { GET_USER_INFO } from "graphql/user/queries";
 import { Button, Input } from "components/basic";
 import { MIN_NAME_LENGTH } from "config/constants";
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
 import styles from "./PasswordModal.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 interface Props {
     name: string;
@@ -25,32 +26,24 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
         refetchQueries: [{ query: GET_USER_INFO, variables: { user_id } }]
     });
 
-    if (error) {
-        console.error(error);
-    }
-
-    const submit = () => {
-        sendData().then((response) => {
-            if (response.data.changeName.success) {
+    const submit = (e: SyntheticEvent) => {
+        e.preventDefault();
+        sendData()
+            .then((response) => {
                 onClose();
-            } else {
                 setFormError(response.data.changeName.error);
-            }
-        });
+            })
+            .catch((err) => {
+                setFormError(err.message);
+                console.error(error);
+            });
     };
 
     const isValid = () => inputValue && inputValue !== name && inputValue.length >= MIN_NAME_LENGTH;
 
-    const onKeyPress = (e) => {
-        if (formError) setFormError("");
-        if (e.nativeEvent.key === "Enter" && isValid()) {
-            submit();
-        }
-    };
-
     return (
         <>
-            <div className={styles.form}>
+            <form className={styles.form} onSubmit={submit}>
                 <div className={styles.fieldset}>
                     <div className={styles.oneInputAlign}>
                         <Input
@@ -59,11 +52,11 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
                             width={250}
                             responsive
                             onChangeText={(value) => setInputValue(value)}
-                            onKeyPress={onKeyPress}
                         />
                     </div>
                     <div className={styles.btns}>
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             className={styles.btn}
                             width={120}
                             title="Change"
@@ -72,7 +65,6 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
                             disabled={!isValid()}
                             isUppercase
                             isLoading={loading}
-                            onClick={submit}
                         />
                         <Button
                             className={styles.btn}
@@ -85,7 +77,7 @@ const _NameModal: React.FC<Props> = ({ name, onClose }) => {
                         />
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     );
 };

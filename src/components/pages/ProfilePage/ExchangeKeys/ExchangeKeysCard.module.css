@@ -1,84 +1,83 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 240px;
-  height: 240px;
-  margin: 8px 5px 0;
-  background-color: var(--dark);
-  border-radius: 2px;
-  box-shadow: var(--shadow);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 270px;
+    height: 240px;
+    margin: 8px 5px 0;
+    background-color: var(--dark);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
 }
 
 .tableCellText {
-  font-size: var(--normal1);
-  color: white;
+    font-size: var(--normal1);
+    color: white;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .secondaryText {
-  color: var(--accent);
-  font-size: var(--small1);
+    color: var(--accent);
+    font-size: var(--small1);
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
 }
 
-.rowError {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
+.errorCell {
+    grid-column: 1 / span 2;
+    grid-row-start: 3;
+    padding: 5px 5px;
+}
+
+.errorCellText {
+    font-size: 0.8em;
 }
 
 .topPart {
-  background-color: var(--lightBg);
-  padding: 10px 5px 10px 15px;
+    background-color: var(--lightBg);
+    padding: 10px 5px 10px 15px;
 }
 
 .name {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .btn {
-  display: flex;
-  flex-direction: column;
-  flex: 0.2;
-  align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    flex: 0.2;
+    align-items: flex-end;
 }
 
-.exchangeGroup {
-  flex: 1;
-  align-items: flex-start;
-  margin-top: 15px;
-  padding: 0 15px 10px;
-}
-
-.exchangeRow {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+.exchangeCell {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0 0 15px;
 }
 
 .btnGroup {
-  margin-top: 15px;
-  padding: 0 15px 10px;
-  justify-content: space-around;
-}
-
-.errorGroup {
-  margin-top: 10px;
-  padding: 0 15px 10px;
-  height: 40px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    margin-top: 15px;
+    padding: 0 15px 10px;
+    justify-content: space-around;
 }
 
 @media (max-width: 480px) {
-  .container {
-    max-width: unset;
-  }
+    .container {
+        max-width: unset;
+    }
 }

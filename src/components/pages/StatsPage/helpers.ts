@@ -6,15 +6,14 @@ import { CheckedFilters } from "./types";
 import uniqueArrayByfield from "utils/uniqueArrayByfield";
 
 export const getFormatData = (stats) => {
-    if (!stats.length || !stats[0].statistics.performance) return { chartData: null, robotStatistic: null };
-    const chartData = stats[0].statistics.performance.map((pos) => ({
+    if (!stats?.equity || !stats?.statistics) return { chartData: null, robotStatistic: null };
+    const chartData = stats.equity.map((pos) => ({
         time: dayjs.utc(pos.x / 1000).valueOf(),
         value: pos.y
     }));
-
     return {
         chartData: uniqueArrayByfield(chartData, "time"),
-        robotStatistic: getRobotStatistic(stats[0].statistics)
+        robotStatistic: getRobotStatistic(stats.statistics)
     };
 };
 
@@ -39,3 +38,19 @@ export const getLabelCombinations = (filters) =>
 export const getQueueType = (displayType: string) => ({
     _eq: displayType === "signals" ? "signal" : "userRobot"
 });
+
+export const extractRoute = (route: string): string => {
+    return route
+        .split("/")
+        .filter((i) => i)
+        .slice(0, 2)
+        .join("/");
+};
+
+export const getVariablesFrom = (params) =>
+    Object.entries(params).reduce((acc, v) => {
+        const [key, value] = v;
+        if (!value) return acc;
+        acc[key] = value;
+        return acc;
+    }, {});

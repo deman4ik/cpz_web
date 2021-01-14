@@ -1,176 +1,139 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useMemo, memo } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import React, { memo, useContext, useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
-import { GET_MARKETS } from "graphql/common/queries";
-import { EDIT_ROBOT } from "graphql/local/mutations";
-import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
-import { ErrorLine, LoadingIndicator } from "components/common";
-import { Button, Input } from "components/basic";
-import { moneyFormat } from "config/utils";
-import { getLimits, calculateCurrency, calculateAsset } from "./helpers";
-import { color } from "config/constants";
+import { queriesToRobotTypeMap } from "graphql/common/queries";
+import { Button, Modal } from "components/basic";
+import { buildSettings, getLimits, limitsPropToType } from "./helpers";
+import { volumeTypeOptionsMap } from "./constants";
 import styles from "./index.module.css";
+import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
+import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
+import { AddRobotInputsMap } from "components/ui/Modals/constants";
+import { AuthContext } from "libs/hoc/context";
+import { EDIT_SIGNAL } from "graphql/signals/mutations";
+import { RobotsType } from "config/types";
+import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
+import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 interface Props {
-    onClose: () => void;
+    onClose: (changesMade?: boolean) => void;
+    isOpen: boolean;
+    title: string;
+    type: string;
     setTitle: (title: string) => void;
     code?: string;
 }
+const inputs = AddRobotInputsMap;
 
-const _EditRobotModal: React.FC<Props> = ({ onClose, code, setTitle }) => {
+const queryToEditType = {
+    [RobotsType.signals]: EDIT_SIGNAL,
+    [RobotsType.robots]: USER_ROBOT_EDIT
+};
+const mapPropToType = {
+    [RobotsType.robots]: "userRobotEdit",
+    [RobotsType.signals]: "userSignalEdit"
+};
+const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
+    const { authState } = useContext(AuthContext);
+
     const [formError, setFormError] = useState("");
-    const { data: dataRobot } = useQuery(ROBOT);
-    const [inputVolumeAsset, setInputVolumeAsset] = useState("0");
-    const [inputVolumeCurrency, setInputVolumeCurrency] = useState("0");
+    const { data: robotData } = useQuery(ROBOT(type));
 
-    const { data, loading } = useQuery(GET_MARKETS, {
+    const { exchange, asset, currency } = robotData?.robot.subs || {};
+    const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
-            exchange: dataRobot.robot.subs.exchange,
-            asset: dataRobot.robot.subs.asset,
-            currency: dataRobot.robot.subs.currency
-        },
-        skip: !dataRobot
+            id: robotData?.robot.user_ex_acc_id,
+            exchange,
+            asset,
+            currency,
+            user_id: authState.user_id
+        }
     });
 
-    const limits = useMemo(() => (!loading && data ? getLimits(data) : { asset: { min: 0, max: 0 }, price: 0 }), [
-        loading,
-        data
-    ]);
+    const limits = useMemo(() => !loading && data && getLimits(data, limitsPropToType[type]), [loading, data]);
 
-    useEffect(() => {
-        if (dataRobot) {
-            setInputVolumeAsset(dataRobot.robot.subs.volume);
-            setInputVolumeCurrency(calculateCurrency(dataRobot.robot.subs.volume, limits.price));
-            setTitle(`Edit ${dataRobot ? dataRobot.robot.name : ""}`);
-        }
-    }, [dataRobot, limits]);
+    const subscribeModalProps = useSubscribeModal({
+        limits,
+        inputs,
+        robotData
+    });
+    const { inputValues, volumeType, precision, errors } = subscribeModalProps;
 
-    const handleOnChangeAsset = (value: string) => {
-        setInputVolumeAsset(value);
-        setInputVolumeCurrency(calculateCurrency(value, limits.price));
-    };
-
-    const handleOnChangeCurrency = (value: string) => {
-        setInputVolumeCurrency(value);
-        setInputVolumeAsset(calculateAsset(value, limits.price));
-    };
-
-    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(USER_ROBOT_EDIT);
-    const [editRobot] = useMutation(EDIT_ROBOT);
+    const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);
 
     const handleOnSubmit = () => {
+        const settings = buildSettings({ volumeType, inputValues, precision });
+        const prop = mapPropToType[type];
         userRobotEdit({
             variables: {
-                id: dataRobot.robot.userRobotId,
-                volume: Number(inputVolumeAsset)
+                robotId: robotData?.robot.userRobotId || robotData?.robot.id,
+                settings
             }
-        }).then((response) => {
-            if (response.data.userRobotEdit.success) {
-                editRobot({
-                    variables: {
-                        robot: dataRobot.robot,
-                        volume: Number(inputVolumeAsset),
-                        code
-                    }
-                });
-            } else {
-                setFormError(response.data.userRobotEdit.error);
-            }
-            onClose();
-        });
+        })
+            .then((response) => {
+                const { data: responseData } = response;
+                if (!responseData[prop].result) {
+                    setFormError(responseData[prop].error);
+                }
+                refetch().catch((e) => console.error(e));
+                onClose(true);
+            })
+            .catch((e) => {
+                setFormError(e.message);
+            });
     };
-    const isValid = () => Number(inputVolumeAsset) >= limits.asset.min && Number(inputVolumeAsset) <= limits.asset.max;
-    const handleOnKeyPress = (e) => {
-        if (e.nativeEvent.key === "Enter" && isValid()) {
+
+    const onKeyPress = (e) => {
+        if (e.nativeEvent.key === "Enter" && !errors.length) {
             handleOnSubmit();
         }
     };
 
+    useEffect(() => {
+        setTitle(`Edit ${robotData?.robot.name || "Robot"}`);
+    }, [robotData]);
+
+    useEffect(() => {
+        setFormError("");
+    }, [isOpen]);
+
+    const enabled = !(loading || editRobotLoading);
     return (
-        <>
-            {loading || editRobotLoading ? (
-                <LoadingIndicator />
-            ) : (
-                <>
-                    {formError && <ErrorLine formError={formError} />}
-                    <div className={styles.container}>
-                        <div className={styles.bodyTitle}>
-                            Please enter desired trading amount in&nbsp;
-                            <span style={{ color: color.white }}>{dataRobot ? dataRobot.robot.subs.asset : ""}</span>
-                        </div>
-                        <div className={styles.form}>
-                            <div className={[styles.bodyText, styles.formComment].join(" ")}>
-                                <div className={styles.value_group}>
-                                    <div className={styles.label}>Minimum value is&nbsp;</div>
-                                    <div className={styles.value_row}>
-                                        <span>{moneyFormat(limits.asset.min, 3)}</span>&nbsp;
-                                        <span style={{ color: "white" }}>
-                                            {dataRobot ? dataRobot.robot.subs.asset : ""}
-                                        </span>
-                                        &nbsp;≈&nbsp;{calculateCurrency(limits.asset.min.toString(), limits.price)}
-                                        &nbsp;$
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.fieldset}>
-                                <div className={styles.input_group}>
-                                    <div className={styles.volume}>
-                                        <Input
-                                            error={!isValid()}
-                                            type="number"
-                                            width={150}
-                                            value={inputVolumeAsset}
-                                            selectTextOnFocus
-                                            right
-                                            onChangeText={(value) => handleOnChangeAsset(value)}
-                                            onKeyPress={handleOnKeyPress}
-                                        />
-                                        <span className={styles.volume_text}>
-                                            {dataRobot ? dataRobot.robot.subs.asset : ""}
-                                        </span>
-                                    </div>
-                                    <span className={styles.delimiter} style={{ marginTop: 3 }}>
-                                        ≈
-                                    </span>
-                                    <div className={styles.volume} style={{ marginTop: 3 }}>
-                                        <Input
-                                            type="number"
-                                            value={`${inputVolumeCurrency}`}
-                                            width={150}
-                                            right
-                                            onKeyPress={handleOnKeyPress}
-                                            onChangeText={(value) => handleOnChangeCurrency(value)}
-                                        />
-                                        <span className={styles.volume_text}>$</span>
-                                    </div>
-                                </div>
-                                <div className={styles.btns}>
-                                    <Button
-                                        className={styles.btn}
-                                        title="Save"
-                                        icon="check"
-                                        type="success"
-                                        disabled={!isValid()}
-                                        isUppercase
-                                        onClick={handleOnSubmit}
-                                    />
-                                    <Button
-                                        className={styles.btn}
-                                        title="Cancel"
-                                        icon="close"
-                                        type="dimmed"
-                                        isUppercase
-                                        onClick={onClose}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </>
+        <Modal isOpen={isOpen} onClose={() => onClose()} title={title}>
+            <>
+                <SubscribeModalContent
+                    {...subscribeModalProps}
+                    volumeTypeOptions={volumeTypeOptionsMap[type]}
+                    robotData={robotData}
+                    formError={formError}
+                    inputs={inputs}
+                    onKeyPress={onKeyPress}
+                    enabled={enabled}
+                />
+                <div className={styles.btns}>
+                    <Button
+                        className={styles.btn}
+                        isLoading={!enabled}
+                        title="Save"
+                        icon="check"
+                        type="success"
+                        disabled={errors.length > 0}
+                        isUppercase
+                        onClick={handleOnSubmit}
+                    />
+                    <Button
+                        className={styles.btn}
+                        title="Cancel"
+                        icon="close"
+                        type="dimmed"
+                        isUppercase
+                        onClick={onClose}
+                    />
+                </div>
+            </>
+        </Modal>
     );
 };
 

@@ -2,12 +2,12 @@ import React, { memo } from "react";
 import { CaptionButton } from "components/basic";
 
 interface Props {
-    setVisibleToolbarFilters: () => void;
+    toggleFiltersVisibility: () => void;
 }
 
-const _StatsPageButtonToolbar: React.FC<Props> = ({ setVisibleToolbarFilters }) => (
+const _StatsPageButtonToolbar: React.FC<Props> = ({ toggleFiltersVisibility }) => (
     <div className="toolbar">
-        <CaptionButton title="filter" icon="filtervariant" onClick={setVisibleToolbarFilters} />
+        <CaptionButton title="filter" icon="filtervariant" onClick={toggleFiltersVisibility} />
     </div>
 );
 

@@ -3,16 +3,13 @@ import dynamic from "next/dynamic";
 
 import dayjs from "../../../libs/dayjs";
 import { NoRecentData, LoadingIndicator } from "../../common";
-import { TabType } from "../../../config/types";
 import { ChartType } from "../../charts/LightWeightChart/types";
 import { PerformanceTabComponent } from "./PerformanceTabComponent";
-import { tabName, getRobotStatistic } from "./helpers";
-import styles from "./index.module.css";
+import { getRobotStatistic } from "./helpers";
 
 interface Props {
-    stat: any;
-    activeTab: TabType;
-    width: number;
+    fullStats: any;
+    fullWidth?: boolean;
 }
 
 const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeightChart"), {
@@ -20,50 +17,36 @@ const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeight
     ssr: false
 });
 
-const _PerformanceTabRobotPage: React.FC<Props> = ({ stat, activeTab, width }) => {
+const _PerformanceTabRobotPage: React.FC<Props> = ({ fullStats, fullWidth }) => {
     const [isChartLoaded, setIsChartLoaded] = useState(false);
+
     const chartData = useMemo(
         () =>
-            !stat.statistics || !stat.statistics.performance
+            !fullStats?.equity
                 ? null
-                : stat.statistics.performance.map((pos) => ({
+                : fullStats.equity.map((pos) => ({
                       time: dayjs.utc(pos.x / 1000).valueOf(),
                       value: pos.y
                   })),
-        [stat]
+        [fullStats]
     );
 
-    const robotStatistic = useMemo(
-        () => (!stat.statistics || !stat.statistics.performance ? null : getRobotStatistic(stat.statistics)),
-        [stat]
-    );
-
-    return (
+    const robotStatistics = useMemo(() => getRobotStatistic(fullStats?.statistics), [fullStats]);
+    return !fullStats || Object.keys(fullStats).length === 0 ? (
+        <NoRecentData message="No recent data available" />
+    ) : (
         <>
-            {!stat ? (
-                <LoadingIndicator />
-            ) : (
-                <>
-                    {!chartData ? (
-                        <NoRecentData message="No recent data available" style={{ marginTop: 20 }} />
-                    ) : (
-                        <LightWeightChartWithNoSSR
-                            data={chartData}
-                            type={ChartType.area}
-                            size={{ height: 400, width }}
-                            setIsChartLoaded={setIsChartLoaded}
-                        />
-                    )}
-                    {isChartLoaded ? (
-                        <>
-                            <div className={styles.performanceTitle}>{tabName[TabType[activeTab]]}</div>
-                            <PerformanceTabComponent width={width} robotStatistic={robotStatistic} />
-                        </>
-                    ) : null}
-                </>
-            )}
+            <LightWeightChartWithNoSSR
+                fullWidth={fullWidth}
+                data={chartData}
+                type={ChartType.area}
+                size={{ height: 400 }}
+                setIsChartLoaded={setIsChartLoaded}
+            />
+            {!isChartLoaded && <div style={{ height: 400 }} />}
+            <PerformanceTabComponent robotStatistic={robotStatistics} />
         </>
     );
 };
 
-export const PerformanceTabRobotPage = memo(_PerformanceTabRobotPage);
+export const PerformanceTab = memo(_PerformanceTabRobotPage);

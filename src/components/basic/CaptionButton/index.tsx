@@ -7,7 +7,12 @@ import {
     FilterVariantIcon,
     FilterVariantRemoveIcon,
     SettingsIcon,
-    CloseIcon
+    CloseIcon,
+    BorderColorIcon as EditIcon,
+    PlusBox,
+    BullHorn,
+    ChevronRightIcon,
+    FileQuestion
 } from "assets/icons/svg";
 
 interface Props {
@@ -17,6 +22,8 @@ interface Props {
     width?: number;
     onClick?: () => void;
     responsive?: boolean;
+    hidden?: boolean;
+    href?: string;
 }
 
 const components = {
@@ -26,10 +33,24 @@ const components = {
     filtervariant: FilterVariantIcon,
     filtervariantremove: FilterVariantRemoveIcon,
     settings: SettingsIcon,
-    close: CloseIcon
+    close: CloseIcon,
+    edit: EditIcon,
+    plusbox: PlusBox,
+    announcement: BullHorn,
+    chevronright: ChevronRightIcon,
+    docs: FileQuestion
 };
 
-export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onClick, responsive = true }) => {
+export const CaptionButton: React.FC<Props> = ({
+    title,
+    style,
+    icon,
+    width,
+    onClick,
+    responsive = true,
+    hidden = false,
+    href = null
+}) => {
     const SpecificIcon = components[icon];
     const getClassName = () => {
         const composeClass = ["btn"];
@@ -37,14 +58,19 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
     };
 
     return (
-        <div className={getClassName().join(" ")} style={style} onClick={onClick}>
-            <div className="wrapper">
-                <div className="btn-text">{title}</div>
+        <div
+            className={getClassName().join(" ")}
+            style={{ ...style, display: hidden ? "none" : "flex" }}
+            onClick={() => {
+                if (onClick) onClick();
+                if (href) window.open(href, "_blank");
+            }}>
+            {title && <div className="btn-text">{title}</div>}
+            {SpecificIcon && (
                 <i className="icon" style={{ width: 20, height: 20 }}>
                     <SpecificIcon size={20} />
                 </i>
-            </div>
-            <div className="aligner" />
+            )}
             <style jsx>
                 {`
                     .btn-text {
@@ -53,31 +79,23 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
                         font-size: 14px;
                         text-align: center;
                         padding-left: 10px;
-                        padding-right: 10px;
+                        padding-right: 5px;
                         white-space: nowrap;
                         opacity: 1;
                         user-select: none;
                     }
                     .icon {
-                        padding-right: 0;
-                        padding-left: 0;
-                        padding-top: 3px;
-                        position: absolute;
-                        top: -6px;
-                        right: -16px;
-                    }
-                    .aligner {
-                        width: 12px;
                     }
                     .btn {
                         display: flex;
+                        align-items: center;
+                        justify-content: center;
                         cursor: pointer;
                         width: ${width ? `${width}px` : "min-content"};
                         height: 34px;
                         padding-left: 5px;
                         padding-right: 5px;
                         user-select: none;
-                        align-items: center;
                         overflow: hidden;
                         border-radius: 4px;
                         position: relative;
@@ -85,32 +103,22 @@ export const CaptionButton: React.FC<Props> = ({ title, style, icon, width, onCl
                         background-color: transparent;
                         text-transform: uppercase;
                     }
-                    .wrapper {
-                        position: relative;
-                        width: 100%;
-                        opacity: 1;
-                    }
-                    .wrapper:active {
+                    .btn:active {
                         opacity: 0.2;
                     }
                     @media (max-width: 768px) {
                         .btn-text {
                             display: ${responsive ? "none" : "block"};
                         }
-                        .icon {
-                            top: ${responsive ? -12 : -6}px;
-                        }
-                        .aligner {
-                            width: ${responsive ? 25 : 12}px;
+                        .btn {
+                            padding: 0 15px;
                         }
                     }
-                    @media (max-width: 365px) {
-                        .icon {
-                            right: ${responsive ? -12 : -16}px;
-                        }
+
+                    @media (max-width: 390px) {
                         .btn {
-                            padding-left: ${responsive ? 0 : 5}px;
-                            padding-right: ${responsive ? 0 : 5}px;
+                            padding-left: 10px;
+                            padding-right: 5px;
                         }
                     }
                 `}

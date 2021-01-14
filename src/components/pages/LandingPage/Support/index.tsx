@@ -9,7 +9,7 @@ const _Support: React.FC = () => (
         <h2 className={styles.title}>Support</h2>
         <div className={styles.support}>
             <div className={styles.grid}>
-                {supportContent().map((item) => (
+                {supportContent.map((item) => (
                     <SupportItem item={item} key={item.icon} />
                 ))}
             </div>

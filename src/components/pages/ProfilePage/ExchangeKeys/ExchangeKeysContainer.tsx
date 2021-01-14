@@ -11,9 +11,10 @@ import { Modal } from "components/basic";
 
 interface Props {
     formatData: any;
+    refetch: () => void;
 }
 
-export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
+export const ExchangeKeysContainer: React.FC<Props> = ({ formatData, refetch }) => {
     const [isVisibleModal, setIsVisibleModal] = useState({
         addKey: {
             isVisible: false,
@@ -34,6 +35,7 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
             ...prev,
             [ModalKey[key]]: { isVisible: !prev[ModalKey[key]].isVisible, options: formOptions || null }
         }));
+        refetch();
     };
 
     const handleSetVisibleModalDeleteKey = () => {
@@ -48,15 +50,18 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
         handleSetVisibleModal(ModalKey.addKey);
     };
 
-    const getTitle = (key: ModalKey) => {
+    const getSettings = (key: ModalKey) => {
         const keyName = ModalKey[key];
         const name = isVisibleModal[keyName].options ? isVisibleModal[keyName].options.name : "";
-        const title = {
-            addKey: (options) => (options ? `Edit ${name} Exchange API Keys` : "Add new Exchange API Keys"),
-            editName: (options) => (options ? `Rename ${name} Exchange API Keys` : ""),
-            deleteKey: (options) => (options ? `Delete ${name} Exchange API Keys?` : "")
+        const settings = {
+            addKey: (options) => ({
+                title: options ? `Edit ${name} Exchange API Keys` : "Add new Exchange API Keys",
+                displayGuide: !options
+            }),
+            editName: (options) => ({ title: options ? `Rename ${name} Exchange API Keys` : "" }),
+            deleteKey: (options) => ({ title: options ? `Delete ${name} Exchange API Keys?` : "" })
         };
-        return title[keyName](isVisibleModal[keyName].options);
+        return settings[keyName](isVisibleModal[keyName].options);
     };
 
     return (
@@ -70,17 +75,18 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
                 </div>
             </div>
             <Modal
-                title={getTitle(ModalKey.addKey)}
+                title={getSettings(ModalKey.addKey).title}
                 isOpen={isVisibleModal.addKey.isVisible}
                 onClose={handleSetVisibleModalAddKey}>
                 <ExchangeKeysAddKeyModal
+                    displayGuide={getSettings(ModalKey.addKey).displayGuide}
                     options={isVisibleModal.addKey.options}
                     isExchangeDisabled={!!isVisibleModal.addKey.options}
                     onClose={handleSetVisibleModalAddKey}
                 />
             </Modal>
             <Modal
-                title={getTitle(ModalKey.editName)}
+                title={getSettings(ModalKey.editName).title}
                 isOpen={isVisibleModal.editName.isVisible}
                 onClose={handleSetVisibleModalEditName}>
                 <ExchangeKeysEditNameModal
@@ -89,7 +95,7 @@ export const ExchangeKeysContainer: React.FC<Props> = ({ formatData }) => {
                 />
             </Modal>
             <Modal
-                title={getTitle(ModalKey.deleteKey)}
+                title={getSettings(ModalKey.deleteKey).title}
                 isOpen={isVisibleModal.deleteKey.isVisible}
                 onClose={handleSetVisibleModalDeleteKey}>
                 <ExchangeKeysDeleteKeyModal

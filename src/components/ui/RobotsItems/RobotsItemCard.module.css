@@ -1,148 +1,169 @@
 .container {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  width: 100%;
-  max-width: 420px;
-  margin-bottom: 6px;
-  margin-left: 5px;
-  margin-right: 5px;
-  background-color: var(--rgbaDark);
-  border-radius: 2px;
-  box-shadow: var(--shadow);
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: var(--rgbaDark);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+}
+
+.statsWrapper > div {
+    margin-bottom: 5px;
+}
+
+.statsWrapper > div:last-child {
+    margin-bottom: unset;
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
 }
 
 .headerCard {
-  padding: 12px;
-  background-color: var(--dark);
-  cursor: pointer;
+    padding: 12px;
+    background-color: var(--dark);
+    cursor: pointer;
 }
 
 .col {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.headerCol {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .secondaryText {
-  color: var(--accent);
-  font-size: var(--small1);
+    display: flex;
+    justify-content: center;
+    color: var(--accent);
+    font-size: var(--small1);
 }
 
 .primaryText {
-  font-size: var(--normal1);
+    font-size: var(--normal1);
 }
 
 .chartCol {
-  display: flex;
-  flex-grow: 2;
-  max-width: 260px;
+    display: flex;
+    flex-grow: 2;
+    max-width: 260px;
 }
 
 .statValue {
-  font-size: var(--small1);
-  line-height: var(--normal2);
-  color: white;
+    font-size: var(--small1);
+    line-height: var(--normal2);
+    color: white;
 }
 
 .footerCart {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-bottom: 12px;
 }
 
 .emptyChart {
-  height: 69px;
+    height: 69px;
 }
 
 .footerRow {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .btnRow {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: row;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
 }
 
 .label {
-  color: var(--accent);
-  font-size: var(--small1);
+    color: var(--accent);
+    font-size: var(--small1);
 }
 
 .chartStat {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profitCol {
-  display: flex;
-  align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
 }
 
 .statCol {
-  display: flex;
-  flex-grow: 1;
-  justify-content: space-between;
-  flex-direction: column;
-  width: auto;
-  margin-top: 0;
-  margin-left: 10px;  
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    flex-direction: column;
+    width: auto;
+    margin-top: 0;
+    margin-left: 10px;
 }
 
 .statRow {
-  display: flex;
-  margin-bottom: 10px;
-  align-items: flex-end;
-  flex-direction: column;
+    display: flex;
+    flex: 1;
+    margin-bottom: 10px;
+    align-items: flex-end;
+    flex-direction: column;
 }
 
 .emptyStats {
-  height: 135px;
+    height: 135px;
 }
 
 @media (max-width: 768px) {
-  .label {
-    font-size: var(--small2);
-  }
+    .label {
+        font-size: var(--small2);
+    }
 }
 
 @media (max-width: 480px) {
-  .container {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .chartStat {
-    flex-direction: column;
-    margin-top: 6px;
-  }
-  .profitCol {
-    align-items: flex-start;
-  }
-  .statCol {
-    flex-direction: row;
-    width: 100%;
-    margin-top: 10px;
-  }
-  .statRow {
-    align-items: center;
-  }
-  .emptyStats {
-    height: 53px;
-  }
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .chartStat {
+        flex-direction: column;
+        margin-top: 6px;
+    }
+    .profitCol {
+        align-items: flex-start;
+    }
+    .statCol {
+        flex-direction: row;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .statRow {
+        align-items: center;
+    }
+    .emptyStats {
+        height: 53px;
+    }
+    .headerCol {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
 }

@@ -18,6 +18,7 @@ yarn.lock
 
 # misc
 .DS_Store
+report.*
 
 # debug
 npm-debug.log*
@@ -33,3 +34,9 @@ yarn-error.log*
 
 # webstorm
 .idea
+
+# vscode
+.vscode
+
+# custom startup scripts
+run*.sh

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { DetailedHTMLProps } from "react";
 
 export type ButtonSize = "big" | "normal" | "small";
 export type ButtonType =
@@ -18,9 +18,18 @@ interface HoverChangesProps {
     icon?: string;
 }
 
+export type HtmlButtonType = "button" | "submit" | "reset";
+
+export enum HTMLButtonTypes {
+    submit = "submit",
+    reset = "reset",
+    button = "button"
+}
+
 export interface ButtonInnerProps {
     title?: string;
     icon?: string;
+    buttonType?: HtmlButtonType;
     type?: string;
     style?: React.CSSProperties;
     responsive?: boolean;
@@ -33,8 +42,10 @@ export interface ButtonProps extends ButtonInnerProps {
     isLoading?: boolean;
     width?: number;
     disabled?: boolean;
+    blocked?: boolean;
     onClick?: () => void;
     className?: string;
     hoverChanges?: HoverChangesProps;
     clickable?: boolean;
+    tooltip?: string;
 }

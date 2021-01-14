@@ -3,7 +3,7 @@ import React from "react";
 
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, colorAction, moneyFormat, valueWithSign, colorDirection } from "config/utils";
+import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
 import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
 import styles from "./NotificationsSets.module.css";
 
@@ -12,7 +12,7 @@ export const failedSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>{`${item.data.error} Robot`}&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}
+                {item.data.robotCode}
             </div>
             <div className={styles.textMessageDesktop}>&nbsp;(</div>
             <div className={styles.textAccent}>{item.data.userRobotId}</div>
@@ -27,15 +27,17 @@ export const failedSet = (item, onClick) => (
     </div>
 );
 
-export const messageSet = (item) => (
-    <div className={[styles.messageRow, styles.textMessageDesktop].join(" ")}>
-        <NotificationsNode
-            message={`${item.type === "message.support-reply" ? "Support Team" : "Announcement"} - ${
-                item.data.message
-            }`}
-        />
-    </div>
-);
+export const messageSet = (item) => {
+    return (
+        <div className={[styles.messageRow, styles.textMessageDesktop].join(" ")}>
+            <NotificationsNode
+                message={`${item.type === "message.support-reply" ? "Support Team" : "Announcement"} - ${
+                    item.data.message || item.data.data.message
+                }`}
+            />
+        </div>
+    );
+};
 
 export const robotTradeSet = (item, onClick) => (
     <div>
@@ -44,7 +46,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.data.robotCode}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.code}</div>
                 </div>
@@ -54,7 +56,7 @@ export const robotTradeSet = (item, onClick) => (
                         {capitalize(item.data.entryAction)}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.robot.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.entryExecuted} ${item.data.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.entryPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
@@ -66,7 +68,7 @@ export const robotTradeSet = (item, onClick) => (
                 <div className={styles.row}>
                     <div className={styles.textMessageDesktop}>Trade&nbsp;</div>
                     <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                        {item.data.robotCode}&nbsp;
                     </div>
                     <div className={styles.textMessageDesktop}>{item.data.code}</div>
                 </div>
@@ -78,14 +80,14 @@ export const robotTradeSet = (item, onClick) => (
                             .join(" ")}
                     </div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.robot.asset}`}</div>
+                    <div className={styles.textMessageDesktop}>{`${item.data.exitExecuted} ${item.data.asset}`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{`${item.data.exitPrice} $`}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
                     <div className={styles.textMessageDesktop}>{formatDate(item.data.exitDate)}</div>
                     <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
-                    <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
-                        {`${valueWithSign(moneyFormat(item.data.profit))} $`}
+                    <div className={styles.textMessageDesktop} style={{ color: getColorForMoney(item.data.profit) }}>
+                        {`${valueWithSign(formatMoney(item.data.profit))} $`}
                     </div>
                 </div>
             </>
@@ -98,7 +100,7 @@ export const errorSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}
+                {item.data.robotCode}
             </div>
             <div className={styles.textMessageDesktop}>&nbsp;(</div>
             <div className={styles.textAccent}>{item.data.userRobotId}&nbsp;</div>
@@ -127,9 +129,9 @@ export const signalAlertSet = (item, onClick) => {
             <div className={styles.row}>
                 <div className={styles.textMessageDesktop}>Signal&nbsp;</div>
                 <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                    {item.robot.name}&nbsp;
+                    {item.data.robotCode}&nbsp;
                 </div>
-                <div className={styles.textMessageDesktop}>{item.robot_position.code}</div>
+                <div className={styles.textMessageDesktop}>{item.positionCode}</div>
             </div>
             <div className={styles.row} style={{ marginTop: 3 }}>
                 <div className={styles.textAccent}>Action&nbsp;</div>
@@ -139,7 +141,9 @@ export const signalAlertSet = (item, onClick) => {
                 </div>
                 <div className={styles.textMessageDesktop}>{capitalize(item.data.orderType)}&nbsp;</div>
                 <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
-                <div className={styles.textMessageDesktop}>{`${moneyFormat(item.data.price)} $`}</div>
+                <div className={styles.textMessageDesktop}>{`${formatMoney(item.data.price)} $`}</div>
+                <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
+                <div className={styles.textMessageDesktop}>{`${item.data.volume} ${item.data.asset}`}</div>
                 <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
                 <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
             </div>
@@ -152,7 +156,7 @@ export const robotSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={styles.textMessageDesktop}>Robot&nbsp;</div>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.robot.name}&nbsp;
+                {item.data.robotCode}&nbsp;
             </div>
             <div className={styles.textMessageDesktop}>{`is ${item.type.split(".")[1]}`}</div>
         </div>
@@ -164,70 +168,84 @@ export const robotSet = (item, onClick) => (
     </div>
 );
 
-export const signalTradeSet = (item, onClick) => (
-    <div>
-        {actionOpen(item.data.action) ? (
-            <>
-                <div className={styles.row}>
-                    <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
-                    <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+export const signalTradeSet = (item, onClick) => {
+    return (
+        <div>
+            {actionOpen(item.data.action) ? (
+                <>
+                    <div className={styles.row}>
+                        <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
+                        <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                            {item.data.robotCode}&nbsp;
+                        </div>
+                        <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
                     </div>
-                    <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
-                </div>
-                <div className={styles.row} style={{ marginTop: 3 }}>
-                    <div className={styles.textAccent}>Entry&nbsp;</div>
-                    <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
-                        {capitalize(item.data.action)}
+                    <div className={styles.row} style={{ marginTop: 3 }}>
+                        <div className={styles.textAccent}>Entry&nbsp;</div>
+                        <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
+                            {capitalize(item.data.action)}
+                        </div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{`${formatMoney(item.data.price)} $`}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{`${item.data.volume} ${item.data.asset}`}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
                     </div>
-                    <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.price} $`}</div>
-                    <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
-                </div>
-            </>
-        ) : (
-            <>
-                <div className={styles.row}>
-                    <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
-                    <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                        {item.robot.name}&nbsp;
+                </>
+            ) : (
+                <>
+                    <div className={styles.row}>
+                        <div className={styles.textMessageDesktop}>Signal Trade&nbsp;</div>
+                        <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                            {item.data.robotCode}&nbsp;
+                        </div>
+                        <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
                     </div>
-                    <div className={styles.textMessageDesktop}>{item.data.positionCode}</div>
-                </div>
-                <div className={styles.row} style={{ marginTop: 3 }}>
-                    <div className={styles.textAccent}>Exit&nbsp;</div>
-                    <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
-                        {capitalize(item.data.action)
-                            .split(/(?=[A-Z])/)
-                            .join(" ")}
+                    <div className={styles.row} style={{ marginTop: 3 }}>
+                        <div className={styles.textAccent}>Exit&nbsp;</div>
+                        <div className={styles.textMessageDesktop} style={colorDirection(item.data.action)}>
+                            {capitalize(item.data.action)
+                                .split(/(?=[A-Z])/)
+                                .join(" ")}
+                        </div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{`${item.data.price} $`}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Amount&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{`${item.data.volume} ${item.data.asset}`}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Bars Held&nbsp;</div>
+                        <div className={styles.textMessageDesktop}>{item.data.barsHeld}</div>
+                        <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
+                        <div
+                            className={styles.textMessageDesktop}
+                            style={{ color: getColorForMoney(item.data.profit) }}>
+                            {`${valueWithSign(formatMoney(item.data.profit))} $`}
+                        </div>
                     </div>
-                    <div className={styles.textAccent}>&nbsp;&nbsp;Price&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{`${item.data.price} $`}</div>
-                    <div className={styles.textAccent}>&nbsp;&nbsp;Date&nbsp;</div>
-                    <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
-                    <div className={styles.textAccent}>&nbsp;&nbsp;Profit&nbsp;</div>
-                    <div className={styles.textMessageDesktop} style={colorAction(item.data.profit > 0)}>
-                        {`${valueWithSign(moneyFormat(item.data.profit))} $`}
-                    </div>
-                </div>
-            </>
-        )}
-    </div>
-);
+                </>
+            )}
+        </div>
+    );
+};
 
-export const userSet = (item, onClick) => (
-    <div>
-        <div className={styles.row}>
-            <div className={styles.textMessageDesktop}>Your API Key&nbsp;</div>
-            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                {item.data.name}
+export const userSet = (item, onClick) => {
+    return (
+        <div>
+            <div className={styles.row}>
+                <div className={styles.textMessageDesktop}>Your API Key&nbsp;</div>
+                <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                    {item.data.name}
+                </div>
+                <div className={styles.textMessageDesktop}>&nbsp;is invalid!</div>
             </div>
-            <div className={styles.textMessageDesktop}>&nbsp;is invalid!</div>
+            <div className={styles.row} style={{ marginTop: 3 }}>
+                <div className={styles.textMessageDesktop}>
+                    {item.data.error}
+                    <span style={{ marginTop: 3 }}>Please update your API Key information in your Profile.</span>
+                </div>
+            </div>
         </div>
-        <div className={styles.row} style={{ marginTop: 3 }}>
-            <div className={styles.textMessageDesktop}>{item.data.error}&nbsp;</div>
-            <div className={styles.textMessageDesktop}>Please update your API Key information in your Profile.</div>
-        </div>
-    </div>
-);
+    );
+};

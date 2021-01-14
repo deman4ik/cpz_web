@@ -1,0 +1,47 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.accordionHead {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.title,
+.subtitle {
+    height: 100%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+}
+
+.ripple {
+    background-position: center;
+    transition: background 0.8s;
+}
+
+.ripple:active {
+    background-color: var(--lightBg);
+    background-size: 100%;
+    transition: background 0s;
+}
+
+@media (max-width: 720px) {
+    .title,
+    .subtitle {
+        padding: 8px 0;
+    }
+    .title {
+        width: 35%;
+    }
+}

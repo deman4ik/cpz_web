@@ -1,21 +1,62 @@
-import React, { memo } from "react";
-
+import React, { memo, useContext, useState } from "react";
 import { Button } from "components/basic";
 import { ModalKey } from "./types";
-import { ChevronRightIcon } from "assets/icons/svg";
-import { capitalize, exchangeName, truncate, getColor } from "config/utils";
+import { capitalize, exchangeName, truncate, getColor, formatMoney } from "config/utils";
 import { color } from "config/constants";
 import styles from "./ExchangeKeysCard.module.css";
+import { useQuery } from "@apollo/client";
+import { USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
+import { AuthContext } from "libs/hoc/context";
 
 interface Props {
     item: any;
     handleSetVisibleModal: (key: ModalKey, formOptions: any) => void;
 }
 
+const EDIT_TOOLTIP = "Enabled keys that have linked started robots cannot be edited.";
+const DELETE_TOOLTIP = "Keys that have any robots linked cannot be removed.";
+
 const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => {
+    const [editDisabled, setEditDisabled] = useState(false);
+    const [deleteDisabled, setDeleteDisabled] = useState(false);
+
+    const [editTooltip, setEditTooltip] = useState(null);
+    const [deleteTooltip, setDeleteTooltip] = useState(null);
+
     const handleOnPressEditName = () => {
         handleSetVisibleModal(ModalKey.editName, { name: item.name, id: item.id });
     };
+
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+    const { data } = useQuery(USER_ROBOTS_BY_EXCHANGE_ID, {
+        variables: {
+            user_ex_acc_id: item ? item.id : null,
+            user_id
+        },
+        onCompleted: () => {
+            if (item) {
+                const userHasNoRobots = data.user_robots.length === 0;
+
+                if (!userHasNoRobots) {
+                    setDeleteDisabled(true);
+                    setDeleteTooltip(DELETE_TOOLTIP);
+                }
+
+                const everyRobotIsStoppedOrPaused = data.user_robots.every((el) =>
+                    ["stopped", "paused"].includes(el.status)
+                );
+
+                const canEdit = item.status === "invalid" || userHasNoRobots || everyRobotIsStoppedOrPaused;
+
+                if (!canEdit) {
+                    setEditDisabled(true);
+                    setEditTooltip(EDIT_TOOLTIP);
+                }
+            }
+        }
+    });
 
     const handlePressEdit = () => {
         handleSetVisibleModal(ModalKey.addKey, {
@@ -40,38 +81,50 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                     <Button isUppercase size="small" icon="bordercolor" onClick={handleOnPressEditName} />
                 </div>
             </div>
-            <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                <div>
-                    <div className={styles.exchangeRow}>
+            <div>
+                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                    <div className={styles.exchangeCell}>
                         <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                             Exchange
                         </div>
-                        <div className={styles.tableCellText} style={{ marginLeft: 10 }}>
-                            {exchangeName(item.exchange)}
-                        </div>
+                        <div className={styles.tableCellText}>{exchangeName(item.exchange)}</div>
                     </div>
-                    <div className={styles.exchangeRow} style={{ marginTop: 10 }}>
+                    <div className={styles.exchangeCell}>
                         <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                             Status
                         </div>
                         <div
                             className={styles.tableCellText}
-                            style={{ marginLeft: 10, color: getColor(item.status === "invalid") }}>
+                            style={{ color: getColor(["invalid", "disabled"].includes(item.status)) }}>
                             {capitalize(item.status)}
                         </div>
                     </div>
+                    <div className={styles.exchangeCell}>
+                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                            Balance
+                        </div>
+                        <div className={styles.tableCellText}>{formatMoney(item.balance)} $</div>
+                    </div>
+                    {item.error && (
+                        <div className={styles.errorCell}>
+                            <div className={[styles.errorCellText].join(" ")}>
+                                <div style={{ color: color.negative, padding: "0 5px 0 10px" }}>&gt; {item.error}</div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-            {item.status === "invalid" && item.error && (
-                <div className={[styles.rowError, styles.errorGroup].join(" ")}>
-                    <ChevronRightIcon color={color.negative} size={26} />
-                    <div>
-                        <div style={{ color: color.negative }}>{item.error}</div>
-                    </div>
-                </div>
-            )}
-            <div className={[styles.row, styles.btnGroup].join(" ")}>
-                <Button title="Edit" width={77} icon="settings" size="small" type="dimmed" onClick={handlePressEdit} />
+            <div className={styles.btnGroup}>
+                <Button
+                    title="Edit"
+                    width={77}
+                    icon="settings"
+                    size="small"
+                    type="dimmed"
+                    onClick={handlePressEdit}
+                    disabled={editDisabled}
+                    tooltip={editTooltip}
+                />
                 <Button
                     title="Delete"
                     width={77}
@@ -80,6 +133,8 @@ const _ExchangeKeysCard: React.FC<Props> = ({ item, handleSetVisibleModal }) => 
                     type="dimmed"
                     style={{ marginLeft: 6 }}
                     onClick={handlePressDelete}
+                    disabled={deleteDisabled}
+                    tooltip={deleteTooltip}
                 />
             </div>
         </div>

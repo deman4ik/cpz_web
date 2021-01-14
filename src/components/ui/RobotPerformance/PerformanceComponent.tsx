@@ -14,10 +14,12 @@ interface Props {
     formatData: any;
     width: number;
     displayType: string;
+    compact?: boolean;
+    titlePrefix?: string;
 }
 
 const cardWidth = 410;
-const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType }) => {
+const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType, titlePrefix, compact }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
     const { dummyCards } = useDummyCarts(width, cardWidth, formatData.length);
 
@@ -29,11 +31,12 @@ const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType
         <>
             {isDesktopView ? (
                 <div className={styles.container}>
-                    <PerformanceHeader />
+                    <PerformanceHeader compact={compact} />
                     {formatData.map((item) => (
                         <PerformanceItem
                             key={item.id}
                             item={item}
+                            compact={compact}
                             onRedirectToDetailView={handleRedirectToDetailView}
                         />
                     ))}
@@ -45,6 +48,7 @@ const _PerformanceComponent: React.FC<Props> = ({ width, formatData, displayType
                             key={item.id}
                             item={item}
                             onRedirectToDetailView={handleRedirectToDetailView}
+                            titlePrefix={titlePrefix}
                         />
                     ))}
                     {DummyCards(dummyCards, cardWidth)}

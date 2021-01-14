@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { _LightWeightChart as ChartLightWeight } from "./LightWeightChart";
+import { _LightWeightChart as Chart } from "./LightWeightChart";
 import styles from "./index.module.css";
 import { PropsWrapChart } from "./types";
 
+const getElementWidth = (el) => el.getBoundingClientRect().width;
+
 const LightWeightChart: React.FC<PropsWrapChart> = ({
     data,
-    size,
+    size: { width, height },
     type,
     loading = false,
     markers,
@@ -15,14 +17,29 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
     legend,
     setIsChartLoaded
 }) => {
-    const isMobile = size.width <= 480;
-    const leftToolBar = size.width >= 1200 ? 190 : 46;
-    const widthWithToolBar = 1214 + leftToolBar;
-    const widthSubtractor = size.width >= widthWithToolBar ? 0 : widthWithToolBar - size.width;
+    const [availableWidth, setAvailableWidth] = useState(width || 0);
+
+    const wrapperRef = useRef(null);
+
+    useEffect(() => {
+        function handleResize() {
+            setAvailableWidth(getElementWidth(wrapperRef.current));
+        }
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    });
 
     return (
-        <div className={styles.container}>
-            <ChartLightWeight
+        <div
+            className={styles.container}
+            style={{ width: "100%", height }}
+            ref={(el) => {
+                if (!el) return;
+                wrapperRef.current = el;
+                setAvailableWidth(getElementWidth(el));
+            }}>
+            <Chart
                 data={data}
                 loading={loading}
                 type={type}
@@ -31,7 +48,7 @@ const LightWeightChart: React.FC<PropsWrapChart> = ({
                 onFetchMore={onFetchMore}
                 legend={legend}
                 setIsChartLoaded={setIsChartLoaded}
-                size={{ width: isMobile ? size.width - 22 : 1180 - widthSubtractor, height: size.height }}
+                size={{ width: availableWidth, height }}
             />
         </div>
     );

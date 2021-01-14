@@ -1,0 +1,67 @@
+.posCard {
+    width: 100%;
+    max-width: 300px;
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--dark);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+}
+
+.rowCard {
+    display: flex;
+    flex-direction: row;
+}
+
+.posCardCol {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.mobileCardTextKey {
+    font-size: var(--small1);
+    color: var(--accent);
+}
+
+.mobileCardPrice {
+    line-height: var(--normal3);
+    font-size: var(--normal2);
+    color: white;
+}
+
+.mobileCardTextValue {
+    display: inline;
+    font-size: var(--normal1);
+    line-height: var(--normal3);
+    color: white;
+}
+
+.mobileCardDate {
+    font-size: var(--small1);
+    line-height: var(--normal3);
+    color: var(--accent);
+}
+
+.mobileCardRow {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.posCardFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 8px;
+    margin-bottom: -8px;
+}
+
+.iconLine {
+    display: flex;
+    flex-direction: row;
+}

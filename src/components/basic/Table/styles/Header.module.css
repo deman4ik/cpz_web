@@ -1,0 +1,43 @@
+.table_header {
+    position: sticky;
+    top: 0;
+    z-index: 103;
+    box-shadow: var(--shadow);
+    width: auto;
+}
+
+.table_header_cell {
+    font-size: var(--small1);
+    color: var(--accent);
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10px 5px 10px 20px;
+    height: 40px;
+}
+
+.resizer_wrapper {
+    background: transparent;
+    width: 10px;
+    height: 80%;
+    position: absolute;
+    right: 0.5px;
+    top: 10%;
+    transform: translateX(50%);
+    z-index: 1;
+    touch-action: none;
+    cursor: col-resize;
+    display: flex;
+    justify-content: center;
+}
+
+.resizer {
+    display: inline-block;
+    background: var(--accent);
+    width: 0.5px;
+    height: 100%;
+}
+
+.resizer.isResizing {
+    background: #ffffff;
+}

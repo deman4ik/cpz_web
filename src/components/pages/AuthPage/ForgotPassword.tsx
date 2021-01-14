@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useApolloClient } from "@apollo/client";
 
@@ -7,52 +8,46 @@ import { validateAuth } from "config/validation";
 import { CartFooter } from "./common/CartFooter";
 import { Input, Button } from "components/basic";
 import { PageHead, Footer, Header } from "components/layout";
-import { reset } from "libs/auth";
+import { usePasswordReset } from "libs/auth";
 import styles from "./index.module.css";
+import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const INITIAL_STATE = {
     email: ""
 };
 
 export const ForgotPassword: React.FC = () => {
-    const [isFetching, setIsFetching] = useState(false);
     const client = useApolloClient();
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-
-    const handleOnPress = () => {
-        handleSubmit();
-    };
+    const [reset, { loading, success, error }] = usePasswordReset({ email: values.email }, client);
+    const errorRef = useRef(error);
 
     useEffect(() => {
-        const recoverPassword = async () => {
-            const result = await reset(values.email, client);
-
-            if (result.success) {
-                Router.push("/auth/recover_password");
-            } else {
-                errors.email = result.error;
-                setValid(false);
-                setIsFetching(false);
-            }
-        };
-        if (isValid) {
-            setIsFetching(true);
-            recoverPassword();
+        if (success) {
+            Router.push("/auth/recover_password");
+        } else if (error && errorRef.current !== error) {
+            setValid(false);
+            errors.email = error;
+            errorRef.current = error;
         }
-    }, [client, errors, isValid, setValid, values.email]);
+    }, [error, success]);
+
+    useEffect(() => {
+        if (isValid && !loading) reset();
+    }, [isValid]);
 
     return (
         <div className={styles.container}>
             <PageHead title="Enter the Email you have registered with. We will send you the instructions there." />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
-                    <div className={styles.card}>
+                    <form className={styles.card} onSubmit={handleSubmit}>
                         <div className={styles.title}>Forgot password?</div>
                         <div className={styles.titleDescription}>
                             Enter the Email you have registered with. We will send you the instructions there.
@@ -63,19 +58,21 @@ export const ForgotPassword: React.FC = () => {
                             maxLength={255}
                             width={260}
                             placeholder="Email"
+                            label="Email"
+                            autoComplete="email"
                             onChangeText={(text: string) => handleChange("email", text)}
                         />
                         <Button
+                            buttonType={HTMLButtonTypes.submit}
                             style={{ marginTop: 25 }}
                             title="Request password reset"
                             type="success"
                             size="big"
                             width={260}
                             isUppercase
-                            isLoading={isFetching}
-                            onClick={handleOnPress}
+                            isLoading={loading}
                         />
-                    </div>
+                    </form>
                     <CartFooter />
                 </div>
             </div>

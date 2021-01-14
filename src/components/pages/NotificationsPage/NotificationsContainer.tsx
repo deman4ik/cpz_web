@@ -10,7 +10,7 @@ import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 import styles from "./NotificationsContainer.module.css";
 
 interface Props {
-    formatData: any;
+    notifications: any;
     handleLoadMore: () => void;
     isLoadingMore: boolean;
     recordsCount: number;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const NotificationsContainer: React.FC<Props> = ({
-    formatData,
+    notifications,
     handleLoadMore,
     isLoadingMore,
     recordsCount,
@@ -38,7 +38,7 @@ export const NotificationsContainer: React.FC<Props> = ({
             <div className={styles.topCards}>
                 {!isDesktopView ? (
                     <div className={styles.topCardsContainer}>
-                        {formatData.map((item, idx) => (
+                        {notifications.map((item, idx) => (
                             <NotificationsItemCard
                                 key={`${item.id}_${idx}`}
                                 item={item}
@@ -48,7 +48,7 @@ export const NotificationsContainer: React.FC<Props> = ({
                     </div>
                 ) : (
                     <div className={styles.accordionSurface}>
-                        {formatData.map((item, idx) => (
+                        {notifications.map((item, idx) => (
                             <NotificationsItem
                                 key={`${item.id}_${idx}`}
                                 item={item}
@@ -58,7 +58,7 @@ export const NotificationsContainer: React.FC<Props> = ({
                     </div>
                 )}
                 <RobotsLoadMore
-                    renderLoadMoreButton={recordsCount > formatData.length}
+                    renderLoadMoreButton={recordsCount > notifications.length}
                     isLoadingMore={isLoadingMore}
                     onFetchMore={handleLoadMore}
                 />

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import Router from "next/router";
 // helpers
-import { moneyFormat, colorAction } from "config/utils";
 import { formatVariables } from "./helpers";
 // types
 import { SignalItem } from "../RobotsList/types";
@@ -12,7 +11,9 @@ import AreaChart from "components/charts/AreaChart";
 // styles
 import styles from "./RobotsItem.module.css";
 // context
-import { AuthContext } from "libs/hoc/authContext";
+import { AuthContext } from "libs/hoc/context";
+import { WinRateStatistics } from "components/ui/RobotsItems/WinRateStatistics";
+import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
 
 interface Props {
     item: SignalItem;
@@ -52,55 +53,38 @@ export const RobotsItem: React.FC<Props> = ({
     const handleOnPressDetails = () => {
         onRedirectToDetailView(item.code);
     };
-
+    const { profit, performance } = item;
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>
             <div className={styles.cellName} onClick={handleOnPressDetails}>
                 <div className={styles.cellNameWrap}>
                     <div className={styles.primaryText}>{item.name}</div>
                     <div className={styles.profitWrap}>
-                        <div className={styles.secondaryText}>
-                            {item.volume ? `${item.volume} ` : ""}
-                            {item.asset}
-                        </div>
-                        <div className={styles.profitText} style={colorAction(item.profit > 0)}>
-                            {item.profit !== 0 && `${item.profit > 0 ? "+" : ""}${moneyFormat(item.profit)} $`}
-                        </div>
+                        <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
                     </div>
                 </div>
                 <ChevronRightIcon color="white" size={26} />
             </div>
             <div className={styles.cellPerformance}>
-                {item.performance && item.performance.length ? (
-                    <AreaChart height={120} positive={item.profit > 0} data={item.performance} />
-                ) : null}
+                {performance && performance.length ? <AreaChart height={120} data={performance} /> : null}
             </div>
+            <div style={{ flex: 0.2 }} />
+            <ProfitItem profit={profit !== 0 ? profit : null} />
             <div className={styles.cellStatistics}>
-                {item.winRate ? (
-                    <>
-                        <div className={styles.statisticsElement}>
-                            <div className={styles.secondaryText}>Win Rate&nbsp;</div>
-                            <div className={styles.statisticsText}>{`${item.winRate} %`}</div>
-                        </div>
-                        <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
-                            <div className={styles.secondaryText}>Max Drawdown&nbsp;</div>
-                            <div className={styles.statisticsText} style={colorAction(item.maxDrawdown > 0)}>
-                                {`${moneyFormat(item.maxDrawdown)} $`}
-                            </div>
-                        </div>
-                        <div className={styles.statisticsElement} style={{ marginTop: 6 }}>
-                            <div className={styles.secondaryText}>Trades Count&nbsp;</div>
-                            <div className={styles.statisticsText}>{item.tradesCount}</div>
-                        </div>
-                    </>
-                ) : null}
+                <WinRateStatistics
+                    classNames={{ container: styles.statsWrapper, wrapper: styles.statisticsElement }}
+                    winRate={item.winRate}
+                    maxDrawdown={item.maxDrawdown}
+                    tradesCount={item.tradesCount}
+                />
             </div>
+
             <div className={styles.cellStatus}>
                 <RobotItemStatusBlock item={item} displayType={displayType} />
             </div>
             <RobotsButtonItem
                 isSubscribed={item.isSubscribed}
-                robotStatus={item.user_robots.status}
+                robotStatus={item.user_robots?.status}
                 displayType={displayType}
                 subscribeToggle={subscribeToggle}
                 handleOnPressDelete={handleOnPressDelete}

@@ -19,3 +19,23 @@ export interface EditName {
     id: string;
     name: string;
 }
+export type Keys = {
+    key: string;
+    secret: string;
+};
+export type UpdateExchangeKeyVars = {
+    name: string;
+    exchange: string;
+    keys: Keys;
+    id?: string;
+};
+
+export interface ExchangeKeysAddKeyModalProps {
+    options?: AddKey;
+    exchange?: string;
+    refetchQueries?: any; // Todo any
+    isExchangeDisabled?: boolean;
+    onClose?: (changesMade?: boolean) => void;
+    handleOnSubmit?: (key: string) => void;
+    displayGuide?: boolean;
+}

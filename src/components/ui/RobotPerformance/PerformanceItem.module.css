@@ -1,71 +1,80 @@
 .tableRow {
-  display: flex;
-  flex-direction: row;
-  border-top-width: 2px;
-  border-color: var(--darkBg);
-  background-color: var(--dark);
-  padding: 10px 20px;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    border-top-width: 2px;
+    border-color: var(--darkBg);
+    background-color: var(--dark);
+    padding: 10px 20px;
+    align-items: center;
 }
 
 .col {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.inlineText {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .wraperBlock {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  opacity: 1;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    opacity: 1;
 }
 
 .wraperName {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .secondaryText {
-  display: flex;
-  flex-direction: column;
-  color: var(--accent);
-  font-size: var(--small1);
+    display: flex;
+    flex-direction: column;
+    color: var(--accent);
+    font-size: var(--small1);
 }
 
 .statisticsElement {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .statisticsText {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: var(--small1);
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: var(--small1);
 }
 
 .tableCellText {
-  word-wrap: break-word;
-  white-space: nowrap;
-  font-size: var(--normal0);
-  color: white;
-};
+    word-wrap: break-word;
+    white-space: nowrap;
+    font-size: var(--normal0);
+    color: white;
+}
 
 .cellWidth {
-  min-width: 90px;
+    min-width: 90px;
 }
 
 .cellProfit {
-  display: flex;
-  flex-direction: column;
-  flex: 0.13;
-  align-items: flex-start;
-  margin-top: 5px;
-  font-size: var(--normal0);
+    display: flex;
+    flex-direction: column;
+    flex: 0.13;
+    align-items: flex-start;
+    margin-top: 5px;
+    font-size: var(--normal0);
 }
 
 .wraperBlock:active {
-  opacity: 0.2;
+    opacity: 0.2;
 }

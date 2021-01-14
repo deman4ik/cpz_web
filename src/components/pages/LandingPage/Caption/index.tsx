@@ -7,7 +7,7 @@ import { Header } from "components/layout";
 import { DOCS_URL } from "config/constants";
 import styles from "./index.module.css";
 
-const DinamicImageWithNoSSR = dynamic(() => import("./DinamicImage"), {
+const DinamicImageWithNoSSR = dynamic(() => import("./DynamicImage"), {
     loading: () => <div className={styles.loading} />,
     ssr: false
 });
@@ -17,8 +17,8 @@ export const _Caption: React.FC = () => (
     <>
         <DinamicImageWithNoSSR />
         <div className={styles.header}>
+            <Header />
             <div className={styles.container}>
-                <Header />
                 <div className={styles.headerBody}>
                     <div className={styles.groupBrand}>
                         <div className={styles.brand}>

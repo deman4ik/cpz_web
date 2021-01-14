@@ -1,5 +1,5 @@
 /*settings types*/
-import { SortType, SortMethodType, filtersProps, OrderInterface } from "../common/OrderModalInner/types";
+import { SortType, SortMethodType, filtersProps, OrderInterface } from "../common/OrderModal/types";
 
 /*sorting settings*/
 export const SORT_TYPES_LIST: Array<SortType> = [

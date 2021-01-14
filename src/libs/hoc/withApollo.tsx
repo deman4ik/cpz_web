@@ -1,16 +1,19 @@
 import React from "react";
 import withApollo from "next-with-apollo";
-import { ApolloClient, createHttpLink, split, ApolloProvider } from "@apollo/client";
+import { ApolloClient, createHttpLink, ApolloProvider, ApolloLink, split, fromPromise } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import gql from "graphql-tag";
 import { setContext } from "@apollo/client/link/context";
-import { getMainDefinition } from "@apollo/client/utilities";
 import { InMemoryCache } from "@apollo/client/cache";
+import { onError } from "@apollo/client/link/error";
 
 import { resolvers } from "graphql/resolvers";
 import { typeDefs } from "graphql/typeDefs";
 import { defaultState } from "graphql/defaultState";
-import { setAccessToken, getExpiredAccessToken } from "../accessToken";
+import { getAccessToken, putTokenInCookie } from "../accessToken";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { fetchAccessToken, logout } from "libs/auth";
+import { httpErrors } from "config/constants";
 
 interface Definintion {
     kind: string;
@@ -47,8 +50,9 @@ const cacheQuery = gql`
             id
             userRobotId
             name
+            code
             subs {
-                vloume
+                settings
                 asset
                 exchange
                 currency
@@ -58,23 +62,63 @@ const cacheQuery = gql`
 `;
 
 const ssrMode = !process.browser;
+
 const httpLink = createHttpLink({
-    uri: `https://${process.env.HASURA_URL}`
+    uri: `https://${process.env.HASURA_URL}`,
+    credentials: "include"
 });
 
-const connectionParams = async (ctx) => {
-    const token = await getExpiredAccessToken(ctx);
+let isRefreshing = false;
+const updateToken = async () => {
+    try {
+        const { data } = await fetchAccessToken();
+        const { accessToken } = data && data.result;
+        putTokenInCookie(accessToken);
+    } catch (e) {
+        console.error("REFRESH TOKEN ERROR: Failed to renew accessToken");
+        logout();
+    }
+};
+// eslint-disable-next-line consistent-return
+const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors)
+        // eslint-disable-next-line no-restricted-syntax
+        for (const error of graphQLErrors) {
+            const { extensions, message } = error;
+            if (extensions.code === httpErrors.JWTError) {
+                if (!isRefreshing) {
+                    isRefreshing = true;
+                    console.info(`Retrying ~ ${operation.operationName}`);
+                    return fromPromise(
+                        // eslint-disable-next-line no-loop-func
+                        updateToken().finally(() => {
+                            isRefreshing = false;
+                        })
+                    ).flatMap(() => forward(operation));
+                }
+                return fromPromise(new Promise((res) => res())).flatMap(() => forward(operation));
+            }
+            console.error(`[GraphQL error]: ${message}`);
+            return fromPromise(new Promise((res) => res())).flatMap(() => forward(operation));
+        }
+    if (networkError) {
+        console.error(`[Network error]: ${networkError}`);
+    }
+});
+
+const connectionParams = () => {
+    const accessToken = getAccessToken();
     const headers = {} as { authorization?: string };
-    if (token) {
-        headers.authorization = `Bearer ${token}`;
+    if (accessToken) {
+        headers.authorization = `Bearer ${accessToken}`;
     }
     return { headers };
 };
 
 export default withApollo(
     (ctx) => {
-        const authLink = setContext(async () => await connectionParams(ctx));
-        const contextLink = authLink.concat(httpLink);
+        const authLink = setContext(() => connectionParams());
+        const contextLink = ApolloLink.from([errorLink, authLink.concat(httpLink)]);
         let link = contextLink;
         if (!ssrMode) {
             const wsLink = new WebSocketLink({
@@ -82,7 +126,7 @@ export default withApollo(
                 options: {
                     reconnect: true,
                     timeout: 30000,
-                    connectionParams: async () => await connectionParams(ctx)
+                    connectionParams: () => connectionParams()
                 }
             });
             link = split(
@@ -119,10 +163,6 @@ export default withApollo(
     },
     {
         render: ({ Page, props }) => {
-            if (typeof props.accessToken !== "undefined") {
-                setAccessToken(props.accessToken);
-            }
-
             return (
                 <ApolloProvider client={props.apollo}>
                     <Page {...props} />

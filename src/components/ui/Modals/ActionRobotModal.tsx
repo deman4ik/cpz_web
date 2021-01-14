@@ -3,68 +3,83 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { ROBOT } from "graphql/local/queries";
 import { USER_ROBOT_DELETE, USER_ROBOT_START, USER_ROBOT_STOP } from "graphql/robots/mutations";
-import { DELETE_ROBOT, ACTION_ROBOT } from "graphql/local/mutations";
 import { capitalize } from "config/utils";
 import { ErrorLine } from "components/common";
 import { Button } from "components/basic";
-import { actionText } from "./helpers";
+import { actionText, currentPage, Pages } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./index.module.css";
+import Router from "next/router";
+import { RobotsType } from "config/types";
 
 interface Props {
     setTitle: (title: string) => void;
     type: string;
-    onClose: () => void;
+    onClose: (changesMade?: boolean) => void;
 }
 
+const actionTypes = {
+    delete: USER_ROBOT_DELETE,
+    start: USER_ROBOT_START,
+    stop: USER_ROBOT_STOP
+};
+const actions = {
+    delete: "userRobotDelete",
+    start: "userRobotStart",
+    stop: "userRobotStop"
+};
 const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
     const [formError, setFormError] = useState("");
-    const { data } = useQuery(ROBOT);
+    const { data } = useQuery(ROBOT(RobotsType.robots));
 
+    const { name, code, userRobotId } = data?.robot;
     useEffect(() => {
-        setTitle(`${capitalize(type)} ${data ? data.robot.name : null}`);
-    }, [data, setTitle, type]);
-    const [actionOnRobot] = useMutation(type === "delete" ? DELETE_ROBOT : ACTION_ROBOT);
-    const [userRobotAction, { loading }] = useMutation(
-        type === "delete" ? USER_ROBOT_DELETE : type === "start" ? USER_ROBOT_START : USER_ROBOT_STOP
-    );
+        setTitle(`${capitalize(type)} ${name || null}`);
+    }, [name, setTitle, type]);
 
-    const handleOnPressSubmit = () => {
-        const message = type === "start" ? "started" : "stopped";
-        const variables = {
-            id: data.robot.userRobotId
-        };
-        const variablesLocal = {
-            robot: data.robot,
-            message
-        };
-        const action = {
-            delete: "userRobotDelete",
-            start: "userRobotStart",
-            stop: "userRobotStop"
-        };
-        userRobotAction({
-            variables
-        }).then((response) => {
-            const result = response.data[action[type]].success;
-            if (result) {
-                if (type !== "delete") {
-                    variablesLocal.message = response.data[action[type]].status;
-                }
-                actionOnRobot({ variables: variablesLocal });
-                if (type === "start") {
-                    event({
-                        action: "start",
-                        category: "Robots",
-                        label: "start",
-                        value: data.robot.userRobotId
-                    });
-                }
-                onClose();
-            } else {
-                setFormError(response.data[action[type]].error);
+    const robotAction = actionTypes[type];
+    const [userRobotAction, { loading }] = useMutation(robotAction);
+
+    const variables = {
+        id: userRobotId
+    };
+
+    function handleResponse(response: any) {
+        const { result } = response.data[actions[type]];
+        if (result) {
+            if (type === "start") {
+                event({
+                    action: "start",
+                    category: "Robots",
+                    label: "start",
+                    value: userRobotId
+                });
             }
-        });
+            onClose(true);
+        } else {
+            setFormError(response.data[actions[type]].error);
+        }
+    }
+    const handleOnPressSubmit = async () => {
+        try {
+            const userRobotActionResponse = await userRobotAction({ variables });
+            handleResponse(userRobotActionResponse);
+            if (type === "start") {
+                event({
+                    action: "start",
+                    category: "Robots",
+                    label: "start",
+                    value: userRobotId
+                });
+            }
+            if (type === "delete" && currentPage(Router.pathname) === Pages.robot) {
+                Router.push(`/robots`);
+            }
+            onClose(true);
+        } catch (e) {
+            console.error(e);
+            setFormError(e.message);
+        }
     };
 
     return (
@@ -73,7 +88,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             <div className={styles.container}>
                 <div className={styles.textWrapper}>
                     <div className={styles.bodyTitle}>
-                        Are you sure you want to {type} this {data ? data.robot.name : ""} robot?
+                        Are you sure you want to {type} this {name || ""} robot?
                     </div>
                     <div className={styles.bodyText}>{actionText[type]}</div>
                 </div>

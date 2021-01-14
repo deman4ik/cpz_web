@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, memo } from "react";
 import { useQuery } from "@apollo/client";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
-import { confirm } from "libs/auth";
+import { useConfirmation } from "libs/auth";
 import { useFormValidation } from "hooks/useFormValidation";
 import { validateAuth } from "config/validation";
 import { USER } from "graphql/local/queries";
@@ -11,47 +12,55 @@ import { Button, Input } from "components/basic";
 import { Footer, PageHead, Header } from "components/layout";
 import styles from "./index.module.css";
 
-const INITIAL_STATE = {
-    verificationCode: ""
-};
-
 export const Verification: React.FC = () => {
-    const { data, loading } = useQuery(USER);
+    const encodedData = useRouter().query.encoded as string;
+
+    const { userId = "", secretCode = "" } = encodedData
+        ? JSON.parse(Buffer.from(encodedData, "base64").toString())
+        : {};
+
+    const INITIAL_STATE = {
+        verificationCode: secretCode
+    };
+
+    const { data: userData, loading: userInfoLoading } = useQuery(USER);
     const { handleSubmit, handleChange, values, errors, isValid, setValid } = useFormValidation(
         INITIAL_STATE,
         validateAuth
     );
-
-    const handleOnPress = async () => {
-        handleSubmit();
-    };
+    const [confirm, { loading, success, error }] = useConfirmation({
+        userId: userId || userData?.userId,
+        secretCode: secretCode || values.verificationCode
+    });
+    const errorRef = useRef(error);
 
     useEffect(() => {
-        if (!loading && data && !data.userId) {
+        if (!userInfoLoading && userData && !userData.userId && !userId) {
             Router.push("/auth/signup");
         }
-    }, [data, loading]);
+    }, [userData, encodedData]);
 
     useEffect(() => {
-        const confirmCode = async () => {
-            const result = await confirm({ userId: data.userId, secretCode: values.verificationCode });
-            if (result.success) {
-                Router.push("/auth/activate");
-            } else {
-                errors.verificationCode = result.error;
-                setValid(false);
-            }
-        };
-        if (isValid) {
-            confirmCode();
+        if ((isValid && !loading && !success) || (userId && secretCode)) {
+            confirm();
         }
-    }, [data.userId, errors, isValid, setValid, values.verificationCode]);
+    }, [isValid, encodedData]);
+
+    useEffect(() => {
+        if (success) {
+            Router.push("/auth/activated");
+        } else if (error && errorRef.current !== error) {
+            setValid(false);
+            errors.verificationCode = error;
+            errorRef.current = error;
+        }
+    }, [error, success]);
 
     return (
         <div className={styles.container}>
             <PageHead title="Verification" />
             <div className={styles.header}>
-                <Header hasHomeButton />
+                <Header />
             </div>
             <div className={styles.plate}>
                 <div className={styles.cardWrapper}>
@@ -74,7 +83,8 @@ export const Verification: React.FC = () => {
                             title="Verify my email address"
                             type="success"
                             width={260}
-                            onClick={handleOnPress}
+                            isLoading={loading}
+                            onClick={handleSubmit}
                             isUppercase
                         />
                     </div>

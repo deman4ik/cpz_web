@@ -1,0 +1,40 @@
+.container {
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--lightBg);
+    margin-bottom: 5px;
+}
+
+.wrapper {
+    max-width: 100%;
+    display: flex;
+}
+
+.tab {
+    margin: 0 30px;
+}
+
+.tab:first-child {
+    margin-left: 0;
+}
+
+.tab:last-child {
+    margin-right: 0;
+}
+
+@media (max-width: 1080px) {
+    .tab {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-top: 0px;
+    }
+    .tab {
+        word-break: break-all;
+    }
+}

@@ -1,36 +1,48 @@
 import React from "react";
 
 import styles from "./RobotsItem.module.css";
+import { StatisticElement } from "components/ui/RobotsItems/StatisticsElement";
+import { capitalize } from "lodash";
+import { RobotsType } from "config/types";
 
 interface Props {
     item: any;
     displayType: string;
 }
 
-export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => (
-    <>
-        {displayType === "signals" && item.active ? (
-            <div className={styles.statisticsElement}>
-                <div className={styles.secondaryText}>Active&nbsp;</div>
-                <div className={styles.statisticsText}>{item.active}</div>
-            </div>
-        ) : null}
-        {displayType === "robots" &&
-        ((item.active && !item.user_robots.status) || item.user_robots.status === "started") ? (
-            <div className={styles.statisticsElement}>
-                <div className={styles.secondaryText}>
-                    {`${item.user_robots.status === "started" ? "Started" : "Active"}`}&nbsp;
-                </div>
-                <div className={styles.statisticsText}>
-                    {item.user_robots.status === "started" ? item.started_at : item.active}
-                </div>
-            </div>
-        ) : null}
-        {item.isSubscribed ? (
-            <div className={styles.statisticsElement} style={{ marginTop: 8 }}>
-                <div className={styles.secondaryText}>Subscribed&nbsp;</div>
-                <div className={styles.statisticsText}>{item.subscribed}</div>
-            </div>
-        ) : null}
-    </>
-);
+const statusMap = {
+    stopped: "stopped_at",
+    started: "started_at"
+};
+
+export const RobotItemStatusBlock: React.FC<Props> = ({ item, displayType }) => {
+    const typeIsSignals = displayType === RobotsType.signals;
+    const { active, user_robots } = item || {};
+
+    let statsContent = <span style={{ color: "white" }}>&#8211;</span>;
+
+    if (typeIsSignals) {
+        if (active)
+            statsContent = (
+                <>
+                    <StatisticElement label="Active" value={active} />
+                    {item.isSubscribed && <StatisticElement label="Subscribed" value={item.subscribed} />}
+                </>
+            );
+    } else {
+        const userRobotStatus = user_robots.status;
+        const statusLabel = userRobotStatus || (active && "Active");
+
+        let displayedTime = item.active;
+
+        if (userRobotStatus) {
+            if (statusMap[userRobotStatus]) displayedTime = item[statusMap[userRobotStatus]];
+            else displayedTime = null;
+        }
+
+        if (statusLabel || displayedTime)
+            statsContent = <StatisticElement label={capitalize(statusLabel)} value={displayedTime} />;
+    }
+
+    return statsContent;
+};

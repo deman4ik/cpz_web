@@ -14,7 +14,7 @@ export const GET_USER_INFO = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-    query notifications($limit: Int!, $offset: Int, $where: notifications_bool_exp) {
+    query get_notifications($limit: Int!, $offset: Int, $where: notifications_bool_exp) {
         notifications(limit: $limit, offset: $offset, where: $where, order_by: { timestamp: desc })
             @connection(key: "notifications") {
             type
@@ -27,32 +27,6 @@ export const GET_NOTIFICATIONS = gql`
                 code
                 name
                 asset
-            }
-            robot_position {
-                id
-                code
-                entry_action
-                entry_price
-                entry_date
-                exit_action
-                exit_price
-                exit_date
-                profit
-                status
-            }
-            user_position {
-                id
-                code
-                status
-                entry_action
-                entry_executed
-                entry_price
-                entry_date
-                exit_action
-                exit_executed
-                exit_price
-                exit_date
-                profit
             }
             user_robot {
                 robot {

@@ -1,47 +1,102 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import jwtDecode from "jwt-decode";
-import redirect from "./redirect";
-import { LOCALHOST } from "../config/constants";
-import { fetchAccessToken } from "./auth";
+import { useContext, useEffect, useState } from "react";
+import { FetchResult, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
+import { REFRESH_TOKEN } from "graphql/auth/mutations";
+import { AuthContext } from "libs/hoc/context";
+import { logout } from "libs/auth";
 
-const accessToken = {
-    token: "",
-    exp: 0
+export const getTokenFromCookie = () => {
+    if (typeof window !== "undefined") {
+        return (
+            document.cookie
+                .split(";")
+                ?.find((row) => row.trim().startsWith("accessToken"))
+                ?.split("=")[1] || ""
+        );
+    }
+    return "";
 };
 
-export const setAccessToken = (token: string) => {
-    accessToken.token = token;
-    accessToken.exp = 0;
-    if (token.length > 0) {
-        const { exp } = jwtDecode(accessToken.token);
-        accessToken.exp = exp;
-    }
+export const putTokenInCookie = (token) => {
+    if (typeof window !== "undefined") document.cookie = `accessToken=${token}; path=/`;
 };
 
-export const getAccessToken = () => accessToken;
+export const getAccessToken = getTokenFromCookie;
+export const nullifyAccessToken = () => putTokenInCookie("");
 
-export const getExpiredAccessToken = async (ctx) => {
-    if (accessToken.token.length === 0) {
-        return accessToken.token;
-    }
-    let token = "";
-    const isLocalhost =
-        ctx && ctx.headers ? ctx.headers.host === LOCALHOST : window.location.origin === `http://${LOCALHOST}`;
-    if (Date.now() >= accessToken.exp * 1000) {
-        token = await fetchAccessToken(isLocalhost ? process.env.DEV_REFRESH_TOKEN : undefined, isLocalhost);
-        if (!token) {
-            redirect(ctx, "/auth/login");
+export const getTokenInfo = (jwt) => {
+    const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
+    return {
+        token: jwt,
+        exp
+    };
+};
+function jwtTokenExpired(jwtToken: { token: string; exp: number }) {
+    return !jwtToken || Date.now() >= jwtToken.exp * 1000;
+}
+export const tokenExpired = (token?: { token: string; exp: number }) => {
+    const jwtToken = token || getTokenInfo(getTokenFromCookie());
+    return jwtTokenExpired(jwtToken);
+};
+
+export const useRefreshToken = (): [
+    () => void,
+    { result: any; error: string },
+    (options?: MutationFunctionOptions<any, OperationVariables>) => Promise<FetchResult<any>>
+] => {
+    const [refresh, { data, error }] = useMutation(REFRESH_TOKEN);
+
+    const refreshToken = () => {
+        // if we dont do that, we have multiple concurrent requests refreshing the token
+        if (tokenExpired()) {
+            nullifyAccessToken();
+            refresh()
+                .then((res) => {
+                    putTokenInCookie(res && res.data.result.accessToken);
+                })
+                .catch((e) => {
+                    console.error(`REFRESH TOKEN ERROR: ${e?.message || e}`);
+                    logout();
+                });
         }
-        setAccessToken(token);
-    } else {
-        token = getAccessToken().token;
-    }
-    return token;
+    };
+    return [refreshToken, { result: data?.result, error: error?.graphQLErrors[0]?.message }, refresh];
 };
 
 /**
- *  Функция получения user_id из jwt токена
+ * Returns access token, a function to update it, and a function to fetch refresh call
  */
+export const useAccessToken = (): [string, (token: string) => void, () => void] => {
+    const [jwtToken, setToken] = useState(getTokenInfo(getTokenFromCookie()));
+    const [refreshToken, { result }] = useRefreshToken();
+    const { setAuthState } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (result?.accessToken) {
+            const { accessToken } = result;
+            const { userId, role } = jwtDecode(accessToken);
+
+            setAuthState({
+                isAuth: Boolean(accessToken),
+                userId,
+                isManager: role === "manager"
+            });
+            setToken(getTokenInfo(accessToken));
+        }
+    }, []);
+
+    return [
+        jwtToken.token,
+        (token) => {
+            setToken(getTokenInfo(token));
+            putTokenInCookie(jwtToken.token);
+        },
+        refreshToken
+    ];
+};
+
 export const getUserIdFromAccessToken = (token): string | null => {
     if (token) {
         const { userId } = jwtDecode(token);
@@ -50,9 +105,6 @@ export const getUserIdFromAccessToken = (token): string | null => {
     return null;
 };
 
-/**
- *  Функция получения роли пользователея
- */
 export const getUserRoleFromAccesToken = (token): string | null => {
     if (token) {
         const { role } = jwtDecode(token);

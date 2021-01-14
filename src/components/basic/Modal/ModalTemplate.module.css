@@ -1,75 +1,86 @@
 .content {
-  max-width: 100%;
-  max-height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: var(--dark);
-  position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: var(--dark);
+    position: relative;
+    overflow: hidden;
 }
 
 .body {
-  padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 20px 20px;
+    width: 100%;
+    min-height: min-content;
+    max-height: calc(80vh - 100px);
+    overflow-y: auto;
 }
 
 .title {
-  text-align: center;
-  font-size: var(--normal3);
-  line-height: var(--big2);
-  color: white;
+    white-space: nowrap;
+    text-align: center;
+    font-size: var(--normal3);
+    line-height: var(--big2);
+    color: white;
 }
 
 .header {
-  padding: 20px 60px;
-  border-bottom-width: 1px;
-  border-color: var(--lightBg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 20px 60px;
+    border-bottom-width: 1px;
+    border-color: var(--lightBg);
 }
 
 .footer {
-  padding: 30px 40px;
-  border-top-width: 1px;
-  border-color: var(--lightBg);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+    align-items: center;
+    max-height: 70px;
+    border-top-width: 1px;
+    border-color: var(--lightBg);
 }
 
 .icon {
-  position: absolute;
-  cursor: pointer;
-  top: 5px;
-  right: 5px;
-  opacity: 1;
+    z-index: 2000;
+    position: absolute;
+    cursor: pointer;
+    top: 5px;
+    right: 5px;
+    opacity: 1;
 }
 
 .icon:active {
-  opacity: .2;
+    opacity: 0.2;
 }
 
 @media (max-width: 768px) {
-  .body {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .title {
-    font-size: var(--normal2);
-    line-height: var(--big1);
-  }
+    .body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .title {
+        font-size: var(--normal2);
+        line-height: var(--big1);
+    }
+
+    .footer {
+        padding: 10px 15px;
+    }
 }
 
 @media (max-width: 480px) {
-  .body {
-    max-height: 510px;
-    overflow: scroll;
-  }
-  .content {
-    width: 100%;
-    height: 100%;
-  }
-  .header {
-    padding: 10px 30px;
-  }
-}
+    .content {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
 
-@media screen and (max-width: 480px) and (min-height: 800px) {
-  .body {
-    max-height: unset;
-    overflow: unset;
-  }
+    .body {
+        max-height: unset !important;
+        height: calc(100vh - 100px) !important;
+    }
 }
