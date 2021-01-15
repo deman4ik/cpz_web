@@ -64,7 +64,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
         inputs,
         robotData
     });
-    console.log(robotData);
+
     const { inputValues, volumeType, precision, errors } = subscribeModalProps;
 
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);

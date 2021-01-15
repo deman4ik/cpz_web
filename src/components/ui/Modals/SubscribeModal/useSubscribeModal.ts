@@ -51,6 +51,8 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
     } = parsedLimits;
 
     const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
+    const currentBalancePercent = availableBalancePercent + (robotData?.robot.subs.settings.balancePercent || 0);
+    console.log(currentBalancePercent);
 
     const { currencyDynamic, assetStatic } = InputTypes;
     const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
@@ -86,9 +88,8 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
                 used_percent: usedAccountPercent,
                 type,
                 value: inputValues[type],
-                maxAmount: type === InputTypes.balancePercent ? maxPercentAmount : maxAmounts[type],
-                minAmount: minAmounts[type],
-                availableBalancePercent
+                maxAmount: type === InputTypes.balancePercent ? currentBalancePercent : maxAmounts[type],
+                minAmount: minAmounts[type]
             });
         }
         return false;

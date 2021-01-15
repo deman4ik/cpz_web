@@ -195,14 +195,13 @@ interface ValidateVolumeProps {
     value: string | number;
     minAmount: string | number;
     maxAmount: string | number;
-    availableBalancePercent: number;
 }
 
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent, availableBalancePercent, maxAmount = 100, minAmount = 0 }) => {
-    return getAmtErrors(value, minAmount, maxAmount - used_percent, 0, "percent");
+const validateBalancePercent = ({ value, maxAmount = 100, minAmount = 0 }) => {
+    return getAmtErrors(value, minAmount, maxAmount, 0, "percent");
 };
 
 const validationFunctions = {
