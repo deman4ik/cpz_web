@@ -23,6 +23,7 @@ const INITIAL_VALUES = { balancePercent: "", currencyDynamic: "", assetStatic: "
 
 export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps) => {
     const DEFAULT_VOLUME_TYPE = robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+
     const [volumeType, setVolumeType] = useState<InputTypes>(DEFAULT_VOLUME_TYPE);
     const getPrecision = () => (limits && limits.precision) || DEFAULT_PRECISION;
     const selectedInputs = inputs[volumeType];
@@ -51,8 +52,10 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
     } = parsedLimits;
 
     const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
-    const currentBalancePercent = availableBalancePercent + (robotData?.robot.subs.settings.balancePercent || 0);
-    console.log(currentBalancePercent);
+    const currentBalancePercent =
+        DEFAULT_VOLUME_TYPE === InputTypes.balancePercent
+            ? availableBalancePercent + (robotData?.robot.subs.settings.balancePercent || 0)
+            : availableBalancePercent;
 
     const { currencyDynamic, assetStatic } = InputTypes;
     const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
