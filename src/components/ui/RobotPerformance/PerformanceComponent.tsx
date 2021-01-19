@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import Router from "next/router";
 
 import { useShowDimension } from "../../../hooks/useShowDimension";
-import { SCREEN_TYPE } from "../../../config/constants";
+import { SCREEN_TYPE } from "config/constants";
 import { PerformanceItem } from "./PerformanceItem";
 import { PerformanceItemCard } from "./PerformanceItemCard";
 import { PerformanceHeader } from "./PerformanceHeader";
