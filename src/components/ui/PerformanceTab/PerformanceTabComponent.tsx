@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { useShowDimension } from "../../../hooks/useShowDimension";
+import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
 import { NoRecentData } from "../../common";
 import { PerformanceTabItem } from "./PerformanceTabItem";
