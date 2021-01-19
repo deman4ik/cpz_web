@@ -2,7 +2,7 @@ import React from "react";
 // hooks
 import useFetchTimestamp from "components/pages/ManagePage/dashBoard/hooks/useFetchTimestamp";
 // utils
-import { formatPeriodUsers } from "../../utils";
+import { formatPeriodUsers } from "components/pages/ManagePage/dashBoard/utils";
 // components
 import StatsContainer from "./StatsContainer";
 

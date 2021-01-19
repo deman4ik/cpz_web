@@ -4,7 +4,7 @@ import { Button } from "components/basic";
 import styles from "./PerformanceItemCard.module.css";
 import { DataCard } from "components/ui/DataCard";
 import StatsContainer from "components/pages/ManagePage/dashBoard/components/UserStats/StatsContainer";
-import { formatMoney, getColor, getColorForMoney, valueWithSign } from "config/utils";
+import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 
 interface Props {
     item: any;
@@ -12,7 +12,7 @@ interface Props {
     titlePrefix?: string;
 }
 
-const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const PerformanceItemCard: React.FC<Props> = ({ item, onRedirectToDetailView, titlePrefix }) => {
     const handleOnPress = () => {

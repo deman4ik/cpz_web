@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import Router from "next/router";
 
 import { CaptionButton } from "../basic";
-//import styles from '../../config/common.module.css';
 
 interface Props {
     displayType: string;

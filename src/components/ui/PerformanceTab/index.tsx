@@ -1,9 +1,8 @@
 import React, { useMemo, useState, memo } from "react";
 import dynamic from "next/dynamic";
-
 import dayjs from "libs/dayjs";
-import { NoRecentData, LoadingIndicator } from "../../common";
-import { ChartType } from "../../charts/LightWeightChart/types";
+import { NoRecentData, LoadingIndicator } from "components/common";
+import { ChartType } from "components/charts/LightWeightChart/types";
 import { PerformanceTabComponent } from "./PerformanceTabComponent";
 import { getRobotStatistic } from "./helpers";
 
@@ -12,7 +11,7 @@ interface Props {
     fullWidth?: boolean;
 }
 
-const LightWeightChartWithNoSSR = dynamic(() => import("../../charts/LightWeightChart"), {
+const LightWeightChartWithNoSSR = dynamic(() => import("components/charts/LightWeightChart"), {
     loading: () => <LoadingIndicator style={{ height: 400 }} />,
     ssr: false
 });

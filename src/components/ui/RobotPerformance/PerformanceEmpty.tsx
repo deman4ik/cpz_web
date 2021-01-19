@@ -6,7 +6,7 @@ import { SCREEN_TYPE } from "config/constants";
 import { PerformanceItem } from "./PerformanceItem";
 import { PerformanceItemCard } from "./PerformanceItemCard";
 import { PerformanceHeader } from "./PerformanceHeader";
-import { DummyCards } from "../../common";
+import { DummyCards } from "components/common";
 import { getItem } from "./helpers";
 import styles from "./PerformanceComponent.module.css";
 

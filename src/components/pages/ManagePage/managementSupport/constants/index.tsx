@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "components/basic";
 
 //utils
-import { ColumnsArraySchema } from "../../utils";
+import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
 
 export const USER_REQUESTS_TABLE_COLUMNS: ColumnsArraySchema = [
     {

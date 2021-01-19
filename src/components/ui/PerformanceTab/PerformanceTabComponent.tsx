@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import { NoRecentData } from "../../common";
+import { NoRecentData } from "components/common";
 import { PerformanceTabItem } from "./PerformanceTabItem";
 import { PerformanceTabItemCard } from "./PerformanceTabItemCard";
 import { PerformanceTabStatisticts } from "./PerformanceTabStatisticts";

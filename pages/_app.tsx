@@ -2,13 +2,12 @@ import React from "react";
 import { AppContext, AppProps } from "next/app";
 import withSecureHeaders from "next-secure-headers";
 import Router from "next/router";
-
 import { pageview } from "libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
 import { AuthContextProvider } from "../src/providers/authContext";
 import { LayoutContextProvider } from "../src/providers/layoutContext";
-import { NextPageProps } from "../src/types";
+import { NextPageProps } from "config/types";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 

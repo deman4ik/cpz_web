@@ -7,7 +7,7 @@ import { PerformanceItem } from "./PerformanceItem";
 import { PerformanceItemCard } from "./PerformanceItemCard";
 import { PerformanceHeader } from "./PerformanceHeader";
 import { useDummyCarts } from "hooks/useDummyCarts";
-import { DummyCards } from "../../common";
+import { DummyCards } from "components/common";
 import styles from "./PerformanceComponent.module.css";
 
 interface Props {

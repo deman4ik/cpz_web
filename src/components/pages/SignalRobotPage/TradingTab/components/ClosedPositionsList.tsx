@@ -3,11 +3,9 @@ import React, { memo } from "react";
 import { NoRecentData } from "components/common";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 import { RobotPositionItem, RobotPositionCard, ClosedPositionsListHeader } from ".";
-
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import { SectionType } from "../../types";
-
+import { SectionType } from "components/pages/SignalRobotPage/types";
 import styles from "./styles/ClosedPositionsList.module.css";
 
 interface Props {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import StepCard from "../../../SupportPage/components/main/StepCard";
+import StepCard from "components/pages/SupportPage/components/main/StepCard";
 import styles from "./styles/Common.module.css";
 import stylesMain from "./styles/Main.module.css";
 import { SIGNALS_CARDS, ROBOTS_CARDS, CREATE_ACCOUNT_CARD } from "./constants";

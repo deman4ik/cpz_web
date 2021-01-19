@@ -3,7 +3,7 @@ import React from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 
-import { SectionType } from "../../types";
+import { SectionType } from "components/pages/SignalRobotPage/types";
 import { colorAction, getIconName, getColor, getIconNameAction } from "config/utils";
 
 import styles from "./styles/RobotPositionCard.module.css";

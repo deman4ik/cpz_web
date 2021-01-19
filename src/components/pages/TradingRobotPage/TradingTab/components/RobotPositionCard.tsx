@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Robot, SectionType } from "../../types";
+import { Robot, SectionType } from "components/pages/TradingRobotPage/types";
 import {
     formatDate,
     valueWithSign,
