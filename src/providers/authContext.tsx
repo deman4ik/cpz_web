@@ -16,7 +16,7 @@ type AuthContextType = {
     setAuthState: Dispatch<SetStateAction<AuthStateType>>;
 };
 
-export const AuthContext = createContext<AuthContextType>(null!);
+export const AuthContext = createContext<AuthContextType>(undefined);
 
 const INITIAL_AUTH_STATE = {
     isAuth: false,
@@ -25,7 +25,7 @@ const INITIAL_AUTH_STATE = {
     user_id: null
 };
 
-export const AuthContextProvider = ({ children }: AuthContextPropsType) => {
+export const AuthContextProvider: React.FC<AuthContextPropsType> = ({ children }) => {
     const [authState, setAuthState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
 
     return <AuthContext.Provider value={{ authState, setAuthState }}>{children}</AuthContext.Provider>;
