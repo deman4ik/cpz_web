@@ -1,7 +1,7 @@
 import React, { useMemo, useState, memo } from "react";
 import dynamic from "next/dynamic";
 
-import dayjs from "../../../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { NoRecentData, LoadingIndicator } from "../../common";
 import { ChartType } from "../../charts/LightWeightChart/types";
 import { PerformanceTabComponent } from "./PerformanceTabComponent";
