@@ -13,10 +13,9 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "providers/authContext";
 import { EDIT_SIGNAL } from "graphql/signals/mutations";
-import { RobotsType } from "config/types";
+import { RobotsType, RobotDataType } from "config/types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
-import { RobotDataType } from "../../../types";
 
 interface Props {
     onClose: (changesMade?: boolean) => void;

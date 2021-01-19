@@ -3,9 +3,8 @@ import React from "react";
 
 import { DeviceContext } from "providers/deviceContext";
 import { getDisplayName } from "../getDisplayName";
-import { DeviceProps } from "config/types";
+import { DeviceProps, NextPageProps } from "config/types";
 import { NextPage, NextPageContext } from "next";
-import { NextPageProps } from "../../types";
 
 export const withDevice = (Page: NextPage) => {
     const WithDevice = (props: NextPageProps) => {

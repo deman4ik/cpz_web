@@ -15,7 +15,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { fetchAccessToken, logout } from "libs/auth";
 import { httpErrors } from "config/constants";
 import { NextPage } from "next";
-import { NextPageProps } from "../../types";
+import { NextPageProps } from "config/types";
 
 interface Definintion {
     kind: string;

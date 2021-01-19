@@ -1,6 +1,6 @@
 import { formatMoney } from "config/utils";
 import { InputTypes, InputValues, Precision, RobotResult, volumes } from "components/ui/Modals/types";
-import { LimitsType } from "../../../types";
+import { LimitsType } from "config/types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",

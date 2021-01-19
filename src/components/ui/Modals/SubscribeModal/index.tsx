@@ -13,9 +13,8 @@ import { Input } from "components/ui/Modals/types";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AuthContext } from "providers/authContext";
 import Router from "next/router";
-import { RobotsType } from "config/types";
+import { RobotsType, RobotDataType } from "config/types";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
-import { RobotDataType } from "../../../../types";
 
 interface Props {
     actionType?: string;

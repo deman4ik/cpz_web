@@ -23,8 +23,7 @@ import { GET_MARKETS_ROBOTS } from "graphql/common/queries";
 import { SOMETHING_WENT_WRONG } from "config/constants";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import Router from "next/router";
-import { RobotsType } from "config/types";
-import { RobotDataType } from "../../../../types";
+import { RobotsType, RobotDataType } from "config/types";
 
 interface Props {
     onClose: (changesMade: boolean) => void;

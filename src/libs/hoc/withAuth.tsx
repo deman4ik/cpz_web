@@ -11,7 +11,7 @@ import redirect from "../redirect";
 import { AuthContext } from "providers/authContext";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 import { NextPage, NextPageContext } from "next";
-import { NextPageProps } from "../../types";
+import { NextPageProps } from "config/types";
 
 const loginPath = "/login";
 const homePath = "/robots";

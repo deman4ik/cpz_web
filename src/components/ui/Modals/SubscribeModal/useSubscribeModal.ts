@@ -11,7 +11,7 @@ import {
     validateVolume
 } from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
-import { LimitsType, RobotDataType } from "../../../../types";
+import { LimitsType, RobotDataType } from "config/types";
 
 interface UseSubscribeModalProps {
     limits: LimitsType;
