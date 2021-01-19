@@ -2,7 +2,7 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
-import { AuthContext } from "../../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
@@ -13,7 +13,7 @@ import { StepWizard } from "components/basic";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
-import { ErrorLine, LoadingIndicator } from "components/common";
+import { ErrorLine } from "components/common";
 import { buildSettings, currentPage, getLimitsForRobot, Pages } from "../helpers";
 import { robotVolumeTypeOptions } from "../constants";
 import { event } from "libs/gtag";

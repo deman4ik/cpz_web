@@ -13,7 +13,7 @@ import {
 } from "assets/icons/svg";
 import { Button, CaptionButton } from "components/basic";
 import Router from "next/router";
-import { AuthContext } from "../../../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { GET_USER_INFO } from "graphql/user/queries";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 

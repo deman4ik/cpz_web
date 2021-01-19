@@ -1,7 +1,7 @@
 import { InputTypes } from "components/ui/Modals/types";
 import { ReactNode } from "react";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-import { DeviceContextType } from "../providers/deviceContext";
+import { DeviceContextType } from "providers/deviceContext";
 
 // export type NextPageProps = any;
 export type NextPageProps = Partial<{

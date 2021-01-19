@@ -1,7 +1,7 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
 
-import { DeviceContext } from "../../providers/deviceContext";
+import { DeviceContext } from "providers/deviceContext";
 import { getDisplayName } from "../getDisplayName";
 import { DeviceProps } from "config/types";
 import { NextPage, NextPageContext } from "next";

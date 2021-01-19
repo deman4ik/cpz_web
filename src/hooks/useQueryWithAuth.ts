@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { AuthContext } from "../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { LazyQueryHookOptions, LazyQueryResult, useLazyQuery } from "@apollo/client";
 import { QueryType } from "components/pages/ManagePage/common/types";
 

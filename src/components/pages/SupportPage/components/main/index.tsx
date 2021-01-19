@@ -7,7 +7,7 @@ import stylesMain from "../../styles/Main.module.css";
 // constants
 import { TG_CARD, AUTH_HELP_CARD } from "./constants";
 // auth context
-import { AuthContext } from "../../../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 
 const Main: React.FC = () => {
     const {

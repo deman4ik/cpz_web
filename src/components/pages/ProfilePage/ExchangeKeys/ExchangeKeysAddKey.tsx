@@ -5,7 +5,7 @@ import { CaptionButton } from "components/basic";
 // types
 import { ModalKey } from "./types";
 // context
-import { AuthContext } from "../../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 // styles
 import styles from "./ExchangeKeysAddKey.module.css";
 

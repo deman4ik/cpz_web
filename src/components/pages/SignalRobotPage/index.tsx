@@ -13,7 +13,7 @@ import { ROBOT_INFO_FOR_USER, ROBOT_INFO } from "graphql/robots/queries";
 import { SET_MODAL_STATE } from "graphql/local/mutations";
 import { POLL_INTERVAL } from "config/constants";
 import { formatRobotData } from "./helpers";
-import { AuthContext } from "../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { MODAL_VISIBLE } from "graphql/local/queries";
 

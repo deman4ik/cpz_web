@@ -6,7 +6,7 @@ import { OPEN_USER_POSITIONS } from "graphql/robots/queries";
 import { POLL_INTERVAL } from "config/constants";
 import { formatSignalsPositions, formatTradingRobotPositions } from "components/ui/RobotOpenPositions/helpers";
 import RobotOpenPositions from "components/ui/RobotOpenPositions";
-import { AuthContext } from "../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { DefaultTemplate } from "components/layout";
 import { capitalize } from "lodash";
 

@@ -17,7 +17,7 @@ import { useShowDimension } from "hooks/useShowDimension";
 //styles
 import styles from "./styles/Template.module.css";
 import Router from "next/router";
-import { LayoutContext } from "../../../providers/layoutContext";
+import { LayoutContext } from "providers/layoutContext";
 
 interface Props {
     title?: string;

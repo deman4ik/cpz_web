@@ -8,7 +8,7 @@ import { useAccessToken, getUserIdFromAccessToken, getUserRoleFromAccessToken } 
 import { getDisplayName } from "../getDisplayName";
 import redirect from "../redirect";
 // context
-import { AuthContext } from "../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { LoadingDummy } from "components/pages/LandingPage/SignalsList/LoadingDummy";
 import { NextPage, NextPageContext } from "next";
 import { NextPageProps } from "../../types";

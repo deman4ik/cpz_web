@@ -5,7 +5,7 @@ import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
-import { AuthContext } from "../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { LoadingIndicator } from "components/common";
 
 const _Header: React.FC = () => {

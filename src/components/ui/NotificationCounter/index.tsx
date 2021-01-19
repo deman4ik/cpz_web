@@ -4,7 +4,7 @@ import { GET_NOTIFICATIONS_AGGREGATE } from "graphql/user/queries";
 import { useClearNotifications } from "hooks/useClearNotifications";
 import { POLL_INTERVAL } from "config/constants";
 import { getIndentLength, indent } from "./helpers";
-import { AuthContext } from "../../../providers/authContext";
+import { AuthContext } from "providers/authContext";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
 export const NotificationCounter: React.FC = () => {

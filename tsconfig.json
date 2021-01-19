@@ -24,7 +24,7 @@
           "assets/*": ["./src/assets/*"],
           "services/*": ["./src/services/*"],
           "utils/*": ["./src/utils/*"],
-          "providers/*": ["./src/providers/*"],
+          "providers/*": ["./src/providers/*"]
         },
         "sourceMap": true,
         "checkJs": false
