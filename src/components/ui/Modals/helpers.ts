@@ -18,7 +18,6 @@ export const DEFAULT_PRECISION = { price: 1, amount: 8 };
 function parseRobotResult(data, type: string) {
     const result: RobotResult = {};
     const { v_user_exchange_accs } = data || {};
-    console.log(data);
 
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
