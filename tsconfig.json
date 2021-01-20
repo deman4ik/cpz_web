@@ -23,7 +23,8 @@
           "libs/*": ["./src/libs/*"],
           "assets/*": ["./src/assets/*"],
           "services/*": ["./src/services/*"],
-          "utils/*": ["./src/utils/*"]
+          "utils/*": ["./src/utils/*"],
+          "providers/*": ["./src/providers/*"]
         },
         "sourceMap": true,
         "checkJs": false

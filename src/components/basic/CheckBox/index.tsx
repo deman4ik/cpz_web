@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { CSSProperties, forwardRef } from "react";
 
-import { LoadingIndicator } from "../../common";
+import { LoadingIndicator } from "components/common";
 import { uniqueId } from "lodash";
 
 interface Props {

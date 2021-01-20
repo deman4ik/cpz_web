@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { FetchResult, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
 import { REFRESH_TOKEN } from "graphql/auth/mutations";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { logout } from "libs/auth";
 
 export const getTokenFromCookie = () => {
@@ -19,14 +19,18 @@ export const getTokenFromCookie = () => {
     return "";
 };
 
-export const putTokenInCookie = (token) => {
+export const putTokenInCookie = (token: string) => {
     if (typeof window !== "undefined") document.cookie = `accessToken=${token}; path=/`;
 };
 
 export const getAccessToken = getTokenFromCookie;
+
+/**
+ * Remove access JWT token from client cookies
+ */
 export const nullifyAccessToken = () => putTokenInCookie("");
 
-export const getTokenInfo = (jwt) => {
+export const getTokenInfo = (jwt: string) => {
     const { exp = 0 } = jwt ? jwtDecode(jwt) : {};
     return {
         token: jwt,
@@ -76,13 +80,15 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     useEffect(() => {
         if (result?.accessToken) {
             const { accessToken } = result;
-            const { userId, role } = jwtDecode(accessToken);
+            const { userId, role }: { userId: string; role: string } = jwtDecode(accessToken);
 
-            setAuthState({
+            setAuthState((prevState) => ({
+                ...prevState,
                 isAuth: Boolean(accessToken),
-                userId,
-                isManager: role === "manager"
-            });
+                user_id: userId,
+                isManager: role === "manager",
+                authIsSet: true
+            }));
             setToken(getTokenInfo(accessToken));
         }
     }, []);
@@ -97,7 +103,7 @@ export const useAccessToken = (): [string, (token: string) => void, () => void] 
     ];
 };
 
-export const getUserIdFromAccessToken = (token): string | null => {
+export const getUserIdFromAccessToken = (token?: string): string | null => {
     if (token) {
         const { userId } = jwtDecode(token);
         return userId;
@@ -105,7 +111,7 @@ export const getUserIdFromAccessToken = (token): string | null => {
     return null;
 };
 
-export const getUserRoleFromAccesToken = (token): string | null => {
+export const getUserRoleFromAccessToken = (token?: string): string | null => {
     if (token) {
         const { role } = jwtDecode(token);
         return role;

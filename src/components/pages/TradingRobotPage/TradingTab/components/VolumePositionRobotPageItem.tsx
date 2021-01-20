@@ -1,9 +1,8 @@
 import React, { memo } from "react";
 
-import { SectionType } from "../../types";
+import { SectionType } from "components/pages/TradingRobotPage/types";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { getIconName, getColor } from "config/utils";
-
 import styles from "./styles/RobotPositionCard.module.css";
 
 interface Props {

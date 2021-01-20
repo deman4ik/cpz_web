@@ -3,7 +3,7 @@ import { InputMap, InputTypes, InputValues, Precision } from "components/ui/Moda
 import {
     AssetTypes,
     CurrencyTypes,
-    defaultPrecision,
+    DEFAULT_PRECISION,
     getInputValues,
     parseLimits,
     precisionToVolumeMap,
@@ -11,21 +11,23 @@ import {
     validateVolume
 } from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
+import { LimitsType, RobotDataType } from "../types";
 
 interface UseSubscribeModalProps {
-    limits: any;
+    limits: LimitsType;
     inputs: InputMap;
-    robotData?: any;
+    robotData?: RobotDataType;
 }
 
-const initialValues = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
+const INITIAL_VALUES = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
-export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeModalProps) {
-    const getDefaultVolumeType = () => robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
-    const [volumeType, setVolumeType] = useState<InputTypes>(getDefaultVolumeType());
-    const getPrecision = () => (limits && limits.precision) || defaultPrecision;
+export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps): any => {
+    const DEFAULT_VOLUME_TYPE = robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+
+    const [volumeType, setVolumeType] = useState<InputTypes>(DEFAULT_VOLUME_TYPE);
+    const getPrecision = () => (limits && limits.precision) || DEFAULT_PRECISION;
     const selectedInputs = inputs[volumeType];
-    const [inputValues, setInputValues] = useState<InputValues>(initialValues);
+    const [inputValues, setInputValues] = useState<InputValues>(INITIAL_VALUES);
     const [precision, setPrecision] = useState<Precision>(getPrecision());
 
     useEffect(() => {
@@ -33,17 +35,19 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [volumeType, limits]);
 
-    const usedAccountPercent = Math.ceil(
-        limits?.used_balance_percent - (robotData?.robot.subs.settings.balancePercent || 0)
-    );
-
     useEffect(() => {
-        setVolumeType(getDefaultVolumeType());
+        setVolumeType(DEFAULT_VOLUME_TYPE);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData]);
 
     const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
-    const { price, minAmount, minAmountUSD, balance, maxPercentAmount } = parsedLimits;
+    const { price, minAmount, minAmountUSD, balance, availableBalancePercent, usedBalancePercent } = parsedLimits;
+
+    const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
+    const currentBalancePercent =
+        DEFAULT_VOLUME_TYPE === InputTypes.balancePercent
+            ? availableBalancePercent + (robotData?.robot.subs.settings.balancePercent || 0)
+            : availableBalancePercent;
 
     const { currencyDynamic, assetStatic } = InputTypes;
     const currentVolumeTypeInCurrency = CurrencyTypes.includes(volumeType);
@@ -79,7 +83,7 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
                 used_percent: usedAccountPercent,
                 type,
                 value: inputValues[type],
-                maxAmount: type === InputTypes.balancePercent ? maxPercentAmount : maxAmounts[type],
+                maxAmount: type === InputTypes.balancePercent ? currentBalancePercent : maxAmounts[type],
                 minAmount: minAmounts[type]
             });
         }
@@ -103,4 +107,4 @@ export function useSubscribeModal({ limits, inputs, robotData }: UseSubscribeMod
         setVolumeType,
         errors
     };
-}
+};

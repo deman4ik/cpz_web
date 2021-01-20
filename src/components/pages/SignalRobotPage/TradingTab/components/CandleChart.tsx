@@ -1,18 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo, useContext, useRef, useCallback } from "react";
-import dynamic from "next/dynamic";
-
-import { LoadingIndicator } from "components/common";
-
-import { useQuery, useMutation, useSubscription } from "@apollo/client";
-import { buildRobotPositionCandlesQuery } from "graphql/robots/queries";
-import { buildSignalPositionCandleSubQuery } from "graphql/signals/subscriptions";
-import { SET_CHART_DATA } from "graphql/local/mutations";
-
-import { getCandleChartData, getUpdatedCandleChartData } from "../../helpers";
-import { ChartType } from "components/charts/LightWeightChart/types";
-import { getLegend } from "config/utils";
-import { AuthContext } from "libs/hoc/context";
+import React, { memo, useContext } from "react";
+import { AuthContext } from "providers/authContext";
 import { candleQueries } from "components/pages/helpers";
 import { CandleChartComponent } from "components/common/CandleChartComponent";
 

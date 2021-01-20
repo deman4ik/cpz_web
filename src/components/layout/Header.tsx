@@ -4,7 +4,7 @@ import { useLogoutProcess } from "hooks/useLogoutProcess";
 import { linksHeader, authHeader } from "./helpers";
 import { event } from "libs/gtag";
 import styles from "./Header.module.css";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { LoadingIndicator } from "components/common";
 import { CryptuosoLogo } from "../../assets/icons/svg";
 

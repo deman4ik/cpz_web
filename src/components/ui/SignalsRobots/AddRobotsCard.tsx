@@ -1,7 +1,6 @@
 import React from "react";
 import Router from "next/router";
-
-import { CaptionButton } from "../../basic";
+import { CaptionButton } from "components/basic";
 import styles from "./AddRobotsCard.module.css";
 
 interface Props {

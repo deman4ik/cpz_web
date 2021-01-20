@@ -1,7 +1,6 @@
 import React from "react";
 
 import { renderAction, renderVolume } from ".";
-
 import {
     formatDate,
     valueWithSign,
@@ -12,8 +11,7 @@ import {
     getTimeFromNow,
     getColorForMoney
 } from "config/utils";
-import { SectionType } from "../../types";
-
+import { SectionType } from "components/pages/SignalRobotPage/types";
 import styles from "./styles/RobotPositionCard.module.css";
 
 interface Props {

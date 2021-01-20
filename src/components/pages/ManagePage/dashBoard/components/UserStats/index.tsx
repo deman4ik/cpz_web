@@ -2,11 +2,10 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { USERS_BY_ROBOTS_AGGREGATE } from "graphql/manage/queries";
 // utils
-import { formatTotalUsers } from "../../utils";
+import { formatTotalUsers } from "components/pages/ManagePage/dashBoard/utils";
 // components
 import StatsContainer from "./StatsContainer";
 import TimestampStats from "./TimestampStats";
-import styles from "../../styles/Dasboard.module.css";
 import { DataCard } from "components/ui/DataCard";
 
 // TODO: работа с шириной в зависимости от других карточек

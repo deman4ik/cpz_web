@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import { ClosedPositionsListHeader, RobotPositionItem, RobotPositionCard } from ".";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import { Robot, SectionType } from "../../types";
+import { Robot, SectionType } from "components/pages/TradingRobotPage/types";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
 import { NoRecentData } from "components/common";
 import styles from "./styles/ClosedPositionContainer.module.css";

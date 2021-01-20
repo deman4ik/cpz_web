@@ -13,7 +13,7 @@ import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 // helpers
 import { getAlerts } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { useScrollPosition } from "hooks/useScrollPosition";
 
 const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolean) => {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from "react";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { candleQueries } from "components/pages/helpers";
 import { CandleChartComponent } from "components/common/CandleChartComponent";
 

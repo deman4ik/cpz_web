@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
-import { ColumnsArraySchema, buildRobotChartCell } from "../../utils";
+import { ColumnsArraySchema, buildRobotChartCell } from "components/pages/ManagePage/utils";
 
 import { STATUS_COLORS } from "config/constants";
 

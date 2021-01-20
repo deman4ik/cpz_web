@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { DeviceContext } from "../libs/deviceContext";
+import { DeviceContext } from "providers/deviceContext";
 
 function getWindowDimensions(isMobile: boolean) {
     if (process.browser) {

@@ -13,11 +13,11 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 
 //context
-import { LayoutContext } from "libs/hoc/context";
 
 //styles
 import styles from "./styles/Template.module.css";
 import Router from "next/router";
+import { LayoutContext } from "providers/layoutContext";
 
 interface Props {
     title?: string;
@@ -51,8 +51,11 @@ export const ManagementTemplate: React.FC<Props> = ({
     const isMenuOpen = menuOpen || false;
     const isNavOpen = menuOpen && navBarOpen;
 
-    const setMenuOpen = (newVal) => {
-        setLayoutState({ menuOpen: newVal });
+    const setMenuOpen = (newVal: boolean) => {
+        setLayoutState((prevState) => ({
+            ...prevState,
+            menuOpen: newVal
+        }));
     };
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);

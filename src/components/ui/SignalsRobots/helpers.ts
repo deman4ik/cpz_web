@@ -1,4 +1,4 @@
-import dayjs from "../../../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { getStats, getVolume, getVolumeWithUnit, getVolumeType } from "config/utils";
 
 // TODO: use formatSignalData to form the array

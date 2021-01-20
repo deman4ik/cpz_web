@@ -11,7 +11,7 @@ import { AddRobotsCard } from "./AddRobotsCard";
 import { RobotsHeader } from "components/ui/RobotsItems";
 import styles from "./index.module.css";
 import { useDummyCarts } from "hooks/useDummyCarts";
-import { DummyCards } from "../../common";
+import { DummyCards } from "components/common";
 
 interface Props {
     data: any;
