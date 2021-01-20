@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -162,6 +162,17 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                             width={260}
                             enabled={!isExchangeDisabled}
                             onChangeValue={(itemValue) => handleOnChangeExchange(itemValue)}
+                        />
+                    </div>
+                </div>
+                <div style={{ marginBottom: 20 }}>
+                    <div className={styles.tableCellText}>Password</div>
+                    <div style={{ marginTop: 6 }}>
+                        <Input
+                            value={inputName}
+                            selectTextOnFocus
+                            width={260}
+                            onChangeText={(value) => handleOnChangeName(value)}
                         />
                     </div>
                 </div>

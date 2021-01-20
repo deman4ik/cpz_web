@@ -7,6 +7,7 @@ export const GET_EXCHANGES = gql`
             name
             ref_link
             docs_link
+            options
         }
     }
 `;
