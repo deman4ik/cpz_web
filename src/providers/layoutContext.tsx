@@ -13,13 +13,13 @@ type LayoutContextType = {
     setLayoutState: Dispatch<SetStateAction<LayoutStateType>>;
 };
 
-export const LayoutContext = createContext<LayoutContextType>(null!);
+export const LayoutContext = createContext<LayoutContextType>(undefined);
 
 const INITIAL_LAYOUT_STATE = {
     menuOpen: false
 };
 
-export const LayoutContextProvider = ({ children }: LayoutContextPropsType) => {
+export const LayoutContextProvider: React.FC<LayoutContextPropsType> = ({ children }) => {
     const [layoutState, setLayoutState] = useState<LayoutStateType>(INITIAL_LAYOUT_STATE);
 
     return <LayoutContext.Provider value={{ layoutState, setLayoutState }}>{children}</LayoutContext.Provider>;
