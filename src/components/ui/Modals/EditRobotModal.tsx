@@ -13,7 +13,8 @@ import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscr
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import { AuthContext } from "providers/authContext";
 import { EDIT_SIGNAL } from "graphql/signals/mutations";
-import { RobotsType, RobotDataType } from "config/types";
+import { RobotsType } from "config/types";
+import { RobotDataType } from "./types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 

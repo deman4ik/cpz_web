@@ -1,15 +1,3 @@
-import { ReactNode } from "react";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-import { DeviceContextType } from "providers/deviceContext";
-
-// export type NextPageProps = any;
-export type NextPageProps = Partial<{
-    children: ReactNode;
-    accessToken: string;
-    apollo: ApolloClient<NormalizedCacheObject>;
-    device: DeviceContextType;
-}>;
-
 export type RobotDataType = {
     ChartData: {
         limit: number;

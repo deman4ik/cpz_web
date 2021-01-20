@@ -15,7 +15,7 @@ export const precisionToVolumeMap = {
 };
 export const DEFAULT_PRECISION = { price: 1, amount: 8 };
 
-function parseRobotResult(data, type: string) {
+function parseRobotResult(data, type) {
     const result: RobotResult = {};
     const { v_user_exchange_accs } = data || {};
 
@@ -52,7 +52,7 @@ function parseSignalResult(data: ResultType, type: string) {
         asset: limits[type]
     };
 }
-export const getLimits = (data: ResultType, type: string): RobotResult => {
+export const getLimits = (data, type) => {
     const result = {
         total_balance_usd: 0,
         used_balance_percent: 0,
@@ -90,9 +90,9 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
     return result;
 };
 
-export const getLimitsForSignal = (data: ResultType): RobotResult => getLimits(data, "userSignal");
+export const getLimitsForSignal = (data: ResultType) => getLimits(data, "userSignal");
 
-export const getLimitsForRobot = (data: ResultType): RobotResult => getLimits(data, "userRobot");
+export const getLimitsForRobot = (data: ResultType) => getLimits(data, "userRobot");
 
 export const calculateCurrency = (asset: string | number, price: number): number => Number(asset) * price;
 
