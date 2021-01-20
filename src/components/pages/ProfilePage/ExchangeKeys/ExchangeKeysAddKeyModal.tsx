@@ -27,7 +27,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
-    const [inputPassword, setInputPassword] = useState("password");
+    const [inputPassword, setInputPassword] = useState("Password");
     const [credentialsPassword, setCredentialsPassword] = useState(false);
 
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
@@ -60,7 +60,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
-        keys: { key: inputKeys.public, secret: inputKeys.secret }
+        keys: { key: inputKeys.public, secret: inputKeys.secret, password: inputPassword }
     };
     if (options && options.id) {
         variables.id = options.id;

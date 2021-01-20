@@ -22,6 +22,7 @@ export interface EditName {
 export type Keys = {
     key: string;
     secret: string;
+    password?: string;
 };
 export type UpdateExchangeKeyVars = {
     name: string;
