@@ -27,7 +27,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
-    const [inputPassword, setInputPassword] = useState("Password");
     const [credentialsPassword, setCredentialsPassword] = useState(false);
 
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
@@ -36,7 +35,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     );
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
+    const [inputKeys, setInputKeys] = useState({ public: "", secret: "", pass: "" });
 
     const [exchanges, setExchanges] = useState([]);
     const [chosenExchange, setChosenExchange] = useState(null);
@@ -60,7 +59,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
-        keys: { key: inputKeys.public, secret: inputKeys.secret, password: inputPassword }
+        keys: { key: inputKeys.public, secret: inputKeys.secret, pass: inputKeys.pass }
     };
     if (options && options.id) {
         variables.id = options.id;
@@ -75,10 +74,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         setInputName(value);
     };
 
-    const handleOnChangePassword = (value: string) => {
-        setInputPassword(value);
-    };
-
     const handleOnChangeExchange = (code: string) => {
         setReceivedExchangeCode(code);
         setChosenExchange(exchanges.find((ex) => ex.code === code));
@@ -90,7 +85,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
 
     const handleOnPress = async (e) => {
         e.preventDefault();
-        if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length) {
+        if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length || !inputKeys.pass.trim().length) {
             setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
             return;
         }
@@ -178,13 +173,17 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                 </div>
                 {credentialsPassword && (
                     <div style={{ marginBottom: 20 }}>
-                        <div className={styles.tableCellText}>Password</div>
+                        <div className={styles.apikeyGroup}>
+                            <div className={styles.tableCellText}>Password&nbsp;</div>
+                            <div className={styles.tableCellText} style={{ color: color.negative }}>
+                                *
+                            </div>
+                        </div>
                         <div style={{ marginTop: 6 }}>
                             <Input
-                                value={inputPassword}
-                                selectTextOnFocus
-                                width={260}
-                                onChangeText={(value) => handleOnChangePassword(value)}
+                                value={inputKeys.pass}
+                                width={240}
+                                onChangeText={(text) => handleOnChangeKeys(text, "pass")}
                             />
                         </div>
                     </div>
