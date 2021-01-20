@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -27,6 +27,9 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
+    const [inputPassword, setInputPassword] = useState("password");
+    const [credentialsPassword, setCredentialsPassword] = useState(false);
+
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
     const [receivedExchangeCode, setReceivedExchangeCode] = useState(
         options && options.exchange ? options.exchange : exchange
@@ -50,6 +53,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         }
     });
 
+    useEffect(() => {
+        if (chosenExchange !== null) setCredentialsPassword(chosenExchange.options.requiredCredentials.pass);
+    }, [chosenExchange]);
+
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
@@ -66,6 +73,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
 
     const handleOnChangeName = (value: string) => {
         setInputName(value);
+    };
+
+    const handleOnChangePassword = (value: string) => {
+        setInputPassword(value);
     };
 
     const handleOnChangeExchange = (code: string) => {
@@ -165,17 +176,19 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
-                <div style={{ marginBottom: 20 }}>
-                    <div className={styles.tableCellText}>Password</div>
-                    <div style={{ marginTop: 6 }}>
-                        <Input
-                            value={inputName}
-                            selectTextOnFocus
-                            width={260}
-                            onChangeText={(value) => handleOnChangeName(value)}
-                        />
+                {credentialsPassword && (
+                    <div style={{ marginBottom: 20 }}>
+                        <div className={styles.tableCellText}>Password</div>
+                        <div style={{ marginTop: 6 }}>
+                            <Input
+                                value={inputPassword}
+                                selectTextOnFocus
+                                width={260}
+                                onChangeText={(value) => handleOnChangePassword(value)}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className={styles.areaGroup}>
                     <div className={styles.row}>
                         <div className={styles.apikeyGroup}>
