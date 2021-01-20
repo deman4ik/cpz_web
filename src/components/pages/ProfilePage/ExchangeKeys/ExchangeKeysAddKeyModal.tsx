@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -14,6 +14,7 @@ import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const errorMessages = {
     KEYS_ARE_REQUIRED: "Both Public and Private API Keys are required",
+    PASSWORD_IS_REQUIRED: "Password is required",
     LONG_NAME: "Max name length is 50 symbols."
 };
 
@@ -27,13 +28,15 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
+    const [credentialsPassword, setCredentialsPassword] = useState(false);
+
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
     const [receivedExchangeCode, setReceivedExchangeCode] = useState(
         options && options.exchange ? options.exchange : exchange
     );
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
+    const [inputKeys, setInputKeys] = useState({ public: "", secret: "", pass: "" });
 
     const [exchanges, setExchanges] = useState([]);
     const [chosenExchange, setChosenExchange] = useState(null);
@@ -50,10 +53,14 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         }
     });
 
+    useEffect(() => {
+        if (chosenExchange !== null) setCredentialsPassword(chosenExchange.options.requiredCredentials.pass);
+    }, [chosenExchange]);
+
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
-        keys: { key: inputKeys.public, secret: inputKeys.secret }
+        keys: { key: inputKeys.public, secret: inputKeys.secret, pass: inputKeys.pass }
     };
     if (options && options.id) {
         variables.id = options.id;
@@ -83,6 +90,12 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
             return;
         }
+
+        if (!inputKeys.pass.trim().length) {
+            setErrorMessage(errorMessages.PASSWORD_IS_REQUIRED);
+            return;
+        }
+
         if (inputName.length > 50) {
             setErrorMessage(errorMessages.LONG_NAME);
             return;
@@ -165,6 +178,23 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
+                {credentialsPassword && (
+                    <div style={{ marginBottom: 20 }}>
+                        <div className={styles.apikeyGroup}>
+                            <div className={styles.tableCellText}>Password&nbsp;</div>
+                            <div className={styles.tableCellText} style={{ color: color.negative }}>
+                                *
+                            </div>
+                        </div>
+                        <div style={{ marginTop: 6 }}>
+                            <Input
+                                value={inputKeys.pass}
+                                width={240}
+                                onChangeText={(text) => handleOnChangeKeys(text, "pass")}
+                            />
+                        </div>
+                    </div>
+                )}
                 <div className={styles.areaGroup}>
                     <div className={styles.row}>
                         <div className={styles.apikeyGroup}>
