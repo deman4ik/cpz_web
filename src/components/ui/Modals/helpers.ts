@@ -1,6 +1,6 @@
 import { formatMoney } from "config/utils";
 import { InputTypes, InputValues, Precision, RobotResult, volumes } from "components/ui/Modals/types";
-import { LimitsType } from "config/types";
+import { LimitsType, ResultType } from "./types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -15,9 +15,11 @@ export const precisionToVolumeMap = {
 };
 export const DEFAULT_PRECISION = { price: 1, amount: 8 };
 
-function parseRobotResult(data, type) {
+function parseRobotResult(data, type: string) {
     const result: RobotResult = {};
     const { v_user_exchange_accs } = data || {};
+    console.log(data);
+
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
     const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
@@ -40,17 +42,18 @@ export const limitsPropToType = {
     signals: "userSignal",
     robots: "userRobot"
 };
-function parseSignalResult(data, type) {
+function parseSignalResult(data: ResultType, type: string) {
     const { v_user_markets: markets } = data;
     if (!(markets && markets.length)) return {};
 
     const { limits, ...rest } = markets[0];
+
     return {
         ...rest,
         asset: limits[type]
     };
 }
-export const getLimits = (data, type) => {
+export const getLimits = (data: ResultType, type: string): RobotResult => {
     const result = {
         total_balance_usd: 0,
         used_balance_percent: 0,
@@ -73,13 +76,14 @@ type SettingsType = {
     initialVolume?: number;
     balancePercent?: number;
 };
+
 interface BuildSettingsProps {
     volumeType: InputTypes;
     inputValues: InputValues;
     precision: Precision;
 }
 
-export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps) => {
+export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps): SettingsType => {
     const result: SettingsType = { volumeType };
     result[volumes[volumeType]] = Number(
         Number(inputValues[volumeType]).toFixed(precision[precisionToVolumeMap[volumeType]])
@@ -87,22 +91,22 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
     return result;
 };
 
-export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
+export const getLimitsForSignal = (data: ResultType): RobotResult => getLimits(data, "userSignal");
 
-export const getLimitsForRobot = (data) => getLimits(data, "userRobot");
+export const getLimitsForRobot = (data: ResultType): RobotResult => getLimits(data, "userRobot");
 
 export const calculateCurrency = (asset: string | number, price: number): number => Number(asset) * price;
 
 export const calculateAsset = (currency: string | number, price: number): number =>
     price === 0 ? 0 : Number(currency) / price;
 
-export const getPercent = (amountUSD, balance) => Math.ceil((amountUSD / balance) * 100);
+export const getPercent = (amountUSD: number, balance: number): number => Math.ceil((amountUSD / balance) * 100);
 
 export const formatNumber = (n: number, precision?: number): string => formatMoney(n, precision || 6);
 
 export const trimNumber = (n: number): string => Number(n.toFixed(6)).toString();
 
-export const roundWithPrecision = (number: number, precision: number) => {
+export const roundWithPrecision = (number: number, precision: number): number => {
     if (precision === 1) {
         return Math.floor(number * 10) / 10;
     }
@@ -210,7 +214,7 @@ const validationFunctions = {
     currencyDynamic: validateCurrencies,
     balancePercent: validateBalancePercent
 };
-export function validateVolume({ type, ...rest }: ValidateVolumeProps) {
+export function validateVolume({ type, ...rest }: ValidateVolumeProps): ValidateVolumeProps {
     const validateFunction = validationFunctions[type];
     return validateFunction(rest);
 }
@@ -240,6 +244,6 @@ const routesToPagesMap = {
     "/signals/robot/[code]": Pages.signal
 };
 
-export const currentPage = (path: string) => routesToPagesMap[path];
+export const currentPage = (path: string): string => routesToPagesMap[path];
 
 export const isObjectEmpty = (obj) => Object.values(obj).filter((i) => i === 0 || !!i).length === 0;

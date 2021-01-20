@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import React, { FC, createContext, Dispatch, ReactNode, SetStateAction, useState, ReactElement } from "react";
 
 type AuthContextPropsType = {
     children: ReactNode;
@@ -25,7 +25,7 @@ const INITIAL_AUTH_STATE = {
     user_id: null
 };
 
-export const AuthContextProvider: React.FC<AuthContextPropsType> = ({ children }) => {
+export const AuthContextProvider: FC<AuthContextPropsType> = ({ children }) => {
     const [authState, setAuthState] = useState<AuthStateType>(INITIAL_AUTH_STATE);
 
     return <AuthContext.Provider value={{ authState, setAuthState }}>{children}</AuthContext.Provider>;

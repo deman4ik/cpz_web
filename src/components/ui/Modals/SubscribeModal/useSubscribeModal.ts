@@ -21,7 +21,7 @@ interface UseSubscribeModalProps {
 
 const INITIAL_VALUES = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
-export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps) => {
+export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps): any => {
     const DEFAULT_VOLUME_TYPE = robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
 
     const [volumeType, setVolumeType] = useState<InputTypes>(DEFAULT_VOLUME_TYPE);
@@ -41,15 +41,7 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
     }, [robotData]);
 
     const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
-    const {
-        price,
-        minAmount,
-        minAmountUSD,
-        balance,
-        maxPercentAmount,
-        availableBalancePercent,
-        usedBalancePercent
-    } = parsedLimits;
+    const { price, minAmount, minAmountUSD, balance, availableBalancePercent, usedBalancePercent } = parsedLimits;
 
     const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
     const currentBalancePercent =

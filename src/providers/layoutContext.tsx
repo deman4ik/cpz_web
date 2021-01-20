@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import React, { FC, createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 type LayoutContextPropsType = {
     children: ReactNode;
@@ -19,7 +19,7 @@ const INITIAL_LAYOUT_STATE = {
     menuOpen: false
 };
 
-export const LayoutContextProvider: React.FC<LayoutContextPropsType> = ({ children }) => {
+export const LayoutContextProvider: FC<LayoutContextPropsType> = ({ children }) => {
     const [layoutState, setLayoutState] = useState<LayoutStateType>(INITIAL_LAYOUT_STATE);
 
     return <LayoutContext.Provider value={{ layoutState, setLayoutState }}>{children}</LayoutContext.Provider>;
