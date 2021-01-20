@@ -14,6 +14,7 @@ import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const errorMessages = {
     KEYS_ARE_REQUIRED: "Both Public and Private API Keys are required",
+    PASSWORD_IS_REQUIRED: "Password is required",
     LONG_NAME: "Max name length is 50 symbols."
 };
 
@@ -85,10 +86,16 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
 
     const handleOnPress = async (e) => {
         e.preventDefault();
-        if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length || !inputKeys.pass.trim().length) {
+        if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length) {
             setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
             return;
         }
+
+        if (!inputKeys.pass.trim().length) {
+            setErrorMessage(errorMessages.PASSWORD_IS_REQUIRED);
+            return;
+        }
+
         if (inputName.length > 50) {
             setErrorMessage(errorMessages.LONG_NAME);
             return;
