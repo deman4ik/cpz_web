@@ -36,9 +36,11 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
                         gtag('config', '${GA_TRACKING_ID}', {
-                        page_path: window.location.pathname,
+                        'page_path': window.location.pathname,
+                        'user_id': 'USER_ID'
                         });
-                        gtag('config', '${AW_CONVERSION_ID}');${gtag || ""}`
+                        gtag('config', '${AW_CONVERSION_ID}');
+                        ${gtag || ""}`
                     }}
                 />
             </>
