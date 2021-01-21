@@ -28,7 +28,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
-    const [credentialsPassword, setCredentialsPassword] = useState(false);
+    const [isPassword, setIsPassword] = useState(false);
 
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
     const [receivedExchangeCode, setReceivedExchangeCode] = useState(
@@ -54,17 +54,21 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     });
 
     useEffect(() => {
-        if (chosenExchange !== null) setCredentialsPassword(chosenExchange.options.requiredCredentials.pass);
+        if (chosenExchange !== null) setIsPassword(chosenExchange.options.requiredCredentials.pass);
     }, [chosenExchange]);
 
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
-        keys: { key: inputKeys.public, secret: inputKeys.secret, pass: inputKeys.pass }
+        keys: { key: inputKeys.public, secret: inputKeys.secret }
     };
     if (options && options.id) {
         variables.id = options.id;
     }
+    if (variables && variables.keys && isPassword) {
+        variables.keys.pass = inputKeys.pass;
+    }
+
     const [addKey] = useMutation(UPDATE_EXCHANGE_KEY, {
         variables,
         refetchQueries: [...(refetchQueries || []), { query: GET_USER_EXCHANGES }],
@@ -91,7 +95,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             return;
         }
 
-        if (!inputKeys.pass.trim().length) {
+        if (isPassword && !inputKeys.pass.trim().length) {
             setErrorMessage(errorMessages.PASSWORD_IS_REQUIRED);
             return;
         }
@@ -163,7 +167,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 10 }}>
                     <div className={styles.tableCellText}>Exchange</div>
                     <div style={{ marginTop: 6 }}>
                         <Select
@@ -178,23 +182,6 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
-                {credentialsPassword && (
-                    <div style={{ marginBottom: 20 }}>
-                        <div className={styles.apikeyGroup}>
-                            <div className={styles.tableCellText}>Password&nbsp;</div>
-                            <div className={styles.tableCellText} style={{ color: color.negative }}>
-                                *
-                            </div>
-                        </div>
-                        <div style={{ marginTop: 6 }}>
-                            <Input
-                                value={inputKeys.pass}
-                                width={240}
-                                onChangeText={(text) => handleOnChangeKeys(text, "pass")}
-                            />
-                        </div>
-                    </div>
-                )}
                 <div className={styles.areaGroup}>
                     <div className={styles.row}>
                         <div className={styles.apikeyGroup}>
@@ -226,6 +213,23 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                             />
                         </div>
                     </div>
+                    {isPassword && (
+                        <div className={styles.row}>
+                            <div className={styles.apikeyGroup}>
+                                <div className={styles.tableCellText}>Password&nbsp;</div>
+                                <div className={styles.tableCellText} style={{ color: color.negative }}>
+                                    *
+                                </div>
+                            </div>
+                            <div>
+                                <Input
+                                    value={inputKeys.pass}
+                                    width={240}
+                                    onChangeText={(text) => handleOnChangeKeys(text, "pass")}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.apikeyGroup}>
                     <Button
