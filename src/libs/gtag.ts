@@ -4,7 +4,7 @@ export const AW_CONVERSION_ID = "AW-971308941";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url) => {
-    if (process.env.NODE_ENV === "development") return;
+    if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("config", GA_TRACKING_ID, {
         page_path: url
     });
@@ -12,7 +12,7 @@ export const pageview = (url) => {
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const event = ({ action, category, label, value }) => {
-    if (process.env.NODE_ENV === "development") return;
+    if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("event", action, {
         event_category: category,
         event_label: label,
@@ -21,7 +21,7 @@ export const event = ({ action, category, label, value }) => {
 };
 
 export const gtag_report_conversion = (url: string) => {
-    if (process.env.NODE_ENV === "development") return false;
+    if (process.env.ENABLE_ANALYTICS === "development") return false;
     const callback = () => {
         if (typeof url !== "undefined") {
             (window as any).location = url;

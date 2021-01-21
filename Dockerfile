@@ -8,6 +8,7 @@ COPY . /usr/src/app
 
 ARG HASURA_URL=${HASURA_URL}
 ARG TELEGRAM_BOT_NAME=${TELEGRAM_BOT_NAME}
+ARG ENABLE_ANALYTICS=${ENABLE_ANALYTICS}
 
 RUN npm install && npm run build && npm prune --production
 

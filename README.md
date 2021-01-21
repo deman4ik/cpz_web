@@ -1,7 +1,7 @@
 ## Cryptuoso Web App
 
-Dev https://web.dev.cryptuoso.com
-Prod https://web.prod.cryptuoso.com
+-   Dev https://web.dev.cryptuoso.com
+-   Prod https://web.prod.cryptuoso.com
 
 ### Scripts
 
@@ -16,3 +16,4 @@ Prod https://web.prod.cryptuoso.com
 -   **HASURA_URL** - graphql API host for https/wss (hasura.dev.cryptuoso.com/v1/graphql)
 -   **TELEGRAM_BOT_NAME** - for landing urls and login widget (cpz_test_bot)
 -   **POLL_INTERVAL** - polling interval [optional]
+-   **ENABLE_ANALYTICS** - analytics enabled by default pass `development` to disable [optional]
