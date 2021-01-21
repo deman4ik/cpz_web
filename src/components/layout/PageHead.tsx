@@ -59,9 +59,9 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                             trackLinks: true,
                             accurateTrackBounce: true,
                             webvisor: true,
-                        });
-                        ym(69520861, 'getClientID', function (clientID) {
-                            ym(69520861, "userParams", { UserID: '${userId}' });
+                            userParams: {
+                                UserID: '${userId}'
+                            }
                         });
                           `
                     }}
