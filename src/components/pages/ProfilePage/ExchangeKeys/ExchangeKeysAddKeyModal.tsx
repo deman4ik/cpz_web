@@ -60,11 +60,15 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
-        keys: { key: inputKeys.public, secret: inputKeys.secret, pass: inputKeys.pass }
+        keys: { key: inputKeys.public, secret: inputKeys.secret }
     };
     if (options && options.id) {
         variables.id = options.id;
     }
+    if (variables && variables.keys && isPassword) {
+        variables.keys.pass = inputKeys.pass;
+    }
+
     const [addKey] = useMutation(UPDATE_EXCHANGE_KEY, {
         variables,
         refetchQueries: [...(refetchQueries || []), { query: GET_USER_EXCHANGES }],
@@ -91,7 +95,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             return;
         }
 
-        if (!inputKeys.pass.trim().length) {
+        if (isPassword && !inputKeys.pass.trim().length) {
             setErrorMessage(errorMessages.PASSWORD_IS_REQUIRED);
             return;
         }
