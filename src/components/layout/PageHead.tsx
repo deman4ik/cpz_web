@@ -54,13 +54,14 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
                         m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
                         (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
                         ym(69520861, "init", {
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true,
-                        webvisor:true,
+                            clickmap: true,
+                            trackLinks: true,
+                            accurateTrackBounce: true,
+                            webvisor: true,
                         });
-                        var yaUserId = yaCounter69520861.getClientID();
-                        ym(69520861, "userParams", { UserID: yaUserId });
+                        ym(69520861, 'getClientID', function (clientID) {
+                            ym(69520861, "userParams", { UserID: clientID });
+                        });
                           `
                     }}
                 />
