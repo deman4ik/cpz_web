@@ -141,11 +141,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                                 code
                             }
                         }
-                    }).then((res) => {
-                        const robotCode = code || robotData?.robot.code;
-                        if (currentPage(Router.pathname) !== Pages.robot) {
-                            Router.push(`/robots${robotCode ? `/robot/${robotCode}` : ""}`);
-                        }
+                    }).then(() => {
                         event({
                             action: "create",
                             category: "Robots",
@@ -167,6 +163,12 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         }
     };
 
+    const redirectToRobotPage = ({ code: robotCode }) => {
+        if (currentPage(Router.pathname) !== Pages.robot) {
+            Router.push(`/robots${robotCode ? `/robot/${robotCode}` : ""}`);
+        }
+    };
+
     const handleOnStart = () => {
         userRobotStart({
             variables: { id: newRobotId }
@@ -179,6 +181,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             message: "started"
                         }
                     }).then(() => {
+                        redirectToRobotPage(robotData?.robot);
                         event({
                             action: "start",
                             category: "Robots",
@@ -194,6 +197,11 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             .catch((e) => {
                 setFormError(e.message || SOMETHING_WENT_WRONG);
             });
+    };
+
+    const handleOnClose = () => {
+        redirectToRobotPage(robotData?.robot);
+        onClose(true);
     };
 
     const dataPicker = useMemo(
@@ -222,6 +230,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const isValid = () => !errors.length;
 
     const enabled = !loadingState;
+
     return (
         <>
             <>
@@ -260,7 +269,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         enabled={enabled}
                         robotName={robotData ? robotData.robot.name : null}
                         handleOnStart={handleOnStart}
-                        onClose={onClose}
+                        onClose={handleOnClose}
                     />
                 )}
             </>
