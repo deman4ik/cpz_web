@@ -167,7 +167,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 10 }}>
                     <div className={styles.tableCellText}>Exchange</div>
                     <div style={{ marginTop: 6 }}>
                         <Select
@@ -221,7 +221,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                                     *
                                 </div>
                             </div>
-                            <div style={{ marginTop: 6 }}>
+                            <div>
                                 <Input
                                     value={inputKeys.pass}
                                     width={240}
