@@ -9,12 +9,13 @@ interface Props {
     description?: string;
     keywords?: string;
     gtag?: string;
+    userId?: string;
 }
 
 const description = "Cryptuoso - Cryptocurrency Trading Robots for your successful investment";
 const keywords = "cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken";
 
-export const PageHead: React.FC<Props> = ({ title, gtag }) => (
+export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
     <Head>
         <title>CRYPTUOSO - {title}</title>
         <meta charSet="utf-8" />
@@ -37,7 +38,7 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
                         gtag('js', new Date());
                         gtag('config', '${GA_TRACKING_ID}', {
                         'page_path': window.location.pathname,
-                        'user_id': 'USER_ID'
+                        'user_id': '${userId}'
                         });
                         gtag('config', '${AW_CONVERSION_ID}');
                         ${gtag || ""}`
@@ -60,7 +61,7 @@ export const PageHead: React.FC<Props> = ({ title, gtag }) => (
                             webvisor: true,
                         });
                         ym(69520861, 'getClientID', function (clientID) {
-                            ym(69520861, "userParams", { UserID: clientID });
+                            ym(69520861, "userParams", { UserID: '${userId}' });
                         });
                           `
                     }}
