@@ -18,19 +18,12 @@ import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
 
 interface Props {
     item: SignalItem;
-    onRedirectToDetailView: (code: string) => void;
     robotSubscribe: (variables: any) => void;
     displayType: string;
     lastItem: boolean;
 }
 
-export const RobotsItem: React.FC<Props> = ({
-    item,
-    robotSubscribe,
-    displayType,
-    onRedirectToDetailView,
-    lastItem
-}) => {
+export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType, lastItem }) => {
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
@@ -51,17 +44,13 @@ export const RobotsItem: React.FC<Props> = ({
         robotSubscribe(formatVariables(item, "delete"));
     };
 
-    const handleOnPressDetails = () => {
-        onRedirectToDetailView(item.code);
-    };
-
     const { profit, performance } = item;
 
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>
             <Link href={`/${displayType}/robot/${item.code}`}>
                 <a>
-                    <div className={styles.cellName} onClick={handleOnPressDetails}>
+                    <div className={styles.cellName}>
                         <div className={styles.cellNameWrap}>
                             <div className={styles.primaryText}>{item.name}</div>
                             <div className={styles.profitWrap}>

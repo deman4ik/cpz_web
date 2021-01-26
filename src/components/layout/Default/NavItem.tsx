@@ -23,7 +23,6 @@ import styles from "./styles/NavBar.module.css";
 interface Props {
     item: any;
     active: boolean;
-    handleOnClick: (path: string, external: boolean) => void;
 }
 
 const components = {
@@ -41,12 +40,8 @@ const components = {
     managementSupport: MessageAlert
 };
 
-const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
+const _NavItem: React.FC<Props> = ({ item, active }) => {
     const SpecificIcon = components[item.icon];
-
-    const handleOnClickLink = () => {
-        handleOnClick(item.route ? item.route : item.href, !item.route);
-    };
 
     const path = item.route ? `/${item.route}` : item.href;
 
@@ -55,9 +50,7 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
             {item && item.route ? (
                 <Link href={path}>
                     <a>
-                        <div
-                            className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}
-                            onClick={handleOnClickLink}>
+                        <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
                             <SpecificIcon
                                 color={active ? "white" : "rgba(255, 255, 255, 0.68)"}
                                 width={24}
@@ -72,9 +65,7 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
                 </Link>
             ) : (
                 <a href={path}>
-                    <div
-                        className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}
-                        onClick={handleOnClickLink}>
+                    <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
                         <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
                         {item.label === PageType.notifications && <NotificationCounter />}
                         <div className={styles.itemLabel}>
