@@ -35,7 +35,7 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
     const { data: signalsData, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(signalsQuery, {
         variables: {
             robot_id: robot.id,
-            ...(isAuth ? { user_signal_id: userSignal.id } : {})
+            ...(isAuth && userSignal && userSignal.id !== null ? { user_signal_id: userSignal.id } : {})
         },
         pollInterval: POLL_INTERVAL
     });
