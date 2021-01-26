@@ -3,7 +3,7 @@ import React from "react";
 import TradingTab from "components/pages/common/TradingTab";
 import { PerformanceTab } from "components/ui/PerformanceTab";
 import TabNavigation from "components/basic/TabNavigation";
-import useFetchSignalRobotPositions from "../../SignalRobotPage/useFetchSignalRobotPositions";
+import useFetchSignalRobotPositions from "components/pages/SignalRobotPage/useFetchSignalRobotPositions";
 import useFetchTradingRobotPositions from "components/pages/TradingRobotPage/useFetchTradingRobotPositions";
 import { RobotsType } from "config/types";
 

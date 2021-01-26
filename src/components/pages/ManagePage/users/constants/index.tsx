@@ -1,6 +1,6 @@
-import { SET_USER_STATUS } from "graphql/manage/users/mutations";
 import React from "react";
-import { ColumnsArraySchema, buildDisabledCheckboxCell, CallMode, InputType } from "../../utils";
+import { SET_USER_STATUS } from "graphql/manage/users/mutations";
+import { ColumnsArraySchema, buildDisabledCheckboxCell, CallMode, InputType } from "components/pages/ManagePage/utils";
 
 export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
     {

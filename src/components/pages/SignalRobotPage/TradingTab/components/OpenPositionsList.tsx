@@ -1,9 +1,6 @@
 import React, { memo } from "react";
-
 import { RobotPositionCard } from ".";
-
-import { SectionType } from "../../types";
-
+import { SectionType } from "components/pages/SignalRobotPage/types";
 import styles from "./styles/OpenPositionsList.module.css";
 
 interface Props {

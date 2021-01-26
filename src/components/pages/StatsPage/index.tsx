@@ -13,7 +13,7 @@ import { getFormatData, getSubTitle } from "./helpers";
 import { capitalize } from "config/utils";
 import { PageType } from "config/types";
 import styles from "./index.module.css";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { StatsFiltersModal } from "components/ui/Modals/StatsFiltersModal";
 import { QueueTypes } from "components/pages/StatsPage/types";
 

@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 
 // components
-import { Modal } from "../../Modal";
-import { CheckBox } from "../../CheckBox";
+import { Modal } from "components/basic/Modal";
+import { CheckBox } from "components/basic/CheckBox";
 import { Button } from "components/basic/Button";
 //icons
 import { ArrowUpIcon, ArrowDownIcon } from "assets/icons/svg";

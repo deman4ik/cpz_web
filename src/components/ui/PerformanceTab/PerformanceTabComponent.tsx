@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 
-import { useShowDimension } from "../../../hooks/useShowDimension";
-import { SCREEN_TYPE } from "../../../config/constants";
-import { NoRecentData } from "../../common";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
+import { NoRecentData } from "components/common";
 import { PerformanceTabItem } from "./PerformanceTabItem";
 import { PerformanceTabItemCard } from "./PerformanceTabItemCard";
 import { PerformanceTabStatisticts } from "./PerformanceTabStatisticts";
-import { capitalize } from "../../../config/utils";
+import { capitalize } from "config/utils";
 import styles from "./PerformanceTabComponent.module.css";
 import useWindowDimensions from "hooks/useWindowDimensions";
 

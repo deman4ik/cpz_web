@@ -1,6 +1,6 @@
 import React from "react";
 
-import { event, gtag_report_conversion } from "../../../libs/gtag";
+import { event, gtag_report_conversion } from "libs/gtag";
 import styles from "./index.module.css";
 
 interface Props {

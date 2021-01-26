@@ -1,5 +1,6 @@
 import { formatMoney } from "config/utils";
 import { InputTypes, InputValues, Precision, RobotResult, volumes } from "components/ui/Modals/types";
+import { LimitsType, ResultType } from "./types";
 
 export const actionText = {
     start: "It is a realtime automated trading mode using your exchange account. Use is at your own risk.",
@@ -12,11 +13,12 @@ export const precisionToVolumeMap = {
     [InputTypes.assetStatic]: "amount",
     [InputTypes.currencyDynamic]: "price"
 };
-export const defaultPrecision = { price: 1, amount: 8 };
+export const DEFAULT_PRECISION = { price: 1, amount: 8 };
 
 function parseRobotResult(data, type) {
     const result: RobotResult = {};
     const { v_user_exchange_accs } = data || {};
+
     if (!(v_user_exchange_accs && v_user_exchange_accs.length)) return result;
 
     const { amounts, total_balance_usd, user } = v_user_exchange_accs[0];
@@ -31,6 +33,7 @@ function parseRobotResult(data, type) {
     }
     result.total_balance_usd = total_balance_usd;
     result.used_balance_percent = amounts?.used_balance_percent || 0;
+    result.available_balance_percent = amounts?.available_balance_percent || 0;
 
     return result;
 }
@@ -38,11 +41,12 @@ export const limitsPropToType = {
     signals: "userSignal",
     robots: "userRobot"
 };
-function parseSignalResult(data, type) {
+function parseSignalResult(data: ResultType, type: string) {
     const { v_user_markets: markets } = data;
     if (!(markets && markets.length)) return {};
 
     const { limits, ...rest } = markets[0];
+
     return {
         ...rest,
         asset: limits[type]
@@ -54,7 +58,7 @@ export const getLimits = (data, type) => {
         used_balance_percent: 0,
         asset: { min: { amount: 0, amountUSD: 0 }, max: { amount: 0, amountUSD: 0 } },
         price: 0,
-        precision: defaultPrecision
+        precision: DEFAULT_PRECISION
     };
     let parsedData;
     if (type === limitsPropToType.robots) {
@@ -71,13 +75,14 @@ type SettingsType = {
     initialVolume?: number;
     balancePercent?: number;
 };
+
 interface BuildSettingsProps {
     volumeType: InputTypes;
     inputValues: InputValues;
     precision: Precision;
 }
 
-export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps) => {
+export const buildSettings = ({ volumeType, inputValues, precision }: BuildSettingsProps): SettingsType => {
     const result: SettingsType = { volumeType };
     result[volumes[volumeType]] = Number(
         Number(inputValues[volumeType]).toFixed(precision[precisionToVolumeMap[volumeType]])
@@ -85,22 +90,22 @@ export const buildSettings = ({ volumeType, inputValues, precision }: BuildSetti
     return result;
 };
 
-export const getLimitsForSignal = (data) => getLimits(data, "userSignal");
+export const getLimitsForSignal = (data: ResultType) => getLimits(data, "userSignal");
 
-export const getLimitsForRobot = (data) => getLimits(data, "userRobot");
+export const getLimitsForRobot = (data: ResultType) => getLimits(data, "userRobot");
 
 export const calculateCurrency = (asset: string | number, price: number): number => Number(asset) * price;
 
 export const calculateAsset = (currency: string | number, price: number): number =>
     price === 0 ? 0 : Number(currency) / price;
 
-export const getPercent = (amountUSD, balance) => Math.ceil((amountUSD / balance) * 100);
+export const getPercent = (amountUSD: number, balance: number): number => Math.ceil((amountUSD / balance) * 100);
 
 export const formatNumber = (n: number, precision?: number): string => formatMoney(n, precision || 6);
 
 export const trimNumber = (n: number): string => Number(n.toFixed(6)).toString();
 
-export const roundWithPrecision = (number: number, precision: number) => {
+export const roundWithPrecision = (number: number, precision: number): number => {
     if (precision === 1) {
         return Math.floor(number * 10) / 10;
     }
@@ -126,8 +131,10 @@ export type ParsedLimits = {
     maxAmountUSD?: number;
     balance?: number;
     maxPercentAmount?: number;
+    usedBalancePercent?: number;
+    availableBalancePercent?: number;
 };
-export function parseLimits(limits: any): ParsedLimits {
+export function parseLimits(limits: LimitsType): ParsedLimits {
     if (!(limits && limits.asset)) {
         return {};
     }
@@ -140,7 +147,9 @@ export function parseLimits(limits: any): ParsedLimits {
         minAmountUSD: min.amountUSD || 0,
         maxAmountUSD: max.amountUSD || 0,
         balance: limits.total_balance_usd,
-        maxPercentAmount: max.balancePercent
+        maxPercentAmount: max.balancePercent,
+        usedBalancePercent: limits.used_balance_percent,
+        availableBalancePercent: limits.available_balance_percent
     };
 }
 
@@ -194,8 +203,9 @@ interface ValidateVolumeProps {
 const validateCurrencies = ({ value, minAmount, maxAmount, precision }) =>
     getAmtErrors(value, minAmount, maxAmount, precision);
 
-const validateBalancePercent = ({ value, used_percent, maxAmount = 100, minAmount = 0 }) =>
-    getAmtErrors(value, minAmount, maxAmount - used_percent, 0, "percent");
+const validateBalancePercent = ({ value, maxAmount = 100, minAmount = 0 }) => {
+    return getAmtErrors(value, minAmount, maxAmount, 0, "percent");
+};
 
 const validationFunctions = {
     assetStatic: validateCurrencies,
@@ -203,7 +213,7 @@ const validationFunctions = {
     currencyDynamic: validateCurrencies,
     balancePercent: validateBalancePercent
 };
-export function validateVolume({ type, ...rest }: ValidateVolumeProps) {
+export function validateVolume({ type, ...rest }: ValidateVolumeProps): ValidateVolumeProps {
     const validateFunction = validationFunctions[type];
     return validateFunction(rest);
 }
@@ -233,6 +243,6 @@ const routesToPagesMap = {
     "/signals/robot/[code]": Pages.signal
 };
 
-export const currentPage = (path: string) => routesToPagesMap[path];
+export const currentPage = (path: string): string => routesToPagesMap[path];
 
 export const isObjectEmpty = (obj) => Object.values(obj).filter((i) => i === 0 || !!i).length === 0;

@@ -11,7 +11,7 @@ import NothingComponent from "components/common/NothingComponent";
 // types
 import { PageType } from "config/types";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 
 export const NotificationsPage: React.FC = () => {
     /*Контекст аутентификации*/

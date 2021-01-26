@@ -6,7 +6,7 @@ import { color } from "config/constants";
 import styles from "./ExchangeKeysCard.module.css";
 import { useQuery } from "@apollo/client";
 import { USER_ROBOTS_BY_EXCHANGE_ID } from "graphql/robots/queries";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 
 interface Props {
     item: any;

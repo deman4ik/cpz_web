@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { PageHead } from "..";
 import { NavHeader } from "./NavHeader";
@@ -8,6 +8,7 @@ import { PageType } from "config/types";
 import styles from "./styles/Template.module.css";
 import Router from "next/router";
 import { isNewPage } from "utils/common";
+import { AuthContext } from "providers/authContext";
 
 interface Props {
     title?: string;
@@ -29,6 +30,10 @@ export const DefaultTemplate: React.FC<Props> = ({
         handleBackNavigation &&
         (typeof handleBackNavigation === "function" ? handleBackNavigation : !isNewPage() ? () => Router.back() : null);
 
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
+
     return (
         <div
             className={styles.container}
@@ -39,6 +44,7 @@ export const DefaultTemplate: React.FC<Props> = ({
                 title={`${title}${subTitle ? `: ${subTitle}` : ""}`}
                 description="Cryptuoso - Cryptocurrency Trading Robots for your successful investment"
                 keywords="cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, bitfinex, bitmex, kraken, binance"
+                userId={user_id}
             />
             <div id="modal" />
             <div className={styles.mainMenuContainer}>

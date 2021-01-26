@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types*/
-import dayjs from "../libs/dayjs";
+import dayjs from "libs/dayjs";
 import { timeFrameFormat, color, VolumeDisplayUnits } from "./constants";
 import { RobotStats } from "./types";
 import { InputTypes, UnitsToTypes, volumes, VolumeTypesToLabelsMap } from "components/ui/Modals/types";

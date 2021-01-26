@@ -11,9 +11,10 @@ import styles from "./index.module.css";
 import { SubscribeModalContent } from "components/ui/Modals/SubscribeModal/SubscribeModalContent";
 import { useSubscribeModal } from "components/ui/Modals/SubscribeModal/useSubscribeModal";
 import { AddRobotInputsMap } from "components/ui/Modals/constants";
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { EDIT_SIGNAL } from "graphql/signals/mutations";
 import { RobotsType } from "config/types";
+import { RobotDataType } from "./types";
 import { USER_ROBOT_EDIT } from "graphql/robots/mutations";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 
@@ -25,6 +26,7 @@ interface Props {
     setTitle: (title: string) => void;
     code?: string;
 }
+
 const inputs = AddRobotInputsMap;
 
 const queryToEditType = {
@@ -35,13 +37,16 @@ const mapPropToType = {
     [RobotsType.robots]: "userRobotEdit",
     [RobotsType.signals]: "userSignalEdit"
 };
+
 const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, type }) => {
     const { authState } = useContext(AuthContext);
 
     const [formError, setFormError] = useState("");
-    const { data: robotData } = useQuery(ROBOT(type));
+
+    const { data: robotData } = useQuery<RobotDataType>(ROBOT(type));
 
     const { exchange, asset, currency } = robotData?.robot.subs || {};
+
     const { data, loading, refetch } = useQueryWithAuth(true, queriesToRobotTypeMap[type], {
         variables: {
             id: robotData?.robot.user_ex_acc_id,
@@ -59,6 +64,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
         inputs,
         robotData
     });
+
     const { inputValues, volumeType, precision, errors } = subscribeModalProps;
 
     const [userRobotEdit, { loading: editRobotLoading }] = useMutation(queryToEditType[type]);
@@ -77,7 +83,9 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
                 if (!responseData[prop].result) {
                     setFormError(responseData[prop].error);
                 }
-                refetch().catch((e) => console.error(e));
+                if (refetch) {
+                    refetch().catch((e) => console.error(e));
+                }
                 onClose(true);
             })
             .catch((e) => {

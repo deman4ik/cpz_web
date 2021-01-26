@@ -1,7 +1,6 @@
 import { REGEXS } from "config/constants";
-// utils
 import { formatDate } from "config/utils";
-import { defineProperty } from "../../utils";
+import { defineProperty } from "components/pages/ManagePage/utils";
 import { UserStatus } from "config/types";
 
 const getUserStatus = (val) =>

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useEffect } from "react";
 
-import { Button } from "../../Button";
-import { Select } from "../../Select";
+import { Button } from "components/basic/Button";
+import { Select } from "components/basic/Select";
 
 // styles
 import styles from "../styles/Common.module.css";

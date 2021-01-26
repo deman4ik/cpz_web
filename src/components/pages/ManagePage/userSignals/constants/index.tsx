@@ -1,4 +1,4 @@
-import { ColumnsArraySchema } from "../../utils";
+import { ColumnsArraySchema } from "components/pages/ManagePage/utils";
 
 export const USER_SIGNALS_TABLE_COLUMNS: ColumnsArraySchema = [
     {

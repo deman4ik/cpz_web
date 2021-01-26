@@ -1,6 +1,6 @@
 import React from "react";
 //utils
-import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "../../utils";
+import { ColumnsArraySchema, buildRobotChartCell, buildDisabledCheckboxCell } from "components/pages/ManagePage/utils";
 import { STATUS_COLORS } from "config/constants";
 import { DynamicDataCell } from "components/pages/ManagePage/backtests/DynamicDataCell";
 

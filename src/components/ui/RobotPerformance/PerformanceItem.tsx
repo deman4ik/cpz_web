@@ -1,6 +1,5 @@
 import React from "react";
 import dynamic from "next/dynamic";
-
 import { ChevronRightIcon } from "assets/icons/svg";
 import { formatMoney, getColorForMoney, valueWithSign } from "config/utils";
 import styles from "./PerformanceItem.module.css";
@@ -12,7 +11,7 @@ interface Props {
     noShadow?: boolean;
 }
 
-const DynamicAreaChart = dynamic(() => import("../../charts/AreaChart"));
+const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const PerformanceItem: React.FC<Props> = ({
     item,

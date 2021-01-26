@@ -7,6 +7,7 @@ export const GET_MARKETS_ROBOTS = gql`
             total_balance_usd
             amounts {
                 used_balance_percent
+                available_balance_percent
             }
             user {
                 markets(where: { asset: { _eq: $asset }, exchange: { _eq: $exchange }, currency: { _eq: $currency } }) {

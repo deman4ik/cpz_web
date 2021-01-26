@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "components/ui/Modals/index.module.css";
 import styles_subs from "components/ui/Modals/SubscribeModal.module.css";
 import { InputTypes } from "components/ui/Modals/types";
-import { AssetTypes, formatNumber, getPercent, trimNumber } from "components/ui/Modals/helpers";
+import { AssetTypes, getPercent, trimNumber } from "components/ui/Modals/helpers";
 
 interface MinimumAmountProps {
     minAmount: number;

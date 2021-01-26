@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Robot, SectionType } from "../../types";
+import { Robot, SectionType } from "components/pages/TradingRobotPage/types";
 import { RobotPositionCard } from ".";
 import { NoRecentData } from "components/common";
 import styles from "./styles/OpenPositionContainer.module.css";

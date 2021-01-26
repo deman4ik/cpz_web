@@ -1,5 +1,5 @@
 // constants
-import { globalAny } from "../config/constants";
+import { globalAny } from "config/constants";
 
 /**
  * Сервис  скродда окна (Тргерится только на ось)

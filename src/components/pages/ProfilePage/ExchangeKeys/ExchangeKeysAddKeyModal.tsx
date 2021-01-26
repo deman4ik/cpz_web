@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_EXCHANGES, GET_USER_EXCHANGES } from "graphql/profile/queries";
@@ -14,6 +14,7 @@ import { HTMLButtonTypes } from "components/basic/Button/types";
 
 const errorMessages = {
     KEYS_ARE_REQUIRED: "Both Public and Private API Keys are required",
+    PASSWORD_IS_REQUIRED: "Password is required",
     LONG_NAME: "Max name length is 50 symbols."
 };
 
@@ -27,13 +28,15 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     displayGuide = false
 }) => {
     const [inputName, setInputName] = useState(options ? options.name : "");
+    const [isPassword, setIsPassword] = useState(false);
+
     const [guideDisplayed, setGuideDisplayed] = useState(displayGuide);
     const [receivedExchangeCode, setReceivedExchangeCode] = useState(
         options && options.exchange ? options.exchange : exchange
     );
     const [errorMessage, setErrorMessage] = useState("");
     const [isFetching, setIsFetching] = useState(false);
-    const [inputKeys, setInputKeys] = useState({ public: "", secret: "" });
+    const [inputKeys, setInputKeys] = useState({ public: "", secret: "", pass: "" });
 
     const [exchanges, setExchanges] = useState([]);
     const [chosenExchange, setChosenExchange] = useState(null);
@@ -50,6 +53,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         }
     });
 
+    useEffect(() => {
+        if (chosenExchange !== null) setIsPassword(chosenExchange.options.requiredCredentials.pass);
+    }, [chosenExchange]);
+
     const variables: UpdateExchangeKeyVars = {
         name: inputName || null,
         exchange: receivedExchangeCode,
@@ -58,6 +65,10 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
     if (options && options.id) {
         variables.id = options.id;
     }
+    if (variables && variables.keys && isPassword) {
+        variables.keys.pass = inputKeys.pass;
+    }
+
     const [addKey] = useMutation(UPDATE_EXCHANGE_KEY, {
         variables,
         refetchQueries: [...(refetchQueries || []), { query: GET_USER_EXCHANGES }],
@@ -83,6 +94,12 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
             setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
             return;
         }
+
+        if (isPassword && !inputKeys.pass.trim().length) {
+            setErrorMessage(errorMessages.PASSWORD_IS_REQUIRED);
+            return;
+        }
+
         if (inputName.length > 50) {
             setErrorMessage(errorMessages.LONG_NAME);
             return;
@@ -150,7 +167,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                         />
                     </div>
                 </div>
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 10 }}>
                     <div className={styles.tableCellText}>Exchange</div>
                     <div style={{ marginTop: 6 }}>
                         <Select
@@ -196,6 +213,23 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                             />
                         </div>
                     </div>
+                    {isPassword && (
+                        <div className={styles.row}>
+                            <div className={styles.apikeyGroup}>
+                                <div className={styles.tableCellText}>Password&nbsp;</div>
+                                <div className={styles.tableCellText} style={{ color: color.negative }}>
+                                    *
+                                </div>
+                            </div>
+                            <div>
+                                <Input
+                                    value={inputKeys.pass}
+                                    width={240}
+                                    onChangeText={(text) => handleOnChangeKeys(text, "pass")}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.apikeyGroup}>
                     <Button

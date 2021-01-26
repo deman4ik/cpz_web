@@ -1,13 +1,13 @@
 import React, { memo } from "react";
 import Router from "next/router";
 
-import { useShowDimension } from "../../../hooks/useShowDimension";
-import { SCREEN_TYPE } from "../../../config/constants";
+import { useShowDimension } from "hooks/useShowDimension";
+import { SCREEN_TYPE } from "config/constants";
 import { PerformanceItem } from "./PerformanceItem";
 import { PerformanceItemCard } from "./PerformanceItemCard";
 import { PerformanceHeader } from "./PerformanceHeader";
-import { useDummyCarts } from "../../../hooks/useDummyCarts";
-import { DummyCards } from "../../common";
+import { useDummyCarts } from "hooks/useDummyCarts";
+import { DummyCards } from "components/common";
 import styles from "./PerformanceComponent.module.css";
 
 interface Props {

@@ -12,7 +12,7 @@ import { getHash, getSearchProps } from "config/utils";
 // services
 import LocalStorageService from "services/localStorageService";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { useQueryWithAuth } from "hooks/useQueryWithAuth";
 import { RobotsType } from "config/types";
 import { useScrollPosition } from "hooks/useScrollPosition";
@@ -26,7 +26,7 @@ export const useFetchRobots = (
     const { preservePosition, restorePosition } = useScrollPosition();
     /*Обработка контекста аутентификации*/
     const {
-        authState: { isAuth, user_id, authIsSet }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const QUERIES_TYPE = AUTH_QUERIES[Number(isAuth)];
 

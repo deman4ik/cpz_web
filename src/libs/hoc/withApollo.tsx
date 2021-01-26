@@ -14,6 +14,8 @@ import { getAccessToken, putTokenInCookie } from "../accessToken";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { fetchAccessToken, logout } from "libs/auth";
 import { httpErrors } from "config/constants";
+import { NextPage } from "next";
+import { NextPageProps } from "config/types";
 
 interface Definintion {
     kind: string;
@@ -85,7 +87,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
         // eslint-disable-next-line no-restricted-syntax
         for (const error of graphQLErrors) {
             const { extensions, message } = error;
-            if (extensions.code === httpErrors.JWTError) {
+            if (extensions?.code === httpErrors.JWTError) {
                 if (!isRefreshing) {
                     isRefreshing = true;
                     console.info(`Retrying ~ ${operation.operationName}`);
@@ -162,9 +164,9 @@ export default withApollo(
         return client;
     },
     {
-        render: ({ Page, props }) => {
+        render: ({ Page, props }: { Page: NextPage; props: NextPageProps }) => {
             return (
-                <ApolloProvider client={props.apollo}>
+                <ApolloProvider client={props.apollo!}>
                     <Page {...props} />
                 </ApolloProvider>
             );

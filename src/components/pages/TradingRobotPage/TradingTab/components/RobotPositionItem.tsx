@@ -9,7 +9,7 @@ import {
     getTimeFromNow,
     getColorForMoney
 } from "config/utils";
-import { Robot } from "../../types";
+import { Robot } from "components/pages/TradingRobotPage/types";
 import styles from "./styles/RobotPositionItem.module.css";
 
 interface Props {

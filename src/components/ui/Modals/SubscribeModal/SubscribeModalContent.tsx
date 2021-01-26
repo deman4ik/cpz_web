@@ -5,20 +5,11 @@ import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
 import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolumeType";
-import {
-    InputMap,
-    InputTypes,
-    InputValues,
-    Precision,
-    UnitsToTypes,
-    volumes,
-    VolumeTypeOption
-} from "components/ui/Modals/types";
+import { InputMap, InputTypes, InputValues, Precision, volumes, VolumeTypeOption } from "components/ui/Modals/types";
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
 import {
-    AssetTypes,
     formatNumber,
     isObjectEmpty,
     ParsedLimits,

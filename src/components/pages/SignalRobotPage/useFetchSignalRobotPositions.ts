@@ -13,7 +13,7 @@ import { CLOSED_POSITIONS_LIMIT, POLL_INTERVAL } from "config/constants";
 // helpers
 import { getAlerts } from "./helpers";
 // context
-import { AuthContext } from "libs/hoc/context";
+import { AuthContext } from "providers/authContext";
 import { useScrollPosition } from "hooks/useScrollPosition";
 
 const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolean) => {
@@ -35,7 +35,7 @@ const useFetchSignalRobotPositions = (robotData, preserveScrollPosition?: boolea
     const { data: signalsData, loading: loadingOpenSignals, refetch: refetch_open_signals } = useQuery(signalsQuery, {
         variables: {
             robot_id: robot.id,
-            ...(isAuth ? { user_signal_id: userSignal.id } : {})
+            ...(isAuth && userSignal && userSignal.id !== null ? { user_signal_id: userSignal.id } : {})
         },
         pollInterval: POLL_INTERVAL
     });
