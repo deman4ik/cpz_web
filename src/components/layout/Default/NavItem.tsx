@@ -54,23 +54,32 @@ const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
         <div className={styles.itemWrapper}>
             {item && item.route ? (
                 <Link href={path}>
-                    <a className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`} onClick={handleOnClickLink}>
+                    <a>
+                        <div
+                            className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}
+                            onClick={handleOnClickLink}>
+                            <SpecificIcon
+                                color={active ? "white" : "rgba(255, 255, 255, 0.68)"}
+                                width={24}
+                                height={24}
+                            />
+                            {item.label === PageType.notifications && <NotificationCounter />}
+                            <div className={styles.itemLabel}>
+                                <div className={styles.itemText}>{item.label}</div>
+                            </div>
+                        </div>
+                    </a>
+                </Link>
+            ) : (
+                <a href={path}>
+                    <div
+                        className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}
+                        onClick={handleOnClickLink}>
                         <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
                         {item.label === PageType.notifications && <NotificationCounter />}
                         <div className={styles.itemLabel}>
                             <div className={styles.itemText}>{item.label}</div>
                         </div>
-                    </a>
-                </Link>
-            ) : (
-                <a
-                    href={path}
-                    className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}
-                    onClick={handleOnClickLink}>
-                    <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
-                    {item.label === PageType.notifications && <NotificationCounter />}
-                    <div className={styles.itemLabel}>
-                        <div className={styles.itemText}>{item.label}</div>
                     </div>
                 </a>
             )}
