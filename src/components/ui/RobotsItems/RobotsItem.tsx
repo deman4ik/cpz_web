@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Router from "next/router";
+import Link from "next/link";
 // helpers
 import { formatVariables } from "./helpers";
 // types
@@ -17,19 +18,12 @@ import { ProfitItem } from "components/ui/RobotsItems/ProfitItem";
 
 interface Props {
     item: SignalItem;
-    onRedirectToDetailView: (code: string) => void;
     robotSubscribe: (variables: any) => void;
     displayType: string;
     lastItem: boolean;
 }
 
-export const RobotsItem: React.FC<Props> = ({
-    item,
-    robotSubscribe,
-    displayType,
-    onRedirectToDetailView,
-    lastItem
-}) => {
+export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType, lastItem }) => {
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
@@ -50,21 +44,23 @@ export const RobotsItem: React.FC<Props> = ({
         robotSubscribe(formatVariables(item, "delete"));
     };
 
-    const handleOnPressDetails = () => {
-        onRedirectToDetailView(item.code);
-    };
     const { profit, performance } = item;
+
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>
-            <div className={styles.cellName} onClick={handleOnPressDetails}>
-                <div className={styles.cellNameWrap}>
-                    <div className={styles.primaryText}>{item.name}</div>
-                    <div className={styles.profitWrap}>
-                        <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
+            <Link href={`/${displayType}/robot/${item.code}`}>
+                <a>
+                    <div className={styles.cellName}>
+                        <div className={styles.cellNameWrap}>
+                            <div className={styles.primaryText}>{item.name}</div>
+                            <div className={styles.profitWrap}>
+                                <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
+                            </div>
+                        </div>
+                        <ChevronRightIcon color="white" size={26} />
                     </div>
-                </div>
-                <ChevronRightIcon color="white" size={26} />
-            </div>
+                </a>
+            </Link>
             <div className={styles.cellPerformance}>
                 {performance && performance.length ? <AreaChart height={120} data={performance} /> : null}
             </div>

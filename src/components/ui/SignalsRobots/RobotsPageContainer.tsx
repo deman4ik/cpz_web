@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
 import { useShowDimension } from "hooks/useShowDimension";
@@ -24,10 +23,6 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.WIDE);
     const { dummyCards } = useDummyCarts(width, cartWidth, data.length + 1);
 
-    const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${displayType}/robot/${code}`);
-    };
-
     const [setSubscride] = useMutation(SET_MODAL_STATE, {
         refetchQueries: [{ query: MODAL_VISIBLE }]
     });
@@ -48,7 +43,6 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
                             robotSubscribe={robotSubscribe}
                             displayType={displayType}
                             lastItem={false}
-                            onRedirectToDetailView={handleRedirectToDetailView}
                         />
                     ))}
                     <AddRobotsCard displayType={displayType} />
@@ -61,7 +55,6 @@ export const RobotsPageContainer: React.FC<Props> = ({ data, width, displayType 
                             item={item}
                             robotSubscribe={robotSubscribe}
                             displayType={displayType}
-                            onRedirectToDetailView={handleRedirectToDetailView}
                         />
                     ))}
                     <AddRobotsCard displayType={displayType} mobile />

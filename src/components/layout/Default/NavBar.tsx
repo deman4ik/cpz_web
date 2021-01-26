@@ -16,13 +16,6 @@ interface Props {
 
 const _NavBar: React.FC<Props> = ({ activeTab }) => {
     const router = useRouter();
-    const handleOnClick = (path: string, external: boolean) => {
-        if (external) {
-            window.location.assign(path);
-        } else {
-            router.push(`/${path}`).then(() => window.scrollTo(0, 0));
-        }
-    };
 
     const toHomePage = () => router.push("/");
 
@@ -53,19 +46,14 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
             </div>
             <div className={styles.container}>
                 {mainItems.map((item) => (
-                    <NavItem
-                        key={item.label}
-                        item={item}
-                        active={activeTab === item.label}
-                        handleOnClick={handleOnClick}
-                    />
+                    <NavItem key={item.label} item={item} active={activeTab === item.label} />
                 ))}
             </div>
             <div className={styles.secondaryItems}>
                 <div className={styles.groupLine} />
                 <div className={styles.container}>
                     {secondaryItems.map((item) => (
-                        <NavItem key={item.label} item={item} active={false} handleOnClick={handleOnClick} />
+                        <NavItem key={item.label} item={item} active={false} />
                     ))}
                 </div>
                 <div className={styles.groupLine} />

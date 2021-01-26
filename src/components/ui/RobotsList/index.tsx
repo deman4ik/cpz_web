@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import { useMutation } from "@apollo/client";
 
 import { SET_MODAL_STATE } from "graphql/local/mutations";
@@ -27,9 +26,6 @@ export const RobotsList: React.FC<Props> = (props) => {
     const { dummyCards } = useDummyCarts(props.width, cartWidth, props.data.length);
     const renderLoadMoreButton = props.data.length >= SHOW_LIMIT && props.data.length < props.counts;
     const { showDimension: isDesktopView } = useShowDimension(props.width, SCREEN_TYPE.WIDE);
-    const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${props.displayType}/robot/${code}`);
-    };
 
     const [setSubscride] = useMutation(SET_MODAL_STATE, {
         refetchQueries: [{ query: MODAL_VISIBLE }]
@@ -52,7 +48,6 @@ export const RobotsList: React.FC<Props> = (props) => {
                                 robotSubscribe={robotSubscribe}
                                 displayType={props.displayType}
                                 lastItem={idx === props.data.length - 1}
-                                onRedirectToDetailView={handleRedirectToDetailView}
                             />
                         ))}
                     </div>
@@ -64,7 +59,6 @@ export const RobotsList: React.FC<Props> = (props) => {
                                 item={item}
                                 robotSubscribe={robotSubscribe}
                                 displayType={props.displayType}
-                                onRedirectToDetailView={handleRedirectToDetailView}
                             />
                         ))}
                         {DummyCards(dummyCards, cartWidth)}

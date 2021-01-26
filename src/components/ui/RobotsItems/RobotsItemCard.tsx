@@ -7,17 +7,17 @@ import { Button } from "components/basic";
 import styles from "./RobotsItemCard.module.css";
 import { WinRateStatistics } from "./WinRateStatistics";
 import { DataCard } from "../DataCard";
+import Link from "next/link";
 
 interface Props {
     item: SignalItem;
     displayType: string;
-    onRedirectToDetailView: (code: string) => void;
     robotSubscribe: (variables: any) => void;
 }
 
 const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
-export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe, onRedirectToDetailView }) => {
+export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe }) => {
     const subscribeToggle = () => {
         robotSubscribe(formatVariables(item, "", displayType));
     };
@@ -30,33 +30,33 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
         robotSubscribe(formatVariables(item, "delete"));
     };
 
-    const handleOnPressDetails = () => {
-        onRedirectToDetailView(item.code);
-    };
-
     return (
         <DataCard
             header={
-                <div className={styles.row} onClick={handleOnPressDetails}>
-                    <div className={styles.headerCol}>
-                        {item.name}
-                        <div className={styles.footerRow}>
-                            <div className={styles.secondaryText}>
-                                {item.displayedVolume || `${item.volume} ${item.asset}`}
+                <Link href={`/${displayType}/robot/${item.code}`}>
+                    <a>
+                        <div className={styles.row}>
+                            <div className={styles.headerCol}>
+                                {item.name}
+                                <div className={styles.footerRow}>
+                                    <div className={styles.secondaryText}>
+                                        {item.displayedVolume || `${item.volume} ${item.asset}`}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.col}>
+                                <Button
+                                    title="details"
+                                    isUppercase
+                                    responsive
+                                    size="small"
+                                    style={{ paddingLeft: 0, paddingRight: 0 }}
+                                    icon="chevronright"
+                                />
                             </div>
                         </div>
-                    </div>
-                    <div className={styles.col}>
-                        <Button
-                            title="details"
-                            isUppercase
-                            responsive
-                            size="small"
-                            style={{ paddingLeft: 0, paddingRight: 0 }}
-                            icon="chevronright"
-                        />
-                    </div>
-                </div>
+                    </a>
+                </Link>
             }
             body={
                 <div className={styles.chartStat}>
