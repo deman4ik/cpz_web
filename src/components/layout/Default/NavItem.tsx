@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import Link from "next/link";
 
 import {
     RobotIcon,
@@ -22,7 +23,6 @@ import styles from "./styles/NavBar.module.css";
 interface Props {
     item: any;
     active: boolean;
-    handleOnClick: (path: string, external: boolean) => void;
 }
 
 const components = {
@@ -40,22 +40,40 @@ const components = {
     managementSupport: MessageAlert
 };
 
-const _NavItem: React.FC<Props> = ({ item, active, handleOnClick }) => {
+const _NavItem: React.FC<Props> = ({ item, active }) => {
     const SpecificIcon = components[item.icon];
 
-    const handleOnClickLink = () => {
-        handleOnClick(item.route ? item.route : item.href, !item.route);
-    };
+    const path = item.route ? `/${item.route}` : item.href;
 
     return (
         <div className={styles.itemWrapper}>
-            <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`} onClick={handleOnClickLink}>
-                <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
-                {item.label === PageType.notifications && <NotificationCounter />}
-                <div className={styles.itemLabel}>
-                    <div className={styles.itemText}>{item.label}</div>
-                </div>
-            </div>
+            {item && item.route ? (
+                <Link href={path}>
+                    <a>
+                        <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
+                            <SpecificIcon
+                                color={active ? "white" : "rgba(255, 255, 255, 0.68)"}
+                                width={24}
+                                height={24}
+                            />
+                            {item.label === PageType.notifications && <NotificationCounter />}
+                            <div className={styles.itemLabel}>
+                                <div className={styles.itemText}>{item.label}</div>
+                            </div>
+                        </div>
+                    </a>
+                </Link>
+            ) : (
+                <a href={path}>
+                    <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
+                        <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
+                        {item.label === PageType.notifications && <NotificationCounter />}
+                        <div className={styles.itemLabel}>
+                            <div className={styles.itemText}>{item.label}</div>
+                        </div>
+                    </div>
+                </a>
+            )}
         </div>
     );
 };
