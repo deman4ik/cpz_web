@@ -6,6 +6,7 @@ import { SCREEN_TYPE } from "config/constants";
 import { NotificationsItem } from "./NotificationsItem";
 import { NotificationsItemCard } from "./NotificationsItemCard";
 import { RobotsLoadMore } from "components/ui/RobotsLoadMore";
+import useSaveScroll from "hooks/useSaveScroll";
 
 import styles from "./NotificationsContainer.module.css";
 
@@ -15,6 +16,7 @@ interface Props {
     isLoadingMore: boolean;
     recordsCount: number;
     width: number;
+    displayType: string;
 }
 
 export const NotificationsContainer: React.FC<Props> = ({
@@ -22,7 +24,8 @@ export const NotificationsContainer: React.FC<Props> = ({
     handleLoadMore,
     isLoadingMore,
     recordsCount,
-    width
+    width,
+    displayType
 }) => {
     const { showDimension: isDesktopView } = useShowDimension(width, SCREEN_TYPE.TABLET);
     const routeNotification = (action: { link: string; redirect: boolean }) => {
@@ -33,6 +36,7 @@ export const NotificationsContainer: React.FC<Props> = ({
         }
     };
 
+    useSaveScroll(displayType, isLoadingMore);
     return (
         <div className={styles.container}>
             <div className={styles.topCards}>

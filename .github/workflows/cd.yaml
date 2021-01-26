@@ -59,4 +59,4 @@ jobs:
 
             - name: Verify deployment prod
               if: contains(github.ref, 'master')
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cpz-web
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cpz-web-prod

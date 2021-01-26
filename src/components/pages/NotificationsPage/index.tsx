@@ -51,6 +51,7 @@ export const NotificationsPage: React.FC = () => {
                     isLoadingMore={isLoadingMore}
                     recordsCount={recordsCount}
                     notifications={notifications}
+                    displayType="notifications"
                     width={width}
                 />
             )}

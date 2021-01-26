@@ -20,6 +20,7 @@ import style from "./index.module.css";
 import { RobotAggrOpenPositionsCard } from "components/ui/RobotAggrOpenPositionsCard";
 import { parseAggregatedPositionsData } from "components/ui/RobotAggrOpenPositionsCard/helpers";
 import RobotsGuide from "./RobotsGuide";
+import useSaveScroll from "hooks/useSaveScroll";
 
 type Props = {
     type: RobotsType;
@@ -73,6 +74,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
 
     const userHasRobots = useMemo(() => robotsData && robotsData[type].length > 0, [robotsData, type]);
 
+    useSaveScroll(`${type}-page`, robotsLoading);
     return (
         <DefaultTemplate
             page={typeIsSignals ? PageType.signals : PageType.robots}

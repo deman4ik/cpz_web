@@ -27,7 +27,7 @@ const useSaveScroll = (key: string, loading?: any): void => {
         return () => {
             WindowScrollService.unsubscribeListenScroll(scrollHandler);
         };
-    }, [key, loading]);
+    });
 };
 
 export default useSaveScroll;
