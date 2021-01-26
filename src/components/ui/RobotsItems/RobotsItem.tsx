@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Router from "next/router";
+import Link from "next/link";
 // helpers
 import { formatVariables } from "./helpers";
 // types
@@ -53,18 +54,24 @@ export const RobotsItem: React.FC<Props> = ({
     const handleOnPressDetails = () => {
         onRedirectToDetailView(item.code);
     };
+
     const { profit, performance } = item;
+
     return (
         <div className={`${styles.itemContainer}${!lastItem ? ` ${styles.itemContainerMargin}` : ""}`}>
-            <div className={styles.cellName} onClick={handleOnPressDetails}>
-                <div className={styles.cellNameWrap}>
-                    <div className={styles.primaryText}>{item.name}</div>
-                    <div className={styles.profitWrap}>
-                        <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
+            <Link href={`/${displayType}/robot/${item.code}`}>
+                <a>
+                    <div className={styles.cellName} onClick={handleOnPressDetails}>
+                        <div className={styles.cellNameWrap}>
+                            <div className={styles.primaryText}>{item.name}</div>
+                            <div className={styles.profitWrap}>
+                                <div className={styles.secondaryText}>{item.displayedVolume || ""}</div>
+                            </div>
+                        </div>
+                        <ChevronRightIcon color="white" size={26} />
                     </div>
-                </div>
-                <ChevronRightIcon color="white" size={26} />
-            </div>
+                </a>
+            </Link>
             <div className={styles.cellPerformance}>
                 {performance && performance.length ? <AreaChart height={120} data={performance} /> : null}
             </div>
