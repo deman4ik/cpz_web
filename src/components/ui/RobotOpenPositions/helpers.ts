@@ -95,6 +95,7 @@ export const formatTradingRobotPositions = (positions: any) =>
             const existingAsset = existingExchange.assets.find((el) => el.asset === position.asset);
             if (!existingAsset) {
                 existingExchange.assets.push(asset);
+                existingExchange.profit += asset.profit;
             } else {
                 existingAsset.robots.push(robot);
                 existingAsset.volume = round(
