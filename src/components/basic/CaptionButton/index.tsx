@@ -12,7 +12,7 @@ import {
     PlusBox,
     BullHorn,
     ChevronRightIcon,
-    FileQuestion
+    HelpIcon
 } from "assets/icons/svg";
 
 interface Props {
@@ -38,7 +38,7 @@ const components = {
     plusbox: PlusBox,
     announcement: BullHorn,
     chevronright: ChevronRightIcon,
-    docs: FileQuestion
+    docs: HelpIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({
@@ -67,7 +67,7 @@ export const CaptionButton: React.FC<Props> = ({
             }}>
             {title && <div className="btn-text">{title}</div>}
             {SpecificIcon && (
-                <i className="icon" style={{ width: 20, height: 20 }}>
+                <i className="icon" style={{ width: 24, height: 24, fill: "white" }}>
                     <SpecificIcon size={20} />
                 </i>
             )}
