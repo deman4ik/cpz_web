@@ -58,71 +58,72 @@ export const CaptionButton: React.FC<Props> = ({
     };
 
     return (
-        <div
-            className={getClassName().join(" ")}
-            style={{ ...style, display: hidden ? "none" : "flex" }}
-            onClick={() => {
-                if (onClick) onClick();
-                if (href) window.open(href, "_blank");
-            }}>
-            {title && <div className="btn-text">{title}</div>}
-            {SpecificIcon && (
-                <i className="icon" style={{ width: 20, height: 20 }}>
-                    <SpecificIcon size={20} />
-                </i>
-            )}
-            <style jsx>
-                {`
-                    .btn-text {
-                        width: 100%;
-                        color: white;
-                        font-size: 14px;
-                        text-align: center;
-                        padding-left: 10px;
-                        padding-right: 5px;
-                        white-space: nowrap;
-                        opacity: 1;
-                        user-select: none;
-                    }
-                    .icon {
-                    }
-                    .btn {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        cursor: pointer;
-                        width: ${width ? `${width}px` : "min-content"};
-                        height: 34px;
-                        padding-left: 5px;
-                        padding-right: 5px;
-                        user-select: none;
-                        overflow: hidden;
-                        border-radius: 4px;
-                        position: relative;
-                        opacity: 1;
-                        background-color: transparent;
-                        text-transform: uppercase;
-                    }
-                    .btn:active {
-                        opacity: 0.2;
-                    }
-                    @media (max-width: 768px) {
+        <a href={href} target="_blank" rel="noreferrer">
+            <div
+                className={getClassName().join(" ")}
+                style={{ ...style, display: hidden ? "none" : "flex" }}
+                onClick={() => {
+                    if (onClick) onClick();
+                }}>
+                {title && <div className="btn-text">{title}</div>}
+                {SpecificIcon && (
+                    <i className="icon" style={{ width: 20, height: 20 }}>
+                        <SpecificIcon size={20} />
+                    </i>
+                )}
+                <style jsx>
+                    {`
                         .btn-text {
-                            display: ${responsive ? "none" : "block"};
-                        }
-                        .btn {
-                            padding: 0 15px;
-                        }
-                    }
-
-                    @media (max-width: 390px) {
-                        .btn {
+                            width: 100%;
+                            color: white;
+                            font-size: 14px;
+                            text-align: center;
                             padding-left: 10px;
                             padding-right: 5px;
+                            white-space: nowrap;
+                            opacity: 1;
+                            user-select: none;
                         }
-                    }
-                `}
-            </style>
-        </div>
+                        .icon {
+                        }
+                        .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            width: ${width ? `${width}px` : "min-content"};
+                            height: 34px;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                            user-select: none;
+                            overflow: hidden;
+                            border-radius: 4px;
+                            position: relative;
+                            opacity: 1;
+                            background-color: transparent;
+                            text-transform: uppercase;
+                        }
+                        .btn:active {
+                            opacity: 0.2;
+                        }
+                        @media (max-width: 768px) {
+                            .btn-text {
+                                display: ${responsive ? "none" : "block"};
+                            }
+                            .btn {
+                                padding: 0 15px;
+                            }
+                        }
+
+                        @media (max-width: 390px) {
+                            .btn {
+                                padding-left: 10px;
+                                padding-right: 5px;
+                            }
+                        }
+                    `}
+                </style>
+            </div>
+        </a>
     );
 };
