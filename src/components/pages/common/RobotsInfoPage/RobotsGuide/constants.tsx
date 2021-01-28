@@ -47,7 +47,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
         title: (
             <>
                 Learn about manual сryptocurrency trading with Cryptuoso Signals.
-                <DocsButton href="https://support.cryptuoso.com/signals" />
+                <DocsButton href="/info/docs/signals" />
             </>
         ),
         icon: MultiLineChartIcon
@@ -58,7 +58,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
                 Subscribe to Signal Robot and enter your trading amount.
                 <InlineDiv>
                     <Button title="ADD SIGNALS +" type="primary" onClick={() => Router.push("/signals/search")} />
-                    <DocsButton href="https://support.cryptuoso.com/signals#howtosubscribeonsignalsinourwebapp?" />
+                    <DocsButton href="/info/docs/signals#how-to-subscribe-on-signals" />
                 </InlineDiv>
             </>
         ),
@@ -68,7 +68,7 @@ export const SIGNALS_CARDS: Array<stepsCard> = [
         title: (
             <>
                 Wait for Signals and execute them on your exchange.
-                <DocsButton href="https://support.cryptuoso.com/signals#howtounderstandsignalsandwhattodo?" />
+                <DocsButton href="/info/docs/signals#how-to-understand-signals-and-what-to-do" />
             </>
         ),
         icon: MessageAlert
@@ -89,7 +89,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
         title: (
             <>
                 Learn about automated сryptocurrency trading with Cryptuoso Robots.
-                <DocsButton href="https://support.cryptuoso.com/robots" />
+                <DocsButton href="/info/docs/robots" />
             </>
         ),
         icon: RobotIcon
@@ -100,7 +100,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
                 Generate your API Keys on your exchange and add them to your Cryptuoso Account.
                 <InlineDiv>
                     <Button title="ADD KEY +" type="primary" onClick={() => Router.push("/profile")} />
-                    <DocsButton href="https://support.cryptuoso.com/exchange-accounts" />
+                    <DocsButton href="/info/docs/exchange-accounts" />
                 </InlineDiv>
             </>
         ),
@@ -112,7 +112,7 @@ export const ROBOTS_CARDS: Array<stepsCard> = [
                 Add chosen Robot, link it with your API Keys and enter your trading amount.
                 <InlineDiv>
                     <Button title="ADD ROBOTS +" type="primary" onClick={() => Router.push("/robots/search")} />
-                    <DocsButton href="https://support.cryptuoso.com/robots#howtostartrobotinourwebapp?" />
+                    <DocsButton href="/info/docs/robots#how-to-start-robot" />
                 </InlineDiv>
             </>
         ),
@@ -130,7 +130,7 @@ export const CREATE_ACCOUNT_CARD = {
             Create your Cryptuoso Account with Telegram or Email.
             <InlineDiv>
                 <Button title="LOG IN" type="success" onClick={() => Router.push("/auth/login")} />
-                <DocsButton href="https://support.cryptuoso.com/help" />
+                <DocsButton href="/info/docs/" />
             </InlineDiv>
         </>
     ),

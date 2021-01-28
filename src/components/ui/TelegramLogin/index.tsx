@@ -9,7 +9,7 @@ import { Modal } from "components/basic";
 import { LoadingIndicator } from "components/common";
 import styles from "./index.module.css";
 
-const DOC_LINK = "https://support.cryptuoso.com";
+const DOC_LINK = "/info/docs";
 
 interface Props {
     userId?: number;
