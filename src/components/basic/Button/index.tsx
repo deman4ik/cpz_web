@@ -127,10 +127,11 @@ export const Button: React.FC<ButtonProps> = ({
             text-transform: uppercase;
           }
           .btn.success {
-            background-image: linear-gradient(
-              rgb(28, 164, 107),
-              rgb(9, 107, 65)
-            );
+            background-image: ${
+                title === "Start"
+                    ? "linear-gradient(rgb(11, 152, 197), rgb(4, 97, 128))"
+                    : "linear-gradient(rgb(28, 164, 107), rgb(9, 107, 65))"
+            };
           }
           .btn.primary {
             background-image: linear-gradient(
