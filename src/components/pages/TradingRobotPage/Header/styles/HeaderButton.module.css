@@ -1,5 +1,6 @@
 .headerButton {
   margin-left: 10px;
+  background-image: linear-gradient(rgb(11, 152, 197), rgb(27, 127, 160)) !important;
 }
 
 @media (max-width: 768px) {

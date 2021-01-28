@@ -46,6 +46,7 @@ export const RobotsButtonItem: React.FC<Props> = ({
                 isUppercase
                 width={120}
                 size="small"
+                className={isRobotType && "primary"}
                 blocked={isRobotType && statusPaused}
                 disabled={isRobotType && robotStatus === "stopping"}
                 hoverChanges={
