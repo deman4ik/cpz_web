@@ -67,7 +67,7 @@ export const CaptionButton: React.FC<Props> = ({
                 }}>
                 {title && <div className="btn-text">{title}</div>}
                 {SpecificIcon && (
-                    <i className="icon" style={{ width: 20, height: 20 }}>
+                    <i className="icon" style={{ width: 24, height: 24, fill: "white" }}>
                         <SpecificIcon size={20} />
                     </i>
                 )}
