@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { Button } from "components/basic";
@@ -21,38 +22,39 @@ const components = {
     arrowup: ArrowUpIcon
 };
 
-export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, onRedirectToDetailView }) => {
+export const OpenPositionsItemCard: React.FC<PropsOpenPositionsItem> = ({ item, type }) => {
     const SpecificIcon = components[getIconName(item.direction)];
-    const handleOnPress = () => {
-        onRedirectToDetailView(item.robot.code);
-    };
 
     return (
         <div className={styles.container} key={item.id}>
-            <div className={[styles.row, styles.cardCaption].join(" ")} onClick={handleOnPress}>
-                <div className={styles.sectionGroup} style={{ flex: 0.9 }}>
-                    <div className={styles.actionGroup}>
-                        <div className={styles.tableCellText} style={colorDirection(item.direction)}>
-                            {capitalize(item.direction)}
+            <Link href={`/${type}/robot/${item.robot.code}`}>
+                <a>
+                    <div className={[styles.row, styles.cardCaption].join(" ")}>
+                        <div className={styles.sectionGroup} style={{ flex: 0.9 }}>
+                            <div className={styles.actionGroup}>
+                                <div className={styles.tableCellText} style={colorDirection(item.direction)}>
+                                    {capitalize(item.direction)}
+                                </div>
+                                <div className={styles.tableCellText} style={{ marginLeft: 4 }}>
+                                    {item.code}
+                                </div>
+                            </div>
+                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                                {item.robot.name}
+                            </div>
                         </div>
-                        <div className={styles.tableCellText} style={{ marginLeft: 4 }}>
-                            {item.code}
+                        <div className={styles.sectionGroup} style={{ alignItems: "flex-end" }}>
+                            <Button
+                                title="details"
+                                isUppercase
+                                size="small"
+                                style={{ paddingLeft: 0, paddingRight: 0 }}
+                                icon="chevronright"
+                            />
                         </div>
                     </div>
-                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                        {item.robot.name}
-                    </div>
-                </div>
-                <div className={styles.sectionGroup} style={{ alignItems: "flex-end" }}>
-                    <Button
-                        title="details"
-                        isUppercase
-                        size="small"
-                        style={{ paddingLeft: 0, paddingRight: 0 }}
-                        icon="chevronright"
-                    />
-                </div>
-            </div>
+                </a>
+            </Link>
             <div className={[styles.row, styles.cardBody].join(" ")}>
                 <div className={styles.sectionGroup}>
                     <div className={styles.headerText} style={{ marginBottom: 2 }}>

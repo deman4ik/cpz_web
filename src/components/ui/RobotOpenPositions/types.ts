@@ -14,5 +14,5 @@ export interface PropsOpenPositionsItem {
             asset: string;
         };
     };
-    onRedirectToDetailView: (code: string) => void;
+    type: string;
 }

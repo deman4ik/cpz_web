@@ -12,7 +12,7 @@ import {
     PlusBox,
     BullHorn,
     ChevronRightIcon,
-    FileQuestion
+    HelpIcon
 } from "assets/icons/svg";
 
 interface Props {
@@ -38,7 +38,7 @@ const components = {
     plusbox: PlusBox,
     announcement: BullHorn,
     chevronright: ChevronRightIcon,
-    docs: FileQuestion
+    docs: HelpIcon
 };
 
 export const CaptionButton: React.FC<Props> = ({
@@ -73,6 +73,40 @@ export const CaptionButton: React.FC<Props> = ({
                 )}
                 <style jsx>
                     {`
+                    .btn-text {
+                        width: 100%;
+                        color: white;
+                        font-size: 14px;
+                        text-align: center;
+                        padding-left: 10px;
+                        padding-right: 5px;
+                        white-space: nowrap;
+                        opacity: 1;
+                        user-select: none;
+                    }
+                    .icon {
+                    }
+                    .btn {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        width: ${width ? `${width}px` : "min-content"};
+                        height: 34px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        user-select: none;
+                        overflow: hidden;
+                        border-radius: 4px;
+                        position: relative;
+                        opacity: 1;
+                        background-color: transparent;
+                        text-transform: uppercase;
+                    }
+                    .btn:active {
+                        opacity: 0.2;
+                    }
+                    @media (max-width: 768px) {
                         .btn-text {
                             width: 100%;
                             color: white;
@@ -114,7 +148,6 @@ export const CaptionButton: React.FC<Props> = ({
                                 padding: 0 15px;
                             }
                         }
-
                         @media (max-width: 390px) {
                             .btn {
                                 padding-left: 10px;

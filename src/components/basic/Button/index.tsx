@@ -130,7 +130,7 @@ export const Button: React.FC<ButtonProps> = ({
             background-image: linear-gradient(
               rgb(28, 164, 107),
               rgb(9, 107, 65)
-            );
+              );
           }
           .btn.primary {
             background-image: linear-gradient(
