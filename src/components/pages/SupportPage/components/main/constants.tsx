@@ -1,7 +1,7 @@
 import React from "react";
 import { TELEGRAM_COMMUNITY_URL } from "config/constants";
 import stylesMain from "components/pages/SupportPage/styles/Main.module.css";
-import { TelegramIcon, EmailIcon } from "assets/icons/svg";
+import { TelegramIcon, EmailIcon, HelpIcon } from "assets/icons/svg";
 
 export interface stepsCard {
     title: React.ReactNode | string;
@@ -34,4 +34,17 @@ export const AUTH_HELP_CARD = {
         </div>
     ),
     icon: EmailIcon
+};
+
+export const LEARN_ROBOTS_CARD = {
+    title: (
+        <div>
+            Learn all about Cryptuoso Robots. How to configure and use signals, robots and exchange accounts in{" "}
+            <a href="/info/docs" className={stylesMain.step_card_accent}>
+                {" "}
+                documentation
+            </a>
+        </div>
+    ),
+    icon: HelpIcon
 };
