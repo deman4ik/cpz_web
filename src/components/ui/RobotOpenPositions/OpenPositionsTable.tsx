@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import { OpenPositionsItem } from "./OpenPositionsItem";
 import { OpenPositionsItemCard } from "./OpenPositionsItemCard";
 import { DummyCards } from "components/common";
@@ -16,10 +15,6 @@ type Props = {
 };
 
 const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element => {
-    const handleRedirectToDetailView = (code: string) => {
-        Router.push(`/${type}/robot/${code}`);
-    };
-
     const countDummyCards = (dataLength) => {
         const cardsInARow = width - 200 <= 0 ? 1 : Math.floor((width - 200) / cardWidth);
         const module = dataLength % cardsInARow;
@@ -63,17 +58,13 @@ const OpenPositionsTable = ({ width, mobile, type, asset }: Props): JSX.Element 
                         </div>
                     </div>
                     {asset.robots.map((item, idx) => (
-                        <OpenPositionsItem key={idx} item={item} onRedirectToDetailView={handleRedirectToDetailView} />
+                        <OpenPositionsItem key={idx} item={item} type={type} />
                     ))}
                 </>
             ) : (
                 <div key={asset.value} className={styles.cardItemsContainer}>
                     {asset.robots.map((item, idx) => (
-                        <OpenPositionsItemCard
-                            key={idx}
-                            item={item}
-                            onRedirectToDetailView={handleRedirectToDetailView}
-                        />
+                        <OpenPositionsItemCard key={idx} item={item} type={type} />
                     ))}
                     {DummyCards(countDummyCards(asset.robots.length), cardWidth)}
                 </div>

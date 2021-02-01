@@ -49,13 +49,14 @@ const useFetchTradingRobotPosition = (robotData: RobotData, preserveScrollPositi
         }
     });
 
+    const idUserAndSignal = userRobot
+        ? { robotId: userRobot.id, status: { _in: statusOptions } }
+        : { robot_id: robot.id, status: { _in: statusOptions } };
+
     const { data: aggrData, loading: loadingAggregate } = useQuery(
         userRobot ? USER_ROBOT_POSITIONS_AGGREGATE : SIGNAL_ROBOT_POSITIONS_AGGREGATE,
         {
-            variables: {
-                robotId: userRobot ? userRobot.id : robot.id,
-                status: { _in: statusOptions }
-            },
+            variables: idUserAndSignal,
             pollInterval: POLL_INTERVAL
         }
     );

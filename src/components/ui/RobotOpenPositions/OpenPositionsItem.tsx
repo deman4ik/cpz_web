@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { ChevronRightIcon, ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import {
@@ -22,36 +23,35 @@ const components = {
     arrowup: ArrowUpIcon
 };
 
-export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, onRedirectToDetailView }) => {
+export const OpenPositionsItem: React.FC<PropsOpenPositionsItem> = ({ item, type }) => {
     const SpecificIcon = components[getIconName(item.direction)];
-
-    const handleOnPress = () => {
-        onRedirectToDetailView(item.robot.code);
-    };
 
     return (
         <div className={`${styles.tableRow} ${tableStyles.tableGridRow}`}>
-            <div
-                className={styles.positionGroup}
-                onClick={handleOnPress}
-                style={{
-                    flex: 0.3
-                }}>
-                <div className={styles.limitWrapper}>
-                    <div className={styles.codeGroup}>
-                        <div className={styles.tableCellText} style={colorDirection(item.direction)}>
-                            {capitalize(item.direction)}
+            <Link href={`/${type}/robot/${item.robot.code}`}>
+                <a>
+                    <div
+                        className={styles.positionGroup}
+                        style={{
+                            flex: 0.3
+                        }}>
+                        <div className={styles.limitWrapper}>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText} style={colorDirection(item.direction)}>
+                                    {capitalize(item.direction)}
+                                </div>
+                                <div className={styles.tableCellText} style={{ marginLeft: 4 }}>
+                                    {item.code}
+                                </div>
+                            </div>
+                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                                {item.robot.name}
+                            </div>
                         </div>
-                        <div className={styles.tableCellText} style={{ marginLeft: 4 }}>
-                            {item.code}
-                        </div>
+                        <ChevronRightIcon color={color.white} size={26} />
                     </div>
-                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                        {item.robot.name}
-                    </div>
-                </div>
-                <ChevronRightIcon color={color.white} size={26} />
-            </div>
+                </a>
+            </Link>
             <div className={styles.col}>
                 <div className={styles.tableCellText}>{`${item.entry_price} $`}</div>
                 <div className={styles.secondaryText} style={{ marginTop: 2 }} title={formatDate(item.entry_date)}>
