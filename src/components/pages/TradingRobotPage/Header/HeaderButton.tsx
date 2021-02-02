@@ -22,8 +22,6 @@ const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
         subscribe(createVariable(robotData, statusTypes[robotStatus]));
     };
 
-    console.log(robotStatus);
-
     return (
         <>
             {robotStatus ? (
