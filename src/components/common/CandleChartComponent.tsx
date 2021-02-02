@@ -50,22 +50,20 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
     const limitRef = useRef(limit);
     useEffect(() => {
         limitRef.current = limit;
-    }, [limit]);
+    });
 
     const onFetchMore = useCallback(
-        () => (offset: number, signal?: AbortSignal) => {
-            const vars = {
-                offset: limitRef.current,
-                limit: limitRef.current + LIMIT
-            };
+        (offset: number, signal?: AbortSignal) => {
             fetchMore({
-                variables: vars,
+                variables: {
+                    offset: limitRef.current,
+                    limit: LIMIT
+                },
                 context: { fetchOptions: { signal } }
             }).catch((e) => console.error(e));
-            setLimit((oldLimit) => oldLimit + LIMIT);
+            setLimit((prevLimit) => prevLimit + limitRef.current);
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        []
+        [fetchMore]
     );
 
     useEffect(() => {
@@ -108,7 +106,7 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
     return (
         <LightWeightChartWithNoSSR
             fullWidth={fullWidth}
-            loading={loading}
+            loading={false}
             data={chartData.candles}
             onFetchMore={onFetchMore}
             markers={chartData.markers}
