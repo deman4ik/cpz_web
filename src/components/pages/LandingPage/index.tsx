@@ -6,6 +6,7 @@ import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
+import { Pricing } from "./Pricing";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -36,6 +37,7 @@ const _LandingPage: React.FC = () => {
                         <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />
+                        <Pricing />
                         <Footer />
                     </div>
                 </div>

@@ -105,3 +105,71 @@ export const descriptionFirstLine: DescriptionFirstLineType[] = [
             "Connect your cryptocurrency exchange account (Binance, Bitfinex, Kraken) to our robots for automatic trading. Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance."
     }
 ];
+
+export const pricingContent = [
+    {
+        icon: "planet",
+        iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
+        title: "1 months",
+        text: `Daily Signals from our Robots
+            Telegram public channel
+            Instagram public page
+            Telegram Community Support
+            Web Community Chat Support`,
+        button: "Get started",
+        buttonType: "outline-warn",
+        href: "#"
+    },
+    {
+        icon: "planet",
+        iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
+        title: "3 months",
+        text: `Daily Signals from our Robots
+            Telegram public channel
+            Instagram public page
+            Telegram Community Support
+            Web Community Chat Support`,
+        button: "Get started",
+        buttonType: "outline-primary",
+        href: "#"
+    },
+    {
+        icon: "planet",
+        iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
+        title: "6 months",
+        text: `Daily Signals from our Robots
+            Telegram public channel
+            Instagram public page
+            Telegram Community Support
+            Web Community Chat Support`,
+        button: "Get started",
+        buttonType: "outline-secondary",
+        href: "#"
+    },
+    {
+        icon: "planet",
+        iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
+        title: "1 year",
+        text: `Daily Signals from our Robots
+            Telegram public channel
+            Instagram public page
+            Telegram Community Support
+            Web Community Chat Support`,
+        button: "Get started",
+        buttonType: "outline-warn",
+        href: "#"
+    },
+    {
+        icon: "planet",
+        iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
+        title: "2 years",
+        text: `Daily Signals from our Robots
+            Telegram public channel
+            Instagram public page
+            Telegram Community Support
+            Web Community Chat Support`,
+        button: "Get started",
+        buttonType: "outline-primary",
+        href: "#"
+    }
+];
