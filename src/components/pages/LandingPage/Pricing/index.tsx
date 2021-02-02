@@ -4,7 +4,7 @@ import { PricingItem } from "./PricingItem";
 import { pricingContent } from "../helpers";
 import styles from "./index.module.css";
 
-export const Pricing: FC = () => (
+const _Pricing: FC = () => (
     <>
         <h2 className={styles.title}>Pricing</h2>
         <div className={styles.support}>
@@ -16,3 +16,5 @@ export const Pricing: FC = () => (
         </div>
     </>
 );
+
+export const Pricing = memo(_Pricing);
