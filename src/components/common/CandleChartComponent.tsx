@@ -56,12 +56,12 @@ export const CandleChartComponent: FC<CandleChartComponentProps> = ({
         (offset: number, signal?: AbortSignal) => {
             fetchMore({
                 variables: {
-                    offset,
-                    limit: limitRef.current
+                    offset: limitRef.current,
+                    limit: LIMIT
                 },
                 context: { fetchOptions: { signal } }
             }).catch((e) => console.error(e));
-            setLimit(offset + limitRef.current);
+            setLimit((prevLimit) => prevLimit + limitRef.current);
         },
         [fetchMore]
     );
