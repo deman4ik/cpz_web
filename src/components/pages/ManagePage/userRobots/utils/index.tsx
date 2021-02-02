@@ -1,7 +1,6 @@
 import { formatDate, getStats, getUserRobotSettings, getVolumeType, getVolumeWithUnit } from "config/utils";
 
 export const formatUserRobots = ({ user_robots }: { user_robots: any }): any => {
-    console.log(user_robots);
     return user_robots.map((user_robot) => {
         const { created_at, stopped_at, status, user, robot } = user_robot;
         const { equity, profit, winRate, maxDrawdown, tradesCount } = getStats(user_robot);

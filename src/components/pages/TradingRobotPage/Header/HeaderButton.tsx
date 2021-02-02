@@ -14,6 +14,7 @@ const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
     const { title, icon, type, hoverTitle, hoverType, hoverIcon } = displayData.robots;
 
     const robotPaused = robotStatus === "paused";
+    const statusStarted = robotStatus === "started";
     const handleOnPress = () => {
         if (robotPaused) {
             return;
@@ -28,7 +29,7 @@ const _HeaderButton: React.FC<Props> = ({ robotData, subscribe }) => {
                     icon={icon(robotStatus)}
                     title={title(robotStatus)}
                     type={type(robotStatus)}
-                    className={styles.headerButton}
+                    className={statusStarted ? styles.headerButtonSuccess : styles.headerButtonPrimary}
                     blocked={robotPaused}
                     disabled={robotStatus === "stopping"}
                     size="small"
