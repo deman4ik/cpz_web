@@ -69,7 +69,7 @@ export const RobotsItem: React.FC<Props> = ({ item, robotSubscribe, displayType,
             <div className={styles.cellStatistics}>
                 <WinRateStatistics
                     classNames={{ container: styles.statsWrapper, wrapper: styles.statisticsElement }}
-                    winRate={item.winRate || 0}
+                    winRate={item.winRate}
                     maxDrawdown={item.maxDrawdown}
                     tradesCount={item.tradesCount}
                 />
