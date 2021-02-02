@@ -28,6 +28,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
     const canDisplayEdit = (isTypeSignals && isSubscribed) || isTypeRobots;
     const canDisplayDelete = isTypeRobots && robotStatus === "stopped";
     const statusPaused = robotStatus === "paused";
+    const statusStarted = robotStatus === "started";
 
     return (
         <div className={styles.btnRow}>
@@ -37,6 +38,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
                 icon={icon(checker)}
                 title={title(checker)}
                 type={type(checker)}
+                className={statusStarted ? "success" : "primary"}
                 isUppercase
                 disabled={isTypeRobots && robotStatus === "stopping"}
                 size="small"
