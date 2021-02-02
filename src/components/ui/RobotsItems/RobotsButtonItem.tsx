@@ -37,8 +37,6 @@ export const RobotsButtonItem: React.FC<Props> = ({
     const canDisplayEdit = () => typeSignalAndSubscribed || (isRobotType && robotStatus);
     const canDisplayDelete = () => typeRobotAndStopped;
 
-    console.log(robotStatus);
-
     return (
         <div className={styles.cellAction}>
             <Button
