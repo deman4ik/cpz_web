@@ -38,6 +38,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
                 icon={icon(checker)}
                 title={title(checker)}
                 type={type(checker)}
+                className={!statusStarted && "primary"}
                 isUppercase
                 disabled={isTypeRobots && robotStatus === "stopping"}
                 size="small"

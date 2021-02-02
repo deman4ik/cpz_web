@@ -28,11 +28,15 @@ export const WinRateStatistics: FC<WinRateStatisticsProps> = ({
                             valueTextStyle={{ color: getColorForMoney(profit) }}
                         />
                     )}
-                    <StatisticElement label="Win Rate" value={`${winRate} %`} className={classNames.wrapper} />
+                    <StatisticElement
+                        label="Win Rate"
+                        value={winRate ? `${winRate} %` : null}
+                        className={classNames.wrapper}
+                    />
                     <StatisticElement
                         className={classNames.wrapper}
                         label="Max Drawdown"
-                        value={`${formatMoney(maxDrawdown)} $`}
+                        value={maxDrawdown ? `${formatMoney(maxDrawdown)} $` : null}
                         valueTextStyle={{ color: getColorForMoney(maxDrawdown) }}
                     />
                     <StatisticElement label="Trades Count" value={tradesCount} className={classNames.wrapper} />

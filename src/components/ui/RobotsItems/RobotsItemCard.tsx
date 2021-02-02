@@ -66,7 +66,7 @@ export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscr
                         ) : null}
                     </div>
                     <div className={styles.statCol}>
-                        {!item.winRate ? (
+                        {!item.tradesCount ? (
                             <div className={styles.emptyStats}>
                                 <div />
                             </div>
