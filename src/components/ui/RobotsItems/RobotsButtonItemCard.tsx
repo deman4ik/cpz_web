@@ -29,7 +29,6 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
     const statusStarted = robotStatus === "started";
     const canDisplayDelete = isTypeRobots && robotStatus === "stopped";
     const statusPaused = robotStatus === "paused";
-
     return (
         <div className={styles.btnRow}>
             {canDisplayDelete && <Button icon="close" size="small" width={26} onClick={handleOnPressDelete} />}
