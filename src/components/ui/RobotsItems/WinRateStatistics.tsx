@@ -18,7 +18,7 @@ export const WinRateStatistics: FC<WinRateStatisticsProps> = ({
 }) => {
     return (
         <>
-            {winRate || winRate === 0 ? (
+            {tradesCount ? (
                 <div className={classNames.container || ""}>
                     {profit && (
                         <StatisticElement
