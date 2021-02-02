@@ -29,6 +29,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
     const statusStarted = robotStatus === "started";
     const canDisplayDelete = isTypeRobots && robotStatus === "stopped";
     const statusPaused = robotStatus === "paused";
+
     return (
         <div className={styles.btnRow}>
             {canDisplayDelete && <Button icon="close" size="small" width={26} onClick={handleOnPressDelete} />}
@@ -37,6 +38,7 @@ export const RobotsButtonItemCard: React.FC<Props> = ({
                 icon={icon(checker)}
                 title={title(checker)}
                 type={type(checker)}
+                className={!statusStarted && "primary"}
                 isUppercase
                 disabled={isTypeRobots && robotStatus === "stopping"}
                 size="small"
