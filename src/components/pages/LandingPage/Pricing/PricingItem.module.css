@@ -9,12 +9,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 360px;
+  width: calc(1400px / 4 - 20px);
   min-height: 520px;
   margin: 0 20px;
   padding: 20px 40px;
   background-color: var(--rgbaDark);
   border-radius: 2px;
+}
+
+@media (max-width: 1200px) {
+  .col {
+    margin-bottom: 10px;
+  }
 }
 
 .colBody {
@@ -44,6 +50,7 @@
   line-height: var(--big2);
   color: var(--whiteFaded);
   white-space: pre-line;
+  margin-bottom: 20px;
 }
 
 .colFooter {
@@ -57,10 +64,4 @@
   margin-bottom: 20px;
   padding-left: 0px;
   padding-right: 0px;
-}
-
-@media (max-width: 1200px) {
-  .col {
-    margin-bottom: 10px;
-  }
 }

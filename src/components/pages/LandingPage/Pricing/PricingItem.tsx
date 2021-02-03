@@ -7,13 +7,14 @@ import styles from "./PricingItem.module.css";
 
 interface Props {
     item: PricingItemType;
+    title: string;
 }
 
 const components = {
     planet: PlanetIcon
 };
 
-export const PricingItem: React.FC<Props> = ({ item }) => {
+export const PricingItem: React.FC<Props> = ({ item, title }) => {
     const SpecificIcon = components[item.icon];
 
     return (
@@ -21,9 +22,9 @@ export const PricingItem: React.FC<Props> = ({ item }) => {
             <div className={styles.col}>
                 <div className={styles.colBody}>
                     <div className={styles.iconWrapper}>
-                        <PlanetIcon key={item.title} colors={item.iconColors} />
+                        <SpecificIcon key={item.title} colors={item.iconColors} />
                     </div>
-                    <div className={styles.colTitle}>{item.title}</div>
+                    <div className={styles.colTitle}>{title}</div>
                     <div className={styles.colText}>{item.text}</div>
                 </div>
                 <div className={styles.colFooter}>
