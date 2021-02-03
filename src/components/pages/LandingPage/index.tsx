@@ -9,6 +9,7 @@ import { Support } from "./Support";
 import { Pricing } from "./Pricing";
 import { Faq } from "./Faq";
 import { Founders } from "./Founders";
+import { Aboutus } from "./Aboutus";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -42,6 +43,7 @@ const _LandingPage: React.FC = () => {
                         <Pricing />
                         <Faq />
                         <Founders />
+                        <Aboutus />
                         <Footer />
                     </div>
                 </div>

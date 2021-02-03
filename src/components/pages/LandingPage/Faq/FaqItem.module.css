@@ -5,7 +5,7 @@
 }
 
 .faqButton {
-  background-color:  #242B4A;
+  background-color: var(--rgbaDark);
   cursor: pointer;
   padding: 18px;
   display: flex;
@@ -22,7 +22,7 @@
 
 .faqTitle {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   color: #D0DDF5;
 }
 
@@ -45,7 +45,8 @@
 
 .faqText {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.2;
   padding: 18px;
   color: #B8BDDE;
 }

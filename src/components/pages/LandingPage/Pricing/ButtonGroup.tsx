@@ -2,8 +2,6 @@ import React from "react";
 import styles from "./ButtonGroup.module.css";
 
 const Button = ({ classActive, title, handleButton }) => {
-    console.log(classActive);
-
     return (
         <a className={`${styles.button} ${classActive}`} onClick={() => handleButton(title)}>
             {title}
