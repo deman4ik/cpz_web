@@ -4,6 +4,7 @@
   font-size: 18px;
   width: calc(498px / 4);
   cursor: pointer;
+  color: white;
 }
 
 .button:not(:last-child) {
@@ -12,6 +13,7 @@
 
 .active {
   background-color: white;
+  color: #242B4A;
 }
 
 .buttonGroup {

@@ -8,27 +8,21 @@
   color: white;
 }
 
-.wrapper {
-  display: flex;
-  justify-content: space-around;
+.founders {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @media (max-width: 1200px) {
-  .wrapper {
+  .founders {
     flex-direction: column;
-    margin: 0 auto;
-    width: 80%;
   }
 }
 
-.gridLeft {
-  flex: 0 1 40%;
+.grid {
+  display: flex;
   flex-direction: row;
-  margin-bottom: 80px;
-}
-
-.gridRight {
-  flex: 0 1 40%;
   margin-bottom: 80px;
 }
 
