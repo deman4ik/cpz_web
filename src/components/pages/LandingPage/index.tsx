@@ -7,6 +7,7 @@ import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
 import { Pricing } from "./Pricing";
+import { Faq } from "./Faq";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -38,6 +39,7 @@ const _LandingPage: React.FC = () => {
                         <RoadMap />
                         <Support />
                         <Pricing />
+                        <Faq />
                         <Footer />
                     </div>
                 </div>

@@ -8,15 +8,25 @@
   color: white;
 }
 
-.pricing {
-  width: 100%;
-  margin: 0 auto;
+.wrapper {
+  display: flex;
+  justify-content: space-around;
 }
 
-.grid {
-  display: flex;
+@media (max-width: 1200px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
+
+.gridLeft {
+  flex: 0 1 40%;
   flex-direction: row;
   margin-bottom: 80px;
+}
+
+.gridRight {
+  flex: 0 1 40%;
 }
 
 @media (max-width: 1200px) {

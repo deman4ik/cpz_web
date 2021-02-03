@@ -15,7 +15,7 @@ const _Pricing = () => {
     return (
         <>
             <h2 className={styles.title}>Pricing</h2>
-            <div className={styles.support}>
+            <div className={styles.pricing}>
                 <ButtonGroup
                     buttons={["1 month", "6 months", "1 year", "2 years"]}
                     handleButton={handleButton}
