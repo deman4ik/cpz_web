@@ -5,6 +5,8 @@ import Router from "next/router";
 import { pageview } from "libs/gtag";
 import "./style.css";
 import "../src/assets/static/common.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { AuthContextProvider } from "../src/providers/authContext";
 import { LayoutContextProvider } from "../src/providers/layoutContext";
 import { NextPageProps } from "config/types";
