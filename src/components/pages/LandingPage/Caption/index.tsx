@@ -33,7 +33,7 @@ export const _Caption: React.FC = () => (
                             <PrimaryButton
                                 title="TRY IT FREE"
                                 type="secondary"
-                                href="/robots"
+                                href="/auth/login"
                                 className={styles.headerBtn}
                             />
                         </div>
