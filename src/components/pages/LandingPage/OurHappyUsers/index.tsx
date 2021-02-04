@@ -27,6 +27,7 @@ const _OurHappyUsers = () => {
     return (
         <>
             <h2 className={styles.title}>Our happy users</h2>
+
             <div className={styles.aboutus}>
                 <Slider {...settings}>
                     {foundersContent.map((item) => (

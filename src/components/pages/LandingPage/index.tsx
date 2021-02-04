@@ -38,14 +38,14 @@ const _LandingPage: React.FC = () => {
                         <SignalsList />
                         <TradingApp />
                         <TelegramBot />
+                        <Pricing />
+                        <Faq />
+                        <Aboutus />
+                        <Founders />
+                        <OurHappyUsers />
                         <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />
-                        <Pricing />
-                        <Faq />
-                        <Founders />
-                        <Aboutus />
-                        <OurHappyUsers />
                         <Footer />
                     </div>
                 </div>
