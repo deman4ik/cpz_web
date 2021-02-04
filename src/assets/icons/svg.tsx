@@ -459,7 +459,7 @@ export const CryptuosoLogo = ({ size = 34 }) => (
 );
 
 export const PlanetIcon: React.FC<Props> = ({ colors: { colorFrom, colorTo }, width = 194, height = 111 }) => (
-    <svg fill={colorTo} width={`${width}px`} height={`${height}px`} focusable="false" viewBox="0 0 194 111" aria-hidden="true">
+    <svg width={`${width}px`} height={`${height}px`} focusable="false" viewBox="0 0 194 111" aria-hidden="true">
         <g filter="url(#filter0_d)">
             <path d="M95.7569 100.212C143.978 100.212 183.069 61.1213 183.069 12.9001C183.069 -35.3211 143.978 -74.4121 95.7569 -74.4121C47.5357 -74.4121 8.4447 -35.3211 8.4447 12.9001C8.4447 61.1213 47.5357 100.212 95.7569 100.212Z" fill="url(#paint0_linear)" />
         </g>
@@ -515,6 +515,6 @@ export const ArrowSliderIcon: React.FC<Props> = ({ color = "white", rotate = "ro
     <svg
         style={{ transform: rotate }}
         width="16" height="30" viewBox="0 0 16 30" fill={color}>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.15002 15.9949L13.58 29.4309C13.78 29.6259 14.1 29.6259 14.29 29.4309L15 28.7229C15.19 28.5279 15.19 28.2119 15 28.0169L2.48002 15.4989L15.44 2.5429C15.63 2.3479 15.63 2.0349 15.44 1.8419L14.74 1.1419C14.54 0.9499 14.23 0.9499 14.04 1.1419L0.74002 14.4389C0.63002 14.5459 0.590019 14.6909 0.600019 14.8329L0.15002 15.2879C-0.0499802 15.4839 -0.0499802 15.8009 0.15002 15.9949Z" fill="white" />
+        <path fillRule="evenodd" clip-rule="evenodd" d="M0.15002 15.9949L13.58 29.4309C13.78 29.6259 14.1 29.6259 14.29 29.4309L15 28.7229C15.19 28.5279 15.19 28.2119 15 28.0169L2.48002 15.4989L15.44 2.5429C15.63 2.3479 15.63 2.0349 15.44 1.8419L14.74 1.1419C14.54 0.9499 14.23 0.9499 14.04 1.1419L0.74002 14.4389C0.63002 14.5459 0.590019 14.6909 0.600019 14.8329L0.15002 15.2879C-0.0499802 15.4839 -0.0499802 15.8009 0.15002 15.9949Z" fill="white" />
     </svg>
 );

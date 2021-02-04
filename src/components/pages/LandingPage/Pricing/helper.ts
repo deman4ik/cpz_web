@@ -1,7 +1,7 @@
 export const pricingContent = [
     {
         icon: "planet",
-        iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
+        iconColors: { colorFrom: "purple", colorTo: "pink" },
         title: "1 months",
         text: `Daily Signals from our Robots
             Telegram public channel
@@ -37,7 +37,7 @@ export const pricingContent = [
     },
     {
         icon: "planet",
-        iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
+        iconColors: { colorFrom: "red", colorTo: "green" },
         title: "2 year",
         text: `Daily Signals from our Robots
             Telegram public channel`,

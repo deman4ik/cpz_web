@@ -9,20 +9,14 @@ interface Props {
     title: string;
 }
 
-const components = {
-    planet: PlanetIcon
-};
-
 export const PricingItem: React.FC<Props> = ({ item, title }) => {
-    const SpecificIcon = components[item.icon];
     const isActive = item && item.title === title;
-
     return (
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
                     <div className={styles.iconWrapper}>
-                        <SpecificIcon key={item.title} colors={item.iconColors} />
+                        <PlanetIcon key={item.title} colors={item.iconColors} />
                     </div>
                     <div className={styles.colTitle}>{item.title}</div>
                     <div className={`${styles.colHighlite} ${isActive && styles.active}`}>
