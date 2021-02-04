@@ -54,7 +54,7 @@ const _Header: React.FC = () => {
                             <LoadingIndicator />
                         ) : (
                             <div>
-                                <Link href="/profile/">
+                                <Link href="/profile">
                                     <a className={styles.btnTitle}>Profile</a>
                                 </Link>
                             </div>
