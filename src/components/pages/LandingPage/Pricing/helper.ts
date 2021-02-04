@@ -19,8 +19,7 @@ export const pricingContent = [
         text: `Daily Signals from our Robots
             Telegram public channel
             Instagram public page
-            Telegram Community Support
-            Web Community Chat Support`,
+            Telegram Community Support`,
         button: "Get started",
         buttonType: "outline-primary",
         href: "#"
@@ -31,9 +30,7 @@ export const pricingContent = [
         title: "1 year",
         text: `Daily Signals from our Robots
             Telegram public channel
-            Instagram public page
-            Telegram Community Support
-            Web Community Chat Support`,
+            Instagram public page`,
         button: "Get started",
         buttonType: "outline-secondary",
         href: "#"
@@ -43,10 +40,7 @@ export const pricingContent = [
         iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
         title: "2 year",
         text: `Daily Signals from our Robots
-            Telegram public channel
-            Instagram public page
-            Telegram Community Support
-            Web Community Chat Support`,
+            Telegram public channel`,
         button: "Get started",
         buttonType: "outline-warn",
         href: "#"

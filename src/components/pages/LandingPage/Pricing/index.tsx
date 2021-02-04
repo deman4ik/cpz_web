@@ -2,26 +2,21 @@ import React, { memo, useState } from "react";
 
 import { PricingItem } from "./PricingItem";
 import { ButtonGroup } from "./ButtonGroup";
-import { pricingContent } from "./helpres";
+import { pricingContent } from "./helper";
 import styles from "./index.module.css";
 
 const _Pricing = () => {
-    const [buttonTitle, setButtonTitle] = useState("Trial period");
+    const [buttonTitle, setButtonTitle] = useState("1 month");
 
-    const handleButton = (title) => {
-        setButtonTitle(title);
+    const handleButton = ({ textContent }) => {
+        setButtonTitle(textContent);
     };
 
     return (
         <>
             <h2 className={styles.title}>Pricing</h2>
             <div className={styles.pricing}>
-                <ButtonGroup
-                    buttons={["1 month", "6 months", "1 year", "2 years"]}
-                    handleButton={handleButton}
-                    title={buttonTitle}
-                />
-
+                <ButtonGroup handleButton={handleButton} title={buttonTitle} />
                 <div className={styles.grid}>
                     {pricingContent.map((item) => (
                         <PricingItem key={item.title} item={item} title={buttonTitle} />

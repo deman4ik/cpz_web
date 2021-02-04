@@ -15,12 +15,22 @@
 
 .grid {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 80px;
+}
+
+@media (max-width: 1340px) {
+  .grid {
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 1200px) {
   .grid {
+    width: auto;
     flex-direction: column;
   }
 }
