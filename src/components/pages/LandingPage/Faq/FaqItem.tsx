@@ -18,7 +18,7 @@ export const FaqItem = ({ item }) => {
 
     return (
         <div className={styles.faqItem}>
-            <a className={`${styles.faqButton} ${itemActive}`} onClick={toggleAccordion}>
+            <a className={styles.faqButton} onClick={toggleAccordion}>
                 <p className={`${styles.faqTitle}`}>{item.title}</p>
                 <div className={`${itemRotate}`}>
                     <ChevronRightIcon />

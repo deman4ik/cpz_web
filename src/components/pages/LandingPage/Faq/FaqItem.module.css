@@ -15,11 +15,6 @@
   transition: background-color 0.3s ease;
 }
 
-.faqButton:hover,
-.active {
-  background-color: #2C3454;
-}
-
 .faqTitle {
   font-weight: 600;
   font-size: 16px;
@@ -38,7 +33,7 @@
 }
 
 .faqContent {
-  background-color: #242B4A;
+  background-color: var(--rgbaDark);
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
