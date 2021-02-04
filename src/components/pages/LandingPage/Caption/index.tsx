@@ -36,12 +36,6 @@ export const _Caption: React.FC = () => (
                                 href="/robots"
                                 className={styles.headerBtn}
                             />
-                            <PrimaryButton
-                                title="DOCUMENTATION"
-                                type="primary"
-                                href={DOCS_URL}
-                                className={styles.headerBtn}
-                            />
                         </div>
                     </div>
                     <div className={styles.logoWrapper}>
