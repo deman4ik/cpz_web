@@ -1,5 +1,4 @@
 import React from "react";
-import { PlanetIcon } from "assets/icons/svg";
 import { PrimaryButton } from "components/basic";
 import { PricingItemType } from "../types";
 import styles from "./PricingItem.module.css";
@@ -16,12 +15,14 @@ export const PricingItem: React.FC<Props> = ({ item, title }) => {
             <div className={styles.col}>
                 <div className={styles.colBody}>
                     <div className={styles.iconWrapper}>
-                        <PlanetIcon key={item.title} colors={item.iconColors} />
+                        <img src={item.icon} alt={item.title} />
                     </div>
                     <div className={styles.colTitle}>{item.title}</div>
                     <div className={`${styles.colHighlite} ${isActive && styles.active}`}>
                         <div className={styles.colText}>{item.text}</div>
                     </div>
+                    <p className={styles.colPrice}>$ {item.price}</p>
+                    <p className={styles.colSubPrice}>save $ {item.savePrice}</p>
                 </div>
                 <div className={styles.colFooter}>
                     <PrimaryButton

@@ -13,6 +13,8 @@ export type PricingItemType = {
     iconColors?: { colorFrom: string; colorTo: string };
     title?: string;
     text?: string;
+    price?: string;
+    savePrice?: string;
     button?: string;
     buttonType?: string;
     href?: string;

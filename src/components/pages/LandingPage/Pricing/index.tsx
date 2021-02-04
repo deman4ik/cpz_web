@@ -1,16 +1,12 @@
 import React, { memo, useState } from "react";
-
 import { PricingItem } from "./PricingItem";
 import { ButtonGroup } from "./ButtonGroup";
 import { pricingContent } from "./helper";
 import styles from "./index.module.css";
 
 const _Pricing = () => {
-    const [buttonTitle, setButtonTitle] = useState("1 month");
-
-    const handleButton = ({ textContent }) => {
-        setButtonTitle(textContent);
-    };
+    const [buttonTitle, setButtonTitle] = useState("1 months");
+    const handleButton = ({ textContent }) => setButtonTitle(textContent);
 
     return (
         <>

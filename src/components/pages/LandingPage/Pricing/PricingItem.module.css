@@ -65,7 +65,20 @@
   border-top: 1px solid var(--lightBg);
   border-bottom: 1px solid var(--lightBg);
   min-height: 180px;
-  margin: 20px 0;
+  margin: 20px 0 0;
+}
+
+.colPrice {
+  font-size: 43px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.colSubPrice {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
 }
 
 .active {
