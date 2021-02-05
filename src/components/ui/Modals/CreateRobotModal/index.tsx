@@ -3,13 +3,14 @@ import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "providers/authContext";
-
+import gql from "graphql-tag";
 import { ROBOT } from "graphql/local/queries";
 import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
 import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
 import { ACTION_ROBOT, CREATE_ROBOT } from "graphql/local/mutations";
 import { exchangeName } from "config/utils";
 import { StepWizard } from "components/basic";
+import { CreateRobotStep0 } from "./CreateRobotStep0";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
@@ -43,7 +44,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [inputKey, setInputKey] = useState("");
     const [formError, setFormError] = useState("");
     const [newRobotId, setNewRobotId] = useState("");
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [loadingState, setLoadingState] = useState(true);
     const handleOnNext = () => {
         setStep(step + 1);
@@ -65,6 +66,38 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         variables: { ...variables, user_id },
         skip: !robotData
     });
+
+    const GET_USER_SUBS = gql`
+        query user_exchange_accs($user_id: uuid) {
+            user_subs(where: { user_id: { _eq: $user_id } }) {
+                status
+            }
+        }
+    `;
+
+    const GET_SUBSCRIPTIONS = gql`
+        query subscriptions {
+            subscriptions {
+                options
+            }
+        }
+    `;
+
+    useQuery(GET_USER_SUBS, {
+        variables: {
+            user_id
+        },
+        onCompleted: ({ user_subs }) => {
+            // if (user_subs.length) setStep(1);
+            setStep(1);
+        }
+    });
+
+    const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
+    const subscriptions = useMemo(() => (!dataLoading && dataSubs ? dataSubs.subscriptions : []), [
+        dataLoading,
+        dataSubs
+    ]);
 
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
@@ -234,11 +267,29 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     return (
         <>
             <>
-                <div className={styles.wizardContainer}>
-                    <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
-                </div>
+                {Number(steps) > 1 ? (
+                    <div className={styles.wizardContainer}>
+                        <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
+                    </div>
+                ) : (
+                    <>
+                        <h1 style={{ color: "white" }}>Choose plan</h1>
+                        <CreateRobotStep0
+                            enabled={enabled}
+                            dataPicker={subscriptions}
+                            selectedKey={inputKey}
+                            variables={{ ...variables, user_id }}
+                            hasError={!!formError}
+                            onClose={onClose}
+                            setFormError={setFormError}
+                            handleOnNext={handleOnNext}
+                            handleOnChangeExchange={handleOnChangeExchange}
+                        />
+                    </>
+                )}
                 <ErrorLine formError={formError} />
-                {step === 1 && (
+
+                {step === 2 && (
                     <CreateRobotStep1
                         enabled={enabled}
                         dataPicker={dataPicker}
@@ -251,7 +302,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         handleOnChangeExchange={handleOnChangeExchange}
                     />
                 )}
-                {step === 2 && (
+                {step === 3 && (
                     <CreateRobotStep2
                         volumeTypeOptions={robotVolumeTypeOptions}
                         inputs={inputs}
@@ -264,7 +315,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         isValid={isValid()}
                     />
                 )}
-                {step === 3 && (
+                {step === 4 && (
                     <CreateRobotStep3
                         enabled={enabled}
                         robotName={robotData ? robotData.robot.name : null}
