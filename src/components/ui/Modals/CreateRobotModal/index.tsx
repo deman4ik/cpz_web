@@ -3,9 +3,8 @@ import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "providers/authContext";
-import gql from "graphql-tag";
 import { ROBOT } from "graphql/local/queries";
-import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
+import { GET_USER_EXCHANGES_WITH_MARKETS, GET_USER_SUBS, GET_SUBSCRIPTIONS } from "graphql/profile/queries";
 import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
 import { ACTION_ROBOT, CREATE_ROBOT } from "graphql/local/mutations";
 import { exchangeName } from "config/utils";
@@ -26,7 +25,7 @@ import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import Router from "next/router";
 import { RobotsType } from "config/types";
 import { RobotDataType } from "../types";
-import { identity } from "lodash";
+// import { identity } from "lodash";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -67,35 +66,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         variables: { ...variables, user_id },
         skip: !robotData
     });
-
-    const GET_USER_SUBS = gql`
-        query user_exchange_accs($user_id: uuid) {
-            user_subs(where: { user_id: { _eq: $user_id } }) {
-                status
-            }
-        }
-    `;
-
-    const GET_SUBSCRIPTIONS = gql`
-        query subscriptions {
-            subscriptions {
-                description
-            }
-            subscription_options {
-                code
-                subscription_id
-                name
-                description
-                sort_order
-                price_month
-                price_total
-                discount
-                amount
-                unit
-                available
-            }
-        }
-    `;
 
     useQuery(GET_USER_SUBS, {
         variables: {
@@ -285,7 +255,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             dataPicker={subscriptions}
                             selectedKey={inputKey}
                             variables={{ ...variables, user_id }}
-                            hasError={!!formError}
+                            formError={formError}
                             onClose={onClose}
                             setFormError={setFormError}
                             handleOnNext={handleOnNext}

@@ -1,0 +1,30 @@
+.plan {
+    display: flex;
+    padding-bottom: 30px
+}
+
+@media (max-width: 768px) {
+    .plan {
+        flex-wrap: wrap;
+    }
+}
+.planCard {
+    color: white;
+    width: 180px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .planCard {
+        width: auto;
+    }
+}
+
+.planName {
+    text-transform: uppercase;
+}
+
+.planPrice {
+    font-size: 24;
+}
