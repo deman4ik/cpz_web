@@ -6,7 +6,7 @@ import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: React.FC = () => (
     <>
-        <div className={styles.regionTitle}>Cryptuoso Account</div>
+        <div className={styles.regionTitle}>Cryptuoso Subscription</div>
         <div className={styles.surface}>
             <div className={styles.title}>
                 Status:&nbsp;
