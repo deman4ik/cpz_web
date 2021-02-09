@@ -18,7 +18,7 @@
   height: 100%;
   background-color: var(--dark);
   box-shadow: var(--shadow);
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .title {
@@ -65,5 +65,91 @@
   .surface {
     max-width: 312px;
     padding: 20px 15px;
+  }
+}
+
+
+
+/* source */
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  /* max-width: 270px; */
+  width: 300px;
+  height: 240px;
+  margin: 8px 5px 0;
+  background-color: var(--dark);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+}
+
+.tableCellText {
+  font-size: var(--normal1);
+  color: white;
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.secondaryText {
+  color: var(--accent);
+  font-size: var(--small1);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto;
+  align-items: end;
+}
+
+.errorCell {
+  grid-column: 1 / span 2;
+  grid-row-start: 3;
+  padding: 5px 5px;
+}
+
+.errorCellText {
+  font-size: 0.8em;
+}
+
+.topPart {
+  background-color: var(--lightBg);
+  padding: 10px 5px 10px 15px;
+}
+
+.name {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  flex: 0.2;
+  align-items: flex-end;
+}
+
+.exchangeCell {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0 0 15px;
+}
+
+.btnGroup {
+  display: flex;
+  margin-top: auto;
+  align-content: flex-end;
+  justify-content: space-between;
+}
+
+@media (max-width: 480px) {
+  .container {
+      max-width: unset;
   }
 }

@@ -55,14 +55,6 @@ export const GET_USER_EXCHANGES_WITH_MARKETS = gql`
     }
 `;
 
-export const GET_USER_SUBS = gql`
-    query user_exchange_accs($user_id: uuid) {
-        user_subs(where: { user_id: { _eq: $user_id } }) {
-            status
-        }
-    }
-`;
-
 export const GET_SUBSCRIPTIONS = gql`
     query subscriptions {
         subscriptions {
@@ -80,6 +72,42 @@ export const GET_SUBSCRIPTIONS = gql`
             amount
             unit
             available
+        }
+    }
+`;
+
+export const GET_SUBSCRIPTIONS_NAME = gql`
+    query subscriptions {
+        subscriptions {
+            name
+        }
+    }
+`;
+
+export const GET_USER_SUBS = gql`
+    query user_exchange_accs($user_id: uuid) {
+        user_subs(where: { user_id: { _eq: $user_id } }) {
+            status
+        }
+    }
+`;
+
+export const GET_USER_SUBS_BY_CREATED_AT = gql`
+    query user_exchange_accs($user_id: uuid) {
+        user_subs(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
+            subscriptionOption {
+                code
+                subscription_id
+                name
+                description
+                sort_order
+                price_month
+                price_total
+                discount
+                amount
+                unit
+                available
+            }
         }
     }
 `;
