@@ -76,25 +76,10 @@ export const GET_SUBSCRIPTIONS = gql`
     }
 `;
 
-export const GET_SUBSCRIPTIONS_NAME = gql`
-    query subscriptions_name {
-        subscriptions {
-            name
-        }
-    }
-`;
-
 export const GET_USER_SUBS = gql`
     query user_subscriptions($user_id: uuid) {
-        user_subs(where: { user_id: { _eq: $user_id } }) {
-            status
-        }
-    }
-`;
-
-export const GET_USER_SUBS_BY_CREATED_AT = gql`
-    query uuser_subscriptions_by_created_at($user_id: uuid) {
         user_subs(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
+            status
             subscriptionOption {
                 code
                 subscription_id
@@ -107,8 +92,11 @@ export const GET_USER_SUBS_BY_CREATED_AT = gql`
                 amount
                 unit
                 available
+                subscription {
+                    name
+                }
             }
-            user_payments(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
+            user_payments(where: { user_id: { _eq: $user_id } }) {
                 code
                 price
                 status
