@@ -41,7 +41,6 @@ const _AccountBalance: FC = (): any => {
 
     const handleOnModalClose = () => console.log(`closed!`);
 
-    console.log(`subscription_id`, subscription_id);
     console.log(`chekoutData`, chekoutData);
 
     return (

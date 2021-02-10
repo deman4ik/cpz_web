@@ -27,20 +27,28 @@ export const DELETE_EXCHANGE_BY_ID = gql`
 export const SET_USER_SUB = gql`
     mutation createUserSub($subscriptionId: uuid!, $subscriptionOption: String!) {
         createUserSub(subscriptionId: $subscriptionId, subscriptionOption: $subscriptionOption) {
-            result
+            id
         }
     }
 `;
 
+// export const CHECKOUT_USER_SUB = gql`
+//     mutation checkoutUserSub($userSubId: uuid!) {
+//         checkoutUserSub(userSubId: $userSubId) {
+//             userPayment {
+//                 code
+//                 price
+//                 status
+//                 created_at
+//             }
+//         }
+//     }
+// `;
+
 export const CHECKOUT_USER_SUB = gql`
     mutation checkoutUserSub($userSubId: uuid!) {
         checkoutUserSub(userSubId: $userSubId) {
-            userPayment {
-                code
-                price
-                status
-                created_at
-            }
+            id
         }
     }
 `;
