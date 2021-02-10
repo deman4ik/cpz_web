@@ -8,6 +8,8 @@ import { LayoutContextProvider } from "../src/providers/layoutContext";
 import { NextPageProps } from "config/types";
 import "./style.css";
 import "../src/assets/static/common.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "react-coinbase-commerce/dist/coinbase-commerce-button.css";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));

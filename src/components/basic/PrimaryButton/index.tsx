@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 import { event, gtag_report_conversion } from "libs/gtag";
 import styles from "./index.module.css";
 
@@ -33,13 +33,13 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
                 value: href
             });
         }
-
-        window.location.href = href;
     };
 
     return (
-        <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
-            {title}
-        </a>
+        <Link href={href}>
+            <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
+                {title}
+            </a>
+        </Link>
     );
 };

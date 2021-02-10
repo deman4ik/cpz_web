@@ -6,6 +6,11 @@ import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
+import { Pricing } from "./Pricing";
+import { Faq } from "./Faq";
+import { Founders } from "./Founders";
+import { Aboutus } from "./Aboutus";
+import { OurHappyUsers } from "./OurHappyUsers";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -33,6 +38,11 @@ const _LandingPage: React.FC = () => {
                         <SignalsList />
                         <TradingApp />
                         <TelegramBot />
+                        <Pricing />
+                        <Faq />
+                        <Aboutus />
+                        <Founders />
+                        <OurHappyUsers />
                         <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />

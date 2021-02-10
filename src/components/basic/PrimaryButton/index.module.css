@@ -50,6 +50,12 @@
   border: 1px solid var(--warn);
 }
 
+.outline-pink, .outline-pink:visited {
+  color: var(--lightRed);
+  background-color: transparent;
+  border: 1px solid var(--lightRed);
+}
+
 .normalBtn {
   font-size: 18px;
   height: 62px;

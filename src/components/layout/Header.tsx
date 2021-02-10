@@ -54,10 +54,8 @@ const _Header: React.FC = () => {
                             <LoadingIndicator />
                         ) : (
                             <div>
-                                <Link href="/">
-                                    <a className={styles.btnTitle} onClick={logout}>
-                                        Log out
-                                    </a>
+                                <Link href="/profile">
+                                    <a className={styles.btnTitle}>Profile</a>
                                 </Link>
                             </div>
                         )}
