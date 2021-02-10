@@ -1,0 +1,33 @@
+.title {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 38px;
+  line-height: 42px;
+  font-weight: bold;
+  color: white;
+}
+
+.founders {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .founders {
+    flex-direction: column;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    flex-direction: column;
+  }
+}

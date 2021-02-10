@@ -8,6 +8,18 @@ export type SupportItemType = {
     href: string;
 };
 
+export type PricingItemType = {
+    icon?: string;
+    iconColors?: { colorFrom: string; colorTo: string };
+    title?: string;
+    text?: string;
+    price?: string;
+    savePrice?: string;
+    button?: string;
+    buttonType?: string;
+    href?: string;
+};
+
 export interface StepProps {
     date: string;
     title: string;
