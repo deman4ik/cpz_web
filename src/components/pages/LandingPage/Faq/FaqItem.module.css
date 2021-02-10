@@ -1,0 +1,47 @@
+.faqItem:not(:last-child) {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.faqButton {
+  background-color: var(--rgbaDark);
+  cursor: pointer;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.faqTitle {
+  font-weight: 600;
+  font-size: 16px;
+  color: #D0DDF5;
+}
+
+.faqIcon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.faqRotate {
+  margin-left: auto;
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+.faqContent {
+  background-color: var(--rgbaDark);
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faqText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 18px;
+  color: #B8BDDE;
+}

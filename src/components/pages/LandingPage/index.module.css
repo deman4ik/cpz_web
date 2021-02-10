@@ -23,8 +23,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  background-image: url(/img/index-bg.png);
-  background-size: cover;
+  background: url(/img/index-bg.png) no-repeat center bottom / 100%;
 }
 
 .starsBackground {

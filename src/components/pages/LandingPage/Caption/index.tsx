@@ -49,7 +49,6 @@ export const _Caption: React.FC = () => (
                     </div>
                 </div>
             </div>
-            <div className={styles.gradient} />
         </div>
     </>
 );
