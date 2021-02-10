@@ -22,76 +22,100 @@ const _AccountBalance: FC = (): any => {
 
     const { subscriptionOption, status } = data.user_subs[0];
     const { subscription } = subscriptionOption;
+    console.log(data);
 
     return (
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
+
             <div className={styles.surface}>
-                <div className={[styles.row, styles.topPart].join(" ")}>
-                    <div className={styles.name}>
-                        <div className={styles.tableCellText}>{subscription.name}</div>
-                    </div>
-                </div>
-                <div>
-                    <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                        <div className={styles.exchangeCell}>
-                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                Subscription
-                            </div>
-                            <div className={styles.tableCellText}>{subscriptionOption.name}</div>
+                {data ? (
+                    <div className={styles.stub}>
+                        <div className={styles.title}>
+                            <h4>Cryptuoso Trading Signal:&nbsp;</h4>
+                            <p>FREE PLAN</p>
                         </div>
-                        <div className={styles.exchangeCell}>
-                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                Amount
-                            </div>
-                            <div className={styles.tableCellText}>{subscriptionOption.amount}</div>
-                        </div>
-                        <div className={styles.exchangeCell}>
-                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                Period
-                            </div>
-                            <div className={styles.tableCellText}>{subscriptionOption.unit}</div>
+                        <div className={styles.title}>
+                            Status:&nbsp;
+                            <div className={styles.beta}>Active</div>
                         </div>
 
-                        <div className={styles.btn}>
-                            <Link href="/profile/subscription-history">
-                                <a>
-                                    <Button title="History" size="small" icon="history" type="dimmed" />
-                                </a>
-                            </Link>
-                        </div>
-
-                        <div className={styles.exchangeCell}>
-                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                Price
-                            </div>
-                            <div className={styles.tableCellText}>
-                                $ {subscriptionOption.price_total && subscriptionOption.price_total.toFixed(1)}
-                            </div>
-                        </div>
-                        <div className={styles.exchangeCell}>
-                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                Status
-                            </div>
-                            <div className={styles.tableCellText}>{status}</div>
-                        </div>
+                        <Button
+                            isUppercase
+                            style={{ margin: "20px auto" }}
+                            title="Start free trial"
+                            size="small"
+                            type="primary"
+                        />
                     </div>
-                    {subscriptionOption.active_to && subscriptionOption.trial_ended && (
-                        <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.tableCellText}>
-                                    Expires: {subscriptionOption.active_to || subscriptionOption.trial_ended}
+                ) : (
+                    <>
+                        <div className={[styles.row, styles.topPart].join(" ")}>
+                            <div className={styles.name}>
+                                <div className={styles.tableCellText}>{subscription.name}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                                <div className={styles.exchangeCell}>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Subscription
+                                    </div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.name}</div>
+                                </div>
+                                <div className={styles.exchangeCell}>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Amount
+                                    </div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.amount}</div>
+                                </div>
+                                <div className={styles.exchangeCell}>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Period
+                                    </div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.unit}</div>
+                                </div>
+
+                                <div className={styles.btn}>
+                                    <Link href="/profile/subscription-history">
+                                        <a>
+                                            <Button title="History" size="small" icon="history" type="dimmed" />
+                                        </a>
+                                    </Link>
+                                </div>
+
+                                <div className={styles.exchangeCell}>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Price
+                                    </div>
+                                    <div className={styles.tableCellText}>
+                                        $ {subscriptionOption.price_total && subscriptionOption.price_total.toFixed(1)}
+                                    </div>
+                                </div>
+                                <div className={styles.exchangeCell}>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Status
+                                    </div>
+                                    <div className={styles.tableCellText}>{status}</div>
                                 </div>
                             </div>
+                            {subscriptionOption.active_to && subscriptionOption.trial_ended && (
+                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                                    <div className={styles.exchangeCell}>
+                                        <div className={styles.tableCellText}>
+                                            Expires: {subscriptionOption.active_to || subscriptionOption.trial_ended}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-
-                <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                    <Button title="Change plan" size="small" icon="settings" type="dimmed" />
-                    <Button title="Pay" size="small" icon="bitcoin" type="dimmed" />
-                    <Button title="Cancel" size="small" icon="close" type="dimmed" />
-                </div>
+                        <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
+                            <Button title="Change plan" size="small" icon="settings" type="dimmed" />
+                            <Button title="Pay" size="small" icon="bitcoin" type="dimmed" />
+                            <Button title="Cancel" size="small" icon="close" type="dimmed" />
+                        </div>
+                    </>
+                )}
             </div>
         </>
     );
