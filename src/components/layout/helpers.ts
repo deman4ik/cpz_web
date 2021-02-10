@@ -1,5 +1,5 @@
 import { BLOG_URL, DOCS_URL, TERMS_URL, PRIVACY_URL, SUPPORT_URL, TELEGRAM_COMMUNITY_URL } from "config/constants";
-import { TelegramIcon, InstagramIcon, TwitterIcon } from "assets/icons/svg";
+import { FacebookIcon, TelegramIcon, InstagramIcon, TwitterIcon } from "assets/icons/svg";
 
 export const MAINMENU_MAX_WIDTH = 200;
 export const MAINMENU_MIN_WIDTH = 56;
@@ -33,6 +33,10 @@ export const authHeader = [
 
 export const footerIcons = [
     {
+        href: "https://www.facebook.com/cryptuoso",
+        icon: FacebookIcon
+    },
+    {
         href: "https://twitter.com/cryptuoso",
         icon: TwitterIcon
     },
@@ -47,6 +51,7 @@ export const footerIcons = [
 ];
 
 export const contactIcons = {
+    facebook: FacebookIcon,
     telegram: TelegramIcon,
     instagram: InstagramIcon,
     twitter: TwitterIcon

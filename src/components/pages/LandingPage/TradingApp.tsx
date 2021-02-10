@@ -24,7 +24,7 @@ const _TradingApp: React.FC = () => (
                     </div>
                 ))}
                 <div style={{ margin: "0 auto" }}>
-                    <PrimaryButton title="Start now" href="/robots" type="secondary" />
+                    <PrimaryButton title="Start now" href="/auth/login" type="secondary" />
                 </div>
             </div>
         </div>
