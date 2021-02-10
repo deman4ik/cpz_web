@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo } from "react";
-import { useMutation } from "@apollo/client";
+import React, { useMemo, useState, memo } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import { SET_USER_SUB } from "graphql/profile/mutations";
+import { GET_SUBSCRIPTIONS } from "graphql/profile/queries";
 import { Button } from "components/basic";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { HTMLButtonTypes } from "components/basic/Button/types";
@@ -9,18 +10,17 @@ import { HTMLButtonTypes } from "components/basic/Button/types";
 import styles from "./index.module.css";
 
 interface Props {
-    dataPicker: any; // Todo any
-    selectedKey: string;
     enabled: boolean;
-    variables: any; // Todo any
-    formError?: string;
-    handleOnNext: () => void;
-    setFormError: (error: string) => void;
-    onClose: (changesMade?: boolean) => void;
+    handleOnNext?: () => void;
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ dataPicker, handleOnNext, setFormError, formError, enabled }) => {
-    const { subscriptions, subscription_options } = dataPicker;
+const _SubscriptionPlan: React.FC<Props> = ({ handleOnNext, enabled }) => {
+    const [formError, setFormError] = useState("");
+    const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
+    const { subscriptions, subscription_options } = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [
+        dataLoading,
+        dataSubs
+    ]);
 
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -32,7 +32,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ dataPicker, handleOnNext, setFormE
             }
         }).catch(({ message }) => {
             setFormError(message);
-            setTimeout(() => handleOnNext(), 2000);
+            if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
         });
     };
 

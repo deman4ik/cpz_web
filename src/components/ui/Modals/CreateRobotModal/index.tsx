@@ -76,9 +76,6 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         }
     });
 
-    const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
-    const subscriptions = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [dataLoading, dataSubs]);
-
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
             id: inputKey,
@@ -250,16 +247,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 {step === 0 && (
                     <>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
-                        <SubscriptionPlan
-                            enabled={enabled}
-                            dataPicker={subscriptions}
-                            selectedKey={inputKey}
-                            variables={{ ...variables, user_id }}
-                            formError={formError}
-                            onClose={onClose}
-                            setFormError={setFormError}
-                            handleOnNext={handleOnNext}
-                        />
+                        <SubscriptionPlan enabled={enabled} handleOnNext={handleOnNext} />
                     </>
                 )}
                 {step === 1 && (

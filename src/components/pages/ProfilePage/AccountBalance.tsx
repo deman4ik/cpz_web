@@ -1,13 +1,16 @@
-import React, { FC, useContext, memo } from "react";
+import React, { FC, useContext, useState, memo } from "react";
 import Link from "next/link";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
-import { Button } from "components/basic";
-import { color } from "config/constants";
+import { Modal, Button } from "components/basic";
+import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
+    const [isModalVisible, setModalVisibility] = useState(false);
+    const handleSetVisible = () => setModalVisibility(!isModalVisible);
+
     const {
         authState: { user_id }
     } = useContext(AuthContext);
@@ -22,14 +25,12 @@ const _AccountBalance: FC = (): any => {
 
     const { subscriptionOption, status } = data.user_subs[0];
     const { subscription } = subscriptionOption;
-    console.log(data);
 
     return (
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
-
             <div className={styles.surface}>
-                {data ? (
+                {data && data.user_subs && data.user_subs.length === 0 ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
@@ -46,6 +47,7 @@ const _AccountBalance: FC = (): any => {
                             title="Start free trial"
                             size="small"
                             type="primary"
+                            onClick={handleSetVisible}
                         />
                     </div>
                 ) : (
@@ -115,6 +117,12 @@ const _AccountBalance: FC = (): any => {
                             <Button title="Cancel" size="small" icon="close" type="dimmed" />
                         </div>
                     </>
+                )}
+                {isModalVisible && (
+                    <Modal isOpen={isModalVisible} onClose={() => handleSetVisible()} style={{ paddingTop: "20px" }}>
+                        <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
+                        <SubscriptionPlan enabled={isModalVisible} />
+                    </Modal>
                 )}
             </div>
         </>
