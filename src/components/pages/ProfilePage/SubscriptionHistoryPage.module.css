@@ -1,0 +1,117 @@
+.exchangeContainerMobile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exchange {
+    display: flex;
+    align-items: center;
+    font-size: var(--big1);
+    color: white;
+    margin: 10px 0;
+}
+
+.assetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--normal1);
+    background-color: var(--dark);
+    color: white;
+    padding: 10px 20px;
+}
+
+.assetHeaderMobileStats {
+    display: flex;
+    font-size: var(--normal0);
+    color: var(--accent);
+    flex-direction: column;
+}
+
+@media (max-width: 1080px) {
+    .exchange {
+        font-size: var(--normal3);
+    }
+}
+
+@media (max-width: 480px) {
+    .exchange {
+        font-size: var(--normal1);
+    }
+    .assetHeader {
+        font-size: var(--normal0);
+    }
+}
+
+.tableHeader {
+    border-top-width: 2px;
+    border-color: var(--darkBg);
+    background-color: var(--dark);
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tableRow {
+    display: flex;
+    flex-direction: row;
+    border-top-width: 2px;
+    border-color: var(--darkBg);
+    padding: 15px 20px;
+    align-items: center;
+    background-color: var(--dark);
+}
+
+@media (max-width: 1300px) {
+    .tableRow {
+        display: inline-flex;
+        width: 100%;
+        max-width: 320px;
+        flex-wrap: wrap;
+        margin-left: 10px;
+        margin-top: 10px;
+        box-shadow: rgb(0 0 0 / 24%) 0px 3px 4px;
+    }
+}
+
+.positionGroup {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    opacity: 1;
+}
+
+@media (max-width: 1300px) {
+    .positionGroup {
+        flex-direction: column;
+    }
+}
+
+.tableCellText {
+    font-size: var(--normal0);
+    color: white;
+}
+
+@media (max-width: 1300px) {
+    .tableCellText {
+        padding: 0 0 10px;
+    }
+}
+
+.secondaryText {
+    color: var(--accent);
+    font-size: var(--small1);
+    padding: 0 0 5px;
+}
+
+.volumeGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.limitWrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 190px;
+}
