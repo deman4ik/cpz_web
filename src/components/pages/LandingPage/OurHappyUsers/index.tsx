@@ -1,10 +1,9 @@
 import React, { memo } from "react";
 import Slider from "react-slick";
-import styles from "./index.module.css";
 import { OurHappyUser } from "./OurHappyUser";
 import { foundersContent } from "../Founders/helpres";
-
 import { ArrowSliderIcon } from "assets/icons/svg";
+import styles from "./index.module.css";
 
 function SliderArrow(props) {
     const { className, onClick } = props;
