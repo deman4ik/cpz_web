@@ -9,55 +9,67 @@ const _SubscriptionHistoryTable = ({ userSubs, userStatus }) => {
                 {userSubs && (
                     <>
                         <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Subscription Name</div>
-                            </div>
                             <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                {userSubs.name}
+                                Subscription Name
+                            </div>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText}>{userSubs.name}</div>
                             </div>
                         </div>
                         <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Option</div>
-                            </div>
                             <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                {userSubs.name}&nbsp;
-                                {userSubs.amount}&nbsp;
-                                {userSubs.unit}
+                                Option
+                            </div>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText}>
+                                    {userSubs.name}&nbsp;
+                                    {userSubs.amount}&nbsp;
+                                    {userSubs.unit}
+                                </div>
                             </div>
                         </div>
                         <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Price</div>
-                            </div>
                             <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                $ {userSubs.price_total.toFixed(1)}
+                                Price
+                            </div>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText}> $ {userSubs.price_total.toFixed(1)}</div>
                             </div>
                         </div>
                         <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Status</div>
-                            </div>
                             <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                {userStatus}
+                                Status
+                            </div>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText}> {userStatus}</div>
                             </div>
                         </div>
-                        <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Date from</div>
-                            </div>
-                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                {userSubs.active_from || userSubs.trial_started}
-                            </div>
-                        </div>
-                        <div className={styles.limitWrapper}>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>Date to</div>
-                            </div>
-                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                {userSubs.active_to || userSubs.trial_ended}
-                            </div>
-                        </div>
+                        {userSubs.active_from ||
+                            (userSubs.trial_started && (
+                                <div className={styles.limitWrapper}>
+                                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                                        Date from
+                                    </div>
+                                    <div className={styles.codeGroup}>
+                                        <div className={styles.tableCellText}>
+                                            {userSubs.active_from || userSubs.trial_started}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        {userSubs.active_to ||
+                            (userSubs.trial_ended && (
+                                <div className={styles.limitWrapper}>
+                                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                                        Date to
+                                    </div>
+                                    <div className={styles.codeGroup}>
+                                        <div className={styles.tableCellText}>
+                                            {userSubs.active_to || userSubs.trial_ended}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                     </>
                 )}
             </div>
