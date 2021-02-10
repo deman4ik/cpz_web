@@ -1,14 +1,19 @@
 import React, { FC, useContext, useState, memo } from "react";
 import Link from "next/link";
+import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
+import { CHECKOUT_USER_SUB } from "graphql/profile/mutations";
 import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
+import { ErrorLine } from "components/common";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
     const [isModalVisible, setModalVisibility] = useState(false);
+    const [formError, setFormError] = useState("");
+    const [checkoutUserSub, { data: chekoutData }] = useMutation(CHECKOUT_USER_SUB);
     const handleSetVisible = () => setModalVisibility(!isModalVisible);
 
     const {
@@ -24,7 +29,20 @@ const _AccountBalance: FC = (): any => {
     if (loading) return "Loading...";
 
     const { subscriptionOption, status } = data.user_subs[0];
-    const { subscription } = subscriptionOption;
+    const { subscription, subscription_id } = subscriptionOption;
+
+    const handleOnCheckoutUserSub = () => {
+        checkoutUserSub({
+            variables: {
+                userSubId: subscription_id
+            }
+        }).catch(({ message }) => setFormError(message));
+    };
+
+    const handleOnModalClose = () => console.log(`closed!`);
+
+    console.log(`subscription_id`, subscription_id);
+    console.log(`chekoutData`, chekoutData);
 
     return (
         <>
@@ -111,6 +129,16 @@ const _AccountBalance: FC = (): any => {
                                 </div>
                             )}
                         </div>
+                        <div
+                            style={{
+                                textAlign: "center",
+                                backgroundColor: "white",
+                                marginTop: 10,
+                                padding: 5,
+                                borderRadius: 5
+                            }}>
+                            <CoinbaseCommerceButton chargeId={subscription_id} />
+                        </div>
                         <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
                             <Button
                                 title="Change plan"
@@ -119,9 +147,16 @@ const _AccountBalance: FC = (): any => {
                                 type="dimmed"
                                 onClick={handleSetVisible}
                             />
-                            <Button title="Pay" size="small" icon="bitcoin" type="dimmed" />
+                            <Button
+                                title="Pay"
+                                size="small"
+                                icon="bitcoin"
+                                type="dimmed"
+                                onClick={handleOnCheckoutUserSub}
+                            />
                             <Button title="Cancel" size="small" icon="close" type="dimmed" />
                         </div>
+                        <ErrorLine formError={formError} style={{ margin: 0 }} />
                     </>
                 )}
                 {isModalVisible && (

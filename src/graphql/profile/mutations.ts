@@ -29,3 +29,16 @@ export const SET_USER_SUB = gql`
         createUserSub(subscriptionId: $subscriptionId, subscriptionOption: $subscriptionOption)
     }
 `;
+
+export const CHECKOUT_USER_SUB = gql`
+    mutation checkoutUserSub($userSubId: uuid!) {
+        checkoutUserSub(userSubId: $userSubId) {
+            userPayment {
+                code
+                price
+                status
+                created_at
+            }
+        }
+    }
+`;

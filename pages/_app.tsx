@@ -3,11 +3,12 @@ import { AppContext, AppProps } from "next/app";
 import withSecureHeaders from "next-secure-headers";
 import Router from "next/router";
 import { pageview } from "libs/gtag";
-import "./style.css";
-import "../src/assets/static/common.css";
 import { AuthContextProvider } from "../src/providers/authContext";
 import { LayoutContextProvider } from "../src/providers/layoutContext";
 import { NextPageProps } from "config/types";
+import "./style.css";
+import "../src/assets/static/common.css";
+import "react-coinbase-commerce/dist/coinbase-commerce-button.css";
 
 Router.events.on("routeChangeComplete", (url) => pageview(url));
 

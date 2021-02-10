@@ -24,7 +24,6 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext })
     ]);
 
     const [createUserSub] = useMutation(SET_USER_SUB);
-
     const handleOnSubscription = ({ subscription_id, code }) => {
         createUserSub({
             variables: {
