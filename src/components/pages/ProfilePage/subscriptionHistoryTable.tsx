@@ -1,6 +1,5 @@
 import React, { memo } from "react";
-
-import styles from "./subscriptionHistoryPage.module.css";
+import styles from "./SubscriptionHistoryPage.module.css";
 
 const _SubscriptionHistoryTable = ({ userSubs, userStatus }) => {
     return (

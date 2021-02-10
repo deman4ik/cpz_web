@@ -4,7 +4,7 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "providers/authContext";
 import { ROBOT } from "graphql/local/queries";
-import { GET_USER_EXCHANGES_WITH_MARKETS, GET_USER_SUBS, GET_SUBSCRIPTIONS } from "graphql/profile/queries";
+import { GET_USER_EXCHANGES_WITH_MARKETS, GET_USER_SUBS } from "graphql/profile/queries";
 import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
 import { ACTION_ROBOT, CREATE_ROBOT } from "graphql/local/mutations";
 import { exchangeName } from "config/utils";

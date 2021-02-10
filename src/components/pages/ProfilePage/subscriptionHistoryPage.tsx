@@ -8,7 +8,7 @@ import { SubscriptionHistoryTable } from "./SubscriptionHistoryTable";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";
-import styles from "./subscriptionHistoryPage.module.css";
+import styles from "./SubscriptionHistoryPage.module.css";
 
 const _SubscriptionHistoryPage: FC = (): any => {
     const { width } = useWindowDimensions();
