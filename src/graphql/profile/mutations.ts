@@ -26,8 +26,6 @@ export const DELETE_EXCHANGE_BY_ID = gql`
 
 export const SET_USER_SUB = gql`
     mutation createUserSub($subscriptionId: uuid!, $subscriptionOption: String!) {
-        createUserSub(subscriptionId: $subscriptionId, subscriptionOption: $subscriptionOption) {
-            result
-        }
+        createUserSub(subscriptionId: $subscriptionId, subscriptionOption: $subscriptionOption)
     }
 `;

@@ -30,7 +30,7 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {data && data.user_subs && data.user_subs.length === 0 ? (
+                {!status ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
@@ -112,7 +112,13 @@ const _AccountBalance: FC = (): any => {
                             )}
                         </div>
                         <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                            <Button title="Change plan" size="small" icon="settings" type="dimmed" />
+                            <Button
+                                title="Change plan"
+                                size="small"
+                                icon="settings"
+                                type="dimmed"
+                                onClick={handleSetVisible}
+                            />
                             <Button title="Pay" size="small" icon="bitcoin" type="dimmed" />
                             <Button title="Cancel" size="small" icon="close" type="dimmed" />
                         </div>
@@ -121,7 +127,7 @@ const _AccountBalance: FC = (): any => {
                 {isModalVisible && (
                     <Modal isOpen={isModalVisible} onClose={() => handleSetVisible()} style={{ paddingTop: "20px" }}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
-                        <SubscriptionPlan enabled={isModalVisible} />
+                        <SubscriptionPlan enabled={isModalVisible} subsName={subscriptionOption.name} />
                     </Modal>
                 )}
             </div>

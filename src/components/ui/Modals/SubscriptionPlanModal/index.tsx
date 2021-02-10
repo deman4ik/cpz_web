@@ -11,10 +11,11 @@ import styles from "./index.module.css";
 
 interface Props {
     enabled: boolean;
+    subsName?: boolean;
     handleOnNext?: () => void;
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ handleOnNext, enabled }) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext }) => {
     const [formError, setFormError] = useState("");
     const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
     const { subscriptions, subscription_options } = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [
@@ -61,6 +62,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ handleOnNext, enabled }) => {
                                 size="small"
                                 width={260}
                                 isUppercase
+                                disabled={subsName === item.name}
                                 onClick={() => handleOnSubscription(item)}
                             />
                         </div>

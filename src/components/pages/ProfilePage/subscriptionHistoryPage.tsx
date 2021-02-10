@@ -4,7 +4,7 @@ import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { DefaultTemplate } from "components/layout";
 import NothingComponent from "components/common/NothingComponent";
-import { SubscriptionHistoryTable } from "./subscriptionHistoryTable";
+import { SubscriptionHistoryTable } from "./SubscriptionHistoryTable";
 import useWindowDimensions from "hooks/useWindowDimensions";
 import { useShowDimension } from "hooks/useShowDimension";
 import { SCREEN_TYPE } from "config/constants";

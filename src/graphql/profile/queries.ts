@@ -58,6 +58,7 @@ export const GET_USER_EXCHANGES_WITH_MARKETS = gql`
 export const GET_SUBSCRIPTIONS = gql`
     query subscriptions {
         subscriptions {
+            name
             description
         }
         subscription_options {
