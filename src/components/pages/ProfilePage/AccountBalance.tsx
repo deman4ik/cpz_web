@@ -1,5 +1,6 @@
 import React, { FC, useContext, useState, memo } from "react";
 import Link from "next/link";
+import dayjs from "dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
 import { CHECKOUT_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
@@ -14,9 +15,7 @@ const _AccountBalance: FC = (): any => {
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [formError, setFormError] = useState("");
-    const [paymentCode, setPaymentId] = useState("");
-    const [chargeCode, setChargeCode] = useState("");
-    const [userPayment, setUserPayment] = useState({ price: 0, status: "" });
+    const [userPaymentData, setUserPayment] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [checkoutUserSub, { loading: loadingCheckoutUserSub, data: dataCheckoutUserSub }] = useMutation(
         CHECKOUT_USER_SUB
     );
@@ -38,21 +37,12 @@ const _AccountBalance: FC = (): any => {
     const { id, status, subscriptionOption } = data.user_subs[0];
     const { subscription } = subscriptionOption;
 
-    checkoutUserSub({
-        variables: {
-            userSubId: id
-        }
-    })
-        .then(({ data: { checkoutUserSub: dataCheckout } }) => {
-            setPaymentId(dataCheckout.userPayment.id);
-            setChargeCode(dataCheckout.userPayment.code);
-        })
-        .catch(({ message }) => setFormError(message));
+    // const toggleSelect = useCallback(() => setSelectEnabled(!selectEnabled), [selectEnabled]);
 
     const handleOnModalCheckoutClose = () => {
         checkPayment({
             variables: {
-                chargeId: paymentCode
+                chargeId: userPaymentData.id
             }
         })
             .then((res) => console.log(res))
@@ -67,10 +57,20 @@ const _AccountBalance: FC = (): any => {
         })
             .then((result) => {
                 setModalCheckoutVisibility(!isModalCheckoutVisible);
-                setUserPayment(result.data.checkoutUserSub.userPayment);
+                setUserPayment({ ...result.data.checkoutUserSub.userPayment });
+                console.log(result.data.checkoutUserSub.userPayment);
             })
             .catch(({ message }) => setFormError(message));
     };
+
+    console.log(data.user_subs[0]);
+
+    const getPriceTotalWithNoZero = (price) => {
+        const zero = (price % 1).toString().split(".")[1] || "0";
+        return zero === "0" || zero.charAt(0) === "0" ? price.toFixed() : price.toFixed(1);
+    };
+
+    const getTimeCharge = (expires) => dayjs(expires).diff(dayjs(), "m") < 0;
 
     return (
         <>
@@ -98,53 +98,42 @@ const _AccountBalance: FC = (): any => {
                     </div>
                 ) : (
                     <>
-                        <div className={[styles.row, styles.topPart].join(" ")}>
+                        <div className={styles.topPart}>
                             <div className={styles.name}>
                                 <div className={styles.tableCellText}>{subscription.name}</div>
                             </div>
                         </div>
                         <div>
-                            <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                            <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                        Subscription
+                                        Period
                                     </div>
                                     <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                        Amount
-                                    </div>
-                                    <div className={styles.tableCellText}>{subscriptionOption.amount}</div>
-                                </div>
-                                <div className={styles.exchangeCell}>
-                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                        Period
-                                    </div>
-                                    <div className={styles.tableCellText}>{subscriptionOption.unit}</div>
-                                </div>
-
-                                <div className={styles.btn}>
-                                    <Link href="/profile/subscription-history">
-                                        <a>
-                                            <Button title="History" size="small" icon="history" type="dimmed" />
-                                        </a>
-                                    </Link>
-                                </div>
-
-                                <div className={styles.exchangeCell}>
-                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Price
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        $ {subscriptionOption.price_total && subscriptionOption.price_total.toFixed(1)}
+                                        $ {getPriceTotalWithNoZero(subscriptionOption.price_total)}
                                     </div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>{status}</div>
+                                    <div className={styles.tableCellText}>
+                                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                                    </div>
+                                </div>
+                                {/* <div className={styles.exchangeCell} /> */}
+                                <div className={styles.exchangeCell}>
+                                    <Link href="/profile/subscription-history">
+                                        <a>
+                                            <Button title="History" size="small" icon="history" type="dimmed" />
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                             {subscriptionOption.active_to && subscriptionOption.trial_ended && (
@@ -160,19 +149,19 @@ const _AccountBalance: FC = (): any => {
                         <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
                             <Button
                                 title="Change plan"
-                                size="small"
+                                size="normal"
                                 icon="settings"
                                 type="dimmed"
                                 onClick={handleSetSubsVisible}
                             />
                             <Button
-                                title="Pay"
-                                size="small"
+                                title="Checkout"
+                                size="normal"
                                 icon="bitcoin"
-                                type="dimmed"
+                                type="primary"
                                 onClick={handleSetCheckoutVisible}
                             />
-                            <Button title="Cancel" size="small" icon="close" type="dimmed" />
+                            <Button title="Cancel" size="normal" icon="close" type="dimmed" />
                         </div>
                         <ErrorLine formError={formError} style={{ margin: 0 }} />
                     </>
@@ -194,13 +183,28 @@ const _AccountBalance: FC = (): any => {
                         style={{ paddingTop: "20px" }}>
                         <div style={{ color: "white", textAlign: "center" }}>
                             <h2 style={{ color: "white", margin: 0 }}>Checkout</h2>
-                            <p>{userPayment.price}</p>
-                            <p>{userPayment.status}</p>
+                            <p>Price: $ {userPaymentData.price}</p>
+                            <p>Status: {userPaymentData.status}</p>
+                            <p>
+                                Charge expires:{" "}
+                                {getTimeCharge(userPaymentData.expires_at)
+                                    ? 0
+                                    : getTimeCharge(userPaymentData.expires_at)}
+                            </p>
+                            <p style={{ display: "block", fontSize: 14 }}>
+                                The payment processing and validation on the blockchain may take up to 60 minutes. When
+                                your payment will be resolved your subscription will be activated.
+                                <a
+                                    style={{ display: "block", fontSize: 14, margin: "10px 0 20px" }}
+                                    href="https://commerce.coinbase.com/faq#customers">
+                                    How it works?
+                                </a>
+                            </p>
                         </div>
                         <CoinbaseCommerceButton
                             styled={{ display: "flex" }}
-                            chargeId={chargeCode}
-                            onModalClosed={() => handleOnModalCheckoutClose()}
+                            chargeId={userPaymentData.code}
+                            onModalClosed={handleOnModalCheckoutClose}
                         />
                     </Modal>
                 )}

@@ -40,8 +40,9 @@ export const CHECKOUT_USER_SUB = gql`
                 id
                 code
                 price
-                created_at
                 status
+                created_at
+                expires_at
             }
         }
     }

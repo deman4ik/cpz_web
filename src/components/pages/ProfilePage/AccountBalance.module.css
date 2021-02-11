@@ -66,7 +66,6 @@
 
 @media (max-width: 768px) {
   .surface {
-    min-height: auto;
     padding: 20px 25px;
     max-width: 420px;
   }
@@ -80,7 +79,7 @@
 }
 
 .container {
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -107,9 +106,21 @@
 
 .row {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
-  align-items: end;
+  align-items: center;
+  justify-items: start;
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+  }
+
+  .exchangeCell {
+    grid-column: span 2;
+  }
 }
 
 .errorCell {
@@ -123,8 +134,8 @@
 }
 
 .topPart {
-  background-color: var(--lightBg);
-  padding: 10px 5px 10px 15px;
+  padding: 10px 0;
+  margin: 0 auto;
 }
 
 .name {
@@ -133,17 +144,10 @@
   align-items: center;
 }
 
-.btn {
-  display: flex;
-  flex-direction: column;
-  flex: 0.2;
-  align-items: flex-end;
-}
-
 .exchangeCell {
   display: flex;
   flex-direction: column;
-  padding: 15px 0 0 15px;
+  padding: 15px 0;
 }
 
 .btnGroup {
@@ -151,6 +155,18 @@
   margin-top: auto;
   align-content: flex-end;
   justify-content: space-between;
+}
+
+@media (max-width: 480px) {
+  .btnGroup {
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+  }
+
+  .exchangeCell {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 480px) {
