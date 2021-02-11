@@ -80,6 +80,7 @@ export const GET_SUBSCRIPTIONS = gql`
 export const GET_USER_SUBS = gql`
     query user_subscriptions($user_id: uuid) {
         user_subs(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
+            id
             status
             subscriptionOption {
                 code

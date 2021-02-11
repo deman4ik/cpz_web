@@ -13,9 +13,10 @@ interface Props {
     enabled: boolean;
     subsName?: boolean;
     handleOnNext?: () => void;
+    handleOnClose?: () => void;
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext }) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext, handleOnClose }) => {
     const [formError, setFormError] = useState("");
     const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
     const { subscriptions, subscription_options } = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [
@@ -30,10 +31,12 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext })
                 subscriptionId: subscription_id,
                 subscriptionOption: code
             }
-        }).catch(({ message }) => {
-            setFormError(message);
-            if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
-        });
+        })
+            .then(() => {
+                if (handleOnClose) handleOnClose();
+                if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
+            })
+            .catch(({ message }) => setFormError(message));
     };
 
     return (

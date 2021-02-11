@@ -2,7 +2,7 @@ import React, { FC, useContext, useState, memo } from "react";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
-import { CHECKOUT_USER_SUB } from "graphql/profile/mutations";
+import { CHECKOUT_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
 import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
@@ -11,10 +11,15 @@ import { ErrorLine } from "components/common";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
-    const [isModalVisible, setModalVisibility] = useState(false);
+    const [isModalSubsVisible, setModalVisibility] = useState(false);
+    const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [formError, setFormError] = useState("");
-    const [checkoutUserSub, { data: chekoutData }] = useMutation(CHECKOUT_USER_SUB);
-    const handleSetVisible = () => setModalVisibility(!isModalVisible);
+    const [paymentCode, setPaymentId] = useState("");
+    const [chargeCode, setChargeCode] = useState("");
+    const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
+    const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
+    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
+    const handleSetCheckoutVisible = () => setModalCheckoutVisibility(!isModalCheckoutVisible);
 
     const {
         authState: { user_id }
@@ -28,20 +33,29 @@ const _AccountBalance: FC = (): any => {
 
     if (loading) return "Loading...";
 
-    const { subscriptionOption, status } = data.user_subs[0];
-    const { subscription, subscription_id } = subscriptionOption;
+    const { id, status, subscriptionOption } = data.user_subs[0];
+    const { subscription } = subscriptionOption;
 
-    const handleOnCheckoutUserSub = () => {
-        checkoutUserSub({
+    checkoutUserSub({
+        variables: {
+            userSubId: id
+        }
+    })
+        .then(({ data: { checkoutUserSub: dataCheckout } }) => {
+            setPaymentId(dataCheckout.userPayment.id);
+            setChargeCode(dataCheckout.userPayment.code);
+        })
+        .catch(({ message }) => setFormError(message));
+
+    const handleOnModalCheckoutClose = () => {
+        checkPayment({
             variables: {
-                userSubId: subscription_id
+                chargeId: paymentCode
             }
-        }).catch(({ message }) => setFormError(message));
+        })
+            .then((res) => console.log(res))
+            .catch(({ message }) => setFormError(message));
     };
-
-    const handleOnModalClose = () => console.log(`closed!`);
-
-    console.log(`chekoutData`, chekoutData);
 
     return (
         <>
@@ -64,7 +78,7 @@ const _AccountBalance: FC = (): any => {
                             title="Start free trial"
                             size="small"
                             type="primary"
-                            onClick={handleSetVisible}
+                            onClick={handleSetCheckoutVisible}
                         />
                     </div>
                 ) : (
@@ -128,40 +142,34 @@ const _AccountBalance: FC = (): any => {
                                 </div>
                             )}
                         </div>
-                        <div
-                            style={{
-                                textAlign: "center",
-                                backgroundColor: "white",
-                                marginTop: 10,
-                                padding: 5,
-                                borderRadius: 5
-                            }}>
-                            <CoinbaseCommerceButton chargeId={subscription_id} />
-                        </div>
                         <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
                             <Button
                                 title="Change plan"
                                 size="small"
                                 icon="settings"
                                 type="dimmed"
-                                onClick={handleSetVisible}
+                                onClick={handleSetSubsVisible}
                             />
-                            <Button
-                                title="Pay"
-                                size="small"
-                                icon="bitcoin"
-                                type="dimmed"
-                                onClick={handleOnCheckoutUserSub}
+
+                            <CoinbaseCommerceButton
+                                styled={{ display: "flex" }}
+                                chargeId={chargeCode}
+                                onModalClosed={() => handleOnModalCheckoutClose()}
                             />
+
                             <Button title="Cancel" size="small" icon="close" type="dimmed" />
                         </div>
                         <ErrorLine formError={formError} style={{ margin: 0 }} />
                     </>
                 )}
-                {isModalVisible && (
-                    <Modal isOpen={isModalVisible} onClose={() => handleSetVisible()} style={{ paddingTop: "20px" }}>
+                {isModalSubsVisible && (
+                    <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible} style={{ paddingTop: "20px" }}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
-                        <SubscriptionPlan enabled={isModalVisible} subsName={subscriptionOption.name} />
+                        <SubscriptionPlan
+                            enabled={isModalSubsVisible}
+                            subsName={subscriptionOption.name}
+                            handleOnClose={handleSetSubsVisible}
+                        />
                     </Modal>
                 )}
             </div>

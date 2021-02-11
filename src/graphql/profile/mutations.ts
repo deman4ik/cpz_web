@@ -32,23 +32,27 @@ export const SET_USER_SUB = gql`
     }
 `;
 
-// export const CHECKOUT_USER_SUB = gql`
-//     mutation checkoutUserSub($userSubId: uuid!) {
-//         checkoutUserSub(userSubId: $userSubId) {
-//             userPayment {
-//                 code
-//                 price
-//                 status
-//                 created_at
-//             }
-//         }
-//     }
-// `;
-
 export const CHECKOUT_USER_SUB = gql`
     mutation checkoutUserSub($userSubId: uuid!) {
         checkoutUserSub(userSubId: $userSubId) {
             id
+            userPayment {
+                id
+                code
+                price
+                created_at
+            }
+        }
+    }
+`;
+
+export const CHECKOUT_PAYMENT = gql`
+    mutation checkoutUserSub($chargeId: uuid!) {
+        checkPayment(chargeId: $chargeId, provider: "coinbase.commerce") {
+            userPayment {
+                status
+                provider
+            }
         }
     }
 `;
