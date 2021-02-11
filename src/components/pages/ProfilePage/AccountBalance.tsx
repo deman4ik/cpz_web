@@ -37,8 +37,6 @@ const _AccountBalance: FC = (): any => {
     const { id, status, subscriptionOption } = data.user_subs[0];
     const { subscription } = subscriptionOption;
 
-    // const toggleSelect = useCallback(() => setSelectEnabled(!selectEnabled), [selectEnabled]);
-
     const handleOnModalCheckoutClose = () => {
         checkPayment({
             variables: {
@@ -67,7 +65,7 @@ const _AccountBalance: FC = (): any => {
 
     const getPriceTotalWithNoZero = (price) => {
         const zero = (price % 1).toString().split(".")[1] || "0";
-        return zero === "0" || zero.charAt(0) === "0" ? price.toFixed() : price.toFixed(1);
+        return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
     };
 
     const getTimeCharge = (expires) => dayjs(expires).diff(dayjs(), "m") < 0;
@@ -124,7 +122,7 @@ const _AccountBalance: FC = (): any => {
                                         Status
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                                        {status[0].toUpperCase() + status.slice(1)}
                                     </div>
                                 </div>
                                 {/* <div className={styles.exchangeCell} /> */}
