@@ -41,6 +41,7 @@ export const CHECKOUT_USER_SUB = gql`
                 code
                 price
                 created_at
+                status
             }
         }
     }

@@ -16,10 +16,12 @@ const _AccountBalance: FC = (): any => {
     const [formError, setFormError] = useState("");
     const [paymentCode, setPaymentId] = useState("");
     const [chargeCode, setChargeCode] = useState("");
-    const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
-    const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
+    const [userPayment, setUserPayment] = useState({ price: 0, status: "" });
+    const [checkoutUserSub, { loading: loadingCheckoutUserSub, data: dataCheckoutUserSub }] = useMutation(
+        CHECKOUT_USER_SUB
+    );
+    const [checkPayment, { loading: loadingPayment, data: dataPayment }] = useMutation(CHECKOUT_PAYMENT);
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
-    const handleSetCheckoutVisible = () => setModalCheckoutVisibility(!isModalCheckoutVisible);
 
     const {
         authState: { user_id }
@@ -54,6 +56,19 @@ const _AccountBalance: FC = (): any => {
             }
         })
             .then((res) => console.log(res))
+            .catch(({ message }) => setFormError(message));
+    };
+
+    const handleSetCheckoutVisible = () => {
+        checkoutUserSub({
+            variables: {
+                userSubId: id
+            }
+        })
+            .then((result) => {
+                setModalCheckoutVisibility(!isModalCheckoutVisible);
+                setUserPayment(result.data.checkoutUserSub.userPayment);
+            })
             .catch(({ message }) => setFormError(message));
     };
 
@@ -150,13 +165,13 @@ const _AccountBalance: FC = (): any => {
                                 type="dimmed"
                                 onClick={handleSetSubsVisible}
                             />
-
-                            <CoinbaseCommerceButton
-                                styled={{ display: "flex" }}
-                                chargeId={chargeCode}
-                                onModalClosed={() => handleOnModalCheckoutClose()}
+                            <Button
+                                title="Pay"
+                                size="small"
+                                icon="bitcoin"
+                                type="dimmed"
+                                onClick={handleSetCheckoutVisible}
                             />
-
                             <Button title="Cancel" size="small" icon="close" type="dimmed" />
                         </div>
                         <ErrorLine formError={formError} style={{ margin: 0 }} />
@@ -169,6 +184,23 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
+                        />
+                    </Modal>
+                )}
+                {isModalCheckoutVisible && (
+                    <Modal
+                        isOpen={isModalCheckoutVisible}
+                        onClose={handleSetCheckoutVisible}
+                        style={{ paddingTop: "20px" }}>
+                        <div style={{ color: "white", textAlign: "center" }}>
+                            <h2 style={{ color: "white", margin: 0 }}>Checkout</h2>
+                            <p>{userPayment.price}</p>
+                            <p>{userPayment.status}</p>
+                        </div>
+                        <CoinbaseCommerceButton
+                            styled={{ display: "flex" }}
+                            chargeId={chargeCode}
+                            onModalClosed={() => handleOnModalCheckoutClose()}
                         />
                     </Modal>
                 )}
