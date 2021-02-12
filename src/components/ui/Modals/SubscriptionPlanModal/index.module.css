@@ -1,6 +1,7 @@
 .plan {
     display: flex;
-    padding-bottom: 30px
+    justify-content: center;
+    padding-bottom: 30px;
 }
 
 @media (max-width: 768px) {
@@ -23,8 +24,25 @@
 
 .planName {
     text-transform: uppercase;
+    color: white;
+    text-align: center;
 }
 
 .planPrice {
     font-size: 24;
+}
+
+.buttonGroup {
+    margin: 0 auto;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+@media (max-width: 670px) {
+    .buttonGroup {
+        display: flex;
+        flex-wrap: wrap;
+        width: 60%;
+        justify-content: center;
+    }
 }

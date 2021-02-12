@@ -1,24 +1,18 @@
 import React, { memo } from "react";
 import { pricingContent } from "./helper";
+import { ButtonPrice } from "./ButtonPrice";
 import styles from "./ButtonGroup.module.css";
 
-const Button = ({ classActive, title, handleButton }) => {
-    return (
-        <a className={`${styles.button} ${classActive}`} onClick={(e) => handleButton(e.currentTarget)}>
-            {title}
-        </a>
-    );
-};
-
-export const _ButtonGroup = ({ title, handleButton }) => {
+export const _ButtonGroup = ({ title, handleOnButton }) => {
     return (
         <div className={styles.buttonGroup}>
             {pricingContent.map((item) => (
-                <Button
+                <ButtonPrice
                     key={item.title}
                     title={item.title}
                     classActive={item.title === title && styles.active}
-                    handleButton={handleButton}
+                    handleOnButton={handleOnButton}
+                    plan={item}
                 />
             ))}
         </div>

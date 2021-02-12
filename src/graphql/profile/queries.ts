@@ -73,6 +73,7 @@ export const GET_SUBSCRIPTIONS = gql`
             amount
             unit
             available
+            highlight
         }
     }
 `;
@@ -94,6 +95,7 @@ export const GET_USER_SUBS = gql`
                 amount
                 unit
                 available
+                highlight
                 subscription {
                     name
                 }
