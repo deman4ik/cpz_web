@@ -16,7 +16,9 @@ const _AccountBalance: FC = (): any => {
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [formError, setFormError] = useState("");
-    const [userPaymentData, setUserPayment] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
+    const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
+    const [isOkButton, setOkButton] = useState(false);
+
     const [checkoutUserSub, { loading: loadingCheckoutUserSub, data: dataCheckoutUserSub }] = useMutation(
         CHECKOUT_USER_SUB
     );
@@ -45,7 +47,16 @@ const _AccountBalance: FC = (): any => {
                 chargeId: userPaymentData.id
             }
         })
-            .then((res) => console.log(res))
+            .then(
+                ({
+                    data: {
+                        checkPayment: { userPayment }
+                    }
+                }) => {
+                    setUserPaymentData({ ...userPaymentData, status: userPayment.status });
+                    console.log(`checkPayment.userPayment`, userPayment);
+                }
+            )
             .catch(({ message }) => setFormError(message));
     };
 
@@ -55,17 +66,21 @@ const _AccountBalance: FC = (): any => {
                 userSubId: id
             }
         })
-            .then((result) => {
-                setModalCheckoutVisibility(!isModalCheckoutVisible);
-                setUserPayment({ ...result.data.checkoutUserSub.userPayment });
-                console.log(result.data.checkoutUserSub.userPayment);
-            })
+            .then(
+                ({
+                    data: {
+                        checkoutUserSub: { userPayment }
+                    }
+                }) => {
+                    setModalCheckoutVisibility(!isModalCheckoutVisible);
+                    setUserPaymentData({ ...userPayment });
+                    console.log(`checkoutUserSub.userPayment`, userPayment);
+                }
+            )
             .catch(({ message }) => setFormError(message));
     };
 
     console.log(`---------------------------`);
-
-    console.log(`USER_SUB`, subscription);
 
     const getPriceTotalWithNoZero = (price) => {
         const zero = (price % 1).toString().split(".")[1] || "0";
@@ -181,7 +196,10 @@ const _AccountBalance: FC = (): any => {
                 {isModalCheckoutVisible && (
                     <Modal
                         isOpen={isModalCheckoutVisible}
-                        onClose={handleSetCheckoutVisible}
+                        onClose={() => {
+                            handleOnModalCheckoutClose();
+                            setOkButton(true);
+                        }}
                         style={{ paddingTop: "20px" }}>
                         <div style={{ color: "white", textAlign: "center" }}>
                             <h2 style={{ color: "white", margin: 0 }}>Checkout</h2>
@@ -208,11 +226,23 @@ const _AccountBalance: FC = (): any => {
                                 </a>
                             </p>
                         </div>
-                        <CoinbaseCommerceButton
-                            styled={{ display: "flex" }}
-                            chargeId={userPaymentData.code}
-                            onModalClosed={handleOnModalCheckoutClose}
-                        />
+                        {isOkButton ? (
+                            <Button
+                                title="OK"
+                                size="normal"
+                                type="dimmed"
+                                onClick={() => {
+                                    setModalCheckoutVisibility(!isModalCheckoutVisible);
+                                    setOkButton(false);
+                                }}
+                            />
+                        ) : (
+                            <CoinbaseCommerceButton
+                                styled={{ display: "flex" }}
+                                chargeId={userPaymentData.code}
+                                // onModalClosed={handleOnModalCheckoutClose}
+                            />
+                        )}
                     </Modal>
                 )}
             </div>
