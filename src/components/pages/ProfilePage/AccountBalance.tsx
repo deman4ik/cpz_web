@@ -198,7 +198,11 @@ const _AccountBalance: FC = (): any => {
                             setModalCheckoutVisibility(!isModalCheckoutVisible);
                             setOkButton(false);
                         }}
-                        style={{ paddingTop: "20px", backgroundColor: isFrame ? "transparent" : "" }}
+                        style={{
+                            width: "480px",
+                            paddingTop: "20px",
+                            backgroundColor: isFrame ? "transparent" : ""
+                        }}
                         isFrame={isFrame}>
                         <div
                             style={{
@@ -222,11 +226,15 @@ const _AccountBalance: FC = (): any => {
                             <p
                                 style={{
                                     fontSize: 14,
-                                    width: isFrame ? "100%" : "calc(100vw / 4)",
-                                    height: isFrame ? "100vh" : ""
+                                    width: "100%",
+                                    height: isFrame ? "100vh" : "",
+                                    whiteSpace: "pre-line",
+                                    margin: "0 auto"
                                 }}>
-                                The payment processing and validation on the blockchain may take up to 60 minutes. When
-                                your payment will be resolved your subscription will be activated.
+                                {`The payment processing and validation
+on the blockchain may take up to 60 minutes.
+When your payment will be resolved
+your subscription will be activated.`}
                                 <a
                                     style={{ display: "block", fontSize: 14, margin: "10px 0 20px" }}
                                     href="https://commerce.coinbase.com/faq#customers"

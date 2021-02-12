@@ -110,7 +110,7 @@ button {
 .coinbase-commerce-button {
     pointer-events: auto !important;
     cursor: pointer !important;
-    height: 26px !important;
+    height: 34px !important;
     padding-left: 10px !important;
     padding-right: 30px !important;
     user-select: none !important;
@@ -119,9 +119,9 @@ button {
     border-radius: 4px !important;
     position: relative !important;
     opacity: 1 !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEwSURBVHgBlVWLjcIwDE3RDdAR2OA6AjcB2aAdgQ1gA7pBbgNug8IEvQ0CE8AGxqZGWMh2ypOekjTP37RpCAoAoEZ2yAMywwsjP2vDXKA4Iq9QRi46RsEePsfWcrZ1jAYu18L+3VkHdlmENXKH3CB7Qxulw6xlxXtLmA5pw/OD4ZD6XnvZPTKUJy8C/Br6dXAiyixXvE7C8aDo/xa4t3QO/sRjw2Mn5hdF/x3Ax+pZLmfZiLKzZrAIDqqqOvI0IekUb7yOZmVGpKz0jzAW7MYv3PtXov1gdmexPrLmFHxcrNeGvorEmdRKVdar1j4brl0GIxtfeUwwfS3JcJZlxKgIKAhdFgOygTLa9zJ6R1y6znZqR2Eq6VP0wQNMDc8zHFHWMcwFvH4B8h7M/Iz2as3uDj9B4vGCv5WiAAAAAElFTkSuQmCC")
-        no-repeat 107px center/ 13px rgb(44, 52, 84) !important;
+        no-repeat 123px center/ 13px rgb(44, 52, 84) !important;
 }
 
 .coinbase-commerce-button:active {
