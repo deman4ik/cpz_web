@@ -13,27 +13,22 @@ import { ErrorLine } from "components/common";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [formError, setFormError] = useState("");
     const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
 
-    const [checkoutUserSub, { loading: loadingCheckoutUserSub, data: dataCheckoutUserSub }] = useMutation(
-        CHECKOUT_USER_SUB
-    );
-    const [checkPayment, { loading: loadingPayment, data: dataPayment }] = useMutation(CHECKOUT_PAYMENT);
-    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
-
-    const {
-        authState: { user_id }
-    } = useContext(AuthContext);
-
     const { data, loading } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
     });
+    const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
+    const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     if (user_id === null) Router.push("/auth/login").then(() => window.scrollTo(0, 0));
     if (loading) return "Loading...";
@@ -41,25 +36,7 @@ const _AccountBalance: FC = (): any => {
     const { id, status, subscriptionOption } = data.user_subs[0];
     const { subscription } = subscriptionOption;
 
-    const handleOnModalCheckoutClose = () => {
-        checkPayment({
-            variables: {
-                chargeId: userPaymentData.id
-            }
-        })
-            .then(
-                ({
-                    data: {
-                        checkPayment: { userPayment }
-                    }
-                }) => {
-                    setUserPaymentData({ ...userPaymentData, status: userPayment.status });
-                    console.log(`checkPayment.userPayment`, userPayment);
-                }
-            )
-            .catch(({ message }) => setFormError(message));
-    };
-
+    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
         checkoutUserSub({
             variables: {
@@ -79,8 +56,24 @@ const _AccountBalance: FC = (): any => {
             )
             .catch(({ message }) => setFormError(message));
     };
-
-    console.log(`---------------------------`);
+    const handleOnModalCheckoutClose = () => {
+        checkPayment({
+            variables: {
+                chargeId: userPaymentData.id
+            }
+        })
+            .then(
+                ({
+                    data: {
+                        checkPayment: { userPayment }
+                    }
+                }) => {
+                    setUserPaymentData({ ...userPaymentData, status: userPayment.status });
+                    console.log(`checkPayment.userPayment`, userPayment);
+                }
+            )
+            .catch(({ message }) => setFormError(message));
+    };
 
     const getPriceTotalWithNoZero = (price) => {
         const zero = (price % 1).toString().split(".")[1] || "0";
