@@ -11,6 +11,7 @@ interface Props {
     onClose?: React.MouseEventHandler;
     style?: React.CSSProperties;
     contentHeight?: number | string;
+    isFrame?: boolean;
 }
 
 export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight, isFrame }) => (
