@@ -1,4 +1,5 @@
 import React, { FC, useContext, useState, memo } from "react";
+import Router from "next/router";
 import Link from "next/link";
 import dayjs from "dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
@@ -32,6 +33,7 @@ const _AccountBalance: FC = (): any => {
         }
     });
 
+    if (user_id === null) Router.push("/auth/login").then(() => window.scrollTo(0, 0));
     if (loading) return "Loading...";
 
     const { id, status, subscriptionOption } = data.user_subs[0];
@@ -61,7 +63,9 @@ const _AccountBalance: FC = (): any => {
             .catch(({ message }) => setFormError(message));
     };
 
-    console.log(data.user_subs[0]);
+    console.log(`---------------------------`);
+
+    console.log(`USER_SUB`, subscription);
 
     const getPriceTotalWithNoZero = (price) => {
         const zero = (price % 1).toString().split(".")[1] || "0";
@@ -181,6 +185,10 @@ const _AccountBalance: FC = (): any => {
                         style={{ paddingTop: "20px" }}>
                         <div style={{ color: "white", textAlign: "center" }}>
                             <h2 style={{ color: "white", margin: 0 }}>Checkout</h2>
+                            <p>
+                                {subscription.name}&nbsp;
+                                {subscriptionOption.name}
+                            </p>
                             <p>Price: $ {userPaymentData.price}</p>
                             <p>Status: {userPaymentData.status}</p>
                             <p>
@@ -189,12 +197,13 @@ const _AccountBalance: FC = (): any => {
                                     ? 0
                                     : getTimeCharge(userPaymentData.expires_at)}
                             </p>
-                            <p style={{ display: "block", fontSize: 14 }}>
+                            <p style={{ fontSize: 14, width: "calc(100vh / 3)" }}>
                                 The payment processing and validation on the blockchain may take up to 60 minutes. When
                                 your payment will be resolved your subscription will be activated.
                                 <a
                                     style={{ display: "block", fontSize: 14, margin: "10px 0 20px" }}
-                                    href="https://commerce.coinbase.com/faq#customers">
+                                    href="https://commerce.coinbase.com/faq#customers"
+                                    rel="nofollow">
                                     How it works?
                                 </a>
                             </p>
