@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, memo } from "react";
+import React, { FC, useContext, useState, useRef, memo } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ import { ErrorLine } from "components/common";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
+    const inputEl = useRef(null);
     const {
         authState: { user_id }
     } = useContext(AuthContext);
@@ -21,6 +22,8 @@ const _AccountBalance: FC = (): any => {
     const [formError, setFormError] = useState("");
     const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
+    const [modalRef, setModalRef] = useState("");
+    const [isFrame, setIframe] = useState(false);
 
     const { data, loading } = useQuery(GET_USER_SUBS, {
         variables: {
@@ -35,6 +38,8 @@ const _AccountBalance: FC = (): any => {
 
     const { id, status, subscriptionOption } = data.user_subs[0];
     const { subscription } = subscriptionOption;
+
+    const callRef = (ref) => setModalRef(ref);
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
@@ -190,11 +195,17 @@ const _AccountBalance: FC = (): any => {
                     <Modal
                         isOpen={isModalCheckoutVisible}
                         onClose={() => {
-                            handleOnModalCheckoutClose();
-                            setOkButton(true);
+                            setModalCheckoutVisibility(!isModalCheckoutVisible);
+                            setOkButton(false);
                         }}
-                        style={{ paddingTop: "20px" }}>
-                        <div style={{ color: "white", textAlign: "center" }}>
+                        style={{ paddingTop: "20px", backgroundColor: isFrame ? "transparent" : "" }}
+                        isFrame={isFrame}>
+                        <div
+                            style={{
+                                color: "white",
+                                textAlign: "center",
+                                opacity: isFrame ? "0" : "1"
+                            }}>
                             <h2 style={{ color: "white", margin: 0 }}>Checkout</h2>
                             <p>
                                 {subscription.name}&nbsp;
@@ -208,7 +219,12 @@ const _AccountBalance: FC = (): any => {
                                     ? 0
                                     : getTimeCharge(userPaymentData.expires_at)}
                             </p>
-                            <p style={{ fontSize: 14, width: "calc(100vh / 3)" }}>
+                            <p
+                                style={{
+                                    fontSize: 14,
+                                    width: isFrame ? "100%" : "calc(100vw / 4)",
+                                    height: isFrame ? "100vh" : ""
+                                }}>
                                 The payment processing and validation on the blockchain may take up to 60 minutes. When
                                 your payment will be resolved your subscription will be activated.
                                 <a
@@ -233,7 +249,12 @@ const _AccountBalance: FC = (): any => {
                             <CoinbaseCommerceButton
                                 styled={{ display: "flex" }}
                                 chargeId={userPaymentData.code}
-                                // onModalClosed={handleOnModalCheckoutClose}
+                                onLoad={() => setIframe(true)}
+                                onModalClosed={() => {
+                                    handleOnModalCheckoutClose();
+                                    setOkButton(true);
+                                    setIframe(false);
+                                }}
                             />
                         )}
                     </Modal>

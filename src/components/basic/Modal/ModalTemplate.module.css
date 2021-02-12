@@ -14,7 +14,7 @@
     width: 100%;
     min-height: min-content;
     max-height: calc(80vh - 100px);
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .title {

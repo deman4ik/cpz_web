@@ -13,7 +13,7 @@ interface Props {
     contentHeight?: number | string;
 }
 
-export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight }) => (
+export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight, isFrame }) => (
     <div className={styles.content} style={style}>
         {title && (
             <div className={styles.header}>
@@ -24,8 +24,10 @@ export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClos
             {children}
         </div>
         {footer && <div className={styles.footer}>{footer}</div>}
-        <div className={styles.icon}>
-            <EffectButton icon="windowclose" color={color.accent} onClick={onClose} />
-        </div>
+        {isFrame || (
+            <div className={`${isFrame ? "" : styles.icon}`}>
+                <EffectButton icon="windowclose" color={color.accent} onClick={onClose} />
+            </div>
+        )}
     </div>
 );

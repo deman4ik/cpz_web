@@ -127,3 +127,7 @@ button {
 .coinbase-commerce-button:active {
     opacity: 0.2 !important;
 }
+
+.coinbase-commerce-iframe-container {
+    background-color: transparent !important
+}

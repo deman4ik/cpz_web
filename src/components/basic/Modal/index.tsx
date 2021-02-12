@@ -13,6 +13,7 @@ interface Props {
     style?: React.CSSProperties;
     footer?: JSX.Element;
     contentHeight?: number | string;
+    isFrame?: boolean;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -32,13 +33,16 @@ export const Modal: React.FC<Props> = (props) => {
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={`${styles.modal} ${props.className}`}>
+                <div
+                    ref={modalRef}
+                    className={`${styles.modal} ${props.className} ${props.isFrame ? styles.noBackground : ""}`}>
                     <ModalTemplate
                         title={props.title}
                         onClose={props.onClose}
                         footer={props.footer}
                         style={props.style}
-                        contentHeight={props.contentHeight}>
+                        contentHeight={props.contentHeight}
+                        isFrame={props.isFrame}>
                         {props.children}
                     </ModalTemplate>
                 </div>

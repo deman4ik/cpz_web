@@ -39,6 +39,8 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, subsName, handleOnNext, h
             .catch(({ message }) => setFormError(message));
     };
 
+    console.log(`query subscriptions`, dataSubs);
+
     return (
         <>
             <div className={styles.plan}>
