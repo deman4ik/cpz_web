@@ -15,9 +15,10 @@ interface Props {
     subsName?: boolean;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
+    status?: string;
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose }) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, status }) => {
     const [formError, setFormError] = useState("");
     const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
     const { subscriptions, subscription_options } = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [
@@ -25,7 +26,12 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
         dataSubs
     ]);
 
+    console.log(subscriptions);
+
+    // const [subName, setSubName] = useState("1 month");
+
     const [createUserSub] = useMutation(SET_USER_SUB);
+
     const handleOnSubscription = ({ subscription_id, code }) => {
         createUserSub({
             variables: {
@@ -60,7 +66,10 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
         setPlan(card);
     };
 
-    // console.log(`userSubs`, userSubs);
+    const getPriceTotalWithNoZero = (price) => {
+        const zero = (price % 1).toString().split(".")[1] || "0";
+        return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
+    };
 
     return (
         <div className={styles.planContainer}>
@@ -89,9 +98,9 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                         {/* <p>
                                 {item.amount} {item.unit}
                             </p> */}
-                        <p>{subscriptions[0].description}</p>
+                        <p className={styles.planDescription}>{subscriptions[0].description}</p>
                         <b className={styles.planPrice}>
-                            $ {subPlan.price_total}&nbsp;
+                            $ {getPriceTotalWithNoZero(subPlan.price_total)}&nbsp;
                             {subPlan.discount === null || `(-${subPlan.discount} %)`}
                         </b>
                         <p>
@@ -105,7 +114,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                             size="small"
                             width={260}
                             isUppercase
-                            disabled={subPlan.highlight}
+                            disabled={status && subPlan.highlight}
                             onClick={() => handleOnSubscription(subPlan)}
                         />
                     </div>

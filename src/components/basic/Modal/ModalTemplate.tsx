@@ -21,7 +21,9 @@ export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClos
                 <div className={styles.title}>{title}</div>
             </div>
         )}
-        <div className={styles.body} style={{ height: contentHeight || "unset" }}>
+        <div
+            className={`${styles.body} ${isFrame ? styles.bodyNoMaxHeight : ""}`}
+            style={{ height: contentHeight || "unset" }}>
             {children}
         </div>
         {footer && <div className={styles.footer}>{footer}</div>}

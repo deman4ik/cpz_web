@@ -17,6 +17,10 @@
     overflow-y: hidden;
 }
 
+.bodyNoMaxHeight {
+    max-height: none;
+}
+
 .title {
     white-space: nowrap;
     text-align: center;

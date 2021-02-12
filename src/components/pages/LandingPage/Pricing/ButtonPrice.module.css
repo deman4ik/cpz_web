@@ -14,7 +14,7 @@
   .button {
     margin-right: 10px;
   }
-  @media (max-width: 670px) {
+  @media (max-width: 1050px) {
     .button {
       margin-bottom: 10px;
     }

@@ -87,6 +87,8 @@ const _AccountBalance: FC = (): any => {
 
     const getTimeCharge = (expires) => dayjs(expires).diff(dayjs(), "m") < 0;
 
+    console.log(`user_subs`, data);
+
     return (
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
@@ -188,6 +190,7 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
+                            status={status}
                         />
                     </Modal>
                 )}
