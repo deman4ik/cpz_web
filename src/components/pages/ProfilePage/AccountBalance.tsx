@@ -1,7 +1,6 @@
-import React, { FC, useContext, useState, useRef, memo } from "react";
+import React, { FC, useContext, useState, memo } from "react";
 import Router from "next/router";
 import Link from "next/link";
-import dayjs from "dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
 import { CHECKOUT_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
@@ -10,10 +9,10 @@ import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import { ErrorLine } from "components/common";
+import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
-    const inputEl = useRef(null);
     const {
         authState: { user_id }
     } = useContext(AuthContext);
@@ -22,7 +21,6 @@ const _AccountBalance: FC = (): any => {
     const [formError, setFormError] = useState("");
     const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
-    const [modalRef, setModalRef] = useState("");
     const [isFrame, setIframe] = useState(false);
 
     const { data, loading } = useQuery(GET_USER_SUBS, {
@@ -37,9 +35,7 @@ const _AccountBalance: FC = (): any => {
     if (loading) return "Loading...";
 
     const { id, status, subscriptionOption } = data.user_subs[0];
-    const { subscription } = subscriptionOption;
-
-    const callRef = (ref) => setModalRef(ref);
+    const { subscription, name: currentPlan } = subscriptionOption;
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
@@ -79,15 +75,6 @@ const _AccountBalance: FC = (): any => {
             )
             .catch(({ message }) => setFormError(message));
     };
-
-    const getPriceTotalWithNoZero = (price) => {
-        const zero = (price % 1).toString().split(".")[1] || "0";
-        return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
-    };
-
-    const getTimeCharge = (expires) => dayjs(expires).diff(dayjs(), "m") < 0;
-
-    console.log(`user_subs`, data);
 
     return (
         <>
@@ -190,7 +177,7 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
-                            status={status}
+                            currentPlan={currentPlan}
                         />
                     </Modal>
                 )}

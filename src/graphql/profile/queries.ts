@@ -83,6 +83,13 @@ export const GET_USER_SUBS = gql`
         user_subs(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
             id
             status
+            data
+            subscription {
+                id
+                name
+                description
+                available
+            }
             subscriptionOption {
                 code
                 subscription_id
@@ -101,10 +108,12 @@ export const GET_USER_SUBS = gql`
                 }
             }
             user_payments(where: { user_id: { _eq: $user_id } }) {
+                id
                 code
                 price
                 status
                 created_at
+                expires_at
             }
         }
     }

@@ -7,7 +7,7 @@ import { ButtonPrice } from "components/pages/LandingPage/Pricing/ButtonPrice";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { Button } from "components/basic";
 import { HTMLButtonTypes } from "components/basic/Button/types";
-
+import { getPriceTotalWithNoZero } from "config/utils.ts";
 import styles from "./index.module.css";
 
 interface Props {
@@ -15,20 +15,16 @@ interface Props {
     subsName?: boolean;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
-    status?: string;
+    currentPlan?: string;
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, status }) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, currentPlan }) => {
     const [formError, setFormError] = useState("");
     const { data: dataSubs, loading: dataLoading } = useQuery(GET_SUBSCRIPTIONS);
     const { subscriptions, subscription_options } = useMemo(() => (!dataLoading && dataSubs ? dataSubs : []), [
         dataLoading,
         dataSubs
     ]);
-
-    console.log(subscriptions);
-
-    // const [subName, setSubName] = useState("1 month");
 
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -46,37 +42,28 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
             .catch(({ message }) => setFormError(message));
     };
 
-    const subscriptionOptionsSorted =
+    const subsOptionsSorted =
         subscription_options && subscription_options.slice().sort((a, b) => a.sort_order - b.sort_order);
 
-    const [subName, setSubName] = useState("1 month");
-    const [subPlan, setPlan] = useState({
-        price_total: 0,
-        discount: 0,
-        price_month: 0,
-        name: "",
-        subscription_id: "",
-        code: "",
-        unit: "",
-        highlight: false
-    });
+    const [subsActivePlan] =
+        subscription_options && subscription_options.filter((option) => option.name === currentPlan);
+
+    const [subsHighlightedPlan] =
+        subscription_options && subscription_options.filter((option) => option.highlight === true);
+
+    const [subName, setSubName] = useState(currentPlan || subsHighlightedPlan.name);
+    const [subPlan, setPlan] = useState(subsActivePlan);
     const handleOnButton = (card) => {
-        console.log(card.highlight);
         setSubName(card.name);
         setPlan(card);
-    };
-
-    const getPriceTotalWithNoZero = (price) => {
-        const zero = (price % 1).toString().split(".")[1] || "0";
-        return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
     };
 
     return (
         <div className={styles.planContainer}>
             <h3 className={styles.planName}>{subscriptions && subscriptions[0].name}</h3>
             <div className={styles.buttonGroup}>
-                {subscriptionOptionsSorted &&
-                    subscriptionOptionsSorted.map((plan) => (
+                {subsOptionsSorted &&
+                    subsOptionsSorted.map((plan) => (
                         <ButtonPrice
                             key={plan.name}
                             title={plan.name}
@@ -87,25 +74,20 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                     ))}
             </div>
             <div className={styles.plan}>
-                {enabled && subscriptionOptionsSorted && (
+                {enabled && subsOptionsSorted && (
                     <div className={styles.planCard}>
-                        {/* <PrimaryButton
-                                // className={styles.headerBtn}
-                                title={item.name}
-                                type={planColors[index]}
-                                href="#"
-                            /> */}
-                        {/* <p>
-                                {item.amount} {item.unit}
-                            </p> */}
                         <p className={styles.planDescription}>{subscriptions[0].description}</p>
-                        <b className={styles.planPrice}>
-                            $ {getPriceTotalWithNoZero(subPlan.price_total)}&nbsp;
-                            {subPlan.discount === null || `(-${subPlan.discount} %)`}
-                        </b>
-                        <p>
-                            $ {subPlan.price_month} per {subPlan.unit}
-                        </p>
+                        {subPlan && (
+                            <>
+                                <b className={styles.planPrice}>
+                                    $ {getPriceTotalWithNoZero(subPlan.price_total)}&nbsp;
+                                    {subPlan.discount === null || `(-${subPlan.discount} %)`}
+                                </b>
+                                <p>
+                                    $ {subPlan.price_month} per {subPlan.unit}
+                                </p>
+                            </>
+                        )}
                         <Button
                             buttonType={HTMLButtonTypes.button}
                             style={{ width: 140, margin: "0 auto" }}
@@ -114,7 +96,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                             size="small"
                             width={260}
                             isUppercase
-                            disabled={status && subPlan.highlight}
+                            // disabled={status && subPlan.highlight}
                             onClick={() => handleOnSubscription(subPlan)}
                         />
                     </div>
