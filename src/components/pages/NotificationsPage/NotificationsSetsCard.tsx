@@ -297,3 +297,46 @@ export const userSet = (item, onClick) => (
         <div className={styles.textMessageCard}>Please update your API Key information in your Profile.</div>
     </div>
 );
+
+export const errorUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>{item.data.error}</div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserPaymentSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
