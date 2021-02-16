@@ -7,11 +7,13 @@
     flex-direction: column;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 15px;
     text-align: center;
     font-size: var(--normal3);
     color: var(--accent);
     word-break: normal;
+    align-items: center;
+    height: 50px;
+    justify-content: center;
 }
 
 .isActive {
@@ -22,5 +24,11 @@
 @media (max-width: 480px) {
     .btn {
         font-size: var(--small1);
+    }
+}
+
+@media (max-width: 640px) {
+    .btn {
+        height: 66px;
     }
 }
