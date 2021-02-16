@@ -63,12 +63,14 @@ export const RobotPositionCard: React.FC<Props> = ({ item, robot, activeTab }) =
                         </div>
                     </div>
                 )}
-                <div className={styles.mobileCardRow} style={{ flex: 1, alignItems: "flex-end" }}>
-                    <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
-                    <div className={styles.mobileCardPrice} style={{ color: getColorForMoney(item.profit) }}>
-                        {valueWithSign(formatMoney(item.profit))} $
+                {activeTab !== SectionType.closedPositions && (
+                    <div className={styles.mobileCardRow} style={{ flex: 1, alignItems: "flex-end" }}>
+                        <div className={styles.mobileCardTextKey}>Unrealized Profit</div>
+                        <div className={styles.mobileCardPrice} style={{ color: getColorForMoney(item.profit) }}>
+                            {valueWithSign(formatMoney(item.profit))} $
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
             {activeTab === SectionType.closedPositions && (
                 <div className={styles.posCardFooter}>
