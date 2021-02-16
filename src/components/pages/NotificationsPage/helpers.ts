@@ -38,7 +38,8 @@ const messageMap = {
     "order.error": "error",
     "message.support-reply": "message",
     "message.broadcast": "message",
-    "user_ex_acc.error": "user"
+    "user_ex_acc.error": "user",
+    "user_sub.error": "data.error"
 };
 
 export const headerSelectData = [
@@ -93,7 +94,7 @@ export const getRedirectionLink = (item) => {
             link: `/robots/robot/${item.data.robotCode}`,
             redirect: false
         }),
-        error: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
+        error: () => ({ link: `/robots/robot/${item.data.robotCode}`, redirect: true }),
         signalAlert: () => ({
             link: `/signals/robot/${item.data.robotCode}`,
             redirect: false
