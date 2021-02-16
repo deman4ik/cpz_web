@@ -34,5 +34,7 @@
   .robotStats {
       flex-direction: column;
       margin: 0 auto 5px;
+      display: flex;
+      width: 100%;
   }
 }
