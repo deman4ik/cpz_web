@@ -12,6 +12,12 @@
   margin: 60px auto 60px;
 }
 
+@media (max-width: 1200px) {
+  .free {
+    margin-bottom: 100px;
+  }
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -53,11 +59,11 @@
   margin-right: 18px;
 }
 
-.robotsTextAccent{
+.robotsTextAccent {
   color: white;
 }
 
-.tradingAppImgContainer{
+.tradingAppImgContainer {
   display: flex;
   flex: 1;
   height: 431px;

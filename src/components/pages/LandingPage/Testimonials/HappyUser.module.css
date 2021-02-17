@@ -12,6 +12,7 @@
   margin: 0 20px;
   padding: 20px 20px;
   border-radius: 2px;
+  width: 60%;
 }
 
 @media (max-width: 530px) {
@@ -55,6 +56,20 @@
   color: var(--whiteFaded);
   white-space: pre-line;
   margin-bottom: 20px;
+}
+
+.colText button {
+  font-size: var(--normal3);
+  line-height: var(--big2);
+  color: var(--whiteFaded);
+  white-space: pre-line;
+  margin-bottom: 20px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.colText button:hover {
+  opacity: 0.7;
 }
 
 .colFooter {
