@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { pricingContent } from "./helper";
 import styles from "./ButtonGroup.module.css";
 
 const Button = ({ classActive, title, handleButton }) => {
@@ -10,15 +9,15 @@ const Button = ({ classActive, title, handleButton }) => {
     );
 };
 
-export const _ButtonGroup = ({ title, handleButton }) => {
+export const _ButtonGroup = ({ title, options, handleButton }) => {
     return (
         <div className={styles.buttonGroup}>
-            {pricingContent.map((item) => (
+            {options.map((item) => (
                 <Button
-                    key={item.title}
-                    title={item.title}
-                    classActive={item.title === title && styles.active}
-                    handleButton={handleButton}
+                    key={item.name}
+                    title={item.name}
+                    classActive={item.name === title && styles.active}
+                    handleButton={() => handleButton(item)}
                 />
             ))}
         </div>

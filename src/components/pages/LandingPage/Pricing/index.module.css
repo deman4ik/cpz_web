@@ -13,6 +13,26 @@
   margin: 0 auto;
 }
 
+.billed {
+  font-size: 24px;
+  text-align: center;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 auto;;
+  margin-bottom: 10px;
+}
+
+.benefits {
+font-size: 24px;
+text-align: center;
+color: #ffffff;
+max-width: 730px;
+line-height: 1.2;
+margin: 0 auto;
+margin-bottom: 50px;
+white-space: pre-wrap;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -23,7 +43,6 @@
 @media (max-width: 1340px) {
   .grid {
     justify-content: center;
-    width: 70%;
     margin: 0 auto;
   }
 }

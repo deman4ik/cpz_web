@@ -13,6 +13,20 @@
   border-radius: 2px;
 }
 
+.colHighlite {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px;
+  margin: 0 auto;
+}
+
+.colHighliteMore {
+  border-radius: 2px;
+  box-shadow: 
+  0 0 10px #ffffff, 0 0 30px #0ba9ca,
+  0 0 20px #0ba9ca, 0 0 50px #0ba9ca;
+  }
+
 @media (max-width: 1450px) {
   .col {
     margin-bottom: 20px;
@@ -33,6 +47,7 @@
   flex-direction: column;
   flex-grow: 1;
   align-items: center;
+  min-height: 610px;
 }
 
 .iconWrapper {
@@ -47,23 +62,27 @@
   line-height: var(--big3);
   color: white;
   text-transform: uppercase;
+  max-width: 255px;
+  margin-bottom: 10px;
 }
 
 .colText {
   font-size: var(--normal1);
   line-height: var(--big2);
   font-weight: 500;
-  color: var(--whiteFaded);
+  color: #ffffff;
   white-space: pre-line;
   text-align: center;
+  min-height: 220px;
 }
 
 .colHighlite {
   display: flex;
   padding: 10px 0;
   align-items: center;
-  border-top: 1px solid var(--lightBg);
-  border-bottom: 1px solid var(--lightBg);
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   min-height: 180px;
   margin: 20px 0 0;
 }
@@ -72,13 +91,24 @@
   font-size: 43px;
   font-weight: 700;
   color: white;
-  margin-bottom: 10px;
+  margin: 00;
 }
 
 .colSubPrice {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 700;
   color: white;
+  position: relative;
+  margin-top: 30px;
+}
+
+.colSubPrice:after {
+  position: absolute;
+  border-bottom: 2px solid red;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 50%;
 }
 
 .active {
@@ -94,8 +124,32 @@
 
 .headerBtn {
   width: 270px;
-  margin-bottom: 20px;
   padding-left: 0px;
   padding-right: 0px;
   text-transform: none;
+  color: #ffffff;
+  text-shadow: none;
+  border: none;
+  white-space: pre-wrap;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.1;
+}
+
+.headerBtnNoLink {
+  width: 270px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-transform: none;
+  text-shadow: none;
+  color: #ffffff;
+  border: none;
+  cursor: unset;
+  pointer-events: none;
+  white-space: pre-wrap;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.1;
 }

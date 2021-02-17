@@ -18,6 +18,19 @@ export type PricingItemType = {
     button?: string;
     buttonType?: string;
     href?: string;
+    highlite?: boolean;
+    borderColor?: string;
+    buttonBackgroundColor?: string;
+};
+
+export type PricingPlanItemType = {
+    name: string;
+    amount: number;
+    discount: number;
+    price_month: number;
+    price_total: number;
+    sort_order: number;
+    unit: string;
 };
 
 export interface StepProps {

@@ -37,7 +37,7 @@
   .buttonGroup {
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
+
     justify-content: center;
   }
 }
