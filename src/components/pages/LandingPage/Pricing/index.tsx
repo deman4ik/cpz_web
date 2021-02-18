@@ -1,16 +1,31 @@
-import React, { memo, useState } from "react";
-import { PricingItem } from "./PricingItem";
+import React, { memo, useState, useEffect } from "react";
+import { PricingCard } from "./PricingCard";
 import { ButtonGroup } from "./ButtonGroup";
-import { pricingContent, subscriptionPlan } from "./helper";
+import { usePricing } from "./usePricing";
+import { pricingContent } from "./helper";
 import styles from "./index.module.css";
 
 const _Pricing = () => {
-    const subsOptionsSorted = subscriptionPlan[0].options.slice().sort((a, b) => a.sort_order - b.sort_order);
-    const [buttonTitle, setButtonTitle] = useState(subsOptionsSorted[1].name);
-    const [plan, setPlan] = useState(subsOptionsSorted[1]);
+    const { options } = usePricing();
+
+    const [buttonTitle, setButtonTitle] = useState("");
+    const [buttonPeriods, setButtonPeriods] = useState([{ name: "", unit: "", free: "" }]);
+    const [defaultPrice, setDefaultPrice] = useState("");
+    const [subsPlans, setSubsPlans] = useState({ name: "", price_month: "", free_month: "" });
+
+    useEffect(() => {
+        if (!options || !options.length) return;
+
+        const optionsSorted = options.slice().sort((a, b) => a.sort_order - b.sort_order);
+        setButtonTitle(optionsSorted[1].name);
+        setSubsPlans(optionsSorted[1]);
+        setDefaultPrice(optionsSorted[0].price_month);
+        setButtonPeriods(optionsSorted);
+    }, [options]);
+
     const handleButton = (item) => {
         setButtonTitle(item.name);
-        setPlan(item);
+        setSubsPlans(item);
     };
 
     return (
@@ -21,10 +36,16 @@ const _Pricing = () => {
             </p>
             <div className={styles.pricing}>
                 <p className={styles.billed}>Billed for</p>
-                <ButtonGroup handleButton={handleButton} options={subsOptionsSorted} title={buttonTitle} />
+                <ButtonGroup handleButton={handleButton} options={buttonPeriods} title={buttonTitle} />
                 <div className={styles.grid}>
                     {pricingContent.map((item) => (
-                        <PricingItem key={item.title} item={item} plan={plan} title={buttonTitle} />
+                        <PricingCard
+                            key={item.title}
+                            item={item}
+                            plan={subsPlans}
+                            defaultPrice={defaultPrice}
+                            title={buttonTitle}
+                        />
                     ))}
                 </div>
             </div>

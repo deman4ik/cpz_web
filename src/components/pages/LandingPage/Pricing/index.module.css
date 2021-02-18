@@ -1,55 +1,66 @@
 .title {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  text-align: center;
-  font-size: 38px;
-  line-height: 42px;
-  font-weight: bold;
-  color: white;
+	margin-top: 20px;
+	margin-bottom: 40px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
 }
 
 .pricing {
-  width: 100%;
-  margin: 0 auto;
+	width: 100%;
+
+	margin: 0 auto 80px;
 }
 
 .billed {
-  font-size: 24px;
-  text-align: center;
-  color: #ffffff;
-  line-height: 1.2;
-  margin: 0 auto;;
-  margin-bottom: 10px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+
+	text-align: center;
+	color: #fff;
+
+	font-size: 24px;
+	line-height: 1.2;;
 }
 
 .benefits {
-font-size: 24px;
-text-align: center;
-color: #ffffff;
-max-width: 730px;
-line-height: 1.2;
-margin: 0 auto;
-margin-bottom: 50px;
-white-space: pre-wrap;
+	max-width: 730px;
+
+	margin: 0 auto;
+	margin-bottom: 50px;
+
+	text-align: center;
+	white-space: pre-wrap;
+	color: #fff;
+
+	font-size: 24px;
+	line-height: 1.2;
 }
 
 .grid {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 80px;
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+
+	margin-bottom: 80px;
 }
 
 @media (max-width: 1340px) {
-  .grid {
-    justify-content: center;
-    margin: 0 auto;
-  }
+	.grid {
+		align-items: center;
+		justify-content: center;
+
+		margin: 0 auto;
+	}
 }
 
 @media (max-width: 1200px) {
-  .grid {
-    width: auto;
-    flex-direction: column;
-  }
+	.grid {
+		flex-direction: column;
+		width: auto;
+	}
 }

@@ -25,12 +25,8 @@ export type PricingItemType = {
 
 export type PricingPlanItemType = {
     name: string;
-    amount: number;
-    discount: number;
-    price_month: number;
-    price_total: number;
-    sort_order: number;
-    unit: string;
+    price_month: string;
+    free_month: string;
 };
 
 export interface StepProps {
