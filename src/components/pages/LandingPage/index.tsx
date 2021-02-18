@@ -10,7 +10,7 @@ import { Pricing } from "./Pricing";
 import { Faq } from "./Faq";
 import { Founders } from "./Founders";
 import { Aboutus } from "./Aboutus";
-import { OurHappyUsers } from "./OurHappyUsers";
+import { Testimonials } from "./Testimonials";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -38,11 +38,11 @@ const _LandingPage: React.FC = () => {
                         <SignalsList />
                         <TradingApp />
                         <TelegramBot />
-                        <Pricing />
-                        <Faq />
-                        <Aboutus />
                         <Founders />
-                        <OurHappyUsers />
+                        <Aboutus />
+                        <Faq />
+                        <Testimonials />
+                        <Pricing />
                         <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />

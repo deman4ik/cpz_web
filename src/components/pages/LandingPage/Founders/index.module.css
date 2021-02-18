@@ -12,22 +12,23 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  margin-bottom: 60px;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+  flex-direction: row;
+  margin-bottom: 40px;
 }
 
 @media (max-width: 1200px) {
   .founders {
     flex-direction: column;
   }
-}
-
-.grid {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 80px;
-}
-
-@media (max-width: 1200px) {
   .grid {
     flex-direction: column;
+    align-items: center;
   }
 }

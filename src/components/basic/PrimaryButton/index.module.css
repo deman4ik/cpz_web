@@ -56,6 +56,12 @@
   border: 1px solid var(--lightRed);
 }
 
+.outline-grey, .outline-grey:visited {
+  color: #545C7D;
+  background-color: transparent;
+  border: 1px solid #545C7D;
+}
+
 .normalBtn {
   font-size: 18px;
   height: 62px;

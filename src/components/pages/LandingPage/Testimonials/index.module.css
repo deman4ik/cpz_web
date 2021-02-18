@@ -25,5 +25,9 @@
   font-size: var(--normal3);
   line-height: var(--big2);
   color: var(--whiteFaded);
-  margin-bottom: 20px;  
+  margin-bottom: 20px;
+}
+
+.arrow:hover {
+  opacity: 0.7;
 }
