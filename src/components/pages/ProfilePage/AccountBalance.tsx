@@ -133,9 +133,9 @@ const _AccountBalance: FC = (): any => {
                                 </div>
                                 {/* <div className={styles.exchangeCell} /> */}
                                 <div className={styles.exchangeCell}>
-                                    <Link href="/profile/subscription-history">
+                                    <Link href="/profile/payment-history">
                                         <a>
-                                            <Button title="History" size="small" icon="history" type="dimmed" />
+                                            <Button title="Payment History" size="small" icon="history" type="dimmed" />
                                         </a>
                                     </Link>
                                 </div>

@@ -118,3 +118,27 @@ export const GET_USER_SUBS = gql`
         }
     }
 `;
+
+export const GET_USER_PAYMENTS = gql`
+    query userPayments($user_id: uuid) {
+        user_payments(where: { user_id: { _eq: $user_id } }) {
+            id
+            code
+            url
+            status
+            price
+            created_at
+            expires_at
+            subscription_from
+            subscription_to
+            user_sub {
+                subscriptionOption {
+                    name
+                }
+                subscription {
+                    name
+                }
+            }
+        }
+    }
+`;
