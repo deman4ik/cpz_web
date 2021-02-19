@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Caption } from "./Caption";
 import { Description } from "./Description";
 import { SignalsList } from "./SignalsList";
+import { MadeToHelp } from "./MadeToHelp";
 import { Pricing } from "./Pricing";
 import { Testimonials } from "./Testimonials";
 import { TradingApp } from "./TradingApp";
@@ -36,6 +37,7 @@ const _LandingPage: React.FC = () => {
                         <Description />
                         <h2 className={styles.topRobotsTitle}>Top Performance Robots</h2>
                         <SignalsList />
+                        <MadeToHelp />
                         <Pricing />
                         <Testimonials />
                         <TradingApp />
