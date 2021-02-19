@@ -6,7 +6,7 @@ export const pricingContent = [
     {
         icon: planetGreen,
         iconColors: { colorFrom: "purple", colorTo: "pink" },
-        title: "Free plan",
+        name: "Free plan",
         text: `Manual trading
         Trading signals from our robots
         
@@ -25,7 +25,7 @@ export const pricingContent = [
     {
         icon: planetSky,
         iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
-        title: "Advanced plan",
+        name: "Advanced plan",
         text: `Fully automated trading
         Access to 135+ trading robots
         
@@ -47,7 +47,7 @@ export const pricingContent = [
     {
         icon: planetGrey,
         iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
-        title: "The investor plan",
+        name: "The investor plan",
         text: `Portfolio management
 
 
@@ -60,5 +60,45 @@ export const pricingContent = [
         buttonBackgroundColor: "rgba(105, 135, 185, 0.2)",
         borderColor: "#0b98c5",
         href: ""
+    }
+];
+
+export const subscriptionPlan = [
+    {
+        name: "TRADER PLAN",
+        description:
+            "All free features\n+\nFully automated trading\nAll available (125+) trading robots\nUnlimited positions & deals\nUnlimited trading volume\nNo fees on trades\nEnhanced support",
+        options: [
+            {
+                name: "1 month",
+                sort_order: 1,
+                unit: "month",
+                amount: 1,
+                price_month: 39,
+                price_total: 39,
+                discount: null,
+                free_months: null
+            },
+            {
+                name: "1 year",
+                sort_order: 3,
+                unit: "year",
+                amount: 1,
+                price_month: 29,
+                price_total: 349,
+                discount: 25,
+                free_months: 3
+            },
+            {
+                name: "6 months",
+                sort_order: 2,
+                unit: "month",
+                amount: 6,
+                price_month: 33,
+                price_total: 199,
+                discount: 15,
+                free_months: 1
+            }
+        ]
     }
 ];

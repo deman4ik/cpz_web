@@ -23,12 +23,6 @@ export type PricingItemType = {
     buttonBackgroundColor?: string;
 };
 
-export type PricingPlanItemType = {
-    name: string;
-    price_month: string;
-    free_month: string;
-};
-
 export interface StepProps {
     date: string;
     title: string;

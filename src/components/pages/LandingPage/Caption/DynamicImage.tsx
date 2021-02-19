@@ -5,13 +5,17 @@ import useWindowDimensions from "hooks/useWindowDimensions";
 import { color } from "config/constants";
 import styles from "./index.module.css";
 
-const DinamicImage: React.FC = () => {
+interface DinamicProps {
+    distanceToBoundary?: number;
+}
+
+const DinamicImage: React.FC<DinamicProps> = ({ distanceToBoundary }) => {
     const { width, height } = useWindowDimensions();
 
     return (
         <div className={styles.headerBgImg}>
             <Particles
-                height={`${height}px`}
+                height={`${distanceToBoundary || height}px`}
                 params={{
                     particles: {
                         number: {
