@@ -13,12 +13,12 @@ const DinamicImageWithNoSSR = dynamic(() => import("./DynamicImage"), {
 const subTitle = "Just invest –\n robots do the rest";
 
 export const _Caption: React.FC = () => {
-    const bounderyOfElement = useRef(null);
+    const boundaryOfElement = useRef(null);
     const [boundary, setBoundary] = useState(0);
 
     const BoundaryOfButton = () => {
         useEffect(() => {
-            const elementProperties = bounderyOfElement.current;
+            const elementProperties = boundaryOfElement.current;
             setBoundary(elementProperties.offsetTop + elementProperties.offsetHeight);
         });
         return null;
@@ -40,7 +40,7 @@ export const _Caption: React.FC = () => {
                                 Cryptocurrency trading robots for&nbsp;your&nbsp;successful investment
                             </h1>
                             <div className={styles.subTitle}>{subTitle}</div>
-                            <div ref={bounderyOfElement} className={styles.headerGroupBtn}>
+                            <div ref={boundaryOfElement} className={styles.headerGroupBtn}>
                                 <PrimaryButton
                                     title="TRY IT FREE"
                                     type="secondary"
