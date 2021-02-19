@@ -36,8 +36,6 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
         }
     };
 
-    console.log(href.indexOf("http"));
-
     return href.indexOf("http") !== 0 ? (
         <Link href={href}>
             <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
