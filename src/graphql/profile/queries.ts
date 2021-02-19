@@ -80,7 +80,11 @@ export const GET_SUBSCRIPTIONS = gql`
 
 export const GET_USER_SUBS = gql`
     query user_subscriptions($user_id: uuid) {
-        user_subs(where: { user_id: { _eq: $user_id } }, order_by: { created_at: desc }) {
+        user_subs(
+            where: { user_id: { _eq: $user_id }, status: { _nin: ["canceled", "expired"] } }
+            order_by: { created_at: desc_nulls_last }
+            limit: 1
+        ) {
             id
             status
             data

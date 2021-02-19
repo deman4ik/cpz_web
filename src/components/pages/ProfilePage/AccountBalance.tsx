@@ -8,7 +8,7 @@ import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
-import { ErrorLine } from "components/common";
+import { LoadingIndicator, ErrorLine } from "components/common";
 import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
@@ -22,6 +22,7 @@ const _AccountBalance: FC = (): any => {
     const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
     const [isFrame, setIframe] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
     const { data, loading } = useQuery(GET_USER_SUBS, {
         variables: {
@@ -39,6 +40,7 @@ const _AccountBalance: FC = (): any => {
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
+        setLoading(true);
         checkoutUserSub({
             variables: {
                 userSubId: id
@@ -52,12 +54,14 @@ const _AccountBalance: FC = (): any => {
                 }) => {
                     setModalCheckoutVisibility(!isModalCheckoutVisible);
                     setUserPaymentData({ ...userPayment });
+                    setLoading(false);
                     console.log(`checkoutUserSub.userPayment`, userPayment);
                 }
             )
             .catch(({ message }) => setFormError(message));
     };
     const handleOnModalCheckoutClose = () => {
+        setLoading(true);
         checkPayment({
             variables: {
                 chargeId: userPaymentData.id
@@ -70,6 +74,7 @@ const _AccountBalance: FC = (): any => {
                     }
                 }) => {
                     setUserPaymentData({ ...userPaymentData, status: userPayment.status });
+                    setLoading(false);
                     console.log(`checkPayment.userPayment`, userPayment);
                 }
             )
@@ -90,7 +95,6 @@ const _AccountBalance: FC = (): any => {
                             Status:&nbsp;
                             <div className={styles.beta}>Active</div>
                         </div>
-
                         <Button
                             isUppercase
                             style={{ margin: "20px auto" }}
@@ -108,6 +112,11 @@ const _AccountBalance: FC = (): any => {
                             </div>
                         </div>
                         <div>
+                            {isLoading && (
+                                <div className={styles.loader}>
+                                    <LoadingIndicator />
+                                </div>
+                            )}
                             <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
@@ -207,7 +216,7 @@ const _AccountBalance: FC = (): any => {
                             </p>
                             <p>Price: $ {userPaymentData.price}</p>
                             <p>Status: {userPaymentData.status}</p>
-                            <p>Charge expires: {getTimeCharge(userPaymentData.expires_at)}</p>
+                            <p>Charge expires {getTimeCharge(userPaymentData.expires_at)}</p>
                             <p
                                 style={{
                                     fontSize: 14,
@@ -239,16 +248,18 @@ your subscription will be activated.`}
                                 }}
                             />
                         ) : (
-                            <CoinbaseCommerceButton
-                                styled={{ display: "flex" }}
-                                chargeId={userPaymentData.code}
-                                onLoad={() => setIframe(true)}
-                                onModalClosed={() => {
-                                    handleOnModalCheckoutClose();
-                                    setOkButton(true);
-                                    setIframe(false);
-                                }}
-                            />
+                            <>
+                                <CoinbaseCommerceButton
+                                    styled={{ display: "flex" }}
+                                    chargeId={userPaymentData.code}
+                                    onLoad={() => setIframe(true)}
+                                    onModalClosed={() => {
+                                        handleOnModalCheckoutClose();
+                                        setOkButton(true);
+                                        setIframe(false);
+                                    }}
+                                />
+                            </>
                         )}
                     </Modal>
                 )}
