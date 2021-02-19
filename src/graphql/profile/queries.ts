@@ -60,20 +60,21 @@ export const GET_SUBSCRIPTIONS = gql`
         subscriptions {
             name
             description
-        }
-        subscription_options {
-            code
-            subscription_id
-            name
-            description
-            sort_order
-            price_month
-            price_total
-            discount
-            amount
-            unit
-            available
-            highlight
+            options: subscription_options {
+                code
+                subscription_id
+                name
+                description
+                sort_order
+                price_month
+                price_total
+                discount
+                amount
+                unit
+                available
+                highlight
+                free_months
+            }
         }
     }
 `;

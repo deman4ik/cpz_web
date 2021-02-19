@@ -180,7 +180,10 @@ const _AccountBalance: FC = (): any => {
                     </>
                 )}
                 {isModalSubsVisible && (
-                    <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible} style={{ paddingTop: "20px" }}>
+                    <Modal
+                        isOpen={isModalSubsVisible}
+                        onClose={handleSetSubsVisible}
+                        style={{ paddingTop: "20px", minHeight: 590 }}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
