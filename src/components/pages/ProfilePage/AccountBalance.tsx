@@ -207,12 +207,7 @@ const _AccountBalance: FC = (): any => {
                             </p>
                             <p>Price: $ {userPaymentData.price}</p>
                             <p>Status: {userPaymentData.status}</p>
-                            <p>
-                                Charge expires:{" "}
-                                {getTimeCharge(userPaymentData.expires_at)
-                                    ? 0
-                                    : getTimeCharge(userPaymentData.expires_at)}
-                            </p>
+                            <p>Charge expires: {getTimeCharge(userPaymentData.expires_at)}</p>
                             <p
                                 style={{
                                     fontSize: 14,

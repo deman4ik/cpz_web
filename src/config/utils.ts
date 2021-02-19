@@ -166,4 +166,4 @@ export const getPriceTotalWithNoZero = (price) => {
     return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
 };
 
-export const getTimeCharge = (expires) => dayjs(expires).diff(dayjs(), "m") < 0;
+export const getTimeCharge = (expires) => dayjs.utc(expires).fromNow();
