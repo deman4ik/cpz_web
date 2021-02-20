@@ -40,7 +40,12 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
         setPlan(optionsSorted[1]);
 
         const [highlightedPlan] = options.filter((option) => option.highlight === true);
-        if (highlightedPlan) setButtonName(highlightedPlan.name);
+        if (currentPlan) {
+            setButtonName(currentPlan);
+            return;
+        }
+
+        setButtonName(highlightedPlan.name);
     }, [data]);
 
     const handleOnSubscriptionPlan = ({ subscription_id, code }) => {
