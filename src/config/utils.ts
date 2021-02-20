@@ -160,3 +160,10 @@ export const getTimeFromNow = (d: string): string => {
 
     return timeFromNow;
 };
+
+export const getPriceTotalWithNoZero = (price) => {
+    const zero = (price % 1).toString().split(".")[1] || "0";
+    return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);
+};
+
+export const getTimeCharge = (expires) => dayjs.utc(expires).utcOffset(480).fromNow();

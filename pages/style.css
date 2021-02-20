@@ -1,108 +1,141 @@
 :root {
-    --darkBg: #1f233f;
-    --dark: #242b4a;
-    --bg: #091943;
-    --lightBg: #2c3454;
-    --primary: #0b98c5;
-    --secondary: #5becae;
-    --accent: #6987b9;
-    --danger: #ff8b75;
-    --warn: #fff2bc;
-    --positive: #1ca46b;
-    --negative: #cd3e60;
-    --lightRed: #cc6fa3;
-    --lightGreen: #70e2bc;
-    --yellow: "#FEE338";
-    --inactiveGray: rgba(255, 255, 255, 0.68);
-    --activeSelect: rgba(105, 135, 185, 0.2);
-    --whiteFaded: rgba(255, 255, 255, 0.7);
-    --whiteLight: rgba(255, 255, 255, 0.15);
-    --rgbaDark: rgba(36, 43, 74, 0.7);
-    --rgbaPrimary: rgba(105, 135, 185, 0.2);
-    --small3: 10px;
-    --small2: 12px;
-    --small1: 14px;
-    --normal0: 15px;
-    --normal1: 16px;
-    --normal2: 18px;
-    --normal3: 20px;
-    --big1: 24px;
-    --big2: 28px;
-    --big3: 32px;
-    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
-    --header-height: 56px;
-    --menu-width: 200px;
-    --menu-icon-size: 40px;
-    --desktop-width: 1448px;
+	--accent: #6987b9;
+	--activeSelect: rgba(105, 135, 185, 0.2);
+	--bg: #091943;
+	--big1: 24px;
+	--big2: 28px;
+	--big3: 32px;
+	--danger: #ff8b75;
+	--dark: #242b4a;
+	--darkBg: #1f233f;
+	--desktop-width: 1448px;
+	--header-height: 56px;
+	--inactiveGray: rgba(255, 255, 255, 0.68);
+	--lightBg: #2c3454;
+	--lightGreen: #70e2bc;
+	--lightRed: #cc6fa3;
+	--menu-icon-size: 40px;
+	--menu-width: 200px;
+	--negative: #cd3e60;
+	--normal0: 15px;
+	--normal1: 16px;
+	--normal2: 18px;
+	--normal3: 20px;
+	--positive: #1ca46b;
+	--primary: #0b98c5;
+	--rgbaDark: rgba(36, 43, 74, 0.7);
+	--rgbaPrimary: rgba(105, 135, 185, 0.2);
+	--secondary: #5becae;
+	--shadow: rgba(0, 0, 0, 0.24) 0 3px 4px;
+	--small1: 14px;
+	--small2: 12px;
+	--small3: 10px;
+	--warn: #fff2bc;
+	--whiteFaded: rgba(255, 255, 255, 0.7);
+	--whiteLight: rgba(255, 255, 255, 0.15);
+	--yellow: "#FEE338";
 }
 
 * {
-    box-sizing: border-box;
-    border: 0 solid black;
+	box-sizing: border-box;
+
+	border: 0 solid black;
 }
 
 body {
-    background-color: var(--darkBg);
-    overflow-y: auto;
-    margin: 0;
-    font-family: "Roboto", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	overflow-y: auto;
+
+	margin: 0;
+
+	background-color: var(--darkBg);
+
+	font-family: "Roboto", sans-serif;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    text-decoration: none;
-    color: var(--accent);
+	text-decoration: none;
+	color: var(--accent);
 }
 
 a:visited {
-    color: var(--accent);
+	color: var(--accent);
 }
 
 .VictoryContainer {
-    user-select: auto !important;
-    pointer-events: auto !important;
-    touch-action: auto !important;
+	user-select: auto !important;
+	pointer-events: auto !important;
+
+	touch-action: auto !important;
 }
 
 .negative {
-    color: var(--negative);
+	color: var(--negative);
 }
 
 .positive {
-    color: var(--positive);
+	color: var(--positive);
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+	width: 5px;
+	height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--lightBg);
+	background: var(--lightBg);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--whiteLight);
+	background: var(--whiteLight);
 }
 
 div {
-    /*Firefox scrollbar options*/
-    scrollbar-color: var(--whiteLight) var(--lightBg);
-    scrollbar-width: thin;
+	/*Firefox scrollbar options*/
+	scrollbar-color: var(--whiteLight) var(--lightBg);
+	scrollbar-width: thin;
 }
 
 button {
-    background: none;
-    outline: none;
+	outline: none;
+	background: none;
 }
 
 /* react-slick */
 .slick-active button::before {
-    color: white !important;
+	color: white !important;
 }
 
-.slick-next:before,
-.slick-prev:before   {
-    content: none !important;
+.slick-next:before, .slick-prev:before {
+	content: none !important;
+}
+
+.coinbase-commerce-button {
+	position: relative !important;
+	overflow: hidden !important;
+	align-items: center !important;
+	height: 34px !important;
+
+	padding-right: 30px !important;
+	padding-left: 10px !important;
+
+	cursor: pointer !important;
+	user-select: none !important;
+	pointer-events: auto !important;
+	opacity: 1 !important;
+	border-radius: 4px !important;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEwSURBVHgBlVWLjcIwDE3RDdAR2OA6AjcB2aAdgQ1gA7pBbgNug8IEvQ0CE8AGxqZGWMh2ypOekjTP37RpCAoAoEZ2yAMywwsjP2vDXKA4Iq9QRi46RsEePsfWcrZ1jAYu18L+3VkHdlmENXKH3CB7Qxulw6xlxXtLmA5pw/OD4ZD6XnvZPTKUJy8C/Br6dXAiyixXvE7C8aDo/xa4t3QO/sRjw2Mn5hdF/x3Ax+pZLmfZiLKzZrAIDqqqOvI0IekUb7yOZmVGpKz0jzAW7MYv3PtXov1gdmexPrLmFHxcrNeGvorEmdRKVdar1j4brl0GIxtfeUwwfS3JcJZlxKgIKAhdFgOygTLa9zJ6R1y6znZqR2Eq6VP0wQNMDc8zHFHWMcwFvH4B8h7M/Iz2as3uDj9B4vGCv5WiAAAAAElFTkSuQmCC")
+	no-repeat 123px center/ 13px rgb(44, 52, 84) !important;
+
+	font-size: 14px !important;
+}
+
+.coinbase-commerce-button:active {
+	opacity: 0.2 !important;
+}
+
+.coinbase-commerce-iframe-container {
+	background-color: transparent !important;
 }

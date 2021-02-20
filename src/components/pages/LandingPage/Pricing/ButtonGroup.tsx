@@ -14,9 +14,9 @@ const Button = ({ classActive, period, handleButton }) => {
     );
 };
 
-export const _ButtonGroup = ({ buttonName, options, handleButton }): any => {
+export const _ButtonGroup = ({ buttonName, options, handleButton, style }: any): any => {
     return (
-        <div className={styles.buttonGroup}>
+        <div className={styles.buttonGroup} style={style}>
             {options.map((item) => (
                 <Button
                     key={item.name}

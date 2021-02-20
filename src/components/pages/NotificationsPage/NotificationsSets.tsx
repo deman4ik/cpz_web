@@ -249,3 +249,46 @@ export const userSet = (item, onClick) => {
         </div>
     );
 };
+
+export const errorUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageDesktop}>{item.data.error}</div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageDesktop}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserPaymentSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageDesktop}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
