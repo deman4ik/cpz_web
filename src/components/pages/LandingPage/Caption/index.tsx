@@ -1,10 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
-
 import BigLogo from "assets/img/big-logo.png";
 import { PrimaryButton } from "components/basic";
 import { Header } from "components/layout";
-import { DOCS_URL } from "config/constants";
 import styles from "./index.module.css";
 
 const DinamicImageWithNoSSR = dynamic(() => import("./DynamicImage"), {
@@ -13,45 +11,53 @@ const DinamicImageWithNoSSR = dynamic(() => import("./DynamicImage"), {
 });
 
 const subTitle = "Just invest –\n robots do the rest";
-export const _Caption: React.FC = () => (
-    <>
-        <DinamicImageWithNoSSR />
-        <div className={styles.header}>
-            <Header />
-            <div className={styles.container}>
-                <div className={styles.headerBody}>
-                    <div className={styles.groupBrand}>
-                        <div className={styles.brand}>
-                            <div className={styles.brandName}>CRYPTUOSO</div>
-                            <div className={styles.brandRights}>®</div>
+
+export const _Caption: React.FC = () => {
+    const boundaryOfElement = useRef(null);
+    const [boundary, setBoundary] = useState(0);
+
+    const BoundaryOfButton = () => {
+        useEffect(() => {
+            const elementProperties = boundaryOfElement.current;
+            setBoundary(elementProperties.offsetTop + elementProperties.offsetHeight);
+        });
+        return null;
+    };
+
+    return (
+        <>
+            <DinamicImageWithNoSSR distanceToBoundary={boundary} />
+            <div className={styles.header}>
+                <Header />
+                <div className={styles.container}>
+                    <div className={styles.headerBody}>
+                        <div className={styles.groupBrand}>
+                            <div className={styles.brand}>
+                                <div className={styles.brandName}>CRYPTUOSO</div>
+                                <div className={styles.brandRights}>®</div>
+                            </div>
+                            <h1 className={styles.title}>
+                                Cryptocurrency trading robots for&nbsp;your&nbsp;successful investment
+                            </h1>
+                            <div className={styles.subTitle}>{subTitle}</div>
+                            <div ref={boundaryOfElement} className={styles.headerGroupBtn}>
+                                <PrimaryButton
+                                    title="TRY IT FREE"
+                                    type="secondary"
+                                    href="/auth/login"
+                                    className={styles.headerBtn}
+                                />
+                                <BoundaryOfButton />
+                            </div>
                         </div>
-                        <h1 className={styles.title}>
-                            Cryptocurrency trading robots for&nbsp;your&nbsp;successful investment
-                        </h1>
-                        <div className={styles.subTitle}>{subTitle}</div>
-                        <div className={styles.headerGroupBtn}>
-                            <PrimaryButton
-                                title="TRY IT FREE"
-                                type="secondary"
-                                href="/robots"
-                                className={styles.headerBtn}
-                            />
-                            <PrimaryButton
-                                title="DOCUMENTATION"
-                                type="primary"
-                                href={DOCS_URL}
-                                className={styles.headerBtn}
-                            />
+                        <div className={styles.logoWrapper}>
+                            <img className={styles.bigLogo} src={BigLogo} alt="" />
                         </div>
-                    </div>
-                    <div className={styles.logoWrapper}>
-                        <img className={styles.bigLogo} src={BigLogo} alt="" />
                     </div>
                 </div>
             </div>
-            <div className={styles.gradient} />
-        </div>
-    </>
-);
+        </>
+    );
+};
 
 export const Caption = memo(_Caption);

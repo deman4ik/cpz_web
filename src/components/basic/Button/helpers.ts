@@ -12,7 +12,9 @@ import {
     FilterVariantRemoveIcon,
     FilterVariantMinusIcon,
     EmailIcon,
-    AccountIcon
+    AccountIcon,
+    HistoryIcon,
+    BitcoinIcon
 } from "assets/icons/svg";
 
 export const components = {
@@ -29,7 +31,9 @@ export const components = {
     close: CloseIcon,
     lockopen: LockOpenIcon,
     email: EmailIcon,
-    account: AccountIcon
+    account: AccountIcon,
+    history: HistoryIcon,
+    bitcoin: BitcoinIcon
 };
 
 export const props = {

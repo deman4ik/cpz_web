@@ -3,13 +3,13 @@ import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 // context
 import { AuthContext } from "providers/authContext";
-
 import { ROBOT } from "graphql/local/queries";
-import { GET_USER_EXCHANGES_WITH_MARKETS } from "graphql/profile/queries";
+import { GET_USER_EXCHANGES_WITH_MARKETS, GET_USER_SUBS } from "graphql/profile/queries";
 import { USER_ROBOT_CREATE, USER_ROBOT_START } from "graphql/robots/mutations";
 import { ACTION_ROBOT, CREATE_ROBOT } from "graphql/local/mutations";
 import { exchangeName } from "config/utils";
 import { StepWizard } from "components/basic";
+import { SubscriptionPlan } from "../SubscriptionPlanModal";
 import { CreateRobotStep1 } from "./CreateRobotStep1";
 import { CreateRobotStep2 } from "./CreateRobotStep2";
 import { CreateRobotStep3 } from "./CreateRobotStep3";
@@ -25,6 +25,7 @@ import { AddRobotInputsMap } from "components/ui/Modals/constants";
 import Router from "next/router";
 import { RobotsType } from "config/types";
 import { RobotDataType } from "../types";
+// import { identity } from "lodash";
 
 interface Props {
     onClose: (changesMade: boolean) => void;
@@ -43,7 +44,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [inputKey, setInputKey] = useState("");
     const [formError, setFormError] = useState("");
     const [newRobotId, setNewRobotId] = useState("");
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(0);
     const [loadingState, setLoadingState] = useState(true);
     const handleOnNext = () => {
         setStep(step + 1);
@@ -64,6 +65,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const { data, loading, refetch: refetchUserExchangeKeys } = useQuery(GET_USER_EXCHANGES_WITH_MARKETS, {
         variables: { ...variables, user_id },
         skip: !robotData
+    });
+
+    useQuery(GET_USER_SUBS, {
+        variables: {
+            user_id
+        },
+        onCompleted: ({ user_subs }) => {
+            if (user_subs[0].status) setStep(0);
+        }
     });
 
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
@@ -234,10 +244,20 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     return (
         <>
             <>
-                <div className={styles.wizardContainer}>
-                    <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
-                </div>
-                <ErrorLine formError={formError} />
+                {step === 0 && (
+                    <>
+                        <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
+                        <SubscriptionPlan enabled={enabled} handleOnNext={handleOnNext} />
+                    </>
+                )}
+                {step === 1 && (
+                    <>
+                        <div className={styles.wizardContainer}>
+                            <StepWizard steps={steps} activeStep={step} height={90} titleWidth={200} width={width} />
+                        </div>
+                        <ErrorLine formError={formError} />
+                    </>
+                )}
                 {step === 1 && (
                     <CreateRobotStep1
                         enabled={enabled}

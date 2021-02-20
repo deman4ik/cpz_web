@@ -11,21 +11,26 @@ interface Props {
     onClose?: React.MouseEventHandler;
     style?: React.CSSProperties;
     contentHeight?: number | string;
+    isFrame?: boolean;
 }
 
-export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight }) => (
+export const ModalTemplate: React.FC<Props> = ({ children, title, footer, onClose, style, contentHeight, isFrame }) => (
     <div className={styles.content} style={style}>
         {title && (
             <div className={styles.header}>
                 <div className={styles.title}>{title}</div>
             </div>
         )}
-        <div className={styles.body} style={{ height: contentHeight || "unset" }}>
+        <div
+            className={`${styles.body} ${isFrame ? styles.bodyNoMaxHeight : ""}`}
+            style={{ height: contentHeight || "unset" }}>
             {children}
         </div>
         {footer && <div className={styles.footer}>{footer}</div>}
-        <div className={styles.icon}>
-            <EffectButton icon="windowclose" color={color.accent} onClick={onClose} />
-        </div>
+        {isFrame || (
+            <div className={`${isFrame ? "" : styles.icon}`}>
+                <EffectButton icon="windowclose" color={color.accent} onClick={onClose} />
+            </div>
+        )}
     </div>
 );

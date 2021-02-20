@@ -1,107 +1,124 @@
 .app {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  margin: 60px auto 60px;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row;
+
+	margin: 60px auto 60px;
 }
 
 .free {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 60px auto 60px;
-}
+	display: flex;
+	align-items: center;
+	flex-direction: row;
 
-.row {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  flex: 1;
-}
-
-.robotsSteps {
-  display: flex;
-  flex-direction: column;
-  max-width: 450px;
-}
-
-.robotsStep {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.robotsStepsTitle {
-  margin-top: 0;
-  margin-bottom: 40px;
-  text-align: center;
-  font-size: 38px;
-  line-height: 42px;
-  font-weight: bold;
-  color: white;
-}
-
-.robotsStepText {
-  margin-bottom: 40px;
-  font-size: var(--big1);
-  line-height: var(--big2);
-  color: var(--whiteFaded);
-}
-
-.robotsStepCircle {
-  margin-top: 11px;
-  margin-right: 18px;
-}
-
-.robotsTextAccent{
-  color: white;
-}
-
-.tradingAppImgContainer{
-  display: flex;
-  flex: 1;
-  height: 431px;
-  margin-top: 0;
-}
-
-.telegramBotImg {
-  width: 357px;
-  height: 658px;
-  margin: 0;
-}
-
-.tradingAppImg {
-  width: 700px;
-  height: 429px;
-  max-width: 100%;
-  object-fit: contain;
-  border-bottom-width: 1px;
-  border-color: var(--whiteLight);
+	margin: 60px auto 80px;
 }
 
 @media (max-width: 1200px) {
-  .app {
-    align-items: center;
-    flex-direction: column;
-  }
-  .free {
-    align-items: center;
-    flex-direction: column;
-  }
-  .robotsStepText {
-    font-size: var(--normal3);
-    line-height: var(--big1);
-  }
-  .tradingAppImgContainer {
-    height: 197px;
-    margin-top: 45px;
-  }
-  .tradingAppImg {
-    width: 320px;
-    height: 196px;
-  }
-  .telegramBotImg {
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
+	.free {
+		margin-bottom: 100px;
+	}
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
+}
+
+.robotsSteps {
+	display: flex;
+	flex-direction: column;
+	max-width: 450px;
+}
+
+.robotsStep {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.robotsStepsTitle {
+	margin-top: 0;
+	margin-bottom: 40px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
+}
+
+.robotsStepText {
+	margin-bottom: 40px;
+
+	color: var(--whiteFaded);
+
+	font-size: var(--big1);
+	line-height: var(--big2);
+}
+
+.robotsStepCircle {
+	margin-top: 11px;
+	margin-right: 18px;
+}
+
+.robotsTextAccent {
+	color: white;
+}
+
+.tradingAppImgContainer {
+	display: flex;
+	flex: 1;
+	height: 431px;
+
+	margin-top: 0;
+}
+
+.telegramBotImg {
+	width: 357px;
+	height: 658px;
+
+	margin: 0;
+}
+
+.tradingAppImg {
+	width: 700px;
+	max-width: 100%;
+	height: 429px;
+
+	border-color: var(--whiteLight);
+	border-bottom-width: 1px;
+
+	object-fit: contain;
+}
+
+@media (max-width: 1200px) {
+	.app {
+		align-items: center;
+		flex-direction: column;
+	}
+	.free {
+		align-items: center;
+		flex-direction: column;
+	}
+	.robotsStepText {
+		font-size: var(--normal3);
+		line-height: var(--big1);
+	}
+	.tradingAppImgContainer {
+		height: 197px;
+
+		margin-top: 45px;
+	}
+	.tradingAppImg {
+		width: 320px;
+		height: 196px;
+	}
+	.telegramBotImg {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
 }

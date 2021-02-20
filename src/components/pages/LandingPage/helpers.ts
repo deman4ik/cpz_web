@@ -92,13 +92,6 @@ export const descriptionRobots: DescriptionRobotsType[] = [
 export const descriptionFirstLine: DescriptionFirstLineType[] = [
     {
         imgStyle: { width: 250, height: 120 },
-        imgSrc: "signals",
-        title: "Receive Signals",
-        text:
-            "Use robot signals as indicators for trading and trade manually. You will be able to view the approximate statistics of your trade with signals in your account."
-    },
-    {
-        imgStyle: { width: 250, height: 120 },
         imgSrc: "robots",
         title: "Automatic Trading",
         text:

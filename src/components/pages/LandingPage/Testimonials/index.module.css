@@ -1,0 +1,38 @@
+.title {
+	margin-top: 20px;
+	margin-bottom: 40px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
+}
+
+.aboutus {
+	width: 100%;
+	max-width: 1200px;
+
+	margin: 0 auto 80px;
+	padding: 20px;
+}
+
+@media (max-width: 1200px) {
+	.aboutus {
+		flex-direction: column;
+	}
+}
+
+.colText {
+	margin-bottom: 20px;
+
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
+}
+
+.arrow:hover {
+	opacity: 0.7;
+}

@@ -30,7 +30,7 @@ spec:
                   resources:
                       requests:
                           memory: 128Mi
-                          cpu: "50m"
+                          cpu: "100m"
                       limits:
                           memory: 256Mi
                           cpu: "200m"
@@ -51,3 +51,25 @@ spec:
         app: cpz-web-<ENV>
         env: <ENV>
     type: ClusterIP
+---
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta1
+metadata:
+    name: cpz-web-<ENV>
+    namespace: <ENV>
+spec:
+    scaleTargetRef:
+        kind: Deployment
+        name: cpz-web-<ENV>
+        apiVersion: apps/v1
+    minReplicas: 1
+    maxReplicas: 3
+    metrics:
+        - type: Resource
+          resource:
+              name: cpu
+              targetAverageUtilization: 150
+        - type: Resource
+          resource:
+              name: memory
+              targetAverageUtilization: 150
