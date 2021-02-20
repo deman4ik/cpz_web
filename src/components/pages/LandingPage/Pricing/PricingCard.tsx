@@ -4,7 +4,7 @@ import styles from "./PricingCard.module.css";
 
 export const _PricingCard = ({ card, currentPlan, basePrice, buttonName }): any => {
     const isActive = card && card.name === buttonName;
-    const isAdvancedPlan = card.name === "Advanced plan";
+    const isAdvancedPlan = card.highlite && card.name;
     const isOneMonth = currentPlan.name === "1 month";
 
     return (
@@ -35,7 +35,7 @@ export const _PricingCard = ({ card, currentPlan, basePrice, buttonName }): any 
                 <div className={styles.colFooter}>
                     <PrimaryButton
                         className={card.href ? styles.headerBtn : styles.headerBtnNoLink}
-                        title={card.name}
+                        title={card.buttonName}
                         type={card.buttonType}
                         href={card.href}
                         style={{ backgroundColor: `${card.buttonBackgroundColor}` }}

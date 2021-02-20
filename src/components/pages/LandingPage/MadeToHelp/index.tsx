@@ -8,7 +8,7 @@ const _MadeToHelp = () => {
     return (
         <>
             <h2 className={styles.title}>Cryptuoso is made to help</h2>
-            <div className={styles.founders}>
+            <div className={styles.container}>
                 <div className={styles.grid}>
                     {madeToHelpContent.map((item) => (
                         <MadeToHelpItem key={item.title} item={item} />

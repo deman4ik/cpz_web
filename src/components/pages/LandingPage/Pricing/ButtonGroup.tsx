@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import styles from "./ButtonGroup.module.css";
 
-const Button = ({ classActive, period, handleButton }) => {
+const Button = ({ classActive, period, handleOnButton }) => {
     return (
-        <a className={`${styles.button} ${classActive}`} onClick={(e) => handleButton(e.currentTarget)}>
+        <a className={`${styles.button} ${classActive}`} onClick={(e) => handleOnButton(e.currentTarget)}>
             {period.name}
             {period && period.free !== null && (
                 <p className={styles.free}>
@@ -14,7 +14,7 @@ const Button = ({ classActive, period, handleButton }) => {
     );
 };
 
-export const _ButtonGroup = ({ buttonName, options, handleButton, style }: any): any => {
+export const _ButtonGroup = ({ buttonName, options, handleOnButton, style }: any): any => {
     return (
         <div className={styles.buttonGroup} style={style}>
             {options.map((item) => (
@@ -22,7 +22,7 @@ export const _ButtonGroup = ({ buttonName, options, handleButton, style }: any):
                     key={item.name}
                     period={{ name: item.name, unit: item.unit, free: item.free_months }}
                     classActive={item.name === buttonName && styles.active}
-                    handleButton={() => handleButton(item)}
+                    handleOnButton={() => handleOnButton(item)}
                 />
             ))}
         </div>

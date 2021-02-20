@@ -1,33 +1,38 @@
 .title {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  text-align: center;
-  font-size: 38px;
-  line-height: 42px;
-  font-weight: bold;
-  color: white;
+	margin-top: 20px;
+	margin-bottom: 40px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
 }
 
 .aboutus {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 80px;
-  padding: 20px;
+	width: 100%;
+	max-width: 1200px;
+
+	margin: 0 auto 80px;
+	padding: 20px;
 }
 
 @media (max-width: 1200px) {
-  .aboutus {
-    flex-direction: column;
-  }
+	.aboutus {
+		flex-direction: column;
+	}
 }
 
 .colText {
-  font-size: var(--normal3);
-  line-height: var(--big2);
-  color: var(--whiteFaded);
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
 }
 
 .arrow:hover {
-  opacity: 0.7;
+	opacity: 0.7;
 }

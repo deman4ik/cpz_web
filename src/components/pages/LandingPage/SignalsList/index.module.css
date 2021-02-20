@@ -1,25 +1,27 @@
 .container {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	margin: 0 auto 70px;
 }
 
 .moreBtn {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 420px;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  margin-left: 20px;
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	justify-content: center;
+	width: 100%;
+	max-width: 420px;
+
+	margin-right: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
 }
 
 .loading {
-  width: 100%;
+	width: 100%;
 }
 
 @media (max-width: 480px) {

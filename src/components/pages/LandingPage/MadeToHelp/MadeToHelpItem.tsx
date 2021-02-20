@@ -6,7 +6,7 @@ export const MadeToHelpItem = ({ item }): any => {
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
-                    <item.icon />
+                    <item.icon color={item.color} />
                     <p className={styles.colTitle}>{item.title}</p>
                     <p className={styles.colDescription}>{item.description}</p>
                 </div>
