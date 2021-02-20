@@ -32,11 +32,12 @@ const _AccountBalance: FC = (): any => {
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (user_id === null) Router.push("/auth/login").then(() => window.scrollTo(0, 0));
-    if (loading) return "Loading...";
+    if (loading || !data) return "Loading...";
 
     const { id, status, subscriptionOption } = data.user_subs[0];
     const { subscription, name: currentPlan } = subscriptionOption;
+
+    console.log(data);
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
@@ -140,7 +141,6 @@ const _AccountBalance: FC = (): any => {
                                         {status[0].toUpperCase() + status.slice(1)}
                                     </div>
                                 </div>
-                                {/* <div className={styles.exchangeCell} /> */}
                                 <div className={styles.exchangeCell}>
                                     <Link href="/profile/payment-history">
                                         <a>
@@ -183,7 +183,9 @@ const _AccountBalance: FC = (): any => {
                     <Modal
                         isOpen={isModalSubsVisible}
                         onClose={handleSetSubsVisible}
-                        style={{ paddingTop: "20px", minHeight: 590 }}>
+                        style={{
+                            paddingTop: "20px"
+                        }}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
@@ -191,6 +193,19 @@ const _AccountBalance: FC = (): any => {
                             handleOnClose={handleSetSubsVisible}
                             currentPlan={currentPlan}
                         />
+                        <style jsx>
+                            {`
+                                @media (max-width: 670px) {
+                                    :global(a) {
+                                        padding: 10px !important;
+                                        margin: 0;
+                                    }
+                                    :global(div) {
+                                        margin: 0 !important;
+                                    }
+                                }
+                            `}
+                        </style>
                     </Modal>
                 )}
                 {isModalCheckoutVisible && (
@@ -201,7 +216,7 @@ const _AccountBalance: FC = (): any => {
                             setOkButton(false);
                         }}
                         style={{
-                            width: "480px",
+                            maxWidth: "480px",
                             paddingTop: "20px",
                             backgroundColor: isFrame ? "transparent" : ""
                         }}
