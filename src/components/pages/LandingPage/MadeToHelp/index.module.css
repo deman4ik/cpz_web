@@ -1,47 +1,49 @@
 .title {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: 38px;
-  line-height: 42px;
-  font-weight: bold;
-  color: white;
+	margin-top: 20px;
+	margin-bottom: 30px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
 }
 
-.founders {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-bottom: 60px;
+.container {
+	width: 100%;
+	max-width: 1200px;
+
+	margin: 0 auto;
+	margin-bottom: 90px;
 }
 
 .grid {
-  display: flex;
-  justify-content: space-around;
-  flex-grow: 1;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+	justify-content: space-around;
 }
 
 .benefits {
 	max-width: 730px;
 
 	margin: 0 auto;
-	margin-bottom: 50px;
 
 	text-align: center;
 	white-space: pre-wrap;
-	color: #ffffff;
+	color: #fff;
 
 	font-size: 24px;
 	line-height: 1.2;
 }
 
 @media (max-width: 1200px) {
-  .founders {
-    flex-direction: column;
-  }
-  .grid {
-    flex-direction: column;
-    align-items: center;
-  }
+	.founders {
+		flex-direction: column;
+	}
+	.grid {
+		align-items: center;
+		flex-direction: column;
+	}
 }

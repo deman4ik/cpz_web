@@ -1,72 +1,84 @@
 .title {
-  max-width: 980px;
-  margin-top: 0;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
-  font-size: var(--big3);
-  line-height: 40px;
-  color: var(--whiteFaded);
-  text-align: center;
+	align-items: center;
+	max-width: 980px;
+
+	margin-top: 0;
+	margin-right: auto;
+	margin-left: auto;
+
+	text-align: center;
+	color: var(--whiteFaded);
+
+	font-size: var(--big3);
+	line-height: 40px;
 }
 
 .text {
-  display: inline;
-  margin-right: auto;
-  margin-left: auto;
-  font-size: var(--big1);
-  line-height: 36px;
-  color: var(--whiteFaded);
+	display: inline;
+
+	margin-right: auto;
+	margin-left: auto;
+
+	color: var(--whiteFaded);
+
+	font-size: var(--big1);
+	line-height: 36px;
 }
 
 .container {
-  position: relative;
-  width: 100%;
-  max-width: 1448px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  overflow: hidden;
-  margin-bottom: 20px;
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	max-width: 1448px;
+
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
 }
 
 .line {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 980px;
-  margin-top: 20px;
+	display: flex;
+	align-items: center;
+	max-width: 980px;
+
+	margin-top: 20px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .textWhite {
-  color: white;
+	color: white;
 }
 
 .textGreen {
-  color: var(--lightGreen);
+	color: var(--lightGreen);
 }
 
 .redText {
-  color: var(--lightRed);
+	color: var(--lightRed);
 }
 
 .textAccent {
-  color: var(--accent);
+	color: var(--accent);
 }
 
 @media (max-width: 1200px) {
-  .title {
-    max-width: 450px;
-    margin-top: 40;
-    text-align: left;
-    font-size: var(--big1);
-    line-height: var(--big3);
-  }
-  .text {
-    max-width: 450px;
-    font-size: var(--normal3);
-    line-height: var(--big2);
-  }
+	.title {
+		max-width: 450px;
+
+		margin-top: 40;
+
+		text-align: left;
+
+		font-size: var(--big1);
+		line-height: var(--big3);
+	}
+	.text {
+		max-width: 450px;
+
+		font-size: var(--normal3);
+		line-height: var(--big2);
+	}
 }

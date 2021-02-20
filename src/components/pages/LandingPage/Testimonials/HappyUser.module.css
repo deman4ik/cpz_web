@@ -1,79 +1,87 @@
 .row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
 }
 
 .col {
-  display: flex;
-  flex-direction: column;
-  width: 420px;
-  margin: 0 20px;
-  padding: 20px 20px;
-  border-radius: 2px;
-  width: 60%;
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+	width: 60%;
+
+	padding: 20px 20px 0;
+
+	border-radius: 2px;
 }
 
 @media (max-width: 530px) {
-  .col {
-    margin-bottom: 10px;
-    width: auto;
-    min-width: 320px;
-  }
+	.col {
+		width: auto;
+		min-width: 320px;
+	}
 }
 
 .colBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 
 .iconWrapper {
-  margin-top: 20px;
-  margin-bottom: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .colTitle {
-  text-align: center;
-  font-size: var(--big3);
-  line-height: var(--big3);
-  color: white;
-  padding: 0;
-  margin-bottom: 0;
+	margin-bottom: 0;
+	padding: 0;
+
+	text-align: center;
+	color: white;
+
+	font-size: var(--big3);
+	line-height: var(--big3);
 }
 
 .colPosition {
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: var(--big4);
-  color: white;
+	margin-bottom: 20px;
+
+	text-align: center;
+	color: white;
+
+	font-size: var(--big4);
 }
 
 .colText {
-  font-size: var(--normal3);
-  line-height: var(--big2);
-  color: var(--whiteFaded);
-  white-space: pre-line;
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+
+	white-space: pre-line;
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
 }
 
 .colText button {
-  font-size: var(--normal3);
-  line-height: var(--big2);
-  color: var(--whiteFaded);
-  white-space: pre-line;
-  margin-bottom: 20px;
-  cursor: pointer;
-  padding: 0;
+	margin-bottom: 20px;
+	padding: 0;
+
+	cursor: pointer;
+	white-space: pre-line;
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
 }
 
 .colText button:hover {
-  opacity: 0.7;
+	opacity: 0.7;
 }
 
 .colFooter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }

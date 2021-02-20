@@ -16,7 +16,7 @@ export const pricingContent = [
         Web Community Chat Support
         `,
         price: "0",
-        button: "Get started",
+        buttonName: "Get\nstarted",
         buttonType: "",
         buttonBackgroundColor: "#0b98c5",
         borderColor: "#2c3454",
@@ -25,7 +25,7 @@ export const pricingContent = [
     {
         icon: planetSky,
         iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
-        name: "Advanced plan",
+        name: "Trader plan",
         text: `Fully automated trading
         Access to 135+ trading robots
         
@@ -37,7 +37,7 @@ export const pricingContent = [
         `,
         price: "14,9",
         savePrice: "7,45",
-        button: "Start\nfree trial",
+        buttonName: "Start\nfree trial",
         buttonType: "",
         buttonBackgroundColor: "#1ca46b",
         borderColor: "#0b98c5",
@@ -55,7 +55,7 @@ export const pricingContent = [
         allocate assets between the robots`,
         price: "",
         savePrice: "",
-        button: "Coming\nsoon",
+        buttonName: "Coming\nsoon",
         buttonType: "",
         buttonBackgroundColor: "rgba(105, 135, 185, 0.2)",
         borderColor: "#0b98c5",

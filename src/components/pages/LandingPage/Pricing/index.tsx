@@ -12,33 +12,34 @@ const _Pricing = () => {
     const [currentPlan, setCurrentPlan] = useState(optionsSorted[PLAN_NAMES["6 months"]]);
     const basePrice = optionsSorted[PLAN_NAMES["1 month"]].price_month;
 
-    const handleButton = (card) => {
+    const handleOnButton = (card) => {
+        console.log(card.name);
+
         setButtonName(card.name);
         setCurrentPlan(card);
     };
 
     return (
-        <>
+        <div className={styles.pricing}>
             <h2 className={styles.title}>Plans &amp; pricing</h2>
             <p className={styles.benefits}>
                 {`Get access to all the available features at a single, affordable price.\nFree trial available after sign up.\nNo credit card required.`}
             </p>
-            <div className={styles.pricing}>
-                <p className={styles.billed}>Billed for</p>
-                <ButtonGroup handleButton={handleButton} options={optionsSorted} buttonName={buttonName} />
-                <div className={styles.grid}>
-                    {pricingContent.map((card) => (
-                        <PricingCard
-                            key={card.name}
-                            card={card}
-                            currentPlan={currentPlan}
-                            basePrice={basePrice}
-                            buttonName={buttonName}
-                        />
-                    ))}
-                </div>
+
+            <p className={styles.billed}>Billed for</p>
+            <ButtonGroup handleOnButton={handleOnButton} options={optionsSorted} buttonName={buttonName} />
+            <div className={styles.grid}>
+                {pricingContent.map((card) => (
+                    <PricingCard
+                        key={card.name}
+                        card={card}
+                        currentPlan={currentPlan}
+                        basePrice={basePrice}
+                        buttonName={buttonName}
+                    />
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 

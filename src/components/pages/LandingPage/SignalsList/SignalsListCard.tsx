@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import dynamic from "next/dynamic";
 
 import { PrimaryButton } from "components/basic";
-import { getStats, formatMoney, valueWithSign, getVolumeWithUnit } from "config/utils";
+import { getStats, formatMoney, getVolumeWithUnit } from "config/utils";
 import styles from "./SignalsListCard.module.css";
 
 interface Props {
@@ -52,14 +52,6 @@ const _SignalsListCard: React.FC<Props> = ({ robot }) => {
                 </div>
             </div>
             <div className={styles.btns}>
-                {robot.signals && (
-                    <PrimaryButton
-                        type="primary"
-                        title="Subscribe to Signals"
-                        href={`/signals/robot/${robot.code}`}
-                        mini
-                    />
-                )}
                 {robot.trading && (
                     <PrimaryButton
                         type="secondary"
