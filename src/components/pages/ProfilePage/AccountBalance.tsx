@@ -208,6 +208,7 @@ const _AccountBalance: FC = (): any => {
                         onClose={() => {
                             setModalCheckoutVisibility(!isModalCheckoutVisible);
                             setOkButton(false);
+                            document.body.style.overflow = "auto";
                         }}
                         style={{
                             maxWidth: "480px",

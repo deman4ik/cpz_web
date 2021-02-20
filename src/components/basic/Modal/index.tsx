@@ -22,6 +22,7 @@ export const Modal: React.FC<Props> = (props) => {
         function handleClickOutside(event) {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
                 props.onClose(event);
+                document.body.style.overflow = "auto";
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -30,6 +31,7 @@ export const Modal: React.FC<Props> = (props) => {
         };
     }, [modalRef, props]);
     if (!props.isOpen) return null;
+    document.body.style.overflow = "hidden";
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>

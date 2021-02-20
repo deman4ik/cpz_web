@@ -21,6 +21,7 @@ export const EffectButton: React.FC<Props> = ({ icon, onClick, color = "white" }
 
     const handleClick = (e) => {
         onClick(e);
+        document.body.style.overflow = "auto";
     };
     return (
         <div className={`${styles.wrapper} ${styles.ripple}`} onClick={handleClick}>
