@@ -1,5 +1,5 @@
-import avatarKirill from "assets/img/founders/kirill.png";
-import avatarDimitriy from "assets/img/founders/dimitriy.png";
+import avatarKirill from "assets/img/avatars/kirill.png";
+import avatarDimitriy from "assets/img/avatars/dimitriy.png";
 
 export const foundersContent = [
     {

@@ -1,27 +1,27 @@
 import React, { memo } from "react";
 import Slider from "react-slick";
-import { OurHappyUser } from "./OurHappyUser";
-import { foundersContent } from "../Founders/helpres";
+import { HappyUser } from "./HappyUser";
+import { testimonialsContent } from "./helper";
 import { ArrowSliderIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
-function SliderArrow(props) {
+export const SliderArrow = (props): any => {
     const { className, onClick } = props;
     return (
-        <div className={className} onClick={onClick}>
+        <div className={`${className} ${styles.arrow}`} onClick={onClick}>
             <ArrowSliderIcon rotate={props.rotate} />
         </div>
     );
-}
+};
 
-const _OurHappyUsers = () => {
+const _Testimonials = () => {
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 2,
         slidesToScroll: 1,
-        nextArrow: <SliderArrow rotate="rotate(180deg)" />,
+        nextArrow: <SliderArrow className={styles.arrow} rotate="rotate(180deg)" />,
         prevArrow: <SliderArrow />,
         responsive: [
             {
@@ -38,14 +38,11 @@ const _OurHappyUsers = () => {
 
     return (
         <>
-            <h2 className={styles.title}>Our happy users</h2>
+            <h2 className={styles.title}>What people are actually thinking about Cryptuoso</h2>
             <div className={styles.aboutus}>
                 <Slider {...settings}>
-                    {foundersContent.map((item) => (
-                        <OurHappyUser key={item.avatar} item={item} />
-                    ))}
-                    {foundersContent.map((item) => (
-                        <OurHappyUser key={item.avatar} item={item} />
+                    {testimonialsContent.map((item) => (
+                        <HappyUser key={item.name} item={item} />
                     ))}
                 </Slider>
             </div>
@@ -53,4 +50,4 @@ const _OurHappyUsers = () => {
     );
 };
 
-export const OurHappyUsers = memo(_OurHappyUsers);
+export const Testimonials = memo(_Testimonials);

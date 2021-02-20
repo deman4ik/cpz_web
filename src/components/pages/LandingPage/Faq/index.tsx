@@ -8,7 +8,7 @@ const _Faq = () => {
     const half = Math.ceil(faqContent.length / 2);
     return (
         <>
-            <h2 className={styles.title}>Faq</h2>
+            <h2 className={styles.title}>FAQ</h2>
             <div className={styles.wrapper}>
                 <div className={styles.gridLeft}>
                     {faqContent.slice(0, half).map((item) => (

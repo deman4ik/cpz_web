@@ -18,6 +18,9 @@ export type PricingItemType = {
     button?: string;
     buttonType?: string;
     href?: string;
+    highlite?: boolean;
+    borderColor?: string;
+    buttonBackgroundColor?: string;
 };
 
 export interface StepProps {

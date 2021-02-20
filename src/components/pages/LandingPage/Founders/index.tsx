@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { FoundersItem } from "./FoundersItem";
-import { foundersContent } from "./helpres";
+import { foundersContent } from "./helper";
 
 import styles from "./index.module.css";
 

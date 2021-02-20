@@ -1,6 +1,6 @@
 .title {
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   text-align: center;
   font-size: 38px;
   line-height: 42px;
@@ -20,7 +20,20 @@
   justify-content: space-around;
   flex-grow: 1;
   flex-direction: row;
-  margin-bottom: 40px;
+}
+
+.benefits {
+	max-width: 730px;
+
+	margin: 0 auto;
+	margin-bottom: 50px;
+
+	text-align: center;
+	white-space: pre-wrap;
+	color: #ffffff;
+
+	font-size: 24px;
+	line-height: 1.2;
 }
 
 @media (max-width: 1200px) {

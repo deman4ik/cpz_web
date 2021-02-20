@@ -2,15 +2,16 @@ import React, { useContext } from "react";
 import { Caption } from "./Caption";
 import { Description } from "./Description";
 import { SignalsList } from "./SignalsList";
+import { MadeToHelp } from "./MadeToHelp";
+import { Pricing } from "./Pricing";
+import { Testimonials } from "./Testimonials";
 import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
 import { Support } from "./Support";
-import { Pricing } from "./Pricing";
 import { Faq } from "./Faq";
 import { Founders } from "./Founders";
 import { Aboutus } from "./Aboutus";
-import { OurHappyUsers } from "./OurHappyUsers";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
@@ -36,13 +37,14 @@ const _LandingPage: React.FC = () => {
                         <Description />
                         <h2 className={styles.topRobotsTitle}>Top Performance Robots</h2>
                         <SignalsList />
+                        <MadeToHelp />
+                        <Pricing />
+                        <Testimonials />
                         <TradingApp />
                         <TelegramBot />
-                        <Pricing />
                         <Faq />
-                        <Aboutus />
                         <Founders />
-                        <OurHappyUsers />
+                        <Aboutus />
                         <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />
