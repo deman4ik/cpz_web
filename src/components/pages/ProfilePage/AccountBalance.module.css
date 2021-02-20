@@ -130,8 +130,11 @@
 
 @media (max-width: 480px) {
 	.row {
-		grid-template-columns: repeat(4, 1fr);
-		justify-items: center;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: center;
+		width: 100%;
 	}
 }
 
@@ -174,6 +177,7 @@
 
 @media (max-width: 480px) {
 	.btnGroup {
+		align-content: center;
 		flex-direction: column;
 		flex-grow: 1;
 		justify-content: space-evenly;

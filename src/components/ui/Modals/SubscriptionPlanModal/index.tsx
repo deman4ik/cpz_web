@@ -96,7 +96,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                 )}
                 <Button
                     buttonType={HTMLButtonTypes.button}
-                    style={{ width: 140, margin: "0 auto" }}
+                    style={{ maxWidth: 140, margin: "0 auto" }}
                     title="Subscribe"
                     type="success"
                     size="normal"

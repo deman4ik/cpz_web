@@ -70,6 +70,13 @@
 	border-bottom: 1px solid var(--primary);
 }
 
+@media (max-width: 480px) {
+	.planDescription {
+		margin-bottom: 20px;
+		padding: 10px;
+	}
+}
+
 .buttonGroup {
 	margin: 0 auto;
 	margin-top: 25px;
