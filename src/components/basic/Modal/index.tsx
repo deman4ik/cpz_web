@@ -26,14 +26,12 @@ export const Modal: React.FC<Props> = (props) => {
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.body.style.overflow = "auto";
+            document.body.style.overflowY = "auto";
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [modalRef, props]);
-    console.log(props.isOpen);
-
     if (props.isOpen) {
-        document.body.style.overflow = "hidden";
+        document.body.style.overflowY = "hidden";
     } else {
         return null;
     }
