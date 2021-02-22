@@ -1,5 +1,4 @@
 import React, { FC, useContext, useState, memo } from "react";
-import Router from "next/router";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
@@ -34,10 +33,7 @@ const _AccountBalance: FC = (): any => {
 
     if (loading || !data) return "Loading...";
 
-    const { id, status, subscriptionOption } = data.user_subs[0];
-    const { subscription, name: currentPlan } = subscriptionOption;
-
-    console.log(data);
+    const { id, status, subscription, subscriptionOption } = data.user_subs[0];
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
@@ -186,7 +182,7 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
-                            currentPlan={currentPlan}
+                            currentPlan={subscriptionOption}
                         />
                         <style jsx>
                             {`

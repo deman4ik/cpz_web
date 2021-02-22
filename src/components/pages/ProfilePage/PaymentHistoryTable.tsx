@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { formatDate } from "config/utils";
 import styles from "./PaymentHistoryPage.module.css";
 
 const _PaymentHistoryTable = ({
@@ -68,7 +69,7 @@ const _PaymentHistoryTable = ({
                             Created
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{created_at}</div>
+                            <div className={styles.tableCellText}>{formatDate(created_at)}</div>
                         </div>
                     </div>
                 </>
@@ -81,7 +82,7 @@ const _PaymentHistoryTable = ({
                             Expires
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{expires_at}</div>
+                            <div className={styles.tableCellText}>{formatDate(expires_at)}</div>
                         </div>
                     </div>
                 </>
@@ -109,7 +110,9 @@ const _PaymentHistoryTable = ({
                             Subscription Period
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{`${subscription_from} \n- ${subscription_to}`}</div>
+                            <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
+                                subscription_to
+                            )}`}</div>
                         </div>
                     </div>
                 </>
