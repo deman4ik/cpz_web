@@ -8,12 +8,13 @@ import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
+import NothingComponent from "components/common/NothingComponent";
 import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
     const {
-        authState: { user_id }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
@@ -25,13 +26,22 @@ const _AccountBalance: FC = (): any => {
 
     const { data, loading } = useQuery(GET_USER_SUBS, {
         variables: {
+            isAuth,
             user_id
         }
     });
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (loading || !data) return "Loading...";
+    if (loading || !data || !isAuth)
+        return (
+            <>
+                <div className={styles.regionTitle}>Cryptuoso Subscription</div>
+                <div className={styles.surface}>
+                    <NothingComponent beforeButtonKeyWord="subscription" />
+                </div>
+            </>
+        );
 
     const { id, status, subscription, subscriptionOption } = data.user_subs[0];
 
