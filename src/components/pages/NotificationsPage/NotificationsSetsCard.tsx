@@ -32,7 +32,7 @@ export const messageSet = (item) => (
 );
 
 export const robotTradeSet = (item, onClick) => {
-    return(
+    return (
         <div className={styles.rowCard}>
             {item.data.status === "open" ? (
                 <>
@@ -120,7 +120,8 @@ export const robotTradeSet = (item, onClick) => {
                 </>
             )}
         </div>
-    )};
+    );
+};
 
 export const errorSet = (item, onClick) => (
     <div className={styles.rowCard} style={{ flex: 1 }}>
