@@ -8,7 +8,6 @@ import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
-import NothingComponent from "components/common/NothingComponent";
 import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
@@ -26,7 +25,6 @@ const _AccountBalance: FC = (): any => {
 
     const { data, loading } = useQuery(GET_USER_SUBS, {
         variables: {
-            isAuth,
             user_id
         }
     });
@@ -38,7 +36,7 @@ const _AccountBalance: FC = (): any => {
             <>
                 <div className={styles.regionTitle}>Cryptuoso Subscription</div>
                 <div className={styles.surface}>
-                    <NothingComponent beforeButtonKeyWord="subscription" />
+                    <p className={styles.titleStab}>Your user subscription will appear here.</p>
                 </div>
             </>
         );
