@@ -23,15 +23,16 @@ const _AccountBalance: FC = (): any => {
     const [isFrame, setIframe] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
-    const { data, loading } = useQuery(GET_USER_SUBS, {
+    const { loading, error, data } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
     });
+
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (loading || !data || !isAuth)
+    if (loading || error || !data || !data.user_subs || !isAuth)
         return (
             <>
                 <div className={styles.regionTitle}>Cryptuoso Subscription</div>
@@ -212,7 +213,6 @@ const _AccountBalance: FC = (): any => {
                         onClose={() => {
                             setModalCheckoutVisibility(!isModalCheckoutVisible);
                             setOkButton(false);
-                            document.body.style.overflow = "auto";
                         }}
                         style={{
                             maxWidth: "480px",

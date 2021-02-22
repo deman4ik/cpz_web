@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import Router from "next/router";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { SignalItem } from "../RobotsList/types";
 import { RobotsButtonItemCard, RobotItemStatusBlock } from ".";
 import { formatVariables } from "./helpers";
 import { Button } from "components/basic";
-import styles from "./RobotsItemCard.module.css";
+import { AuthContext } from "providers/authContext";
 import { WinRateStatistics } from "./WinRateStatistics";
 import { DataCard } from "../DataCard";
-import Link from "next/link";
+import styles from "./RobotsItemCard.module.css";
 
 interface Props {
     item: SignalItem;
@@ -18,8 +20,16 @@ interface Props {
 const DynamicAreaChart = dynamic(() => import("components/charts/AreaChart"));
 
 export const RobotsItemCard: React.FC<Props> = ({ item, displayType, robotSubscribe }) => {
+    const {
+        authState: { isAuth }
+    } = useContext(AuthContext);
+
     const subscribeToggle = () => {
-        robotSubscribe(formatVariables(item, "", displayType));
+        if (!isAuth) {
+            Router.push("/auth/login");
+        } else {
+            robotSubscribe(formatVariables(item, "", displayType));
+        }
     };
 
     const handleOnPressChangeVolume = () => {

@@ -21,7 +21,7 @@ interface Props {
 }
 
 const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, currentPlan }) => {
-    const { data, loading } = useQuery(GET_SUBSCRIPTIONS);
+    const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
     const [formError, setFormError] = useState("");
