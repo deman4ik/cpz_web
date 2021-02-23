@@ -20,7 +20,7 @@ const _RobotOpenPositions: React.FC<Props> = ({ type, data }) => {
     const mobile = !desktopSize;
 
     return (
-        <div>
+        <div className={styles.itemCardWrapper}>
             {!data.length ? (
                 <div style={{ marginTop: "20px" }}>
                     <NothingComponent

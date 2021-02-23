@@ -59,7 +59,7 @@ export const robotTradeSet = (item, onClick) => (
                         <div className={styles.colRobot}>
                             <div className={styles.textAccentCard}>Amount</div>
                             <div className={styles.textMessageCard}>
-                                {`${item.data.entryExecuted} ${item.robot?.asset}`}
+                                {`${item.data.entryExecuted} ${item.data.asset}`}
                             </div>
                         </div>
                         <div className={styles.colRobot} style={{ marginTop: 5 }}>
@@ -98,7 +98,7 @@ export const robotTradeSet = (item, onClick) => (
                             <div className={styles.colRobot}>
                                 <div className={styles.textAccentCard}>Amount</div>
                                 <div className={styles.textMessageCard}>
-                                    {`${item.data.exitExecuted} ${item.robot?.asset}`}
+                                    {`${item.data.exitExecuted} ${item.data.asset}`}
                                 </div>
                             </div>
                             <div className={styles.colRobot}>
