@@ -74,8 +74,8 @@
 
 @media (max-width: 1300px) {
 	.tableRow {
-		display: inline-flex;
-		flex-wrap: wrap;
+		align-items: flex-start;
+		flex-direction: column;
 		width: 100%;
 		max-width: 320px;
 
@@ -83,6 +83,10 @@
 		margin-left: 10px;
 
 		box-shadow: rgb(0 0 0 / 24%) 0 3px 4px;
+	}
+
+	.tableRow:last-of-type {
+		margin-bottom: 20px;
 	}
 }
 

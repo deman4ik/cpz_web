@@ -15,11 +15,13 @@ interface Props {
     subsName?: boolean;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
-    currentPlan?: string;
+    currentPlan?: {
+        name?: string;
+    };
 }
 
 const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, currentPlan }) => {
-    const { data } = useQuery(GET_SUBSCRIPTIONS);
+    const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
     const [formError, setFormError] = useState("");
@@ -29,7 +31,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
     const [buttonName, setButtonName] = useState("6 months");
 
     useEffect(() => {
-        if (!data) return;
+        if (loading || !data) return;
 
         const { subscriptions } = data;
         const { options } = subscriptions[0];
@@ -41,7 +43,8 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
 
         const [highlightedPlan] = options.filter((option) => option.highlight === true);
         if (currentPlan) {
-            setButtonName(currentPlan);
+            setButtonName(currentPlan.name);
+            setPlan(currentPlan);
             return;
         }
 
@@ -74,7 +77,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
             <div className={styles.buttonGroup}>
                 {periods && (
                     <ButtonGroup
-                        handleButton={handleOnButton}
+                        handleOnButton={handleOnButton}
                         options={periods}
                         buttonName={buttonName}
                         style={{ marginBottom: 0 }}

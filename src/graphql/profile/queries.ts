@@ -108,9 +108,6 @@ export const GET_USER_SUBS = gql`
                 unit
                 available
                 highlight
-                subscription {
-                    name
-                }
             }
             user_payments(where: { user_id: { _eq: $user_id } }) {
                 id
@@ -125,8 +122,13 @@ export const GET_USER_SUBS = gql`
 `;
 
 export const GET_USER_PAYMENTS = gql`
-    query userPayments($user_id: uuid) {
-        user_payments(where: { user_id: { _eq: $user_id } }) {
+    query userPayments($user_id: uuid, $limit: Int, $offset: Int) {
+        user_payments(
+            limit: $limit
+            offset: $offset
+            where: { user_id: { _eq: $user_id } }
+            order_by: { created_at: desc }
+        ) {
             id
             code
             url
