@@ -25,6 +25,15 @@
 	box-shadow: var(--shadow);
 }
 
+.titleStab {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	font-size: var(--normal0);
+	color: var(--whiteFaded);
+	margin: 5px;
+}
+
 .stub {
 	display: flex;
 	flex-direction: column;

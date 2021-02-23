@@ -1,5 +1,4 @@
 import React, { FC, useContext, useState, memo } from "react";
-import Router from "next/router";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
@@ -14,7 +13,7 @@ import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
     const {
-        authState: { user_id }
+        authState: { isAuth, user_id }
     } = useContext(AuthContext);
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
@@ -24,20 +23,26 @@ const _AccountBalance: FC = (): any => {
     const [isFrame, setIframe] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
-    const { data, loading } = useQuery(GET_USER_SUBS, {
+    const { loading, error, data } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
     });
+
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (loading || !data) return "Loading...";
+    if (loading || error || !data || !data.user_subs || !isAuth)
+        return (
+            <>
+                <div className={styles.regionTitle}>Cryptuoso Subscription</div>
+                <div className={styles.surface}>
+                    <p className={styles.titleStab}>Your user subscription will appear here.</p>
+                </div>
+            </>
+        );
 
-    const { id, status, subscriptionOption } = data.user_subs[0];
-    const { subscription, name: currentPlan } = subscriptionOption;
-
-    console.log(data);
+    const { id, status, subscription, subscriptionOption } = data.user_subs[0];
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCheckoutVisible = () => {
@@ -186,7 +191,7 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
-                            currentPlan={currentPlan}
+                            currentPlan={subscriptionOption}
                         />
                         <style jsx>
                             {`
