@@ -87,7 +87,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             !!shortPosLoading ||
             !!longPosLoading ? (
                 <LoadingIndicator style={{ height: 400 }}/>
-            ) :!!!userHasRobots ? (
+            ) :!!userHasRobots ? (
                 <>
                     <div className={style.doubledSection}>
                         <RobotPerformance
