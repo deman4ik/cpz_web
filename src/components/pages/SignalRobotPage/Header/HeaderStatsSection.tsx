@@ -20,7 +20,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ config, columnsNum = 2, width })
     const gridColumnsString = Array.from({ length: numberOfColumns }, () => "auto").join(" ");
 
     return (
-        <div className={styles.robotStats} style={{ gridTemplateColumns: gridColumnsString }}>
+        <div className={styles.robotStats}>
             {config.map((i) => (
                 <HeaderStatsSectionItem key={i.label} {...i} />
             ))}

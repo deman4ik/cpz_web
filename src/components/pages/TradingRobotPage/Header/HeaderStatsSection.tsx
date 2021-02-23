@@ -19,7 +19,7 @@ const _HeaderStatsSection: React.FC<Props> = ({ robotData }) => {
     const notOwnedButHasActiveDays = !isOwnedByUser && activeDays(robotData) !== null;
     const ownedAndStarted = isOwnedByUser && userRobot.status === "started";
     return (
-        <div className={styles.robotStats} style={{ gridTemplateColumns: "auto auto" }}>
+        <div className={styles.robotStats}>
             <HeaderStatsSectionItem
                 value={`${formatMoney(getProfit(robotData))} $`}
                 label="Profit"

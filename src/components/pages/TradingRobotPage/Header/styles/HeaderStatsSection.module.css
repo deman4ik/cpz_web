@@ -1,38 +1,53 @@
 .robotStats {
-  padding-top: 15px;
-  display: grid;
-  grid-gap: 5px;
+	display: grid;
+
+	padding-top: 15px;
+
+	grid-gap: 5px;
+	grid-template-columns: auto auto;
 }
 
 .robotStatsCol {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .robotStatsRow {
-  width: fit-content;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  margin-bottom: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: fit-content;
+	width: 100%;
+
+	margin-bottom: 5px;
 }
 
 .robotStatsLabel {
-  margin-left: 20px;
-  font-size: var(--small1);
-  color: var(--accent);
+	margin-left: 20px;
+
+	color: var(--accent);
+
+	font-size: var(--small1);
 }
 
 .robotStatsValue {
-  margin-left: 20px;
-  font-size: var(--small1);
-  color: white;
+	margin-left: 20px;
+
+	color: white;
+
+	font-size: var(--small1);
 }
 
-@media (max-width: 768px) {
-  .robotStats {
-      flex-direction: column;
-      margin: 0 auto 5px;
-  }
+@media (max-width: 480px) {
+	.robotStats {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		margin: 0 auto 5px;
+	}
+
+	.robotStatsLabel, .robotStatsValue {
+		margin: 0;
+	}
 }
