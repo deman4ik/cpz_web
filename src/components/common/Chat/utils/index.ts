@@ -12,7 +12,7 @@ export interface messagesContext {
  * @param data - сообщения пользователя
  * @param messagesContext - определяет чат от лица юзера или тех поддержки  а так же username  в сообщениях
  */
-export const formatMessage = (data: any, { supportContext, username }: messagesContext) => {
+export const formatMessage = (data: [], { supportContext, username }: messagesContext) : any => {
     return data.map(({ data: { message }, timestamp, to }) => {
         let type: string;
         let subject: string;

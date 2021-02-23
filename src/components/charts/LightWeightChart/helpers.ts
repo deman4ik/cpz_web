@@ -4,7 +4,7 @@ import { ChartSize } from "./types";
 export const getLeftOffsetButton = (lastValue: number): number =>
     lastValue ? (lastValue.toFixed(2).length - 7) * 6 : 0;
 
-export const getChartOptionsConfig = (size: ChartSize) => ({
+export const getChartOptionsConfig = (size: ChartSize) : any => ({
     width: size.width,
     height: size.height,
     layout: {
