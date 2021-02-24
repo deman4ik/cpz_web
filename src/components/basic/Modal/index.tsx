@@ -18,6 +18,18 @@ interface Props {
 
 export const Modal: React.FC<Props> = (props) => {
     const modalRef = useRef(null);
+    const bodyRef = useRef(document.body);
+
+    useEffect(() => {
+        const body = bodyRef.current;
+        if (props.isOpen) {
+            body.classList.add(styles.noScroll);
+        }
+        return () => {
+            body.classList.remove(styles.noScroll);
+        };
+    }, [props.isOpen]);
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -26,22 +38,18 @@ export const Modal: React.FC<Props> = (props) => {
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.body.style.overflowY = "auto";
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [modalRef, props]);
-    if (props.isOpen) {
-        document.body.style.overflowY = "hidden";
-    } else {
-        return null;
-    }
-
+    if (!props.isOpen) return null;
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
                 <div
                     ref={modalRef}
-                    className={`${styles.modal} ${props.className} ${props.isFrame ? styles.noBackground : ""}`}>
+                    className={`${styles.modal} ${props.className ? props.className : ""} ${
+                        props.isFrame ? styles.noBackground : ""
+                    }`}>
                     <ModalTemplate
                         title={props.title}
                         onClose={props.onClose}
