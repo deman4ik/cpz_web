@@ -81,7 +81,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
             title={typeIsSignals ? PageType.signals : PageType.robots}
             subTitle={typeIsSignals ? "Manual Trading" : "Automated Trading"}
             toolbar={<PageToolbar displayType={typeIsSignals ? RobotsType.signals : RobotsType.robots} />}>
-            {(!!isAuth && typeof robotsData === "undefined") ||
+            {(isAuth && typeof robotsData === "undefined") ||
             !!aggrDataLoading ||
             !!robotsLoading ||
             !!shortPosLoading ||
