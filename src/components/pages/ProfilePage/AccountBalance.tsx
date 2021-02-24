@@ -8,7 +8,7 @@ import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
-import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
+import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
@@ -19,15 +19,28 @@ const _AccountBalance: FC = (): any => {
     const [userId, setUserId] = useState();
     const [status, setStatus] = useState("");
     const [subscription, setSubscription] = useState({ name: "" });
-    const [subscriptionOption, setSubscriptionOption] = useState();
+
+    const [subscriptionOption, setSubscriptionOption] = useState({
+        name: "",
+        price_total: 0,
+        active_to: "",
+        trial_ended: ""
+    });
+
+    const [userPaymentData, setUserPaymentData] = useState({
+        id: "",
+        code: "",
+        price: 0,
+        status: "",
+        expires_at: ""
+    });
 
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
-    const [formError, setFormError] = useState("");
-    const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
     const [isFrame, setIframe] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [formError, setFormError] = useState("");
 
     const { loading, error, data } = useQuery(GET_USER_SUBS, {
         variables: {
@@ -40,34 +53,13 @@ const _AccountBalance: FC = (): any => {
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     useEffect(() => {
-        if (loading || error || !data || !data.user_subs) return;
-
-        setUserId(data.user_subs[0].id);
-        setStatus(data.user_subs[0].status);
-        setSubscription(data.user_subs[0].subscription);
-        setSubscriptionOption(data.user_subs[0].subscriptionOption);
+        if (!loading && !error && data && data.user_subs) {
+            setUserId(data.user_subs[0].id);
+            setStatus(getToUpperCase(data.user_subs[0].status));
+            setSubscription(data.user_subs[0].subscription);
+            setSubscriptionOption(data.user_subs[0].subscriptionOption);
+        }
     }, [loading, error, data]);
-
-    if (!isAuth)
-        return (
-            <>
-                <div className={styles.regionTitle}>Cryptuoso Subscription</div>
-                <div className={styles.surface}>
-                    <p className={styles.titleStab}>Your user subscription will appear here.</p>
-                    <Link href=" /auth/login">
-                        <a>
-                            <Button
-                                isUppercase
-                                style={{ margin: "20px auto 0", width: "260px" }}
-                                title="Try for free"
-                                size="big"
-                                type="primary"
-                            />
-                        </a>
-                    </Link>
-                </div>
-            </>
-        );
 
     const handleSetCheckoutVisible = (id) => {
         setLoading(true);
@@ -90,6 +82,7 @@ const _AccountBalance: FC = (): any => {
             )
             .catch(({ message }) => setFormError(message));
     };
+
     const handleOnModalCheckoutClose = () => {
         setLoading(true);
         checkPayment({
@@ -115,7 +108,22 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!data || !data.user_subs || !subscription || !subscriptionOption ? (
+                {!isAuth ? (
+                    <>
+                        <p className={styles.titleStab}>Your user subscription will appear here.</p>
+                        <Link href=" /auth/login">
+                            <a>
+                                <Button
+                                    isUppercase
+                                    style={{ margin: "20px auto 0", width: "260px" }}
+                                    title="Try for free"
+                                    size="big"
+                                    type="primary"
+                                />
+                            </a>
+                        </Link>
+                    </>
+                ) : !data || !data.user_subs ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
@@ -166,9 +174,7 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>
-                                        {status[0].toUpperCase() + status.slice(1)}
-                                    </div>
+                                    <div className={styles.tableCellText}>{status}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <Link href="/profile/payment-history">
@@ -213,9 +219,8 @@ const _AccountBalance: FC = (): any => {
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
-                            subsName={subscriptionOption && subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
-                            currentPlan={subscriptionOption}
+                            currentPlan={data && data.user_subs && subscriptionOption}
                         />
                         <style jsx>
                             {`
