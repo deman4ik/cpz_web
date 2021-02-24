@@ -245,7 +245,7 @@ const _AccountBalance: FC = (): any => {
                         }}
                         style={{
                             maxWidth: "480px",
-                            padding: 20,
+                            padding: 0,
                             backgroundColor: isFrame ? "transparent" : ""
                         }}
                         isFrame={isFrame}>
