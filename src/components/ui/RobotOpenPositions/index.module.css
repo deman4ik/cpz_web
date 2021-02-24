@@ -1,44 +1,55 @@
 .exchangeContainerMobile {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .exchange {
-    display: flex;
-    align-items: center;
-    font-size: var(--big1);
-    color: white;
-    margin: 10px 0;
+	display: flex;
+	align-items: center;
+
+	margin: 10px 0;
+
+	color: white;
+
+	font-size: var(--big1);
 }
 
 .assetHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--normal1);
-    background-color: var(--dark);
-    color: white;
-    padding: 10px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 10px 20px;
+
+	color: white;
+	background-color: var(--dark);
+
+	font-size: var(--normal1);
 }
 
 .assetHeaderMobileStats {
-    display: flex;
-    font-size: var(--normal0);
-    color: var(--accent);
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
+
+	color: var(--accent);
+
+	font-size: var(--normal0);
 }
 
 @media (max-width: 1080px) {
-    .exchange {
-        font-size: var(--normal3);
-    }
+	.exchange {
+		font-size: var(--normal3);
+	}
 }
 
 @media (max-width: 480px) {
-    .exchange {
-        font-size: var(--normal1);
-    }
-    .assetHeader {
-        font-size: var(--normal0);
-    }
+	.exchange {
+		font-size: var(--normal1);
+	}
+	.assetHeader {
+		font-size: var(--normal0);
+	}
+	.itemCardWrapper {
+		padding-bottom: 50px;
+	}
 }

@@ -21,24 +21,24 @@
 }
 
 .tab:first-child {
-    margin-left: 0;
+	margin-left: 0;
 }
 
 .tab:last-child {
-    margin-right: 0;
+	margin-right: 0;
 }
 
 @media (max-width: 1080px) {
-    .tab {
-        margin: 0 10px;
-    }
+	.tab {
+		margin: 0 10px;
+	}
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding-top: 0px;
-    }
-    .tab {
-        word-break: break-all;
-    }
+	.container {
+		padding-top: 0;
+	}
+	.tab {
+		word-break: break-all;
+	}
 }

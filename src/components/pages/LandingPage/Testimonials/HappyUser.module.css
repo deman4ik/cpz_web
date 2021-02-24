@@ -1,0 +1,87 @@
+.row {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+	width: 60%;
+
+	padding: 20px 20px 0;
+
+	border-radius: 2px;
+}
+
+@media (max-width: 530px) {
+	.col {
+		width: auto;
+		min-width: 320px;
+	}
+}
+
+.colBody {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.iconWrapper {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.colTitle {
+	margin-bottom: 0;
+	padding: 0;
+
+	text-align: center;
+	color: white;
+
+	font-size: var(--big3);
+	line-height: var(--big3);
+}
+
+.colPosition {
+	margin-bottom: 20px;
+
+	text-align: center;
+	color: white;
+
+	font-size: var(--big4);
+}
+
+.colText {
+	margin-bottom: 20px;
+
+	white-space: pre-line;
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
+}
+
+.colText button {
+	margin-bottom: 20px;
+	padding: 0;
+
+	cursor: pointer;
+	white-space: pre-line;
+	color: var(--whiteFaded);
+
+	font-size: var(--normal3);
+	line-height: var(--big2);
+}
+
+.colText button:hover {
+	opacity: 0.7;
+}
+
+.colFooter {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}

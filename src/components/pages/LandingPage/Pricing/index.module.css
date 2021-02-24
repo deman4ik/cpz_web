@@ -1,0 +1,66 @@
+.title {
+	margin-top: 20px;
+	margin-bottom: 40px;
+
+	text-align: center;
+	color: white;
+
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
+}
+
+.pricing {
+	width: 100%;
+
+	margin: 0 auto 110px;
+}
+
+.billed {
+	margin: 0 auto;
+	margin-bottom: 10px;
+
+	text-align: center;
+	color: #fff;
+
+	font-size: 24px;
+	line-height: 1.2;;
+}
+
+.benefits {
+	max-width: 730px;
+
+	margin: 0 auto;
+	margin-bottom: 50px;
+
+	text-align: center;
+	white-space: pre-wrap;
+	color: #fff;
+
+	font-size: 24px;
+	line-height: 1.2;
+}
+
+.grid {
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+
+	margin-bottom: 80px;
+}
+
+@media (max-width: 1340px) {
+	.grid {
+		align-items: center;
+		justify-content: center;
+
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 1200px) {
+	.grid {
+		flex-direction: column;
+		width: auto;
+	}
+}

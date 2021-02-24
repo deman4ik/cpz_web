@@ -1,7 +1,8 @@
 import React from "react";
-
+import Link from "next/link";
 import { event, gtag_report_conversion } from "libs/gtag";
 import styles from "./index.module.css";
+import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 interface Props {
     title: string;
@@ -33,12 +34,16 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
                 value: href
             });
         }
-
-        window.location.href = href;
     };
 
-    return (
-        <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
+    return href.indexOf("http") !== 0 ? (
+        <Link href={href}>
+            <a className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
+                {title}
+            </a>
+        </Link>
+    ) : (
+        <a href={href} className={getClassName().join(" ")} style={style} onClick={handleOnClick}>
             {title}
         </a>
     );

@@ -31,97 +31,95 @@ export const messageSet = (item) => (
     </div>
 );
 
-export const robotTradeSet = (item, onClick) => {
-    return (
-        <div className={styles.rowCard}>
-            {item.data.status === "open" ? (
-                <>
-                    <div className={styles.row} style={{ justifyContent: "flex-start" }}>
-                        <div className={styles.textMessageCard}>Trade&nbsp;</div>
-                        <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                            {item.data.robotCode}&nbsp;
-                        </div>
-                        <div className={styles.textMessageCard}>{item.data.code}</div>
+export const robotTradeSet = (item, onClick) => (
+    <div className={styles.rowCard}>
+        {item.data.status === "open" ? (
+            <>
+                <div className={styles.row} style={{ justifyContent: "flex-start" }}>
+                    <div className={styles.textMessageCard}>Trade&nbsp;</div>
+                    <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
+                        {item.data.robotCode}&nbsp;
                     </div>
-                    <div className={styles.row} style={{ flex: 1 }}>
-                        <div className={styles.rowRobot}>
-                            <div className={styles.colRobot}>
-                                <div className={styles.textAccentCard}>Entry</div>
-                                <div className={styles.textMessageCard} style={colorDirection(item.data.entryAction)}>
-                                    {capitalize(item.data.entryAction)}
-                                </div>
-                            </div>
-                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                                <div className={styles.textAccentCard}>Price</div>
-                                <div className={styles.textMessageCard}>{`${item.data.entryPrice} $`}</div>
+                    <div className={styles.textMessageCard}>{item.data.code}</div>
+                </div>
+                <div className={styles.row} style={{ flex: 1 }}>
+                    <div className={styles.rowRobot}>
+                        <div className={styles.colRobot}>
+                            <div className={styles.textAccentCard}>Entry</div>
+                            <div className={styles.textMessageCard} style={colorDirection(item.data.entryAction)}>
+                                {capitalize(item.data.entryAction)}
                             </div>
                         </div>
-                        <div className={styles.rowRobot}>
+                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                            <div className={styles.textAccentCard}>Price</div>
+                            <div className={styles.textMessageCard}>{`${item.data.entryPrice} $`}</div>
+                        </div>
+                    </div>
+                    <div className={styles.rowRobot}>
+                        <div className={styles.colRobot}>
+                            <div className={styles.textAccentCard}>Amount</div>
+                            <div className={styles.textMessageCard}>
+                                {`${item.data.entryExecuted} ${item.data.asset}`}
+                            </div>
+                        </div>
+                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                            <div className={styles.textAccentCard}>Date</div>
+                            <div className={styles.textMessageCard}>{formatDate(item.data.entryDate)}</div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        ) : (
+            <>
+                <div className={styles.row} style={{ justifyContent: "flex-start" }}>
+                    <div className={styles.textMessageCard}>Trade&nbsp;</div>
+                    <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
+                        {item.data.robotCode}&nbsp;
+                    </div>
+                    <div className={styles.textMessageCard}>{item.data.code}</div>
+                </div>
+                <div className={styles.row} style={{ flex: 1 }}>
+                    <div className={styles.rowRobot}>
+                        <div className={styles.colRobot}>
+                            <div className={styles.textAccentCard}>Exit</div>
+                            <div className={styles.textMessageCard} style={colorDirection(item.data.exitAction)}>
+                                {capitalize(item.data.exitAction)
+                                    .split(/(?=[A-Z])/)
+                                    .join(" ")}
+                            </div>
+                        </div>
+                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                            <div className={styles.textAccentCard}>Price</div>
+                            <div className={styles.textMessageCard}>{`${item.data.exitPrice} $`}</div>
+                        </div>
+                    </div>
+                    <div className={styles.rowRobot}>
+                        <div className={styles.rowRobotProfit}>
                             <div className={styles.colRobot}>
                                 <div className={styles.textAccentCard}>Amount</div>
                                 <div className={styles.textMessageCard}>
-                                    {item.data.entryExecuted} {item.data.asset}
+                                    {`${item.data.exitExecuted} ${item.data.asset}`}
                                 </div>
                             </div>
-                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                                <div className={styles.textAccentCard}>Date</div>
-                                <div className={styles.textMessageCard}>{formatDate(item.data.entryDate)}</div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <div className={styles.row} style={{ justifyContent: "flex-start" }}>
-                        <div className={styles.textMessageCard}>Trade&nbsp;</div>
-                        <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
-                            {item.data.robotCode}&nbsp;
-                        </div>
-                        <div className={styles.textMessageCard}>{item.data.code}</div>
-                    </div>
-                    <div className={styles.row} style={{ flex: 1 }}>
-                        <div className={styles.rowRobot}>
                             <div className={styles.colRobot}>
-                                <div className={styles.textAccentCard}>Exit</div>
-                                <div className={styles.textMessageCard} style={colorDirection(item.data.exitAction)}>
-                                    {capitalize(item.data.exitAction)
-                                        .split(/(?=[A-Z])/)
-                                        .join(" ")}
+                                <div className={styles.textAccentCard}>Profit</div>
+                                <div
+                                    className={styles.textMessageCard}
+                                    style={{ color: getColorForMoney(item.data.profit) }}>
+                                    {`${valueWithSign(formatMoney(item.data.profit))} $`}
                                 </div>
-                            </div>
-                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                                <div className={styles.textAccentCard}>Price</div>
-                                <div className={styles.textMessageCard}>{`${item.data.exitPrice} $`}</div>
                             </div>
                         </div>
-                        <div className={styles.rowRobot}>
-                            <div className={styles.rowRobotProfit}>
-                                <div className={styles.colRobot}>
-                                    <div className={styles.textAccentCard}>Amount</div>
-                                    <div className={styles.textMessageCard}>
-                                        {item.data.entryExecuted} {item.data.asset}
-                                    </div>
-                                </div>
-                                <div className={styles.colRobot}>
-                                    <div className={styles.textAccentCard}>Profit</div>
-                                    <div
-                                        className={styles.textMessageCard}
-                                        style={{ color: getColorForMoney(item.data.profit) }}>
-                                        {`${valueWithSign(formatMoney(item.data.profit))} $`}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                                <div className={styles.textAccentCard}>Date</div>
-                                <div className={styles.textMessageCard}>{formatDate(item.data.exitDate)}</div>
-                            </div>
+                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                            <div className={styles.textAccentCard}>Date</div>
+                            <div className={styles.textMessageCard}>{formatDate(item.data.exitDate)}</div>
                         </div>
                     </div>
-                </>
-            )}
-        </div>
-    );
-};
+                </div>
+            </>
+        )}
+    </div>
+);
 
 export const errorSet = (item, onClick) => (
     <div className={styles.rowCard} style={{ flex: 1 }}>
@@ -297,5 +295,48 @@ export const userSet = (item, onClick) => (
         </div>
         <div className={styles.textMessageCard}>{item.data.error}</div>
         <div className={styles.textMessageCard}>Please update your API Key information in your Profile.</div>
+    </div>
+);
+
+export const errorUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>{item.data.error}</div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserSubSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
+    </div>
+);
+
+export const statusUserPaymentSet = (item, onClick) => (
+    <div>
+        <div className={styles.row}>
+            <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
+                <div className={styles.textMessageCard}>
+                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+            </div>
+        </div>
+        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
+            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+        </div>
     </div>
 );

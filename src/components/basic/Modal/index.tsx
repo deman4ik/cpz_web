@@ -13,6 +13,7 @@ interface Props {
     style?: React.CSSProperties;
     footer?: JSX.Element;
     contentHeight?: number | string;
+    isFrame?: boolean;
 }
 
 export const Modal: React.FC<Props> = (props) => {
@@ -25,20 +26,29 @@ export const Modal: React.FC<Props> = (props) => {
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
+            document.body.style.overflowY = "auto";
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [modalRef, props]);
-    if (!props.isOpen) return null;
+    if (props.isOpen) {
+        document.body.style.overflowY = "hidden";
+    } else {
+        return null;
+    }
+
     return (
         <ClientOnlyPortal selector="#modal">
             <div className={styles.backdrop}>
-                <div ref={modalRef} className={`${styles.modal} ${props.className}`}>
+                <div
+                    ref={modalRef}
+                    className={`${styles.modal} ${props.className} ${props.isFrame ? styles.noBackground : ""}`}>
                     <ModalTemplate
                         title={props.title}
                         onClose={props.onClose}
                         footer={props.footer}
                         style={props.style}
-                        contentHeight={props.contentHeight}>
+                        contentHeight={props.contentHeight}
+                        isFrame={props.isFrame}>
                         {props.children}
                     </ModalTemplate>
                 </div>

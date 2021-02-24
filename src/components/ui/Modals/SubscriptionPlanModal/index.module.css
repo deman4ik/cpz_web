@@ -1,0 +1,102 @@
+.planContainer {
+	margin-bottom: 30px;
+}
+
+.plan {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+	.plan {
+		flex-wrap: wrap;
+	}
+}
+.planCard {
+	min-width: 320px;
+	max-width: 400px;
+
+	padding: 0 10px;
+
+	text-align: center;
+	color: white;
+}
+
+@media (max-width: 768px) {
+	.planCard {
+		width: auto;
+	}
+}
+
+.planPriceWrapper {
+	display: flex;
+	align-items: center;
+	flex: 0 1;
+	flex-direction: column;
+
+	text-align: right;
+}
+
+.planName {
+	text-align: center;
+	text-transform: uppercase;
+	color: white;
+}
+
+.planPrice {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 55px;
+
+	margin: 0;
+
+	font-size: 28px;
+	font-weight: 700;
+}
+
+.planDiscount {
+	display: block;
+
+	margin: 0;
+
+	font-size: 18px;
+}
+
+.planDescription {
+	margin-bottom: 20px;
+	padding: 20px;
+
+	white-space: pre-line;
+	border-top: 1px solid var(--primary);
+	border-bottom: 1px solid var(--primary);
+}
+
+@media (max-width: 480px) {
+	.planDescription {
+		margin-top: 5px;
+		margin-bottom: 20px;
+		padding: 10px;
+	}
+}
+
+.buttonGroup {
+	margin: 0 auto;
+	margin-top: 25px;
+	margin-bottom: 10px;
+
+	text-align: center;
+}
+
+@media (max-width: 1050px) {
+	.buttonGroup {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		flex-wrap: wrap;
+
+		margin-bottom: 5px;
+	}
+}

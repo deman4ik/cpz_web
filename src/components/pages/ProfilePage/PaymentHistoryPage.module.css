@@ -1,0 +1,154 @@
+.exchangeContainerMobile {
+	display: flex;
+	justify-content: space-between;
+}
+
+.exchange {
+	display: flex;
+	align-items: center;
+
+	margin: 10px 0;
+
+	color: white;
+
+	font-size: var(--big1);
+}
+
+.assetHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 10px 20px;
+
+	color: white;
+	background-color: var(--dark);
+
+	font-size: var(--normal1);
+}
+
+.assetHeaderMobileStats {
+	display: flex;
+	flex-direction: column;
+
+	color: var(--accent);
+
+	font-size: var(--normal0);
+}
+
+@media (max-width: 1080px) {
+	.exchange {
+		font-size: var(--normal3);
+	}
+}
+
+@media (max-width: 480px) {
+	.exchange {
+		font-size: var(--normal1);
+	}
+	.assetHeader {
+		font-size: var(--normal0);
+	}
+}
+
+.tableHeader {
+	padding-right: 20px;
+	padding-left: 20px;
+
+	border-color: var(--darkBg);
+	border-top-width: 2px;
+	background-color: var(--dark);
+}
+
+.tableRow {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+
+	padding: 15px 20px;
+
+	border-color: var(--darkBg);
+	border-top-width: 2px;
+	background-color: var(--dark);
+}
+
+@media (max-width: 1300px) {
+	.tableRow {
+		align-items: flex-start;
+		flex-direction: column;
+		width: 100%;
+		max-width: 320px;
+
+		margin-top: 10px;
+		margin-left: 10px;
+
+		box-shadow: rgb(0 0 0 / 24%) 0 3px 4px;
+	}
+
+	.tableRow:last-of-type {
+		margin-bottom: 20px;
+	}
+}
+
+.positionGroup {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+	justify-content: space-between;
+
+	opacity: 1;
+}
+
+@media (max-width: 1300px) {
+	.positionGroup {
+		flex-direction: column;
+	}
+}
+
+.tableCellText {
+	color: white;
+
+	font-size: var(--normal0);
+}
+
+.tableCellTextUrl {
+	color: white;
+
+	font-size: var(--normal0);
+}
+
+.tableCellUrl:link, .tableCellUrl:visited {
+	color: white;
+}
+
+.tableCellUrl:hover, .tableCellUrl:focus {
+	opacity: 0.7;
+}
+
+@media (max-width: 1300px) {
+	.tableCellText {
+		padding: 0 0 10px;
+
+		white-space: pre-wrap;
+	}
+}
+
+.secondaryText {
+	padding: 0 0 5px;
+
+	color: var(--accent);
+
+	font-size: var(--small1);
+}
+
+.volumeGroup {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+.limitWrapper {
+	display: flex;
+	flex-direction: column;
+}
