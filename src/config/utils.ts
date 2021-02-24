@@ -161,6 +161,8 @@ export const getTimeFromNow = (d: string): string => {
     return timeFromNow;
 };
 
+export const getToUpperCase = (word) => word[0].toUpperCase() + word.slice(1);
+
 export const getPriceTotalWithNoZero = (price) => {
     const zero = (price % 1).toString().split(".")[1] || "0";
     return zero === "0" || zero[0] === "0" ? price.toFixed() : price.toFixed(1);

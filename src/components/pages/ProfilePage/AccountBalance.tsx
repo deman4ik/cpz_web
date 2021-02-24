@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, memo } from "react";
+import React, { FC, useContext, useState, memo, useEffect } from "react";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
@@ -8,20 +8,39 @@ import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
-import { getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
+import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
+
+    const [userId, setUserId] = useState();
+    const [status, setStatus] = useState("");
+    const [subscription, setSubscription] = useState({ name: "" });
+
+    const [subscriptionOption, setSubscriptionOption] = useState({
+        name: "",
+        price_total: 0,
+        active_to: "",
+        trial_ended: ""
+    });
+
+    const [userPaymentData, setUserPaymentData] = useState({
+        id: "",
+        code: "",
+        price: 0,
+        status: "",
+        expires_at: ""
+    });
+
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
-    const [formError, setFormError] = useState("");
-    const [userPaymentData, setUserPaymentData] = useState({ id: "", code: "", price: 0, status: "", expires_at: "" });
     const [isOkButton, setOkButton] = useState(false);
     const [isFrame, setIframe] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [formError, setFormError] = useState("");
 
     const { loading, error, data } = useQuery(GET_USER_SUBS, {
         variables: {
@@ -29,23 +48,20 @@ const _AccountBalance: FC = (): any => {
         }
     });
 
+    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (loading || error || !data || !data.user_subs || !isAuth)
-        return (
-            <>
-                <div className={styles.regionTitle}>Cryptuoso Subscription</div>
-                <div className={styles.surface}>
-                    <p className={styles.titleStab}>Your user subscription will appear here.</p>
-                </div>
-            </>
-        );
+    useEffect(() => {
+        if (!loading && !error && data && data.user_subs) {
+            setUserId(data.user_subs[0].id);
+            setStatus(getToUpperCase(data.user_subs[0].status));
+            setSubscription(data.user_subs[0].subscription);
+            setSubscriptionOption(data.user_subs[0].subscriptionOption);
+        }
+    }, [loading, error, data]);
 
-    const { id, status, subscription, subscriptionOption } = data.user_subs[0];
-
-    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
-    const handleSetCheckoutVisible = () => {
+    const handleSetCheckoutVisible = (id) => {
         setLoading(true);
         checkoutUserSub({
             variables: {
@@ -66,6 +82,7 @@ const _AccountBalance: FC = (): any => {
             )
             .catch(({ message }) => setFormError(message));
     };
+
     const handleOnModalCheckoutClose = () => {
         setLoading(true);
         checkPayment({
@@ -91,7 +108,22 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!status ? (
+                {!isAuth ? (
+                    <>
+                        <p className={styles.titleStab}>Your user subscription will appear here.</p>
+                        <Link href=" /auth/login">
+                            <a>
+                                <Button
+                                    isUppercase
+                                    style={{ margin: "20px auto 0", width: "260px" }}
+                                    title="Try for free"
+                                    size="big"
+                                    type="primary"
+                                />
+                            </a>
+                        </Link>
+                    </>
+                ) : !data || !data.user_subs ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
@@ -107,7 +139,7 @@ const _AccountBalance: FC = (): any => {
                             title="Start free trial"
                             size="small"
                             type="primary"
-                            onClick={handleSetCheckoutVisible}
+                            onClick={handleSetSubsVisible}
                         />
                     </div>
                 ) : (
@@ -142,9 +174,7 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>
-                                        {status[0].toUpperCase() + status.slice(1)}
-                                    </div>
+                                    <div className={styles.tableCellText}>{status}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <Link href="/profile/payment-history">
@@ -177,7 +207,7 @@ const _AccountBalance: FC = (): any => {
                                 size="normal"
                                 icon="bitcoin"
                                 type="primary"
-                                onClick={handleSetCheckoutVisible}
+                                onClick={() => handleSetCheckoutVisible(userId)}
                             />
                             <Button title="Cancel" size="normal" icon="close" type="dimmed" />
                         </div>
@@ -189,9 +219,8 @@ const _AccountBalance: FC = (): any => {
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
-                            subsName={subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
-                            currentPlan={subscriptionOption}
+                            currentPlan={data && data.user_subs && subscriptionOption}
                         />
                         <style jsx>
                             {`

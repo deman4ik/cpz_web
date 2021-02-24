@@ -12,11 +12,11 @@ import styles from "./index.module.css";
 
 interface Props {
     enabled: boolean;
-    subsName?: boolean;
+    subsName?: string;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
     currentPlan?: {
-        name?: string;
+        name: string;
     };
 }
 
