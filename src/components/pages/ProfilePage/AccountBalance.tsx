@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, memo } from "react";
+import React, { FC, useContext, useState, memo, useEffect } from "react";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
@@ -15,6 +15,12 @@ const _AccountBalance: FC = (): any => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
+
+    const [userId, setUserId] = useState();
+    const [status, setStatus] = useState("");
+    const [subscription, setSubscription] = useState({ name: "" });
+    const [subscriptionOption, setSubscriptionOption] = useState();
+
     const [isModalSubsVisible, setModalVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [formError, setFormError] = useState("");
@@ -29,23 +35,41 @@ const _AccountBalance: FC = (): any => {
         }
     });
 
+    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
-    if (loading || error || !data || !data.user_subs || !isAuth)
+    useEffect(() => {
+        if (loading || error || !data || !data.user_subs) return;
+
+        setUserId(data.user_subs[0].id);
+        setStatus(data.user_subs[0].status);
+        setSubscription(data.user_subs[0].subscription);
+        setSubscriptionOption(data.user_subs[0].subscriptionOption);
+    }, [loading, error, data]);
+
+    if (!isAuth)
         return (
             <>
                 <div className={styles.regionTitle}>Cryptuoso Subscription</div>
                 <div className={styles.surface}>
                     <p className={styles.titleStab}>Your user subscription will appear here.</p>
+                    <Link href=" /auth/login">
+                        <a>
+                            <Button
+                                isUppercase
+                                style={{ margin: "20px auto 0", width: "260px" }}
+                                title="Try for free"
+                                size="big"
+                                type="primary"
+                            />
+                        </a>
+                    </Link>
                 </div>
             </>
         );
 
-    const { id, status, subscription, subscriptionOption } = data.user_subs[0];
-
-    const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
-    const handleSetCheckoutVisible = () => {
+    const handleSetCheckoutVisible = (id) => {
         setLoading(true);
         checkoutUserSub({
             variables: {
@@ -91,7 +115,7 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!status ? (
+                {!data || !data.user_subs || !subscription || !subscriptionOption ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
@@ -107,7 +131,7 @@ const _AccountBalance: FC = (): any => {
                             title="Start free trial"
                             size="small"
                             type="primary"
-                            onClick={handleSetCheckoutVisible}
+                            onClick={handleSetSubsVisible}
                         />
                     </div>
                 ) : (
@@ -177,7 +201,7 @@ const _AccountBalance: FC = (): any => {
                                 size="normal"
                                 icon="bitcoin"
                                 type="primary"
-                                onClick={handleSetCheckoutVisible}
+                                onClick={() => handleSetCheckoutVisible(userId)}
                             />
                             <Button title="Cancel" size="normal" icon="close" type="dimmed" />
                         </div>
@@ -189,7 +213,7 @@ const _AccountBalance: FC = (): any => {
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
-                            subsName={subscriptionOption.name}
+                            subsName={subscriptionOption && subscriptionOption.name}
                             handleOnClose={handleSetSubsVisible}
                             currentPlan={subscriptionOption}
                         />

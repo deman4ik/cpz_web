@@ -13,8 +13,6 @@ const _Pricing = () => {
     const basePrice = optionsSorted[PLAN_NAMES["1 month"]].price_month;
 
     const handleOnButton = (card) => {
-        console.log(card.name);
-
         setButtonName(card.name);
         setCurrentPlan(card);
     };
