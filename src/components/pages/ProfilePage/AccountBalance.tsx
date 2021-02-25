@@ -39,6 +39,7 @@ const _AccountBalance: FC = (): any => {
     });
 
     const [isModalSubsVisible, setModalVisibility] = useState(false);
+    const [isModalCancelVisible, setModalCancelVisibility] = useState(false);
     const [isModalCheckoutVisible, setModalCheckoutVisibility] = useState(false);
     const [isOkButton, setOkButton] = useState(false);
     const [isFrame, setIframe] = useState(false);
@@ -52,6 +53,7 @@ const _AccountBalance: FC = (): any => {
     });
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
+    const handleSetCancelVisible = () => setModalCancelVisibility(!isModalCancelVisible);
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
@@ -218,7 +220,13 @@ const _AccountBalance: FC = (): any => {
                                 type="primary"
                                 onClick={() => handleSetCheckoutVisible(userId)}
                             />
-                            <Button title="Cancel" size="normal" icon="close" type="dimmed" />
+                            <Button
+                                title="Cancel"
+                                size="normal"
+                                icon="close"
+                                type="dimmed"
+                                onClick={handleSetCancelVisible}
+                            />
                         </div>
                         <ErrorLine formError={formError} style={{ margin: 0 }} />
                     </>
@@ -322,6 +330,32 @@ your subscription will be activated.`}
                                 onModalClosed={() => handleOnModalCheckoutClose()}
                             />
                         )}
+                    </Modal>
+                )}
+                {isModalCancelVisible && (
+                    <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible}>
+                        <h2 style={{ color: "white", margin: 0 }}>Cancel subscription</h2>
+                        <div>
+                            {`Are you sure you want to cancel your ${subscription.name} subscription? All robots will be
+                            stopped! If there are any open positions they will be canceled (closed) with current market
+                            prices and potentially may cause profit losses!`}
+                        </div>
+                        <div>
+                            <Button
+                                isUppercase
+                                style={{ margin: "0 auto", width: "260px" }}
+                                title="Yes"
+                                size="big"
+                                type="primary"
+                            />
+                            <Button
+                                isUppercase
+                                style={{ margin: "0 auto", width: "260px" }}
+                                title="No"
+                                size="big"
+                                type="success"
+                            />
+                        </div>
                     </Modal>
                 )}
             </div>
