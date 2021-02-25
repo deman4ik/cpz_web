@@ -37,6 +37,10 @@
 	font-size: var(--normal0);
 }
 
+.titleStab svg {
+	margin-right: 10px;
+}
+
 .stub {
 	display: flex;
 	flex-direction: column;

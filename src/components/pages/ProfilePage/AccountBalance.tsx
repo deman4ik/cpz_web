@@ -6,8 +6,9 @@ import { CHECKOUT_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
 import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
-import { SubscriptionPlan } from "../../ui/Modals/SubscriptionPlanModal";
+import { SubscriptionPlan } from "components/ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
+import { WalletMembership } from "assets/icons/svg";
 import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
@@ -112,7 +113,9 @@ const _AccountBalance: FC = (): any => {
             <div className={styles.surface}>
                 {!isAuth ? (
                     <>
-                        <p className={styles.titleStab}>Your user subscription will appear here.</p>
+                        <div className={styles.titleStab}>
+                            <WalletMembership size={24} /> Your user subscription will appear here.
+                        </div>
                         <Link href=" /auth/login">
                             <a>
                                 <Button
@@ -125,7 +128,7 @@ const _AccountBalance: FC = (): any => {
                             </a>
                         </Link>
                     </>
-                ) : !data || !data.user_subs.length ? (
+                ) : data && !data.user_subs.length ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>

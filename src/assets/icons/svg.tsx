@@ -281,6 +281,12 @@ export const ChartAreaSpline: React.FC<Props> = ({ color = "white", size = 24 })
     </svg>
 );
 
+export const WalletMembership: React.FC<Props> = ({ color = "white", size = 24 }) => (
+    <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox="0 0 24 24">
+    <path d="M20 10H4V4h16m0 11H4v-2h16m0-11H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h4v5l4-2l4 2v-5h4c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2z" fill="currentColor"/>
+    </svg>
+);
+
 export const AccountPlus: React.FC<Props> = ({ color = "white", size = 24 }) => (
     <svg width={`${size}px`} height={`${size}px`} fill={color} viewBox="0 0 24 24">
         <path
