@@ -18,7 +18,7 @@ export interface InputProps {
     width?: number;
     responsive?: boolean;
     error?: string | boolean;
-    onSelect?: (e: any) => void;
+    // onSelect?: (e: any) => void;
     selectTextOnFocus?: boolean;
     readonly?: boolean;
     style?: CSSProperties;
@@ -41,7 +41,7 @@ export const Input: React.FC<InputProps> = ({
     onKeyPress,
     width = 350,
     error,
-    onSelect,
+    // onSelect,
     selectTextOnFocus,
     responsive,
     readonly,

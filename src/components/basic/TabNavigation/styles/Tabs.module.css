@@ -1,21 +1,23 @@
 .container {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-
-	margin-bottom: 5px;
-	padding-top: 20px;
-
-	border-bottom: 1px solid var(--lightBg);
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--lightBg);
+    margin-bottom: 5px;
+    align-items: center;
 }
 
 .wrapper {
-	display: flex;
-	max-width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .tab {
-	margin: 0 30px;
+    margin: 0 30px;
+    display: flex;
+    align-items: center;
 }
 
 .tab:first-child {
