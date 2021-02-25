@@ -53,7 +53,9 @@ const _AccountBalance: FC = (): any => {
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     useEffect(() => {
-        if (!loading && !error && data && data.user_subs) {
+        console.log(data);
+
+        if (!loading && !error && data && data.user_subs.length) {
             setUserId(data.user_subs[0].id);
             setStatus(getToUpperCase(data.user_subs[0].status));
             setSubscription(data.user_subs[0].subscription);
@@ -123,7 +125,7 @@ const _AccountBalance: FC = (): any => {
                             </a>
                         </Link>
                     </>
-                ) : !data || !data.user_subs ? (
+                ) : !data || !data.user_subs.length ? (
                     <div className={styles.stub}>
                         <div className={styles.title}>
                             <h4>Cryptuoso Trading Signal:&nbsp;</h4>
