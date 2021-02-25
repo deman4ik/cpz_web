@@ -30,11 +30,15 @@
 	align-items: flex-start;
 	justify-content: center;
 
-	margin: 5px;
+	margin: 5px 5px 18px;
 
 	color: var(--whiteFaded);
 
 	font-size: var(--normal0);
+}
+
+.titleStab svg {
+	margin-right: 10px;
 }
 
 .stub {
@@ -215,4 +219,27 @@
 	left: 0;
 
 	margin: auto;
+}
+
+
+.cancel .text {
+	min-width: 300px;
+	max-width: 420px;
+
+	margin-bottom: 20px;
+
+	text-align: center;
+	color: white;
+}
+
+.cancel .title {
+	margin-bottom: 20px;
+
+	color: white;
+
+	font-size: 24px;
+}
+
+.cancel .btnGroup {
+	width: 200px;
 }

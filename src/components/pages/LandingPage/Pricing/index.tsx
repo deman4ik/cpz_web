@@ -23,9 +23,15 @@ const _Pricing = () => {
             <p className={styles.benefits}>
                 {`Get access to all the available features at a single, affordable price.\nFree trial available after sign up.\nNo credit card required.`}
             </p>
-
-            <p className={styles.billed}>Billed for</p>
-            <ButtonGroup handleOnButton={handleOnButton} options={optionsSorted} buttonName={buttonName} />
+            <div className={styles.billedContainer}>
+                <p className={styles.billed}>Billed for</p>
+                <ButtonGroup
+                    handleOnButton={handleOnButton}
+                    options={optionsSorted}
+                    buttonName={buttonName}
+                    style={{ fontSize: 18 }}
+                />
+            </div>
             <div className={styles.grid}>
                 {pricingContent.map((card) => (
                     <PricingCard

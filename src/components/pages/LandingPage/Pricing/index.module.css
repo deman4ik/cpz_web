@@ -16,6 +16,13 @@
 	margin: 0 auto 110px;
 }
 
+.billedContainer {
+	min-width: calc(320px - 30px);
+	max-width: 360px;
+
+	margin: 0 auto;
+}
+
 .billed {
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -58,7 +65,7 @@
 	}
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
 	.grid {
 		flex-direction: column;
 		width: auto;
