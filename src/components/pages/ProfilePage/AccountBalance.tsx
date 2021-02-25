@@ -332,33 +332,38 @@ your subscription will be activated.`}
                         )}
                     </Modal>
                 )}
-                {isModalCancelVisible && (
-                    <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible}>
-                        <h2 style={{ color: "white", margin: 0 }}>Cancel subscription</h2>
-                        <div>
-                            {`Are you sure you want to cancel your ${subscription.name} subscription? All robots will be
-                            stopped! If there are any open positions they will be canceled (closed) with current market
-                            prices and potentially may cause profit losses!`}
-                        </div>
-                        <div>
-                            <Button
-                                isUppercase
-                                style={{ margin: "0 auto", width: "260px" }}
-                                title="Yes"
-                                size="big"
-                                type="primary"
-                            />
-                            <Button
-                                isUppercase
-                                style={{ margin: "0 auto", width: "260px" }}
-                                title="No"
-                                size="big"
-                                type="success"
-                            />
-                        </div>
-                    </Modal>
-                )}
             </div>
+            {isModalCancelVisible && (
+                <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible} className={styles.cancel}>
+                    <h2 className={styles.title}>Cancel subscription</h2>
+                    <div className={`${styles.text}`}>
+                        <p>
+                            Are you sure you want to cancel your <b>{subscription.name}</b> subscription?
+                        </p>
+                        <p>
+                            All robots will be <b>stopped</b>! If there are any <b>open positions</b> they will be{" "}
+                            <b>canceled</b> (closed) with current market prices and potentially may cause profit{" "}
+                            <b>losses</b>
+                        </p>
+                    </div>
+                    <div className={styles.btnGroup}>
+                        <Button
+                            isUppercase
+                            style={{ margin: "0 auto", width: "80px" }}
+                            title="Yes"
+                            size="normal"
+                            type="primary"
+                        />
+                        <Button
+                            isUppercase
+                            style={{ margin: "0 auto", width: "80px" }}
+                            title="No"
+                            size="normal"
+                            type="success"
+                        />
+                    </div>
+                </Modal>
+            )}
         </>
     );
 };

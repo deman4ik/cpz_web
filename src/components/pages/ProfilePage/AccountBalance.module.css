@@ -220,3 +220,26 @@
 
 	margin: auto;
 }
+
+
+.cancel .text {
+	min-width: 300px;
+	max-width: 420px;
+
+	margin-bottom: 20px;
+
+	text-align: center;
+	color: white;
+}
+
+.cancel .title {
+	margin-bottom: 20px;
+
+	color: white;
+
+	font-size: 24px;
+}
+
+.cancel .btnGroup {
+	width: 200px;
+}
