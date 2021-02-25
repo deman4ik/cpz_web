@@ -2,7 +2,7 @@ import React, { FC, useContext, useRef, useEffect, useState, memo } from "react"
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
-import { CHECKOUT_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
+import { CHECKOUT_USER_SUB, CANCEL_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
 import { GET_USER_SUBS } from "graphql/profile/queries";
 import { AuthContext } from "providers/authContext";
 import { Modal, Button } from "components/basic";
@@ -19,7 +19,7 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const [userId, setUserId] = useState();
+    const [userSubId, setUserSubId] = useState();
     const [status, setStatus] = useState("");
     const [subscription, setSubscription] = useState({ name: "" });
 
@@ -55,22 +55,23 @@ const _AccountBalance: FC = (): any => {
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCancelVisible = () => setModalCancelVisibility(!isModalCancelVisible);
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
+    const [cancelUserSub] = useMutation(CANCEL_USER_SUB);
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     useEffect(() => {
         if (!loading && !error && data && data.user_subs.length) {
-            setUserId(data.user_subs[0].id);
+            setUserSubId(data.user_subs[0].id);
             setStatus(getToUpperCase(data.user_subs[0].status));
             setSubscription(data.user_subs[0].subscription);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
     }, [loading, error, data]);
 
-    const handleSetCheckoutVisible = (id) => {
+    const handleSetCheckoutVisible = () => {
         setLoading(true);
         checkoutUserSub({
             variables: {
-                userSubId: id
+                userSubId
             }
         })
             .then(
@@ -86,6 +87,19 @@ const _AccountBalance: FC = (): any => {
                 }
             )
             .catch(({ message }) => setFormError(message));
+    };
+
+    const handleSetCancelSubs = () => {
+        setLoading(true);
+        cancelUserSub({
+            variables: {
+                userSubId
+            }
+        }).then((result) => {
+            handleSetCancelVisible();
+            setLoading(false);
+            console.log(`cancelUserSub`, result);
+        });
     };
 
     const handleOnModalCheckoutClose = () => {
@@ -161,11 +175,6 @@ const _AccountBalance: FC = (): any => {
                             </div>
                         </div>
                         <div>
-                            {isLoading && (
-                                <div className={styles.loader}>
-                                    <LoadingIndicator />
-                                </div>
-                            )}
                             <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
@@ -218,7 +227,7 @@ const _AccountBalance: FC = (): any => {
                                 size="normal"
                                 icon="bitcoin"
                                 type="primary"
-                                onClick={() => handleSetCheckoutVisible(userId)}
+                                onClick={handleSetCheckoutVisible}
                             />
                             <Button
                                 title="Cancel"
@@ -242,11 +251,6 @@ const _AccountBalance: FC = (): any => {
                         <style jsx>
                             {`
                                 @media (max-width: 670px) {
-                                     {
-                                        /* :global(a) {
-                                        padding: 10px !important;
-                                    } */
-                                    }
                                     :global(div) {
                                         margin: 0 !important;
                                     }
@@ -330,39 +334,53 @@ your subscription will be activated.`}
                                 onModalClosed={() => handleOnModalCheckoutClose()}
                             />
                         )}
+                        {isLoading && (
+                            <div className={styles.loader}>
+                                <LoadingIndicator />
+                            </div>
+                        )}
                     </Modal>
                 )}
             </div>
             {isModalCancelVisible && (
-                <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible} className={styles.cancel}>
-                    <h2 className={styles.title}>Cancel subscription</h2>
-                    <div className={`${styles.text}`}>
-                        <p>
-                            Are you sure you want to cancel your <b>{subscription.name}</b> subscription?
-                        </p>
-                        <p>
-                            All robots will be <b>stopped</b>! If there are any <b>open positions</b> they will be{" "}
-                            <b>canceled</b> (closed) with current market prices and potentially may cause profit{" "}
-                            <b>losses</b>
-                        </p>
-                    </div>
-                    <div className={styles.btnGroup}>
-                        <Button
-                            isUppercase
-                            style={{ margin: "0 auto", width: "80px" }}
-                            title="Yes"
-                            size="normal"
-                            type="primary"
-                        />
-                        <Button
-                            isUppercase
-                            style={{ margin: "0 auto", width: "80px" }}
-                            title="No"
-                            size="normal"
-                            type="success"
-                        />
-                    </div>
-                </Modal>
+                <>
+                    <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible} className={styles.cancel}>
+                        <h2 className={styles.title}>Cancel subscription</h2>
+                        <div className={`${styles.text}`}>
+                            <p>
+                                Are you sure you want to cancel your <b>{subscription.name}</b> subscription?
+                            </p>
+                            <p>
+                                All robots will be <b>stopped</b>! If there are any <b>open positions</b> they will be{" "}
+                                <b>canceled</b> (closed) with current market prices and potentially may cause profit{" "}
+                                <b>losses</b>
+                            </p>
+                        </div>
+                        <div className={styles.btnGroup}>
+                            <Button
+                                isUppercase
+                                style={{ margin: "0 auto", width: "80px" }}
+                                title="Yes"
+                                size="normal"
+                                type="primary"
+                                onClick={handleSetCancelSubs}
+                            />
+                            <Button
+                                isUppercase
+                                style={{ margin: "0 auto", width: "80px" }}
+                                title="No"
+                                size="normal"
+                                type="success"
+                                onClick={handleSetCancelVisible}
+                            />
+                        </div>
+                        {isLoading && (
+                            <div className={styles.loader}>
+                                <LoadingIndicator />
+                            </div>
+                        )}
+                    </Modal>
+                </>
             )}
         </>
     );

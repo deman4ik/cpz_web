@@ -48,6 +48,14 @@ export const CHECKOUT_USER_SUB = gql`
     }
 `;
 
+export const CANCEL_USER_SUB = gql`
+    mutation cancelUserSub($userSubId: uuid!) {
+        cancelUserSub(userSubId: $userSubId) {
+            result
+        }
+    }
+`;
+
 export const CHECKOUT_PAYMENT = gql`
     mutation checkoutUserSub($chargeId: uuid!) {
         checkPayment(chargeId: $chargeId, provider: "coinbase.commerce") {
