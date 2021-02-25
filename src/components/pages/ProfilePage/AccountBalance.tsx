@@ -120,7 +120,7 @@ const _AccountBalance: FC = (): any => {
                             <a>
                                 <Button
                                     isUppercase
-                                    style={{ margin: "20px auto 0", width: "260px" }}
+                                    style={{ margin: "0 auto", width: "260px" }}
                                     title="Try for free"
                                     size="big"
                                     type="primary"
