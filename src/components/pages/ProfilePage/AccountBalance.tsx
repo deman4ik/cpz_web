@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, memo, useEffect } from "react";
+import React, { FC, useContext, useRef, useEffect, useState, memo } from "react";
 import Link from "next/link";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
@@ -16,6 +16,8 @@ const _AccountBalance: FC = (): any => {
     const {
         authState: { isAuth, user_id }
     } = useContext(AuthContext);
+
+    const buttonRef = useRef(null);
 
     const [userId, setUserId] = useState();
     const [status, setStatus] = useState("");
@@ -54,8 +56,6 @@ const _AccountBalance: FC = (): any => {
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     useEffect(() => {
-        console.log(data);
-
         if (!loading && !error && data && data.user_subs.length) {
             setUserId(data.user_subs[0].id);
             setStatus(getToUpperCase(data.user_subs[0].status));
@@ -87,6 +87,10 @@ const _AccountBalance: FC = (): any => {
     };
 
     const handleOnModalCheckoutClose = () => {
+        setOkButton(true);
+        setIframe(false);
+        if (buttonRef.current !== null) buttonRef.current.querySelector("button").textContent = "Check Payment";
+
         setLoading(true);
         checkPayment({
             variables: {
@@ -289,28 +293,32 @@ your subscription will be activated.`}
                             </p>
                         </div>
                         {isOkButton ? (
-                            <Button
-                                title="OK"
-                                size="normal"
-                                type="dimmed"
-                                onClick={() => {
-                                    setModalCheckoutVisibility(!isModalCheckoutVisible);
-                                    setOkButton(false);
-                                }}
-                            />
-                        ) : (
                             <>
-                                <CoinbaseCommerceButton
-                                    styled={{ display: "flex" }}
-                                    chargeId={userPaymentData.code}
-                                    onLoad={() => setIframe(true)}
-                                    onModalClosed={() => {
-                                        handleOnModalCheckoutClose();
-                                        setOkButton(true);
-                                        setIframe(false);
+                                <div ref={buttonRef} style={{ marginBottom: 15 }}>
+                                    <CoinbaseCommerceButton
+                                        styled={{ display: "flex" }}
+                                        chargeId={userPaymentData.code}
+                                        onLoad={() => setIframe(true)}
+                                        onModalClosed={() => handleOnModalCheckoutClose()}
+                                    />
+                                </div>
+                                <Button
+                                    title="OK"
+                                    size="normal"
+                                    type="dimmed"
+                                    onClick={() => {
+                                        setModalCheckoutVisibility(!isModalCheckoutVisible);
+                                        setOkButton(false);
                                     }}
                                 />
                             </>
+                        ) : (
+                            <CoinbaseCommerceButton
+                                styled={{ display: "flex" }}
+                                chargeId={userPaymentData.code}
+                                onLoad={() => setIframe(true)}
+                                onModalClosed={() => handleOnModalCheckoutClose()}
+                            />
                         )}
                     </Modal>
                 )}
