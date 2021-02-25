@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps } from "react";
+import React from "react";
 
 export type ButtonSize = "big" | "normal" | "small";
 export type ButtonType =
