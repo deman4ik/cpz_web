@@ -20,7 +20,7 @@ export const pricingContent = [
         buttonType: "",
         buttonBackgroundColor: "#0b98c5",
         borderColor: "#2c3454",
-        href: "#"
+        href: "/auth/login"
     },
     {
         icon: planetSky,
@@ -41,7 +41,7 @@ export const pricingContent = [
         buttonType: "",
         buttonBackgroundColor: "#1ca46b",
         borderColor: "#0b98c5",
-        href: "#",
+        href: "/auth/login",
         highlite: true
     },
     {
@@ -59,7 +59,7 @@ export const pricingContent = [
         buttonType: "",
         buttonBackgroundColor: "rgba(105, 135, 185, 0.2)",
         borderColor: "#0b98c5",
-        href: ""
+        href: "/auth/login"
     }
 ];
 

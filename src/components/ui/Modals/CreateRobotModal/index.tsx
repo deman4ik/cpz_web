@@ -44,7 +44,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     const [inputKey, setInputKey] = useState("");
     const [formError, setFormError] = useState("");
     const [newRobotId, setNewRobotId] = useState("");
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(1);
     const [loadingState, setLoadingState] = useState(true);
     const handleOnNext = () => {
         setStep(step + 1);
@@ -72,7 +72,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
             user_id
         },
         onCompleted: ({ user_subs }) => {
-            if (user_subs[0].status) setStep(0);
+            if (user_subs && !user_subs.length) setStep(0);
         }
     });
 
