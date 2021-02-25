@@ -224,7 +224,7 @@ const _AccountBalance: FC = (): any => {
                     </>
                 )}
                 {isModalSubsVisible && (
-                    <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible} style={{ padding: 10 }}>
+                    <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
@@ -234,8 +234,10 @@ const _AccountBalance: FC = (): any => {
                         <style jsx>
                             {`
                                 @media (max-width: 670px) {
-                                    :global(a) {
+                                     {
+                                        /* :global(a) {
                                         padding: 10px !important;
+                                    } */
                                     }
                                     :global(div) {
                                         margin: 0 !important;

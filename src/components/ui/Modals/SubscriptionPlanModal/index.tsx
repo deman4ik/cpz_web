@@ -39,16 +39,17 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
 
         const optionsSorted = options.slice().sort((a, b) => a.sort_order - b.sort_order);
         setPeriods(optionsSorted);
-        setPlan(optionsSorted[1]);
 
         const [highlightedPlan] = options.filter((option) => option.highlight === true);
-        if (currentPlan) {
+
+        if (currentPlan && currentPlan.name) {
             setButtonName(currentPlan.name);
             setPlan(currentPlan);
             return;
         }
 
         setButtonName(highlightedPlan.name);
+        setPlan(optionsSorted[1]);
     }, [data]);
 
     const handleOnSubscriptionPlan = ({ subscription_id, code }) => {
