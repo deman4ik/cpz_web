@@ -16,3 +16,4 @@
 -   **TELEGRAM_BOT_NAME** - for landing urls and login widget (cpz_test_bot)
 -   **DEV_REFRESH_TOKEN** - refresh token for localhost [optional]
 -   **POLL_INTERVAL** - polling interval [optional]
+| DEPLOY | 
