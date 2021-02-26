@@ -272,6 +272,7 @@
 	width: 100%;
 
 	margin: 0 auto;
+	margin-top: 15px;
 
 	white-space: pre-line;
 
@@ -284,4 +285,8 @@
 	margin: 10px 0 30px;
 
 	font-size: 14px;
+}
+
+.checkout .secondaryText {
+	margin-bottom: 6px;
 }
