@@ -23,14 +23,12 @@ const _AccountBalance: FC = (): any => {
     const [status, setStatus] = useState("");
     const [subscription, setSubscription] = useState({ name: "" });
 
-    const freePlan = {
-        name: "Forever",
+    const [subscriptionOption, setSubscriptionOption] = useState({
+        name: "",
         price_total: 0,
         active_to: "",
         trial_ended: ""
-    };
-
-    const [subscriptionOption, setSubscriptionOption] = useState(freePlan);
+    });
 
     const [userPaymentData, setUserPaymentData] = useState({
         id: "",

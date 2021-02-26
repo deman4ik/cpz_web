@@ -15,7 +15,7 @@ interface Props {
     subsName?: string;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
-    handleOnClick?: (arg: any) => void;
+    handleOnClick?: (arg0: any, arg1: any) => void;
     currentPlan?: {
         name: string;
     };
