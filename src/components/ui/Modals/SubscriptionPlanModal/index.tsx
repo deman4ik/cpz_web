@@ -15,12 +15,13 @@ interface Props {
     subsName?: string;
     handleOnNext?: () => void;
     handleOnClose?: () => void;
+    handleOnClick?: (arg: any) => void;
     currentPlan?: {
         name: string;
     };
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, currentPlan }) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, handleOnClick, currentPlan }) => {
     const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -61,6 +62,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
         })
             .then(({ data: subscribedPlan }) => {
                 console.log(`subscribedPlan`, subscribedPlan);
+                handleOnClick(plan, subscribedPlan);
                 if (handleOnClose) handleOnClose();
                 if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
             })

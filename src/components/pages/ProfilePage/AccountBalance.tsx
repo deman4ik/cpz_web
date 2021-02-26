@@ -19,16 +19,18 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const [userSubId, setUserSubId] = useState();
+    const [userSubId, setUserSubId] = useState("");
     const [status, setStatus] = useState("");
     const [subscription, setSubscription] = useState({ name: "" });
 
-    const [subscriptionOption, setSubscriptionOption] = useState({
-        name: "",
+    const freePlan = {
+        name: "Forever",
         price_total: 0,
         active_to: "",
         trial_ended: ""
-    });
+    };
+
+    const [subscriptionOption, setSubscriptionOption] = useState(freePlan);
 
     const [userPaymentData, setUserPaymentData] = useState({
         id: "",
@@ -130,6 +132,14 @@ const _AccountBalance: FC = (): any => {
             .catch(({ message }) => setFormError(message));
     };
 
+    const handleOnSubscription = (planOptions, { createUserSub }) => {
+        setSubscriptionOption(planOptions);
+        setUserSubId(createUserSub.id);
+        setPlan(true);
+    };
+
+    const timeExpiry = getTimeCharge(userPaymentData.expires_at) || 0;
+
     return (
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
@@ -173,7 +183,7 @@ const _AccountBalance: FC = (): any => {
                                         Price
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        $ {isPlan ? getPriceTotalWithNoZero(subscriptionOption.price_total) : "0"}
+                                        $ {isPlan ? getPriceTotalWithNoZero(subscriptionOption.price_total) : 0}
                                     </div>
                                 </div>
                                 <div className={styles.exchangeCell}>
@@ -226,7 +236,7 @@ const _AccountBalance: FC = (): any => {
                                         onClick={handleSetCancelVisible}
                                     />
                                 </div>
-                                <ErrorLine formError={formError} style={{ margin: 0 }} />
+                                <ErrorLine formError={formError} style={{ width: "auto" }} />
                             </>
                         ) : (
                             <div
@@ -250,6 +260,7 @@ const _AccountBalance: FC = (): any => {
                         <SubscriptionPlan
                             enabled={isModalSubsVisible}
                             handleOnClose={handleSetSubsVisible}
+                            handleOnClick={handleOnSubscription}
                             currentPlan={data && data.user_subs && subscriptionOption}
                         />
                         <style jsx>
@@ -296,13 +307,13 @@ const _AccountBalance: FC = (): any => {
                                     $ {userPaymentData.price} {userPaymentData.status}
                                 </div>
                             </div>
-                            {parseInt(getTimeCharge(userPaymentData.expires_at).replace(/[^0-9.]/g, ""), 10) <= 0 || (
+                            {timeExpiry <= 0 || (
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Charge expires in
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        {getTimeCharge(userPaymentData.expires_at)}
+                                        {timeExpiry} {timeExpiry > 1 ? `minutes` : `minute`}
                                     </div>
                                 </div>
                             )}

@@ -1,48 +1,51 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+
+	margin: 0 auto;
 }
 
 .mainContainer {
-  display: flex;
-  flex-direction: column;
-  margin-left: 200px;
-  max-width: 1200px;
-  position: relative;
-  z-index: 0;
+	position: relative;
+	z-index: 0;
+	display: flex;
+	flex-direction: column;
+	max-width: 1200px;
+
+	margin-left: 200px;
 }
 
 .wrapFixed + .mainContainer {
-  padding-top: 56px;
+	padding-top: 56px;
 }
 
 .mainMenuContainer {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .wrapFixed {
-  position: fixed;
-  z-index: 102;
-  width: 100%;
+	position: fixed;
+	z-index: 102;
+	width: 100%;
+	max-width: calc(100vw - 5px);
 }
 
 .wrapSticky {
-  position: sticky;
-  z-index: 102;
-  width: 100%;
+	position: sticky;
+	z-index: 102;
+	width: 100%;
 }
 
 @media (max-width: 1200px) {
-  .mainContainer {
-    margin-left: 56px;
-  }
+	.mainContainer {
+		margin-left: 56px;
+	}
 }
 
 @media (max-width: 480px) {
-  .mainContainer {
-    margin-left: 0;
-  }
+	.mainContainer {
+		margin-left: 0;
+	}
 }
