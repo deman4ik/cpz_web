@@ -47,7 +47,7 @@ const _AccountBalance: FC = (): any => {
     const [isPlan, setPlan] = useState(false);
     const [formError, setFormError] = useState("");
 
-    const { loading, error, data } = useQuery(GET_USER_SUBS, {
+    const { data } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
@@ -60,14 +60,14 @@ const _AccountBalance: FC = (): any => {
     const [checkPayment] = useMutation(CHECKOUT_PAYMENT);
 
     useEffect(() => {
-        if (!loading && !error && data && data.user_subs.length) {
+        if (data && data.user_subs.length) {
             setPlan(data && data.user_subs.length);
             setUserSubId(data.user_subs[0].id);
             setStatus(getToUpperCase(data.user_subs[0].status));
             setSubscription(data.user_subs[0].subscription);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
-    }, [loading, error, data]);
+    }, [data]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);

@@ -30,6 +30,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
     const [periods, setPeriods] = useState();
     const [subsPlan, setSubscriptionPlan] = useState({ name: "", description: "" });
     const [buttonName, setButtonName] = useState("6 months");
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         if (loading || !data) return;
@@ -54,6 +55,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
     }, [data]);
 
     const handleOnSubscriptionPlan = ({ subscription_id, code }) => {
+        setLoading(true);
         createUserSub({
             variables: {
                 subscriptionId: subscription_id,
@@ -62,11 +64,15 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
         })
             .then(({ data: subscribedPlan }) => {
                 console.log(`subscribedPlan`, subscribedPlan);
-                handleOnClick(plan, subscribedPlan);
+                setLoading(false);
+                if (handleOnClick) handleOnClick(plan, subscribedPlan);
                 if (handleOnClose) handleOnClose();
                 if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
             })
-            .catch(({ message }) => setFormError(message));
+            .catch(({ message }) => {
+                setLoading(false);
+                setFormError(message);
+            });
     };
 
     const handleOnButton = (card) => {
@@ -118,6 +124,11 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                 {!enabled && <LoadingIndicator />}
             </div>
             <ErrorLine formError={formError} style={{ margin: 0 }} />
+            {isLoading && (
+                <div className={styles.loader}>
+                    <LoadingIndicator />
+                </div>
+            )}
         </div>
     );
 };

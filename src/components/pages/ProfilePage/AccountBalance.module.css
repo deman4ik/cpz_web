@@ -220,7 +220,6 @@
 	margin: auto;
 }
 
-
 .cancel .text {
 	min-width: 300px;
 	max-width: 420px;
@@ -241,6 +240,13 @@
 
 .cancel .btnGroup {
 	width: 200px;
+}
+
+@media (max-width: 480px) {
+	.cancel .btnGroup {
+		flex-direction: row;
+		width: 200px;
+	}
 }
 
 .checkout {
