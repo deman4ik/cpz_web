@@ -67,14 +67,15 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         skip: !robotData
     });
 
-    useQuery(GET_USER_SUBS, {
+    const { data: dataUserSubs } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
-        },
-        onCompleted: ({ user_subs }) => {
-            if (user_subs && !user_subs.length) setStep(0);
         }
     });
+
+    useEffect(() => {
+        if (dataUserSubs && !dataUserSubs.user_subs.length) setStep(0);
+    }, [dataUserSubs]);
 
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {

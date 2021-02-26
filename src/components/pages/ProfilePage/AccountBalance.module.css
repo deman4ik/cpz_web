@@ -105,7 +105,6 @@
 }
 
 .container {
-	/* position: relative; */
 	display: flex;
 	flex-direction: column;
 	width: 300px;
@@ -221,7 +220,6 @@
 	margin: auto;
 }
 
-
 .cancel .text {
 	min-width: 300px;
 	max-width: 420px;
@@ -242,4 +240,48 @@
 
 .cancel .btnGroup {
 	width: 200px;
+}
+
+@media (max-width: 480px) {
+	.cancel .btnGroup {
+		flex-direction: row;
+		width: 200px;
+	}
+}
+
+.checkout {
+	width: 100%;
+	max-width: 420px;
+
+	padding: 0;
+}
+
+.checkout .frame {
+	opacity: 0;
+	background-color: transparent;
+}
+
+.checkout .content {
+	min-width: 320px;
+
+	text-align: center;
+	color: white;
+}
+
+.checkout .text {
+	width: 100%;
+
+	margin: 0 auto;
+
+	white-space: pre-line;
+
+	font-size: 14px;;
+}
+
+.checkout .howItWorks {
+	display: block;
+
+	margin: 10px 0 30px;
+
+	font-size: 14px;
 }
