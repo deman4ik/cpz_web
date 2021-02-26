@@ -21,9 +21,7 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
         return composeClass;
     };
 
-    const handleOnClick = (e) => {
-        e.preventDefault();
-
+    const handleOnClick = () => {
         if (gtag_conversation) {
             gtag_report_conversion(href);
         } else {
