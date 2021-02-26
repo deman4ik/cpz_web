@@ -14,7 +14,8 @@ import {
     EmailIcon,
     AccountIcon,
     HistoryIcon,
-    BitcoinIcon
+    BitcoinIcon,
+    WalletMembershipIcon
 } from "assets/icons/svg";
 
 export const components = {
@@ -33,7 +34,8 @@ export const components = {
     email: EmailIcon,
     account: AccountIcon,
     history: HistoryIcon,
-    bitcoin: BitcoinIcon
+    bitcoin: BitcoinIcon,
+    wallet: WalletMembershipIcon
 };
 
 export const props = {
