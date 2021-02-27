@@ -21,7 +21,7 @@ const _AccountBalance: FC = (): any => {
 
     const [userSubId, setUserSubId] = useState("");
     const [status, setStatus] = useState("");
-    const [subscription, setSubscription] = useState({ name: "" });
+    const [subsName, setSubsName] = useState("FREE PLAN");
 
     const [subscriptionOption, setSubscriptionOption] = useState({
         name: "",
@@ -47,7 +47,7 @@ const _AccountBalance: FC = (): any => {
     const [isPlan, setPlan] = useState(false);
     const [formError, setFormError] = useState("");
 
-    const { data } = useQuery(GET_USER_SUBS, {
+    const { data, refetch } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
@@ -64,7 +64,7 @@ const _AccountBalance: FC = (): any => {
             setPlan(data && data.user_subs.length);
             setUserSubId(data.user_subs[0].id);
             setStatus(getToUpperCase(data.user_subs[0].status));
-            setSubscription(data.user_subs[0].subscription);
+            setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
     }, [data]);
@@ -101,6 +101,14 @@ const _AccountBalance: FC = (): any => {
             handleSetCancelVisible();
             setLoading(false);
             setPlan(false);
+            setSubsName("FREE PLAN");
+            setSubscriptionOption({
+                name: "",
+                price_total: 0,
+                active_to: "",
+                trial_ended: ""
+            });
+            refetch();
             console.log(`cancelUserSub`, result);
         });
     };
@@ -134,6 +142,7 @@ const _AccountBalance: FC = (): any => {
         setSubscriptionOption(planOptions);
         setUserSubId(createUserSub.id);
         setPlan(true);
+        setSubsName("TRADER PLAN");
     };
 
     const timeExpiry = getTimeCharge(userPaymentData.expires_at) || 0;
@@ -163,7 +172,7 @@ const _AccountBalance: FC = (): any => {
                     <>
                         <div className={styles.topPart}>
                             <div className={styles.name}>
-                                <div className={styles.tableCellText}>{subscription.name}</div>
+                                <div className={styles.tableCellText}>{subsName}</div>
                             </div>
                         </div>
                         <div>
@@ -259,7 +268,7 @@ const _AccountBalance: FC = (): any => {
                             enabled={isModalSubsVisible}
                             handleOnClose={handleSetSubsVisible}
                             handleOnClick={handleOnSubscription}
-                            currentPlan={data && data.user_subs && subscriptionOption}
+                            currentPlan={subscriptionOption}
                         />
                         <style jsx>
                             {`
@@ -292,7 +301,7 @@ const _AccountBalance: FC = (): any => {
                                     Subscription
                                 </div>
                                 <div className={styles.tableCellText}>
-                                    {subscription.name}&nbsp;
+                                    {subsName}&nbsp;
                                     {subscriptionOption.name}
                                 </div>
                             </div>
@@ -370,7 +379,7 @@ const _AccountBalance: FC = (): any => {
                         <h2 className={styles.title}>Cancel subscription</h2>
                         <div className={`${styles.text}`}>
                             <p>
-                                Are you sure you want to cancel your <b>{subscription.name}</b> subscription?
+                                Are you sure you want to cancel your <b>{subsName}</b> subscription?
                             </p>
                             <p>
                                 All robots will be <b>stopped</b>! If there are any <b>open positions</b> they will be{" "}
