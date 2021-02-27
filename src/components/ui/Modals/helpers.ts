@@ -140,9 +140,10 @@ export function parseLimits(limits: LimitsType): ParsedLimits {
     }
     const { price, asset } = limits;
     const { min, max } = asset;
+
     return {
         price,
-        minAmount: min.amount || 0,
+        minAmount: (min.amount * min.amountUSD) / (min.amount * price) || 0,
         maxAmount: max.amount || 0,
         minAmountUSD: min.amountUSD || 0,
         maxAmountUSD: max.amountUSD || 0,
