@@ -113,17 +113,18 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                 )}
                 <Button
                     buttonType={HTMLButtonTypes.button}
-                    style={{ maxWidth: 140, margin: "0 auto" }}
+                    style={{ margin: "0 auto" }}
                     title="Subscribe"
                     type="success"
                     size="normal"
                     width={260}
                     isUppercase
+                    disabled={currentPlan && currentPlan.name === buttonName}
                     onClick={() => handleOnSubscriptionPlan(plan)}
                 />
                 {!enabled && <LoadingIndicator />}
             </div>
-            <ErrorLine formError={formError} style={{ margin: 0 }} />
+            <ErrorLine formError={formError} style={{ margin: "10px auto", width: "100%" }} />
             {isLoading && (
                 <div className={styles.loader}>
                     <LoadingIndicator />
