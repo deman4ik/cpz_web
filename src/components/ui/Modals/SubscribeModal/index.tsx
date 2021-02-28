@@ -106,7 +106,8 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                             action: "subscribe",
                             category: "Signals",
                             label: "subscribe",
-                            value: id
+                            value: id,
+                            robot_code: code
                         });
                         onClose(true);
                         Router.push(`/signals${code ? `/robot/${code}` : ""}`);

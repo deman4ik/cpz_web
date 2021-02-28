@@ -157,7 +157,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             action: "create",
                             category: "Robots",
                             label: "create",
-                            value: robotData.robot.id
+                            value: robotData.robot.id,
+                            robot_code: robotData.robot.code
                         });
                     });
                 } else {
@@ -197,7 +198,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             action: "start",
                             category: "Robots",
                             label: "start",
-                            value: robotData.robot.id
+                            value: robotData.robot.id,
+                            robot_code: robotData.robot.code
                         });
                     });
                     onClose(true);

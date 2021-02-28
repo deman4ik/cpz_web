@@ -6,12 +6,13 @@ import { CryptuosoLogo } from "../../assets/icons/svg";
 import styles from "./Footer.module.css";
 
 const _Footer: React.FC = () => {
-    const hahdleOnClick = (href: string) => {
+    const hahdleOnClick = (href: string, robot_code?: string) => {
         event({
             action: "click",
             category: "Landing",
             label: "conversion",
-            value: href
+            value: href,
+            robot_code
         });
     };
 

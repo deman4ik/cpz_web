@@ -44,7 +44,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
         id: userRobotId
     };
 
-    function handleResponse(response: any) {
+    function handleResponse(response: any, robot_code?: string) {
         const { result } = response.data[actions[type]];
         if (result) {
             if (type === "start") {
@@ -52,7 +52,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: userRobotId
+                    value: userRobotId,
+                    robot_code
                 });
             }
             onClose(true);
@@ -60,7 +61,7 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             setFormError(response.data[actions[type]].error);
         }
     }
-    const handleOnPressSubmit = async () => {
+    const handleOnPressSubmit = async (robot_code?: string) => {
         try {
             const userRobotActionResponse = await userRobotAction({ variables });
             handleResponse(userRobotActionResponse);
@@ -69,7 +70,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: userRobotId
+                    value: userRobotId,
+                    robot_code
                 });
             }
             if (type === "delete" && currentPage(Router.pathname) === Pages.robot) {

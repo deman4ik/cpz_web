@@ -1,9 +1,9 @@
 import React, { memo, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-
 import { ROBOT } from "graphql/local/queries";
 import { UNSUBSCRIBE_FROM_SIGNALS } from "graphql/signals/mutations";
 import { UNSUBSCRIBE } from "graphql/local/mutations";
+import { event } from "libs/gtag";
 import { Button } from "components/basic";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import styles from "./index.module.css";
@@ -34,6 +34,13 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                     unsubscribe({
                         variables: { cache: data.robot.cache, chartData: data.ChartData }
                     }).catch((e) => console.error(e));
+                    event({
+                        action: "unsubscribe",
+                        category: "Signals",
+                        label: "unsubscribe",
+                        value: data.robot.id,
+                        robot_code: data.robot.code
+                    });
                 } else {
                     setFormError(response.data.userSignalUnsubscribe.result);
                 }
