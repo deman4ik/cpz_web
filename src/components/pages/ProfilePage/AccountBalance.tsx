@@ -67,7 +67,9 @@ const _AccountBalance: FC = (): any => {
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
-    }, [data]);
+
+        refetch();
+    }, [data, refetch]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -308,11 +310,16 @@ const _AccountBalance: FC = (): any => {
 
                             <div className={styles.exchangeCell}>
                                 <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Price Status
+                                    Price
                                 </div>
-                                <div className={styles.tableCellText}>
-                                    $ {userPaymentData.price} {userPaymentData.status}
+                                <div className={styles.tableCellText}>$ {userPaymentData.price}</div>
+                            </div>
+
+                            <div className={styles.exchangeCell}>
+                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                    Status
                                 </div>
+                                <div className={styles.tableCellText}>{userPaymentData.status}</div>
                             </div>
                             {timeExpiry <= 0 || (
                                 <div className={styles.exchangeCell}>
