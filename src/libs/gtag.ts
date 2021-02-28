@@ -4,9 +4,6 @@ export const AW_CONVERSION_ID = "AW-971308941";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url) => {
-    console.log(url);
-    console.log(process.env.DEBUG_MODE);
-
     if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("config", GA_TRACKING_ID, {
         page_path: url,
