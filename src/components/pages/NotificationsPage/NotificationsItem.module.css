@@ -1,33 +1,44 @@
 .tableRow {
-  display: flex;
-  flex-direction: row;
-  border-top-width: 2px;
-  border-color: var(--darkBg);
-  padding: 15px 20px;
+	display: flex;
+	flex-direction: row;
+
+	padding: 15px 20px;
+
+	border-color: var(--darkBg);
+	border-top-width: 2px;
 }
 
 .dateText {
-  color: var(--accent);
-  font-size: var(--small2);
-  margin-bottom: 3px
+	margin-bottom: 3px;
+
+	color: var(--accent);
+
+	font-size: var(--small2);;
 }
 
 .mark {
-  color: var(--negative);
-  margin-top: -4px
+	margin-top: -4px;
+
+	color: var(--negative);;
 }
 
 .lineGroup {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
 }
 
 .dateGroup {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .support_link {
-    padding-top: 10px;
+	padding-top: 10px;
+}
+
+.textMessageDesktop {
+	color: white;
+
+	font-size: var(--normal1);
 }
