@@ -88,7 +88,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
         setInputKeys((prev) => ({ ...prev, [key]: text }));
     };
 
-    const handleOnPress = async (e) => {
+    const handleOnPress = async (e, robot_code?: string) => {
         e.preventDefault();
         if (!inputKeys.public.trim().length || !inputKeys.secret.trim().length) {
             setErrorMessage(errorMessages.KEYS_ARE_REQUIRED);
@@ -118,7 +118,7 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                     category: "Profile",
                     label: "add_api_key",
                     value: "add_api_key",
-                    robot_code: ""
+                    robot_code
                 });
             }
             if (handleOnSubmit) {
