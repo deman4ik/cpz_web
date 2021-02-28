@@ -12,6 +12,7 @@ import {
 } from "components/ui/Modals/helpers";
 import { volumeTypeOptions } from "../constants";
 import { LimitsType, RobotDataType } from "../types";
+import { LOGIN } from "graphql/auth/mutations";
 
 interface UseSubscribeModalProps {
     limits: LimitsType;
@@ -42,7 +43,6 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
 
     const parsedLimits = useMemo(() => parseLimits(limits), [limits]);
     const { price, minAmount, minAmountUSD, balance, availableBalancePercent, usedBalancePercent } = parsedLimits;
-
     const usedAccountPercent = Math.ceil(usedBalancePercent - (robotData?.robot.subs.settings.balancePercent || 0));
     const currentBalancePercent =
         DEFAULT_VOLUME_TYPE === InputTypes.balancePercent
@@ -63,7 +63,7 @@ export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeMod
             const assetValue = getTranslatedValue(amountUSD, currencyDynamic, assetStatic);
             result = getInputValues(assetValue, amountUSD, assetValue, getPercent(amountUSD));
         } else if (currentVolumeTypeInAsset) {
-            const currencyValue = getTranslatedValue(amount, assetStatic, currencyDynamic);
+            const currencyValue = Number(getTranslatedValue(amount, assetStatic, currencyDynamic).toFixed());
             result = getInputValues(amount, currencyValue, amount, getPercent(currencyValue));
         }
         return result;
