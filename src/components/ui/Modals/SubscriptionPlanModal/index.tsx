@@ -13,15 +13,23 @@ import styles from "./index.module.css";
 interface Props {
     enabled: boolean;
     subsName?: string;
-    handleOnNext?: () => void;
     handleOnClose?: () => void;
     handleOnClick?: (arg0: any, arg1: any) => void;
+    setStep?: (step: number) => void;
+    subsRefetch?: () => void;
     currentPlan?: {
         name: string;
     };
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClose, handleOnClick, currentPlan }) => {
+const _SubscriptionPlan: React.FC<Props> = ({
+    enabled,
+    setStep,
+    subsRefetch,
+    handleOnClose,
+    handleOnClick,
+    currentPlan
+}) => {
     const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -67,7 +75,8 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, handleOnNext, handleOnClo
                 setLoading(false);
                 if (handleOnClick) handleOnClick(plan, subscribedPlan);
                 if (handleOnClose) handleOnClose();
-                if (handleOnNext) setTimeout(() => handleOnNext(), 2000);
+                if (setStep) setStep(1);
+                subsRefetch();
             })
             .catch(({ message }) => {
                 setLoading(false);
