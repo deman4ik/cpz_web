@@ -14,7 +14,7 @@ interface Props {
     enabled: boolean;
     subsName?: string;
     handleOnClose?: () => void;
-    handleOnClick?: (arg0: any, arg1: any) => void;
+    handleOnClick?: (arg0: any, arg1: any, arg2: any) => void;
     setStep?: (step: number) => void;
     subsRefetch?: () => void;
     currentPlan?: {
@@ -70,10 +70,10 @@ const _SubscriptionPlan: React.FC<Props> = ({
                 subscriptionOption: code
             }
         })
-            .then(({ data: subscribedPlan }) => {
-                console.log(`subscribedPlan`, subscribedPlan);
+            .then(({ data: userSub }) => {
+                console.log(`createUserSub`, userSub);
                 setLoading(false);
-                if (handleOnClick) handleOnClick(plan, subscribedPlan);
+                if (handleOnClick) handleOnClick(plan, userSub, subsPlan);
                 if (handleOnClose) handleOnClose();
                 if (setStep) setStep(1);
                 subsRefetch();

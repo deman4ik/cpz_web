@@ -1,7 +1,6 @@
 import React, { memo } from "react";
-
 import { formatDate, getTimeFromNow } from "config/utils";
-import { showMessage, getRedirectionLink } from "./helpers";
+import { showMessage, getRedirectionLink, getTextStatusExpiredOrCanceled, getTextStatusExpiring } from "./helpers";
 import styles from "./NotificationsItemCard.module.css";
 
 interface Props {
@@ -23,6 +22,10 @@ export const _NotificationsItemCard: React.FC<Props> = ({ item, routeNotificatio
                 {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
             </div>
             {showMessage(item, handleOnPressNotification, true)}
+            <div className={styles.textMessageCard}>
+                {(item?.status === "expired" || item?.status === "canceled") && getTextStatusExpiredOrCanceled()}
+                {item?.status === "expiring" && getTextStatusExpiring(item)}
+            </div>
         </div>
     );
 };

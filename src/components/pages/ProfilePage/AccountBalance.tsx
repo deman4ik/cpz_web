@@ -19,16 +19,18 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const [userSubId, setUserSubId] = useState("");
-    const [status, setStatus] = useState("");
-    const [subsName, setSubsName] = useState("FREE PLAN");
-
-    const [subscriptionOption, setSubscriptionOption] = useState({
+    const INITIAL_OPTIONS = {
         name: "",
         price_total: 0,
         active_to: "",
         trial_ended: ""
-    });
+    };
+
+    const [userSubId, setUserSubId] = useState("");
+    const [status, setStatus] = useState("");
+    const [subsName, setSubsName] = useState("FREE PLAN");
+
+    const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
 
     const [userPaymentData, setUserPaymentData] = useState({
         id: "",
@@ -104,12 +106,7 @@ const _AccountBalance: FC = (): any => {
             setLoading(false);
             setPlan(false);
             setSubsName("FREE PLAN");
-            setSubscriptionOption({
-                name: "",
-                price_total: 0,
-                active_to: "",
-                trial_ended: ""
-            });
+            setSubscriptionOption(INITIAL_OPTIONS);
             refetch();
             console.log(`cancelUserSub`, result);
         });
@@ -140,11 +137,12 @@ const _AccountBalance: FC = (): any => {
             .catch(({ message }) => setFormError(message));
     };
 
-    const handleOnSubscription = (planOptions, { createUserSub }) => {
+    const handleOnSubscription = (planOptions, { createUserSub: { id } }, { name }) => {
         setSubscriptionOption(planOptions);
-        setUserSubId(createUserSub.id);
+        setUserSubId(id);
+        setSubsName(name);
         setPlan(true);
-        setSubsName("TRADER PLAN");
+        refetch();
     };
 
     const timeExpiry = getTimeCharge(userPaymentData.expires_at) || 0;
