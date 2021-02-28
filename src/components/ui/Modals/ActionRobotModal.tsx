@@ -52,7 +52,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: userRobotId
+                    value: userRobotId,
+                    robot_code: ""
                 });
             }
             onClose(true);
@@ -69,7 +70,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
                     action: "start",
                     category: "Robots",
                     label: "start",
-                    value: userRobotId
+                    value: userRobotId,
+                    robot_code: ""
                 });
             }
             if (type === "delete" && currentPage(Router.pathname) === Pages.robot) {

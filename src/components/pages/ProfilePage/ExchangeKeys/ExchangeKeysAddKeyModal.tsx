@@ -117,7 +117,8 @@ const _ExchangeKeysAddKeyModal: React.FC<ExchangeKeysAddKeyModalProps> = ({
                     action: "add_api_key",
                     category: "Profile",
                     label: "add_api_key",
-                    value: "add_api_key"
+                    value: "add_api_key",
+                    robot_code: ""
                 });
             }
             if (handleOnSubmit) {

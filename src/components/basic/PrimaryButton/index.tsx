@@ -29,7 +29,8 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
                 action: "click",
                 category: "Landing",
                 label: "conversion",
-                value: href
+                value: href,
+                robot_code: ""
             });
         }
     };

@@ -11,7 +11,8 @@ const _Footer: React.FC = () => {
             action: "click",
             category: "Landing",
             label: "conversion",
-            value: href
+            value: href,
+            robot_code: ""
         });
     };
 
