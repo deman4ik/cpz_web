@@ -6,17 +6,20 @@ export const AW_CONVERSION_ID = "AW-971308941";
 export const pageview = (url) => {
     if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("config", GA_TRACKING_ID, {
-        page_path: url
+        page_path: url,
+        debug_mode: process.env.DEBUG_MODE
     });
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value }) => {
+export const event = ({ action, category, label, value, robot_code }) => {
     if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("event", action, {
+        event_source: "web",
         event_category: category,
         event_label: label,
-        value
+        value,
+        robot_code
     });
 };
 

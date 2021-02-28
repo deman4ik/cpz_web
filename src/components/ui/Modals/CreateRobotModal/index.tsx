@@ -67,7 +67,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         skip: !robotData
     });
 
-    const { data: dataUserSubs } = useQuery(GET_USER_SUBS, {
+    const { data: dataUserSubs, refetch: subsRefetch } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
@@ -157,7 +157,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             action: "create",
                             category: "Robots",
                             label: "create",
-                            value: robotData.robot.id
+                            value: robotData.robot.id,
+                            robot_code: robotData.robot.code
                         });
                     });
                 } else {
@@ -197,7 +198,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                             action: "start",
                             category: "Robots",
                             label: "start",
-                            value: robotData.robot.id
+                            value: robotData.robot.id,
+                            robot_code: robotData.robot.code
                         });
                     });
                     onClose(true);
@@ -248,7 +250,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 {step === 0 && (
                     <>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
-                        <SubscriptionPlan enabled={enabled} handleOnNext={handleOnNext} />
+                        <SubscriptionPlan enabled={enabled} setStep={setStep} subsRefetch={subsRefetch} />
                     </>
                 )}
                 {step === 1 && (
