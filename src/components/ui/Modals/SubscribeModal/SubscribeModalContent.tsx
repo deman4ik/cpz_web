@@ -85,8 +85,7 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
             const { settings: robotSettings } = robotData?.robot.subs;
             const { volumeType: robotVolumeType } = robotSettings;
 
-            const volumeByType = volumes[robotVolumeType];
-            onChange(robotVolumeType)(robotSettings[volumeByType]);
+            onChange(robotVolumeType)(minAmounts[robotVolumeType]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);

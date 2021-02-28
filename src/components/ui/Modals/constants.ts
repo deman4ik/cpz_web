@@ -14,10 +14,10 @@ export const volumeTypeOptions = [
 
 export const robotVolumeTypeOptions = [
     ...volumeTypeOptions,
-    {
-        label: "Dynamic asset",
-        value: InputTypes.assetDynamicDelta
-    },
+    // {
+    //     label: "Dynamic asset",
+    //     value: InputTypes.assetDynamicDelta
+    // },
     {
         label: "Balance percentage",
         value: InputTypes.balancePercent
