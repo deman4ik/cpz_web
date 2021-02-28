@@ -110,6 +110,7 @@ const _AccountBalance: FC = (): any => {
                 active_to: "",
                 trial_ended: ""
             });
+            refetch();
             console.log(`cancelUserSub`, result);
         });
     };
