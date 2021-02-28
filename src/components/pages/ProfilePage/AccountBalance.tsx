@@ -67,7 +67,9 @@ const _AccountBalance: FC = (): any => {
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
-    }, [data]);
+
+        refetch();
+    }, [data, refetch]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -108,7 +110,6 @@ const _AccountBalance: FC = (): any => {
                 active_to: "",
                 trial_ended: ""
             });
-            refetch();
             console.log(`cancelUserSub`, result);
         });
     };
