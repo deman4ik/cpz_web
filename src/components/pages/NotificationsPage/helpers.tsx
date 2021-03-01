@@ -1,3 +1,5 @@
+import React from "react";
+import dayjs from "libs/dayjs";
 import * as Sets from "./NotificationsSets";
 import * as SetsCard from "./NotificationsSetsCard";
 import { color, DOCS_URL, SUPPORT_URL } from "config/constants";
@@ -124,3 +126,25 @@ export const getRedirectionLink = (item) => {
 
     return links[messageMap[item.type]]();
 };
+
+export const getTextStatusExpiredOrCanceled = (): JSX.Element => (
+    <p>
+        All robots are <b>stopping</b> now! If&nbsp;there are any <b>open positions</b> they will be
+        <b>canceled</b> (closed) with current market prices and potentially may cause profit
+        <b>losses</b>!
+    </p>
+);
+
+export const getTextStatusExpiring = (item: any): JSX.Element => (
+    <>
+        <p>
+            Expires in&nbsp; {`${dayjs.utc().diff(item.activeTo || item.trialEnded, "day")}`} days. Please renew you
+            subscription.
+        </p>
+        <p>
+            After subscription expires all robots will be&nbsp;<b>stopped</b>! If&nbsp;there are any
+            <b>open positions</b> they will be&nbsp;<b>canceled</b> (closed) with current market prices and potentially
+            may cause profit <b>losses</b>!
+        </p>
+    </>
+);

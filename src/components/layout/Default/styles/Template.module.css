@@ -25,6 +25,12 @@
 	height: 100%;
 }
 
+@media (max-width: 420px) {
+	.mainMenuContainer {
+		padding-bottom: 2.6rem;
+	}
+}
+
 .wrapFixed {
 	position: fixed;
 	z-index: 102;

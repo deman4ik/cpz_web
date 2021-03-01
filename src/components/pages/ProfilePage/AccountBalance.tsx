@@ -1,5 +1,6 @@
 import React, { FC, useContext, useRef, useEffect, useState, memo } from "react";
 import Link from "next/link";
+import dayjs from "libs/dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
 import { CHECKOUT_USER_SUB, CANCEL_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
@@ -19,16 +20,18 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const [userSubId, setUserSubId] = useState("");
-    const [status, setStatus] = useState("");
-    const [subsName, setSubsName] = useState("FREE PLAN");
-
-    const [subscriptionOption, setSubscriptionOption] = useState({
+    const INITIAL_OPTIONS = {
         name: "",
         price_total: 0,
         active_to: "",
         trial_ended: ""
-    });
+    };
+
+    const [userSubId, setUserSubId] = useState("");
+    const [status, setStatus] = useState("");
+    const [subsName, setSubsName] = useState("FREE PLAN");
+
+    const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
 
     const [userPaymentData, setUserPaymentData] = useState({
         id: "",
@@ -104,12 +107,7 @@ const _AccountBalance: FC = (): any => {
             setLoading(false);
             setPlan(false);
             setSubsName("FREE PLAN");
-            setSubscriptionOption({
-                name: "",
-                price_total: 0,
-                active_to: "",
-                trial_ended: ""
-            });
+            setSubscriptionOption(INITIAL_OPTIONS);
             refetch();
             console.log(`cancelUserSub`, result);
         });
@@ -140,11 +138,12 @@ const _AccountBalance: FC = (): any => {
             .catch(({ message }) => setFormError(message));
     };
 
-    const handleOnSubscription = (planOptions, { createUserSub }) => {
+    const handleOnSubscription = (planOptions, { createUserSub: { id } }, { name }) => {
         setSubscriptionOption(planOptions);
-        setUserSubId(createUserSub.id);
+        setUserSubId(id);
+        setSubsName(name);
         setPlan(true);
-        setSubsName("TRADER PLAN");
+        refetch();
     };
 
     const timeExpiry = getTimeCharge(userPaymentData.expires_at) || 0;
@@ -209,11 +208,20 @@ const _AccountBalance: FC = (): any => {
                                     </Link>
                                 </div>
                             </div>
-                            {subscriptionOption.active_to && subscriptionOption.trial_ended && (
+                            {status === "trial" && subscriptionOption.trial_ended !== null && (
                                 <div className={[styles.row, styles.exchangeGroup].join(" ")}>
                                     <div className={styles.exchangeCell}>
                                         <div className={styles.tableCellText}>
-                                            Expires: {subscriptionOption.active_to || subscriptionOption.trial_ended}
+                                            Expires in {dayjs.utc().diff(subscriptionOption.trial_ended, "day")} days
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {status === "active" && subscriptionOption.active_to !== null && (
+                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                                    <div className={styles.exchangeCell}>
+                                        <div className={styles.tableCellText}>
+                                            Expires in {dayjs.utc().diff(subscriptionOption.active_to, "day")} days
                                         </div>
                                     </div>
                                 </div>

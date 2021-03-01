@@ -1,52 +1,55 @@
 .header {
-    position: sticky;
-    margin-left: 200px;
-    background-color: var(--dark);
-    height: 56px;
-    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.24);
+	position: sticky;
+	height: 56px;
+	margin-left: 200px;
+	background-color: var(--dark);
+	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.24);
 }
 
 .wrapper {
-    position: relative;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    flex-direction: row;
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	height: 100%;
 }
 
 .titleGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    position: absolute;
-    left: 0;
+	position: absolute;
+	left: 0;
+	display: flex;
+	align-items: stretch;
+	flex-direction: column;
 }
 
 .title {
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-    text-align: left;
+	text-align: left;
+	color: white;
+	font-size: 18px;
+	font-weight: 500;
 }
 
 .subTitle {
-    font-size: var(--small1);
-    color: var(--accent);
+	color: var(--accent);
+	font-size: var(--small1);
 }
 
 .toolbarContainer {
-    position: absolute;
-    right: 0;
+	position: absolute;
+	right: 0;
 }
 
 @media (max-width: 1200px) {
-    .header {
-        margin-left: 56px;
-    }
+	.header {
+		margin-left: 56px;
+	}
 }
 
 @media (max-width: 480px) {
-    .header {
-        margin-left: 0;
-    }
+	.header {
+		margin-left: 0;
+	}
+	.subTitle {
+		font-size: var(--small2);
+	}
 }
