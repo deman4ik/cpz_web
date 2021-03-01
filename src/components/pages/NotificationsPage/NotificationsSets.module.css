@@ -1,71 +1,71 @@
 .textMessageDesktop {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: var(--normal1);
+	display: flex;
+	flex-direction: column;
+	color: white;
+	font-size: var(--normal1);
 }
 
 .textMessageCard {
-  color: white;
-  font-size: var(--small1);
+	color: white;
+	font-size: var(--small1);
 }
 
 .messageRow {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 1;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 1;
 }
 
 .row {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .rowCard {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .rowRobot {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-around;
-  margin-top: 5px;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: space-around;
+	margin-top: 5px;
 }
 
 .rowRobotProfit {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  justify-content: space-between;
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .colRobot {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
 }
 
 .textAccent {
-  color: var(--accent);
-  font-size: var(--normal1);
+	color: var(--accent);
+	font-size: var(--normal1);
 }
 
 .cursor {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .textAccentCard {
-  color: var(--accent);
-  font-size: var(--small1);
+	color: var(--accent);
+	font-size: var(--small1);
 }
 
 .alertRow {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  justify-content: space-between;
-  margin-top: 5px;
-  flex-wrap: wrap;
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-top: 5px;
 }

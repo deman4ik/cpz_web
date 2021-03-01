@@ -16,7 +16,6 @@ interface Props {
 
 const _RobotOpenPositionsPage: React.FC<Props> = ({ type }) => {
     const typeIsSignals = type === RobotsType.signals;
-    console.log(1);
     const {
         authState: { user_id }
     } = useContext(AuthContext);
@@ -32,7 +31,6 @@ const _RobotOpenPositionsPage: React.FC<Props> = ({ type }) => {
     );
     // TODO: use single function to parse both signal and trading robots
     const formatPositions = typeIsSignals ? formatSignalsPositions : formatTradingRobotPositions;
-    console.log(formatPositions);
     return (
         <DefaultTemplate page={PageType[type]} title="Open Positions" subTitle={capitalize(type)} handleBackNavigation>
             <div style={{ padding: "5px 0 0 5px" }}>

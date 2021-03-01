@@ -64,11 +64,13 @@ export const filters = {
         "user-robot.stopped",
         "user-robot.paused",
         "user-robot.resumed",
-        "message.support-reply"
+        "message.support-reply",
+        "user_payment.status",
+        "user_sub.status"
     ],
     signals: ["signal.trade", "signal.alert", "signal-trade.new", "signal-alert.new"],
     trading: ["user-robot.trade"],
-    error: ["order.error", "user_ex_acc.error"]
+    error: ["order.error", "user_ex_acc.error", "user_sub.error"]
 };
 
 export const showMessage = (item, onClick: () => void, card = false): JSX.Element => {
@@ -117,9 +119,9 @@ export const getRedirectionLink = (item) => {
             redirect: false
         }),
         user: () => ({ link: "/profile", redirect: true }),
-        errorUserSub: () => ({ link: "/#", redirect: true }),
-        statusUserSub: () => ({ link: "/#", redirect: true }),
-        statusUserPayment: () => ({ link: "/#", redirect: true })
+        errorUserSub: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
+        statusUserSub: () => ({ link: "/profile", redirect: true }),
+        statusUserPayment: () => ({ link: "/profile/payment-history", redirect: true })
     };
 
     return links[messageMap[item.type]]();
@@ -136,8 +138,8 @@ export const getTextStatusExpiredOrCanceled = (): JSX.Element => (
 export const getTextStatusExpiring = (item: any): JSX.Element => (
     <>
         <p>
-            Expires in&nbsp; {`${dayjs.utc().diff(item.activeTo || item.trialEnded, "day")}`} days. Please renew you
-            subscription.
+            Expires in&nbsp; {`${dayjs.utc().diff(item?.data.activeTo || item?.data.trialEnded, "day")}`} days. Please
+            renew you subscription.
         </p>
         <p>
             After subscription expires all robots will be&nbsp;<b>stopped</b>! If&nbsp;there are any
