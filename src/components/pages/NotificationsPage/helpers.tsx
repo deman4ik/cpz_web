@@ -121,7 +121,7 @@ export const getRedirectionLink = (item) => {
         user: () => ({ link: "/profile", redirect: true }),
         errorUserSub: () => ({ link: "/#", redirect: true }),
         statusUserSub: () => ({ link: "/#", redirect: true }),
-        statusUserPayment: () => ({ link: "/#", redirect: true })
+        statusUserPayment: () => ({ link: "/profile/payment-history", redirect: true })
     };
 
     return links[messageMap[item.type]]();

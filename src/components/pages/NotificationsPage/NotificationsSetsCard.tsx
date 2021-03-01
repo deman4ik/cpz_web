@@ -1,6 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
@@ -323,7 +322,7 @@ export const statusUserSubSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageCard}>
-                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                    {item.data.subscriptionName} is {item.data.status}
                 </div>
             </div>
         </div>
@@ -344,6 +343,9 @@ export const statusUserPaymentSet = (item, onClick) => (
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageCard}>
                     Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+                <div className={styles.textMessageCard}>
+                    Your charge {item.data.code} for subscription {item.data.subcriptionName} is {item.data.status}
                 </div>
             </div>
         </div>

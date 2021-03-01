@@ -3,10 +3,8 @@
 	flex-direction: column;
 	width: 100%;
 	max-width: 300px;
-
 	margin: 5px;
 	padding: 10px;
-
 	background-color: var(--dark);
 	box-shadow: var(--shadow);
 }
@@ -14,20 +12,17 @@
 .dateGroup {
 	display: flex;
 	flex-direction: row;
-
 	margin-bottom: 3px;
 }
 
 .dateText {
 	color: var(--accent);
-
 	font-size: var(--small2);
 }
 
 .mark {
-	margin-top: -4px;;
-
-	color: var(--negative);
+	margin-top: -4px;
+	color: var(--negative);;
 }
 
 @media (max-width: 320px) {
@@ -38,6 +33,5 @@
 
 .textMessageCard {
 	color: white;
-
 	font-size: var(--small1);
 }

@@ -1,6 +1,5 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
 import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
@@ -275,16 +274,16 @@ export const statusUserSubSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageDesktop}>
-                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                    {item.data.subscriptionName} is {item.data.status}
                 </div>
             </div>
         </div>
         <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
             <div className={styles.textMessageDesktop}>{formatDate(item.data.timestamp)}</div>
             <div className={styles.textMessageDesktop}>
-                {(item.data?.status === "expired" || item.data?.status === "canceled") &&
+                {(item.data.status === "expired" || item.data.status === "canceled") &&
                     getTextStatusExpiredOrCanceled()}
-                {item.data?.status === "expiring" && getTextStatusExpiring(item)}
+                {item.data.status === "expiring" && getTextStatusExpiring(item)}
             </div>
         </div>
     </div>
@@ -296,6 +295,9 @@ export const statusUserPaymentSet = (item, onClick) => (
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageDesktop}>
                     Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                </div>
+                <div className={styles.textMessageDesktop}>
+                    Your charge {item.data.code} for subscription {item.data.subcriptionName} is {item.data.status}
                 </div>
             </div>
         </div>
