@@ -74,8 +74,13 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
     });
 
     useEffect(() => {
-        if (dataUserSubs && !dataUserSubs.user_subs.length) setStep(0);
-    }, [dataUserSubs]);
+        subsRefetch();
+        if (dataUserSubs && !dataUserSubs.user_subs.length) {
+            setStep(0);
+        } else {
+            setStep(1);
+        }
+    }, [dataUserSubs, subsRefetch]);
 
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
@@ -250,7 +255,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                 {step === 0 && (
                     <>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
-                        <SubscriptionPlan enabled={enabled} setStep={setStep} subsRefetch={subsRefetch} />
+                        <SubscriptionPlan enabled={enabled} setStep={setStep} />
                     </>
                 )}
                 {step === 1 && (

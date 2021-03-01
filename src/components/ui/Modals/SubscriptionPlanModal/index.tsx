@@ -22,14 +22,7 @@ interface Props {
     };
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({
-    enabled,
-    setStep,
-    subsRefetch,
-    handleOnClose,
-    handleOnClick,
-    currentPlan
-}) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, handleOnClick, currentPlan }) => {
     const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -76,7 +69,6 @@ const _SubscriptionPlan: React.FC<Props> = ({
                 if (handleOnClick) handleOnClick(plan, userSub, subsPlan);
                 if (handleOnClose) handleOnClose();
                 if (setStep) setStep(1);
-                subsRefetch();
             })
             .catch(({ message }) => {
                 setLoading(false);
