@@ -6,11 +6,9 @@
 	width: 100%;
 	max-width: 420px;
 	height: 100%;
-
 	margin-right: 20px;
 	margin-bottom: 30px;
 	margin-left: 20px;
-
 	border-radius: 2px;
 	background-color: var(--rgbaDark);
 	box-shadow: rgba(11, 152, 197, 0.2) 0 0 20px;
@@ -18,14 +16,12 @@
 
 .primaryText {
 	color: white;
-
 	font-weight: bold;
 }
 
 .secondaryText {
 	text-align: right;
 	color: white;
-
 	font-size: var(--small1);
 }
 
@@ -34,12 +30,10 @@
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
-
 	padding-top: 15px;
 	padding-right: 20px;
 	padding-bottom: 15px;
 	padding-left: 20px;
-
 	background-color: var(--dark);
 }
 
@@ -61,27 +55,30 @@
 	flex-grow: 1;
 	justify-content: space-between;
 	width: auto;
-
 	margin: 10px 15px 10px 0;
+}
+
+@media (max-width: 768px) {
+	.statCol {
+		margin: 0;
+		padding: 0 20px;
+	}
 }
 
 .statRow {
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-
 	margin-bottom: 10px;
 }
 
 .label {
 	color: var(--accent);
-
 	font-size: var(--small2);
 }
 
 .statValue {
 	color: white;
-
 	font-size: var(--small1);
 	line-height: var(--normal2);
 }
@@ -96,7 +93,6 @@
 .chartCol {
 	flex-grow: 2;
 	max-width: 260px;
-
 	padding-left: 15px;
 }
 
@@ -105,7 +101,6 @@
 	flex-direction: row;
 	justify-content: center;
 	height: auto;
-
 	padding: 0 15px 15px;
 }
 
@@ -119,7 +114,6 @@
 
 .wide {
 	display: inline;
-
 	margin-bottom: 5px;
 }
 
@@ -141,7 +135,6 @@
 		flex-direction: row;
 		justify-content: space-between;
 		width: 100%;
-
 		margin-top: 10px;
 		margin-left: 0;
 	}
@@ -151,6 +144,9 @@
 }
 
 @media (max-width: 480px) {
+	.primaryText {
+		font-size: var(--small1);
+	}
 	.container {
 		margin-right: 0;
 		margin-left: 0;
