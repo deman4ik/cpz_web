@@ -62,11 +62,13 @@ export const filters = {
         "user-robot.stopped",
         "user-robot.paused",
         "user-robot.resumed",
-        "message.support-reply"
+        "message.support-reply",
+        "user_payment.status",
+        "user_sub.status"
     ],
     signals: ["signal.trade", "signal.alert", "signal-trade.new", "signal-alert.new"],
     trading: ["user-robot.trade"],
-    error: ["order.error", "user_ex_acc.error"]
+    error: ["order.error", "user_ex_acc.error", "user_sub.error"]
 };
 
 export const showMessage = (item, onClick: () => void, card = false): JSX.Element => {
