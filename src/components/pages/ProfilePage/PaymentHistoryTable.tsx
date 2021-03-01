@@ -120,16 +120,18 @@ const _PaymentHistoryTable: FC<Props> = ({
 
             <div className={styles.positionGroup}>
                 <>
-                    <div className={styles.limitWrapper}>
-                        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Subscription Period
+                    {subscription_from !== null && subscription_to !== null && (
+                        <div className={styles.limitWrapper}>
+                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                                Subscription Period
+                            </div>
+                            <div className={styles.codeGroup}>
+                                <div className={styles.tableCellText}>{`${formatDate(
+                                    subscription_from
+                                )} \n- ${formatDate(subscription_to)}`}</div>
+                            </div>
                         </div>
-                        <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
-                                subscription_to
-                            )}`}</div>
-                        </div>
-                    </div>
+                    )}
                 </>
             </div>
         </div>
