@@ -119,8 +119,8 @@ export const getRedirectionLink = (item) => {
             redirect: false
         }),
         user: () => ({ link: "/profile", redirect: true }),
-        errorUserSub: () => ({ link: "/#", redirect: true }),
-        statusUserSub: () => ({ link: "/#", redirect: true }),
+        errorUserSub: () => ({ link: `${DOCS_URL}${SUPPORT_URL}`, redirect: true }),
+        statusUserSub: () => ({ link: "/profile", redirect: true }),
         statusUserPayment: () => ({ link: "/profile/payment-history", redirect: true })
     };
 
