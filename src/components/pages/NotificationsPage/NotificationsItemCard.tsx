@@ -22,10 +22,6 @@ export const _NotificationsItemCard: React.FC<Props> = ({ item, routeNotificatio
                 {!item.readed ? <div className={styles.mark}>&nbsp;*</div> : null}
             </div>
             {showMessage(item, handleOnPressNotification, true)}
-            <div className={styles.textMessageCard}>
-                {(item?.status === "expired" || item?.status === "canceled") && getTextStatusExpiredOrCanceled()}
-                {item?.status === "expiring" && getTextStatusExpiring(item)}
-            </div>
         </div>
     );
 };

@@ -138,8 +138,8 @@ export const getTextStatusExpiredOrCanceled = (): JSX.Element => (
 export const getTextStatusExpiring = (item: any): JSX.Element => (
     <>
         <p>
-            Expires in&nbsp; {`${dayjs.utc().diff(item.activeTo || item.trialEnded, "day")}`} days. Please renew you
-            subscription.
+            Expires in&nbsp; {`${dayjs.utc().diff(item?.data.activeTo || item?.data.trialEnded, "day")}`} days. Please
+            renew you subscription.
         </p>
         <p>
             After subscription expires all robots will be&nbsp;<b>stopped</b>! If&nbsp;there are any

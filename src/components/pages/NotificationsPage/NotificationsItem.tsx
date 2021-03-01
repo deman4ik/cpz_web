@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import Link from "next/link";
 import { formatDate, getTimeFromNow } from "config/utils";
-import { showMessage, getRedirectionLink, getTextStatusExpiredOrCanceled, getTextStatusExpiring } from "./helpers";
+import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItem.module.css";
 
 interface Props {
@@ -13,6 +13,7 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
     const handleOnPressNotification = () => {
         routeNotification(getRedirectionLink(item));
     };
+    console.log(item);
 
     return (
         <div className={styles.tableRow}>
@@ -31,10 +32,6 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
                         </a>
                     </Link>
                 )}
-                <div className={styles.textMessageDesktop}>
-                    {(item?.status === "expired" || item?.status === "canceled") && getTextStatusExpiredOrCanceled()}
-                    {item?.status === "expiring" && getTextStatusExpiring(item)}
-                </div>
             </div>
         </div>
     );
