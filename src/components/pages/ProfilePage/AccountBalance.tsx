@@ -1,5 +1,6 @@
 import React, { FC, useContext, useRef, useEffect, useState, memo } from "react";
 import Link from "next/link";
+import dayjs from "libs/dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
 import { CHECKOUT_USER_SUB, CANCEL_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
@@ -207,11 +208,20 @@ const _AccountBalance: FC = (): any => {
                                     </Link>
                                 </div>
                             </div>
-                            {subscriptionOption.active_to && subscriptionOption.trial_ended && (
+                            {status === "trial" && subscriptionOption.trial_ended !== null && (
                                 <div className={[styles.row, styles.exchangeGroup].join(" ")}>
                                     <div className={styles.exchangeCell}>
                                         <div className={styles.tableCellText}>
-                                            Expires: {subscriptionOption.active_to || subscriptionOption.trial_ended}
+                                            Expires in {dayjs.utc().diff(subscriptionOption.trial_ended, "day")} days
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {status === "active" && subscriptionOption.active_to !== null && (
+                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                                    <div className={styles.exchangeCell}>
+                                        <div className={styles.tableCellText}>
+                                            Expires in {dayjs.utc().diff(subscriptionOption.active_to, "day")} days
                                         </div>
                                     </div>
                                 </div>
