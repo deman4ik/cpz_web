@@ -1,10 +1,8 @@
 .regionTitle {
 	padding-top: 20px;
 	padding-bottom: 20px;
-
 	text-align: center;
 	color: var(--accent);
-
 	font-size: var(--normal3);
 }
 
@@ -16,11 +14,9 @@
 	max-width: 550px;
 	height: 100%;
 	min-height: 340px;
-
 	margin-right: 10px;
 	margin-left: 10px;
 	padding: 40px 50px;
-
 	background-color: var(--dark);
 	box-shadow: var(--shadow);
 }
@@ -29,11 +25,8 @@
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
-
 	margin: 5px 5px 18px;
-
 	color: var(--whiteFaded);
-
 	font-size: var(--normal0);
 }
 
@@ -52,9 +45,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
 	color: var(--accent);
-
 	font-size: var(--normal2);
 }
 
@@ -77,21 +68,18 @@
 	align-items: center;
 	justify-content: center;
 	height: auto;
-
 	margin: 20px auto 30px;
 }
 
 .comment {
 	text-align: center;
 	color: var(--accent);
-
 	font-size: var(--small1);
 }
 
 @media (max-width: 768px) {
 	.surface {
 		max-width: 420px;
-
 		padding: 20px 25px;
 	}
 }
@@ -99,7 +87,6 @@
 @media (max-width: 480px) {
 	.surface {
 		max-width: 312px;
-
 		padding: 20px 15px;
 	}
 }
@@ -109,9 +96,7 @@
 	flex-direction: column;
 	width: 300px;
 	height: 240px;
-
 	margin: 8px 5px 0;
-
 	border-radius: 2px;
 	background-color: var(--dark);
 	box-shadow: var(--shadow);
@@ -120,17 +105,14 @@
 .tableCellText {
 	display: block;
 	overflow: hidden;
-
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	color: white;
-
 	font-size: var(--normal1);
 }
 
 .secondaryText {
 	color: var(--accent);
-
 	font-size: var(--small1);
 }
 
@@ -178,7 +160,6 @@
 .exchangeCell {
 	display: flex;
 	flex-direction: column;
-
 	padding: 15px 0;
 }
 
@@ -186,7 +167,6 @@
 	display: flex;
 	align-content: flex-end;
 	justify-content: space-between;
-
 	margin-top: auto;
 }
 
@@ -210,31 +190,26 @@
 }
 
 .loader {
-	position: absolute;
+	position: relative;
 	z-index: 1000;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
-
 	margin: auto;
 }
 
 .cancel .text {
 	min-width: 300px;
 	max-width: 420px;
-
 	margin-bottom: 20px;
-
 	text-align: center;
 	color: white;
 }
 
 .cancel .title {
 	margin-bottom: 20px;
-
 	color: white;
-
 	font-size: 24px;
 }
 
@@ -252,7 +227,6 @@
 .checkout {
 	width: 100%;
 	max-width: 420px;
-
 	padding: 0;
 }
 
@@ -263,27 +237,21 @@
 
 .checkout .content {
 	min-width: 320px;
-
 	text-align: center;
 	color: white;
 }
 
 .checkout .text {
 	width: 100%;
-
 	margin: 0 auto;
 	margin-top: 15px;
-
 	white-space: pre-line;
-
 	font-size: 14px;;
 }
 
 .checkout .howItWorks {
 	display: block;
-
 	margin: 10px 0 30px;
-
 	font-size: 14px;
 }
 

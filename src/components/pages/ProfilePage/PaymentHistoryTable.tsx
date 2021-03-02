@@ -29,7 +29,7 @@ const _PaymentHistoryTable: FC<Props> = ({
     user_sub
 }) => {
     return (
-        <div className={`${styles.tableRow} ${styles.tableGridRow}`}>
+        <div className={`${styles.tableRow}`}>
             <div className={styles.positionGroup}>
                 <>
                     <div className={styles.limitWrapper}>
@@ -58,7 +58,7 @@ const _PaymentHistoryTable: FC<Props> = ({
                             Charge Price
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{price}</div>
+                            <div className={styles.tableCellText}>{price} $</div>
                         </div>
                     </div>
                 </>
@@ -118,22 +118,22 @@ const _PaymentHistoryTable: FC<Props> = ({
                 </>
             </div>
 
-            <div className={styles.positionGroup}>
-                <>
-                    {subscription_from !== null && subscription_to !== null && (
-                        <div className={styles.limitWrapper}>
-                            <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                                Subscription Period
-                            </div>
-                            <div className={styles.codeGroup}>
-                                <div className={styles.tableCellText}>{`${formatDate(
-                                    subscription_from
-                                )} \n- ${formatDate(subscription_to)}`}</div>
-                            </div>
+            {subscription_from !== null && subscription_to !== null ? (
+                <div className={styles.positionGroup}>
+                    <div className={styles.limitWrapper}>
+                        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                            Subscription Period
                         </div>
-                    )}
-                </>
-            </div>
+                        <div className={styles.codeGroup}>
+                            <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
+                                subscription_to
+                            )}`}</div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.positionGroup} style={{ flexGrow: 13 }} />
+            )}
         </div>
     );
 };
