@@ -344,17 +344,20 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.tableCellText}>{subsName}</div>
                                     <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
-                                <div>
-                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                        Period
-                                    </div>
-                                    <div className={styles.tableCellText}>
-                                        {formatDateWithData(userPaymentData?.subscription_from)}
-                                    </div>
-                                    <div className={styles.tableCellText}>
-                                        {formatDateWithData(userPaymentData?.subscription_to)}
-                                    </div>
-                                </div>
+                                {(userPaymentData?.subscription_from && userPaymentData?.subscription_from !== null) ||
+                                    (userPaymentData?.subscription_to && userPaymentData?.subscription_to !== null && (
+                                        <div>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Period
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_from)}
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_to)}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
 
                             <div
