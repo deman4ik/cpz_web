@@ -308,11 +308,8 @@ export const errorUserSubSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageCard}>{item.data.error}</div>
+                <div className={styles.textMessageCard}>{item.data?.error}</div>
             </div>
-        </div>
-        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
         </div>
     </div>
 );
@@ -322,12 +319,11 @@ export const statusUserSubSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageCard}>
-                    {item.data.subscriptionName} is {item.data.status}
+                    {item.data?.subscriptionName} is {item.data?.status}
                 </div>
             </div>
         </div>
         <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
             <div className={styles.textMessageCard}>
                 {(item.data?.status === "expired" || item.data?.status === "canceled") &&
                     getTextStatusExpiredOrCanceled()}
@@ -342,15 +338,9 @@ export const statusUserPaymentSet = (item, onClick) => (
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
                 <div className={styles.textMessageCard}>
-                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
-                </div>
-                <div className={styles.textMessageCard}>
-                    Your charge {item.data.code} for subscription {item.data.subcriptionName} is {item.data.status}
+                    Your charge {item.data?.code} for subscription {item.data?.subscriptionName} is {item.data?.status}
                 </div>
             </div>
-        </div>
-        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
         </div>
     </div>
 );
