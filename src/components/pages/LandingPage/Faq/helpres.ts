@@ -51,13 +51,11 @@ export const faqContent = [
         
         Cryptocurrency exchanges run 24/7 and it is physically impossible for a person to trade on them without any interruptions or breaks.Robots can easily solve this problem. 
         
-        
         2 - Emotions 
         
         Emotions make it easy to make a mistake and execute a high-risk trade.  Robots have no emotions and their actions are based only on accurate calculations.
         
         3 - Performance 
-        
         
         A robot takes decisions many times faster and more accurately than a human. 
         `
@@ -66,11 +64,11 @@ export const faqContent = [
         title: "Why is Cryptuoso better than other similar platforms?",
         text: `Look at the 3 main advantages of Cryptuoso: 
 
-        #1 Our robots are all based on preconfigured and well tested strategies. So you don't need to invent a strategy every time, backtest it hundreds of times and only then start trading.  Needless to say, that it is impossible to create a truly advanced trading algorithm in any service, as we do through coding.
+        1 - Our robots are all based on preconfigured and well tested strategies. So you don't need to invent a strategy every time, backtest it hundreds of times and only then start trading.  Needless to say, that it is impossible to create a truly advanced trading algorithm in any service, as we do through coding.
         
-        #2 With Cryptuoso you have access to over 135+ trading robots: they use various strategies, exchanges, currency pairs and timeframes. It would be hard to find such a wide selection anywhere else.
+        2 - With Cryptuoso you have access to over 135+ trading robots: they use various strategies, exchanges, currency pairs and timeframes. It would be hard to find such a wide selection anywhere else.
         
-        #3 Cryptuoso users have no restrictions on:
+        3 - Cryptuoso users have no restrictions on:
         
         - Trades amount
         - Opened positions amount
@@ -90,9 +88,9 @@ export const faqContent = [
     },
     {
         title: "How much capital do I need?",
-        text: `Each robot has a minimum start volume of 0.001 units of the main currency of the pair. For Ethereum, it will be just a few dollars.
+        text: `Each robot has a minimum start volume of about 20$.
 
-        But please keep in mind that we recommend to distribute your capital among several robots.`
+        But please keep in mind that we recommend to distribute your capital among several robots so the real answer is you need more than 100$ on your cryptocurrency exchange account.`
     },
     {
         title: "Do you guarantee that I will make profit with your signals/robots?",

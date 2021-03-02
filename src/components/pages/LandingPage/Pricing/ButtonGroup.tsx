@@ -5,11 +5,13 @@ const Button = ({ classActive, period, handleOnButton }) => {
     return (
         <a className={`${styles.button} ${classActive}`} onClick={(e) => handleOnButton(e.currentTarget)}>
             {period.name}
+            {/* 
+            "free months" оставляем пока только на лендинге
             {period && period.free !== null && (
                 <p className={styles.free}>
                     {period.free} month{period.free > 1 && `s`} free
                 </p>
-            )}
+           )} */}
         </a>
     );
 };

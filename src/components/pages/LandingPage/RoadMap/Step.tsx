@@ -8,7 +8,7 @@ interface Props {
     idx: number;
     isVertical: boolean;
 }
-const active = 6;
+const active = 7;
 export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
     const isActiveCheck = active === idx + 1;
     const isActiveLine = active >= idx + 1;
@@ -64,7 +64,7 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
     const getLineStyle = () => {
         const line = [styles.line];
         if (isActiveLine) line.push(styles.activeLine);
-        if (isActiveCheck && idx === 5) line.push(styles.endActiveLine);
+        if (isActiveCheck && idx === active - 1) line.push(styles.endActiveLine);
         return line;
     };
 

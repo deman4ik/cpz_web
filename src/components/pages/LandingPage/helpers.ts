@@ -43,14 +43,14 @@ export const steps: StepProps[] = [
     },
     { date: "Q4 2019", title: "Cryptuoso Trading\nTelegram Bot (Beta)" },
     { date: "Q2 2020", title: "Cryptuoso Trading\nWeb App (Beta)" },
-    { date: "Q4 2020", title: "Cryptuoso Trading\nRobots (Release)" },
-    { date: "Q1 2021", title: "Cryptuoso Trading\nMobile App (Beta)" }
+    { date: "Q1 2021", title: "Cryptuoso Release\nPaid Plans" },
+    { date: "Q2 2021", title: "Cryptuoso Trading\nPortfolio Management" }
 ];
 
 export const tradingSteps: TradingStepType[] = [
     {
         accent: "Inspect",
-        text: " robots' public statistics we've collected in over 2,5 years of trading on the cryptocurrency market."
+        text: " robots' public statistics we've collected in over 3 years of trading on the cryptocurrency market."
     },
     {
         accent: "Choose",
@@ -95,6 +95,6 @@ export const descriptionFirstLine: DescriptionFirstLineType[] = [
         imgSrc: "robots",
         title: "Automatic Trading",
         text:
-            "Connect your cryptocurrency exchange account (Binance, Bitfinex, Kraken) to our robots for automatic trading. Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance."
+            "Connect your cryptocurrency exchange account (Binance, Bitfinex, Kraken, KuCoin, Huobi Pro) to our robots for automatic trading. Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance."
     }
 ];
