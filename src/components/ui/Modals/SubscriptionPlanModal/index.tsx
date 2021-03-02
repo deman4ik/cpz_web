@@ -92,6 +92,7 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, h
                     <ButtonGroup
                         handleOnButton={handleOnButton}
                         options={periods}
+                        free={false}
                         buttonName={buttonName}
                         style={{ marginBottom: 0 }}
                     />

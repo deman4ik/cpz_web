@@ -28,6 +28,7 @@ const _Pricing = () => {
                 <ButtonGroup
                     handleOnButton={handleOnButton}
                     options={optionsSorted}
+                    free
                     buttonName={buttonName}
                     style={{ fontSize: 18 }}
                 />
