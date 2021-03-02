@@ -10,7 +10,7 @@ import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "components/ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { WalletMembershipIcon } from "assets/icons/svg";
-import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge, formatDateWithData } from "config/utils.ts";
+import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge, formatDateWithData } from "config/utils";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
@@ -33,8 +33,7 @@ const _AccountBalance: FC = (): any => {
         }
     });
 
-    const [userSubId, setUserSubId] = useState("");
-    const [status, setStatus] = useState("active");
+    const [userSub, setUserSub] = useState({ id: "", status: "active", trial_ended: "", active_to: "" });
     const [subsName, setSubsName] = useState("FREE PLAN");
     const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
 
@@ -67,8 +66,13 @@ const _AccountBalance: FC = (): any => {
     useEffect(() => {
         if (data && data.user_subs.length) {
             setPlan(data && data.user_subs.length);
-            setUserSubId(data.user_subs[0].id);
-            setStatus(data.user_subs[0].status);
+            setUserSub({
+                id: data.user_subs[0].id,
+                status: data.user_subs[0].status,
+                trial_ended: data.user_subs[0].trial_ended,
+                active_to: data.user_subs[0].active_to
+            });
+
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
@@ -80,7 +84,7 @@ const _AccountBalance: FC = (): any => {
         setLoading(true);
         checkoutUserSub({
             variables: {
-                userSubId
+                userSubId: userSub.id
             }
         })
             .then(
@@ -102,14 +106,14 @@ const _AccountBalance: FC = (): any => {
         setLoading(true);
         cancelUserSub({
             variables: {
-                userSubId
+                userSubId: userSub.id
             }
         }).then((result) => {
             handleSetCancelVisible();
             setLoading(false);
             setPlan(false);
             setSubsName("FREE PLAN");
-            setStatus("active");
+            setUserSub({ id: "", status: "active", trial_ended: null, active_to: null });
             setSubscriptionOption(INITIAL_OPTIONS);
             refetch();
             console.log(`cancelUserSub`, result);
@@ -143,7 +147,7 @@ const _AccountBalance: FC = (): any => {
 
     const handleOnSubscription = (planOptions, { createUserSub: { id } }, { name }) => {
         setSubscriptionOption(planOptions);
-        setUserSubId(id);
+        setUserSub({ ...userSub, id });
         setSubsName(name);
         setPlan(true);
         refetch();
@@ -202,33 +206,29 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>{getToUpperCase(status)}</div>
+                                    <div className={styles.tableCellText}>{getToUpperCase(userSub.status)}</div>
                                 </div>
-                                {status === "trial" &&
-                                    subscriptionOption?.trial_ended &&
-                                    subscriptionOption?.trial_ended !== null && (
-                                        <div className={styles.exchangeCell}>
-                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                                Expires
-                                            </div>
-                                            <div className={styles.tableCellText}>
-                                                {dayjs().to(dayjs(subscriptionOption.trial_ended))}
-                                            </div>
+                                {userSub.status === "trial" && userSub.trial_ended && (
+                                    <div className={styles.exchangeCell}>
+                                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                            Expires
                                         </div>
-                                    )}
+                                        <div className={styles.tableCellText}>
+                                            {dayjs().to(dayjs(userSub.trial_ended))}
+                                        </div>
+                                    </div>
+                                )}
 
-                                {status === "active" &&
-                                    subscriptionOption?.active_to &&
-                                    subscriptionOption?.active_to !== null && (
-                                        <div className={styles.exchangeCell}>
-                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                                Expires
-                                            </div>
-                                            <div className={styles.tableCellText}>
-                                                {dayjs().to(dayjs(subscriptionOption.active_to))}
-                                            </div>
+                                {userSub.status === "active" && userSub.active_to && (
+                                    <div className={styles.exchangeCell}>
+                                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                            Expires
                                         </div>
-                                    )}
+                                        <div className={styles.tableCellText}>
+                                            {dayjs().to(dayjs(userSub.active_to))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className={styles.rowButtonGroup}>
