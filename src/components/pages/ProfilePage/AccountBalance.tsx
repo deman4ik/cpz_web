@@ -20,8 +20,6 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const xxx = "2021-03-08 13:10:50.146206";
-
     const INITIAL_OPTIONS = {
         name: "Forever",
         price_total: 0,
