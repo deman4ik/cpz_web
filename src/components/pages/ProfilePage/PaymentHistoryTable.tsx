@@ -29,7 +29,7 @@ const _PaymentHistoryTable: FC<Props> = ({
     user_sub
 }) => {
     return (
-        <div className={`${styles.tableRow}`}>
+        <div className={`${styles.tableRow} ${styles.tableGridRow}`}>
             <div className={styles.positionGroup}>
                 <>
                     <div className={styles.limitWrapper}>
@@ -117,23 +117,20 @@ const _PaymentHistoryTable: FC<Props> = ({
                     </div>
                 </>
             </div>
-
-            {subscription_from !== null && subscription_to !== null ? (
-                <div className={styles.positionGroup}>
-                    <div className={styles.limitWrapper}>
-                        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Subscription Period
-                        </div>
+            <div className={styles.positionGroup}>
+                <div className={styles.limitWrapper}>
+                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                        Subscription Period
+                    </div>
+                    {subscription_from !== null && subscription_to !== null && (
                         <div className={styles.codeGroup}>
                             <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
                                 subscription_to
                             )}`}</div>
                         </div>
-                    </div>
+                    )}
                 </div>
-            ) : (
-                <div className={styles.positionGroup} style={{ flexGrow: 13 }} />
-            )}
+            </div>
         </div>
     );
 };

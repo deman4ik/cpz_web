@@ -2,7 +2,15 @@
 import React from "react";
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
+import {
+    formatDate,
+    capitalize,
+    formatMoney,
+    valueWithSign,
+    colorDirection,
+    getColorForMoney,
+    getToUpperCase
+} from "config/utils";
 import {
     actionName,
     actionIcon,
@@ -270,8 +278,10 @@ export const statusUserSubSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageDesktop}>
-                    {item.data?.subscriptionName} is {item.data?.status}
+                <div className={styles.textMessageDesktop} style={{ flexDirection: "row" }}>
+                    Subscription&nbsp;<span className={styles.textAccent}>{item.data?.subscriptionName}</span>
+                    &nbsp;is&nbsp;
+                    {getToUpperCase(item.data?.status)}
                 </div>
             </div>
         </div>
@@ -289,8 +299,10 @@ export const statusUserPaymentSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageDesktop}>
-                    Your charge {item.data?.code} for subscription {item.data?.subscriptionName} is {item.data?.status}
+                <div className={styles.textMessageDesktop} style={{ flexDirection: "row" }}>
+                    Your charge&nbsp;<span className={styles.textAccent}>{item.data?.code}</span>&nbsp;for
+                    subscription&nbsp;
+                    {item.data?.subscriptionName} is {getToUpperCase(item.data?.status)}
                 </div>
             </div>
         </div>

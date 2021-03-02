@@ -20,6 +20,8 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
+    const xxx = "2021-03-08 13:10:50.146206";
+
     const INITIAL_OPTIONS = {
         name: "Forever",
         price_total: 0,
@@ -207,24 +209,32 @@ const _AccountBalance: FC = (): any => {
                                     </Link>
                                 </div>
                             </div>
-                            {status === "trial" && subscriptionOption?.trial_ended !== null && (
-                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+
+                            {status === "trial" &&
+                                subscriptionOption?.trial_ended &&
+                                subscriptionOption?.trial_ended !== null && (
                                     <div className={styles.exchangeCell}>
+                                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                            Expires
+                                        </div>
                                         <div className={styles.tableCellText}>
-                                            Expires in {dayjs().to(dayjs(subscriptionOption.trial_ended))}
+                                            {dayjs().to(dayjs(subscriptionOption.trial_ended))}
                                         </div>
                                     </div>
-                                </div>
-                            )}
-                            {status === "active" && subscriptionOption?.active_to !== null && (
-                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
+                                )}
+
+                            {status === "active" &&
+                                subscriptionOption?.active_to &&
+                                subscriptionOption?.active_to !== null && (
                                     <div className={styles.exchangeCell}>
+                                        <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                            Expires
+                                        </div>
                                         <div className={styles.tableCellText}>
-                                            Expires in {dayjs().to(dayjs(subscriptionOption.active_to))}
+                                            {dayjs().to(dayjs(subscriptionOption.active_to))}
                                         </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
                         </div>
 
                         {isPlan ? (
