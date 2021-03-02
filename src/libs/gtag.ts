@@ -1,5 +1,6 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 export const GA_TRACKING_ID = "G-37BGBQ6GCK";
+export const UA_TRACKING_ID = "UA-156066352-1";
 export const AW_CONVERSION_ID = "AW-971308941";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages

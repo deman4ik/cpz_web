@@ -2,7 +2,7 @@
 import React from "react";
 import Head from "next/head";
 
-import { GA_TRACKING_ID, AW_CONVERSION_ID } from "libs/gtag";
+import { GA_TRACKING_ID, UA_TRACKING_ID, AW_CONVERSION_ID } from "libs/gtag";
 
 interface Props {
     title?: string;
@@ -39,6 +39,10 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                         gtag('config', '${GA_TRACKING_ID}', {
                         'page_path': window.location.pathname,
                         'user_id': '${userId}'
+                        });
+                        gtag('config', '${UA_TRACKING_ID}', {
+                        'page_path': window.location.pathname,
+                        'userId': '${userId}'
                         });
                         gtag('config', '${AW_CONVERSION_ID}');
                         ${gtag || ""}`
@@ -96,6 +100,17 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                         <img height="1" width="1" style="display:none"
                         src="https://www.facebook.com/tr?id=3892002647514527&ev=PageView&noscript=1"
                         />`
+                    }}
+                />
+            </>
+        )}
+        {process.env.ENABLE_ANALYTICS === "development" ? null : (
+            <>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        (function(o){var b="https://quickkoala.io/anywhere/",t="88a3a2cee18a4eeeb90c9603fb42d708a5c2538df39442f59fdd32abbd53c35c",a=window.AutopilotAnywhere={_runQueue:[],run:function(){this._runQueue.push(arguments);}},c=encodeURIComponent,s="SCRIPT",d=document,l=d.getElementsByTagName(s)[0],p="t="+c(d.title||"")+"&u="+c(d.location.href||"")+"&r="+c(d.referrer||""),j="text/javascript",z,y;if(!window.Autopilot) window.Autopilot=a;if(o.app) p="devmode=true&"+p;z=function(src,asy){var e=d.createElement(s);e.src=src;e.type=j;e.async=asy;l.parentNode.insertBefore(e,l);};y=function(){z(b+t+'?'+p,true);};if(window.attachEvent){window.attachEvent("onload",y);}else{window.addEventListener("load",y,false);}})({}); 
+                        `
                     }}
                 />
             </>

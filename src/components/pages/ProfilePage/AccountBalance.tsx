@@ -70,6 +70,8 @@ const _AccountBalance: FC = (): any => {
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
+
+        refetch();
     }, [setPlan, data, refetch]);
 
     const handleSetCheckoutVisible = () => {
