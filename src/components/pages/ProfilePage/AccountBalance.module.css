@@ -98,6 +98,7 @@
 	.subsContainer {
 		align-items: center;
 		flex-direction: column;
+		padding: 0 20px;
 	}
 	.exchangeCell {
 		flex-direction: row;
