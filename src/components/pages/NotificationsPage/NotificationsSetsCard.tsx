@@ -1,10 +1,24 @@
 /*eslint-disable @typescript-eslint/explicit-module-boundary-types*/
 import React from "react";
-
 import { NotificationsNode } from "./NotificationsNode";
 import { ArrowDownIcon, ArrowUpIcon } from "assets/icons/svg";
-import { formatDate, capitalize, formatMoney, valueWithSign, colorDirection, getColorForMoney } from "config/utils";
-import { actionName, actionIcon, actionColor, actionOpen } from "./helpers";
+import {
+    formatDate,
+    capitalize,
+    formatMoney,
+    valueWithSign,
+    colorDirection,
+    getColorForMoney,
+    getToUpperCase
+} from "config/utils";
+import {
+    actionName,
+    actionIcon,
+    actionColor,
+    actionOpen,
+    getTextStatusExpiredOrCanceled,
+    getTextStatusExpiring
+} from "./helpers";
 import styles from "./NotificationsSets.module.css";
 
 export const failedSet = (item, onClick) => (
@@ -203,7 +217,7 @@ export const signalTradeSet = (item, onClick) => {
         <div className={styles.rowCard}>
             {actionOpen(item.data.action) ? (
                 <>
-                    <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
+                    <div className={styles.textMessageCard}>Signal Trade1&nbsp;</div>
                     <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                         <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
                             {item.data.robotCode}&nbsp;
@@ -222,7 +236,7 @@ export const signalTradeSet = (item, onClick) => {
                             <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
                         </div>
                         <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                            <div className={styles.textAccentCard}>Amount</div>
+                            <div className={styles.textAccentCard}>Amount11</div>
                             <div className={styles.textMessageCard}>{item.data.volume}</div>
                         </div>
                         <div className={styles.colRobot}>
@@ -302,11 +316,8 @@ export const errorUserSubSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageCard}>{item.data.error}</div>
+                <div className={styles.textMessageCard}>{item.data?.error}</div>
             </div>
-        </div>
-        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
         </div>
     </div>
 );
@@ -315,13 +326,19 @@ export const statusUserSubSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageCard}>
-                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                <div className={styles.textMessageCard} style={{ flexDirection: "row" }}>
+                    Subscription&nbsp;<span className={styles.textAccent}>{item.data?.subscriptionName}</span>
+                    &nbsp;is&nbsp;
+                    {getToUpperCase(item.data?.status)}
                 </div>
             </div>
         </div>
         <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
+            <div className={styles.textMessageCard}>
+                {(item.data?.status === "expired" || item.data?.status === "canceled") &&
+                    getTextStatusExpiredOrCanceled()}
+                {item.data?.status === "expiring" && getTextStatusExpiring(item)}
+            </div>
         </div>
     </div>
 );
@@ -330,13 +347,12 @@ export const statusUserPaymentSet = (item, onClick) => (
     <div>
         <div className={styles.row}>
             <div className={[styles.textAccent, styles.cursor].join(" ")} onClick={onClick}>
-                <div className={styles.textMessageCard}>
-                    Payment for {item.data.subscriptionName} is {item.data.status} {item.data.context || ""}
+                <div className={styles.textMessageCard} style={{ flexDirection: "row" }}>
+                    Your charge&nbsp;<span className={styles.textAccent}>{item.data?.code}</span>&nbsp;for
+                    subscription&nbsp;
+                    {item.data?.subscriptionName} is {getToUpperCase(item.data?.status)}
                 </div>
             </div>
-        </div>
-        <div className={styles.row} style={{ flex: 1, flexWrap: "wrap", marginTop: 3 }}>
-            <div className={styles.textMessageCard}>{formatDate(item.data.timestamp)}</div>
         </div>
     </div>
 );

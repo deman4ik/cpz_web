@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-
 import { formatDate, getTimeFromNow } from "config/utils";
 import { showMessage, getRedirectionLink } from "./helpers";
 import styles from "./NotificationsItemCard.module.css";

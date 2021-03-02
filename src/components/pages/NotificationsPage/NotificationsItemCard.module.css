@@ -1,32 +1,37 @@
 .card {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 5px;
-  padding: 10px;
-  background-color: var(--dark);
-  max-width: 300px;
-  box-shadow: var(--shadow);
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 300px;
+	margin: 5px;
+	padding: 10px;
+	background-color: var(--dark);
+	box-shadow: var(--shadow);
 }
 
 .dateGroup {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 3px;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 3px;
 }
 
 .dateText {
-  color: var(--accent);
-  font-size: var(--small2);
+	color: var(--accent);
+	font-size: var(--small2);
 }
 
 .mark {
-  color: var(--negative);
-  margin-top: -4px
+	margin-top: -4px;
+	color: var(--negative);;
 }
 
 @media (max-width: 320px) {
-  .card {
-    max-width: unset;
-  }
+	.card {
+		max-width: unset;
+	}
+}
+
+.textMessageCard {
+	color: white;
+	font-size: var(--small1);
 }

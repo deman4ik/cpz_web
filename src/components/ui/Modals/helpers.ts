@@ -140,10 +140,11 @@ export function parseLimits(limits: LimitsType): ParsedLimits {
     }
     const { price, asset } = limits;
     const { min, max } = asset;
+    const minAmount = (min.amount * min.amountUSD) / (min.amount * price);
 
     return {
         price,
-        minAmount: (min.amount * min.amountUSD) / (min.amount * price) || 0,
+        minAmount: roundWithPrecision(minAmount, DEFAULT_PRECISION.amount) || 0,
         maxAmount: max.amount || 0,
         minAmountUSD: min.amountUSD || 0,
         maxAmountUSD: max.amountUSD || 0,

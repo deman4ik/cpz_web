@@ -1,7 +1,6 @@
 .container {
 	display: flex;
 	flex-direction: column;
-
 	margin: 0 auto;
 }
 
@@ -11,7 +10,6 @@
 	display: flex;
 	flex-direction: column;
 	max-width: 1200px;
-
 	margin-left: 200px;
 }
 
@@ -25,11 +23,16 @@
 	height: 100%;
 }
 
+@media (max-width: 420px) {
+	.mainMenuContainer {
+		padding-bottom: 2.6rem;
+	}
+}
+
 .wrapFixed {
 	position: fixed;
 	z-index: 102;
 	width: 100%;
-	max-width: calc(100vw - 5px);
 }
 
 .wrapSticky {

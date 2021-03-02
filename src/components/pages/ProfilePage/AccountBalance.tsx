@@ -1,5 +1,6 @@
 import React, { FC, useContext, useRef, useEffect, useState, memo } from "react";
 import Link from "next/link";
+import dayjs from "libs/dayjs";
 import CoinbaseCommerceButton from "react-coinbase-commerce";
 import { useMutation, useQuery } from "@apollo/client";
 import { CHECKOUT_USER_SUB, CANCEL_USER_SUB, CHECKOUT_PAYMENT } from "graphql/profile/mutations";
@@ -9,7 +10,7 @@ import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "components/ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { WalletMembershipIcon } from "assets/icons/svg";
-import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
+import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge, formatDateWithData } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
@@ -19,23 +20,33 @@ const _AccountBalance: FC = (): any => {
 
     const buttonRef = useRef(null);
 
-    const [userSubId, setUserSubId] = useState("");
-    const [status, setStatus] = useState("");
-    const [subsName, setSubsName] = useState("FREE PLAN");
-
-    const [subscriptionOption, setSubscriptionOption] = useState({
-        name: "",
+    const INITIAL_OPTIONS = {
+        name: "Forever",
         price_total: 0,
-        active_to: "",
-        trial_ended: ""
+        active_to: null,
+        trial_ended: null
+    };
+
+    const { loading, data, refetch } = useQuery(GET_USER_SUBS, {
+        variables: {
+            user_id
+        }
     });
+
+    const [userSubId, setUserSubId] = useState("");
+    const [status, setStatus] = useState("active");
+    const [subsName, setSubsName] = useState("FREE PLAN");
+    const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
 
     const [userPaymentData, setUserPaymentData] = useState({
         id: "",
         code: "",
         price: 0,
         status: "",
-        expires_at: ""
+        created_at: null,
+        expires_at: null,
+        subscription_from: null,
+        subscription_to: null
     });
 
     const [isModalSubsVisible, setModalVisibility] = useState(false);
@@ -47,12 +58,6 @@ const _AccountBalance: FC = (): any => {
     const [isPlan, setPlan] = useState(false);
     const [formError, setFormError] = useState("");
 
-    const { data, refetch } = useQuery(GET_USER_SUBS, {
-        variables: {
-            user_id
-        }
-    });
-
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCancelVisible = () => setModalCancelVisibility(!isModalCancelVisible);
     const [checkoutUserSub] = useMutation(CHECKOUT_USER_SUB);
@@ -63,13 +68,13 @@ const _AccountBalance: FC = (): any => {
         if (data && data.user_subs.length) {
             setPlan(data && data.user_subs.length);
             setUserSubId(data.user_subs[0].id);
-            setStatus(getToUpperCase(data.user_subs[0].status));
+            setStatus(data.user_subs[0].status);
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
 
-        refetch();
-    }, [data, refetch]);
+        // refetch();
+    }, [setPlan, data /*,refetch*/]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -104,12 +109,8 @@ const _AccountBalance: FC = (): any => {
             setLoading(false);
             setPlan(false);
             setSubsName("FREE PLAN");
-            setSubscriptionOption({
-                name: "",
-                price_total: 0,
-                active_to: "",
-                trial_ended: ""
-            });
+            setStatus("active");
+            setSubscriptionOption(INITIAL_OPTIONS);
             refetch();
             console.log(`cancelUserSub`, result);
         });
@@ -140,11 +141,12 @@ const _AccountBalance: FC = (): any => {
             .catch(({ message }) => setFormError(message));
     };
 
-    const handleOnSubscription = (planOptions, { createUserSub }) => {
+    const handleOnSubscription = (planOptions, { createUserSub: { id } }, { name }) => {
         setSubscriptionOption(planOptions);
-        setUserSubId(createUserSub.id);
+        setUserSubId(id);
+        setSubsName(name);
         setPlan(true);
-        setSubsName("TRADER PLAN");
+        refetch();
     };
 
     const timeExpiry = getTimeCharge(userPaymentData.expires_at) || 0;
@@ -153,7 +155,7 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!isAuth ? (
+                {!isAuth && (
                     <>
                         <div className={styles.titleStab}>
                             <WalletMembershipIcon /> Your user subscription will appear here.
@@ -170,79 +172,106 @@ const _AccountBalance: FC = (): any => {
                             </a>
                         </Link>
                     </>
-                ) : (
+                )}
+                {isAuth && !loading ? (
                     <>
                         <div className={styles.topPart}>
                             <div className={styles.name}>
                                 <div className={styles.tableCellText}>{subsName}</div>
                             </div>
                         </div>
-                        <div>
+                        <div className={styles.subsContainer}>
                             <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Period
                                     </div>
-                                    <div className={styles.tableCellText}>
-                                        {isPlan ? subscriptionOption.name : "Forever"}
-                                    </div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Price
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        $ {isPlan ? getPriceTotalWithNoZero(subscriptionOption.price_total) : 0}
+                                        $ {getPriceTotalWithNoZero(subscriptionOption.price_total)}
                                     </div>
                                 </div>
+                            </div>
+                            <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>{isPlan ? status : "Active"}</div>
+                                    <div className={styles.tableCellText}>{getToUpperCase(status)}</div>
                                 </div>
-                                <div className={styles.exchangeCell}>
-                                    <Link href="/profile/payment-history">
-                                        <a>
-                                            <Button title="Payment History" size="small" icon="history" type="dimmed" />
-                                        </a>
-                                    </Link>
-                                </div>
-                            </div>
-                            {subscriptionOption.active_to && subscriptionOption.trial_ended && (
-                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                                    <div className={styles.exchangeCell}>
-                                        <div className={styles.tableCellText}>
-                                            Expires: {subscriptionOption.active_to || subscriptionOption.trial_ended}
+                                {status === "trial" &&
+                                    subscriptionOption?.trial_ended &&
+                                    subscriptionOption?.trial_ended !== null && (
+                                        <div className={styles.exchangeCell}>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Expires
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {dayjs().to(dayjs(subscriptionOption.trial_ended))}
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            )}
+                                    )}
+
+                                {status === "active" &&
+                                    subscriptionOption?.active_to &&
+                                    subscriptionOption?.active_to !== null && (
+                                        <div className={styles.exchangeCell}>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Expires
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {dayjs().to(dayjs(subscriptionOption.active_to))}
+                                            </div>
+                                        </div>
+                                    )}
+                            </div>
+
+                            <div className={styles.rowButtonGroup}>
+                                <Link href="/profile/payment-history">
+                                    <a>
+                                        <Button title="Payment History" size="small" icon="history" type="dimmed" />
+                                    </a>
+                                </Link>
+                                <Button
+                                    title="Change plan"
+                                    size="small"
+                                    icon="settings"
+                                    type="dimmed"
+                                    style={{ width: 136 }}
+                                    onClick={handleSetSubsVisible}
+                                />
+                                <Button
+                                    title="Cancel"
+                                    size="small"
+                                    icon="close"
+                                    type="dimmed"
+                                    style={{ width: 136 }}
+                                    onClick={handleSetCancelVisible}
+                                />
+                            </div>
                         </div>
 
                         {isPlan ? (
                             <>
-                                <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                                    <Button
-                                        title="Change plan"
-                                        size="normal"
-                                        icon="settings"
-                                        type="dimmed"
-                                        onClick={handleSetSubsVisible}
-                                    />
+                                <div
+                                    className={[
+                                        styles.row,
+                                        styles.exchangeGroup,
+                                        styles.btnGroup,
+                                        styles.btnCheckout
+                                    ].join(" ")}
+                                    style={{ justifyContent: "center" }}>
                                     <Button
                                         title="Checkout"
                                         size="normal"
                                         icon="bitcoin"
                                         type="primary"
                                         onClick={handleSetCheckoutVisible}
-                                    />
-                                    <Button
-                                        title="Cancel"
-                                        size="normal"
-                                        icon="close"
-                                        type="dimmed"
-                                        onClick={handleSetCancelVisible}
                                     />
                                 </div>
                                 <ErrorLine formError={formError} style={{ width: "auto" }} />
@@ -262,7 +291,14 @@ const _AccountBalance: FC = (): any => {
                             </div>
                         )}
                     </>
+                ) : (
+                    isAuth && (
+                        <div className={styles.loader}>
+                            <LoadingIndicator />
+                        </div>
+                    )
                 )}
+
                 {isModalSubsVisible && (
                     <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
@@ -298,29 +334,49 @@ const _AccountBalance: FC = (): any => {
                         }}>
                         <div className={`${styles.content} ${isFrame ? styles.frame : ""}`}>
                             <h2>Checkout</h2>
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Subscription
+                            <div
+                                className={styles.exchangeCell}
+                                style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Subscription
+                                    </div>
+                                    <div className={styles.tableCellText}>{subsName}</div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
-                                <div className={styles.tableCellText}>
-                                    {subsName}&nbsp;
-                                    {subscriptionOption.name}
+                                {(userPaymentData?.subscription_from && userPaymentData?.subscription_from !== null) ||
+                                    (userPaymentData?.subscription_to && userPaymentData?.subscription_to !== null && (
+                                        <div>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Period
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_from)}
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_to)}
+                                            </div>
+                                        </div>
+                                    ))}
+                            </div>
+
+                            <div
+                                className={styles.exchangeCell}
+                                style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Price
+                                    </div>
+                                    <div className={styles.tableCellText}>$ {userPaymentData.price}</div>
+                                </div>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Status
+                                    </div>
+                                    <div className={styles.tableCellText}>{userPaymentData.status}</div>
                                 </div>
                             </div>
 
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Price
-                                </div>
-                                <div className={styles.tableCellText}>$ {userPaymentData.price}</div>
-                            </div>
-
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Status
-                                </div>
-                                <div className={styles.tableCellText}>{userPaymentData.status}</div>
-                            </div>
                             {timeExpiry <= 0 || (
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
@@ -351,6 +407,8 @@ const _AccountBalance: FC = (): any => {
                                         styled={{ display: "flex" }}
                                         chargeId={userPaymentData.code}
                                         onLoad={() => setIframe(true)}
+                                        onChargeSuccess={() => handleOnModalCheckoutClose()}
+                                        onChargeFailure={() => handleOnModalCheckoutClose()}
                                         onModalClosed={() => handleOnModalCheckoutClose()}
                                     />
                                 </div>
@@ -369,6 +427,8 @@ const _AccountBalance: FC = (): any => {
                                 styled={{ display: "flex" }}
                                 chargeId={userPaymentData.code}
                                 onLoad={() => setIframe(true)}
+                                onChargeSuccess={() => handleOnModalCheckoutClose()}
+                                onChargeFailure={() => handleOnModalCheckoutClose()}
                                 onModalClosed={() => handleOnModalCheckoutClose()}
                             />
                         )}
@@ -380,6 +440,7 @@ const _AccountBalance: FC = (): any => {
                     </Modal>
                 )}
             </div>
+
             {isModalCancelVisible && (
                 <>
                     <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible} className={styles.cancel}>

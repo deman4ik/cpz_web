@@ -83,6 +83,13 @@ export const formatDate = (date: string, addUTC = true): string => {
     return addUTC ? `${res} UTC` : res;
 };
 
+export const formatDateWithData = (date: string, addUTC = true): string => {
+    if (!date) return "";
+    const res = dayjs.utc(date).format("DD MMM YY");
+    if (res === "Invalid date") return "";
+    return addUTC ? `${res}` : res;
+};
+
 export const exchangeName = (code: string) => (code ? titleFromLowerCase(code) : code);
 
 export const getLegend = (robot) =>

@@ -14,22 +14,16 @@ interface Props {
     enabled: boolean;
     subsName?: string;
     handleOnClose?: () => void;
-    handleOnClick?: (arg0: any, arg1: any) => void;
+    handleOnClick?: (arg0: any, arg1: any, arg2: any) => void;
     setStep?: (step: number) => void;
     subsRefetch?: () => void;
     currentPlan?: {
         name: string;
+        price_total: number;
     };
 }
 
-const _SubscriptionPlan: React.FC<Props> = ({
-    enabled,
-    setStep,
-    subsRefetch,
-    handleOnClose,
-    handleOnClick,
-    currentPlan
-}) => {
+const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, handleOnClick, currentPlan }) => {
     const { loading, data } = useQuery(GET_SUBSCRIPTIONS);
     const [createUserSub] = useMutation(SET_USER_SUB);
 
@@ -52,7 +46,9 @@ const _SubscriptionPlan: React.FC<Props> = ({
 
         const [highlightedPlan] = options.filter((option) => option.highlight === true);
 
-        if (currentPlan && currentPlan.name) {
+        console.log(currentPlan);
+
+        if (currentPlan && currentPlan.price_total !== 0) {
             setButtonName(currentPlan.name);
             setPlan(currentPlan);
             return;
@@ -70,13 +66,12 @@ const _SubscriptionPlan: React.FC<Props> = ({
                 subscriptionOption: code
             }
         })
-            .then(({ data: subscribedPlan }) => {
-                console.log(`subscribedPlan`, subscribedPlan);
+            .then(({ data: userSub }) => {
+                console.log(`createUserSub`, userSub);
                 setLoading(false);
-                if (handleOnClick) handleOnClick(plan, subscribedPlan);
+                if (handleOnClick) handleOnClick(plan, userSub, subsPlan);
                 if (handleOnClose) handleOnClose();
                 if (setStep) setStep(1);
-                subsRefetch();
             })
             .catch(({ message }) => {
                 setLoading(false);

@@ -13,7 +13,6 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
     const handleOnPressNotification = () => {
         routeNotification(getRedirectionLink(item));
     };
-
     return (
         <div className={styles.tableRow}>
             <div className={styles.lineGroup}>

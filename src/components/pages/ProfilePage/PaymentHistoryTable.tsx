@@ -1,8 +1,23 @@
-import React, { memo } from "react";
-import { formatDate } from "config/utils";
+import React, { FC, memo } from "react";
+import { formatDateWithData } from "config/utils";
 import styles from "./PaymentHistoryPage.module.css";
 
-const _PaymentHistoryTable = ({
+interface Props {
+    code?: string;
+    created_at?: string;
+    expires_at?: string;
+    price?: string;
+    status?: string;
+    subscription_from?: string | null;
+    subscription_to?: string | null;
+    url?: string | null;
+    user_sub?: {
+        subscription: { name: string };
+        subscriptionOption: { name: string };
+    };
+}
+
+const _PaymentHistoryTable: FC<Props> = ({
     code,
     created_at,
     expires_at,
@@ -28,7 +43,7 @@ const _PaymentHistoryTable = ({
                                         {code}
                                     </a>
                                 ) : (
-                                    { code }
+                                    <span>{code}</span>
                                 )}
                             </div>
                         </div>
@@ -43,7 +58,7 @@ const _PaymentHistoryTable = ({
                             Charge Price
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{price}</div>
+                            <div className={styles.tableCellText}>{price} $</div>
                         </div>
                     </div>
                 </>
@@ -69,7 +84,7 @@ const _PaymentHistoryTable = ({
                             Created
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDate(created_at)}</div>
+                            <div className={styles.tableCellText}>{formatDateWithData(created_at)}</div>
                         </div>
                     </div>
                 </>
@@ -82,7 +97,7 @@ const _PaymentHistoryTable = ({
                             Expires
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDate(expires_at)}</div>
+                            <div className={styles.tableCellText}>{formatDateWithData(expires_at)}</div>
                         </div>
                     </div>
                 </>
@@ -96,26 +111,25 @@ const _PaymentHistoryTable = ({
                         </div>
                         <div className={styles.codeGroup}>
                             <div className={styles.tableCellText}>
-                                {user_sub.subscription.name} {user_sub.subscriptionOption.name}
+                                {user_sub?.subscription.name} {user_sub?.subscriptionOption.name}
                             </div>
                         </div>
                     </div>
                 </>
             </div>
-
             <div className={styles.positionGroup}>
-                <>
-                    <div className={styles.limitWrapper}>
-                        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Subscription Period
-                        </div>
-                        <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
-                                subscription_to
-                            )}`}</div>
-                        </div>
+                <div className={styles.limitWrapper}>
+                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                        Subscription Period
                     </div>
-                </>
+                    {subscription_from !== null && subscription_to !== null && (
+                        <div className={styles.codeGroup}>
+                            <div className={styles.tableCellText}>{`${formatDateWithData(
+                                subscription_from
+                            )} \n- ${formatDateWithData(subscription_to)}`}</div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
