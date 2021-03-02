@@ -67,20 +67,20 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
         skip: !robotData
     });
 
-    const { data: dataUserSubs, refetch: subsRefetch } = useQuery(GET_USER_SUBS, {
+    const { data: dataUserSubs, refetch: refetchUserSubs } = useQuery(GET_USER_SUBS, {
         variables: {
             user_id
         }
     });
 
     useEffect(() => {
-        subsRefetch();
+        refetchUserSubs();
         if (dataUserSubs && !dataUserSubs.user_subs.length) {
             setStep(0);
         } else {
             setStep(1);
         }
-    }, [dataUserSubs, subsRefetch]);
+    }, [dataUserSubs, refetchUserSubs]);
 
     const [getMarkets, { data: limitsData, loading: limitsLoading }] = useLazyQuery(GET_MARKETS_ROBOTS, {
         variables: {
