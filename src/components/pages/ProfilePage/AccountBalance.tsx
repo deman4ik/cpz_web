@@ -27,10 +27,15 @@ const _AccountBalance: FC = (): any => {
         trial_ended: null
     };
 
+    const { loading, data, refetch } = useQuery(GET_USER_SUBS, {
+        variables: {
+            user_id
+        }
+    });
+
     const [userSubId, setUserSubId] = useState("");
     const [status, setStatus] = useState("active");
     const [subsName, setSubsName] = useState("FREE PLAN");
-
     const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
 
     const [userPaymentData, setUserPaymentData] = useState({
@@ -49,12 +54,6 @@ const _AccountBalance: FC = (): any => {
     const [isLoading, setLoading] = useState(false);
     const [isPlan, setPlan] = useState(false);
     const [formError, setFormError] = useState("");
-
-    const { data, refetch } = useQuery(GET_USER_SUBS, {
-        variables: {
-            user_id
-        }
-    });
 
     const handleSetSubsVisible = () => setModalVisibility(!isModalSubsVisible);
     const handleSetCancelVisible = () => setModalCancelVisibility(!isModalCancelVisible);
@@ -171,8 +170,7 @@ const _AccountBalance: FC = (): any => {
                         </Link>
                     </>
                 )}
-
-                {isAuth && !isLoading ? (
+                {isAuth && !loading ? (
                     <>
                         <div className={styles.topPart}>
                             <div className={styles.name}>
@@ -228,52 +226,52 @@ const _AccountBalance: FC = (): any => {
                                 </div>
                             )}
                         </div>
+
+                        {isPlan ? (
+                            <>
+                                <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
+                                    <Button
+                                        title="Change plan"
+                                        size="normal"
+                                        icon="settings"
+                                        type="dimmed"
+                                        onClick={handleSetSubsVisible}
+                                    />
+                                    <Button
+                                        title="Checkout"
+                                        size="normal"
+                                        icon="bitcoin"
+                                        type="primary"
+                                        onClick={handleSetCheckoutVisible}
+                                    />
+                                    <Button
+                                        title="Cancel"
+                                        size="normal"
+                                        icon="close"
+                                        type="dimmed"
+                                        onClick={handleSetCancelVisible}
+                                    />
+                                </div>
+                                <ErrorLine formError={formError} style={{ width: "auto" }} />
+                            </>
+                        ) : (
+                            <div
+                                className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
+                                style={{ alignSelf: "center" }}>
+                                <Button
+                                    isUppercase
+                                    title="Start free trial"
+                                    size="normal"
+                                    icon="wallet"
+                                    type="primary"
+                                    onClick={handleSetSubsVisible}
+                                />
+                            </div>
+                        )}
                     </>
                 ) : (
                     <div className={styles.loader}>
                         <LoadingIndicator />
-                    </div>
-                )}
-
-                {isPlan ? (
-                    <>
-                        <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                            <Button
-                                title="Change plan"
-                                size="normal"
-                                icon="settings"
-                                type="dimmed"
-                                onClick={handleSetSubsVisible}
-                            />
-                            <Button
-                                title="Checkout"
-                                size="normal"
-                                icon="bitcoin"
-                                type="primary"
-                                onClick={handleSetCheckoutVisible}
-                            />
-                            <Button
-                                title="Cancel"
-                                size="normal"
-                                icon="close"
-                                type="dimmed"
-                                onClick={handleSetCancelVisible}
-                            />
-                        </div>
-                        <ErrorLine formError={formError} style={{ width: "auto" }} />
-                    </>
-                ) : (
-                    <div
-                        className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
-                        style={{ alignSelf: "center" }}>
-                        <Button
-                            isUppercase
-                            title="Start free trial"
-                            size="normal"
-                            icon="wallet"
-                            type="primary"
-                            onClick={handleSetSubsVisible}
-                        />
                     </div>
                 )}
 
