@@ -21,14 +21,14 @@ const _AccountBalance: FC = (): any => {
     const buttonRef = useRef(null);
 
     const INITIAL_OPTIONS = {
-        name: "",
+        name: "Forever",
         price_total: 0,
-        active_to: "",
-        trial_ended: ""
+        active_to: null,
+        trial_ended: null
     };
 
     const [userSubId, setUserSubId] = useState("");
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("active");
     const [subsName, setSubsName] = useState("FREE PLAN");
 
     const [subscriptionOption, setSubscriptionOption] = useState(INITIAL_OPTIONS);
@@ -38,7 +38,7 @@ const _AccountBalance: FC = (): any => {
         code: "",
         price: 0,
         status: "",
-        expires_at: ""
+        expires_at: null
     });
 
     const [isModalSubsVisible, setModalVisibility] = useState(false);
@@ -66,13 +66,11 @@ const _AccountBalance: FC = (): any => {
         if (data && data.user_subs.length) {
             setPlan(data && data.user_subs.length);
             setUserSubId(data.user_subs[0].id);
-            setStatus(getToUpperCase(data.user_subs[0].status));
+            setStatus(data.user_subs[0].status);
             setSubsName(data.user_subs[0].subscription.name);
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
-
-        refetch();
-    }, [data, refetch]);
+    }, [setPlan, data, refetch]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -107,6 +105,7 @@ const _AccountBalance: FC = (): any => {
             setLoading(false);
             setPlan(false);
             setSubsName("FREE PLAN");
+            setStatus("active");
             setSubscriptionOption(INITIAL_OPTIONS);
             refetch();
             console.log(`cancelUserSub`, result);
@@ -152,7 +151,7 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!isAuth ? (
+                {!isAuth && (
                     <>
                         <div className={styles.titleStab}>
                             <WalletMembershipIcon /> Your user subscription will appear here.
@@ -169,7 +168,9 @@ const _AccountBalance: FC = (): any => {
                             </a>
                         </Link>
                     </>
-                ) : (
+                )}
+
+                {isAuth && !isLoading ? (
                     <>
                         <div className={styles.topPart}>
                             <div className={styles.name}>
@@ -182,23 +183,21 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Period
                                     </div>
-                                    <div className={styles.tableCellText}>
-                                        {isPlan ? subscriptionOption.name : "Forever"}
-                                    </div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Price
                                     </div>
                                     <div className={styles.tableCellText}>
-                                        $ {isPlan ? getPriceTotalWithNoZero(subscriptionOption.price_total) : 0}
+                                        $ {getPriceTotalWithNoZero(subscriptionOption.price_total)}
                                     </div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
-                                    <div className={styles.tableCellText}>{isPlan ? status : "Active"}</div>
+                                    <div className={styles.tableCellText}>{getToUpperCase(status)}</div>
                                 </div>
                                 <div className={styles.exchangeCell}>
                                     <Link href="/profile/payment-history">
@@ -208,69 +207,74 @@ const _AccountBalance: FC = (): any => {
                                     </Link>
                                 </div>
                             </div>
-                            {status === "trial" && subscriptionOption.trial_ended !== null && (
+                            {status === "trial" && subscriptionOption?.trial_ended !== null && (
                                 <div className={[styles.row, styles.exchangeGroup].join(" ")}>
                                     <div className={styles.exchangeCell}>
                                         <div className={styles.tableCellText}>
-                                            Expires in {dayjs.utc().diff(subscriptionOption.trial_ended, "day")} days
+                                            Expires in {dayjs().to(dayjs(subscriptionOption.trial_ended))}
                                         </div>
                                     </div>
                                 </div>
                             )}
-                            {status === "active" && subscriptionOption.active_to !== null && (
+                            {status === "active" && subscriptionOption?.active_to !== null && (
                                 <div className={[styles.row, styles.exchangeGroup].join(" ")}>
                                     <div className={styles.exchangeCell}>
                                         <div className={styles.tableCellText}>
-                                            Expires in {dayjs.utc().diff(subscriptionOption.active_to, "day")} days
+                                            Expires in {dayjs().to(dayjs(subscriptionOption.active_to))}
                                         </div>
                                     </div>
                                 </div>
                             )}
                         </div>
-
-                        {isPlan ? (
-                            <>
-                                <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                                    <Button
-                                        title="Change plan"
-                                        size="normal"
-                                        icon="settings"
-                                        type="dimmed"
-                                        onClick={handleSetSubsVisible}
-                                    />
-                                    <Button
-                                        title="Checkout"
-                                        size="normal"
-                                        icon="bitcoin"
-                                        type="primary"
-                                        onClick={handleSetCheckoutVisible}
-                                    />
-                                    <Button
-                                        title="Cancel"
-                                        size="normal"
-                                        icon="close"
-                                        type="dimmed"
-                                        onClick={handleSetCancelVisible}
-                                    />
-                                </div>
-                                <ErrorLine formError={formError} style={{ width: "auto" }} />
-                            </>
-                        ) : (
-                            <div
-                                className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
-                                style={{ alignSelf: "center" }}>
-                                <Button
-                                    isUppercase
-                                    title="Start free trial"
-                                    size="normal"
-                                    icon="wallet"
-                                    type="primary"
-                                    onClick={handleSetSubsVisible}
-                                />
-                            </div>
-                        )}
                     </>
+                ) : (
+                    <div className={styles.loader}>
+                        <LoadingIndicator />
+                    </div>
                 )}
+
+                {isPlan ? (
+                    <>
+                        <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
+                            <Button
+                                title="Change plan"
+                                size="normal"
+                                icon="settings"
+                                type="dimmed"
+                                onClick={handleSetSubsVisible}
+                            />
+                            <Button
+                                title="Checkout"
+                                size="normal"
+                                icon="bitcoin"
+                                type="primary"
+                                onClick={handleSetCheckoutVisible}
+                            />
+                            <Button
+                                title="Cancel"
+                                size="normal"
+                                icon="close"
+                                type="dimmed"
+                                onClick={handleSetCancelVisible}
+                            />
+                        </div>
+                        <ErrorLine formError={formError} style={{ width: "auto" }} />
+                    </>
+                ) : (
+                    <div
+                        className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
+                        style={{ alignSelf: "center" }}>
+                        <Button
+                            isUppercase
+                            title="Start free trial"
+                            size="normal"
+                            icon="wallet"
+                            type="primary"
+                            onClick={handleSetSubsVisible}
+                        />
+                    </div>
+                )}
+
                 {isModalSubsVisible && (
                     <Modal isOpen={isModalSubsVisible} onClose={handleSetSubsVisible}>
                         <h2 style={{ color: "white", margin: 0 }}>Choose plan</h2>
@@ -388,6 +392,7 @@ const _AccountBalance: FC = (): any => {
                     </Modal>
                 )}
             </div>
+
             {isModalCancelVisible && (
                 <>
                     <Modal isOpen={isModalCancelVisible} onClose={handleSetCancelVisible} className={styles.cancel}>
