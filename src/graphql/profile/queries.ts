@@ -112,10 +112,13 @@ export const GET_USER_SUBS = gql`
             user_payments(where: { user_id: { _eq: $user_id } }) {
                 id
                 code
+                url
                 price
                 status
                 created_at
                 expires_at
+                subscription_from
+                subscription_to
             }
         }
     }
