@@ -67,7 +67,7 @@ export const subscriptionPlan = [
     {
         name: "TRADER PLAN",
         description:
-            "All free features\n+\nFully automated trading\nAll available (125+) trading robots\nUnlimited positions & deals\nUnlimited trading volume\nNo fees on trades\nEnhanced support",
+            "All free features\n+\nFully automated trading\nAll available (135+) trading robots\nUnlimited positions & deals\nUnlimited trading volume\nNo fees on trades\nEnhanced support",
         options: [
             {
                 name: "1 month",
@@ -80,7 +80,7 @@ export const subscriptionPlan = [
                 free_months: null
             },
             {
-                name: "1 year",
+                name: "9 months",
                 sort_order: 3,
                 unit: "year",
                 amount: 1,
@@ -90,7 +90,7 @@ export const subscriptionPlan = [
                 free_months: 3
             },
             {
-                name: "6 months",
+                name: "5 months",
                 sort_order: 2,
                 unit: "month",
                 amount: 6,

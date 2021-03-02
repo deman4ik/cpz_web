@@ -7,7 +7,7 @@ import { ButtonGroup } from "components/pages/LandingPage/Pricing/ButtonGroup";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { Button } from "components/basic";
 import { HTMLButtonTypes } from "components/basic/Button/types";
-import { getPriceTotalWithNoZero } from "config/utils.ts";
+import { getPriceTotalWithNoZero } from "config/utils";
 import styles from "./index.module.css";
 
 interface Props {
