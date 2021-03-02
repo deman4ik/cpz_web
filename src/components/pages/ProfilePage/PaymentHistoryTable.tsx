@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { formatDate } from "config/utils";
+import { formatDateWithData } from "config/utils";
 import styles from "./PaymentHistoryPage.module.css";
 
 interface Props {
@@ -29,7 +29,7 @@ const _PaymentHistoryTable: FC<Props> = ({
     user_sub
 }) => {
     return (
-        <div className={`${styles.tableRow}`}>
+        <div className={`${styles.tableRow} ${styles.tableGridRow}`}>
             <div className={styles.positionGroup}>
                 <>
                     <div className={styles.limitWrapper}>
@@ -84,7 +84,7 @@ const _PaymentHistoryTable: FC<Props> = ({
                             Created
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDate(created_at)}</div>
+                            <div className={styles.tableCellText}>{formatDateWithData(created_at)}</div>
                         </div>
                     </div>
                 </>
@@ -97,7 +97,7 @@ const _PaymentHistoryTable: FC<Props> = ({
                             Expires
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDate(expires_at)}</div>
+                            <div className={styles.tableCellText}>{formatDateWithData(expires_at)}</div>
                         </div>
                     </div>
                 </>
@@ -117,23 +117,20 @@ const _PaymentHistoryTable: FC<Props> = ({
                     </div>
                 </>
             </div>
-
-            {subscription_from !== null && subscription_to !== null ? (
-                <div className={styles.positionGroup}>
-                    <div className={styles.limitWrapper}>
-                        <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Subscription Period
-                        </div>
-                        <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{`${formatDate(subscription_from)} \n- ${formatDate(
-                                subscription_to
-                            )}`}</div>
-                        </div>
+            <div className={styles.positionGroup}>
+                <div className={styles.limitWrapper}>
+                    <div className={styles.secondaryText} style={{ marginTop: 2 }}>
+                        Subscription Period
                     </div>
+                    {subscription_from !== null && subscription_to !== null && (
+                        <div className={styles.codeGroup}>
+                            <div className={styles.tableCellText}>{`${formatDateWithData(
+                                subscription_from
+                            )} \n- ${formatDateWithData(subscription_to)}`}</div>
+                        </div>
+                    )}
                 </div>
-            ) : (
-                <div className={styles.positionGroup} style={{ flexGrow: 13 }} />
-            )}
+            </div>
         </div>
     );
 };

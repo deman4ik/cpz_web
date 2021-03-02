@@ -62,6 +62,8 @@ export const CHECKOUT_PAYMENT = gql`
             userPayment {
                 status
                 provider
+                subscription_from
+                subscription_to
             }
         }
     }

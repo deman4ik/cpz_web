@@ -10,7 +10,7 @@ import { Modal, Button } from "components/basic";
 import { SubscriptionPlan } from "components/ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { WalletMembershipIcon } from "assets/icons/svg";
-import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge } from "config/utils.ts";
+import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge, formatDateWithData } from "config/utils.ts";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
@@ -43,7 +43,10 @@ const _AccountBalance: FC = (): any => {
         code: "",
         price: 0,
         status: "",
-        expires_at: null
+        created_at: null,
+        expires_at: null,
+        subscription_from: null,
+        subscription_to: null
     });
 
     const [isModalSubsVisible, setModalVisibility] = useState(false);
@@ -70,8 +73,8 @@ const _AccountBalance: FC = (): any => {
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
 
-        refetch();
-    }, [setPlan, data, refetch]);
+        // refetch();
+    }, [setPlan, data /*,refetch*/]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -177,7 +180,7 @@ const _AccountBalance: FC = (): any => {
                                 <div className={styles.tableCellText}>{subsName}</div>
                             </div>
                         </div>
-                        <div>
+                        <div className={styles.subsContainer}>
                             <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
@@ -193,63 +196,82 @@ const _AccountBalance: FC = (): any => {
                                         $ {getPriceTotalWithNoZero(subscriptionOption.price_total)}
                                     </div>
                                 </div>
+                            </div>
+                            <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                         Status
                                     </div>
                                     <div className={styles.tableCellText}>{getToUpperCase(status)}</div>
                                 </div>
-                                <div className={styles.exchangeCell}>
-                                    <Link href="/profile/payment-history">
-                                        <a>
-                                            <Button title="Payment History" size="small" icon="history" type="dimmed" />
-                                        </a>
-                                    </Link>
-                                </div>
+                                {status === "trial" &&
+                                    subscriptionOption?.trial_ended &&
+                                    subscriptionOption?.trial_ended !== null && (
+                                        <div className={styles.exchangeCell}>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Expires
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {dayjs().to(dayjs(subscriptionOption.trial_ended))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                {status === "active" &&
+                                    subscriptionOption?.active_to &&
+                                    subscriptionOption?.active_to !== null && (
+                                        <div className={styles.exchangeCell}>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Expires
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {dayjs().to(dayjs(subscriptionOption.active_to))}
+                                            </div>
+                                        </div>
+                                    )}
                             </div>
-                            {status === "trial" && subscriptionOption?.trial_ended !== null && (
-                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                                    <div className={styles.exchangeCell}>
-                                        <div className={styles.tableCellText}>
-                                            Expires in {dayjs().to(dayjs(subscriptionOption.trial_ended))}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {status === "active" && subscriptionOption?.active_to !== null && (
-                                <div className={[styles.row, styles.exchangeGroup].join(" ")}>
-                                    <div className={styles.exchangeCell}>
-                                        <div className={styles.tableCellText}>
-                                            Expires in {dayjs().to(dayjs(subscriptionOption.active_to))}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+
+                            <div className={styles.rowButtonGroup}>
+                                <Link href="/profile/payment-history">
+                                    <a>
+                                        <Button title="Payment History" size="small" icon="history" type="dimmed" />
+                                    </a>
+                                </Link>
+                                <Button
+                                    title="Change plan"
+                                    size="small"
+                                    icon="settings"
+                                    type="dimmed"
+                                    style={{ width: 136 }}
+                                    onClick={handleSetSubsVisible}
+                                />
+                                <Button
+                                    title="Cancel"
+                                    size="small"
+                                    icon="close"
+                                    type="dimmed"
+                                    style={{ width: 136 }}
+                                    onClick={handleSetCancelVisible}
+                                />
+                            </div>
                         </div>
 
                         {isPlan ? (
                             <>
-                                <div className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}>
-                                    <Button
-                                        title="Change plan"
-                                        size="normal"
-                                        icon="settings"
-                                        type="dimmed"
-                                        onClick={handleSetSubsVisible}
-                                    />
+                                <div
+                                    className={[
+                                        styles.row,
+                                        styles.exchangeGroup,
+                                        styles.btnGroup,
+                                        styles.btnCheckout
+                                    ].join(" ")}
+                                    style={{ justifyContent: "center" }}>
                                     <Button
                                         title="Checkout"
                                         size="normal"
                                         icon="bitcoin"
                                         type="primary"
                                         onClick={handleSetCheckoutVisible}
-                                    />
-                                    <Button
-                                        title="Cancel"
-                                        size="normal"
-                                        icon="close"
-                                        type="dimmed"
-                                        onClick={handleSetCancelVisible}
                                     />
                                 </div>
                                 <ErrorLine formError={formError} style={{ width: "auto" }} />
@@ -270,9 +292,11 @@ const _AccountBalance: FC = (): any => {
                         )}
                     </>
                 ) : (
-                    <div className={styles.loader}>
-                        <LoadingIndicator />
-                    </div>
+                    isAuth && (
+                        <div className={styles.loader}>
+                            <LoadingIndicator />
+                        </div>
+                    )
                 )}
 
                 {isModalSubsVisible && (
@@ -310,29 +334,49 @@ const _AccountBalance: FC = (): any => {
                         }}>
                         <div className={`${styles.content} ${isFrame ? styles.frame : ""}`}>
                             <h2>Checkout</h2>
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Subscription
+                            <div
+                                className={styles.exchangeCell}
+                                style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Subscription
+                                    </div>
+                                    <div className={styles.tableCellText}>{subsName}</div>
+                                    <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
-                                <div className={styles.tableCellText}>
-                                    {subsName}&nbsp;
-                                    {subscriptionOption.name}
+                                {(userPaymentData?.subscription_from && userPaymentData?.subscription_from !== null) ||
+                                    (userPaymentData?.subscription_to && userPaymentData?.subscription_to !== null && (
+                                        <div>
+                                            <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                                Period
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_from)}
+                                            </div>
+                                            <div className={styles.tableCellText}>
+                                                {formatDateWithData(userPaymentData?.subscription_to)}
+                                            </div>
+                                        </div>
+                                    ))}
+                            </div>
+
+                            <div
+                                className={styles.exchangeCell}
+                                style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Price
+                                    </div>
+                                    <div className={styles.tableCellText}>$ {userPaymentData.price}</div>
+                                </div>
+                                <div>
+                                    <div className={styles.secondaryText} style={{ minWidth: 60 }}>
+                                        Status
+                                    </div>
+                                    <div className={styles.tableCellText}>{userPaymentData.status}</div>
                                 </div>
                             </div>
 
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Price
-                                </div>
-                                <div className={styles.tableCellText}>$ {userPaymentData.price}</div>
-                            </div>
-
-                            <div className={styles.exchangeCell}>
-                                <div className={styles.secondaryText} style={{ minWidth: 60 }}>
-                                    Status
-                                </div>
-                                <div className={styles.tableCellText}>{userPaymentData.status}</div>
-                            </div>
                             {timeExpiry <= 0 || (
                                 <div className={styles.exchangeCell}>
                                     <div className={styles.secondaryText} style={{ minWidth: 60 }}>
@@ -363,6 +407,8 @@ const _AccountBalance: FC = (): any => {
                                         styled={{ display: "flex" }}
                                         chargeId={userPaymentData.code}
                                         onLoad={() => setIframe(true)}
+                                        onChargeSuccess={() => handleOnModalCheckoutClose()}
+                                        onChargeFailure={() => handleOnModalCheckoutClose()}
                                         onModalClosed={() => handleOnModalCheckoutClose()}
                                     />
                                 </div>
@@ -381,6 +427,8 @@ const _AccountBalance: FC = (): any => {
                                 styled={{ display: "flex" }}
                                 chargeId={userPaymentData.code}
                                 onLoad={() => setIframe(true)}
+                                onChargeSuccess={() => handleOnModalCheckoutClose()}
+                                onChargeFailure={() => handleOnModalCheckoutClose()}
                                 onModalClosed={() => handleOnModalCheckoutClose()}
                             />
                         )}

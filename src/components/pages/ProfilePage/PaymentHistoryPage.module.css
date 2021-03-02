@@ -85,6 +85,15 @@
 	opacity: 1;
 }
 
+.positionGroup:nth-of-type(6) {
+	flex-basis: calc(100% / 7);
+}
+
+.positionGroup:last-of-type {
+	align-self: flex-start;
+	flex-basis: calc(100% / 4);
+}
+
 @media (max-width: 1300px) {
 	.positionGroup {
 		flex-direction: column;
