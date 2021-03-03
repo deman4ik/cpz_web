@@ -14,7 +14,7 @@ export const SliderArrow = (props): any => {
     );
 };
 
-const _Testimonials = () => {
+const _Feedback = () => {
     const settings = {
         dots: true,
         infinite: true,
@@ -38,6 +38,9 @@ const _Testimonials = () => {
 
     return (
         <>
+            <a name="feedback" className="visually-hidden">
+                What people are actually thinking about Cryptuoso
+            </a>
             <h2 className={styles.title}>What people are actually thinking about Cryptuoso</h2>
             <div className={styles.aboutus}>
                 <Slider {...settings}>
@@ -50,4 +53,4 @@ const _Testimonials = () => {
     );
 };
 
-export const Testimonials = memo(_Testimonials);
+export const Feedback = memo(_Feedback);

@@ -15,13 +15,19 @@ const _RoadMap: React.FC = () => {
     return (
         <>
             {show ? (
-                <div className={styles.container}>
-                    <div className={styles.stepsContainer}>
-                        {steps.map((step, idx) => (
-                            <Step step={step} idx={idx} key={idx} isVertical={isVertical} />
-                        ))}
+                <>
+                    <a name="roadmap" className="visually-hidden">
+                        Cryptuoso roadmap
+                    </a>
+                    <h2 className={styles.title}>Cryptuoso roadmap</h2>
+                    <div className={styles.container}>
+                        <div className={styles.stepsContainer}>
+                            {steps.map((step, idx) => (
+                                <Step step={step} idx={idx} key={idx} isVertical={isVertical} />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </>
             ) : null}
         </>
     );

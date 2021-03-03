@@ -1,14 +1,8 @@
-import React, { AriaAttributes, DOMAttributes, memo, useState } from "react";
+import React, { memo, useState } from "react";
 import { PricingCard } from "./PricingCard";
 import { ButtonGroup } from "./ButtonGroup";
 import { pricingContent, subscriptionPlan } from "./helper";
 import styles from "./index.module.css";
-
-declare module "react" {
-    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-        name?: string;
-    }
-}
 
 const optionsSorted = subscriptionPlan[0].options.slice().sort((a, b) => a.sort_order - b.sort_order);
 

@@ -3,7 +3,6 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
-
 	margin: 0 auto 70px;
 }
 
@@ -14,7 +13,6 @@
 	justify-content: center;
 	width: 100%;
 	max-width: 420px;
-
 	margin-right: 20px;
 	margin-bottom: 20px;
 	margin-left: 20px;
@@ -25,4 +23,14 @@
 }
 
 @media (max-width: 480px) {
+}
+
+.title {
+	margin-top: 20px;
+	margin-bottom: 40px;
+	text-align: center;
+	color: white;
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
 }

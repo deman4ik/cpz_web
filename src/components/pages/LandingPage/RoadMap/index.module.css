@@ -1,9 +1,18 @@
+.title {
+	margin-top: 20px;
+	margin-bottom: 40px;
+	text-align: center;
+	color: white;
+	font-size: 38px;
+	font-weight: bold;
+	line-height: 42px;
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	min-height: 285px;
-
 	margin-top: 10px;
 	margin-right: 40px;
 	margin-bottom: 80px;
@@ -21,7 +30,6 @@
 @media (max-width: 992px) {
 	.stepsContainer {
 		flex-direction: column;
-
 		margin-left: -120px;
 	}
 }
