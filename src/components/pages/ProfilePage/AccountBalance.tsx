@@ -77,8 +77,8 @@ const _AccountBalance: FC = (): any => {
             setSubscriptionOption(data.user_subs[0].subscriptionOption);
         }
 
-        // refetch();
-    }, [setPlan, data /*,refetch*/]);
+        refetch();
+    }, [setPlan, data, refetch]);
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
@@ -159,7 +159,7 @@ const _AccountBalance: FC = (): any => {
         <>
             <div className={styles.regionTitle}>Cryptuoso Subscription</div>
             <div className={styles.surface}>
-                {!isAuth && (
+                {!isAuth ? (
                     <>
                         <div className={styles.titleStab}>
                             <WalletMembershipIcon /> Your user subscription will appear here.
@@ -176,14 +176,14 @@ const _AccountBalance: FC = (): any => {
                             </a>
                         </Link>
                     </>
-                )}
-                {isAuth && !loading ? (
+                ) : !loading ? (
                     <>
                         <div className={styles.topPart}>
                             <div className={styles.name}>
                                 <div className={styles.tableCellText}>{subsName}</div>
                             </div>
                         </div>
+
                         <div className={styles.subsContainer}>
                             <div className={styles.row}>
                                 <div className={styles.exchangeCell}>
@@ -231,33 +231,36 @@ const _AccountBalance: FC = (): any => {
                                 )}
                             </div>
 
-                            <div className={styles.rowButtonGroup}>
+                            <div className={`${styles.rowButtonGroup} ${!isPlan && styles.rowButtonSingle}`}>
                                 <Link href="/profile/payment-history">
                                     <a>
                                         <Button title="Payment History" size="small" icon="history" type="dimmed" />
                                     </a>
                                 </Link>
-                                <Button
-                                    title="Change plan"
-                                    size="small"
-                                    icon="settings"
-                                    type="dimmed"
-                                    style={{ width: 136 }}
-                                    onClick={handleSetSubsVisible}
-                                />
-                                <Button
-                                    title="Cancel"
-                                    size="small"
-                                    icon="close"
-                                    type="dimmed"
-                                    style={{ width: 136 }}
-                                    onClick={handleSetCancelVisible}
-                                />
+                                {isPlan && (
+                                    <>
+                                        <Button
+                                            title="Change plan"
+                                            size="small"
+                                            icon="settings"
+                                            type="dimmed"
+                                            style={{ width: 136 }}
+                                            onClick={handleSetSubsVisible}
+                                        />
+                                        <Button
+                                            title="Cancel"
+                                            size="small"
+                                            icon="close"
+                                            type="dimmed"
+                                            style={{ width: 136 }}
+                                            onClick={handleSetCancelVisible}
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
-
-                        {isPlan ? (
-                            <>
+                        <>
+                            {isPlan ? (
                                 <div
                                     className={[
                                         styles.row,
@@ -274,29 +277,27 @@ const _AccountBalance: FC = (): any => {
                                         onClick={handleSetCheckoutVisible}
                                     />
                                 </div>
-                                <ErrorLine formError={formError} style={{ width: "auto" }} />
-                            </>
-                        ) : (
-                            <div
-                                className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
-                                style={{ alignSelf: "center" }}>
-                                <Button
-                                    isUppercase
-                                    title="Start free trial"
-                                    size="normal"
-                                    icon="wallet"
-                                    type="primary"
-                                    onClick={handleSetSubsVisible}
-                                />
-                            </div>
-                        )}
+                            ) : (
+                                <div
+                                    className={[styles.row, styles.exchangeGroup, styles.btnGroup].join(" ")}
+                                    style={{ alignSelf: "center" }}>
+                                    <Button
+                                        isUppercase
+                                        title="Start free trial"
+                                        size="normal"
+                                        icon="wallet"
+                                        type="primary"
+                                        onClick={handleSetSubsVisible}
+                                    />
+                                </div>
+                            )}
+                            <ErrorLine formError={formError} style={{ width: "auto" }} />
+                        </>
                     </>
                 ) : (
-                    isAuth && (
-                        <div className={styles.loader}>
-                            <LoadingIndicator />
-                        </div>
-                    )
+                    <div className={styles.loader}>
+                        <LoadingIndicator />
+                    </div>
                 )}
 
                 {isModalSubsVisible && (
@@ -344,8 +345,9 @@ const _AccountBalance: FC = (): any => {
                                     <div className={styles.tableCellText}>{subsName}</div>
                                     <div className={styles.tableCellText}>{subscriptionOption.name}</div>
                                 </div>
-                                {(userPaymentData?.subscription_from && userPaymentData?.subscription_from !== null) ||
-                                    (userPaymentData?.subscription_to && userPaymentData?.subscription_to !== null && (
+                                {userPaymentData &&
+                                    (userPaymentData?.subscription_from ||
+                                        userPaymentData?.subscription_from !== null) && (
                                         <div>
                                             <div className={styles.secondaryText} style={{ minWidth: 60 }}>
                                                 Period
@@ -357,7 +359,7 @@ const _AccountBalance: FC = (): any => {
                                                 {formatDateWithData(userPaymentData?.subscription_to)}
                                             </div>
                                         </div>
-                                    ))}
+                                    )}
                             </div>
 
                             <div

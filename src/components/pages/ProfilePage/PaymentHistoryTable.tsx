@@ -29,7 +29,7 @@ const _PaymentHistoryTable: FC<Props> = ({
     user_sub
 }) => {
     return (
-        <div className={`${styles.tableRow} ${styles.tableGridRow}`}>
+        <div className={`${styles.tableRow}`}>
             <div className={styles.positionGroup}>
                 <>
                     <div className={styles.limitWrapper}>
