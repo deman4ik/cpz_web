@@ -43,6 +43,8 @@ export const CHECKOUT_USER_SUB = gql`
                 status
                 created_at
                 expires_at
+                subscription_from
+                subscription_to
             }
         }
     }

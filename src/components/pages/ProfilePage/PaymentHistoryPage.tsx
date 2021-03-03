@@ -36,8 +36,6 @@ const _PaymentHistoryPage: FC = (): any => {
         }
     });
 
-    console.log(data);
-
     const onFetchMore = useCallback(() => {
         const currentLength = data.user_payments.length || 0;
         fetchMore({

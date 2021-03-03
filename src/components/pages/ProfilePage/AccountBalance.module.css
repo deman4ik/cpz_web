@@ -148,6 +148,11 @@
 	justify-content: space-evenly;
 }
 
+.rowButtonSingle {
+	justify-content: flex-start;
+	padding-top: 25px;
+}
+
 
 @media (max-width: 480px) {
 	.row {
@@ -156,6 +161,11 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		width: 100%;
+	}
+
+	.rowButtonSingle {
+		margin-bottom: 20px;
+		padding-top: 0;
 	}
 }
 

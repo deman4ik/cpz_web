@@ -4,7 +4,7 @@ import { Description } from "./Description";
 import { SignalsList } from "./SignalsList";
 import { MadeToHelp } from "./MadeToHelp";
 import { Pricing } from "./Pricing";
-import { Testimonials } from "./Testimonials";
+import { Feedback } from "./Feedback";
 import { TradingApp } from "./TradingApp";
 import { TelegramBot } from "./TelegramBot";
 import { RoadMap } from "./RoadMap";
@@ -15,6 +15,12 @@ import { Aboutus } from "./Aboutus";
 import { PageHead, Footer } from "components/layout";
 import { AuthContext } from "providers/authContext";
 import styles from "./index.module.css";
+
+declare module "react" {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        name?: string;
+    }
+}
 
 const _LandingPage: React.FC = () => {
     const {
@@ -35,17 +41,15 @@ const _LandingPage: React.FC = () => {
                     <div className={styles.starsBackground} />
                     <div className={styles.container}>
                         <Description />
-                        <h2 className={styles.topRobotsTitle}>Top Performance Robots</h2>
                         <SignalsList />
                         <MadeToHelp />
                         <Pricing />
-                        <Testimonials />
+                        <Feedback />
                         <TradingApp />
                         <TelegramBot />
                         <Faq />
                         <Founders />
                         <Aboutus />
-                        <h2 className={styles.roadmapTitle}>Cryptuoso roadmap</h2>
                         <RoadMap />
                         <Support />
                         <Footer />

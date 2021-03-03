@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { formatDateWithData } from "config/utils";
+import { formatDate, formatDateWithData } from "config/utils";
 import styles from "./PaymentHistoryPage.module.css";
 
 interface Props {
@@ -29,7 +29,7 @@ const _PaymentHistoryTable: FC<Props> = ({
     user_sub
 }) => {
     return (
-        <div className={`${styles.tableRow} ${styles.tableGridRow}`}>
+        <div className={`${styles.tableRow}`}>
             <div className={styles.positionGroup}>
                 <>
                     <div className={styles.limitWrapper}>
@@ -81,10 +81,10 @@ const _PaymentHistoryTable: FC<Props> = ({
                 <>
                     <div className={styles.limitWrapper}>
                         <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Created
+                            Charge Created
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDateWithData(created_at)}</div>
+                            <div className={styles.tableCellText}>{formatDate(created_at)}</div>
                         </div>
                     </div>
                 </>
@@ -94,10 +94,10 @@ const _PaymentHistoryTable: FC<Props> = ({
                 <>
                     <div className={styles.limitWrapper}>
                         <div className={styles.secondaryText} style={{ marginTop: 2 }}>
-                            Expires
+                            Charge Expires
                         </div>
                         <div className={styles.codeGroup}>
-                            <div className={styles.tableCellText}>{formatDateWithData(expires_at)}</div>
+                            <div className={styles.tableCellText}>{formatDate(expires_at)}</div>
                         </div>
                     </div>
                 </>

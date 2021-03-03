@@ -19,6 +19,9 @@ const _Pricing = () => {
 
     return (
         <div className={styles.pricing}>
+            <a name="plans-and-pricing" className="visually-hidden">
+                Plans and pricing
+            </a>
             <h2 className={styles.title}>Plans &amp; pricing</h2>
             <p className={styles.benefits}>
                 {`Get access to all the available features at a single, affordable price.\nFree trial available after sign up.\nNo credit card required.`}

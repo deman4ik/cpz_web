@@ -88,7 +88,8 @@ export const GET_USER_SUBS = gql`
         ) {
             id
             status
-            data
+            trial_ended
+            active_to
             subscription {
                 id
                 name

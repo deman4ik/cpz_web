@@ -8,6 +8,9 @@ const _Faq = () => {
     const half = Math.ceil(faqContent.length / 2);
     return (
         <>
+            <a name="faq" className="visually-hidden">
+                FAQ
+            </a>
             <h2 className={styles.title}>FAQ</h2>
             <div className={styles.wrapper}>
                 <div className={styles.gridLeft}>
