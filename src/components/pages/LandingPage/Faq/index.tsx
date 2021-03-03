@@ -8,7 +8,7 @@ const _Faq = () => {
     const half = Math.ceil(faqContent.length / 2);
     return (
         <>
-            <a name="faq" className="visually-hidden">
+            <a id="faq" className="visually-hidden">
                 FAQ
             </a>
             <h2 className={styles.title}>FAQ</h2>

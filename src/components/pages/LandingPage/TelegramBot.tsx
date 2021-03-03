@@ -12,7 +12,7 @@ const _TelegramBot: React.FC = () => (
         </div>
         <div className={styles.row}>
             <div className={styles.robotsSteps}>
-                <a name="trading-bot" className="visually-hidden">
+                <a id="trading-bot" className="visually-hidden">
                     Cryptuoso Trading Telegram Bot
                 </a>
                 <h2 className={styles.robotsStepsTitle}>

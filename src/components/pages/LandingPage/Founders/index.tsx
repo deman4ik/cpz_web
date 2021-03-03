@@ -7,7 +7,7 @@ import styles from "./index.module.css";
 const _Founders = () => {
     return (
         <>
-            <a name="founders" className="visually-hidden">
+            <a id="founders" className="visually-hidden">
                 Founders
             </a>
             <h2 className={styles.title}>Founders</h2>

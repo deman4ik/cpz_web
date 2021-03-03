@@ -18,7 +18,7 @@ const _SignalsList: React.FC = () => {
                 <LoadingDummy />
             ) : (
                 <>
-                    <a name="top-performance-robots" className="visually-hidden">
+                    <a id="top-performance-robots" className="visually-hidden">
                         Top Performance Robots
                     </a>
                     <h2 className={styles.title}>Top Performance Robots</h2>

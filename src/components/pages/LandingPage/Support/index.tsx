@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 
 const _Support: React.FC = () => (
     <>
-        <a name="support" className="visually-hidden">
+        <a id="support" className="visually-hidden">
             Support
         </a>
         <h2 className={styles.title}>Support</h2>

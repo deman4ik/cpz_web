@@ -11,7 +11,7 @@ const _TradingApp: React.FC = () => (
     <div className={styles.app}>
         <div className={styles.row}>
             <div className={styles.robotsSteps}>
-                <a name="trading-app" className="visually-hidden">
+                <a id="trading-app" className="visually-hidden">
                     Cryptuoso Trading App
                 </a>
                 <h2 className={styles.robotsStepsTitle}>Cryptuoso Trading App</h2>

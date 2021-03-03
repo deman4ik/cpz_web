@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 const _Aboutus = () => {
     return (
         <>
-            <a name="about-us" className="visually-hidden">
+            <a id="about-us" className="visually-hidden">
                 About us
             </a>
             <h2 className={styles.title}>About us</h2>

@@ -16,7 +16,7 @@ const _RoadMap: React.FC = () => {
         <>
             {show ? (
                 <>
-                    <a name="roadmap" className="visually-hidden">
+                    <a id="roadmap" className="visually-hidden">
                         Cryptuoso roadmap
                     </a>
                     <h2 className={styles.title}>Cryptuoso roadmap</h2>

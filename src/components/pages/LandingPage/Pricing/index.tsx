@@ -19,7 +19,7 @@ const _Pricing = () => {
 
     return (
         <div className={styles.pricing}>
-            <a name="plans-and-pricing" className="visually-hidden">
+            <a id="plans-and-pricing" className="visually-hidden">
                 Plans and pricing
             </a>
             <h2 className={styles.title}>Plans &amp; pricing</h2>

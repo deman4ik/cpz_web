@@ -38,7 +38,7 @@ const _Feedback = () => {
 
     return (
         <>
-            <a name="feedback" className="visually-hidden">
+            <a id="feedback" className="visually-hidden">
                 What people are actually thinking about Cryptuoso
             </a>
             <h2 className={styles.title}>What people are actually thinking about Cryptuoso</h2>
