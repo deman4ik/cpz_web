@@ -17,9 +17,7 @@
 .planCard {
 	min-width: 320px;
 	max-width: 400px;
-
 	padding: 0 10px;
-
 	text-align: center;
 	color: white;
 }
@@ -35,7 +33,6 @@
 	align-items: center;
 	flex: 0 1;
 	flex-direction: column;
-
 	text-align: right;
 }
 
@@ -50,25 +47,20 @@
 	flex-direction: column;
 	justify-content: center;
 	min-height: 55px;
-
 	margin: 0;
-
 	font-size: 28px;
 	font-weight: 700;
 }
 
 .planDiscount {
 	display: block;
-
 	margin: 0;
-
 	font-size: 18px;
 }
 
 .planDescription {
 	margin-bottom: 20px;
 	padding: 20px;
-
 	white-space: pre-line;
 	border-top: 1px solid var(--primary);
 	border-bottom: 1px solid var(--primary);
@@ -86,7 +78,6 @@
 	margin: 0 auto;
 	margin-top: 25px;
 	margin-bottom: 10px;
-
 	text-align: center;
 }
 
@@ -96,8 +87,13 @@
 		align-items: center;
 		flex-direction: column;
 		flex-wrap: wrap;
-
 		margin-bottom: 5px;
+	}
+}
+
+@media (max-width: 480px) {
+	.buttonGroup {
+		padding: 0 10px;
 	}
 }
 
@@ -108,6 +104,5 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-
 	margin: auto;
 }
