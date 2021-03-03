@@ -7,14 +7,14 @@ import styles from "./TradingApp.module.css";
 
 const _TelegramBot: React.FC = () => (
     <div className={styles.free}>
-        <a name="trading-bot" className="visually-hidden">
-            Cryptuoso Trading Telegram Bot
-        </a>
         <div className={styles.row}>
             <img src={phoneImg} className={styles.telegramBotImg} alt="" />
         </div>
         <div className={styles.row}>
             <div className={styles.robotsSteps}>
+                <a name="trading-bot" className="visually-hidden">
+                    Cryptuoso Trading Telegram Bot
+                </a>
                 <h2 className={styles.robotsStepsTitle}>
                     Cryptuoso Trading{"\n"}
                     Telegram Bot
