@@ -46,8 +46,6 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, h
 
         const [highlightedPlan] = options.filter((option) => option.highlight === true);
 
-        console.log(currentPlan);
-
         if (currentPlan && currentPlan.price_total !== 0) {
             setButtonName(currentPlan.name);
             setPlan(currentPlan);
