@@ -1,8 +1,14 @@
-import React, { memo, useState } from "react";
+import React, { AriaAttributes, DOMAttributes, memo, useState } from "react";
 import { PricingCard } from "./PricingCard";
 import { ButtonGroup } from "./ButtonGroup";
 import { pricingContent, subscriptionPlan } from "./helper";
 import styles from "./index.module.css";
+
+declare module "react" {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        name?: string;
+    }
+}
 
 const optionsSorted = subscriptionPlan[0].options.slice().sort((a, b) => a.sort_order - b.sort_order);
 
@@ -19,6 +25,9 @@ const _Pricing = () => {
 
     return (
         <div className={styles.pricing}>
+            <a name="plans-and-pricing" className="visually-hidden">
+                Plans and pricing
+            </a>
             <h2 className={styles.title}>Plans &amp; pricing</h2>
             <p className={styles.benefits}>
                 {`Get access to all the available features at a single, affordable price.\nFree trial available after sign up.\nNo credit card required.`}
