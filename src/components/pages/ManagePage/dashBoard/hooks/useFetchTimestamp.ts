@@ -38,7 +38,7 @@ const fetchPeriods = (periodsArray: Array<periodInteface>) => {
  * Hook зарегестрированных юзеров по периодам
  */
 const useFetchTimestamp = (): Array<dataInterface> | null => {
-    const now = dayjs(); // current date
+    const now = dayjs.utc(); // current date
     /*Timestamps periods*/
     const today = { name: "today", period: now.format(format) };
     const dayAgo = { name: "dayAgo", period: now.subtract(1, "day").format(format) };

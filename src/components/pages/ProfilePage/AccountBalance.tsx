@@ -214,7 +214,7 @@ const _AccountBalance: FC = (): any => {
                                             Expires
                                         </div>
                                         <div className={styles.tableCellText}>
-                                            {dayjs().to(dayjs(userSub.trial_ended))}
+                                            {dayjs.utc().to(dayjs(userSub.trial_ended))}
                                         </div>
                                     </div>
                                 )}
@@ -225,7 +225,7 @@ const _AccountBalance: FC = (): any => {
                                             Expires
                                         </div>
                                         <div className={styles.tableCellText}>
-                                            {dayjs().to(dayjs(userSub.active_to))}
+                                            {dayjs.utc().to(dayjs(userSub.active_to))}
                                         </div>
                                     </div>
                                 )}
