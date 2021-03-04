@@ -63,17 +63,13 @@
 
 @media (max-width: 1300px) {
 	.tableRow {
-		align-items: flex-start;
-		flex-direction: column;
+		display: inline-flex;
+		flex-wrap: wrap;
 		width: 100%;
 		max-width: 320px;
 		margin-top: 10px;
 		margin-left: 10px;
 		box-shadow: rgb(0 0 0 / 24%) 0 3px 4px;
-	}
-
-	.tableRow:last-of-type {
-		margin-bottom: 20px;
 	}
 }
 
@@ -83,15 +79,6 @@
 	flex-grow: 1;
 	justify-content: space-between;
 	opacity: 1;
-}
-
-.positionGroup:nth-of-type(6) {
-	flex-basis: calc(100% / 7);
-}
-
-.positionGroup:last-of-type {
-	align-self: flex-start;
-	flex-basis: calc(100% / 4);
 }
 
 @media (max-width: 1300px) {
@@ -141,15 +128,4 @@
 .limitWrapper {
 	display: flex;
 	flex-direction: column;
-}
-
-
-@media (max-width: 480px) {
-	.tableRow {
-		width: calc(100% - 5px);
-		margin-left: 0;
-	}
-	.tableCellText {
-		white-space: normal;
-	}
 }
