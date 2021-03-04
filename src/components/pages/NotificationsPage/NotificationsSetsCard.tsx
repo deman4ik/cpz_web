@@ -236,7 +236,7 @@ export const signalTradeSet = (item, onClick) => {
                             <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
                         </div>
                         <div className={styles.colRobot} style={{ marginTop: 5 }}>
-                            <div className={styles.textAccentCard}>Amount11</div>
+                            <div className={styles.textAccentCard}>Amount</div>
                             <div className={styles.textMessageCard}>{item.data.volume}</div>
                         </div>
                         <div className={styles.colRobot}>

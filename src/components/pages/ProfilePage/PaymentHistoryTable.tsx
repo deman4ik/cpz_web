@@ -122,12 +122,14 @@ const _PaymentHistoryTable: FC<Props> = ({
                     <div className={styles.secondaryText} style={{ marginTop: 2 }}>
                         Subscription Period
                     </div>
-                    {subscription_from !== null && subscription_to !== null && (
+                    {subscription_from !== null && subscription_to !== null ? (
                         <div className={styles.codeGroup}>
                             <div className={styles.tableCellText}>{`${formatDateWithData(
                                 subscription_from
                             )} \n- ${formatDateWithData(subscription_to)}`}</div>
                         </div>
+                    ) : (
+                        <div style={{ paddingTop: 9 }}>&nbsp;</div>
                     )}
                 </div>
             </div>
