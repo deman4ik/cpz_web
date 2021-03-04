@@ -104,8 +104,8 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                         // writeToCache(settings);
                         event({
                             action: "subscribe",
-                            category: "Signals",
-                            label: "subscribe",
+                            category: "signals",
+                            label: "form",
                             value: id,
                             robot_code: code
                         });

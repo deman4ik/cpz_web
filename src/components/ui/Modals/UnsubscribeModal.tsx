@@ -36,8 +36,8 @@ const _UnsubscribeModal: React.FC<Props> = ({ onClose, setTitle }) => {
                     }).catch((e) => console.error(e));
                     event({
                         action: "unsubscribe",
-                        category: "Signals",
-                        label: "unsubscribe",
+                        category: "signals",
+                        label: "form",
                         value: data.robot.id,
                         robot_code: data.robot.code
                     });

@@ -15,13 +15,12 @@ const _Header: React.FC = () => {
 
     const [logout, { loading }] = useLogoutProcess();
 
-    const handleOnClick = (href: string, robot_code?: string) => {
+    const handleOnClick = (href: string) => {
         event({
             action: "click",
-            category: "Landing",
-            label: "conversion",
-            value: href,
-            robot_code
+            category: "landing",
+            label: "link",
+            value: href
         });
     };
 

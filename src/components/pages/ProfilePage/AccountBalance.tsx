@@ -11,6 +11,7 @@ import { SubscriptionPlan } from "components/ui/Modals/SubscriptionPlanModal";
 import { LoadingIndicator, ErrorLine } from "components/common";
 import { WalletMembershipIcon } from "assets/icons/svg";
 import { getToUpperCase, getPriceTotalWithNoZero, getTimeCharge, formatDateWithData } from "config/utils";
+import { event } from "libs/gtag";
 import styles from "./AccountBalance.module.css";
 
 const _AccountBalance: FC = (): any => {
@@ -82,6 +83,12 @@ const _AccountBalance: FC = (): any => {
 
     const handleSetCheckoutVisible = () => {
         setLoading(true);
+        event({
+            action: "checkout",
+            category: "subscription",
+            label: "form",
+            value: userSub.id
+        });
         checkoutUserSub({
             variables: {
                 userSubId: userSub.id
@@ -104,6 +111,12 @@ const _AccountBalance: FC = (): any => {
 
     const handleSetCancelSubs = () => {
         setLoading(true);
+        event({
+            action: "cancel",
+            category: "subscription",
+            label: "form",
+            value: userSub.id
+        });
         cancelUserSub({
             variables: {
                 userSubId: userSub.id
