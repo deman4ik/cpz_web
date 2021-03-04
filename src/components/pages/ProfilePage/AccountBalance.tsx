@@ -260,14 +260,14 @@ const _AccountBalance: FC = (): any => {
                                             style={{ width: 136 }}
                                             onClick={handleSetSubsVisible}
                                         />
-                                        <Button
+                                        {/*<Button
                                             title="Cancel"
                                             size="small"
                                             icon="close"
                                             type="dimmed"
                                             style={{ width: 136 }}
                                             onClick={handleSetCancelVisible}
-                                        />
+                                        />*/}
                                     </>
                                 )}
                             </div>
