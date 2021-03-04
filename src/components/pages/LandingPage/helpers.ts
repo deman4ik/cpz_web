@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, memo } from "react";
 import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from "./types";
 import { DOCS_URL, TELEGRAM_COMMUNITY_URL, color } from "config/constants";
 
@@ -98,3 +99,13 @@ export const descriptionFirstLine: DescriptionFirstLineType[] = [
             "Connect your cryptocurrency exchange account (Binance, Bitfinex, Kraken, KuCoin, Huobi Pro) to our robots for automatic trading. Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance."
     }
 ];
+
+export const useAnchor = (ref: any, anchor: string): void => {
+    useEffect(() => {
+        if (ref.current && document.location.hash === `#${anchor}`) {
+            setTimeout(() => {
+                ref.current.scrollIntoView();
+            }, 300);
+        }
+    });
+};

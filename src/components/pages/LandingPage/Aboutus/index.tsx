@@ -1,10 +1,15 @@
-import React, { memo } from "react";
+import React, { useRef, memo } from "react";
+import { useAnchor } from "../helpers";
 import styles from "./index.module.css";
 
 const _Aboutus = () => {
+    const refAnchor = useRef(null);
+    const anchor = "about-us";
+    useAnchor(refAnchor, anchor);
+
     return (
         <>
-            <a id="about-us" className="visually-hidden">
+            <a ref={refAnchor} id={anchor} className="visually-hidden">
                 About us
             </a>
             <h2 className={styles.title}>About us</h2>

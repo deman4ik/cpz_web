@@ -1,10 +1,11 @@
-import React, { memo } from "react";
+import React, { useRef, memo } from "react";
 import { useQuery } from "@apollo/client";
 
 import { TOP_PERFORMANCE_ROBOTS } from "graphql/robots/queries";
 import { PrimaryButton } from "components/basic";
 import { SignalsListCard } from "./SignalsListCard";
 import { LoadingDummy } from "./LoadingDummy";
+import { useAnchor } from "../helpers";
 import styles from "./index.module.css";
 
 const _SignalsList: React.FC = () => {
@@ -12,13 +13,17 @@ const _SignalsList: React.FC = () => {
         variables: { limit: 5 }
     });
 
+    const refAnchor = useRef(null);
+    const anchor = "top-performance-robots";
+    useAnchor(refAnchor, anchor);
+
     return (
         <>
             {loading || !data ? (
                 <LoadingDummy />
             ) : (
                 <>
-                    <a id="top-performance-robots" className="visually-hidden">
+                    <a ref={refAnchor} id={anchor} className="visually-hidden">
                         Top Performance Robots
                     </a>
                     <h2 className={styles.title}>Top Performance Robots</h2>
