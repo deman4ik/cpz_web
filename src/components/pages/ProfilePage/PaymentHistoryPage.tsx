@@ -55,14 +55,14 @@ const _PaymentHistoryPage: FC = (): any => {
 
     return (
         <DefaultTemplate title="Payment History" handleBackNavigation>
-            <div style={{ padding: "5px 0 0 5px" }}>
+            <div>
                 <div>
                     {loading || !data || !data.user_payments.length ? (
                         <div style={{ marginTop: "20px" }}>
                             <NothingComponent buttonSize="normal" buttonStyles={{ width: "200px", margin: "auto" }} />
                         </div>
                     ) : (
-                        <div>
+                        <div className={styles.wrapper}>
                             <div
                                 className={mobile ? styles.exchangeContainerMobile : styles.tableGridRow}
                                 style={{ padding: "0 20px" }}
