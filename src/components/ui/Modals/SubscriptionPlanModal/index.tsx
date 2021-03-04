@@ -8,6 +8,7 @@ import { LoadingIndicator, ErrorLine } from "components/common";
 import { Button } from "components/basic";
 import { HTMLButtonTypes } from "components/basic/Button/types";
 import { getPriceTotalWithNoZero } from "config/utils";
+import { event } from "libs/gtag";
 import styles from "./index.module.css";
 
 interface Props {
@@ -58,6 +59,12 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, h
 
     const handleOnSubscriptionPlan = ({ subscription_id, code }) => {
         setLoading(true);
+        event({
+            action: "create",
+            category: "subscription",
+            label: "form",
+            value: subscription_id
+        });
         createUserSub({
             variables: {
                 subscriptionId: subscription_id,
@@ -65,7 +72,6 @@ const _SubscriptionPlan: React.FC<Props> = ({ enabled, setStep, handleOnClose, h
             }
         })
             .then(({ data: userSub }) => {
-                console.log(`createUserSub`, userSub);
                 setLoading(false);
                 if (handleOnClick) handleOnClick(plan, userSub, subsPlan);
                 if (handleOnClose) handleOnClose();

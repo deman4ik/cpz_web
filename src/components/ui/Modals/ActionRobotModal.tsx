@@ -50,8 +50,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             if (type === "start") {
                 event({
                     action: "start",
-                    category: "Robots",
-                    label: "start",
+                    category: "robot",
+                    label: "form",
                     value: userRobotId,
                     robot_code
                 });
@@ -68,8 +68,8 @@ const _ActionRobotModal: React.FC<Props> = ({ onClose, type, setTitle }) => {
             if (type === "start") {
                 event({
                     action: "start",
-                    category: "Robots",
-                    label: "start",
+                    category: "robot",
+                    label: "form",
                     value: userRobotId,
                     robot_code
                 });

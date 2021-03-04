@@ -13,7 +13,19 @@ export const pageview = (url) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value, robot_code }) => {
+export const event = ({
+    action,
+    category,
+    label,
+    value,
+    robot_code
+}: {
+    action: string;
+    category: string;
+    label: string;
+    value: string | number;
+    robot_code?: string;
+}) => {
     if (process.env.ENABLE_ANALYTICS === "development") return;
     (window as any).gtag("event", action, {
         event_source: "web",

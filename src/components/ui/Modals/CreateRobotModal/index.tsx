@@ -159,9 +159,9 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         }
                     }).then(() => {
                         event({
-                            action: "create",
-                            category: "Robots",
-                            label: "create",
+                            action: "add",
+                            category: "robot",
+                            label: "form",
                             value: robotData.robot.id,
                             robot_code: robotData.robot.code
                         });
@@ -201,8 +201,8 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         redirectToRobotPage(robotData?.robot);
                         event({
                             action: "start",
-                            category: "Robots",
-                            label: "start",
+                            category: "robot",
+                            label: "form",
                             value: robotData.robot.id,
                             robot_code: robotData.robot.code
                         });

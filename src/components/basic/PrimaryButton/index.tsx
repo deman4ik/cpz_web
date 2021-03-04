@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { event, gtag_report_conversion } from "libs/gtag";
 import styles from "./index.module.css";
-import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 interface Props {
     title: string;
@@ -27,8 +26,8 @@ export const PrimaryButton: React.FC<Props> = ({ title, type, style, className, 
         } else {
             event({
                 action: "click",
-                category: "Landing",
-                label: "conversion",
+                category: "landing",
+                label: "link",
                 value: href,
                 robot_code
             });
