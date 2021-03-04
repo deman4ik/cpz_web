@@ -1,7 +1,8 @@
-import React, { memo } from "react";
+import React, { useRef, memo } from "react";
 import Slider from "react-slick";
 import { HappyUser } from "./HappyUser";
 import { testimonialsContent } from "./helper";
+import { useAnchor } from "../helpers";
 import { ArrowSliderIcon } from "assets/icons/svg";
 import styles from "./index.module.css";
 
@@ -15,6 +16,10 @@ export const SliderArrow = (props): any => {
 };
 
 const _Feedback = () => {
+    const refAnchor = useRef(null);
+    const anchor = "feedback";
+    useAnchor(refAnchor, anchor);
+
     const settings = {
         dots: true,
         infinite: true,
@@ -38,7 +43,7 @@ const _Feedback = () => {
 
     return (
         <>
-            <a name="feedback" className="visually-hidden">
+            <a ref={refAnchor} id={anchor} className="visually-hidden">
                 What people are actually thinking about Cryptuoso
             </a>
             <h2 className={styles.title}>What people are actually thinking about Cryptuoso</h2>
