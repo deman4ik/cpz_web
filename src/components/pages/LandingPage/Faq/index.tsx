@@ -1,14 +1,19 @@
-import React, { memo } from "react";
+import React, { useRef, memo } from "react";
 import { FaqItem } from "./FaqItem";
 import { faqContent } from "./helpres";
+import { useAnchor } from "../helpers";
 
 import styles from "./index.module.css";
 
 const _Faq = () => {
     const half = Math.ceil(faqContent.length / 2);
+    const refAnchor = useRef(null);
+    const anchor = "faq";
+    useAnchor(refAnchor, anchor);
+
     return (
         <>
-            <a name="faq" className="visually-hidden">
+            <a ref={refAnchor} id={anchor} className="visually-hidden">
                 FAQ
             </a>
             <h2 className={styles.title}>FAQ</h2>

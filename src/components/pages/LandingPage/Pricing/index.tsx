@@ -1,12 +1,17 @@
-import React, { memo, useState } from "react";
+import React, { useState, useRef, memo } from "react";
 import { PricingCard } from "./PricingCard";
 import { ButtonGroup } from "./ButtonGroup";
 import { pricingContent, subscriptionPlan } from "./helper";
+import { useAnchor } from "../helpers";
 import styles from "./index.module.css";
 
 const optionsSorted = subscriptionPlan[0].options.slice().sort((a, b) => a.sort_order - b.sort_order);
 
 const _Pricing = () => {
+    const refAnchor = useRef(null);
+    const anchor = "plans-and-pricing";
+    useAnchor(refAnchor, anchor);
+
     const PLAN_NAMES = { "1 month": 0, "6 months": 1 };
     const [buttonName, setButtonName] = useState(optionsSorted[PLAN_NAMES["6 months"]].name);
     const [currentPlan, setCurrentPlan] = useState(optionsSorted[PLAN_NAMES["6 months"]]);
@@ -19,7 +24,7 @@ const _Pricing = () => {
 
     return (
         <div className={styles.pricing}>
-            <a name="plans-and-pricing" className="visually-hidden">
+            <a ref={refAnchor} id={anchor} className="visually-hidden">
                 Plans and pricing
             </a>
             <h2 className={styles.title}>Plans &amp; pricing</h2>
