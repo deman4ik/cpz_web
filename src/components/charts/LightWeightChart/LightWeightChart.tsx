@@ -105,48 +105,51 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
         });
     };
 
-    const handleCrosshairMoved = useCallback((param) => {
-        if (
-            !param.time ||
-            !param.point.y ||
-            !param.point.x ||
-            param.point.x < 0 ||
-            param.point.x > size.width ||
-            param.point.y < 0 ||
-            param.point.y > size.height ||
-            !subscribeRef.current
-        ) {
-            setStylesToRef(toolTipRef, { display: "none" });
-            return;
-        }
-        const item = subscribeRef.current.sortedData.find((el) => el.time === param.time);
-        if (!item) return;
-
-        const { y, x } = param.point;
-        setStylesToRef(toolTipRef, { display: "block" });
-
-        if (type === ChartType.candle) {
-            if (param.hoveredMarkerId) {
-                const arrow = subscribeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
-                toolTipRef.current.innerHTML = toolTipArrowTemplate(arrow);
-            } else {
-                toolTipRef.current.innerHTML = toolTipTemplate(item);
+    const handleCrosshairMoved = useCallback(
+        (param) => {
+            if (
+                !param.time ||
+                !param.point.y ||
+                !param.point.x ||
+                param.point.x < 0 ||
+                param.point.x > size.width ||
+                param.point.y < 0 ||
+                param.point.y > size.height ||
+                !subscribeRef.current
+            ) {
+                setStylesToRef(toolTipRef, { display: "none" });
+                return;
             }
-        } else {
-            toolTipRef.current.innerHTML = toolTipTemplateArea(item);
-        }
+            const item = subscribeRef.current.sortedData.find((el) => el.time === param.time);
+            if (!item) return;
 
-        let left = x + toolTipMargin;
-        if (left > size.width - toolTipWidth) {
-            left = x - toolTipMargin - toolTipWidth;
-        }
+            const { y, x } = param.point;
+            setStylesToRef(toolTipRef, { display: "block" });
 
-        let top = y + toolTipMargin;
-        if (top > size.height - toolTipHeight) {
-            top = y - toolTipHeight - toolTipMargin;
-        }
-        setStylesToRef(toolTipRef, { left: `${left}px`, top: `${top}px` });
-    }, []);
+            if (type === ChartType.candle) {
+                if (param.hoveredMarkerId) {
+                    const arrow = subscribeRef.current.markers.find((el) => el.id === param.hoveredMarkerId);
+                    toolTipRef.current.innerHTML = toolTipArrowTemplate(arrow);
+                } else {
+                    toolTipRef.current.innerHTML = toolTipTemplate(item);
+                }
+            } else {
+                toolTipRef.current.innerHTML = toolTipTemplateArea(item);
+            }
+
+            let left = x + toolTipMargin;
+            if (left > size.width - toolTipWidth) {
+                left = x - toolTipMargin - toolTipWidth;
+            }
+
+            let top = y + toolTipMargin;
+            if (top > size.height - toolTipHeight) {
+                top = y - toolTipHeight - toolTipMargin;
+            }
+            setStylesToRef(toolTipRef, { left: `${left}px`, top: `${top}px` });
+        },
+        [size.width, size.height]
+    );
 
     const handleVisibleTimeRangeChange = () => {
         const buttonVisible = chart.field.timeScale().scrollPosition() < -5;
