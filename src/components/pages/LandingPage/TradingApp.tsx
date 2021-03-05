@@ -1,6 +1,5 @@
 import React, { useRef, memo } from "react";
-
-import tradingApp from "assets/img/trading-app.png";
+import Image from "next/image";
 import { PrimaryButton } from "components/basic";
 import { CircleIcon } from "assets/icons/svg";
 import { tradingSteps, useAnchor } from "./helpers";
@@ -37,7 +36,9 @@ const _TradingApp: React.FC = () => {
                 </div>
             </div>
             <div className={styles.tradingAppImgContainer}>
-                <img className={styles.tradingAppImg} src={tradingApp} alt="" />
+                <div className={styles.tradingAppImg}>
+                    <Image src="/img/trading-app.png" alt="" width={1342} height={823} />
+                </div>
             </div>
         </div>
     );

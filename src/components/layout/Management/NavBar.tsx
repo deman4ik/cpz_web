@@ -1,14 +1,10 @@
 import React, { memo } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
-
 import { NavItem } from "./NavItem";
-
 import { menuItems } from "./constants";
 import { PageType } from "config/types";
-
 import styles from "./styles/NavBar.module.css";
-
-import logo from "assets/img/logo-accent.png";
 
 interface Props {
     activeTab: PageType;
@@ -29,7 +25,9 @@ const _NavBar: React.FC<Props> = ({ activeTab, fullSize = false }) => {
         <div className={`${styles.navBar} ${fullSize ? styles.fullSize : ""}`}>
             <div className={styles.navBarContainer}>
                 <div className={styles.logoWrapper}>
-                    <img className={`${styles.logo}`} src={logo} alt="" />
+                    <div className={`${styles.logo}`}>
+                        <Image src="/img/logo-accent.png" alt="" width={72} height={71} />
+                    </div>
                 </div>
                 <div className={styles.itemGroup}>
                     {menuItems.map((item) => (

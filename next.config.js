@@ -1,8 +1,6 @@
-const withPlugins = require("next-compose-plugins");
-const withImages = require("next-images");
 require("dotenv").config();
 
-module.exports = withPlugins([[withImages, { esModule: true }]], {
+module.exports = {
     env: {
         HASURA_URL: process.env.HASURA_URL,
         AUTH_API_URL: process.env.AUTH_API_URL,
@@ -14,4 +12,4 @@ module.exports = withPlugins([[withImages, { esModule: true }]], {
     },
     poweredByHeader: false,
     trailingSlash: true
-});
+};

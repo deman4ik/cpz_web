@@ -1,9 +1,6 @@
-import avatar1 from "assets/img/avatars/f1.png";
-import avatar2 from "assets/img/avatars/f2.png";
-
 export const foundersContent = [
     {
-        avatar: avatar1,
+        avatar: "f1.png",
         name: "Kirill",
         position: `CEO & co-founder`,
         profile: `Professional trader
@@ -12,7 +9,7 @@ export const foundersContent = [
         Created and tested more than 1000 trading strategies and many robots, based on them`
     },
     {
-        avatar: avatar2,
+        avatar: "f2.png",
         name: "Dimitriy",
         position: `CTO & co-founder`,
         profile: `Full Stack Developer

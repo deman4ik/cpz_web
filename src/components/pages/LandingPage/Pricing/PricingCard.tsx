@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import Image from "next/image";
 import { PrimaryButton } from "components/basic";
 import styles from "./PricingCard.module.css";
 
@@ -12,7 +13,7 @@ export const _PricingCard = ({ card, currentPlan, basePrice, buttonName }): any 
             <div className={`${styles.col} ${card.highlite && styles.colHighliteMore}`}>
                 <div className={styles.colBody}>
                     <div className={styles.iconWrapper}>
-                        <img src={card.icon} alt={card.card} />
+                        <Image src={`/img/planets/${card.icon}`} alt={card.card} width={197} height={110} />
                     </div>
                     <div className={styles.colTitle}>{card.name}</div>
                     <div
