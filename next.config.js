@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 module.exports = {
     env: {
         HASURA_URL: process.env.HASURA_URL,

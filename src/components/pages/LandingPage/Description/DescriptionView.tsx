@@ -11,7 +11,6 @@ const _DescriptionView: React.FC = () => (
                 {descriptionFirstLine.map((item, idx) => (
                     <div className={landing_styles.robotsCol} key={idx}>
                         <div className={`${styles.icon} ${styles.heightIcon}`}>
-                            {console.log(item.imgSrc)}
                             <div style={item.imgStyle}>
                                 <Image src={`/img/${item.imgSrc}.png`} alt="" {...item.imgStyle} />
                             </div>
