@@ -37,7 +37,7 @@ const _TradingApp: React.FC = () => {
             </div>
             <div className={styles.tradingAppImgContainer}>
                 <div className={styles.tradingAppImg}>
-                    <Image src="/img/trading-app.png" alt="" width={1342} height={823} />
+                    <Image quality={90} src="/img/trading-app.png" alt="" width={1342} height={823} />
                 </div>
             </div>
         </div>

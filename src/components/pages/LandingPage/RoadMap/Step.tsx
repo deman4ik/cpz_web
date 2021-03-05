@@ -79,7 +79,7 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
                         className={`${styles.circleCheckActive} ${
                             isActiveCheck ? styles.circleCheck : styles.circleUnCheck
                         }`}>
-                        <Image src="/img/roadmap-check.png" alt="" width={37} height={37} />
+                        <Image quality={90} src="/img/roadmap-check.png" alt="" width={37} height={37} />
                     </div>
                 )}
                 <div className={getCircleCloud().join(" ")}>

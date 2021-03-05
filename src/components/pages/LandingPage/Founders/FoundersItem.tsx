@@ -7,7 +7,7 @@ export const FoundersItem = ({ item }) => {
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
-                    <Image src={`/img/avatars/${item.avatar}`} alt={item.name} width={100} height={100} />
+                    <Image quality={90} src={`/img/avatars/${item.avatar}`} alt={item.name} width={100} height={100} />
                     <p className={styles.colTitle}>{item.name}</p>
                     <p className={styles.colPosition}>{item.position}</p>
                 </div>

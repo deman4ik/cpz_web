@@ -26,7 +26,7 @@ const _NavBar: React.FC<Props> = ({ activeTab, fullSize = false }) => {
             <div className={styles.navBarContainer}>
                 <div className={styles.logoWrapper}>
                     <div className={`${styles.logo}`}>
-                        <Image src="/img/logo-accent.png" alt="" width={72} height={71} />
+                        <Image quality={90} src="/img/logo-accent.png" alt="" width={72} height={71} />
                     </div>
                 </div>
                 <div className={styles.itemGroup}>

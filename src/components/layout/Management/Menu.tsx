@@ -43,7 +43,7 @@ const _Menu: React.FC<Props> = ({ activeTab, toggleMenu, isOpen }) => {
                     <MenuButton onClick={toggleMenu} />
                     <div className={styles.logoWrapper}>
                         <div className={`${styles.logo}`}>
-                            <Image src="/img/logo-accent.png" alt="" width={72} height={71} />
+                            <Image quality={90} src="/img/logo-accent.png" alt="" width={72} height={71} />
                         </div>
                     </div>
                 </div>

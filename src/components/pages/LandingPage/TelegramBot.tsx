@@ -14,7 +14,7 @@ const _TelegramBot: React.FC = () => {
         <div className={styles.free}>
             <div className={styles.row}>
                 <div className={styles.telegramBotImg}>
-                    <Image src="/img/phone-img.png" alt="" width={357} height={658} />
+                    <Image quality={90} src="/img/phone-img.png" alt="" width={357} height={658} />
                 </div>
             </div>
             <div className={styles.row}>

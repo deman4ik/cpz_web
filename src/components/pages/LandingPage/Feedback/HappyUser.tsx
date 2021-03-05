@@ -17,7 +17,7 @@ export const HappyUser = ({ item }): any => {
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
-                    <Image src={`/img/avatars/${item.avatar}`} alt={item.name} width={70} height={70} />
+                    <Image quality={90} src={`/img/avatars/${item.avatar}`} alt={item.name} width={70} height={70} />
                     <p className={styles.colTitle}>{item.name}</p>
                 </div>
                 <p className={styles.colText}>

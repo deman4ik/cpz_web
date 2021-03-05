@@ -52,7 +52,7 @@ export const _Caption: React.FC = () => {
                         </div>
                         <div className={styles.logoWrapper}>
                             <div className={styles.bigLogo}>
-                                <Image src="/img/big-logo.png" alt="" width={621} height={592} />
+                                <Image quality={90} priority src="/img/big-logo.png" alt="" width={621} height={592} />
                             </div>
                         </div>
                     </div>
