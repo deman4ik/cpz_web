@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import styles from "./HappyUser.module.css";
 
 export const HappyUser = ({ item }): any => {
@@ -16,7 +17,7 @@ export const HappyUser = ({ item }): any => {
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
-                    <img src={item.avatar} alt={item.name} />
+                    <Image src={`/img/avatars/${item.avatar}`} alt={item.name} width={70} height={70} />
                     <p className={styles.colTitle}>{item.name}</p>
                 </div>
                 <p className={styles.colText}>

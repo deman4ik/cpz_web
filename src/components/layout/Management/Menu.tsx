@@ -1,7 +1,6 @@
 import React, { memo, useRef, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
-
-import logo from "assets/img/logo-accent.png";
 import { NavItem } from "./NavItem";
 
 import { MenuButton, menuItems } from "./constants";
@@ -43,7 +42,9 @@ const _Menu: React.FC<Props> = ({ activeTab, toggleMenu, isOpen }) => {
                 <div className={styles.menuHeader}>
                     <MenuButton onClick={toggleMenu} />
                     <div className={styles.logoWrapper}>
-                        <img className={`${styles.logo}`} src={logo} alt="" />
+                        <div className={`${styles.logo}`}>
+                            <Image src="/img/logo-accent.png" alt="" width={72} height={71} />
+                        </div>
                     </div>
                 </div>
                 {menuItems.map((item) => (

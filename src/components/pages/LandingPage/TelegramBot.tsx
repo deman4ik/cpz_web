@@ -1,7 +1,6 @@
 import React, { useRef, memo } from "react";
-
+import Image from "next/image";
 import { PrimaryButton } from "components/basic";
-import phoneImg from "assets/img/phone-img.png";
 import { CircleIcon } from "assets/icons/svg";
 import { useAnchor } from "./helpers";
 import styles from "./TradingApp.module.css";
@@ -14,7 +13,9 @@ const _TelegramBot: React.FC = () => {
     return (
         <div className={styles.free}>
             <div className={styles.row}>
-                <img src={phoneImg} className={styles.telegramBotImg} alt="" />
+                <div className={styles.telegramBotImg}>
+                    <Image src="/img/phone-img.png" alt="" width={357} height={658} />
+                </div>
             </div>
             <div className={styles.row}>
                 <div className={styles.robotsSteps}>

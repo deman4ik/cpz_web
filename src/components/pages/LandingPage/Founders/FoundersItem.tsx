@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styles from "./Founders.module.css";
 
 export const FoundersItem = ({ item }) => {
@@ -6,7 +7,7 @@ export const FoundersItem = ({ item }) => {
         <div className={styles.row}>
             <div className={styles.col}>
                 <div className={styles.colBody}>
-                    <img src={item.avatar} alt={item.name} />
+                    <Image src={`/img/avatars/${item.avatar}`} alt={item.name} width={100} height={100} />
                     <p className={styles.colTitle}>{item.name}</p>
                     <p className={styles.colPosition}>{item.position}</p>
                 </div>

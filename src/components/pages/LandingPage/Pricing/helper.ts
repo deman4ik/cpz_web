@@ -1,10 +1,6 @@
-import planetGrey from "assets/img/planets/planet-grey.png";
-import planetGreen from "assets/img/planets/planet-green.png";
-import planetSky from "assets/img/planets/planet-sky.png";
-
 export const pricingContent = [
     {
-        icon: planetGreen,
+        icon: "planet-green.png",
         iconColors: { colorFrom: "purple", colorTo: "pink" },
         name: "Free plan",
         text: `Manual trading
@@ -23,7 +19,7 @@ export const pricingContent = [
         href: "/auth/login"
     },
     {
-        icon: planetSky,
+        icon: "planet-sky.png",
         iconColors: { colorFrom: "#979797", colorTo: "#E5E5E5" },
         name: "Trader plan",
         text: `Fully automated trading
@@ -45,7 +41,7 @@ export const pricingContent = [
         highlite: true
     },
     {
-        icon: planetGrey,
+        icon: "planet-grey.png",
         iconColors: { colorFrom: "#74C2FB", colorTo: "#248BD6" },
         name: "The investor plan",
         text: `Portfolio management

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import dynamic from "next/dynamic";
-import BigLogo from "assets/img/big-logo.png";
 import { PrimaryButton } from "components/basic";
 import { Header } from "components/layout";
 import styles from "./index.module.css";
@@ -51,7 +51,9 @@ export const _Caption: React.FC = () => {
                             </div>
                         </div>
                         <div className={styles.logoWrapper}>
-                            <img className={styles.bigLogo} src={BigLogo} alt="" />
+                            <div className={styles.bigLogo}>
+                                <Image src="/img/big-logo.png" alt="" width={621} height={592} />
+                            </div>
                         </div>
                     </div>
                 </div>
