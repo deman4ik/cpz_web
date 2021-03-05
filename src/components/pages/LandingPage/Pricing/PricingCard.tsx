@@ -13,7 +13,13 @@ export const _PricingCard = ({ card, currentPlan, basePrice, buttonName }): any 
             <div className={`${styles.col} ${card.highlite && styles.colHighliteMore}`}>
                 <div className={styles.colBody}>
                     <div className={styles.iconWrapper}>
-                        <Image src={`/img/planets/${card.icon}`} alt={card.card} width={197} height={110} />
+                        <Image
+                            quality={90}
+                            src={`/img/planets/${card.icon}`}
+                            alt={card.card}
+                            width={197}
+                            height={110}
+                        />
                     </div>
                     <div className={styles.colTitle}>{card.name}</div>
                     <div
