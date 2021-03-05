@@ -84,8 +84,9 @@
 
 @media (max-width: 420px) {
 	.tableRow {
-		max-width: 290px;
+		max-width: none;
 		margin-left: 0;
+		padding-left: 38px;
 	}
 }
 
