@@ -50,6 +50,7 @@ export const formatData = ({ users }: { users: any }) => {
         defineProperty(row, "user_signals", user.user_signals_aggregate.aggregate.count);
         defineProperty(row, "user_robots", user.user_robots_aggregate.aggregate.count);
         defineProperty(row, "user_api_keys", user.user_exchange_accs_aggregate.aggregate.count);
+        defineProperty(row, "user_subs", user.user_subs_aggregate.aggregate.count);
         return row;
     });
 };

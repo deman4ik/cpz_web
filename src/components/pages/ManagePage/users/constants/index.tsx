@@ -90,6 +90,12 @@ export const USERS_TABLE_COLUMNS: ColumnsArraySchema = [
                 accessor: "user_api_keys",
                 width: 85,
                 fieldSchema: { field: "user_exchange_accs_aggregate", subfield: "count" }
+            },
+            {
+                Header: "Active Subs",
+                accessor: "user_subs",
+                width: 85,
+                fieldSchema: { field: "user_subs_aggregate", subfield: "count" }
             }
         ]
     },
