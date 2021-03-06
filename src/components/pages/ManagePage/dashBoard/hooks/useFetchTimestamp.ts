@@ -40,10 +40,10 @@ const fetchPeriods = (periodsArray: Array<periodInteface>) => {
 const useFetchTimestamp = (): Array<dataInterface> | null => {
     const now = dayjs.utc(); // current date
     /*Timestamps periods*/
-    const today = { name: "today", period: now.format(format) };
-    const dayAgo = { name: "dayAgo", period: now.subtract(1, "day").format(format) };
-    const weekAgo = { name: "weekAgo", period: now.subtract(7, "day").format(format) };
-    const monthAgo = { name: "monthAgo", period: now.subtract(1, "month").format(format) };
+    const today = { name: "today", period: now.startOf("day").format(format) };
+    const dayAgo = { name: "dayAgo", period: now.startOf("day").add(-1, "day").format(format) };
+    const weekAgo = { name: "weekAgo", period: now.startOf("week").format(format) };
+    const monthAgo = { name: "monthAgo", period: now.startOf("month").format(format) };
     const periodsArray = [today, dayAgo, weekAgo, monthAgo];
 
     const fetchedPeriods = fetchPeriods(periodsArray);
