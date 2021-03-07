@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import isoWeek from "dayjs/plugin/isoWeek";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import toObject from "dayjs/plugin/toObject";
 
 dayjs.extend(utc);
+dayjs.extend(isoWeek);
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 dayjs.extend(toObject);
