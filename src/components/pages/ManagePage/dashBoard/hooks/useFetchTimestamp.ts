@@ -42,7 +42,7 @@ const useFetchTimestamp = (): Array<dataInterface> | null => {
     /*Timestamps periods*/
     const today = { name: "today", period: now.startOf("day").format(format) };
     const dayAgo = { name: "dayAgo", period: now.startOf("day").add(-1, "day").format(format) };
-    const weekAgo = { name: "weekAgo", period: now.startOf("week").format(format) };
+    const weekAgo = { name: "weekAgo", period: now.startOf("isoWeek").format(format) };
     const monthAgo = { name: "monthAgo", period: now.startOf("month").format(format) };
     const periodsArray = [today, dayAgo, weekAgo, monthAgo];
 
