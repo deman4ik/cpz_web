@@ -1,10 +1,7 @@
 import React, { memo } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
-
 import { NavItem } from "./NavItem";
-
-import logoAccent from "assets/img/logo-accent.png";
-
 import { MainMenuItemProps } from "../types";
 import { PageType } from "config/types";
 import { TELEGRAM_COMMUNITY_URL } from "config/constants";
@@ -42,7 +39,9 @@ const _NavBar: React.FC<Props> = ({ activeTab }) => {
     return (
         <div className={styles.navBar}>
             <div onClick={toHomePage} title="Go to home page">
-                <img className={`${styles.logo} ${styles.bigLogo}`} src={logoAccent} alt="" />
+                <div className={`${styles.logo} ${styles.bigLogo}`}>
+                    <Image quality={90} src="/img/logo-accent.png" alt="" width={72} height={71} />
+                </div>
             </div>
             <div className={styles.container}>
                 {mainItems.map((item) => (

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-
+import Image from "next/image";
 import { descriptionRobots, descriptionFirstLine } from "../helpers";
 import styles from "./DescriptionView.module.css";
 import landing_styles from "../index.module.css";
@@ -11,7 +11,9 @@ const _DescriptionView: React.FC = () => (
                 {descriptionFirstLine.map((item, idx) => (
                     <div className={landing_styles.robotsCol} key={idx}>
                         <div className={`${styles.icon} ${styles.heightIcon}`}>
-                            <img style={item.imgStyle} src={`/img/${item.imgSrc}.png`} alt="" />
+                            <div style={item.imgStyle}>
+                                <Image quality={90} src={`/img/${item.imgSrc}.png`} alt="" {...item.imgStyle} />
+                            </div>
                         </div>
                         <h3 className={styles.title}>{item.title}</h3>
                         <div className={landing_styles.robotsColText}>{item.text}</div>
@@ -22,7 +24,9 @@ const _DescriptionView: React.FC = () => (
                 {descriptionRobots.map((item, idx) => (
                     <div key={idx} className={landing_styles.robotsCol}>
                         <div className={`${styles.icon} ${styles.heightMiniIcon}`}>
-                            <img style={item.imgStyle} src={`/img/robots-icon-${idx + 1}.png`} alt="" />
+                            <div style={item.imgStyle}>
+                                <Image quality={90} src={`/img/robots-icon-${idx + 1}.png`} alt="" {...item.imgStyle} />
+                            </div>
                         </div>
                         <h3 className={styles.title}>{item.title}</h3>
                         <div className={landing_styles.robotsColText}>{item.text}</div>

@@ -39,15 +39,15 @@ export const toolTipTemplate = (data: ToolTip): string => `
     <span style="color: ${white}">: ${roundFormat(data.volume)}</span>
   </div>`;
 
-export const toolTipTemplateArea = (data: ToolTipArea): string => `
-  <div>    
-    <span style="color: ${white}">${dayjs(data.time * 1000)
-    .utc()
-    .format("DD MMM YYYY HH:mm")}</span>
-  </div>
+export const toolTipTemplateArea = (data: ToolTipArea): string => `  
   <div>
-    <span style="color: ${white}">${roundFormat(data.value)} $</span>
-  </div>`;
+  <p style="color: ${white}; margin: 0 0 7px">Profit</p>
+    <p style="color: ${white}; margin: 0 0 7px">${roundFormat(data.value)} $</p>
+    <p style="color: ${white}; margin: 0">${dayjs(data.time * 1000)
+    .utc()
+    .format("DD MMM YYYY HH:mm")}</p>
+  </div>
+  `;
 
 export const toolTipArrowTemplate = (data: ToolTipArrow): string => `
   <div>    

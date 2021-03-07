@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 import styles from "./Step.module.css";
 import { StepProps } from "../types";
 
@@ -75,13 +75,12 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
                 {isFuture ? (
                     <div className={styles.circleFuture} />
                 ) : (
-                    <img
+                    <div
                         className={`${styles.circleCheckActive} ${
                             isActiveCheck ? styles.circleCheck : styles.circleUnCheck
-                        }`}
-                        src="/img/roadmap-check.png"
-                        alt=""
-                    />
+                        }`}>
+                        <Image quality={90} src="/img/roadmap-check.png" alt="" width={37} height={37} />
+                    </div>
                 )}
                 <div className={getCircleCloud().join(" ")}>
                     <img className={getTriangleStyle().join(" ")} src={getTringleImg()} alt="" />

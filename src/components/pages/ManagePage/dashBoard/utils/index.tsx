@@ -15,7 +15,8 @@ const PERIODS_TEXTS = {
 const TOTAL_USERS_TITLES = {
     usersTotal: "Total",
     usersWithRobots: "With Robots",
-    usersWithSignals: "With Signals"
+    usersWithSignals: "With Signals",
+    usersWithSubs: "With Subs"
 };
 
 /**

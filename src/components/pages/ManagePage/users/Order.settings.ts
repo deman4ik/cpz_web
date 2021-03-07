@@ -9,6 +9,8 @@ export const SORT_TYPES_LIST: Array<SortType> = [
     { value: "user_signals_down", label: "User signals ↓" },
     { value: "user_ex_acc_up", label: "User keys ↑" },
     { value: "user_ex_acc_down", label: "User keys ↓" },
+    { value: "user_subs_up", label: "User subs ↑" },
+    { value: "user_subs_down", label: "User subs ↓" },
     { value: "created_at_up", label: "User date ↑" },
     { value: "created_at_down", label: "User date ↓" }
 ];
@@ -18,8 +20,8 @@ export const SORT_METHODS: SortMethodType = {
     user_robots_down: { user_robots_aggregate: { count: "desc" } },
     user_signals_up: { user_signals_aggregate: { count: "asc" } },
     user_signals_down: { user_signals_aggregate: { count: "desc" } },
-    user_ex_acc_up: { user_exchange_accs_aggregate: { count: "asc" } },
-    user_ex_acc_down: { user_exchange_accs_aggregate: { count: "desc" } },
+    user_subs_up: { user_subs_aggregate: { count: "asc" } },
+    user_subs_down: { user_subs_aggregate: { count: "desc" } },
     created_at_up: { created_at: { count: "asc" } },
     created_down: { created_at: { count: "desc" } }
 };
@@ -38,7 +40,8 @@ export const USERS_FILTERS_VARIANTS: any = {
     notActive: { status: { _eq: 0 } },
     robots: { user_robots: { equity: { _is_null: false } } },
     signals: { user_signals: { equity: { _is_null: false } } },
-    keys: { user_exchange_accs: { exchange: { _gt: "0" } } }
+    keys: { user_exchange_accs: { exchange: { _gt: "0" } } },
+    subs: { user_subs: { status: { _in: ["trial", "active"] } } }
 };
 export const USERS_FILTERS: filtersProps = {
     contacts: {
@@ -88,6 +91,11 @@ export const USERS_FILTERS: filtersProps = {
                 name: "With Keys",
                 active: false,
                 filterValue: USERS_FILTERS_VARIANTS.keys
+            },
+            {
+                name: "With Subs",
+                active: false,
+                filterValue: USERS_FILTERS_VARIANTS.subs
             }
         ]
     }

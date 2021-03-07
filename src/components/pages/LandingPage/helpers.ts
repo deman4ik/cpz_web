@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo } from "react";
+import { useEffect } from "react";
 import { StepProps, TradingStepType, DescriptionRobotsType, DescriptionFirstLineType } from "./types";
 import { DOCS_URL, TELEGRAM_COMMUNITY_URL, color } from "config/constants";
 

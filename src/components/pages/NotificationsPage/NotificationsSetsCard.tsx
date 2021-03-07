@@ -174,7 +174,7 @@ export const signalAlertSet = (item, onClick) => {
                     <div className={styles.textAccentCard}>Price</div>
                     <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
                 </div>
-                <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                <div className={styles.colRobot}>
                     <div className={styles.textAccentCard}>Amount</div>
                     <div className={styles.textMessageCard}>{item.data.volume}</div>
                 </div>
@@ -217,7 +217,7 @@ export const signalTradeSet = (item, onClick) => {
         <div className={styles.rowCard}>
             {actionOpen(item.data.action) ? (
                 <>
-                    <div className={styles.textMessageCard}>Signal Trade1&nbsp;</div>
+                    <div className={styles.textMessageCard}>Signal Trade&nbsp;</div>
                     <div className={styles.row} style={{ justifyContent: "flex-start" }}>
                         <div className={[styles.textAccentCard, styles.cursor].join(" ")} onClick={onClick}>
                             {item.data.robotCode}&nbsp;
@@ -225,7 +225,9 @@ export const signalTradeSet = (item, onClick) => {
                         <div className={styles.textMessageCard}>{item.data.code}</div>
                     </div>
                     <div className={styles.alertRow}>
-                        <div className={styles.colRobot}>
+                        <div
+                            className={styles.colRobot}
+                            style={{ ...colorDirection(item.data.action), flexBasis: "100%", marginBottom: 5 }}>
                             <div className={styles.textAccentCard}>Entry</div>
                             <div className={styles.textMessageCard} style={colorDirection(item.data.action)}>
                                 {capitalize(item.data.action)}
@@ -235,7 +237,7 @@ export const signalTradeSet = (item, onClick) => {
                             <div className={styles.textAccentCard}>Price</div>
                             <div className={styles.textMessageCard}>{`${formatMoney(item.data.price)} $`}</div>
                         </div>
-                        <div className={styles.colRobot} style={{ marginTop: 5 }}>
+                        <div className={styles.colRobot}>
                             <div className={styles.textAccentCard}>Amount</div>
                             <div className={styles.textMessageCard}>{item.data.volume}</div>
                         </div>

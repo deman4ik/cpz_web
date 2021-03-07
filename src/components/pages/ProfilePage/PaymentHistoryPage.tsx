@@ -62,7 +62,7 @@ const _PaymentHistoryPage: FC = (): any => {
                             <NothingComponent buttonSize="normal" buttonStyles={{ width: "200px", margin: "auto" }} />
                         </div>
                     ) : (
-                        <div className={styles.wrapper}>
+                        <div className={styles.accordionSurface}>
                             <div
                                 className={mobile ? styles.exchangeContainerMobile : styles.tableGridRow}
                                 style={{ padding: "0 20px" }}

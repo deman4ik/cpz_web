@@ -10,9 +10,9 @@ export const menuItems: MainMenuItemProps[] = [
     { label: PageType.manageRobots, icon: "manageRobots", route: "manage/robots" },
     { label: PageType.manageBacktests, icon: "backBurger", route: "manage/backtests" },
     { label: PageType.userSignals, icon: "userSignals", route: "manage/user_signals" },
-    { label: PageType.deadLetters, icon: "deadLetter", route: "manage/dead_letters" },
     { label: PageType.userRobots, icon: "userRobots", route: "manage/user_robots" },
     { label: PageType.errors, icon: "error", route: "manage/errors" },
+    { label: PageType.deadLetters, icon: "deadLetter", route: "manage/dead_letters" },
     { label: PageType.managementSupport, icon: "managementSupport", route: "manage/support" }
 ];
 

@@ -18,6 +18,11 @@ export const USERS_BY_ROBOTS_AGGREGATE = gql`
                 count
             }
         }
+        usersWithSubs: user_subs_aggregate(where: { status: { _in: ["trial", "started"] } }, distinct_on: [user_id]) {
+            aggregate {
+                count
+            }
+        }
     }
 `;
 
@@ -64,6 +69,11 @@ export const ALL_USERS = gql`
                 }
             }
             user_exchange_accs_aggregate {
+                aggregate {
+                    count
+                }
+            }
+            user_subs_aggregate(where: { status: { _in: ["trial", "started"] } }) {
                 aggregate {
                     count
                 }
