@@ -10,7 +10,7 @@ import {
     translateValue,
     validateVolume
 } from "components/ui/Modals/helpers";
-import { volumeTypeOptions } from "../constants";
+import { volumeTypeOptions, volumeTypeOptionsMap } from "../constants";
 import { LimitsType, RobotDataType } from "../types";
 import { LOGIN } from "graphql/auth/mutations";
 
@@ -23,7 +23,8 @@ interface UseSubscribeModalProps {
 const INITIAL_VALUES = { balancePercent: "", currencyDynamic: "", assetStatic: "", assetDynamicDelta: "" };
 
 export const useSubscribeModal = ({ limits, inputs, robotData }: UseSubscribeModalProps): any => {
-    const DEFAULT_VOLUME_TYPE = robotData?.robot.subs.settings.volumeType || volumeTypeOptions[0].value;
+    const DEFAULT_VOLUME_TYPE =
+        volumeTypeOptionsMap[robotData?.robot.subs.settings.volumeType] || volumeTypeOptions[0].value;
 
     const [volumeType, setVolumeType] = useState<InputTypes>(DEFAULT_VOLUME_TYPE);
     const getPrecision = () => (limits && limits.precision) || DEFAULT_PRECISION;
