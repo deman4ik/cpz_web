@@ -25,7 +25,7 @@ export const _NotificationsItem: React.FC<Props> = ({ item, routeNotification })
                 {showMessage(item, handleOnPressNotification)}
                 {item?.type === "message.support-reply" && (
                     <Link href="/support">
-                        <a className={styles.support_link} href="/support">
+                        <a className={styles.support_link} href="/support" target="_blank">
                             Reply
                         </a>
                     </Link>

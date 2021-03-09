@@ -123,7 +123,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
             const item = subscribeRef.current.sortedData.find((el) => el.time === param.time);
             if (!item) return;
 
-            const { y, x } = param.point;
             setStylesToRef(toolTipRef, { display: "block" });
 
             if (type === ChartType.candle) {
@@ -137,16 +136,26 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
                 toolTipRef.current.innerHTML = toolTipTemplateArea(item);
             }
 
-            let left = x + toolTipMargin;
-            if (left > size.width - toolTipWidth) {
-                left = x - toolTipMargin - toolTipWidth;
+            const price = param.seriesPrices.get(chart.series);
+            const coordinate = chart.series.priceToCoordinate(price);
+            let toolTipCoordinateX = param.point.x - 0;
+            if (coordinate === null) {
+                return;
             }
 
-            let top = y + toolTipMargin;
-            if (top > size.height - toolTipHeight) {
-                top = y - toolTipHeight - toolTipMargin;
-            }
-            setStylesToRef(toolTipRef, { left: `${left}px`, top: `${top}px` });
+            toolTipCoordinateX = Math.max(0, Math.min(chartRef.current.clientWidth - toolTipWidth, toolTipCoordinateX));
+            const toolTipCoordinateY =
+                coordinate - toolTipHeight - toolTipMargin > 0
+                    ? coordinate - toolTipHeight - toolTipMargin
+                    : Math.max(
+                          0,
+                          Math.min(
+                              chartRef.current.clientHeight - toolTipHeight - toolTipMargin,
+                              coordinate + toolTipMargin
+                          )
+                      );
+
+            setStylesToRef(toolTipRef, { left: `${toolTipCoordinateX}px`, top: `${toolTipCoordinateY}px` });
         },
         [size.width, size.height]
     );
@@ -165,7 +174,6 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
     const handleVisibleLogicalRangeChanged = (newVisibleLogicalRange) => {
         const barsInfo = chart.series.barsInLogicalRange(newVisibleLogicalRange);
         if (!loading && barsInfo !== null && barsInfo.barsBefore < 50) {
-            setStylesToRef(chartRef, { cursor: "wait" });
             loadDataFromSource(barsInfo.barsAfter);
         }
     };
