@@ -83,7 +83,6 @@ export const Step: React.FC<Props> = ({ step, idx, isVertical }) => {
                     </div>
                 )}
                 <div className={getCircleCloud().join(" ")}>
-                    {console.log(getTringleImg())}
                     <img className={getTriangleStyle().join(" ")} src={getTringleImg()} alt="" />
                     <div className={styles.circleBody}>
                         <div className={`${styles.circleTitle}${isFuture ? ` ${styles.isFutureText}` : ""}`}>
