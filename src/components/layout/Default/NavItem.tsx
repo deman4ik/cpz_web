@@ -50,7 +50,7 @@ const _NavItem: React.FC<Props> = ({ item, active }) => {
         <div className={styles.itemWrapper}>
             {item && item.route ? (
                 <Link href={path}>
-                    <a target={isTargetBlank && "_blank"}>
+                    <a target={isTargetBlank ? "_blank" : "_self"}>
                         <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
                             <SpecificIcon
                                 color={active ? "white" : "rgba(255, 255, 255, 0.68)"}
