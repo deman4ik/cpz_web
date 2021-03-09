@@ -22,7 +22,10 @@ const _Footer: React.FC = () => {
                     {footerLinks.map((item) => (
                         <Fragment key={item.name}>
                             <Link href={item.href}>
-                                <a className={styles.navItem} onClick={() => hahdleOnClick(item.href)}>
+                                <a
+                                    target={item.name === "Support" ? "_blank" : "_self"}
+                                    className={styles.navItem}
+                                    onClick={() => hahdleOnClick(item.href)}>
                                     <span className={styles.navItemText}>{item.name}</span>
                                 </a>
                             </Link>
