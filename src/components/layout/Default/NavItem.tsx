@@ -44,12 +44,13 @@ const _NavItem: React.FC<Props> = ({ item, active }) => {
     const SpecificIcon = components[item.icon];
 
     const path = item.route ? `/${item.route}` : item.href;
+    const isTargetBlank = item.route === "support";
 
     return (
         <div className={styles.itemWrapper}>
             {item && item.route ? (
                 <Link href={path}>
-                    <a>
+                    <a target={isTargetBlank && "_blank"}>
                         <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
                             <SpecificIcon
                                 color={active ? "white" : "rgba(255, 255, 255, 0.68)"}
@@ -64,7 +65,7 @@ const _NavItem: React.FC<Props> = ({ item, active }) => {
                     </a>
                 </Link>
             ) : (
-                <a href={path}>
+                <a href={path} target="_blank" rel="noreferrer">
                     <div className={`${styles.item}${active ? ` ${styles.activeItem}` : ""}`}>
                         <SpecificIcon color={active ? "white" : "rgba(255, 255, 255, 0.68)"} width={24} height={24} />
                         {item.label === PageType.notifications && <NotificationCounter />}
