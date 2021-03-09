@@ -45,7 +45,7 @@ export const footerIcons = [
         icon: InstagramIcon
     },
     {
-        href: TELEGRAM_COMMUNITY_URL,
+        href: "https://t.me/cryptuoso",
         icon: TelegramIcon
     }
 ];
