@@ -298,6 +298,7 @@ const _CreateRobotModal: React.FC<Props> = ({ onClose, code, width }) => {
                         robotName={robotData ? robotData.robot.name : null}
                         handleOnStart={handleOnStart}
                         onClose={handleOnClose}
+                        formError={formError}
                     />
                 )}
             </>
