@@ -1,15 +1,17 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useContext, useMemo, useState } from "react";
 import styles from "components/pages/StatsPage/index.module.css";
+import { AuthContext } from "providers/authContext";
 import { StatsPageFilters } from "components/pages/StatsPage/StatsPageFilters";
 import { Button, Modal } from "components/basic";
-import { useLazyQuery } from "@apollo/client";
-import { FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS } from "graphql/signals/queries";
+import { gql, useLazyQuery } from "@apollo/client";
+import { USER_AGGR_STATS_FILTERS } from "graphql/signals/queries";
 import { getLabelCombinations } from "components/pages/StatsPage/helpers";
 import { CheckedFilters } from "components/pages/StatsPage/types";
 
 interface StatsFiltersModalProps {
     isOpen: boolean;
     title: string;
+    type: string;
     onClose: () => void;
     selectedFilter?: CheckedFilters;
     checkedFilters: CheckedFilters;
@@ -21,17 +23,50 @@ const emptyFilters = { exchange: [], asset: [] };
 export const StatsFiltersModal: FC<StatsFiltersModalProps> = ({
     isOpen,
     title,
+    type,
     onClose,
     checkedFilters,
     confirmSelectedFilters,
     checkFilterButton,
     clearFilters
 }) => {
+    const {
+        authState: { user_id }
+    } = useContext(AuthContext);
     const [skipFilterQuery, setSkipFilterQuery] = useState(false);
 
     const getOppositeFilterName = (filterName: string) => (filterName === "asset" ? "exchange" : "asset");
 
-    const [getData, { data, loading }] = useLazyQuery(FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS);
+    let query;
+    let opts = {};
+    if (type === "signal" || type === "userRobot") {
+        query = USER_AGGR_STATS_FILTERS;
+        opts = {
+            variables: {
+                type,
+                user_id
+            }
+        };
+    } else if (type === "manageRobotsStats") {
+        query = gql`
+            query get_robot_aggr_stats_filters {
+                filters: robot_aggr_stats(where: { exchange: { _neq: "-" }, asset: { _neq: "-" } }) {
+                    asset
+                    exchange
+                }
+            }
+        `;
+    } else if (type === "manageUserRobotsStats") {
+        query = gql`
+            query get_user_robot_aggr_stats_filters {
+                filters: user_robot_aggr_stats(where: { exchange: { _neq: "-" }, asset: { _neq: "-" } }) {
+                    asset
+                    exchange
+                }
+            }
+        `;
+    }
+    const [getData, { data, loading }] = useLazyQuery(query, opts);
 
     useEffect(() => {
         if (getData) {

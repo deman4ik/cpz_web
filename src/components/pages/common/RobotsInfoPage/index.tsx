@@ -11,7 +11,7 @@ import { POLL_INTERVAL, SCREEN_TYPE } from "config/constants";
 import { AuthContext } from "providers/authContext";
 import {
     AGGREGATED_OPEN_POSITIONS_FOR_SIGNLAS_BY_DIRECTION,
-    ALL_USER_ROBOTS_AGGR_STATS,
+    ALL_USER_AGGR_STATS,
     USER_SIGNALS
 } from "graphql/signals/queries";
 import { formatTradingRobots, formatSignalRobots } from "components/ui/SignalsRobots/helpers";
@@ -34,7 +34,7 @@ const RobotsPage: React.FC<Props> = ({ type }) => {
     } = useContext(AuthContext);
 
     // FOR TOTAL PERFORMANCE TAB
-    const { data: aggrData, loading: aggrDataLoading } = useQueryWithAuth(true, ALL_USER_ROBOTS_AGGR_STATS, {
+    const { data: aggrData, loading: aggrDataLoading } = useQueryWithAuth(true, ALL_USER_AGGR_STATS, {
         variables: { type: { _eq: queryParam[type] }, user_id },
         pollInterval: POLL_INTERVAL
     });

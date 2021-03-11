@@ -30,8 +30,8 @@ export const ManageRobotsStats: React.FC = () => {
     const { data, loading } = useQueryWithAuth(true, mapQueriesToRoutes[displayType], {
         variables: {
             limit: 1,
-            asset: asset ? { _eq: asset } : { _is_null: true },
-            exchange: exchange ? { _eq: exchange } : { _is_null: true }
+            asset: asset || "-",
+            exchange: exchange || "-"
         },
         pollInterval: POLL_INTERVAL
     });
@@ -59,6 +59,7 @@ export const ManageRobotsStats: React.FC = () => {
                 title={`Filter Total ${componentEntity} Performance`}
                 onClose={toggleFiltersVisibility}
                 selectedFilter={selectedFilter}
+                type={displayType}
                 {...restFilterProps}
             />
             <>
