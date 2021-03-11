@@ -5,7 +5,7 @@ import { ValueInput } from "components/ui/Modals/SubscribeModal/ValueInput";
 import { ErrorLine } from "components/common";
 import { MinimumAmount } from "components/ui/Modals/SubscribeModal/MinimumAmount";
 import { SelectVolumeType } from "components/ui/Modals/SubscribeModal/SelectVolumeType";
-import { InputMap, InputTypes, InputValues, Precision, volumes, VolumeTypeOption } from "components/ui/Modals/types";
+import { InputMap, InputTypes, InputValues, Precision, VolumeTypeOption } from "components/ui/Modals/types";
 import { MainInput } from "components/ui/Modals/SubscribeModal/MainInput";
 import { Delimiter } from "components/common/Delimiter";
 import { VolumeDescription } from "components/ui/Modals/SubscribeModal/VollumeDescription";
@@ -34,6 +34,7 @@ export interface SubscribeModalContentProps {
     inputValues: InputValues;
     validate: (type: InputTypes) => void;
     volumeTypeOptions: VolumeTypeOption[];
+    isEdit: boolean;
 }
 
 const SELECT_AMOUNT = "Select amount type and enter desired trading amount";
@@ -52,7 +53,8 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     inputValues,
     setInputValues,
     minAmounts,
-    volumeTypeOptions
+    volumeTypeOptions,
+    isEdit
 }) => {
     const { price, balance, maxPercentAmount } = parsedLimits;
 
@@ -83,15 +85,15 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     useEffect(() => {
         if (robotData && !isObjectEmpty(parsedLimits) && isObjectEmpty(inputValues)) {
             const { settings: robotSettings } = robotData?.robot.subs;
-            const { volumeType: robotType } = robotSettings;
+            const { volumeType: robotVolumeType } = robotSettings;
 
-            const robotValue = Object.values(robotSettings).reduce((accumulator, typeValue) => {
+            const robotVolumeValue = Object.values(robotSettings).reduce((accumulator, typeValue) => {
                 if (typeValue !== robotSettings.volumeType) accumulator[robotSettings.volumeType] = typeValue;
 
                 return accumulator;
             }, {});
 
-            onChange(robotType)(robotValue[robotType]);
+            onChange(robotVolumeType)(isEdit ? robotVolumeValue[robotVolumeType] : minAmounts[robotVolumeType]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);
