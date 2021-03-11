@@ -1,7 +1,7 @@
 import { capitalize, exchangeName } from "config/utils";
 
 const getLineName = (exchange: string | null, asset: string | null, type: string) =>
-    !exchange && !asset
+    exchange === "-" && asset === "-"
         ? ` Total ${type
               .split("_")
               .map((word) => capitalize(word))
@@ -18,14 +18,14 @@ const getAssetData = (stat, type) => {
         winRate,
         maxDrawdown,
         tradesCount,
-        path: `exchange=${exchange}&asset=${asset}`
+        path: `exchange=${exchange === "-" ? null : exchange}&asset=${asset === "-" ? null : asset}`
     };
 };
 
 export const formatStats = (stats, type) =>
     stats?.reduce(
         (acc, stat) =>
-            !stat.asset && !stat.exchange /*|| (stat.asset && stat.exchange)*/
+            stat.asset === "-" && stat.exchange === "-" /*|| (stat.asset && stat.exchange)*/
                 ? [...acc, getAssetData(stat, type)]
                 : acc,
         []

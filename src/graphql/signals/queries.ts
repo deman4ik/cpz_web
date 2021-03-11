@@ -83,17 +83,22 @@ export const SIGNAL_ROBOT_POSITIONS_AGGREGATE = gql`
     }
 `;
 
-export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
+export const USER_AGRR_STATS = gql`
     query get_user_signal_robot_stats_aggr(
-        $exchange: String_comparison_exp
-        $asset: String_comparison_exp
-        $type: String_comparison_exp
+        $exchange: String!
+        $asset: String!
+        $type: String!
         $user_id: uuid
         $limit: Int
     ) {
         stats: v_user_aggr_stats(
             limit: $limit
-            where: { type: $type, exchange: $exchange, asset: $asset, user_id: { _eq: $user_id } }
+            where: {
+                type: { _eq: $type }
+                exchange: { _eq: $exchange }
+                asset: { _eq: $asset }
+                user_id: { _eq: $user_id }
+            }
         ) {
             user_id
             statistics: full_stats
@@ -102,11 +107,12 @@ export const USER_SIGNAL_ROBOT_STATS_AGGREGATE = gql`
     }
 `;
 
-export const ALL_USER_ROBOTS_AGGR_STATS = gql`
-    query get_all_user_signal_robots_stats_aggr($type: String_comparison_exp, $user_id: uuid) {
+export const ALL_USER_AGGR_STATS = gql`
+    query get_all_user_stats_aggr($type: String_comparison_exp, $user_id: uuid) {
         stats: v_user_aggr_stats(
-            order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
-            where: { type: $type, user_id: { _eq: $user_id } }
+            where: { type: $type, user_id: { _eq: $user_id }, 
+            exchange: { _eq: "-" }, 
+            asset: { _eq: "-" } }
         ) {
             user_id
             id
@@ -119,7 +125,7 @@ export const ALL_USER_ROBOTS_AGGR_STATS = gql`
 
 export const ROBOTS_TOTAL_PERFORMANCE = gql`
     query robots_total_performance {
-        stats: v_robot_aggr_stats(order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]) {
+        stats: v_robot_aggr_stats(where: {exchange: { _eq: "-" }, asset: { _eq: "-" }}) {
             ${statsConfig}
             asset
             exchange
@@ -128,14 +134,10 @@ export const ROBOTS_TOTAL_PERFORMANCE = gql`
     }
 `;
 export const ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
-    query robots_total_performance_with_stats(
-        $limit: Int
-        $exchange: String_comparison_exp
-        $asset: String_comparison_exp
-    ) {
+    query robots_total_performance_with_stats($limit: Int, $exchange: String!, $asset: String!) {
         stats: v_robot_aggr_stats(
             limit: $limit
-            where: { exchange: $exchange, asset: $asset }
+            where: { exchange: { _eq: $exchange }, asset: { _eq: $asset } }
             order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
         ) {
             statistics: full_stats
@@ -149,7 +151,7 @@ export const ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
 
 export const USER_ROBOTS_TOTAL_PERFORMANCE = gql`
     query user_robots_total_performance {
-        stats: v_user_robot_aggr_stats(order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]) {
+        stats: v_user_robot_aggr_stats(where: {exchange: { _eq: "-" }, asset: { _eq: "-" }}) {
             ${statsConfig}
             asset
             exchange
@@ -159,14 +161,10 @@ export const USER_ROBOTS_TOTAL_PERFORMANCE = gql`
 `;
 
 export const USER_ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
-    query user_robots_total_performance_with_stats(
-        $limit: Int
-        $exchange: String_comparison_exp
-        $asset: String_comparison_exp
-    ) {
+    query user_robots_total_performance_with_stats($limit: Int, $exchange: String!, $asset: String!) {
         stats: v_user_robot_aggr_stats(
             limit: $limit
-            where: { exchange: $exchange, asset: $asset }
+            where: { exchange: { _eq: $exchange }, asset: { _eq: $asset } }
             order_by: [{ exchange: asc_nulls_first }, { asset: asc_nulls_first }]
         ) {
             statistics: full_stats
@@ -178,9 +176,11 @@ export const USER_ROBOTS_TOTAL_PERFORMANCE_WITH_STATS = gql`
     }
 `;
 
-export const FILTERS_FOR_AGGREGATED_USER_SIGNAL_ROBOTS_STATS = gql`
-    query get_aggr_stats_filters_for_user_robots($type: String_comparison_exp, $user_id: uuid) {
-        filters: user_aggr_stats(where: { type: $type, user_id: { _eq: $user_id } }) {
+export const USER_AGGR_STATS_FILTERS = gql`
+    query get_aggr_stats_filters_for_user_robots($type: String!, $user_id: uuid!) {
+        filters: user_aggr_stats(
+            where: { type: { _eq: $type }, user_id: { _eq: $user_id }, exchange: { _neq: "-" }, asset: { _neq: "-" } }
+        ) {
             asset
             exchange
         }
