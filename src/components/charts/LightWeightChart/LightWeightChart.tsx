@@ -136,6 +136,9 @@ export const _LightWeightChart: React.FC<PropsLighweightChart> = ({
                 toolTipRef.current.innerHTML = toolTipTemplateArea(item);
             }
 
+            if (chart.series === null) {
+                return;
+            }
             const price = param.seriesPrices.get(chart.series);
             const coordinate = chart.series.priceToCoordinate(price);
             let toolTipCoordinateX = param.point.x - 0;
