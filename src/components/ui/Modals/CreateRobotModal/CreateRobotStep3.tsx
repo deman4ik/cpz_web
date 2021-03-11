@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 
 import { Button } from "components/basic";
+import { ErrorLine } from "components/common";
 import { AlertIcon } from "assets/icons/svg";
 import { color } from "config/constants";
 import styles from "../index.module.css";
@@ -10,9 +11,10 @@ interface Props {
     robotName: string;
     handleOnStart?: () => void;
     onClose?: (changesMade?: boolean) => void;
+    formError: string;
 }
 
-const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose, enabled }) => (
+const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose, enabled, formError }) => (
     <>
         <div className={styles.step3}>
             <i className={styles.iconWrapper}>
@@ -22,6 +24,7 @@ const _CreateRobotStep3: React.FC<Props> = ({ robotName, handleOnStart, onClose,
             <div className={styles.bodyText}>
                 It is a realtime automated trading mode using your exchange account and you use it at your own risk!
             </div>
+            <ErrorLine formError={formError} style={{ margin: "20px 0 -50px" }} />
         </div>
         <div className={styles.btns}>
             <Button
