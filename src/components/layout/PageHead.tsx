@@ -115,6 +115,16 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                 />
             </>
         )}
+        {process.env.ENABLE_ANALYTICS === "development" ? null : (
+            <>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"cryptuoso",utcoffset:"0"}))};sessionStorage.setItem("_swa","1");`
+                    }}
+                />
+            </>
+        )}
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
