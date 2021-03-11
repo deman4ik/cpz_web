@@ -83,9 +83,15 @@ export const SubscribeModalContent: FC<SubscribeModalContentProps> = ({
     useEffect(() => {
         if (robotData && !isObjectEmpty(parsedLimits) && isObjectEmpty(inputValues)) {
             const { settings: robotSettings } = robotData?.robot.subs;
-            const { volumeType: robotVolumeType } = robotSettings;
+            const { volumeType: robotType } = robotSettings;
 
-            onChange(robotVolumeType)(minAmounts[robotVolumeType]);
+            const robotValue = Object.values(robotSettings).reduce((accumulator, typeValue) => {
+                if (typeValue !== robotSettings.volumeType) accumulator[robotSettings.volumeType] = typeValue;
+
+                return accumulator;
+            }, {});
+
+            onChange(robotType)(robotValue[robotType]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [robotData, parsedLimits]);
