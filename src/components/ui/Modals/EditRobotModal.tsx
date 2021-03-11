@@ -119,6 +119,7 @@ const _EditRobotModal: React.FC<Props> = ({ onClose, isOpen, title, setTitle, ty
                     inputs={inputs}
                     onKeyPress={onKeyPress}
                     enabled={enabled}
+                    isEdit
                 />
                 <div className={styles.btns}>
                     <Button
