@@ -145,6 +145,7 @@ const _SubscribeModal: React.FC<Props> = ({ actionType, setTitle, onClose, isOpe
                 onKeyPress={onKeyPress}
                 enabled={enabled}
                 formError={formError}
+                isEdit={actionType === "edit"}
             />
         </Modal>
     );
