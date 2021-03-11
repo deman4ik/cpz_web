@@ -3,7 +3,7 @@ import React, { useMemo, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { useFilters } from "hooks/useFilters";
-import { USER_SIGNAL_ROBOT_STATS_AGGREGATE } from "graphql/signals/queries";
+import { USER_AGRR_STATS } from "graphql/signals/queries";
 import { POLL_INTERVAL } from "config/constants";
 import { DefaultTemplate } from "components/layout";
 import { StatsPageButtonToolbar } from "./StatsPageButtonToolbar";
@@ -33,12 +33,12 @@ export const StatsPage: React.FC = () => {
     const { selectedFilter, ...restFilterProps } = useFilters(router.query);
     const { asset, exchange } = selectedFilter;
 
-    const { loading, data } = useQuery(USER_SIGNAL_ROBOT_STATS_AGGREGATE, {
+    const { loading, data } = useQuery(USER_AGRR_STATS, {
         variables: {
             limit: 1,
-            asset: asset ? { _eq: asset } : { _is_null: true },
-            exchange: exchange ? { _eq: exchange } : { _is_null: true },
-            type: { _eq: QueueTypes[displayType] },
+            asset: asset || "-",
+            exchange: exchange || "-",
+            type: QueueTypes[displayType],
             user_id
         },
         pollInterval: POLL_INTERVAL
@@ -65,6 +65,7 @@ export const StatsPage: React.FC = () => {
                 title={`Filter My Total ${capitalize(displayType)} Performance`}
                 onClose={toggleFiltersVisibility}
                 selectedFilter={selectedFilter}
+                type={QueueTypes[displayType]}
                 {...restFilterProps}
             />
             <>
