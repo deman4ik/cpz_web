@@ -1,6 +1,6 @@
 import React from "react";
-import { PasswordRecovered } from "components/pages/AuthPage/PasswordRecovered";
-import { withApollo } from "libs/hoc";
+import { PasswordRecovered } from "../../src/components/pages/AuthPage/PasswordRecovered";
+import { withApollo } from "../../src/libs/hoc";
 
 const Page = () => <PasswordRecovered />;
 

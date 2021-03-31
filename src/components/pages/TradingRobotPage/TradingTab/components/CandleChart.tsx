@@ -19,9 +19,9 @@ export const CandleChart: React.FC<Props> = ({ robot, width, userRobot, setIsCha
     const userRobotId = userRobot?.id;
     const authAndOwnedByUser = isAuth && userRobotId;
 
-    const { timeframe, id: robotId } = robot;
+    const { id: robotId } = robot;
 
-    const robotCandleQuery = candleQueries(timeframe, isAuth, authAndOwnedByUser).robot;
+    const robotCandleQuery = candleQueries(isAuth, authAndOwnedByUser).robot;
     const variables = authAndOwnedByUser ? { robotId: userRobotId || robotId, user_id } : { robotId };
 
     return (

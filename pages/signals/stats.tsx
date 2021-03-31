@@ -1,7 +1,7 @@
 import React from "react";
 
 import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
-import { StatsPage } from "components/pages/StatsPage";
+import { StatsPage } from "../../src/components/pages/StatsPage";
 
 const Page = () => <StatsPage />;
 

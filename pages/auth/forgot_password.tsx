@@ -1,6 +1,6 @@
 import React from "react";
-import { ForgotPassword } from "components/pages/AuthPage/ForgotPassword";
-import { withApollo } from "libs/hoc";
+import { ForgotPassword } from "../../src/components/pages/AuthPage/ForgotPassword";
+import { withApollo } from "../../src/libs/hoc";
 
 const Page = () => <ForgotPassword />;
 

@@ -1,7 +1,7 @@
 import React from "react";
-import { withApollo, withAuth, withDevice } from "libs/hoc";
+import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
 // components
-import { ManageErrors } from "components/pages/ManagePage";
+import { ManageErrors } from "../../src/components/pages/ManagePage";
 
 const Page = () => <ManageErrors />;
 

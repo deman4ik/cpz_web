@@ -2,13 +2,13 @@ import gql from "graphql-tag";
 import { DocumentNode } from "graphql";
 import { candles } from "graphql/robots/queries";
 
-function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
+function ROBOT_POSITION_CANDLE_SUB_FOR_USER() {
     return gql`
       subscription candles(
         $robotId: uuid!
         $user_id: uuid  
       ) {
-        candles: v_candles${timeframe}_user_positions(
+        candles: v_candles_user_positions(
           where: {
             user_robot_id: { _eq: $robotId }
             user_robot: { user_id: { _eq: $user_id } }    
@@ -21,12 +21,12 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe: number) {
     `;
 }
 
-function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
+function ROBOT_POSITION_CANDLE_SUB() {
     return gql`
       subscription candles(
         $robotId: uuid!
       ) {
-        candles: v_candles${timeframe}_positions(
+        candles: v_candles_positions(
           where: {
             robot_id: { _eq: $robotId }
           }
@@ -37,12 +37,13 @@ function ROBOT_POSITION_CANDLE_SUB(timeframe: number) {
       }
     `;
 }
-export function BACKTEST_POSITION_CANDLE_SUB(timeframe: number) {
+
+export function BACKTEST_POSITION_CANDLE_SUB() {
     return gql`
       subscription candles(
         $backtest_id: uuid!
       ) {
-        candles: v_candles${timeframe}_backtest_positions(
+        candles: v_candles_backtest_positions(
           where: {
             backtest_id: { _eq: $backtest_id }
           }
@@ -54,6 +55,6 @@ export function BACKTEST_POSITION_CANDLE_SUB(timeframe: number) {
     `;
 }
 
-export function buildRobotPositionCandleSubQuery(isAuth: boolean, timeframe: number): DocumentNode {
-    return isAuth ? ROBOT_POSITION_CANDLE_SUB_FOR_USER(timeframe) : ROBOT_POSITION_CANDLE_SUB(timeframe);
+export function buildRobotPositionCandleSubQuery(isAuth: boolean): DocumentNode {
+    return isAuth ? ROBOT_POSITION_CANDLE_SUB_FOR_USER() : ROBOT_POSITION_CANDLE_SUB();
 }
