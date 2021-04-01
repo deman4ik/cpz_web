@@ -14,6 +14,7 @@ function ROBOT_POSITION_CANDLE_SUB_FOR_USER() {
             user_robot: { user_id: { _eq: $user_id } }    
           }
           limit: 1
+          order_by: {candle: {timestamp: desc}}
         ) {
           ${candles}
         }
@@ -31,6 +32,7 @@ function ROBOT_POSITION_CANDLE_SUB() {
             robot_id: { _eq: $robotId }
           }
           limit: 1
+          order_by: {candle: {timestamp: desc}}
         ) {
           ${candles}
         }
@@ -48,6 +50,7 @@ export function BACKTEST_POSITION_CANDLE_SUB() {
             backtest_id: { _eq: $backtest_id }
           }
           limit: 1
+          order_by: {candle: {timestamp: desc}}
         ) {
           ${candles}
         }
