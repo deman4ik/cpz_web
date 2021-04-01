@@ -4,11 +4,7 @@ import { DocumentNode } from "graphql";
 function SIGNAL_POSITION_CANDLE_SUB_FOR_USER() {
     return gql`
         subscription candles($userSignalId: uuid!) {
-            candles: v_candles_user_signal_positions(
-                where: { user_signal: { id: { _eq: $userSignalId } } }
-                limit: 1
-                order_by: { candle: { timestamp: desc } }
-            ) {
+            candles: v_candles_user_signal_positions(where: { user_signal: { id: { _eq: $userSignalId } } }, limit: 1) {
                 candle {
                     id
                     time
@@ -28,11 +24,7 @@ function SIGNAL_POSITION_CANDLE_SUB_FOR_USER() {
 function SIGNAL_POSITION_CANDLE_SUB() {
     return gql`
         subscription candles($robotId: uuid!) {
-            candles: v_candles_positions(
-                where: { robot_id: { _eq: $robotId } }
-                limit: 1
-                order_by: { candle: { timestamp: desc } }
-            ) {
+            candles: v_candles_positions(where: { robot_id: { _eq: $robotId } }, limit: 1) {
                 candle {
                     id
                     time
