@@ -1,7 +1,7 @@
 import React from "react";
 
-import { withApollo, withAuth, withDevice } from "libs/hoc";
-import { ManageRobotsStats } from "components/pages/ManagePage/robotStats";
+import { withApollo, withAuth, withDevice } from "../../../src/libs/hoc";
+import { ManageRobotsStats } from "../../../src/components/pages/ManagePage/robotStats";
 
 const Page = () => <ManageRobotsStats />;
 

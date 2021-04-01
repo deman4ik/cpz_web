@@ -15,10 +15,10 @@ const _CandleChart: React.FC<Props> = ({ robot, signals, width, setIsChartLoaded
     const {
         authState: { isAuth }
     } = useContext(AuthContext);
-    const { timeframe, id: robotId, user_signal_id: userSignalId } = robot;
+    const { id: robotId, user_signal_id: userSignalId } = robot;
 
     const authAndOwnedByUser = isAuth && userSignalId;
-    const signalCandleQueries = candleQueries(timeframe, isAuth, authAndOwnedByUser).signal;
+    const signalCandleQueries = candleQueries(isAuth, authAndOwnedByUser).signal;
 
     const variables = authAndOwnedByUser ? { userSignalId } : { robotId };
 

@@ -1,7 +1,7 @@
 import React from "react";
-import { withApollo, withAuth, withDevice } from "libs/hoc";
+import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
 // components
-import { ManageBackTests } from "components/pages/ManagePage";
+import { ManageBackTests } from "../../src/components/pages/ManagePage";
 
 const Page = () => <ManageBackTests />;
 

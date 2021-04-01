@@ -1,7 +1,7 @@
 import React from "react";
-import { withApollo, withAuth, withDevice } from "libs/hoc";
+import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
 // components
-import { ManageUserSignals } from "components/pages/ManagePage";
+import { ManageUserSignals } from "../../src/components/pages/ManagePage";
 
 const Page = () => <ManageUserSignals />;
 

@@ -33,9 +33,9 @@ export const unsubscribe = (_root: any, variables: any, context: any) => {
             data: { id: idRobots, data: { user_signals: [] } }
         });
         if (variables.cache.tableName === "charts") {
-            const { limit, robotId, timeframe } = variables.chartData;
+            const { limit, robotId } = variables.chartData;
             const dataCandles = context.cache.readQuery({
-                query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                query: CANDLES_FOR_USER_SIGNAL(),
                 variables: { limit, robotId }
             });
             const dataChart = dataCandles.candles.map((item) => ({
@@ -43,7 +43,7 @@ export const unsubscribe = (_root: any, variables: any, context: any) => {
                 robot: { ...item.robot, user_signals: [] }
             }));
             context.cache.writeQuery({
-                query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                query: CANDLES_FOR_USER_SIGNAL(),
                 variables: { limit, robotId },
                 data: {
                     candles: dataChart
@@ -88,7 +88,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
             if (variables.cache.tableName === "charts") {
                 const { limit, robotId, timeframe } = variables.chartData;
                 const dataCandles = context.cache.readQuery({
-                    query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                    query: CANDLES_FOR_USER_SIGNAL(),
                     variables: { limit, robotId }
                 });
                 const dataChart = dataCandles.candles.map((item) => {
@@ -99,7 +99,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                     return { ...item, robot: { ...item.robot, user_signals } };
                 });
                 context.cache.writeQuery({
-                    query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                    query: CANDLES_FOR_USER_SIGNAL(),
                     variables: { limit, robotId },
                     data: {
                         candles: dataChart
@@ -169,9 +169,9 @@ export const subscribe = (_root: any, variables: any, context: any) => {
             });
         }
         if (variables.cache.tableName === "charts") {
-            const { limit, robotId, timeframe } = variables.chartData;
+            const { limit, robotId } = variables.chartData;
             const dataCandles = context.cache.readQuery({
-                query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                query: CANDLES_FOR_USER_SIGNAL(),
                 variables: { limit, robotId }
             });
 
@@ -180,7 +180,7 @@ export const subscribe = (_root: any, variables: any, context: any) => {
                 return { ...item, robot: { ...item.robot, user_signals } };
             });
             context.cache.writeQuery({
-                query: CANDLES_FOR_USER_SIGNAL(timeframe),
+                query: CANDLES_FOR_USER_SIGNAL(),
                 variables: { limit, robotId },
                 data: {
                     candles: dataChart

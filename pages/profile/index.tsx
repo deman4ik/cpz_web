@@ -1,6 +1,6 @@
 import React from "react";
-import { ProfilePage } from "components/pages/ProfilePage";
-import { withApollo, withAuth, withDevice } from "libs/hoc";
+import { ProfilePage } from "../../src/components/pages/ProfilePage";
+import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
 
 const Page = () => <ProfilePage />;
 

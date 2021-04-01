@@ -39,17 +39,17 @@ export async function fetchWithStatus(asyncOperation: any, setLoadingFunction: (
     }
 }
 
-export const candleQueries = (timeframe: number, isAuth?: boolean, isAuthAndRobotOwned?: boolean) => ({
+export const candleQueries = (isAuth?: boolean, isAuthAndRobotOwned?: boolean) => ({
     backtest: {
-        history: CANDLES_FOR_BACKTEST(timeframe),
-        realTimeSub: BACKTEST_POSITION_CANDLE_SUB(timeframe)
+        history: CANDLES_FOR_BACKTEST(),
+        realTimeSub: BACKTEST_POSITION_CANDLE_SUB()
     },
     robot: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned, RobotsType.robots),
-        realTimeSub: buildRobotPositionCandleSubQuery(isAuth, timeframe)
+        history: buildRobotPositionCandlesQuery(isAuth, isAuthAndRobotOwned, RobotsType.robots),
+        realTimeSub: buildRobotPositionCandleSubQuery(isAuth)
     },
     signal: {
-        history: buildRobotPositionCandlesQuery(timeframe, isAuth, isAuthAndRobotOwned, RobotsType.signals),
-        realTimeSub: buildSignalPositionCandleSubQuery(isAuth, timeframe)
+        history: buildRobotPositionCandlesQuery(isAuth, isAuthAndRobotOwned, RobotsType.signals),
+        realTimeSub: buildSignalPositionCandleSubQuery(isAuth)
     }
 });

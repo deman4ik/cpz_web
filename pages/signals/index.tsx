@@ -1,4 +1,4 @@
-import SignalRobotsInfoPage from "components/pages/SignalRobotsInfoPage";
+import SignalRobotsInfoPage from "../../src/components/pages/SignalRobotsInfoPage";
 import React from "react";
 import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
 

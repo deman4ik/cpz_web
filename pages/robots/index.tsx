@@ -1,7 +1,7 @@
 import React from "react";
 
-import { withApollo, withAuth, withDevice } from "libs/hoc";
-import TradingRobotsInfoPage from "components/pages/TradingRobotsInfoPage";
+import { withApollo, withAuth, withDevice } from "../../src/libs/hoc";
+import TradingRobotsInfoPage from "../../src/components/pages/TradingRobotsInfoPage";
 
 const Page = () => <TradingRobotsInfoPage />;
 

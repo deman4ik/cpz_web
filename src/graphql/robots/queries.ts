@@ -296,73 +296,77 @@ export const ROBOT_POSITIONS_FOR_USER = gql`
     }
 `;
 
-export const CANDLES_FOR_USER_SIGNAL = (timeframe: number) => gql`
+export const CANDLES_FOR_USER_SIGNAL = () => gql`
   query get_candles_for_user_signals(
     $userSignalId: uuid!
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_user_signal_positions(
+    candles: v_candles_user_signal_positions(
       where: {
         user_signal: { id: { _eq: $userSignalId } }
       }
       limit: $limit
       offset: $offset
+      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
   }
 `;
 
-export const CANDLES_FOR_ROBOT = (timeframe: number, type?: string) => gql`
+export const CANDLES_FOR_ROBOT = (type?: string) => gql`
   query get_candles_for_robot(
     $robotId: uuid!
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}${type ? `_${type}` : ""}_positions(
+    candles: v_candles${type ? `_${type}` : ""}_positions(
       where: {
         robot_id: { _eq: $robotId }
       }
       limit: $limit
       offset: $offset
+      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
   }
 `;
-export const CANDLES_FOR_BACKTEST = (timeframe: number, type?: string) => gql`
+export const CANDLES_FOR_BACKTEST = (type?: string) => gql`
   query get_candles_for_backtest(
     $backtest_id: uuid!
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_backtest_positions(
+    candles: v_candles_backtest_positions(
       where: {
         backtest_id: { _eq: $backtest_id }
       }
       limit: $limit
       offset: $offset
+      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
   }
 `;
 
-export const CANDLES_FOR_USER_ROBOT = (timeframe: number) => gql`
+export const CANDLES_FOR_USER_ROBOT = () => gql`
   query get_candles_for_user_robot(
     $robotId: uuid!
     $user_id: uuid
     $limit: Int
     $offset: Int
   ) {
-    candles: v_candles${timeframe}_user_positions(
+    candles: v_candles_user_positions(
       where: {
         user_robot_id: { _eq: $robotId }
         user_robot: { user_id: { _eq: $user_id } }    
       }
       limit: $limit
       offset: $offset
+      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
@@ -374,18 +378,13 @@ const queriesToType = {
     [RobotsType.signals]: CANDLES_FOR_USER_SIGNAL
 };
 
-export function buildRobotPositionCandlesQuery(
-    timeframe: number,
-    isAuth: boolean,
-    belongsToUser = false,
-    type?: string
-): DocumentNode {
+export function buildRobotPositionCandlesQuery(isAuth: boolean, belongsToUser = false, type?: string): DocumentNode {
     if (isAuth) {
         if (belongsToUser) {
-            return queriesToType[type](timeframe);
+            return queriesToType[type]();
         }
     }
-    return CANDLES_FOR_ROBOT(timeframe);
+    return CANDLES_FOR_ROBOT();
 }
 
 export const USER_ROBOTS_BY_EXCHANGE_ID = gql`

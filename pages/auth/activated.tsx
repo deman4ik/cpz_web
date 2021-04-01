@@ -1,6 +1,6 @@
 import React from "react";
-import { AccountActivated } from "components/pages/AuthPage/AccountActivated";
-import { withApollo } from "libs/hoc";
+import { AccountActivated } from "../../src/components/pages/AuthPage/AccountActivated";
+import { withApollo } from "../../src/libs/hoc";
 
 const Page = () => <AccountActivated />;
 
