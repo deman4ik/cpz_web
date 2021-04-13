@@ -308,7 +308,6 @@ export const CANDLES_FOR_USER_SIGNAL = () => gql`
       }
       limit: $limit
       offset: $offset
-      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
@@ -327,7 +326,6 @@ export const CANDLES_FOR_ROBOT = (type?: string) => gql`
       }
       limit: $limit
       offset: $offset
-      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
@@ -345,7 +343,6 @@ export const CANDLES_FOR_BACKTEST = (type?: string) => gql`
       }
       limit: $limit
       offset: $offset
-      order_by: {candle: {timestamp: desc}}
     ) {
       ${candles}
     }
@@ -366,7 +363,7 @@ export const CANDLES_FOR_USER_ROBOT = () => gql`
       }
       limit: $limit
       offset: $offset
-      order_by: {candle: {timestamp: desc}}
+
     ) {
       ${candles}
     }
