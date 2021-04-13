@@ -44,8 +44,8 @@ export const GET_USER_EXCHANGES_WITH_MARKETS = gql`
             currency
             precision
         }
-        candles1440(
-            where: { exchange: { _eq: $exchange }, asset: { _eq: $asset } }
+        candles(
+            where: { exchange: { _eq: $exchange }, asset: { _eq: $asset }, timeframe: { _eq: 1440 } }
             limit: 1
             order_by: { time: desc }
         ) {
