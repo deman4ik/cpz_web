@@ -35,7 +35,7 @@ export const GET_NEW_USERS_IN_PEROID = gql`
     query get_new_users($periodFrom: timestamp, $periodTo: timestamp) {
         users_aggregate(
             where: {
-                _and: [{ created_at: { _gte: $periodFrom } }, { created_at: { _gte: $periodTo } }]
+                _and: [{ created_at: { _gte: $periodFrom } }, { created_at: { _lte: $periodTo } }]
                 status: { _eq: 1 }
             }
         ) {

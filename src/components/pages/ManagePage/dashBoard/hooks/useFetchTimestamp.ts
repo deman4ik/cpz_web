@@ -3,9 +3,6 @@ import dayjs from "dayjs";
 // graphql
 import { GET_NEW_USERS_IN_PEROID } from "graphql/manage/queries";
 
-/*additional*/
-const format = "YYYY-MM-DD";
-
 export interface periodInteface {
     name: string;
     periodFrom: string;
@@ -43,23 +40,23 @@ const useFetchTimestamp = (): Array<dataInterface> | null => {
     /*Timestamps periods*/
     const today = {
         name: "today",
-        periodFrom: now.startOf("day").format(format),
-        periodTo: now.endOf("day").format(format)
+        periodFrom: now.startOf("day").toISOString(),
+        periodTo: now.endOf("day").toISOString()
     };
     const dayAgo = {
         name: "dayAgo",
-        periodFrom: now.startOf("day").add(-1, "day").format(format),
-        periodTo: now.endOf("day").add(-1, "day").format(format)
+        periodFrom: now.startOf("day").add(-1, "day").toISOString(),
+        periodTo: now.endOf("day").add(-1, "day").toISOString()
     };
     const weekAgo = {
         name: "weekAgo",
-        periodFrom: now.startOf("isoWeek").format(format),
-        periodTo: now.endOf("isoWeek").format(format)
+        periodFrom: now.startOf("isoWeek").toISOString(),
+        periodTo: now.endOf("isoWeek").toISOString()
     };
     const monthAgo = {
         name: "monthAgo",
-        periodFrom: now.startOf("month").format(format),
-        periodTo: now.endOf("month").format(format)
+        periodFrom: now.startOf("month").toISOString(),
+        periodTo: now.endOf("month").toISOString()
     };
     const periodsArray = [today, dayAgo, weekAgo, monthAgo];
 
