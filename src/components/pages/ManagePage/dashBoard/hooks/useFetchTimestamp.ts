@@ -8,7 +8,8 @@ const format = "YYYY-MM-DD";
 
 export interface periodInteface {
     name: string;
-    period: string;
+    periodFrom: string;
+    periodTo: string;
 }
 export interface dataInterface {
     name: string;
@@ -19,13 +20,13 @@ export interface dataInterface {
  * Функция фетчинга данных
  */
 const fetchPeriods = (periodsArray: Array<periodInteface>) => {
-    return periodsArray.map(({ period, name }) => {
+    return periodsArray.map(({ periodFrom, periodTo, name }) => {
         const { data, error } = useQuery(GET_NEW_USERS_IN_PEROID, {
-            variables: { period }
+            variables: { periodFrom, periodTo }
         });
         /*Усолвная обработка*/
         if (data) {
-            return { name, data: data.users };
+            return { name, data: data.users_aggregate.aggregate.count };
         }
         if (error) {
             return { name, data: "error" };
@@ -40,10 +41,26 @@ const fetchPeriods = (periodsArray: Array<periodInteface>) => {
 const useFetchTimestamp = (): Array<dataInterface> | null => {
     const now = dayjs.utc(); // current date
     /*Timestamps periods*/
-    const today = { name: "today", period: now.startOf("day").format(format) };
-    const dayAgo = { name: "dayAgo", period: now.startOf("day").add(-1, "day").format(format) };
-    const weekAgo = { name: "weekAgo", period: now.startOf("isoWeek").format(format) };
-    const monthAgo = { name: "monthAgo", period: now.startOf("month").format(format) };
+    const today = {
+        name: "today",
+        periodFrom: now.startOf("day").format(format),
+        periodTo: now.endOf("day").format(format)
+    };
+    const dayAgo = {
+        name: "dayAgo",
+        periodFrom: now.startOf("day").add(-1, "day").format(format),
+        periodTo: now.endOf("day").add(-1, "day").format(format)
+    };
+    const weekAgo = {
+        name: "weekAgo",
+        periodFrom: now.startOf("isoWeek").format(format),
+        periodTo: now.endOf("isoWeek").format(format)
+    };
+    const monthAgo = {
+        name: "monthAgo",
+        periodFrom: now.startOf("month").format(format),
+        periodTo: now.endOf("month").format(format)
+    };
     const periodsArray = [today, dayAgo, weekAgo, monthAgo];
 
     const fetchedPeriods = fetchPeriods(periodsArray);

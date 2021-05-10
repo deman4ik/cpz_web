@@ -32,9 +32,16 @@ export const USERS_BY_ROBOTS_AGGREGATE = gql`
  *  Использование:  manage/dashboard
  */
 export const GET_NEW_USERS_IN_PEROID = gql`
-    query get_new_users($period: timestamp) {
-        users(where: { created_at: { _gte: $period }, status: { _eq: 1 } }) {
-            created_at
+    query get_new_users($periodFrom: timestamp, $periodTo: timestamp) {
+        users_aggregate(
+            where: {
+                _and: [{ created_at: { _gte: $periodFrom } }, { created_at: { _gte: $periodTo } }]
+                status: { _eq: 1 }
+            }
+        ) {
+            aggregate {
+                count
+            }
         }
     }
 `;
