@@ -32,8 +32,8 @@ export const formatTotalUsers = (data): Array<StatsInterface> => {
 /**
  * Функция обработки данных по периодам
  */
-export const formatPeriodUsers = (periods: Array<dataInterface>) =>
+export const formatPeriodUsers = (periods: Array<any>) =>
     periods.map(({ name, data }) => ({
         title: PERIODS_TEXTS[name],
-        value: <span style={{ color: getColorForMoney(data.length) }}>{valueWithSign(data.length)}</span>
+        value: <span style={{ color: getColorForMoney(data) }}>{valueWithSign(data)}</span>
     }));
