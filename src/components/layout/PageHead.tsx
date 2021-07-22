@@ -56,23 +56,25 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                     dangerouslySetInnerHTML={{
                         __html: `
                         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-                        ym(69520861, "init", {
-                            clickmap: true,
-                            trackLinks: true,
-                            accurateTrackBounce: true,
-                            webvisor: true,
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(69520861, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+        ,
                             userParams: {
                                 UserID: '${userId}'
                             }
-                        });
+   });
                           `
                     }}
                 />
                 <noscript
                     dangerouslySetInnerHTML={{
-                        __html: `<div><img src="https://mc.yandex.ru/watch/69520861" style="position:absolute; left:-9999px;" alt="" /></div>`
+                        __html: `<noscript><div><img src="https://mc.yandex.ru/watch/69520861" style="position:absolute; left:-9999px;" alt="" /></div></noscript>`
                     }}
                 />
             </>
@@ -100,17 +102,6 @@ export const PageHead: React.FC<Props> = ({ title, gtag, userId }) => (
                         <img height="1" width="1" style="display:none"
                         src="https://www.facebook.com/tr?id=3892002647514527&ev=PageView&noscript=1"
                         />`
-                    }}
-                />
-            </>
-        )}
-        {process.env.ENABLE_ANALYTICS === "development" ? null : (
-            <>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                        (function(o){var b="https://quickkoala.io/anywhere/",t="88a3a2cee18a4eeeb90c9603fb42d708a5c2538df39442f59fdd32abbd53c35c",a=window.AutopilotAnywhere={_runQueue:[],run:function(){this._runQueue.push(arguments);}},c=encodeURIComponent,s="SCRIPT",d=document,l=d.getElementsByTagName(s)[0],p="t="+c(d.title||"")+"&u="+c(d.location.href||"")+"&r="+c(d.referrer||""),j="text/javascript",z,y;if(!window.Autopilot) window.Autopilot=a;if(o.app) p="devmode=true&"+p;z=function(src,asy){var e=d.createElement(s);e.src=src;e.type=j;e.async=asy;l.parentNode.insertBefore(e,l);};y=function(){z(b+t+'?'+p,true);};if(window.attachEvent){window.attachEvent("onload",y);}else{window.addEventListener("load",y,false);}})({}); 
-                        `
                     }}
                 />
             </>
