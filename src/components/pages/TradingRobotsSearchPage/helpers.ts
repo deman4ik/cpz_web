@@ -4,7 +4,7 @@ import { attachUserStats, parseRobotInfo } from "components/pages/SignalRobotsSe
 const areThereUserRobots = (robot) => robot.user_robots && robot.user_robots.length;
 
 export const parseUserSettings = (robot) => {
-    return robot.user_robots[0].user_robot_settings.user_robot_settings;
+    return robot.user_robots[0].user_robot_settings?.user_robot_settings;
 };
 
 export const formatRobotsData = (data: any) =>
@@ -24,7 +24,7 @@ export const formatRobotsData = (data: any) =>
         if (userRobot) {
             res.user_robots.status = userRobot.status;
             res.user_robots.id = userRobot.id;
-            res.volume = `${userRobot.user_robot_settings?.user_robot_settings.volume} ${asset}`;
+            res.volume = `${userRobot.user_robot_settings?.user_robot_settings?.volume} ${asset}`;
             res.started_at = userRobot.started_at ? dayjs.utc(userRobot.started_at).fromNow(true) : 0;
 
             attachUserStats(res, userRobot);
